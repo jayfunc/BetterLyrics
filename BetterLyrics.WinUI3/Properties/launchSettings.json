@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "BetterLyrics.WinUI3 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "BetterLyrics.WinUI3 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
