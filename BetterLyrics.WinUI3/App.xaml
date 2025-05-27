@@ -10,6 +10,26 @@
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Color x:Key="SemiTransparentSystemBaseHighColor">#80000000</Color>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="SemiTransparentSystemBaseHighColor">#80FFFFFF</Color>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <LinearGradientBrush x:Key="BaseHighEdgeHorizontalFadeBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="0.02" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="0.98" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="1" Color="Transparent" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="BaseHighEdgeVerticalFadeBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="0.15" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="0.85" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="1" Color="Transparent" />
+            </LinearGradientBrush>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

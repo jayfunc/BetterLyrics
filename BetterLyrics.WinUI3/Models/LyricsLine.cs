@@ -1,16 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Models
-{
-    public partial class LyricsLine : ObservableObject
-    {
+namespace BetterLyrics.WinUI3.Models {
+    public partial class LyricsLine : ObservableObject {
         [ObservableProperty]
         private string _text;
+
+        [ObservableProperty]
+        private ObservableCollection<LyricsLineChar> _lyricsLineChars;
 
         [ObservableProperty]
         private int _startTimestampMs;
@@ -22,8 +20,9 @@ namespace BetterLyrics.WinUI3.Models
         private bool _isPlaying;
 
         [ObservableProperty]
-        private double _playedProgress = 0;
+        private int _durationMs;
 
-        public int DurationMs { get => EndTimestampMs - StartTimestampMs; }
+        [ObservableProperty]
+        private int _averageDurationPerCharMs;
     }
 }

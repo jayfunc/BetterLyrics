@@ -1,20 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using WinRT;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -29,7 +18,7 @@ namespace BetterLyrics.WinUI3
     {
         private readonly ISystemBackdropControllerWithTargets _backdropController;
         private readonly ICompositionSupportsSystemBackdrop _backdropTarget;
-        private static readonly SystemBackdropConfiguration _systemBackdropConfiguration = new SystemBackdropConfiguration
+        private static readonly SystemBackdropConfiguration _systemBackdropConfiguration = new()
         {
             IsInputActive = true,
             Theme = SystemBackdropTheme.Default
@@ -44,8 +33,7 @@ namespace BetterLyrics.WinUI3
             SetTitleBar(Draggable);
 
             _backdropTarget = this.As<ICompositionSupportsSystemBackdrop>();
-            _backdropController = new DesktopAcrylicController
-            {
+            _backdropController = new DesktopAcrylicController {
                 LuminosityOpacity = 0.0f,
                 TintOpacity = 0.0f,
             };

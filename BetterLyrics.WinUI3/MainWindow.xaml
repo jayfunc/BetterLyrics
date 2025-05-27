@@ -9,29 +9,7 @@
     mc:Ignorable="d"
     Title="BetterLyrics.WinUI3">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="36"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="36"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Left spacing area -->
-        <Grid Grid.Column="0"/>
-
-        <!-- Root frame -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="36"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="36"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" x:Name="Draggable" />
-            <Frame Grid.Row="1" x:Name="RootFrame" NavigationFailed="RootFrame_NavigationFailed"/>
-        </Grid>
-
-        <!-- Right spacing area -->
-        <Grid Grid.Column="2"/>
-
+    <Grid x:Name="Draggable">
+        <Frame x:Name="RootFrame" NavigationFailed="RootFrame_NavigationFailed"/>
     </Grid>
 </Window>
