@@ -17,17 +17,21 @@ Coding in progress...
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 
 ## Screenshots
+### Settings
+
+![alt text](/Screenshots/settings.png)
+
 ### Light music mode
 
 Will be activated automatically when lyrics are not detected/found
 
-![Light music mode](/Screenshots/image.png)
+![Light music mode](/Screenshots/light-music.png)
 
 ### General music mode
-![General music mode](/Screenshots/image-1.png)
+![General music mode](/Screenshots/general-music.png)
 
 ### Real-time gif
-![Real-time gif](/Screenshots/1000003299.gif)
+![Real-time gif](/Screenshots/lyrics-animation.gif)
 
 ## Many thanks to 
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)

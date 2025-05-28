@@ -12,7 +12,9 @@
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:dev="using:DevWinUI"
     xmlns:animationhelper="using:BetterLyrics.WinUI3.Helper"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    CacheMode="BitmapCache"
+    NavigationCacheMode="Required" >
 
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
 

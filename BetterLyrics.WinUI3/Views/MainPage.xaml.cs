@@ -89,14 +89,14 @@ namespace BetterLyrics.WinUI3.Views {
 
         private List<LyricsLine> _lyricsLines = [];
 
-        private List<string> _localMusicFolderPaths = ["D:/Musics"];
-
         private Color _systemBaseHighColor = (Color)App.Current.Resources["SystemBaseHighColor"];
 
         public MainPage() {
             this.InitializeComponent();
 
             DataContext = Ioc.Default.GetService<MainViewModel>();
+
+            ViewModel.RefreshMusicMetadataIndexDatabase();
 
             _queueTimer = _dispatcherQueue.CreateTimer();
 
@@ -203,7 +203,7 @@ namespace BetterLyrics.WinUI3.Views {
             CoverImage.Source = null;
             LyricsCanvas.Paused = true;
             _startLineIndex = _endLineIndex = -1;
-            _lyricsLines.Clear();
+            _lyricsLines = [];
             _currentTime = TimeSpan.Zero;
 
             GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps = null;
@@ -217,80 +217,27 @@ namespace BetterLyrics.WinUI3.Views {
 
             byte[]? imgByteFromTag = null;
 
-            bool finishSearching = false;
+            var track = ViewModel.GetMusicMetadata(mediaProps?.Title, mediaProps?.Artist);
 
-            foreach (var musicFolderPath in _localMusicFolderPaths) {
-                foreach (var file in Directory.GetFiles(musicFolderPath)) {
-                    var fileExtension = Path.GetExtension(file);
-                    if (fileExtension != ".mp3" && fileExtension != ".flac") {
-                        continue;
-                    }
-                    var track = new Track(file);
+            if (track != null) {
 
-                    if (track.Title == mediaProps?.Title && track.Artist == mediaProps?.Artist) {
-                        // Get picture from tag
-                        if (track.EmbeddedPictures.Count > 0) {
-                            imgByteFromTag = track.EmbeddedPictures[0].PictureData;
-                        }
-
-                        // Get lyrics
-                        var lyricsPhrases = track.Lyrics.SynchronizedLyrics;
-                        for (int i = 0; i < lyricsPhrases.Count; i++) {
-                            var lyricsPhrase = lyricsPhrases[i];
-                            int lyricsPhraseStartTimestampMs = lyricsPhrase.TimestampMs;
-                            int lyricsPhraseEndTimestampMs = 0;
-
-                            if (i + 1 < lyricsPhrases.Count) {
-                                lyricsPhraseEndTimestampMs = lyricsPhrases[i + 1].TimestampMs;
-                            } else {
-                                lyricsPhraseEndTimestampMs = (int)track.DurationMs;
-                            }
-
-                            var lyricsLine = new LyricsLine {
-                                StartTimestampMs = lyricsPhraseStartTimestampMs,
-                                EndTimestampMs = lyricsPhraseEndTimestampMs,
-                                IsPlaying = false,
-                                Text = lyricsPhrase.Text,
-                            };
-                            lyricsLine.DurationMs = lyricsLine.EndTimestampMs - lyricsLine.StartTimestampMs;
-                            lyricsLine.AverageDurationPerCharMs = lyricsLine.DurationMs / lyricsLine.Text.Length;
-
-                            List<LyricsLineChar> lyricsLineChars = [];
-                            var lyricsLineCharStartTimestampMs = lyricsPhraseStartTimestampMs;
-
-                            foreach (var ch in lyricsLine.Text) {
-
-                                var lyricsLineChar = new LyricsLineChar {
-                                    Text = (ch == ' ' ? (char)160 : ch).ToString(),
-                                    StartTimestampMs = lyricsLineCharStartTimestampMs,
-                                };
-                                lyricsLineChar.EndTimestampMs = lyricsLineChar.StartTimestampMs + lyricsLine.AverageDurationPerCharMs;
-                                lyricsLineChar.DurationMs = lyricsLineChar.EndTimestampMs - lyricsLineChar.StartTimestampMs;
-                                lyricsLineChars.Add(lyricsLineChar);
-
-                                lyricsLineCharStartTimestampMs += lyricsLine.AverageDurationPerCharMs;
-                            }
-
-                            lyricsLine.LyricsLineChars = [.. lyricsLineChars];
-                            _lyricsLines.Add(lyricsLine);
-                        }
-
-                        await SyncLyricsCanvasSizeAsync();
-
-                        ReLayoutLyricsCanvas();
-
-                        int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
-                        var (displayStartLineIndex, displayEndLineIndex) = GetMaxLyricsLineIndexBoundaries();
-                        UpdatePosition(displayStartLineIndex, displayEndLineIndex, currentPlayingLineIndex, true);
-
-                        finishSearching = true;
-                        break;
-
-                    }
+                // Get picture from tag
+                if (track.EmbeddedPictures.Count > 0) {
+                    imgByteFromTag = track.EmbeddedPictures[0].PictureData;
                 }
 
-                if (finishSearching) break;
+                // Get lyrics
+                _lyricsLines = ViewModel.GetLyrics(track);
+
             }
+
+            await SyncLyricsCanvasSizeAsync();
+
+            ReLayoutLyricsCanvas();
+
+            int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
+            var (displayStartLineIndex, displayEndLineIndex) = GetMaxLyricsLineIndexBoundaries();
+            UpdatePosition(displayStartLineIndex, displayEndLineIndex, currentPlayingLineIndex, true);
 
             IRandomAccessStream? stream = null;
             var coverImgStreamFromMediaProps = mediaProps?.Thumbnail;
@@ -416,11 +363,13 @@ namespace BetterLyrics.WinUI3.Views {
 
             await Task.Delay((int)(_animationDurationMs * 1.5));
 
+            double targetSongInfoStackPanelWidth = 0;
             if (_lyricsLines.Count == 0) {
-                SongInfoStackPanel.Width = RootGrid.ActualWidth - 36 * 2;
+                targetSongInfoStackPanelWidth = RootGrid.ActualWidth - 36 * 2;
             } else {
-                SongInfoStackPanel.Width = (RootGrid.ActualWidth - 36 * 3) / 2;
+                targetSongInfoStackPanelWidth = (RootGrid.ActualWidth - 36 * 3) / 2;
             }
+            SongInfoStackPanel.Width = Math.Max(0, targetSongInfoStackPanelWidth);
 
             if (ViewModel.IsSmallScreenMode) {
                 _lyricsCanvasLeftMargin = 36;
@@ -511,8 +460,8 @@ namespace BetterLyrics.WinUI3.Views {
             var b = _systemBaseHighColor.B;
 
             var coverGradientBrush = new CanvasLinearGradientBrush(sender, [
-                new() { Position = 0, Color = _startGradientColor},
-                new() { Position = 1, Color =  _endGradientColor},
+                new() { Position = 0, Color = _startGradientColor },
+                new() { Position = 1, Color = _endGradientColor },
             ]) {
                 StartPoint = new Vector2(0.5f, 0),
                 EndPoint = new Vector2(0.5f, (float)sender.Size.Height)
@@ -741,21 +690,23 @@ namespace BetterLyrics.WinUI3.Views {
                     return;
                 }
 
-                //var t = _currentTime.TotalMilliseconds % 30000;
-                //double progress = t / 30000;
+                var t = _currentTime.TotalMilliseconds % 100000;
+                double progress = t / 100000;
 
-                //int segment = (int)(progress * 3);
-                //double localT = (progress * 3) - segment;
+                int segment = (int)(progress * 3);
+                double localT = (progress * 3) - segment;
 
-                //Color startFrom = ViewModel.CoverImageDominantColors[segment % 3];
-                //Color startTo = ViewModel.CoverImageDominantColors[(segment + 1) % 3];
-                //Color currentStart = Helper.ColorHelper.LerpColor(startFrom, startTo, localT);
-                //ViewModel.StartGraidentColor = _startGradientColor = currentStart;
+                Color startFrom = ViewModel.CoverImageDominantColors[segment % 3];
+                Color startTo = ViewModel.CoverImageDominantColors[(segment + 1) % 3];
+                Color currentStart = Helper.ColorHelper.LerpColor(startFrom, startTo, localT);
+                currentStart.A = 255;
+                ViewModel.StartGraidentColor = _startGradientColor = currentStart;
 
-                //Color endFrom = ViewModel.CoverImageDominantColors[(segment + 2) % 3];
-                //Color endTo = ViewModel.CoverImageDominantColors[segment % 3];
-                //Color currentEnd = Helper.ColorHelper.LerpColor(endFrom, endTo, localT);
-                //ViewModel.EndGraidentColor = _endGradientColor = currentEnd;
+                Color endFrom = ViewModel.CoverImageDominantColors[(segment + 2) % 3];
+                Color endTo = ViewModel.CoverImageDominantColors[segment % 3];
+                Color currentEnd = Helper.ColorHelper.LerpColor(endFrom, endTo, localT);
+                currentEnd.A = 255;
+                ViewModel.EndGraidentColor = _endGradientColor = currentEnd;
 
             });
         }

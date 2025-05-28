@@ -6,10 +6,210 @@
     xmlns:local="using:BetterLyrics.WinUI3"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d"
-    Title="BetterLyrics.WinUI3">
+    Title="BetterLyrics"
+    SizeChanged="Window_SizeChanged">
 
-    <Grid x:Name="Draggable">
+    <Grid>
+
         <Frame x:Name="RootFrame" NavigationFailed="RootFrame_NavigationFailed"/>
+
+        <Grid x:Name="TopCommandGrid" VerticalAlignment="Top" Opacity="0" Background="Transparent" >
+
+            <Grid.Resources>
+
+                <Storyboard x:Name="TopCommandGridFadeInStoryboard" >
+                    <DoubleAnimation 
+                                    Storyboard.TargetName="TopCommandGrid"
+                                    Storyboard.TargetProperty="Opacity" 
+                                    To="1" 
+                                    Duration="0:0:0.2" />
+                </Storyboard>
+                <Storyboard x:Name="TopCommandGridFadeOutStoryboard">
+                    <DoubleAnimation 
+                                    Storyboard.TargetName="TopCommandGrid"
+                                    Storyboard.TargetProperty="Opacity" 
+                                    To="0" 
+                                    Duration="0:0:0.2" />
+                </Storyboard>
+
+            </Grid.Resources>
+
+            <interactivity:Interaction.Behaviors>
+
+                <interactivity:EventTriggerBehavior EventName="PointerEntered" >
+                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource TopCommandGridFadeInStoryboard}"/>
+                </interactivity:EventTriggerBehavior>
+                <interactivity:EventTriggerBehavior EventName="PointerExited" >
+                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource TopCommandGridFadeOutStoryboard}"/>
+                </interactivity:EventTriggerBehavior>
+
+            </interactivity:Interaction.Behaviors>
+
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
+                <!-- Chrome Back -->
+                <AppBarButton x:Name="BackButton" LabelPosition="Collapsed" Click="BackButton_Click" >
+
+                    <AppBarButton.Resources>
+
+                        <Storyboard x:Name="BackButtonFadeInStoryboard" >
+                            <DoubleAnimation 
+                                    Storyboard.TargetName="BackButton"
+                                    Storyboard.TargetProperty="Opacity" 
+                                    To="1" 
+                                    Duration="0:0:0.2" />
+                        </Storyboard>
+                        <Storyboard x:Name="BackButtonFadeOutStoryboard">
+                            <DoubleAnimation 
+                                    Storyboard.TargetName="BackButton"
+                                    Storyboard.TargetProperty="Opacity" 
+                                    To="0" 
+                                    Duration="0:0:0.2" />
+                        </Storyboard>
+
+                    </AppBarButton.Resources>
+
+                    <interactivity:Interaction.Behaviors>
+
+                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="True">
+                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource BackButtonFadeInStoryboard}" />
+                        </interactivity:DataTriggerBehavior>
+                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="False">
+                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource BackButtonFadeOutStoryboard}" />
+                        </interactivity:DataTriggerBehavior>
+
+                    </interactivity:Interaction.Behaviors>
+
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE830;" />
+                </AppBarButton>
+
+                <TextBlock x:Name="AppTitleTextBlock" Text="BetterLyrics" VerticalAlignment="Center" Margin="0,-4,0,0" >
+                    <TextBlock.RenderTransform>
+                        <TranslateTransform x:Name="AppTitleTextBlockTransform" />
+                    </TextBlock.RenderTransform>
+
+                    <TextBlock.Resources>
+
+                        <Storyboard x:Name="AppTitleTextBlockMoveLeftStoryboard" >
+                            <DoubleAnimation
+                                Storyboard.TargetName="AppTitleTextBlockTransform"
+                                Storyboard.TargetProperty="X"
+                                To="-48"
+                                Duration="0:0:0.2" >
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseInOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                        <Storyboard x:Name="AppTitleTextBlockMoveRightStoryboard" >
+                            <DoubleAnimation
+                                Storyboard.TargetName="AppTitleTextBlockTransform"
+                                Storyboard.TargetProperty="X"
+                                To="0"
+                                Duration="0:0:0.2" >
+                                <DoubleAnimation.EasingFunction>
+                                    <CubicEase EasingMode="EaseInOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </TextBlock.Resources>
+
+                    <interactivity:Interaction.Behaviors>
+
+                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="True">
+                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource AppTitleTextBlockMoveRightStoryboard}"/>
+                        </interactivity:DataTriggerBehavior>
+                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="False">
+                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource AppTitleTextBlockMoveLeftStoryboard}"/>
+                        </interactivity:DataTriggerBehavior>
+
+                    </interactivity:Interaction.Behaviors>
+
+                </TextBlock>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
+                <!-- Window Mini -->
+                <AppBarButton Visibility="Collapsed" x:Name="MiniButton" LabelPosition="Collapsed" Click="MiniButton_Click">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEE49;" />
+                </AppBarButton>
+                <!-- Window Unmini -->
+                <AppBarButton Visibility="Collapsed" x:Name="UnminiButton" LabelPosition="Collapsed" Click="UnminiButton_Click">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEE47;" />
+                </AppBarButton>
+                <!-- Window Minimise -->
+                <AppBarButton x:Name="MinimiseButton" LabelPosition="Collapsed" Click="MinimiseButton_Click">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE921;" />
+                </AppBarButton>
+                <!-- Window Maximise -->
+                <AppBarButton x:Name="MaximiseButton" LabelPosition="Collapsed" Click="MaximiseButton_Click">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE922;" />
+                </AppBarButton>
+                <!-- Window Restore -->
+                <AppBarButton Visibility="Collapsed" x:Name="RestoreButton"  LabelPosition="Collapsed" Click="RestoreButton_Click">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE923;" />
+                </AppBarButton>
+                <!-- Window Close -->
+                <AppBarButton x:Name="CloseButton" LabelPosition="Collapsed" Click="CloseButton_Click">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8BB;" />
+                </AppBarButton>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid x:Name="BottomCommandGrid" VerticalAlignment="Bottom" Opacity="0" Background="Transparent" >
+
+            <Grid.Resources>
+
+                <Storyboard x:Name="BottomCommandGridFadeInStoryboard" >
+                    <DoubleAnimation 
+                                    Storyboard.TargetName="BottomCommandGrid"
+                                    Storyboard.TargetProperty="Opacity" 
+                                    To="1" 
+                                    Duration="0:0:0.2" />
+                </Storyboard>
+                <Storyboard x:Name="BottomCommandGridFadeOutStoryboard" BeginTime="0:0:0.2">
+                    <DoubleAnimation 
+                                    Storyboard.TargetName="BottomCommandGrid"
+                                    Storyboard.TargetProperty="Opacity" 
+                                    To="0" 
+                                    Duration="0:0:0.2" />
+                </Storyboard>
+
+            </Grid.Resources>
+
+            <interactivity:Interaction.Behaviors>
+
+                <interactivity:EventTriggerBehavior EventName="PointerEntered" >
+                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource BottomCommandGridFadeInStoryboard}"/>
+                </interactivity:EventTriggerBehavior>
+                <interactivity:EventTriggerBehavior EventName="PointerExited" >
+                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource BottomCommandGridFadeOutStoryboard}"/>
+                </interactivity:EventTriggerBehavior>
+
+            </interactivity:Interaction.Behaviors>
+
+            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
+                <!-- Settings Solid -->
+                <AppBarButton LabelPosition="Collapsed" Click="SettingsButton_Click" >
+
+                    <interactivity:Interaction.Behaviors>
+
+                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="True">
+                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                        </interactivity:DataTriggerBehavior>
+                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="False">
+                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                        </interactivity:DataTriggerBehavior>
+
+                    </interactivity:Interaction.Behaviors>
+
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE713;" />
+                </AppBarButton>
+            </StackPanel>
+
+        </Grid>
+
     </Grid>
 </Window>

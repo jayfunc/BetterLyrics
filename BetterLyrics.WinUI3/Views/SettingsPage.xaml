@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="BetterLyrics.WinUI3.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BetterLyrics.WinUI3.Views"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d"
+    CacheMode="BitmapCache"
+    NavigationCacheMode="Required" >
+
+    <Grid>
+
+        <controls:OpacityMaskView HorizontalContentAlignment="Stretch">
+            <controls:OpacityMaskView.OpacityMask>
+                <Rectangle Fill="{StaticResource BaseHighEdgeVerticalFadeBrush}"/>
+            </controls:OpacityMaskView.OpacityMask>
+            <ScrollViewer>
+
+                <StackPanel Spacing="4" Margin="36,72,36,72">
+
+                    <controls:SettingsExpander x:Uid="SettingsPageMusicLib"
+                                   HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}"
+                                   ItemsSource="{x:Bind ViewModel.LocalMusicFolderPaths, Mode=OneWay}">
+                        <controls:SettingsExpander.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <controls:SettingsCard Header="{x:Bind}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <HyperlinkButton x:Uid="SettingsPageOpenPath" Tag="{x:Bind}" Click="OpenInFileExplorerButton_Click" />
+                                        <HyperlinkButton x:Uid="SettingsPageRemovePath" Tag="{x:Bind}" Click="RemoveFromAppButton_Click" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+                            </DataTemplate>
+                        </controls:SettingsExpander.ItemTemplate>
+                        <controls:SettingsExpander.ItemsHeader>
+                            <muxc:InfoBar x:Uid="SettingsPageRemoveInfo"
+                              IsOpen="True"
+                              Severity="Success">
+                            </muxc:InfoBar>
+                        </controls:SettingsExpander.ItemsHeader>
+                        <controls:SettingsExpander.ItemsFooter>
+                            <controls:SettingsCard>
+                                <Button x:Uid="SettingsPageAddFolder" Click="AddFolderButton_Click" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.ItemsFooter>
+                    </controls:SettingsExpander>
+
+                    <controls:SettingsCard
+                    x:Uid="SettingsPageTheme"
+                               HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
+                        <ComboBox x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged">
+                            <ComboBoxItem Tag="Default" x:Uid="SettingsPageFollowSystem" />
+                            <ComboBoxItem Tag="Light" x:Uid="SettingsPageLight" />
+                            <ComboBoxItem Tag="Dark" x:Uid="SettingsPageDark" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <controls:SettingsExpander
+                    x:Uid="SettingsPageBackdrop"
+                               HeaderIcon="{ui:FontIcon Glyph=&#xEF1F;}">
+                        <ComboBox x:Name="BackdropComboBox" SelectionChanged="BackdropComboBox_SelectionChanged">
+                            <ComboBoxItem x:Uid="SettingsPageNoBackdrop"
+                        Tag="None" />
+                            <ComboBoxItem x:Uid="SettingsPageMica"
+                        Tag="Mica" />
+                            <ComboBoxItem x:Uid="SettingsPageMicaAlt"
+                        Tag="MicaAlt" />
+                            <ComboBoxItem x:Uid="SettingsPageDesktopAcrylic"
+                        Tag="DesktopAcrylic" />
+                            <ComboBoxItem x:Uid="SettingsPageAcrylicBase"
+                        Tag="AcrylicBase" />
+                            <ComboBoxItem x:Uid="SettingsPageAcrylicThin"
+                        Tag="AcrylicThin" />
+                            <ComboBoxItem x:Uid="SettingsPageTransparent"
+                        Tag="Transparent" />
+                        </ComboBox>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard Header="叠加专辑背景色" >
+                                <ToggleSwitch />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard Header="动态专辑背景色" >
+                                <ToggleSwitch />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard Header="专辑背景色透明度" >
+                                <Slider />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
+                    <controls:SettingsCard
+                                        x:Uid="SettingsPageLanguage"
+                               HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}">
+                        <ComboBox SelectedIndex="0">
+                            <ComboBoxItem x:Uid="SettingsPageSC" />
+                            <ComboBoxItem x:Uid="SettingsPageTC" />
+                            <ComboBoxItem x:Uid="SettingsPageEN" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard
+                               Header="BetterLyrics"
+                               HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/StoreLogo.scale-400.png}">
+                        <controls:SettingsCard.Description>
+                            <RichTextBlock>
+                                <Paragraph>
+                                    <Run x:Uid="SettingsPageVersion"/>
+                                    <Run Text="{x:Bind ViewModel.Version, Mode=OneWay}"/>
+                                </Paragraph>
+                            </RichTextBlock>
+                        </controls:SettingsCard.Description>
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard ActionIcon="{ui:FontIcon Glyph=&#xE8A7;}"
+                                       x:Uid="SettingsPageGitHub"
+                               Click="GitHubSettingsCard_Click"
+                               HeaderIcon="{ui:FontIcon Glyph=&#xE943;}"
+                               IsClickEnabled="True"/>
+
+                </StackPanel>
+
+            </ScrollViewer>
+        </controls:OpacityMaskView>
+
+    </Grid>
+</Page>
