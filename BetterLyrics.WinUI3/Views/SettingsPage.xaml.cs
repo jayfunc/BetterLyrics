@@ -33,8 +33,6 @@ namespace BetterLyrics.WinUI3.Views {
 
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
 
-        private ResourceLoader _resourceLoader = new();
-
         public SettingsPage() {
             this.InitializeComponent();
             DataContext = Ioc.Default.GetService<SettingsViewModel>();
@@ -59,7 +57,7 @@ namespace BetterLyrics.WinUI3.Views {
                 string path = folder.Path;
                 bool existed = ViewModel.LocalMusicFolders.Where((x) => x.Path == path).Count() > 0;
                 if (existed) {
-                    MainWindow.StackedNotificationsBehavior?.Show(_resourceLoader.GetString("SettingsPagePathExistedInfo"), 3900);
+                    MainWindow.StackedNotificationsBehavior?.Show(App.ResourceLoader.GetString("SettingsPagePathExistedInfo"), 3900);
                 } else {
                     ViewModel.AddMusicLibrary(path);
                 }

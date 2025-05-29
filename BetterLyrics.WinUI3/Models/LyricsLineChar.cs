@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Graphics.Canvas.Brushes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,41 +9,29 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Models {
-    public partial class LyricsLineChar : ObservableObject {
-        [ObservableProperty]
-        private string _text;
+    public partial class LyricsLineChar {
+        public string Text;
 
-        [ObservableProperty]
-        private int _startTimestampMs;
+        public int StartTimestampMs;
 
-        [ObservableProperty]
-        private int _endTimestampMs;
+        public int EndTimestampMs;
 
-        [ObservableProperty]
-        private LyricsPlayingState _playingState;
+        public LyricsPlayingState PlayingState;
 
-        [ObservableProperty]
-        private float _playingProgress;
+        public float PlayingProgress;
 
-        [ObservableProperty]
-        private int _durationMs;
+        public int DurationMs;
 
-        [ObservableProperty]
-        private Vector2 _position;
+        public Vector2 Position;
 
-        [ObservableProperty]
-        private Vector2 _positionBeforeScrolling;
+        public Vector2 PositionBeforeScrolling;
 
-        [ObservableProperty]
-        private Vector2 _centerPosition;
+        public Vector2 CenterPosition;
 
-        [ObservableProperty]
-        private Rect _layoutBounds;
+        public Rect LayoutBounds;
 
-        [ObservableProperty]
-        private float _scale;
+        public float Scale;
 
-        [ObservableProperty]
-        private float _opacity;
+        public float Opacity;
     }
 }

@@ -35,10 +35,10 @@ namespace BetterLyrics.WinUI3.Services.Settings {
         }
 
         // Theme
-        public ElementTheme Theme => (ElementTheme)Get(SettingsKeys.ThemeMode, SettingsDefaultValues.ThemeMode);
+        public ElementTheme Theme => (ElementTheme)Get(SettingsKeys.ThemeType, SettingsDefaultValues.ThemeType);
 
         public void SetTheme(ElementTheme theme) {
-            Set(SettingsKeys.ThemeMode, (int)theme);
+            Set(SettingsKeys.ThemeType, (int)theme);
             if (App.Current is App app) {
                 if (app.MainWindow?.Content is FrameworkElement mainWindowRoot) {
                     mainWindowRoot.RequestedTheme = theme;

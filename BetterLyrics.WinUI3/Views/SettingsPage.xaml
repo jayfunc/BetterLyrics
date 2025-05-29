@@ -76,7 +76,7 @@
                     <controls:SettingsCard
                     x:Uid="SettingsPageTheme"
                                HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
-                        <ComboBox SelectedIndex="{x:Bind ViewModel.Theme, Mode=TwoWay}" x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.ThemeType, Mode=TwoWay}" x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged">
                             <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
                             <ComboBoxItem x:Uid="SettingsPageLight" />
                             <ComboBoxItem x:Uid="SettingsPageDark" />

@@ -9,12 +9,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d"
-    Title="BetterLyrics"
     SizeChanged="Window_SizeChanged">
 
     <Grid x:Name="RootGrid">
 
-        <Frame x:Name="RootFrame" NavigationFailed="RootFrame_NavigationFailed"/>
+        <Frame x:Name="RootFrame" NavigationFailed="RootFrame_NavigationFailed" Navigated="RootFrame_Navigated"/>
 
         <Grid x:Name="TopCommandGrid" VerticalAlignment="Top" Opacity="0" Background="Transparent" >
 
@@ -49,81 +48,33 @@
             </interactivity:Interaction.Behaviors>
 
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
-                <!-- Chrome Back -->
-                <AppBarButton x:Name="BackButton" LabelPosition="Collapsed" Click="BackButton_Click" >
-
-                    <AppBarButton.Resources>
-
-                        <Storyboard x:Name="BackButtonFadeInStoryboard" >
-                            <DoubleAnimation 
-                                    Storyboard.TargetName="BackButton"
-                                    Storyboard.TargetProperty="Opacity" 
-                                    To="1" 
-                                    Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Name="BackButtonFadeOutStoryboard">
-                            <DoubleAnimation 
-                                    Storyboard.TargetName="BackButton"
-                                    Storyboard.TargetProperty="Opacity" 
-                                    To="0" 
-                                    Duration="0:0:0.2" />
-                        </Storyboard>
-
-                    </AppBarButton.Resources>
-
-                    <interactivity:Interaction.Behaviors>
-
-                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="True">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource BackButtonFadeInStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="False">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource BackButtonFadeOutStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-
-                    </interactivity:Interaction.Behaviors>
-
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE830;" />
+                <!-- Always On Top -->
+                <AppBarButton x:Name="AOTButton" LabelPosition="Collapsed" Click="AOTButton_Click">
+                    <Grid>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE840;" />
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE841;" Opacity="0" x:Name="PinnedFontIcon" >
+                            <FontIcon.Resources>
+                                <Storyboard x:Key="ShowPinnedFontIconStoryboard">
+                                    <DoubleAnimation 
+                                        Storyboard.TargetName="PinnedFontIcon" 
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="1"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                                <Storyboard x:Key="HidePinnedFontIconStoryboard">
+                                    <DoubleAnimation 
+                                        Storyboard.TargetName="PinnedFontIcon" 
+                                        Storyboard.TargetProperty="Opacity"
+                                        To="0"
+                                        Duration="0:0:0.3" />
+                                </Storyboard>
+                            </FontIcon.Resources>
+                        </FontIcon>
+                    </Grid>
                 </AppBarButton>
 
-                <TextBlock x:Name="AppTitleTextBlock" Text="BetterLyrics" VerticalAlignment="Center" Margin="0,-4,0,0" >
-                    <TextBlock.RenderTransform>
-                        <TranslateTransform x:Name="AppTitleTextBlockTransform" />
-                    </TextBlock.RenderTransform>
+                <TextBlock x:Name="AppTitleTextBlock" Text="{x:Bind Title}" VerticalAlignment="Center" Margin="0,-4,0,0" />
 
-                    <TextBlock.Resources>
-
-                        <Storyboard x:Name="AppTitleTextBlockMoveLeftStoryboard" >
-                            <DoubleAnimation
-                                Storyboard.TargetName="AppTitleTextBlockTransform"
-                                Storyboard.TargetProperty="X"
-                                To="-48"
-                                Duration="0:0:0.2"
-                                EasingFunction="{StaticResource EaseInOut}">
-                            </DoubleAnimation>
-                        </Storyboard>
-                        <Storyboard x:Name="AppTitleTextBlockMoveRightStoryboard" >
-                            <DoubleAnimation
-                                Storyboard.TargetName="AppTitleTextBlockTransform"
-                                Storyboard.TargetProperty="X"
-                                To="0"
-                                Duration="0:0:0.2"
-                                EasingFunction="{StaticResource EaseInOut}">
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </TextBlock.Resources>
-
-                    <interactivity:Interaction.Behaviors>
-
-                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="True">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource AppTitleTextBlockMoveRightStoryboard}"/>
-                        </interactivity:DataTriggerBehavior>
-                        <interactivity:DataTriggerBehavior Binding="{Binding ElementName=RootFrame, Path=CanGoBack}" ComparisonCondition="Equal" Value="False">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource AppTitleTextBlockMoveLeftStoryboard}"/>
-                        </interactivity:DataTriggerBehavior>
-
-                    </interactivity:Interaction.Behaviors>
-
-                </TextBlock>
             </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >

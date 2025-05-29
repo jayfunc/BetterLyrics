@@ -219,4 +219,10 @@
   <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
     <value>专辑图片背景不透明度（%）</value>
   </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="MainPageTitle" xml:space="preserve">
+    <value>BetterLyrics</value>
+  </data>
 </root>

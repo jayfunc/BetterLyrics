@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.Settings {
     public static class SettingsDefaultValues {
-        public const int ThemeMode = 0;
+        public const int ThemeType = 0;
         public const int Language = 0;
         public const string MusicLibraries = "[]";
-        public const int BackdropType = 0;
+        public const int BackdropType = 5;
         public const bool IsCoverOverlayEnabled = true;
         public const bool IsDynamicCoverOverlay = true;
-        public const int CoverOverlayOpacity = 100;
+        public const int CoverOverlayOpacity = 50;
     }
 }

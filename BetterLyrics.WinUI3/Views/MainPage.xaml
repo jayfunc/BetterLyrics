@@ -11,6 +11,7 @@
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:dev="using:DevWinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d"
     NavigationCacheMode="Required" >
 
@@ -48,7 +49,7 @@
                     x:Name="LyricsCanvas"
                     Draw="LyricsCanvas_Draw"
                     Update="LyricsCanvas_Update"
-                    Paused="True">
+                    Loaded="LyricsCanvas_Loaded">
                 </canvas:CanvasAnimatedControl>
 
             </Grid>
@@ -148,6 +149,7 @@
                         </Grid.Resources>
 
                         <Image x:Name="CoverImage" />
+
                     </Grid>
 
                     <!-- Song title -->
@@ -156,6 +158,8 @@
                             <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}"/>
                         </controls:OpacityMaskView.OpacityMask>
                         <TextBlock
+                            x:Name="TitleTextBlock"
+                            FontWeight="SemiBold"
                             Text="{x:Bind ViewModel.Title, Mode=OneWay, TargetNullValue='当前没有正在播放的歌曲'}"
                             FontSize="{StaticResource TitleTextBlockFontSize}"
                             Margin="0,12,0,0">
@@ -169,6 +173,7 @@
                         </controls:OpacityMaskView.OpacityMask>
                         <TextBlock
                             Text="{x:Bind ViewModel.Artist, Mode=OneWay, TargetNullValue='播放一首歌再来看吧'}"
+                            FontWeight="SemiBold"
                             Opacity="0.5"
                             FontSize="{StaticResource SubtitleTextBlockFontSize}" >
                         </TextBlock>

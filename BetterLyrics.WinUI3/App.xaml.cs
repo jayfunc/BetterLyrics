@@ -1,11 +1,13 @@
 ﻿using BetterLyrics.WinUI3.Services.Database;
 using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using DevWinUI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.ApplicationModel.Resources;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -21,7 +23,9 @@ namespace BetterLyrics.WinUI3 {
     /// </summary>
     public partial class App : Application {
         public static App Current => (App)Application.Current;
-        public Window? MainWindow { get; private set; }
+        public MainWindow? MainWindow { get; private set; }
+
+        public static ResourceLoader ResourceLoader = new();
 
         public static DispatcherQueue DispatcherQueue => DispatcherQueue.GetForCurrentThread();
 
@@ -52,6 +56,7 @@ namespace BetterLyrics.WinUI3 {
 
             // Activate the window
             MainWindow = new MainWindow();
+            MainWindow!.MainFrame!.Navigate(typeof(MainPage));
             MainWindow.Activate();
         }
 

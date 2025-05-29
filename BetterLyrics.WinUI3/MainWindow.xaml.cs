@@ -2,9 +2,11 @@ using System;
 using System.Diagnostics;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI.Behaviors;
+using DevWinUI;
 using Microsoft.UI;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
@@ -12,6 +14,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using WinRT;
 using WinRT.Interop;
@@ -30,14 +33,17 @@ namespace BetterLyrics.WinUI3 {
 
         public static StackedNotificationsBehavior? StackedNotificationsBehavior { get; private set; }
 
-        private readonly ISettingsService _settingsService;
+        public SettingsViewModel SettingsViewModel;
+
+        public Frame? MainFrame { get; private set; }
 
         public MainWindow() {
             this.InitializeComponent();
 
-            _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-            RootGrid.RequestedTheme = _settingsService.Theme;
-            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(_settingsService.BackdropType);
+            SettingsViewModel = Ioc.Default.GetService<SettingsViewModel>();
+            SettingsViewModel.PropertyChanged += SettingsViewModel_PropertyChanged;
+            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop((BackdropType)SettingsViewModel.BackdropType);
+            RootGrid.RequestedTheme = (ElementTheme)SettingsViewModel.ThemeType;
 
             AppWindow.SetIcon("white_round.ico");
             StackedNotificationsBehavior = NotificationQueue;
@@ -48,7 +54,15 @@ namespace BetterLyrics.WinUI3 {
             AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Collapsed;
             SetTitleBar(TopCommandGrid);
 
-            RootFrame.Navigate(typeof(MainPage));
+            MainFrame = RootFrame;
+        }
+
+        private void SettingsViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(SettingsViewModel.BackdropType)) {
+                SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop((BackdropType)SettingsViewModel.BackdropType);
+            } else if (e.PropertyName == nameof(SettingsViewModel.ThemeType)) {
+                RootGrid.RequestedTheme = (ElementTheme)SettingsViewModel.ThemeType;
+            }
         }
 
         private void RootFrame_NavigationFailed(object sender, NavigationFailedEventArgs e) {
@@ -56,15 +70,21 @@ namespace BetterLyrics.WinUI3 {
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            RootFrame.Navigate(typeof(SettingsPage));
+            // RootFrame.Navigate(typeof(SettingsPage));
+
+            MainWindow mainWindow = new();
+            mainWindow!.MainFrame!.Navigate(typeof(SettingsPage));
+            mainWindow.Activate();
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e) {
-            RootFrame.GoBack();
+            if (RootFrame.CanGoBack) {
+                RootFrame.GoBack();
+            }
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e) {
-            Application.Current.Exit();
+            Close();
         }
 
         private void MaximiseButton_Click(object sender, RoutedEventArgs e) {
@@ -111,6 +131,27 @@ namespace BetterLyrics.WinUI3 {
             MaximiseButton.Visibility = Visibility.Visible;
             RestoreButton.Visibility = Visibility.Collapsed;
             CloseButton.Visibility = Visibility.Visible;
+        }
+
+        private void RootFrame_Navigated(object sender, NavigationEventArgs e) {
+            AppWindow.Title = Title = App.ResourceLoader.GetString($"{e.SourcePageType.Name}Title");
+            if (e.SourcePageType == typeof(MainWindow)) {
+                BottomCommandGrid.Visibility = Visibility.Visible;
+            } else if (e.SourcePageType == typeof(SettingsPage)) {
+                BottomCommandGrid.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void AOTButton_Click(object sender, RoutedEventArgs e) {
+            _presenter.IsAlwaysOnTop = !_presenter.IsAlwaysOnTop;
+            string prefix;
+            if (_presenter.IsAlwaysOnTop) {
+                prefix = "Show";
+            } else {
+                prefix = "Hide";
+            }
+            (PinnedFontIcon.Resources[$"{prefix}PinnedFontIconStoryboard"] as Storyboard).Begin();
+
         }
     }
 }

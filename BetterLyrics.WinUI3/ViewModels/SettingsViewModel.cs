@@ -31,7 +31,7 @@ namespace BetterLyrics.WinUI3.ViewModels {
         private int _language;
 
         [ObservableProperty]
-        private int _theme;
+        private int _themeType;
 
         [ObservableProperty]
         private int _backdropType;
@@ -53,7 +53,7 @@ namespace BetterLyrics.WinUI3.ViewModels {
 
             LocalMusicFolders = [.. _settingsService.MusicLibraries];
             Language = (int)_settingsService.Language;
-            Theme = (int)_settingsService.Theme;
+            ThemeType = (int)_settingsService.Theme;
             BackdropType = (int)_settingsService.BackdropType;
             IsCoverOverlayEnabled = _settingsService.IsCoverOverlayEnabled;
             IsDynamicCoverOverlay = _settingsService.IsDynamicCoverOverlay;
@@ -75,7 +75,7 @@ namespace BetterLyrics.WinUI3.ViewModels {
         }
 
         public void SetTheme() {
-            _settingsService.SetTheme((ElementTheme)Theme);
+            _settingsService.SetTheme((ElementTheme)ThemeType);
         }
 
         public void SetBackdropType() {
