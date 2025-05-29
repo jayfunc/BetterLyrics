@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Models {
     public partial class LyricsLineChar : ObservableObject {
@@ -18,7 +19,10 @@ namespace BetterLyrics.WinUI3.Models {
         private int _endTimestampMs;
 
         [ObservableProperty]
-        private bool _isPlaying;
+        private LyricsPlayingState _playingState;
+
+        [ObservableProperty]
+        private float _playingProgress;
 
         [ObservableProperty]
         private int _durationMs;
@@ -31,6 +35,9 @@ namespace BetterLyrics.WinUI3.Models {
 
         [ObservableProperty]
         private Vector2 _centerPosition;
+
+        [ObservableProperty]
+        private Rect _layoutBounds;
 
         [ObservableProperty]
         private float _scale;

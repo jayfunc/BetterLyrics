@@ -154,13 +154,13 @@
     <value>深色</value>
   </data>
   <data name="SettingsPageSC.Content" xml:space="preserve">
-    <value>簡體中文 | 简体中文</value>
+    <value>简体中文</value>
   </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
   <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>英文 | English</value>
+    <value>English</value>
   </data>
   <data name="SettingsPageGitHub.Header" xml:space="preserve">
     <value>此應用程式已開源</value>
@@ -197,5 +197,26 @@
   </data>
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
     <value>背景材質</value>
+  </data>
+  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+    <value>預設</value>
+  </data>
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>重啟應用程式以應用更改</value>
+  </data>
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>無法在您的電腦中找到該路徑</value>
+  </data>
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>已新增過該資料夾，請勿重複新增</value>
+  </data>
+  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
+    <value>疊加專輯圖片背景</value>
+  </data>
+  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
+    <value>動態專輯圖片背景</value>
+  </data>
+  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
+    <value>專輯圖片背景不透明度（%）</value>
   </data>
 </root>

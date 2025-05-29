@@ -7,10 +7,9 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d"
-    CacheMode="BitmapCache"
     NavigationCacheMode="Required" >
 
     <Grid>
@@ -25,22 +24,47 @@
 
                     <controls:SettingsExpander x:Uid="SettingsPageMusicLib"
                                    HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}"
-                                   ItemsSource="{x:Bind ViewModel.LocalMusicFolderPaths, Mode=OneWay}">
+                                   ItemsSource="{x:Bind ViewModel.LocalMusicFolders, Mode=OneWay}">
                         <controls:SettingsExpander.ItemTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <controls:SettingsCard Header="{x:Bind}">
+                            <DataTemplate>
+                                <controls:SettingsCard Header="{Binding Path, Mode=OneWay}">
+                                    <controls:SettingsCard.Description>
+                                        <TextBlock x:Uid="SettingsPagePathNotFound" Foreground="{StaticResource SystemErrorTextColor}">
+                                            <interactivity:Interaction.Behaviors>
+                                                <interactivity:DataTriggerBehavior Binding="{Binding IsValid, Mode=OneWay}" ComparisonCondition="Equal" Value="True" >
+                                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed"/>
+                                                </interactivity:DataTriggerBehavior>
+                                                <interactivity:DataTriggerBehavior Binding="{Binding IsValid, Mode=OneWay}" ComparisonCondition="Equal" Value="False" >
+                                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible"/>
+                                                </interactivity:DataTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                        </TextBlock>
+                                    </controls:SettingsCard.Description>
                                     <StackPanel Orientation="Horizontal">
-                                        <HyperlinkButton x:Uid="SettingsPageOpenPath" Tag="{x:Bind}" Click="OpenInFileExplorerButton_Click" />
-                                        <HyperlinkButton x:Uid="SettingsPageRemovePath" Tag="{x:Bind}" Click="RemoveFromAppButton_Click" />
+                                        <HyperlinkButton x:Uid="SettingsPageOpenPath" Click="OpenInFileExplorerButton_Click" IsEnabled="{Binding IsValid, Mode=OneWay}" />
+                                        <HyperlinkButton x:Uid="SettingsPageRemovePath" Click="RemoveFromAppButton_Click" />
                                     </StackPanel>
                                 </controls:SettingsCard>
                             </DataTemplate>
                         </controls:SettingsExpander.ItemTemplate>
                         <controls:SettingsExpander.ItemsHeader>
-                            <muxc:InfoBar x:Uid="SettingsPageRemoveInfo"
+                            <InfoBar x:Uid="SettingsPageRemoveInfo"
                               IsOpen="True"
-                              Severity="Success">
-                            </muxc:InfoBar>
+                              Severity="Success"
+                                          IsClosable="False">
+
+                                <interactivity:Interaction.Behaviors>
+
+                                    <interactivity:DataTriggerBehavior Binding="{x:Bind ViewModel.LocalMusicFolders.Count, Mode=OneWay}" ComparisonCondition="Equal" Value="0">
+                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                    </interactivity:DataTriggerBehavior>
+                                    <interactivity:DataTriggerBehavior Binding="{x:Bind ViewModel.LocalMusicFolders.Count, Mode=OneWay}" ComparisonCondition="NotEqual" Value="0">
+                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                    </interactivity:DataTriggerBehavior>
+
+                                </interactivity:Interaction.Behaviors>
+
+                            </InfoBar>
                         </controls:SettingsExpander.ItemsHeader>
                         <controls:SettingsExpander.ItemsFooter>
                             <controls:SettingsCard>
@@ -52,54 +76,55 @@
                     <controls:SettingsCard
                     x:Uid="SettingsPageTheme"
                                HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
-                        <ComboBox x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged">
-                            <ComboBoxItem Tag="Default" x:Uid="SettingsPageFollowSystem" />
-                            <ComboBoxItem Tag="Light" x:Uid="SettingsPageLight" />
-                            <ComboBoxItem Tag="Dark" x:Uid="SettingsPageDark" />
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.Theme, Mode=TwoWay}" x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged">
+                            <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                            <ComboBoxItem x:Uid="SettingsPageLight" />
+                            <ComboBoxItem x:Uid="SettingsPageDark" />
                         </ComboBox>
                     </controls:SettingsCard>
 
                     <controls:SettingsExpander
                     x:Uid="SettingsPageBackdrop"
+                        IsExpanded="True"
                                HeaderIcon="{ui:FontIcon Glyph=&#xEF1F;}">
-                        <ComboBox x:Name="BackdropComboBox" SelectionChanged="BackdropComboBox_SelectionChanged">
-                            <ComboBoxItem x:Uid="SettingsPageNoBackdrop"
-                        Tag="None" />
-                            <ComboBoxItem x:Uid="SettingsPageMica"
-                        Tag="Mica" />
-                            <ComboBoxItem x:Uid="SettingsPageMicaAlt"
-                        Tag="MicaAlt" />
-                            <ComboBoxItem x:Uid="SettingsPageDesktopAcrylic"
-                        Tag="DesktopAcrylic" />
-                            <ComboBoxItem x:Uid="SettingsPageAcrylicBase"
-                        Tag="AcrylicBase" />
-                            <ComboBoxItem x:Uid="SettingsPageAcrylicThin"
-                        Tag="AcrylicThin" />
-                            <ComboBoxItem x:Uid="SettingsPageTransparent"
-                        Tag="Transparent" />
+                        <ComboBox x:Name="BackdropComboBox" SelectedIndex="{x:Bind ViewModel.BackdropType, Mode=TwoWay}" SelectionChanged="BackdropComboBox_SelectionChanged">
+                            <ComboBoxItem x:Uid="SettingsPageNoBackdrop" />
+                            <ComboBoxItem x:Uid="SettingsPageMica" />
+                            <ComboBoxItem x:Uid="SettingsPageMicaAlt" />
+                            <ComboBoxItem x:Uid="SettingsPageDesktopAcrylic" />
+                            <ComboBoxItem x:Uid="SettingsPageAcrylicThin" />
+                            <ComboBoxItem x:Uid="SettingsPageAcrylicBase" />
+                            <ComboBoxItem x:Uid="SettingsPageTransparent" />
                         </ComboBox>
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard Header="叠加专辑背景色" >
-                                <ToggleSwitch />
+                            <controls:SettingsCard x:Uid="SettingsPageCoverOverlay">
+                                <ToggleSwitch IsOn="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=TwoWay}" Toggled="CoverOverlayToggleSwitch_Toggled" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard Header="动态专辑背景色" >
-                                <ToggleSwitch />
+                            <controls:SettingsCard x:Uid="SettingsPageDynamicCoverOverlay" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <ToggleSwitch IsOn="{x:Bind ViewModel.IsDynamicCoverOverlay, Mode=TwoWay}" Toggled="DynamicCoverOverlayToggleSwitch_Toggled" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard Header="专辑背景色透明度" >
-                                <Slider />
+                            <controls:SettingsCard x:Uid="SettingsPageCoverOverlayOpacity" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <Slider ValueChanged="Slider_ValueChanged" Value="{x:Bind ViewModel.CoverOverlayOpacity, Mode=TwoWay}" Minimum="0" Maximum="100" StepFrequency="1" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsCard
+                    <controls:SettingsExpander
+                        IsExpanded="True"
                                         x:Uid="SettingsPageLanguage"
                                HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}">
-                        <ComboBox SelectedIndex="0">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.Language, Mode=TwoWay}" SelectionChanged="LanguageComboBox_SelectionChanged">
+                            <ComboBoxItem x:Uid="SettingsPageSystemLanguage" />
+                            <ComboBoxItem x:Uid="SettingsPageEN" />
                             <ComboBoxItem x:Uid="SettingsPageSC" />
                             <ComboBoxItem x:Uid="SettingsPageTC" />
-                            <ComboBoxItem x:Uid="SettingsPageEN" />
                         </ComboBox>
-                    </controls:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard>
+                                <Button  x:Uid="SettingsPageRestart" Click="RestartButton_Click"/>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <controls:SettingsCard
                                Header="BetterLyrics"

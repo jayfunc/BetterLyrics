@@ -1,12 +1,17 @@
 using System;
 using System.Diagnostics;
+using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI.Behaviors;
 using Microsoft.UI;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using WinRT;
 using WinRT.Interop;
@@ -23,13 +28,21 @@ namespace BetterLyrics.WinUI3 {
         private readonly OverlappedPresenter _presenter;
         private bool _isMiniMode = false;
 
+        public static StackedNotificationsBehavior? StackedNotificationsBehavior { get; private set; }
+
+        private readonly ISettingsService _settingsService;
+
         public MainWindow() {
             this.InitializeComponent();
 
-            var windowHandle = WindowNative.GetWindowHandle(this);
-            var windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
-            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
-            _presenter = (OverlappedPresenter)appWindow.Presenter;
+            _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+            RootGrid.RequestedTheme = _settingsService.Theme;
+            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(_settingsService.BackdropType);
+
+            AppWindow.SetIcon("white_round.ico");
+            StackedNotificationsBehavior = NotificationQueue;
+
+            _presenter = (OverlappedPresenter)AppWindow.Presenter;
 
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Collapsed;
@@ -51,7 +64,7 @@ namespace BetterLyrics.WinUI3 {
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e) {
-            Close();
+            Application.Current.Exit();
         }
 
         private void MaximiseButton_Click(object sender, RoutedEventArgs e) {

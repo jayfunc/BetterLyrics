@@ -21,8 +21,9 @@ namespace BetterLyrics.WinUI3 {
     /// </summary>
     public partial class App : Application {
         public static App Current => (App)Application.Current;
-        public Window? Window { get; private set; }
-        public IThemeService ThemeService { get; set; }
+        public Window? MainWindow { get; private set; }
+
+        public static DispatcherQueue DispatcherQueue => DispatcherQueue.GetForCurrentThread();
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -30,7 +31,6 @@ namespace BetterLyrics.WinUI3 {
         /// </summary>
         public App() {
             this.InitializeComponent();
-            ThemeService = new ThemeService();
         }
 
         /// <summary>
@@ -51,13 +51,8 @@ namespace BetterLyrics.WinUI3 {
                 .BuildServiceProvider());
 
             // Activate the window
-            Window = new MainWindow();
-
-            ThemeService.Initialize(Window);
-            ThemeService.ConfigureBackdrop(BackdropType.Mica);
-            ThemeService.ConfigureElementTheme(ElementTheme.Default);
-
-            Window.Activate();
+            MainWindow = new MainWindow();
+            MainWindow.Activate();
         }
 
     }

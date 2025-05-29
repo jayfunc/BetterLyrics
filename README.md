@@ -19,7 +19,7 @@ Coding in progress...
 ## Screenshots
 ### Settings
 
-![alt text](/Screenshots/settings.png)
+![Settings](/Screenshots/settings.png)
 
 ### Light music mode
 

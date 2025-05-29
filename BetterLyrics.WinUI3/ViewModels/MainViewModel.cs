@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Windows.Globalization;
+using Windows.System.UserProfile;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels {
@@ -26,12 +28,6 @@ namespace BetterLyrics.WinUI3.ViewModels {
         [ObservableProperty]
         private ObservableCollection<Color> _coverImageDominantColors =
             [Colors.Transparent, Colors.Transparent, Colors.Transparent];
-
-        [ObservableProperty]
-        private Color _startGraidentColor;
-
-        [ObservableProperty]
-        private Color _endGraidentColor;
 
         [ObservableProperty]
         private bool _aboutToUpdateUI;
@@ -48,24 +44,27 @@ namespace BetterLyrics.WinUI3.ViewModels {
         }
 
         public void RefreshMusicMetadataIndexDatabase() {
-            List<string> localMusicFolderPaths = [.. JsonSerializer.Deserialize<List<string>>(_settingsService.Get(SettingsKeys.MusicLibraries, SettingsDefaultValues.MusicLibraries))];
+            List<MusicFolder> localMusicFolders = _settingsService.MusicLibraries;
 
             var db = _databaseService.GetConnection();
             db.DeleteAll<MetadataIndex>();
 
-            foreach (var musicFolderPath in localMusicFolderPaths) {
-                foreach (var file in Directory.GetFiles(musicFolderPath)) {
-                    var fileExtension = Path.GetExtension(file);
-                    if (fileExtension != ".mp3" && fileExtension != ".flac") {
-                        continue;
+            foreach (var localMusicFolder in localMusicFolders) {
+                if (localMusicFolder.IsValid) {
+                    foreach (var file in Directory.GetFiles(localMusicFolder.Path)) {
+                        var fileExtension = Path.GetExtension(file);
+                        if (fileExtension != ".mp3" && fileExtension != ".flac") {
+                            continue;
+                        }
+                        var track = new Track(file);
+                        db.Insert(new MetadataIndex {
+                            Path = file,
+                            Title = track.Title,
+                            Artist = track.Artist,
+                        });
                     }
-                    var track = new Track(file);
-                    db.Insert(new MetadataIndex {
-                        Path = file,
-                        Title = track.Title,
-                        Artist = track.Artist,
-                    });
                 }
+
             }
 
         }
@@ -99,7 +98,6 @@ namespace BetterLyrics.WinUI3.ViewModels {
                 var lyricsLine = new LyricsLine {
                     StartTimestampMs = lyricsPhraseStartTimestampMs,
                     EndTimestampMs = lyricsPhraseEndTimestampMs,
-                    IsPlaying = false,
                     Text = lyricsPhrase.Text,
                 };
                 lyricsLine.DurationMs = lyricsLine.EndTimestampMs - lyricsLine.StartTimestampMs;

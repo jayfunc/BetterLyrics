@@ -157,10 +157,10 @@
     <value>简体中文</value>
   </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁体中文 | 繁體中文</value>
+    <value>繁體中文</value>
   </data>
   <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>英文 | English</value>
+    <value>English</value>
   </data>
   <data name="SettingsPageGitHub.Header" xml:space="preserve">
     <value>此应用已开源</value>
@@ -197,5 +197,26 @@
   </data>
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
     <value>背景材质</value>
+  </data>
+  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>重启应用以应用更改</value>
+  </data>
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>无法在您的计算机中找到该路径</value>
+  </data>
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>已添加过该文件夹，请勿重复添加</value>
+  </data>
+  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
+    <value>叠加专辑图片背景</value>
+  </data>
+  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
+    <value>动态专辑图片背景</value>
+  </data>
+  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
+    <value>专辑图片背景不透明度（%）</value>
   </data>
 </root>

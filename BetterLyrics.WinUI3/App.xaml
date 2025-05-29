@@ -30,6 +30,9 @@
                 <GradientStop Offset="0.85" Color="{ThemeResource SystemBaseHighColor}" />
                 <GradientStop Offset="1" Color="Transparent" />
             </LinearGradientBrush>
+            <ExponentialEase x:Key="EaseInOut" EasingMode="EaseInOut"/>
+            <ExponentialEase x:Key="EaseOut" EasingMode="EaseOut"/>
+            <ExponentialEase x:Key="EaseIn" EasingMode="EaseIn"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

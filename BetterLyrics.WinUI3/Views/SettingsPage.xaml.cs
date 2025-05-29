@@ -19,6 +19,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Diagnostics;
 using WinRT.Interop;
 using Windows.Storage.Pickers;
+using BetterLyrics.WinUI3.Models;
+using Microsoft.Windows.ApplicationModel.Resources;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,16 +33,15 @@ namespace BetterLyrics.WinUI3.Views {
 
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
 
+        private ResourceLoader _resourceLoader = new();
+
         public SettingsPage() {
             this.InitializeComponent();
             DataContext = Ioc.Default.GetService<SettingsViewModel>();
-
-            App.Current.ThemeService.SetBackdropComboBoxDefaultItem(BackdropComboBox);
-            App.Current.ThemeService.SetThemeComboBoxDefaultItem(ThemeComboBox);
         }
 
         private async void GitHubSettingsCard_Click(object sender, RoutedEventArgs e) {
-            var uri = new System.Uri("https://github.com/jayfunc/BetterLyrics/tree/master/BetterLyrics.WinUI3");
+            var uri = new System.Uri("https://github.com/jayfunc/BetterLyrics");
             await Launcher.LaunchUriAsync(uri);
         }
 
@@ -49,14 +50,19 @@ namespace BetterLyrics.WinUI3.Views {
 
             picker.FileTypeFilter.Add("*");
 
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.Current.Window);
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.Current.MainWindow);
             InitializeWithWindow.Initialize(picker, hwnd);
 
             var folder = await picker.PickSingleFolderAsync();
 
             if (folder != null) {
                 string path = folder.Path;
-                ViewModel.AddMusicLibrary(path);
+                bool existed = ViewModel.LocalMusicFolders.Where((x) => x.Path == path).Count() > 0;
+                if (existed) {
+                    MainWindow.StackedNotificationsBehavior?.Show(_resourceLoader.GetString("SettingsPagePathExistedInfo"), 3900);
+                } else {
+                    ViewModel.AddMusicLibrary(path);
+                }
             } else {
             }
 
@@ -65,21 +71,47 @@ namespace BetterLyrics.WinUI3.Views {
         private void OpenInFileExplorerButton_Click(object sender, RoutedEventArgs e) {
             Process.Start(new ProcessStartInfo {
                 FileName = "explorer.exe",
-                Arguments = (sender as HyperlinkButton).Tag.ToString(),
+                Arguments = ((sender as FrameworkElement).DataContext as MusicFolder).Path,
                 UseShellExecute = true
             });
         }
 
         private void RemoveFromAppButton_Click(object sender, RoutedEventArgs e) {
-            ViewModel.RemoveMusicLibrary((sender as HyperlinkButton).Tag.ToString());
+            ViewModel.RemoveMusicLibrary((sender as FrameworkElement).DataContext as MusicFolder);
         }
 
         private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            App.Current.ThemeService.OnThemeComboBoxSelectionChanged(sender);
+            ViewModel.SetTheme();
         }
 
         private void BackdropComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            App.Current.ThemeService.OnBackdropComboBoxSelectionChanged(sender);
+            ViewModel.SetBackdropType();
+        }
+
+        private void RestartButton_Click(object sender, RoutedEventArgs e) {
+            var exePath = Process.GetCurrentProcess().MainModule!.FileName!;
+            Process.Start(new ProcessStartInfo {
+                FileName = exePath,
+                UseShellExecute = true
+            });
+
+            Application.Current.Exit();
+        }
+
+        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            ViewModel.SetLanguage();
+        }
+
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
+            ViewModel.SetCoverOverlayOpacity();
+        }
+
+        private void CoverOverlayToggleSwitch_Toggled(object sender, RoutedEventArgs e) {
+            ViewModel.SetIsCoverOverlayEnabled((sender as ToggleSwitch).IsOn);
+        }
+
+        private void DynamicCoverOverlayToggleSwitch_Toggled(object sender, RoutedEventArgs e) {
+            ViewModel.SetDynamicCoverOverlay((sender as ToggleSwitch).IsOn);
         }
     }
 }

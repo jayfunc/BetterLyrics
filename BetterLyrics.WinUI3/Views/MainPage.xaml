@@ -11,17 +11,38 @@
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:dev="using:DevWinUI"
-    xmlns:animationhelper="using:BetterLyrics.WinUI3.Helper"
     mc:Ignorable="d"
-    CacheMode="BitmapCache"
     NavigationCacheMode="Required" >
 
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <!-- Narrow -->
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SongInfoColumnDefinition.Width" Value="0"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!-- Wide -->
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SongInfoColumnDefinition.Width" Value="*"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <Grid x:Name="MainGrid">
 
             <!-- Lyrics area -->
-            <Grid x:Name="LyricsGrid" >
+            <Grid x:Name="LyricsGrid">
 
                 <canvas:CanvasAnimatedControl
                     x:Name="LyricsCanvas"
@@ -33,127 +54,132 @@
             </Grid>
 
             <!-- Song info area -->
-            <StackPanel x:Name="SongInfoStackPanel" Margin="36,36,0,36"
-                    HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Grid Margin="36">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="SongInfoColumnDefinition" Width="*"/>
+                    <ColumnDefinition x:Name="SpacerColumnDefinition" Width="36"/>
+                    <ColumnDefinition  x:Name="LyricsAreaColumnDefinition"  Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <StackPanel.Resources>
+                <StackPanel x:Name="SongInfoStackPanel" Grid.Column="0"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                    <!-- Animation for song info -->
-                    <Storyboard x:Name="SongInfoStackPanelFadeInStoryboard" >
-                        <DoubleAnimation 
+                    <StackPanel.Resources>
+
+                        <!-- Animation for song info -->
+                        <Storyboard x:Name="SongInfoStackPanelFadeInStoryboard" >
+                            <DoubleAnimation 
                                     Storyboard.TargetName="SongInfoStackPanel"
                                     Storyboard.TargetProperty="Opacity" 
                                     To="1" 
                                     Duration="0:0:0.2" />
-                    </Storyboard>
-                    <Storyboard x:Name="SongInfoStackPanelFadeOutStoryboard" BeginTime="0:0:0.2">
-                        <DoubleAnimation 
+                        </Storyboard>
+                        <Storyboard x:Name="SongInfoStackPanelFadeOutStoryboard" BeginTime="0:0:0.2">
+                            <DoubleAnimation 
                                     Storyboard.TargetName="SongInfoStackPanel"
                                     Storyboard.TargetProperty="Opacity" 
                                     To="0" 
                                     Duration="0:0:0.2" />
-                    </Storyboard>
+                        </Storyboard>
 
-                </StackPanel.Resources>
+                    </StackPanel.Resources>
 
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior Binding="{x:Bind ViewModel.IsSmallScreenMode, Mode=OneWay}" ComparisonCondition="Equal" Value="True">
-                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource SongInfoStackPanelFadeOutStoryboard}"/>
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior Binding="{x:Bind ViewModel.IsSmallScreenMode, Mode=OneWay}" ComparisonCondition="Equal" Value="False">
-                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource SongInfoStackPanelFadeInStoryboard}"/>
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
+                    <interactivity:Interaction.Behaviors>
 
-                <!-- Cover area -->
-                <Grid x:Name="CoverGrid" CornerRadius="24" MaxHeight="300" MaxWidth="300" >
-                    <Grid.Resources>
+                        <interactivity:DataTriggerBehavior Binding="{x:Bind ViewModel.IsSmallScreenMode, Mode=OneWay}" ComparisonCondition="Equal" Value="True">
+                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource SongInfoStackPanelFadeOutStoryboard}"/>
+                        </interactivity:DataTriggerBehavior>
+                        <interactivity:DataTriggerBehavior Binding="{x:Bind ViewModel.IsSmallScreenMode, Mode=OneWay}" ComparisonCondition="Equal" Value="False">
+                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource SongInfoStackPanelFadeInStoryboard}"/>
+                        </interactivity:DataTriggerBehavior>
 
-                        <!-- Animation for cover grid -->
-                        <Storyboard x:Key="CoverGridShowStoryboard" >
-                            <DoubleAnimation 
+                    </interactivity:Interaction.Behaviors>
+
+                    <!-- Cover area -->
+                    <Grid x:Name="CoverGrid" CornerRadius="24" MaxHeight="300" MaxWidth="300" >
+                        <Grid.Resources>
+
+                            <!-- Animation for cover grid -->
+                            <Storyboard x:Key="CoverGridShowStoryboard" >
+                                <DoubleAnimation 
                                 EnableDependentAnimation="True"
                                 Storyboard.TargetName="CoverGrid"
                                 Storyboard.TargetProperty="Height"
                                 To="300"
                                 Duration="0:0:0.2" >
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseInOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                            <DoubleAnimation 
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
                                 BeginTime="0:0:0.2"
                                 Storyboard.TargetName="CoverGrid"
                                 Storyboard.TargetProperty="Opacity"
                                 To="1"
                                 Duration="0:0:0.2" >
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseInOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                        <Storyboard x:Key="CoverGridHideStoryboard" >
-                            <DoubleAnimation 
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                            <Storyboard x:Key="CoverGridHideStoryboard" >
+                                <DoubleAnimation 
                                 Storyboard.TargetName="CoverGrid"
                                 Storyboard.TargetProperty="Opacity"
                                 To="0"
                                 Duration="0:0:0.2" >
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseInOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                            <DoubleAnimation 
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                                <DoubleAnimation 
                                 BeginTime="0:0:0.2"
                                 EnableDependentAnimation="True"
                                 Storyboard.TargetName="CoverGrid"
                                 Storyboard.TargetProperty="Height"
                                 To="0"
                                 Duration="0:0:0.2" >
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseInOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseInOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
 
-                    </Grid.Resources>
+                        </Grid.Resources>
 
-                    <Image x:Name="CoverImage" />
-                </Grid>
+                        <Image x:Name="CoverImage" />
+                    </Grid>
 
-                <!-- Song title -->
-                <controls:OpacityMaskView x:Name="TitleOpacityMaskView" HorizontalAlignment="Center" >
-                    <controls:OpacityMaskView.OpacityMask>
-                        <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}"/>
-                    </controls:OpacityMaskView.OpacityMask>
-                    <labs:MarqueeText
-                        x:Name="TitleMarqueeText"
-                        RepeatBehavior="0"                       
-                        Text="{x:Bind ViewModel.Title, Mode=OneWay, TargetNullValue='当前没有正在播放的歌曲'}"
-                        Behavior="Bouncing"
-                        FontSize="{StaticResource TitleTextBlockFontSize}"
-                        Margin="0,12,0,0">
-                    </labs:MarqueeText>
-                </controls:OpacityMaskView>
+                    <!-- Song title -->
+                    <controls:OpacityMaskView x:Name="TitleOpacityMaskView" HorizontalAlignment="Center" >
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}"/>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <TextBlock
+                            Text="{x:Bind ViewModel.Title, Mode=OneWay, TargetNullValue='当前没有正在播放的歌曲'}"
+                            FontSize="{StaticResource TitleTextBlockFontSize}"
+                            Margin="0,12,0,0">
+                        </TextBlock>
+                    </controls:OpacityMaskView>
 
-                <!-- Song artist -->
-                <controls:OpacityMaskView x:Name="ArtistOpacityMaskView" HorizontalAlignment="Center" >
-                    <controls:OpacityMaskView.OpacityMask>
-                        <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}"/>
-                    </controls:OpacityMaskView.OpacityMask>
-                    <labs:MarqueeText
-                        x:Name="ArtistMarqueeText" 
-                        RepeatBehavior="0"                       
-                        Text="{x:Bind ViewModel.Artist, Mode=OneWay, TargetNullValue='播放一首歌再来看吧'}"
-                        Opacity="0.5"
-                        Behavior="Bouncing"
-                        FontSize="{StaticResource SubtitleTextBlockFontSize}" >
-                    </labs:MarqueeText>
-                </controls:OpacityMaskView>
-            </StackPanel>
+                    <!-- Song artist -->
+                    <controls:OpacityMaskView x:Name="ArtistOpacityMaskView" HorizontalAlignment="Center" >
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}"/>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <TextBlock
+                            Text="{x:Bind ViewModel.Artist, Mode=OneWay, TargetNullValue='播放一首歌再来看吧'}"
+                            Opacity="0.5"
+                            FontSize="{StaticResource SubtitleTextBlockFontSize}" >
+                        </TextBlock>
+                    </controls:OpacityMaskView>
+                </StackPanel>
+
+            </Grid>
 
         </Grid>
 
-        <Grid x:Name="ColorOverlayGrid">
+        <!--<Grid x:Name="ColorOverlayGrid">
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                     <GradientStop Offset="0" Color="{x:Bind ViewModel.CoverImageDominantColors[0], Mode=OneWay}"/>
@@ -216,7 +242,7 @@
 
             </interactivity:Interaction.Behaviors>
 
-        </Grid>
+        </Grid>-->
 
     </Grid>
 </Page>

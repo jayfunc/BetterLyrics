@@ -17,12 +17,18 @@ namespace BetterLyrics.WinUI3.Models {
         private int _endTimestampMs;
 
         [ObservableProperty]
-        private bool _isPlaying;
+        private LyricsPlayingState _playingState;
 
         [ObservableProperty]
         private int _durationMs;
 
         [ObservableProperty]
         private int _averageDurationPerCharMs;
+
+        [ObservableProperty]
+        private float _enteringProgress;
+
+        [ObservableProperty]
+        private float _exitingProgress;
     }
 }
