@@ -1,39 +1,33 @@
-﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using Microsoft.Graphics.Canvas.Text;
+﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Hosting;
-using System.Numerics;
-using Microsoft.UI.Composition;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.Graphics.Canvas.Effects;
-using Windows.Graphics.Effects;
-using BetterLyrics.WinUI3.Helper;
-using Color = Windows.UI.Color;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI;
-using System.Collections.ObjectModel;
-using Windows.Media.Control;
-using Windows.Storage.Streams;
-using ATL;
-using System.IO;
-using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
-using Microsoft.Graphics.Canvas.Brushes;
-using Microsoft.UI.Text;
-using Microsoft.UI.Xaml.Media.Animation;
-using CommunityToolkit.WinUI;
-using static System.Collections.Specialized.BitVector32;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI;
 using Microsoft.Graphics.Canvas;
-using System.Reflection.Metadata;
-using Windows.Foundation;
+using Microsoft.Graphics.Canvas.Brushes;
+using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.Text;
+using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI;
+using Microsoft.UI.Composition;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Hosting;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Numerics;
 using System.Reflection;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Graphics.Imaging;
+using Windows.Media.Control;
+using Windows.Storage.Streams;
+using Color = Windows.UI.Color;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -52,6 +46,8 @@ namespace BetterLyrics.WinUI3.Views {
         private OpacityEffect _coverBitmapEffect;
         private float _coverBitmapRotateAngle = 0;
         private float _coverScaleFactor = 1;
+
+        private LyricsAlignmentType _lyricsAlignmentType;
 
         private bool _isCoverOverlayEnabled;
         private bool _isDynamicCoverOverlay;
@@ -79,9 +75,9 @@ namespace BetterLyrics.WinUI3.Views {
         private float _defaultScale = 0.95f;
         private float _highlightedScale = 1.0f;
 
-        private int _lineEnteringDurationMs = 1000;
-        private int _lineExitingDurationMs = 1000;
-        private int _lineScrollDurationMs = 1000;
+        private int _lineEnteringDurationMs = 800;
+        private int _lineExitingDurationMs = 800;
+        private int _lineScrollDurationMs = 800;
 
         private float _scrollOffsetY = 0.0f;
 
@@ -89,6 +85,7 @@ namespace BetterLyrics.WinUI3.Views {
         private double _lyricsAreaHeight = 0.0f;
 
         private double _lyricsCanvasLeftMargin = 0;
+        private double _lyricsCanvasRightMargin = 36;
 
         private int _startVisibleLineIndex = -1;
         private int _endVisibleLineIndex = -1;
@@ -114,7 +111,7 @@ namespace BetterLyrics.WinUI3.Views {
                     BlurAmount = 100f,
                     Source = new ScaleEffect {
                         InterpolationMode = CanvasImageInterpolation.HighQualityCubic,
-                        BorderMode = EffectBorderMode.Hard
+                        BorderMode = EffectBorderMode.Soft
                     }
                 }
             };
@@ -128,6 +125,7 @@ namespace BetterLyrics.WinUI3.Views {
             _isCoverOverlayEnabled = SettingsViewModel.IsCoverOverlayEnabled;
             _isDynamicCoverOverlay = SettingsViewModel.IsDynamicCoverOverlay;
             _coverOverlayOpacity = (float)(SettingsViewModel.CoverOverlayOpacity / 100.0);
+            _lyricsAlignmentType = (LyricsAlignmentType)SettingsViewModel.LyricsAlignmentType;
 
             _queueTimer = _dispatcherQueue.CreateTimer();
         }
@@ -138,16 +136,25 @@ namespace BetterLyrics.WinUI3.Views {
 
         private void SetLyricsColor() {
             _lyricsColor = ((SolidColorBrush)LyricsCanvas.Foreground).Color;
-            Debug.WriteLine(_lyricsColor.ToString());
         }
 
         private void SettingsViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (e.PropertyName == nameof(SettingsViewModel.IsCoverOverlayEnabled)) {
-                _isCoverOverlayEnabled = SettingsViewModel.IsCoverOverlayEnabled;
-            } else if (e.PropertyName == nameof(SettingsViewModel.IsDynamicCoverOverlay)) {
-                _isDynamicCoverOverlay = SettingsViewModel.IsDynamicCoverOverlay;
-            } else if (e.PropertyName == nameof(SettingsViewModel.CoverOverlayOpacity)) {
-                _coverOverlayOpacity = (float)(SettingsViewModel.CoverOverlayOpacity / 100.0);
+            switch (e.PropertyName) {
+                case nameof(SettingsViewModel.IsCoverOverlayEnabled):
+                    _isCoverOverlayEnabled = SettingsViewModel.IsCoverOverlayEnabled;
+                    break;
+                case nameof(SettingsViewModel.IsDynamicCoverOverlay):
+                    _isDynamicCoverOverlay = SettingsViewModel.IsDynamicCoverOverlay;
+                    break;
+                case nameof(SettingsViewModel.CoverOverlayOpacity):
+                    _coverOverlayOpacity = (float)(SettingsViewModel.CoverOverlayOpacity / 100.0);
+                    break;
+                case nameof(SettingsViewModel.LyricsAlignmentType):
+                    _lyricsAlignmentType = (LyricsAlignmentType)SettingsViewModel.LyricsAlignmentType;
+                    ReLayoutLyricsCanvas();
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -407,7 +414,45 @@ namespace BetterLyrics.WinUI3.Views {
         }
 
         private void ReLayoutLyricsCanvas() {
-            float x = (float)_lyricsCanvasLeftMargin;
+
+            float AddLyricsSubLine(LyricsLine lyricsLine, string subLineText, float y, int endLineCharIndex) {
+                // Calculate layout bounds
+                var layout = new CanvasTextLayout(LyricsCanvas.Device, subLineText, _textFormat, (float)_lyricsAreaWidth, (float)_lyricsAreaHeight);
+                var bounds = layout.LayoutBounds;
+
+                var centerX = 0.0;
+                var centerY = bounds.Top + bounds.Height / 2;
+
+                float x = (float)_lyricsCanvasLeftMargin;
+                switch (_lyricsAlignmentType) {
+                    case LyricsAlignmentType.Left:
+                        centerX = x;
+                        break;
+                    case LyricsAlignmentType.Center:
+                        x += (float)(_lyricsAreaWidth - _lyricsCanvasLeftMargin - _lyricsCanvasRightMargin - bounds.Width) / 2;
+                        centerX = x + bounds.Width / 2;
+                        break;
+                    case LyricsAlignmentType.Right:
+                        x += (float)(_lyricsAreaWidth - _lyricsCanvasLeftMargin - _lyricsCanvasRightMargin - bounds.Width);
+                        centerX = x + bounds.Width;
+                        break;
+                    default:
+                        break;
+                }
+
+                lyricsLine.LyricsSubLines.Add(new LyricsLineChild {
+                    Text = subLineText,
+                    CenterPosition = new Vector2((float)centerX, (float)centerY),
+                    PositionBeforeScrolling = new Vector2(x, y),
+                    Position = new Vector2(x, y),
+                    LayoutBounds = bounds,
+                    StartTimestampMs = lyricsLine.LyricsLineChars[endLineCharIndex - subLineText.Length + 1].StartTimestampMs,
+                    EndTimestampMs = lyricsLine.LyricsLineChars[endLineCharIndex].EndTimestampMs,
+                });
+
+                return (float)bounds.Height;
+            }
+
             float y = (float)_lyricsAreaHeight / 2; // Top margin
 
             // Init Positions
@@ -415,64 +460,87 @@ namespace BetterLyrics.WinUI3.Views {
 
                 var lyricsLine = _lyricsLines[i];
 
+                lyricsLine.LyricsSubLines.Clear();
+                string subLineText = "";
+
                 for (int j = 0; j < lyricsLine.LyricsLineChars.Count; j++) {
 
                     var lineChar = lyricsLine.LyricsLineChars[j];
 
-                    // Calculate layout bounds
-                    var layout = new CanvasTextLayout(LyricsCanvas.Device, lineChar.Text, _textFormat, (float)_lyricsAreaWidth, (float)_lyricsAreaHeight);
-                    var bounds = layout.LayoutBounds;
-                    lineChar.LayoutBounds = bounds;
+                    string testSubLineText = subLineText + lineChar.Text;
+
+                    // Calculate test layout bounds
+                    var testLayout = new CanvasTextLayout(LyricsCanvas.Device, testSubLineText, _textFormat, (float)_lyricsAreaWidth, (float)_lyricsAreaHeight);
+                    float testSubLineWidth = (float)testLayout.LayoutBounds.Width;
 
                     // Line break by exceeding UI edge (for the current char)
-                    float charWidth = (float)bounds.Width;
-                    if (charWidth == 0) {
-                        // Handle white-spaces
-                        charWidth = (float)bounds.Height / 4;
+                    if (_lyricsCanvasLeftMargin + testSubLineWidth + _lyricsCanvasRightMargin > _lyricsAreaWidth) {
+
+                        var boundsHeight = AddLyricsSubLine(lyricsLine, subLineText, y, j - 1);
+
+                        subLineText = lineChar.Text;
+
+                        y += boundsHeight * 1.1f;
+                    } else {
+                        subLineText = testSubLineText;
                     }
-
-                    if (x + charWidth + 36 > _lyricsAreaWidth) {
-                        x = (float)_lyricsCanvasLeftMargin;
-                        y += (float)bounds.Height * 1.1f;
-                    }
-
-                    var centerX = (float)_lyricsCanvasLeftMargin + bounds.Width / 2;
-                    var centerY = bounds.Top + bounds.Height / 2;
-                    lineChar.CenterPosition = new Vector2((float)centerX, (float)centerY);
-
-                    lineChar.PositionBeforeScrolling = lineChar.Position = new Vector2(x, y);
-
-                    // For th next char
-                    x += charWidth;
 
                     // Line break by design (for the next char)
                     if (j == lyricsLine.LyricsLineChars.Count - 1) {
-                        x = (float)_lyricsCanvasLeftMargin;
-                        y += (float)bounds.Height * 1.8f;
+
+                        if (subLineText != string.Empty) {
+
+                            var boundsHeight = AddLyricsSubLine(lyricsLine, subLineText, y, j);
+
+                            y += boundsHeight * 1.8f;
+
+                        }
+
                     }
                 }
+
             }
 
         }
 
-        private void LyricsCanvas_Draw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args) {
+        private void LyricsCanvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args) {
             using var ds = args.DrawingSession;
 
             var r = _lyricsColor.R;
             var g = _lyricsColor.G;
             var b = _lyricsColor.B;
 
+            // Draw (dynamic) cover image as the 1st layer
             if (_isCoverOverlayEnabled && _canvasCoverBitmap != null) {
-
-                if (_isDynamicCoverOverlay) {
-                    ds.Transform = Matrix3x2.CreateRotation(_coverBitmapRotateAngle, sender.Size.ToVector2() * 0.5f);
-                }
-                ds.DrawImage(
-                    _coverBitmapEffect,
-                    (float)sender.Size.Width / 2 - _canvasCoverBitmap.SizeInPixels.Width * _coverScaleFactor / 2,
-                    (float)sender.Size.Height / 2 - _canvasCoverBitmap.SizeInPixels.Height * _coverScaleFactor / 2);
-                ds.Transform = Matrix3x2.Identity;
+                DrawCoverImage(sender, ds, _isDynamicCoverOverlay);
             }
+
+            // Draw lyrics as the 2nd layer
+            using var lyricsLayer = new CanvasCommandList(sender);
+            using var lyricsDs = lyricsLayer.CreateDrawingSession();
+            DrawLyrics(sender, lyricsDs, r, g, b);
+
+            // Draw gradient opacity mask as the 3rd layer
+            using var maskCommandList = new CanvasCommandList(sender);
+            using var maskDs = maskCommandList.CreateDrawingSession();
+            DrawGradientOpacityMask(sender, maskDs, r, g, b);
+
+            var blurredLyrics = new GaussianBlurEffect {
+                Source = lyricsLayer,
+                BlurAmount = 0f,
+                BorderMode = EffectBorderMode.Soft,
+            };
+
+            var alphaMaskedLyrics = new AlphaMaskEffect {
+                Source = blurredLyrics,
+                AlphaMask = maskCommandList
+            };
+
+            ds.DrawImage(alphaMaskedLyrics);
+
+        }
+
+        private void DrawLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds, byte r, byte g, byte b) {
 
             var (displayStartLineIndex, displayEndLineIndex) = GetVisibleLyricsLineIndexBoundaries();
 
@@ -480,55 +548,30 @@ namespace BetterLyrics.WinUI3.Views {
 
                 var lyricsLine = _lyricsLines[i];
 
-                for (int j = 0; j < lyricsLine.LyricsLineChars.Count; j++) {
-                    var lineChar = lyricsLine.LyricsLineChars[j];
+                for (int j = 0; j < lyricsLine.LyricsSubLines.Count; j++) {
+                    var lyricsLineChild = lyricsLine.LyricsSubLines[j];
 
-                    using var fadeInOutBrush = new CanvasLinearGradientBrush(sender, [
-                        new() { Position = 0, Color =  Color.FromArgb(0, r, g, b)},
-                        new() { Position = 0.5f, Color = Color.FromArgb((byte)(255 * lineChar.Opacity), r, g, b)},
-                        new() { Position = 1, Color =  Color.FromArgb(0, r, g, b)},
+                    float progressPerChar = 1f / lyricsLineChild.Text.Length;
+
+                    using var horizontalFillBrush = new CanvasLinearGradientBrush(control, [
+                        new() { Position = 0, Color = Color.FromArgb((byte)(255 * lyricsLineChild.Opacity), r, g, b) },
+                        new() { Position = lyricsLineChild.PlayingProgress * (1 + progressPerChar) - progressPerChar, Color = Color.FromArgb((byte)(255 * lyricsLineChild.Opacity), r, g, b) },
+                        new() { Position = lyricsLineChild.PlayingProgress * (1 + progressPerChar), Color = Color.FromArgb((byte)(255 * _defaultOpacity), r, g, b) },
+                        new() { Position = 1.5f, Color = Color.FromArgb((byte)(255 * _defaultOpacity), r, g, b) },
                     ]) {
-                        StartPoint = new Vector2(0.5f, 0),
-                        EndPoint = new Vector2(0.5f, (float)sender.Size.Height)
+                        StartPoint = new Vector2(lyricsLineChild.Position.X, 0),
+                        EndPoint = new Vector2(lyricsLineChild.Position.X + (float)lyricsLineChild.LayoutBounds.Width, 0)
                     };
 
-                    using var horizontalFillBrush = new CanvasLinearGradientBrush(sender, [
-                        new() { Position = -0.05f, Color = Color.FromArgb((byte)(255 * _highlightedOpacity), r, g, b)},
-                        new() { Position = lineChar.PlayingProgress * 1.5f - 0.5f, Color = Color.FromArgb((byte)(255 * _highlightedOpacity), r, g, b)},
-                        new() { Position = lineChar.PlayingProgress * 1.5f, Color = Color.FromArgb((byte)(255 * _defaultOpacity), r, g, b)},
-                        new() { Position = 1.5f, Color =  Color.FromArgb((byte)(255 * _defaultOpacity), r, g, b)},
-                    ]) {
-                        StartPoint = new Vector2(lineChar.Position.X, 0),
-                        EndPoint = new Vector2(lineChar.Position.X + (float)lineChar.LayoutBounds.Width, 0)
-                    };
-
-                    var position = lineChar.Position;
+                    var position = lyricsLineChild.Position;
 
                     // Scale
-                    ds.Transform = Matrix3x2.CreateScale(lineChar.Scale, lineChar.CenterPosition);
+                    ds.Transform = Matrix3x2.CreateScale(lyricsLineChild.Scale, lyricsLineChild.CenterPosition);
 
-                    switch (lyricsLine.PlayingState) {
-                        case LyricsPlayingState.Playing:
-                            switch (lineChar.PlayingState) {
-                                case LyricsPlayingState.NotPlayed:
-                                    ds.DrawText(lineChar.Text, position, fadeInOutBrush, _textFormat);
-                                    break;
-                                case LyricsPlayingState.Playing:
-                                    ds.DrawText(lineChar.Text, position, horizontalFillBrush, _textFormat);
-                                    break;
-                                case LyricsPlayingState.Played:
-                                    ds.DrawText(lineChar.Text, position, _lyricsColor, _textFormat);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case LyricsPlayingState.NotPlayed:
-                        case LyricsPlayingState.Played:
-                        default:
-                            ds.DrawText(lineChar.Text, position, fadeInOutBrush, _textFormat);
-                            break;
-                    }
+                    //ds.DrawText(lyricsLineChild.Text, position, horizontalFillBrush, _textFormat);
+                    using var layout = new CanvasTextLayout(control, lyricsLineChild.Text, _textFormat, (float)(control.Size.Width - _lyricsCanvasLeftMargin - _lyricsCanvasRightMargin), (float)_lyricsAreaHeight);
+                    var adjustedPosition = new Vector2(position.X, position.Y - (float)_lyricsAreaHeight / 2);
+                    ds.DrawTextLayout(layout, adjustedPosition, horizontalFillBrush);
 
                     // Reset scale
                     ds.Transform = Matrix3x2.Identity;
@@ -537,7 +580,33 @@ namespace BetterLyrics.WinUI3.Views {
 
         }
 
-        private void LyricsCanvas_Update(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedUpdateEventArgs args) {
+        private void DrawCoverImage(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool dynamic) {
+            if (_isCoverOverlayEnabled && _canvasCoverBitmap != null) {
+
+                if (dynamic) {
+                    ds.Transform = Matrix3x2.CreateRotation(_coverBitmapRotateAngle, control.Size.ToVector2() * 0.5f);
+                }
+                ds.DrawImage(
+                _coverBitmapEffect,
+                    (float)control.Size.Width / 2 - _canvasCoverBitmap.SizeInPixels.Width * _coverScaleFactor / 2,
+                    (float)control.Size.Height / 2 - _canvasCoverBitmap.SizeInPixels.Height * _coverScaleFactor / 2);
+                ds.Transform = Matrix3x2.Identity;
+            }
+        }
+
+        private static void DrawGradientOpacityMask(ICanvasAnimatedControl control, CanvasDrawingSession ds, byte r, byte g, byte b) {
+            using var maskBrush = new CanvasLinearGradientBrush(control, [
+                new() { Position = 0, Color =  Color.FromArgb(0, r, g, b)},
+                new() { Position = 0.5f, Color = Color.FromArgb(255, r, g, b)},
+                new() { Position = 1, Color =  Color.FromArgb(0, r, g, b)},
+            ]) {
+                StartPoint = new Vector2(0, 0),
+                EndPoint = new Vector2(0, (float)control.Size.Height)
+            };
+            ds.FillRectangle(new Rect(0, 0, control.Size.Width, control.Size.Height), maskBrush);
+        }
+
+        private void LyricsCanvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args) {
             _currentTime += args.Timing.ElapsedTime;
             _coverBitmapRotateAngle += _coverRotateSpeed;
 
@@ -556,19 +625,34 @@ namespace BetterLyrics.WinUI3.Views {
             }
 
             int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
-
             var (displayStartLineIndex, displayEndLineIndex) = GetMaxLyricsLineIndexBoundaries();
-
             UpdateScaleAndOpacity(displayStartLineIndex, displayEndLineIndex, currentPlayingLineIndex);
-
             UpdatePosition(displayStartLineIndex, displayEndLineIndex, currentPlayingLineIndex);
         }
 
         private int GetCurrentPlayingLineIndex() {
             for (int i = 0; i < _lyricsLines.Count; i++) {
 
-                var lyricsLine = _lyricsLines[i];
-                if (lyricsLine.EndTimestampMs < _currentTime.TotalMilliseconds) {
+                var line = _lyricsLines[i];
+                if (line.EndTimestampMs < _currentTime.TotalMilliseconds) {
+                    continue;
+                }
+                return i;
+            }
+            return -1;
+
+        }
+
+        private int GetCurrentPlayingSubLineIndex(int currentPlayingLineIndex) {
+
+            if (currentPlayingLineIndex < 0) {
+                return -1;
+            }
+
+            for (int i = 0; i < _lyricsLines[currentPlayingLineIndex].LyricsSubLines.Count; i++) {
+
+                var subLine = _lyricsLines[currentPlayingLineIndex].LyricsSubLines[i];
+                if (subLine.EndTimestampMs < _currentTime.TotalMilliseconds) {
                     continue;
                 }
                 return i;
@@ -592,85 +676,83 @@ namespace BetterLyrics.WinUI3.Views {
 
                 bool linePlaying = i == currentPlayingLineIndex;
 
+                var lineEnteringDurationMs = Math.Min(lyricsLine.DurationMs, _lineEnteringDurationMs);
+                var lineExitingDurationMs = _lineExitingDurationMs;
+                if (i + 1 <= displayEndLineIndex) {
+                    lineExitingDurationMs = Math.Min(_lyricsLines[i + 1].DurationMs, lineExitingDurationMs);
+                }
+
                 float lineEnteringProgress = 0.0f;
+                float lineExitingProgress = 0.0f;
+
+                bool lineEntering = false;
+                bool lineExiting = false;
+
+                float scale = _defaultScale;
+                float opacity = _defaultOpacity;
 
                 if (linePlaying) {
-                    var lineEnteringDurationMs = Math.Min(lyricsLine.DurationMs, _lineEnteringDurationMs);
-                    lineEnteringProgress =
-                        (float)Math.Min(1, (_currentTime.TotalMilliseconds - lyricsLine.StartTimestampMs) / lineEnteringDurationMs);
                     lyricsLine.PlayingState = LyricsPlayingState.Playing;
+
+                    scale = _highlightedScale;
+                    opacity = _highlightedOpacity;
+
+                    var durationFromStartMs = _currentTime.TotalMilliseconds - lyricsLine.StartTimestampMs;
+                    lineEntering = durationFromStartMs <= lineEnteringDurationMs;
+                    if (lineEntering) {
+                        lineEnteringProgress = (float)durationFromStartMs / lineEnteringDurationMs;
+                        scale = _defaultScale + (_highlightedScale - _defaultScale) * (float)lineEnteringProgress;
+                        opacity = _defaultOpacity + (_highlightedOpacity - _defaultOpacity) * (float)lineEnteringProgress;
+                    }
+
                 } else {
                     if (i < currentPlayingLineIndex) {
                         lyricsLine.PlayingState = LyricsPlayingState.Played;
+
+                        var durationToEndMs = _currentTime.TotalMilliseconds - lyricsLine.EndTimestampMs;
+                        lineExiting = durationToEndMs <= lineExitingDurationMs;
+                        if (lineExiting) {
+
+                            lineExitingProgress = (float)durationToEndMs / lineExitingDurationMs;
+                            scale = _highlightedScale - (_highlightedScale - _defaultScale) * (float)lineExitingProgress;
+                            opacity = _highlightedOpacity - (_highlightedOpacity - _defaultOpacity) * (float)lineExitingProgress;
+                        }
+
                     } else {
                         lyricsLine.PlayingState = LyricsPlayingState.NotPlayed;
                     }
                 }
 
                 lyricsLine.EnteringProgress = lineEnteringProgress;
-
-                bool lineExiting =
-                    lyricsLine.StartTimestampMs + _lineExitingDurationMs <= _currentTime.TotalMilliseconds &&
-                    _currentTime.TotalMilliseconds <= lyricsLine.EndTimestampMs + _lineExitingDurationMs;
-
-                float lineExitingProgress = 0.0f;
-
-                if (lineExiting) {
-                    lineExitingProgress =
-                        (float)Math.Min(1, (_currentTime.TotalMilliseconds - lyricsLine.EndTimestampMs) / _lineExitingDurationMs);
-                }
-
                 lyricsLine.ExitingProgress = lineExitingProgress;
 
-                for (int j = 0; j < lyricsLine.LyricsLineChars.Count; j++) {
+                for (int j = 0; j < lyricsLine.LyricsSubLines.Count; j++) {
 
-                    var lineChar = lyricsLine.LyricsLineChars[j];
+                    var lyricsLineChild = lyricsLine.LyricsSubLines[j];
 
-                    // Scale, opacity, and play progress
-                    float scale;
-                    float opacity;
+                    // Play progress
                     float playProgress = 0;
 
-                    // Chars going to be played in the future
-                    if (_currentTime.TotalMilliseconds < lineChar.StartTimestampMs) {
-                        lineChar.PlayingState = LyricsPlayingState.NotPlayed;
-                        if (linePlaying) {
-                            scale = _defaultScale + (_highlightedScale - _defaultScale) * (float)lineEnteringProgress;
-                            opacity = _defaultOpacity;
-                        } else {
-                            scale = _defaultScale;
-                            opacity = _defaultOpacity;
-                        }
-                        // Chars playing right now 
-                    } else if (lineChar.StartTimestampMs <= _currentTime.TotalMilliseconds &&
-                        _currentTime.TotalMilliseconds <= lineChar.EndTimestampMs) {
+                    // Child going to be played in the future
+                    if (_currentTime.TotalMilliseconds < lyricsLineChild.StartTimestampMs) {
+                        lyricsLineChild.PlayingState = LyricsPlayingState.NotPlayed;
 
-                        lineChar.PlayingState = LyricsPlayingState.Playing;
+                        // Child playing right now 
+                    } else if (lyricsLineChild.StartTimestampMs <= _currentTime.TotalMilliseconds &&
+                        _currentTime.TotalMilliseconds <= lyricsLineChild.EndTimestampMs) {
+                        lyricsLineChild.PlayingState = LyricsPlayingState.Playing;
                         playProgress =
-                            ((float)_currentTime.TotalMilliseconds - lineChar.StartTimestampMs) / lineChar.DurationMs;
-                        scale = _defaultScale + (_highlightedScale - _defaultScale) * (float)lineEnteringProgress;
-                        opacity = _defaultOpacity + (_highlightedOpacity - _defaultOpacity) * (float)playProgress;
+                            ((float)_currentTime.TotalMilliseconds - lyricsLineChild.StartTimestampMs) / lyricsLineChild.DurationMs;
 
-                        // Chars already have played
+                        // Child already have played
                     } else {
-                        lineChar.PlayingState = LyricsPlayingState.Played;
-                        if (linePlaying) {
-                            scale = _defaultScale + (_highlightedScale - _defaultScale) * (float)lineEnteringProgress;
-                            opacity = _highlightedOpacity;
-                        } else {
-                            if (lineExiting) {
-                                scale = _highlightedScale - (_highlightedScale - _defaultScale) * (float)lineExitingProgress;
-                                opacity = _highlightedOpacity - (_highlightedOpacity - _defaultOpacity) * (float)lineExitingProgress;
-                            } else {
-                                scale = _defaultScale;
-                                opacity = _defaultOpacity;
-                            }
-                        }
+                        lyricsLineChild.PlayingState = LyricsPlayingState.Played;
+                        playProgress = 1;
                     }
 
-                    lineChar.Scale = scale;
-                    lineChar.Opacity = opacity;
-                    lineChar.PlayingProgress = playProgress;
+                    lyricsLineChild.Scale = scale;
+                    lyricsLineChild.Opacity = opacity;
+                    lyricsLineChild.PlayingProgress = playProgress;
                 }
             }
         }
@@ -685,16 +767,22 @@ namespace BetterLyrics.WinUI3.Views {
                 return;
             }
 
+            var currentPlayingSubLineIndex = GetCurrentPlayingSubLineIndex(currentPlayingLineIndex);
+
+            if (currentPlayingSubLineIndex < 0) {
+                return;
+            }
+
             // Set _scrollOffsetY
-            var currentPlayingLyricsLine = _lyricsLines[currentPlayingLineIndex];
+            var currentPlayingLyricsSubLine = _lyricsLines[currentPlayingLineIndex].LyricsSubLines[currentPlayingSubLineIndex];
 
             var lineScrollingProgress =
-                (_currentTime.TotalMilliseconds - currentPlayingLyricsLine.StartTimestampMs) /
-                Math.Min(_lineScrollDurationMs, currentPlayingLyricsLine.DurationMs);
+                (_currentTime.TotalMilliseconds - currentPlayingLyricsSubLine.StartTimestampMs) /
+                Math.Min(_lineScrollDurationMs, currentPlayingLyricsSubLine.DurationMs);
 
             _scrollOffsetY =
-                ((float)_lyricsAreaHeight / 2 -
-                (currentPlayingLyricsLine.LyricsLineChars[0].PositionBeforeScrolling.Y + currentPlayingLyricsLine.LyricsLineChars[^1].PositionBeforeScrolling.Y) / 2) * EasingHelper.SmootherStep(Math.Min(1, (float)lineScrollingProgress));
+                (float)(_lyricsAreaHeight / 2 - currentPlayingLyricsSubLine.PositionBeforeScrolling.Y) *
+                EasingHelper.SmootherStep(Math.Min(1, (float)lineScrollingProgress));
 
             bool isScrollingNow = lineScrollingProgress <= 1;
 
@@ -705,33 +793,30 @@ namespace BetterLyrics.WinUI3.Views {
 
                 var lyricsLine = _lyricsLines[i];
 
-                for (int j = 0; j < lyricsLine.LyricsLineChars.Count; j++) {
+                for (int j = 0; j < lyricsLine.LyricsSubLines.Count; j++) {
 
-                    var lineChar = lyricsLine.LyricsLineChars[j];
+                    var lyricsLineChild = lyricsLine.LyricsSubLines[j];
 
                     if (alwaysScrollToCurrentPlayingLine || isScrollingNow) {
-                        lineChar.Position = new Vector2(
-                            lineChar.PositionBeforeScrolling.X,
-                            lineChar.PositionBeforeScrolling.Y + _scrollOffsetY);
+                        lyricsLineChild.Position = new Vector2(
+                            lyricsLineChild.PositionBeforeScrolling.X,
+                            lyricsLineChild.PositionBeforeScrolling.Y + _scrollOffsetY);
                     } else {
-                        lineChar.PositionBeforeScrolling = lineChar.Position;
+                        lyricsLineChild.PositionBeforeScrolling = lyricsLineChild.Position;
                     }
 
-                    if (lineChar.Position.Y >= 0) {
+                    if (lyricsLineChild.Position.Y + lyricsLineChild.LayoutBounds.Height >= 0) {
                         if (_startVisibleLineIndex == -1) {
                             _startVisibleLineIndex = i;
                         }
-                        if (lineChar.Position.Y <= _lyricsAreaHeight) {
-                            if (_endVisibleLineIndex == -1) {
-                                _endVisibleLineIndex = i;
-                            } else if (_endVisibleLineIndex < i) {
-                                _endVisibleLineIndex = i;
-                            }
+                    }
+                    if (lyricsLineChild.Position.Y + lyricsLineChild.LayoutBounds.Height >= _lyricsAreaHeight) {
+                        if (_endVisibleLineIndex == -1) {
+                            _endVisibleLineIndex = i;
                         }
                     }
 
                 }
-
             }
 
         }

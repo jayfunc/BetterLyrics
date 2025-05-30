@@ -45,53 +45,67 @@ namespace BetterLyrics.WinUI3.ViewModels {
         [ObservableProperty]
         private int _coverOverlayOpacity;
 
+        [ObservableProperty]
+        private int _lyricsAlignmentType;
+
         public SettingsViewModel(ISettingsService settingsService) {
+
             var version = Package.Current.Id.Version;
             Version = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
 
             _settingsService = settingsService;
 
+            PropertyChanged += SettingsViewModel_PropertyChanged;
+
+            // Music
             LocalMusicFolders = [.. _settingsService.MusicLibraries];
+            // Language
             Language = (int)_settingsService.Language;
+            // Theme
             ThemeType = (int)_settingsService.Theme;
+            // Backdrop
             BackdropType = (int)_settingsService.BackdropType;
             IsCoverOverlayEnabled = _settingsService.IsCoverOverlayEnabled;
             IsDynamicCoverOverlay = _settingsService.IsDynamicCoverOverlay;
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
+            // Lyrics
+            LyricsAlignmentType = (int)_settingsService.LyricsAlignmentType;
         }
 
-        public void AddMusicLibrary(string libraryPath) {
-            LocalMusicFolders.Add(new MusicFolder(libraryPath));
-            _settingsService.SetMusicLibraries([.. LocalMusicFolders]);
-        }
-
-        public void RemoveMusicLibrary(MusicFolder source) {
-            LocalMusicFolders.Remove(source);
-            _settingsService.SetMusicLibraries([.. LocalMusicFolders]);
-        }
-
-        public void SetLanguage() {
-            _settingsService.SetLanguage((Models.Language)Language);
-        }
-
-        public void SetTheme() {
-            _settingsService.SetTheme((ElementTheme)ThemeType);
-        }
-
-        public void SetBackdropType() {
-            _settingsService.SetBackdropType((BackdropType)BackdropType);
-        }
-
-        public void SetIsCoverOverlayEnabled(bool value) {
-            _settingsService.SetIsCoverOverlayEnabled(value);
-        }
-
-        public void SetDynamicCoverOverlay(bool value) {
-            _settingsService.SetDynamicCoverOverlay(value);
-        }
-
-        public void SetCoverOverlayOpacity() {
-            _settingsService.SetCoverOverlayOpacity(CoverOverlayOpacity);
+        private void SettingsViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            switch (e.PropertyName) {
+                // Music
+                case nameof(LocalMusicFolders):
+                    _settingsService.MusicLibraries = [.. LocalMusicFolders];
+                    break;
+                // Language
+                case nameof(Language):
+                    _settingsService.Language = (Models.Language)Language;
+                    break;
+                // Theme
+                case nameof(ThemeType):
+                    _settingsService.Theme = (ElementTheme)ThemeType;
+                    break;
+                // Backdrop
+                case nameof(BackdropType):
+                    _settingsService.BackdropType = (BackdropType)BackdropType;
+                    break;
+                case nameof(IsCoverOverlayEnabled):
+                    _settingsService.IsCoverOverlayEnabled = IsCoverOverlayEnabled;
+                    break;
+                case nameof(IsDynamicCoverOverlay):
+                    _settingsService.IsDynamicCoverOverlay = IsDynamicCoverOverlay;
+                    break;
+                case nameof(CoverOverlayOpacity):
+                    _settingsService.CoverOverlayOpacity = CoverOverlayOpacity;
+                    break;
+                // Lyrics
+                case nameof(LyricsAlignmentType):
+                    _settingsService.LyricsAlignmentType = (LyricsAlignmentType)LyricsAlignmentType;
+                    break;
+                default:
+                    break;
+            }
         }
 
     }

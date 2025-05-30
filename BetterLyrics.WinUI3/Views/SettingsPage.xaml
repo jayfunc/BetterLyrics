@@ -73,21 +73,19 @@
                         </controls:SettingsExpander.ItemsFooter>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsCard
-                    x:Uid="SettingsPageTheme"
+                    <controls:SettingsCard x:Uid="SettingsPageTheme"
                                HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
-                        <ComboBox SelectedIndex="{x:Bind ViewModel.ThemeType, Mode=TwoWay}" x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.ThemeType, Mode=TwoWay}" x:Name="ThemeComboBox">
                             <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
                             <ComboBoxItem x:Uid="SettingsPageLight" />
                             <ComboBoxItem x:Uid="SettingsPageDark" />
                         </ComboBox>
                     </controls:SettingsCard>
 
-                    <controls:SettingsExpander
-                    x:Uid="SettingsPageBackdrop"
+                    <controls:SettingsExpander x:Uid="SettingsPageBackdrop"
                         IsExpanded="True"
                                HeaderIcon="{ui:FontIcon Glyph=&#xEF1F;}">
-                        <ComboBox x:Name="BackdropComboBox" SelectedIndex="{x:Bind ViewModel.BackdropType, Mode=TwoWay}" SelectionChanged="BackdropComboBox_SelectionChanged">
+                        <ComboBox x:Name="BackdropComboBox" SelectedIndex="{x:Bind ViewModel.BackdropType, Mode=TwoWay}">
                             <ComboBoxItem x:Uid="SettingsPageNoBackdrop" />
                             <ComboBoxItem x:Uid="SettingsPageMica" />
                             <ComboBoxItem x:Uid="SettingsPageMicaAlt" />
@@ -98,22 +96,33 @@
                         </ComboBox>
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageCoverOverlay">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=TwoWay}" Toggled="CoverOverlayToggleSwitch_Toggled" />
+                                <ToggleSwitch IsOn="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=TwoWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageDynamicCoverOverlay" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.IsDynamicCoverOverlay, Mode=TwoWay}" Toggled="DynamicCoverOverlayToggleSwitch_Toggled" />
+                                <ToggleSwitch IsOn="{x:Bind ViewModel.IsDynamicCoverOverlay, Mode=TwoWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageCoverOverlayOpacity" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
-                                <Slider ValueChanged="Slider_ValueChanged" Value="{x:Bind ViewModel.CoverOverlayOpacity, Mode=TwoWay}" Minimum="0" Maximum="100" StepFrequency="1" />
+                                <Slider Value="{x:Bind ViewModel.CoverOverlayOpacity, Mode=TwoWay}" Minimum="0" Maximum="100" StepFrequency="1" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsExpander
-                        IsExpanded="True"
-                                        x:Uid="SettingsPageLanguage"
+                    <controls:SettingsExpander x:Uid="SettingsPageLyrics" IsExpanded="True"
+                               HeaderIcon="{ui:FontIcon Glyph=&#xE8E3;}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment">
+                                <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsAlignmentType, Mode=TwoWay}">
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
+                    <controls:SettingsExpander IsExpanded="True" x:Uid="SettingsPageLanguage"
                                HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}">
-                        <ComboBox SelectedIndex="{x:Bind ViewModel.Language, Mode=TwoWay}" SelectionChanged="LanguageComboBox_SelectionChanged">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.Language, Mode=TwoWay}">
                             <ComboBoxItem x:Uid="SettingsPageSystemLanguage" />
                             <ComboBoxItem x:Uid="SettingsPageEN" />
                             <ComboBoxItem x:Uid="SettingsPageSC" />
@@ -126,8 +135,7 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsCard
-                               Header="BetterLyrics"
+                    <controls:SettingsCard Header="BetterLyrics"
                                HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/StoreLogo.scale-400.png}">
                         <controls:SettingsCard.Description>
                             <RichTextBlock>
@@ -139,8 +147,7 @@
                         </controls:SettingsCard.Description>
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard ActionIcon="{ui:FontIcon Glyph=&#xE8A7;}"
-                                       x:Uid="SettingsPageGitHub"
+                    <controls:SettingsCard ActionIcon="{ui:FontIcon Glyph=&#xE8A7;}" x:Uid="SettingsPageGitHub"
                                Click="GitHubSettingsCard_Click"
                                HeaderIcon="{ui:FontIcon Glyph=&#xE943;}"
                                IsClickEnabled="True"/>

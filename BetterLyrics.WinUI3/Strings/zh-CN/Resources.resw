@@ -225,4 +225,19 @@
   <data name="MainPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
   </data>
+  <data name="SettingsPageLyrics.Header" xml:space="preserve">
+    <value>歌词行为</value>
+  </data>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>对齐方式</value>
+  </data>
+  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>靠左</value>
+  </data>
+  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>靠右</value>
+  </data>
 </root>

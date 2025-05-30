@@ -21,6 +21,7 @@ using WinRT.Interop;
 using Windows.Storage.Pickers;
 using BetterLyrics.WinUI3.Models;
 using Microsoft.Windows.ApplicationModel.Resources;
+using BetterLyrics.WinUI3.Services.Settings;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -59,9 +60,8 @@ namespace BetterLyrics.WinUI3.Views {
                 if (existed) {
                     MainWindow.StackedNotificationsBehavior?.Show(App.ResourceLoader.GetString("SettingsPagePathExistedInfo"), 3900);
                 } else {
-                    ViewModel.AddMusicLibrary(path);
+                    ViewModel.LocalMusicFolders.Add(new MusicFolder(path));
                 }
-            } else {
             }
 
         }
@@ -75,15 +75,7 @@ namespace BetterLyrics.WinUI3.Views {
         }
 
         private void RemoveFromAppButton_Click(object sender, RoutedEventArgs e) {
-            ViewModel.RemoveMusicLibrary((sender as FrameworkElement).DataContext as MusicFolder);
-        }
-
-        private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            ViewModel.SetTheme();
-        }
-
-        private void BackdropComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            ViewModel.SetBackdropType();
+            ViewModel.LocalMusicFolders.Remove((sender as FrameworkElement).DataContext as MusicFolder);
         }
 
         private void RestartButton_Click(object sender, RoutedEventArgs e) {
@@ -96,20 +88,5 @@ namespace BetterLyrics.WinUI3.Views {
             Application.Current.Exit();
         }
 
-        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            ViewModel.SetLanguage();
-        }
-
-        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) {
-            ViewModel.SetCoverOverlayOpacity();
-        }
-
-        private void CoverOverlayToggleSwitch_Toggled(object sender, RoutedEventArgs e) {
-            ViewModel.SetIsCoverOverlayEnabled((sender as ToggleSwitch).IsOn);
-        }
-
-        private void DynamicCoverOverlayToggleSwitch_Toggled(object sender, RoutedEventArgs e) {
-            ViewModel.SetDynamicCoverOverlay((sender as ToggleSwitch).IsOn);
-        }
     }
 }

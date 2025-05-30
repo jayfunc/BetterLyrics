@@ -225,4 +225,19 @@
   <data name="MainPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
   </data>
+  <data name="SettingsPageLyrics.Header" xml:space="preserve">
+    <value>Lyrics Behavior</value>
+  </data>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>Right</value>
+  </data>
 </root>

@@ -103,17 +103,16 @@ namespace BetterLyrics.WinUI3.ViewModels {
                 lyricsLine.DurationMs = lyricsLine.EndTimestampMs - lyricsLine.StartTimestampMs;
                 lyricsLine.AverageDurationPerCharMs = lyricsLine.DurationMs / lyricsLine.Text.Length;
 
-                List<LyricsLineChar> lyricsLineChars = [];
+                List<LyricsLineChild> lyricsLineChars = [];
                 var lyricsLineCharStartTimestampMs = lyricsPhraseStartTimestampMs;
 
                 foreach (var ch in lyricsLine.Text) {
 
-                    var lyricsLineChar = new LyricsLineChar {
-                        Text = (ch == ' ' ? (char)160 : ch).ToString(),
+                    var lyricsLineChar = new LyricsLineChild {
+                        Text = ch.ToString(),
                         StartTimestampMs = lyricsLineCharStartTimestampMs,
                     };
                     lyricsLineChar.EndTimestampMs = lyricsLineChar.StartTimestampMs + lyricsLine.AverageDurationPerCharMs;
-                    lyricsLineChar.DurationMs = lyricsLineChar.EndTimestampMs - lyricsLineChar.StartTimestampMs;
                     lyricsLineChars.Add(lyricsLineChar);
 
                     lyricsLineCharStartTimestampMs += lyricsLine.AverageDurationPerCharMs;

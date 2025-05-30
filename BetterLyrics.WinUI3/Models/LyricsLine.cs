@@ -1,34 +1,34 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace BetterLyrics.WinUI3.Models {
-    public partial class LyricsLine : ObservableObject {
-        [ObservableProperty]
-        private string _text;
+    public class LyricsLine {
+        public string Text { get; set; }
 
-        [ObservableProperty]
-        private ObservableCollection<LyricsLineChar> _lyricsLineChars;
+        /// <summary>
+        /// A list of every single char in this lyrics line
+        /// </summary>
+        public List<LyricsLineChild> LyricsLineChars { get; set; } = [];
 
-        [ObservableProperty]
-        private int _startTimestampMs;
+        /// <summary>
+        /// A list of sub lines in this lyrics line
+        /// </summary>
+        public List<LyricsLineChild> LyricsSubLines { get; set; } = [];
 
-        [ObservableProperty]
-        private int _endTimestampMs;
+        public int StartTimestampMs { get; set; }
 
-        [ObservableProperty]
-        private LyricsPlayingState _playingState;
+        public int EndTimestampMs { get; set; }
 
-        [ObservableProperty]
-        private int _durationMs;
+        public LyricsPlayingState PlayingState { get; set; }
 
-        [ObservableProperty]
-        private int _averageDurationPerCharMs;
+        public int DurationMs { get; set; }
 
-        [ObservableProperty]
-        private float _enteringProgress;
+        public int AverageDurationPerCharMs { get; set; }
 
-        [ObservableProperty]
-        private float _exitingProgress;
+        public float EnteringProgress { get; set; }
+
+        public float ExitingProgress { get; set; }
     }
 }
