@@ -217,7 +217,7 @@
     <value>動態專輯圖片背景</value>
   </data>
   <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
-    <value>專輯圖片背景不透明度（%）</value>
+    <value>專輯圖片背景不透明度</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>設定</value>
@@ -239,5 +239,23 @@
   </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>靠右</value>
+  </data>
+  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
+    <value>專輯圖片背景模糊度</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
+    <value>模糊度</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
+    <value>調整此數值將同步提升專輯圖片背景模糊強度</value>
+  </data>
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>目前值：</value>
+  </data>
+  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
+    <value>啟用模糊（&gt; 0）時將顯著提升 GPU 佔用率</value>
+  </data>
+  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
+    <value>啟用此功能將略微提升 GPU 佔用率</value>
   </data>
 </root>

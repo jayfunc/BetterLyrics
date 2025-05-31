@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Windows.Globalization;
 using Windows.System.UserProfile;
 using Windows.UI;
+using static ATL.LyricsInfo;
 
 namespace BetterLyrics.WinUI3.ViewModels {
     public partial class MainViewModel : ObservableObject {
@@ -84,42 +85,42 @@ namespace BetterLyrics.WinUI3.ViewModels {
         public List<LyricsLine> GetLyrics(Track track) {
             List<LyricsLine> result = [];
             var lyricsPhrases = track.Lyrics.SynchronizedLyrics;
+
+            if (lyricsPhrases.Count > 0) {
+                if (lyricsPhrases[0].TimestampMs > 0) {
+                    var placeholder = new LyricsPhrase(0, " ");
+                    lyricsPhrases.Insert(0, placeholder);
+                    lyricsPhrases.Insert(0, placeholder);
+                }
+            }
+
+            LyricsLine? lyricsLine = null;
+
             for (int i = 0; i < lyricsPhrases.Count; i++) {
                 var lyricsPhrase = lyricsPhrases[i];
-                int lyricsPhraseStartTimestampMs = lyricsPhrase.TimestampMs;
-                int lyricsPhraseEndTimestampMs = 0;
+                int startTimestampMs = lyricsPhrase.TimestampMs;
+                int endTimestampMs;
 
                 if (i + 1 < lyricsPhrases.Count) {
-                    lyricsPhraseEndTimestampMs = lyricsPhrases[i + 1].TimestampMs;
+                    endTimestampMs = lyricsPhrases[i + 1].TimestampMs;
                 } else {
-                    lyricsPhraseEndTimestampMs = (int)track.DurationMs;
+                    endTimestampMs = (int)track.DurationMs;
                 }
 
-                var lyricsLine = new LyricsLine {
-                    StartTimestampMs = lyricsPhraseStartTimestampMs,
-                    EndTimestampMs = lyricsPhraseEndTimestampMs,
-                    Text = lyricsPhrase.Text,
+                lyricsLine ??= new LyricsLine {
+                    StartTimestampMs = startTimestampMs,
                 };
-                lyricsLine.DurationMs = lyricsLine.EndTimestampMs - lyricsLine.StartTimestampMs;
-                lyricsLine.AverageDurationPerCharMs = lyricsLine.DurationMs / lyricsLine.Text.Length;
 
-                List<LyricsLineChild> lyricsLineChars = [];
-                var lyricsLineCharStartTimestampMs = lyricsPhraseStartTimestampMs;
+                lyricsLine.Texts.Add(lyricsPhrase.Text);
 
-                foreach (var ch in lyricsLine.Text) {
-
-                    var lyricsLineChar = new LyricsLineChild {
-                        Text = ch.ToString(),
-                        StartTimestampMs = lyricsLineCharStartTimestampMs,
-                    };
-                    lyricsLineChar.EndTimestampMs = lyricsLineChar.StartTimestampMs + lyricsLine.AverageDurationPerCharMs;
-                    lyricsLineChars.Add(lyricsLineChar);
-
-                    lyricsLineCharStartTimestampMs += lyricsLine.AverageDurationPerCharMs;
+                if (endTimestampMs == startTimestampMs) {
+                    continue;
+                } else {
+                    lyricsLine.EndTimestampMs = endTimestampMs;
+                    result.Add(lyricsLine);
+                    lyricsLine = null;
                 }
 
-                lyricsLine.LyricsLineChars = [.. lyricsLineChars];
-                result.Add(lyricsLine);
             }
             return result;
 

@@ -96,13 +96,34 @@
                         </ComboBox>
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageCoverOverlay">
+                                <controls:SettingsCard.Description>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="SettingsPageCoverOverlayGPUUsage" />
+                                    </StackPanel>
+                                </controls:SettingsCard.Description>
                                 <ToggleSwitch IsOn="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=TwoWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageDynamicCoverOverlay" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <ToggleSwitch IsOn="{x:Bind ViewModel.IsDynamicCoverOverlay, Mode=TwoWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageCoverOverlayOpacity" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
-                                <Slider Value="{x:Bind ViewModel.CoverOverlayOpacity, Mode=TwoWay}" Minimum="0" Maximum="100" StepFrequency="1" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                    <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.CoverOverlayOpacity, Mode=OneWay}"/>
+                                    <TextBlock VerticalAlignment="Center" Text=" %" Margin="0,0,14,0"/>
+                                    <Slider Value="{x:Bind ViewModel.CoverOverlayOpacity, Mode=TwoWay}" 
+                                        Minimum="0" Maximum="100" StepFrequency="1"
+                                        TickPlacement="Outside"  TickFrequency="1" SnapsTo="Ticks" />
+                                </StackPanel>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageCoverOverlayBlurAmount" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" x:Uid="SettingsPageSliderPrefix" />
+                                    <TextBlock VerticalAlignment="Center" Margin="0,0,14,0" Text="{x:Bind ViewModel.CoverOverlayBlurAmount, Mode=OneWay}"/>
+                                    <Slider Value="{x:Bind ViewModel.CoverOverlayBlurAmount, Mode=TwoWay}" 
+                                        Minimum="50" Maximum="200" StepFrequency="10" 
+                                        TickPlacement="Outside"  TickFrequency="10" SnapsTo="Ticks" />
+                                </StackPanel>
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
@@ -116,6 +137,21 @@
                                     <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
                                     <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
                                 </ComboBox>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount">
+                                <controls:SettingsCard.Description>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="SettingsPageLyricsBlurHighGPUUsage" Foreground="{ThemeResource SystemErrorTextColor}"/>
+                                        <TextBlock x:Uid="SettingsPageLyricsBlurAmountSideEffect"/>
+                                    </StackPanel>
+                                </controls:SettingsCard.Description>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" x:Uid="SettingsPageSliderPrefix" />
+                                    <TextBlock VerticalAlignment="Center" Margin="0,0,14,0" Text="{x:Bind ViewModel.LyricsBlurAmount, Mode=OneWay}"/>
+                                    <Slider Value="{x:Bind ViewModel.LyricsBlurAmount, Mode=TwoWay}" 
+                                        Minimum="0" Maximum="10" StepFrequency="1"
+                                        TickPlacement="Outside"  TickFrequency="1" SnapsTo="Ticks" />
+                                </StackPanel>
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>

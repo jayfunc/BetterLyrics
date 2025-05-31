@@ -33,20 +33,23 @@ namespace BetterLyrics.WinUI3.ViewModels {
         [ObservableProperty]
         private int _themeType;
 
+        // Backdrop
         [ObservableProperty]
         private int _backdropType;
-
         [ObservableProperty]
         private bool _isCoverOverlayEnabled;
-
         [ObservableProperty]
         private bool _isDynamicCoverOverlay;
-
         [ObservableProperty]
         private int _coverOverlayOpacity;
+        [ObservableProperty]
+        private int _coverOverlayBlurAmount;
 
+        // Lyrics
         [ObservableProperty]
         private int _lyricsAlignmentType;
+        [ObservableProperty]
+        private int _lyricsBlurAmount;
 
         public SettingsViewModel(ISettingsService settingsService) {
 
@@ -68,8 +71,10 @@ namespace BetterLyrics.WinUI3.ViewModels {
             IsCoverOverlayEnabled = _settingsService.IsCoverOverlayEnabled;
             IsDynamicCoverOverlay = _settingsService.IsDynamicCoverOverlay;
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
+            CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
             // Lyrics
             LyricsAlignmentType = (int)_settingsService.LyricsAlignmentType;
+            LyricsBlurAmount = _settingsService.LyricsBlurAmount;
         }
 
         private void SettingsViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e) {
@@ -99,9 +104,15 @@ namespace BetterLyrics.WinUI3.ViewModels {
                 case nameof(CoverOverlayOpacity):
                     _settingsService.CoverOverlayOpacity = CoverOverlayOpacity;
                     break;
+                case nameof(CoverOverlayBlurAmount):
+                    _settingsService.CoverOverlayBlurAmount = CoverOverlayBlurAmount;
+                    break;
                 // Lyrics
                 case nameof(LyricsAlignmentType):
                     _settingsService.LyricsAlignmentType = (LyricsAlignmentType)LyricsAlignmentType;
+                    break;
+                case nameof(LyricsBlurAmount):
+                    _settingsService.LyricsBlurAmount = LyricsBlurAmount;
                     break;
                 default:
                     break;

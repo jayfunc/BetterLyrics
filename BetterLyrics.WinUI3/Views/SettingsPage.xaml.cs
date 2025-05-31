@@ -49,7 +49,7 @@ namespace BetterLyrics.WinUI3.Views {
 
             picker.FileTypeFilter.Add("*");
 
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.Current.MainWindow);
+            var hwnd = WindowNative.GetWindowHandle(App.Current.MainWindow);
             InitializeWithWindow.Initialize(picker, hwnd);
 
             var folder = await picker.PickSingleFolderAsync();

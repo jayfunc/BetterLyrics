@@ -217,7 +217,7 @@
     <value>Dynamic album art background</value>
   </data>
   <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
-    <value>Album art background opacity (%)</value>
+    <value>Album art background opacity</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Settings</value>
@@ -239,5 +239,23 @@
   </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>Right</value>
+  </data>
+  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
+    <value>Album art background blur amount</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
+    <value>Blur amount</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
+    <value>Adjusting this value will also increase the background blur intensity of the album image.</value>
+  </data>
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>Current Value: </value>
+  </data>
+  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
+    <value>Significantly higher GPU usage when blur is enabled (&gt; 0)</value>
+  </data>
+  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
+    <value>Enabling this feature will slightly increase GPU utilization</value>
   </data>
 </root>

@@ -17,6 +17,7 @@ using Windows.Storage;
 namespace BetterLyrics.WinUI3.Services.Settings {
     public class SettingsService : ISettingsService {
 
+        // Theme
         public ElementTheme Theme {
             get => (ElementTheme)Get(SettingsKeys.ThemeType, SettingsDefaultValues.ThemeType);
             set {
@@ -28,10 +29,14 @@ namespace BetterLyrics.WinUI3.Services.Settings {
                 }
             }
         }
+
+        // Music
         public List<MusicFolder> MusicLibraries {
             get => JsonSerializer.Deserialize<List<MusicFolder>>(Get(SettingsKeys.MusicLibraries, SettingsDefaultValues.MusicLibraries));
             set => Set(SettingsKeys.MusicLibraries, JsonSerializer.Serialize(value));
         }
+
+        // Language
         public Models.Language Language {
             get => (Models.Language)Get(SettingsKeys.Language, SettingsDefaultValues.Language);
             set {
@@ -54,6 +59,8 @@ namespace BetterLyrics.WinUI3.Services.Settings {
                 }
             }
         }
+
+        // Backdrop
         public BackdropType BackdropType {
             get => (BackdropType)Get(SettingsKeys.BackdropType, SettingsDefaultValues.BackdropType);
             set {
@@ -78,9 +85,19 @@ namespace BetterLyrics.WinUI3.Services.Settings {
             get => Get(SettingsKeys.CoverOverlayOpacity, SettingsDefaultValues.CoverOverlayOpacity);
             set => Set(SettingsKeys.CoverOverlayOpacity, value);
         }
+        public int CoverOverlayBlurAmount {
+            get => Get(SettingsKeys.CoverOverlayBlurAmount, SettingsDefaultValues.CoverOverlayBlurAmount);
+            set => Set(SettingsKeys.CoverOverlayBlurAmount, value);
+        }
+
+        // Lyrics
         public LyricsAlignmentType LyricsAlignmentType {
             get => (LyricsAlignmentType)Get(SettingsKeys.LyricsAlignmentType, SettingsDefaultValues.LyricsAlignmentType);
             set => Set(SettingsKeys.LyricsAlignmentType, (int)value);
+        }
+        public int LyricsBlurAmount {
+            get => Get(SettingsKeys.LyricsBlurAmount, SettingsDefaultValues.LyricsBlurAmount);
+            set => Set(SettingsKeys.LyricsBlurAmount, value);
         }
 
         private readonly ApplicationDataContainer _localSettings;
