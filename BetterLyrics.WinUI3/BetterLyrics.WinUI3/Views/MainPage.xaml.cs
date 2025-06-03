@@ -25,6 +25,7 @@ using Windows.Media.Control;
 using Color = Windows.UI.Color;
 using System.Linq;
 using Microsoft.UI.Windowing;
+using Windows.Graphics.Imaging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -40,7 +41,9 @@ namespace BetterLyrics.WinUI3.Views {
 
         private List<LyricsLine> _lyricsLines = [];
 
-        private CanvasBitmap? _canvasCoverBitmap;
+        private SoftwareBitmap? _coverSoftwareBitmap = null;
+        private uint _coverImagePixelWidth = 0;
+        private uint _coverImagePixelHeight = 0;
 
         private float _coverBitmapRotateAngle = 0f;
         private float _coverScaleFactor = 1;
@@ -260,7 +263,7 @@ namespace BetterLyrics.WinUI3.Views {
                     ViewModel.AboutToUpdateUI = true;
                     await Task.Delay(_animationDurationMs);
 
-                    (_lyricsLines, _canvasCoverBitmap) = await ViewModel.SetSongInfoAsync(mediaProps, LyricsCanvas);
+                    (_lyricsLines, _coverSoftwareBitmap, _coverImagePixelWidth, _coverImagePixelHeight) = await ViewModel.SetSongInfoAsync(mediaProps, LyricsCanvas);
 
                     // Force to show lyrics and scroll to current line even if the music is not playing
                     LyricsCanvas.Paused = false;
@@ -311,7 +314,7 @@ namespace BetterLyrics.WinUI3.Views {
             var b = _lyricsColor.B;
 
             // Draw (dynamic) cover image as the very first layer
-            if (_settingsService.IsCoverOverlayEnabled && _canvasCoverBitmap != null) {
+            if (_settingsService.IsCoverOverlayEnabled && _coverSoftwareBitmap != null) {
                 DrawCoverImage(sender, ds, _settingsService.IsDynamicCoverOverlay);
             }
 
@@ -458,28 +461,26 @@ namespace BetterLyrics.WinUI3.Views {
         }
 
         private void DrawCoverImage(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool dynamic) {
-            if (_settingsService.IsCoverOverlayEnabled && _canvasCoverBitmap != null) {
 
-                ds.Transform = Matrix3x2.CreateRotation(_coverBitmapRotateAngle, control.Size.ToVector2() * 0.5f);
+            ds.Transform = Matrix3x2.CreateRotation(_coverBitmapRotateAngle, control.Size.ToVector2() * 0.5f);
 
-                using var coverOverlayEffect = new OpacityEffect {
-                    Opacity = _settingsService.CoverOverlayOpacity / 100f,
-                    Source = new GaussianBlurEffect {
-                        BlurAmount = _settingsService.CoverOverlayBlurAmount,
-                        Source = new ScaleEffect {
-                            InterpolationMode = CanvasImageInterpolation.HighQualityCubic,
-                            BorderMode = EffectBorderMode.Hard,
-                            Scale = new Vector2(_coverScaleFactor),
-                            Source = _canvasCoverBitmap,
-                        }
+            using var coverOverlayEffect = new OpacityEffect {
+                Opacity = _settingsService.CoverOverlayOpacity / 100f,
+                Source = new GaussianBlurEffect {
+                    BlurAmount = _settingsService.CoverOverlayBlurAmount,
+                    Source = new ScaleEffect {
+                        InterpolationMode = CanvasImageInterpolation.HighQualityCubic,
+                        BorderMode = EffectBorderMode.Hard,
+                        Scale = new Vector2(_coverScaleFactor),
+                        Source = CanvasBitmap.CreateFromSoftwareBitmap(control, _coverSoftwareBitmap),
                     }
-                };
-                ds.DrawImage(
-                    coverOverlayEffect,
-                    (float)control.Size.Width / 2 - _canvasCoverBitmap.SizeInPixels.Width * _coverScaleFactor / 2,
-                    (float)control.Size.Height / 2 - _canvasCoverBitmap.SizeInPixels.Height * _coverScaleFactor / 2);
-                ds.Transform = Matrix3x2.Identity;
-            }
+                }
+            };
+            ds.DrawImage(
+                coverOverlayEffect,
+                (float)control.Size.Width / 2 - _coverImagePixelWidth * _coverScaleFactor / 2,
+                (float)control.Size.Height / 2 - _coverImagePixelHeight * _coverScaleFactor / 2);
+            ds.Transform = Matrix3x2.Identity;
         }
 
         private void DrawGradientOpacityMask(ICanvasAnimatedControl control, CanvasDrawingSession ds, byte r, byte g, byte b) {
@@ -509,13 +510,11 @@ namespace BetterLyrics.WinUI3.Views {
                 _lyricsGlowEffectAngle %= MathF.PI * 2;
             }
 
-            if (_settingsService.IsCoverOverlayEnabled && _canvasCoverBitmap != null) {
+            if (_settingsService.IsCoverOverlayEnabled && _coverSoftwareBitmap != null) {
 
                 var diagonal = Math.Sqrt(Math.Pow(_lyricsAreaWidth, 2) + Math.Pow(_lyricsAreaHeight, 2));
 
-                _coverScaleFactor = (float)diagonal / Math.Min(
-                    _canvasCoverBitmap.SizeInPixels.Width,
-                    _canvasCoverBitmap.SizeInPixels.Height);
+                _coverScaleFactor = (float)diagonal / Math.Min(_coverImagePixelWidth, _coverImagePixelHeight);
 
             }
 
