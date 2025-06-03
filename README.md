@@ -1,6 +1,16 @@
-# BetterLyrics
+<div align="center">
+  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Icon.png" alt="" width="64"/>
+</div>
 
-Local song lyrics presentation app built with WinUI3
+<h2 align="center">
+BetterLyrics
+</div>
+
+<h3 align="center">
+Your smooth dynamic local lyrics display built with WinUI 3
+</div>
+
+---
 
 ## Highlighted features
 
@@ -9,55 +19,21 @@ Local song lyrics presentation app built with WinUI3
 - Smooth user interface change from song to song
 - Gradient Karaoke effect on every single character
 
-> Note: Lyrics related effects and functions are built with [CanvasAnimatedControl](https://learn.microsoft.com/en-us/windows/apps/develop/win2d/quick-start#animate-your-app-with-canvasanimatedcontrol) instead of list of `TextBlock`, which ensures a smooth and accurate animation and more customized style.
-
 Coding in progress...
 
 ## Customize in your way
 
 We provide more than one setting item to better align with your preference
 
-- Theme
+- Theme (light, dark, follow system)
 
-  - Follow system
-  - Light
-  - Dark
+- Backdrop (none, mica, acrylic, transparent)
 
-- Backdrop
+- Album art as background (dynamic, blur amount, opacity)
 
-  - None
-  - Mica
-  - Mica alt
-  - Acrylic desktop
-  - Acrylic thin
-  - Acrylic base
-  - Transparent
+- Lyrics (alignment, font size, line spacing, opacity, blur amount, dynamic glow effect)
 
-- Album art as background
-
-  - Dynamic
-  - Opacity
-  - Blur amount
-
-- Lyrics
-
-  - Alignment
-  - Font size
-  - Line spacing
-  - Opacity on the edge
-  - Blur amount
-  - Dynamic glow effect
-
-- Language
-  - English
-  - Simplified Chinese
-  - Traditional Chinese
-
-## Inspired by
-
-- [BetterNCM](https://github.com/std-microblock/BetterNCM)
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
-- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
+- Language (English, Simplified Chinese, Traditional Chinese)
 
 ## Demonstration video
 
@@ -98,6 +74,12 @@ Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(up
 - [cnblogs - .NET App 与 Windows 系统媒体控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
 - [Win2D 中的游戏循环：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
 - [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
+
+## Inspired by
+
+- [BetterNCM](https://github.com/std-microblock/BetterNCM)
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
+- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 
 ## Third-party libraries that this project uses
 
