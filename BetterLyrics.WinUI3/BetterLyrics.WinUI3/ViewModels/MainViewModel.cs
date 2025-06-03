@@ -8,6 +8,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Media.Control;
@@ -99,9 +100,11 @@ namespace BetterLyrics.WinUI3.ViewModels {
 
         }
 
-        public async Task<(List<LyricsLine>, CanvasBitmap?)> SetSongInfoAsync(GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps, ICanvasAnimatedControl control) {
+        public async Task<(List<LyricsLine>, SoftwareBitmap?, uint, uint)> SetSongInfoAsync(GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps, ICanvasAnimatedControl control) {
 
-            CanvasBitmap? canvasBitmap = null;
+            SoftwareBitmap? coverSoftwareBitmap = null;
+            uint coverImagePixelWidth = 0;
+            uint coverImagePixelHeight = 0;
 
             Title = mediaProps?.Title;
             Artist = mediaProps?.Artist;
@@ -128,14 +131,19 @@ namespace BetterLyrics.WinUI3.ViewModels {
                     CoverImageDominantColors[i] = Colors.Transparent;
                 }
             } else {
-                canvasBitmap = await CanvasBitmap.LoadAsync(control, stream);
-                stream.Seek(0);
-
                 CoverImage = new BitmapImage();
                 await CoverImage.SetSourceAsync(stream);
                 stream.Seek(0);
 
                 var decoder = await BitmapDecoder.CreateAsync(stream);
+                coverImagePixelHeight = decoder.PixelHeight;
+                coverImagePixelWidth = decoder.PixelWidth;
+
+                coverSoftwareBitmap = await decoder.GetSoftwareBitmapAsync(
+                    BitmapPixelFormat.Bgra8,
+                    BitmapAlphaMode.Premultiplied
+                );
+
                 var quantizedColors = await _colorThief.GetPalette(decoder, 3);
                 for (int i = 0; i < 3; i++) {
                     Helper.QuantizedColor quantizedColor = quantizedColors[i];
@@ -146,7 +154,7 @@ namespace BetterLyrics.WinUI3.ViewModels {
                 stream.Dispose();
             }
 
-            return (GetLyrics(track), canvasBitmap);
+            return (GetLyrics(track), coverSoftwareBitmap, coverImagePixelWidth, coverImagePixelHeight);
 
         }
 
