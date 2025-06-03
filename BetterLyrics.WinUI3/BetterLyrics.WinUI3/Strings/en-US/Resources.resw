@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>Local music libraries</value>
+  </data>
+  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <value>Add folders storing music or lyrics to build lyrics index database</value>
+  </data>
+  <data name="SettingsPageOpenPath.Content" xml:space="preserve">
+    <value>Open in file explorer</value>
+  </data>
+  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <value>Remove from app</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <value>You are safe to remove the following items</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <value>Original files and folders in this path will not be deleted when removing it from this app</value>
+  </data>
+  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
+    <value>Add a folder</value>
+  </data>
+  <data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>Follow system</value>
+  </data>
+  <data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="SettingsPageSC.Content" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="SettingsPageTC.Content" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="SettingsPageEN.Content" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="SettingsPageGitHub.Header" xml:space="preserve">
+    <value>This is an open source app</value>
+  </data>
+  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
+    <value>Open in new window</value>
+  </data>
+  <data name="SettingsPageGitHub.Description" xml:space="preserve">
+    <value>See source code on GitHub</value>
+  </data>
+  <data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SettingsPageMica.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
+    <value>Mica Alt</value>
+  </data>
+  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
+    <value>Desktop Acrylic</value>
+  </data>
+  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
+    <value>Acrylic Base</value>
+  </data>
+  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
+    <value>Acrylic Thin</value>
+  </data>
+  <data name="SettingsPageTransparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
+    <value>Backdrop</value>
+  </data>
+  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>Restart app to apply change</value>
+  </data>
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>The path cannot be found on your computer</value>
+  </data>
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>The folder has been added. Please do not add it again.</value>
+  </data>
+  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
+    <value>Overlay album art background</value>
+  </data>
+  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
+    <value>Dynamic album art background</value>
+  </data>
+  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
+    <value>Album art background opacity</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainPageTitle" xml:space="preserve">
+    <value>BetterLyrics</value>
+  </data>
+  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
+    <value>Lyrics style</value>
+  </data>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
+    <value>Album art background blur amount</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
+    <value>Blur amount</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
+    <value>Adjusting this value will also increase the background blur intensity of the album image.</value>
+  </data>
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>Current value: </value>
+  </data>
+  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
+    <value>Significantly higher GPU usage when blur is enabled (&gt; 0)</value>
+  </data>
+  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
+    <value>Enabling this feature will slightly increase GPU utilization</value>
+  </data>
+  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+    <value>Top and bottom edge opacity</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>Line spacing</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+    <value>x line height</value>
+  </data>
+  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>Font size</value>
+  </data>
+  <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show lyrics only</value>
+  </data>
+  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
+    <value>Lyrics effect</value>
+  </data>
+  <data name="SettingsPageAlbum.Text" xml:space="preserve">
+    <value>Album background</value>
+  </data>
+  <data name="SettingsPageAbout.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsPageLyricsLib.Text" xml:space="preserve">
+    <value>Lyrics library</value>
+  </data>
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <value>App appearance</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>Glow effect</value>
+  </data>
+  <data name="SettingsPageLyricsDynamicGlowEffect.Header" xml:space="preserve">
+    <value>Dynamic glow effect</value>
+  </data>
+  <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
+    <value>Rebuild lyrics index database</value>
+  </data>
+  <data name="SettingsPageRebuildDatabaseButton.Content" xml:space="preserve">
+    <value>Rebuild</value>
+  </data>
+  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SettingsPageRebuildDatabaseDesc.Text" xml:space="preserve">
+    <value>Rebuilding the database, please wait...</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
+    <value>Let's get started now</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
+    <value>Welcome to BetterLyrics</value>
+  </data>
+  <data name="MainPageTitleBarTeachingTip.Title" xml:space="preserve">
+    <value>The top area is the title bar</value>
+  </data>
+  <data name="MainPageTitleBarTeachingTip.Subtitle" xml:space="preserve">
+    <value>Hover on the top area to show it</value>
+  </data>
+  <data name="MainPageInitDatabaseTeachingTip.Title" xml:space="preserve">
+    <value>Setup lyrics database now</value>
+  </data>
+  <data name="MainPageInitDatabaseTeachingTip.Subtitle" xml:space="preserve">
+    <value>Hover on the bottom left corner and then click  to open settings page</value>
+  </data>
+  <data name="MainPageBottomCommandTeachingTip.Subtitle" xml:space="preserve">
+    <value>Hover on the bottom area to show it</value>
+  </data>
+  <data name="MainPageBottomCommandTeachingTip.Title" xml:space="preserve">
+    <value>The bottom area is the command area</value>
+  </data>
+  <data name="MainPageLyricsOnlyTeachingTip.Title" xml:space="preserve">
+    <value>Toggle "show lyrics only" here</value>
+  </data>
+  <data name="MainPageLyricsOnlyTeachingTip.Subtitle" xml:space="preserve">
+    <value>When lyrics exist, you can switch them in the lower right corner</value>
+  </data>
+  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <value>No music playing now</value>
+  </data>
+</root>

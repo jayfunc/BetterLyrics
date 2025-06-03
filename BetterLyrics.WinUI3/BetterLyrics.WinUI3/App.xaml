@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="BetterLyrics.WinUI3.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:BetterLyrics.WinUI3.Converter"
+    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:local="using:BetterLyrics.WinUI3">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.SettingsControls/SettingsExpander/SettingsExpander.xaml" />
+                <!--  Other merged dictionaries here  -->
+            </ResourceDictionary.MergedDictionaries>
+
+            <!--  Theme  -->
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Color x:Key="SemiTransparentSystemBaseHighColor">#80000000</Color>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Color x:Key="SemiTransparentSystemBaseHighColor">#80FFFFFF</Color>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+
+            <!--  Brush  -->
+            <LinearGradientBrush x:Key="BaseHighEdgeHorizontalFadeBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="0.02" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="0.98" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="1" Color="Transparent" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="BaseHighEdgeVerticalFadeBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="0.15" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="0.85" Color="{ThemeResource SystemBaseHighColor}" />
+                <GradientStop Offset="1" Color="Transparent" />
+            </LinearGradientBrush>
+
+            <!--  Animation  -->
+            <ExponentialEase x:Key="EaseInOut" EasingMode="EaseInOut" />
+            <ExponentialEase x:Key="EaseOut" EasingMode="EaseOut" />
+            <ExponentialEase x:Key="EaseIn" EasingMode="EaseIn" />
+
+            <!--  Converter  -->
+            <converter:ThemeTypeToElementThemeConverter x:Key="ThemeTypeToElementThemeConverter" />
+            <converter:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+
+            <x:Double x:Key="SettingsCardSpacing">4</x:Double>
+
+            <!--  Style (inc. the correct spacing) of a section header  -->
+            <Style
+                x:Key="SettingsSectionHeaderTextBlockStyle"
+                BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+                TargetType="TextBlock">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="1,30,0,6" />
+                </Style.Setters>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

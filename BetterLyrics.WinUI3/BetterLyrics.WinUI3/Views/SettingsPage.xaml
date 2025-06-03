@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="BetterLyrics.WinUI3.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:BetterLyrics.WinUI3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
+    x:Name="RootPage"
+    NavigationCacheMode="Required"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid">
+
+        <controls:OpacityMaskView HorizontalContentAlignment="Stretch">
+            <controls:OpacityMaskView.OpacityMask>
+                <Rectangle Fill="{StaticResource BaseHighEdgeVerticalFadeBrush}" />
+            </controls:OpacityMaskView.OpacityMask>
+            <ScrollViewer>
+                <Grid Margin="36,72,36,72">
+                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                        <TextBlock x:Uid="SettingsPageLyricsLib" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsExpander
+                            x:Uid="SettingsPageMusicLib"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}"
+                            IsExpanded="True"
+                            ItemsSource="{x:Bind ViewModel.SettingsService.MusicLibraries, Mode=OneWay}">
+                            <controls:SettingsExpander.ItemTemplate>
+                                <DataTemplate>
+                                    <controls:SettingsCard Header="{Binding Path, Mode=OneWay}">
+                                        <interactivity:Interaction.Behaviors>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{Binding IsValid, Mode=OneWay}"
+                                                ComparisonCondition="Equal"
+                                                Value="True">
+                                                <interactivity:ChangePropertyAction PropertyName="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                                            </interactivity:DataTriggerBehavior>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{Binding IsValid, Mode=OneWay}"
+                                                ComparisonCondition="Equal"
+                                                Value="False">
+                                                <interactivity:ChangePropertyAction PropertyName="Background" Value="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
+                                            </interactivity:DataTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                        <controls:SettingsCard.Description>
+                                            <TextBlock x:Uid="SettingsPagePathNotFound" Foreground="{ThemeResource SystemFillColorCriticalBrush}">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <interactivity:DataTriggerBehavior
+                                                        Binding="{Binding IsValid, Mode=OneWay}"
+                                                        ComparisonCondition="Equal"
+                                                        Value="True">
+                                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                                    </interactivity:DataTriggerBehavior>
+                                                    <interactivity:DataTriggerBehavior
+                                                        Binding="{Binding IsValid, Mode=OneWay}"
+                                                        ComparisonCondition="Equal"
+                                                        Value="False">
+                                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                                    </interactivity:DataTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </TextBlock>
+                                        </controls:SettingsCard.Description>
+                                        <StackPanel Orientation="Horizontal">
+                                            <HyperlinkButton
+                                                x:Uid="SettingsPageOpenPath"
+                                                Command="{Binding DataContext.OpenFolderInFileExplorerCommand, ElementName=RootPage}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{Binding IsValid, Mode=OneWay}" />
+                                            <HyperlinkButton
+                                                x:Uid="SettingsPageRemovePath"
+                                                Command="{Binding DataContext.RemoveFolderCommand, ElementName=RootPage}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{Binding DataContext.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay, ElementName=RootPage}" />
+                                        </StackPanel>
+                                    </controls:SettingsCard>
+                                </DataTemplate>
+                            </controls:SettingsExpander.ItemTemplate>
+                            <controls:SettingsExpander.ItemsHeader>
+                                <InfoBar
+                                    x:Uid="SettingsPageRemoveInfo"
+                                    BorderThickness="0"
+                                    CornerRadius="0"
+                                    IsClosable="False"
+                                    IsOpen="True"
+                                    Severity="Success">
+
+                                    <interactivity:Interaction.Behaviors>
+
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.SettingsService.MusicLibraries.Count, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.SettingsService.MusicLibraries.Count, Mode=OneWay}"
+                                            ComparisonCondition="NotEqual"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </interactivity:DataTriggerBehavior>
+
+                                    </interactivity:Interaction.Behaviors>
+
+                                </InfoBar>
+                            </controls:SettingsExpander.ItemsHeader>
+                            <controls:SettingsExpander.ItemsFooter>
+                                <controls:SettingsCard
+                                    x:Uid="SettingsPageAddFolder"
+                                    IsEnabled="{x:Bind ViewModel.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                    Style="{StaticResource DefaultSettingsExpanderItemStyle}">
+                                    <Button x:Uid="SettingsPageAddFolderButton" Command="{x:Bind ViewModel.AddFolderCommand}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.ItemsFooter>
+                        </controls:SettingsExpander>
+
+                        <controls:SettingsCard
+                            x:Uid="SettingsPageRebuildDatabase"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xE621;}"
+                            IsEnabled="{x:Bind ViewModel.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            <controls:SettingsCard.Description>
+                                <TextBlock x:Uid="SettingsPageRebuildDatabaseDesc" Visibility="{x:Bind ViewModel.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                            </controls:SettingsCard.Description>
+                            <StackPanel>
+                                <Button x:Uid="SettingsPageRebuildDatabaseButton" Command="{x:Bind ViewModel.RebuildLyricsIndexDatabaseCommand}" />
+                                <ProgressBar
+                                    IsIndeterminate="True"
+                                    ShowError="False"
+                                    ShowPaused="False"
+                                    Visibility="{x:Bind ViewModel.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+
+                        <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
+                            <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind ViewModel.SettingsService.Theme, Mode=TwoWay}">
+                                <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                                <ComboBoxItem x:Uid="SettingsPageLight" />
+                                <ComboBoxItem x:Uid="SettingsPageDark" />
+                            </ComboBox>
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard x:Uid="SettingsPageBackdrop" HeaderIcon="{ui:FontIcon Glyph=&#xF5EF;}">
+                            <ComboBox x:Name="BackdropComboBox" SelectedIndex="{x:Bind ViewModel.SettingsService.BackdropType, Mode=TwoWay}">
+                                <ComboBoxItem x:Uid="SettingsPageNoBackdrop" />
+                                <ComboBoxItem x:Uid="SettingsPageMica" />
+                                <ComboBoxItem x:Uid="SettingsPageMicaAlt" />
+                                <ComboBoxItem x:Uid="SettingsPageDesktopAcrylic" />
+                                <ComboBoxItem x:Uid="SettingsPageAcrylicThin" />
+                                <ComboBoxItem x:Uid="SettingsPageAcrylicBase" />
+                                <ComboBoxItem x:Uid="SettingsPageTransparent" />
+                            </ComboBox>
+                        </controls:SettingsCard>
+
+                        <controls:SettingsExpander
+                            x:Uid="SettingsPageLanguage"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}"
+                            IsExpanded="True">
+                            <ComboBox SelectedIndex="{x:Bind ViewModel.SettingsService.Language, Mode=TwoWay}">
+                                <ComboBoxItem x:Uid="SettingsPageSystemLanguage" />
+                                <ComboBoxItem x:Uid="SettingsPageEN" />
+                                <ComboBoxItem x:Uid="SettingsPageSC" />
+                                <ComboBoxItem x:Uid="SettingsPageTC" />
+                            </ComboBox>
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard>
+                                    <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+
+                        <TextBlock x:Uid="SettingsPageAlbum" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsExpander
+                            x:Uid="SettingsPageCoverOverlay"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xE93C;}"
+                            IsExpanded="True">
+                            <controls:SettingsExpander.Description>
+                                <StackPanel>
+                                    <TextBlock x:Uid="SettingsPageCoverOverlayGPUUsage" />
+                                </StackPanel>
+                            </controls:SettingsExpander.Description>
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.SettingsService.IsCoverOverlayEnabled, Mode=TwoWay}" />
+                            <controls:SettingsExpander.Items>
+
+                                <controls:SettingsCard x:Uid="SettingsPageDynamicCoverOverlay" IsEnabled="{x:Bind ViewModel.SettingsService.IsCoverOverlayEnabled, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SettingsService.IsDynamicCoverOverlay, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageCoverOverlayOpacity" IsEnabled="{x:Bind ViewModel.SettingsService.IsCoverOverlayEnabled, Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.SettingsService.CoverOverlayOpacity, Mode=OneWay}" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text=" %" />
+                                        <Slider
+                                            Maximum="100"
+                                            Minimum="1"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="1"
+                                            TickFrequency="1"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.SettingsService.CoverOverlayOpacity, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageCoverOverlayBlurAmount" IsEnabled="{x:Bind ViewModel.SettingsService.IsCoverOverlayEnabled, Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind ViewModel.SettingsService.CoverOverlayBlurAmount, Mode=OneWay}" />
+                                        <Slider
+                                            Maximum="200"
+                                            Minimum="50"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="10"
+                                            TickFrequency="10"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.SettingsService.CoverOverlayBlurAmount, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+
+                        <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon Glyph=&#xE8E3;}">
+                            <ComboBox SelectedIndex="{x:Bind ViewModel.SettingsService.LyricsAlignmentType, Mode=TwoWay}">
+                                <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
+                                <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
+                                <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
+                            </ComboBox>
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon Glyph=&#xE8E9;}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                <TextBlock
+                                    Margin="0,0,14,0"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind ViewModel.SettingsService.LyricsFontSize, Mode=OneWay}" />
+                                <Slider
+                                    Maximum="48"
+                                    Minimum="12"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="2"
+                                    TickFrequency="2"
+                                    TickPlacement="Outside"
+                                    Value="{x:Bind ViewModel.SettingsService.LyricsFontSize, Mode=TwoWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon Glyph=&#xF579;}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.SettingsService.LyricsLineSpacingFactor, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Uid="SettingsPageLyricsLineSpacingFactorUnit"
+                                    Margin="0,0,14,0"
+                                    VerticalAlignment="Center" />
+                                <Slider
+                                    Maximum="2"
+                                    Minimum="0"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="0.1"
+                                    TickFrequency="0.1"
+                                    TickPlacement="Outside"
+                                    Value="{x:Bind ViewModel.SettingsService.LyricsLineSpacingFactor, Mode=TwoWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+
+                        <TextBlock x:Uid="SettingsPageLyricsEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsCard x:Uid="SettingsPageLyricsVerticalEdgeOpacity" HeaderIcon="{ui:FontIcon Glyph=&#xF573;}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.SettingsService.LyricsVerticalEdgeOpacity, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="0,0,14,0"
+                                    VerticalAlignment="Center"
+                                    Text=" %" />
+                                <Slider
+                                    Maximum="100"
+                                    Minimum="0"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="1"
+                                    TickFrequency="1"
+                                    TickPlacement="Outside"
+                                    Value="{x:Bind ViewModel.SettingsService.LyricsVerticalEdgeOpacity, Mode=TwoWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount" HeaderIcon="{ui:FontIcon Glyph=&#xE727;}">
+                            <controls:SettingsCard.Description>
+                                <StackPanel>
+                                    <TextBlock x:Uid="SettingsPageLyricsBlurHighGPUUsage" Foreground="{ThemeResource SystemFillColorCautionBrush}" />
+                                    <TextBlock x:Uid="SettingsPageLyricsBlurAmountSideEffect" />
+                                </StackPanel>
+                            </controls:SettingsCard.Description>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                <TextBlock
+                                    Margin="0,0,14,0"
+                                    VerticalAlignment="Center"
+                                    Text="{x:Bind ViewModel.SettingsService.LyricsBlurAmount, Mode=OneWay}" />
+                                <Slider
+                                    Maximum="10"
+                                    Minimum="0"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="1"
+                                    TickFrequency="1"
+                                    TickPlacement="Outside"
+                                    Value="{x:Bind ViewModel.SettingsService.LyricsBlurAmount, Mode=TwoWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+
+                        <controls:SettingsExpander
+                            x:Uid="SettingsPageLyricsGlowEffect"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xE9A9;}"
+                            IsExpanded="True">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.SettingsService.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
+                            <controls:SettingsExpander.Items>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsDynamicGlowEffect" IsEnabled="{x:Bind ViewModel.SettingsService.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SettingsService.IsLyricsDynamicGlowEffectEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+
+                        <TextBlock x:Uid="SettingsPageAbout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsCard Header="BetterLyrics" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Icon.png}">
+                            <controls:SettingsCard.Description>
+                                <RichTextBlock>
+                                    <Paragraph>
+                                        <Run x:Uid="SettingsPageVersion" />
+                                        <Run Text="{x:Bind ViewModel.Version, Mode=OneWay}" />
+                                    </Paragraph>
+                                </RichTextBlock>
+                            </controls:SettingsCard.Description>
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard
+                            x:Uid="SettingsPageGitHub"
+                            ActionIcon="{ui:FontIcon Glyph=&#xE8A7;}"
+                            Command="{x:Bind ViewModel.LaunchProjectGitHubPageCommand}"
+                            HeaderIcon="{ui:FontIcon Glyph=&#xE943;}"
+                            IsClickEnabled="True" />
+
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </controls:OpacityMaskView>
+
+    </Grid>
+</Page>

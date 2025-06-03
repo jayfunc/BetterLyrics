@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>本地音樂媒體庫</value>
+  </data>
+  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <value>新增存放音樂或歌詞的資料夾以建立歌詞索引資料庫</value>
+  </data>
+  <data name="SettingsPageOpenPath.Content" xml:space="preserve">
+    <value>在檔案總管中開啟</value>
+  </data>
+  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <value>從應用程式中移除</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <value>您可以安全刪除以下項目</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <value>路徑中的原始檔案和資料夾不會被刪除</value>
+  </data>
+  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
+    <value>新增資料夾</value>
+  </data>
+  <data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>主題</value>
+  </data>
+  <data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>跟隨系統</value>
+  </data>
+  <data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>淺色</value>
+  </data>
+  <data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="SettingsPageSC.Content" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="SettingsPageTC.Content" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="SettingsPageEN.Content" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="SettingsPageGitHub.Header" xml:space="preserve">
+    <value>此應用程式已開源</value>
+  </data>
+  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
+    <value>在新視窗中開啟</value>
+  </data>
+  <data name="SettingsPageGitHub.Description" xml:space="preserve">
+    <value>在 GitHub 上查看原始碼</value>
+  </data>
+  <data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>版本號</value>
+  </data>
+  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="SettingsPageMica.Content" xml:space="preserve">
+    <value>雲母</value>
+  </data>
+  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
+    <value>雲母（替代樣式）</value>
+  </data>
+  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
+    <value>亞克力（桌面）</value>
+  </data>
+  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
+    <value>亞克力（基礎）</value>
+  </data>
+  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
+    <value>亞克力（薄層）</value>
+  </data>
+  <data name="SettingsPageTransparent.Content" xml:space="preserve">
+    <value>透明</value>
+  </data>
+  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
+    <value>背景材質</value>
+  </data>
+  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+    <value>預設</value>
+  </data>
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>重啟應用程式以應用更改</value>
+  </data>
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>無法在您的電腦中找到該路徑</value>
+  </data>
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>已新增過該資料夾，請勿重複新增</value>
+  </data>
+  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
+    <value>疊加專輯圖片背景</value>
+  </data>
+  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
+    <value>動態專輯圖片背景</value>
+  </data>
+  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
+    <value>專輯圖片背景不透明度</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="MainPageTitle" xml:space="preserve">
+    <value>BetterLyrics</value>
+  </data>
+  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
+    <value>歌詞樣式</value>
+  </data>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>對齊方式</value>
+  </data>
+  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>靠左</value>
+  </data>
+  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>靠右</value>
+  </data>
+  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
+    <value>專輯圖片背景模糊度</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
+    <value>模糊度</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
+    <value>調整此數值將同步提升專輯圖片背景模糊強度</value>
+  </data>
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>目前值：</value>
+  </data>
+  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
+    <value>啟用模糊（&gt; 0）時將顯著提升 GPU 佔用率</value>
+  </data>
+  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
+    <value>啟用此功能將略微提升 GPU 佔用率</value>
+  </data>
+  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+    <value>上下邊緣不透明度</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>行間距</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+    <value> 倍行高</value>
+  </data>
+  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>字體大小</value>
+  </data>
+  <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
+    <value>僅展示歌詞</value>
+  </data>
+  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
+    <value>歌詞效果</value>
+  </data>
+  <data name="SettingsPageAlbum.Text" xml:space="preserve">
+    <value>專輯背景</value>
+  </data>
+  <data name="SettingsPageAbout.Text" xml:space="preserve">
+    <value>關於</value>
+  </data>
+  <data name="SettingsPageLyricsLib.Text" xml:space="preserve">
+    <value>歌詞庫</value>
+  </data>
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <value>應用外觀</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>輝光效果</value>
+  </data>
+  <data name="SettingsPageLyricsDynamicGlowEffect.Header" xml:space="preserve">
+    <value>動態輝光效果</value>
+  </data>
+  <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
+    <value>重構歌詞索引資料庫</value>
+  </data>
+  <data name="SettingsPageRebuildDatabaseButton.Content" xml:space="preserve">
+    <value>重構</value>
+  </data>
+  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="SettingsPageRebuildDatabaseDesc.Text" xml:space="preserve">
+    <value>重構資料庫中，請稍候...</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
+    <value>來看看怎麼使用這款應用程式吧</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
+    <value>歡迎使用 BetterLyrics</value>
+  </data>
+  <data name="MainPageTitleBarTeachingTip.Title" xml:space="preserve">
+    <value>頂部區域是標題欄</value>
+  </data>
+  <data name="MainPageTitleBarTeachingTip.Subtitle" xml:space="preserve">
+    <value>懸停在頂部區域以顯示</value>
+  </data>
+  <data name="MainPageInitDatabaseTeachingTip.Title" xml:space="preserve">
+    <value>現在就來初始化歌詞資料庫吧</value>
+  </data>
+  <data name="MainPageInitDatabaseTeachingTip.Subtitle" xml:space="preserve">
+    <value>懸停在左下角後點擊以進入設定頁面</value>
+  </data>
+  <data name="MainPageBottomCommandTeachingTip.Subtitle" xml:space="preserve">
+    <value>懸停在底部區域以顯示</value>
+  </data>
+  <data name="MainPageBottomCommandTeachingTip.Title" xml:space="preserve">
+    <value>底部區域是命令列</value>
+  </data>
+  <data name="MainPageLyricsOnlyTeachingTip.Title" xml:space="preserve">
+    <value>在此切換“僅展示歌詞”</value>
+  </data>
+  <data name="MainPageLyricsOnlyTeachingTip.Subtitle" xml:space="preserve">
+    <value>當歌詞存在時可在右下角進行切換</value>
+  </data>
+  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <value>目前沒有正在播放的音樂</value>
+  </data>
+</root>

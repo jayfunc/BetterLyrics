@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.36105.23 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "BetterLyrics.WinUI3 (Package)", "BetterLyrics.WinUI3\BetterLyrics.WinUI3 (Package)\BetterLyrics.WinUI3 (Package).wapproj", "{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.WinUI3", "BetterLyrics.WinUI3\BetterLyrics.WinUI3\BetterLyrics.WinUI3.csproj", "{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|ARM64.Build.0 = Debug|ARM64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|x64.ActiveCfg = Debug|x64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|x64.Build.0 = Debug|x64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|x64.Deploy.0 = Debug|x64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|x86.ActiveCfg = Debug|x86
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|x86.Build.0 = Debug|x86
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Debug|x86.Deploy.0 = Debug|x86
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|ARM64.ActiveCfg = Release|ARM64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|ARM64.Build.0 = Release|ARM64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|ARM64.Deploy.0 = Release|ARM64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|x64.ActiveCfg = Release|x64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|x64.Build.0 = Release|x64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|x64.Deploy.0 = Release|x64
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|x86.ActiveCfg = Release|x86
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|x86.Build.0 = Release|x86
+		{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}.Release|x86.Deploy.0 = Release|x86
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Debug|ARM64.Build.0 = Debug|ARM64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Debug|x64.ActiveCfg = Debug|x64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Debug|x64.Build.0 = Debug|x64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Debug|x86.ActiveCfg = Debug|x86
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Debug|x86.Build.0 = Debug|x86
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Release|ARM64.ActiveCfg = Release|ARM64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Release|ARM64.Build.0 = Release|ARM64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Release|x64.ActiveCfg = Release|x64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Release|x64.Build.0 = Release|x64
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Release|x86.ActiveCfg = Release|x86
+		{6D26909A-9EE5-4D26-9E81-686BDE36A9D3}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FD73F15-ED69-4DC2-9FD3-A4F03AF172A4}
+	EndGlobalSection
+EndGlobal
