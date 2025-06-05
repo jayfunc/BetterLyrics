@@ -10,7 +10,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
-    x:Name="RootPage"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
@@ -29,54 +28,21 @@
                         <controls:SettingsExpander
                             x:Uid="SettingsPageMusicLib"
                             HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}"
+                            IsEnabled="{x:Bind ViewModel.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                             IsExpanded="True"
                             ItemsSource="{x:Bind ViewModel.SettingsService.MusicLibraries, Mode=OneWay}">
                             <controls:SettingsExpander.ItemTemplate>
                                 <DataTemplate>
-                                    <controls:SettingsCard Header="{Binding Path, Mode=OneWay}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <interactivity:DataTriggerBehavior
-                                                Binding="{Binding IsValid, Mode=OneWay}"
-                                                ComparisonCondition="Equal"
-                                                Value="True">
-                                                <interactivity:ChangePropertyAction PropertyName="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
-                                            </interactivity:DataTriggerBehavior>
-                                            <interactivity:DataTriggerBehavior
-                                                Binding="{Binding IsValid, Mode=OneWay}"
-                                                ComparisonCondition="Equal"
-                                                Value="False">
-                                                <interactivity:ChangePropertyAction PropertyName="Background" Value="{ThemeResource SystemFillColorCriticalBackgroundBrush}" />
-                                            </interactivity:DataTriggerBehavior>
-                                        </interactivity:Interaction.Behaviors>
-                                        <controls:SettingsCard.Description>
-                                            <TextBlock x:Uid="SettingsPagePathNotFound" Foreground="{ThemeResource SystemFillColorCriticalBrush}">
-                                                <interactivity:Interaction.Behaviors>
-                                                    <interactivity:DataTriggerBehavior
-                                                        Binding="{Binding IsValid, Mode=OneWay}"
-                                                        ComparisonCondition="Equal"
-                                                        Value="True">
-                                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                                                    </interactivity:DataTriggerBehavior>
-                                                    <interactivity:DataTriggerBehavior
-                                                        Binding="{Binding IsValid, Mode=OneWay}"
-                                                        ComparisonCondition="Equal"
-                                                        Value="False">
-                                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                                                    </interactivity:DataTriggerBehavior>
-                                                </interactivity:Interaction.Behaviors>
-                                            </TextBlock>
-                                        </controls:SettingsCard.Description>
+                                    <controls:SettingsCard Header="{Binding}">
                                         <StackPanel Orientation="Horizontal">
                                             <HyperlinkButton
                                                 x:Uid="SettingsPageOpenPath"
-                                                Command="{Binding DataContext.OpenFolderInFileExplorerCommand, ElementName=RootPage}"
-                                                CommandParameter="{Binding}"
-                                                IsEnabled="{Binding IsValid, Mode=OneWay}" />
+                                                Click="SettingsPageOpenPathButton_Click"
+                                                Tag="{Binding}" />
                                             <HyperlinkButton
                                                 x:Uid="SettingsPageRemovePath"
-                                                Command="{Binding DataContext.RemoveFolderCommand, ElementName=RootPage}"
-                                                CommandParameter="{Binding}"
-                                                IsEnabled="{Binding DataContext.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay, ElementName=RootPage}" />
+                                                Click="SettingsPageRemovePathButton_Click"
+                                                Tag="{Binding}" />
                                         </StackPanel>
                                     </controls:SettingsCard>
                                 </DataTemplate>
@@ -110,11 +76,8 @@
                                 </InfoBar>
                             </controls:SettingsExpander.ItemsHeader>
                             <controls:SettingsExpander.ItemsFooter>
-                                <controls:SettingsCard
-                                    x:Uid="SettingsPageAddFolder"
-                                    IsEnabled="{x:Bind ViewModel.SettingsService.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                    Style="{StaticResource DefaultSettingsExpanderItemStyle}">
-                                    <Button x:Uid="SettingsPageAddFolderButton" Command="{x:Bind ViewModel.AddFolderCommand}" />
+                                <controls:SettingsCard x:Uid="SettingsPageAddFolder" Style="{StaticResource DefaultSettingsExpanderItemStyle}">
+                                    <Button x:Uid="SettingsPageAddFolderButton" Command="{x:Bind ViewModel.SelectAndAddFolderCommand}" />
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.ItemsFooter>
                         </controls:SettingsExpander>
@@ -358,6 +321,16 @@
                             Command="{x:Bind ViewModel.LaunchProjectGitHubPageCommand}"
                             HeaderIcon="{ui:FontIcon Glyph=&#xE943;}"
                             IsClickEnabled="True" />
+
+                        <TextBlock x:Uid="SettingsPageDev" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
+                            <Button x:Uid="SettingsPagePlayingMockMusicButton" Command="{x:Bind ViewModel.PlayTestingMusicTaskCommand}" />
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard x:Uid="SettingsPageLog">
+                            <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenLogFolderCommand}" />
+                        </controls:SettingsCard>
 
                     </StackPanel>
                 </Grid>

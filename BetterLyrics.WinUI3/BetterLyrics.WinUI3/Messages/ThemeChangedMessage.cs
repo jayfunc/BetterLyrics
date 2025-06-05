@@ -7,8 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Messages {
-    public class ThemeChangedMessage : ValueChangedMessage<ElementTheme> {
-        public ThemeChangedMessage(ElementTheme value) : base(value) {
-        }
+    public class ThemeChangedMessage(ElementTheme value) : ValueChangedMessage<ElementTheme>(value) {
     }
 }

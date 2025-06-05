@@ -19,20 +19,18 @@ namespace BetterLyrics.WinUI3.Services.Database {
         private readonly CharsetDetector _charsetDetector = new();
 
         public DatabaseService() {
-            string dbPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "MusicMetadataIndex.db"
-            );
-            _connection = new SQLiteConnection(dbPath);
-            _connection.CreateTable<MetadataIndex>();
+            _connection = new SQLiteConnection(Helper.AppInfo.DatabasePath);
+            if (_connection.GetTableInfo("MetadataIndex").Count == 0) {
+                _connection.CreateTable<MetadataIndex>();
+            }
         }
 
-        public async Task RebuildMusicMetadataIndexDatabaseAsync(IList<MusicFolder> musicFolders) {
+        public async Task RebuildMusicMetadataIndexDatabaseAsync(IList<string> paths) {
             await Task.Run(() => {
                 _connection.DeleteAll<MetadataIndex>();
-                foreach (var localMusicFolder in musicFolders) {
-                    if (localMusicFolder.IsValid) {
-                        foreach (var file in Directory.GetFiles(localMusicFolder.Path)) {
+                foreach (var path in paths) {
+                    if (Directory.Exists(path)) {
+                        foreach (var file in Directory.GetFiles(path)) {
                             var fileExtension = Path.GetExtension(file);
                             var track = new Track(file);
                             _connection.Insert(new MetadataIndex {

@@ -7,7 +7,17 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
+using System.IO;
 using System.Text;
+using System;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using Windows.ApplicationModel.Core;
+using Serilog.Core;
+using BetterLyrics.WinUI3.Models;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using Microsoft.Windows.AppLifecycle;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -17,11 +27,14 @@ namespace BetterLyrics.WinUI3 {
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     public partial class App : Application {
-        public static App Current => (App)Application.Current;
+
+        private readonly ILogger<App> _logger;
+
+        public static new App Current => (App)Application.Current;
         public MainWindow? MainWindow { get; private set; }
         public MainWindow? SettingsWindow { get; set; }
 
-        public static ResourceLoader ResourceLoader = new();
+        public static ResourceLoader? ResourceLoader { get; private set; }
 
         public static DispatcherQueue DispatcherQueue => DispatcherQueue.GetForCurrentThread();
 
@@ -31,18 +44,32 @@ namespace BetterLyrics.WinUI3 {
         /// </summary>
         public App() {
             this.InitializeComponent();
+
+            App.ResourceLoader = new ResourceLoader();
+
+            Helper.AppInfo.EnsureDirectories();
+            ConfigureServices();
+
+            _logger = Ioc.Default.GetService<ILogger<App>>()!;
+
+            UnhandledException += App_UnhandledException;
         }
 
-        /// <summary>
-        /// Invoked when the application is launched.
-        /// </summary>
-        /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args) {
+        private static void ConfigureServices() {
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File(Helper.AppInfo.LogFilePattern, rollingInterval: RollingInterval.Day)
+                .CreateLogger();
 
             // Register services
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton(DispatcherQueue.GetForCurrentThread())
+                .AddLogging(loggingBuilder => {
+                    loggingBuilder.ClearProviders();
+                    loggingBuilder.AddSerilog();
+                })
                 // Services
                 .AddSingleton<SettingsService>()
                 .AddSingleton<DatabaseService>()
@@ -50,6 +77,18 @@ namespace BetterLyrics.WinUI3 {
                 .AddSingleton<MainViewModel>()
                 .AddSingleton<SettingsViewModel>()
                 .BuildServiceProvider());
+        }
+
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e) {
+            _logger.LogError(e.Exception, "App_UnhandledException");
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Invoked when the application is launched.
+        /// </summary>
+        /// <param name="args">Details about the launch request and process.</param>
+        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args) {
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

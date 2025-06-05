@@ -126,6 +126,9 @@
   <data name="SettingsPageOpenPath.Content" xml:space="preserve">
     <value>Open in file explorer</value>
   </data>
+  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
+    <value>Open in file explorer</value>
+  </data>
   <data name="SettingsPageRemovePath.Content" xml:space="preserve">
     <value>Remove from app</value>
   </data>
@@ -322,7 +325,7 @@
     <value>Setup lyrics database now</value>
   </data>
   <data name="MainPageInitDatabaseTeachingTip.Subtitle" xml:space="preserve">
-    <value>Hover on the bottom left corner and then click  to open settings page</value>
+    <value>Hover on the bottom left corner and then click to open settings page</value>
   </data>
   <data name="MainPageBottomCommandTeachingTip.Subtitle" xml:space="preserve">
     <value>Hover on the bottom area to show it</value>
@@ -338,5 +341,17 @@
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>No music playing now</value>
+  </data>
+  <data name="SettingsPageDev.Text" xml:space="preserve">
+    <value>Developer options</value>
+  </data>
+  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <value>Play test music</value>
+  </data>
+  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+    <value>Play using system player</value>
+  </data>
+  <data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>Log</value>
   </data>
 </root>

@@ -16,12 +16,8 @@
 
             <!--  Theme  -->
             <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Light">
-                    <Color x:Key="SemiTransparentSystemBaseHighColor">#80000000</Color>
-                </ResourceDictionary>
-                <ResourceDictionary x:Key="Dark">
-                    <Color x:Key="SemiTransparentSystemBaseHighColor">#80FFFFFF</Color>
-                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light" />
+                <ResourceDictionary x:Key="Dark" />
             </ResourceDictionary.ThemeDictionaries>
 
             <!--  Brush  -->

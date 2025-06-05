@@ -26,6 +26,8 @@ using Color = Windows.UI.Color;
 using System.Linq;
 using Microsoft.UI.Windowing;
 using Windows.Graphics.Imaging;
+using Windows.Media;
+using Microsoft.Extensions.Logging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,7 +39,7 @@ namespace BetterLyrics.WinUI3.Views {
     public sealed partial class MainPage : Page {
 
         public MainViewModel ViewModel => (MainViewModel)DataContext;
-        private SettingsService _settingsService;
+        private readonly SettingsService _settingsService;
 
         private List<LyricsLine> _lyricsLines = [];
 
@@ -48,29 +50,27 @@ namespace BetterLyrics.WinUI3.Views {
         private float _coverBitmapRotateAngle = 0f;
         private float _coverScaleFactor = 1;
 
-        private float _coverRotateSpeed = 0.003f;
+        private readonly float _coverRotateSpeed = 0.003f;
 
         private float _lyricsGlowEffectAngle = 0f;
-        private float _lyricsGlowEffectSpeed = 0.01f;
+        private readonly float _lyricsGlowEffectSpeed = 0.01f;
 
-        private float _lyricsGlowEffectMinBlurAmount = 0f;
-        private float _lyricsGlowEffectMaxBlurAmount = 6f;
+        private readonly float _lyricsGlowEffectMinBlurAmount = 0f;
+        private readonly float _lyricsGlowEffectMaxBlurAmount = 6f;
 
-        private int _animationDurationMs = 200;
-
-        private DispatcherQueueTimer _queueTimer;
+        private readonly DispatcherQueueTimer _queueTimer;
 
         private TimeSpan _currentTime = TimeSpan.Zero;
 
-        private float _defaultOpacity = 0.3f;
-        private float _highlightedOpacity = 1.0f;
+        private readonly float _defaultOpacity = 0.3f;
+        private readonly float _highlightedOpacity = 1.0f;
 
-        private float _defaultScale = 0.95f;
-        private float _highlightedScale = 1.0f;
+        private readonly float _defaultScale = 0.95f;
+        private readonly float _highlightedScale = 1.0f;
 
-        private int _lineEnteringDurationMs = 800;
-        private int _lineExitingDurationMs = 800;
-        private int _lineScrollDurationMs = 800;
+        private readonly int _lineEnteringDurationMs = 800;
+        private readonly int _lineExitingDurationMs = 800;
+        private readonly int _lineScrollDurationMs = 800;
 
         private float _lastTotalYScroll = 0.0f;
         private float _totalYScroll = 0.0f;
@@ -78,7 +78,7 @@ namespace BetterLyrics.WinUI3.Views {
         private double _lyricsAreaWidth = 0.0f;
         private double _lyricsAreaHeight = 0.0f;
 
-        private double _lyricsCanvasRightMargin = 36;
+        private readonly double _lyricsCanvasRightMargin = 36;
         private double _lyricsCanvasLeftMargin = 0;
         private double _lyricsCanvasMaxTextWidth = 0;
 
@@ -86,7 +86,6 @@ namespace BetterLyrics.WinUI3.Views {
         private int _endVisibleLineIndex = -1;
 
         private bool _forceToScroll = false;
-        private bool _isRelayoutLyricsNeeded = false;
 
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
@@ -95,8 +94,12 @@ namespace BetterLyrics.WinUI3.Views {
 
         private Color _lyricsColor;
 
+        private readonly ILogger<MainPage> _logger;
+
         public MainPage() {
             this.InitializeComponent();
+
+            _logger = Ioc.Default.GetService<ILogger<MainPage>>()!;
 
             SetLyricsColor();
 
@@ -134,6 +137,7 @@ namespace BetterLyrics.WinUI3.Views {
                     }
                     break;
                 case nameof(_settingsService.Theme):
+                    await Task.Delay(1);
                     SetLyricsColor();
                     break;
                 default:
@@ -152,7 +156,7 @@ namespace BetterLyrics.WinUI3.Views {
         }
 
         private void SetLyricsColor() {
-            _lyricsColor = ((SolidColorBrush)TitleTextBlock.Foreground).Color;
+            _lyricsColor = ((SolidColorBrush)LyricsCanvas.Foreground).Color;
         }
 
         private async void InitMediaManager() {
@@ -163,14 +167,14 @@ namespace BetterLyrics.WinUI3.Views {
             SessionManager_CurrentSessionChanged(_sessionManager, null);
         }
 
-        private void CurrentSession_TimelinePropertiesChanged(GlobalSystemMediaTransportControlsSession sender, TimelinePropertiesChangedEventArgs args) {
+        private void CurrentSession_TimelinePropertiesChanged(GlobalSystemMediaTransportControlsSession? sender, TimelinePropertiesChangedEventArgs? args) {
             if (sender == null) {
                 _currentTime = TimeSpan.Zero;
                 return;
             }
 
             _currentTime = sender.GetTimelineProperties().Position;
-            // Debug.WriteLine(_currentTime);
+            // _logger.LogDebug(_currentTime);
         }
 
         /// <summary>
@@ -178,7 +182,7 @@ namespace BetterLyrics.WinUI3.Views {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void CurrentSession_PlaybackInfoChanged(GlobalSystemMediaTransportControlsSession sender, PlaybackInfoChangedEventArgs args) {
+        private void CurrentSession_PlaybackInfoChanged(GlobalSystemMediaTransportControlsSession? sender, PlaybackInfoChangedEventArgs? args) {
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () => {
                 if (sender == null) {
                     LyricsCanvas.Paused = true;
@@ -186,7 +190,7 @@ namespace BetterLyrics.WinUI3.Views {
                 }
 
                 var playbackState = sender.GetPlaybackInfo().PlaybackStatus;
-                Debug.WriteLine(playbackState);
+                _logger.LogDebug(playbackState.ToString());
 
                 switch (playbackState) {
                     case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
@@ -214,12 +218,12 @@ namespace BetterLyrics.WinUI3.Views {
 
         }
 
-        private void SessionManager_SessionsChanged(GlobalSystemMediaTransportControlsSessionManager sender, SessionsChangedEventArgs args) {
-            Debug.WriteLine("SessionManager_SessionsChanged");
+        private void SessionManager_SessionsChanged(GlobalSystemMediaTransportControlsSessionManager sender, SessionsChangedEventArgs? args) {
+            _logger.LogDebug("SessionManager_SessionsChanged");
         }
 
-        private void SessionManager_CurrentSessionChanged(GlobalSystemMediaTransportControlsSessionManager sender, CurrentSessionChangedEventArgs args) {
-            Debug.WriteLine("SessionManager_CurrentSessionChanged");
+        private void SessionManager_CurrentSessionChanged(GlobalSystemMediaTransportControlsSessionManager sender, CurrentSessionChangedEventArgs? args) {
+            _logger.LogDebug("SessionManager_CurrentSessionChanged");
             // Unregister events associated with the previous session  
             if (_currentSession != null) {
                 _currentSession.MediaPropertiesChanged -= CurrentSession_MediaPropertiesChanged;
@@ -244,9 +248,9 @@ namespace BetterLyrics.WinUI3.Views {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        private void CurrentSession_MediaPropertiesChanged(GlobalSystemMediaTransportControlsSession sender, MediaPropertiesChangedEventArgs args) {
+        private void CurrentSession_MediaPropertiesChanged(GlobalSystemMediaTransportControlsSession? sender, MediaPropertiesChangedEventArgs? args) {
             _queueTimer.Debounce(() => {
-                Debug.WriteLine("CurrentSession_MediaPropertiesChanged");
+                _logger.LogDebug("CurrentSession_MediaPropertiesChanged");
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High, async () => {
 
                     GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps = null;
@@ -261,13 +265,14 @@ namespace BetterLyrics.WinUI3.Views {
                     ViewModel.IsAnyMusicSessionExisted = _currentSession != null;
 
                     ViewModel.AboutToUpdateUI = true;
-                    await Task.Delay(_animationDurationMs);
+                    await Task.Delay(AnimationHelper.StoryboardDefaultDuration);
 
-                    (_lyricsLines, _coverSoftwareBitmap, _coverImagePixelWidth, _coverImagePixelHeight) = await ViewModel.SetSongInfoAsync(mediaProps, LyricsCanvas);
+                    (_lyricsLines, _coverSoftwareBitmap, _coverImagePixelWidth, _coverImagePixelHeight) = await ViewModel.SetSongInfoAsync(mediaProps);
 
                     // Force to show lyrics and scroll to current line even if the music is not playing
                     LyricsCanvas.Paused = false;
                     await ForceToScrollToCurrentPlayingLineAsync();
+                    await Task.Delay(1);
                     // Detect and recover the music state
                     CurrentSession_PlaybackInfoChanged(_currentSession, null);
                     CurrentSession_TimelinePropertiesChanged(_currentSession, null);
@@ -275,17 +280,17 @@ namespace BetterLyrics.WinUI3.Views {
                     ViewModel.AboutToUpdateUI = false;
 
                     if (_lyricsLines.Count == 0) {
-                        Grid.SetColumnSpan(SongInfoStackPanel, 3);
+                        Grid.SetColumnSpan(SongInfoInnerGrid, 3);
                     } else {
-                        Grid.SetColumnSpan(SongInfoStackPanel, 1);
+                        Grid.SetColumnSpan(SongInfoInnerGrid, 1);
                     }
 
                 });
-            }, TimeSpan.FromMilliseconds(200));
+            }, TimeSpan.FromMilliseconds(AnimationHelper.DebounceDefaultDuration));
 
         }
 
-        private async void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e) {
+        private async void RootGrid_SizeChanged(object? sender, SizeChangedEventArgs? e) {
             //_queueTimer.Debounce(async () => {
 
             _lyricsAreaHeight = LyricsGrid.ActualHeight;
@@ -315,7 +320,7 @@ namespace BetterLyrics.WinUI3.Views {
 
             // Draw (dynamic) cover image as the very first layer
             if (_settingsService.IsCoverOverlayEnabled && _coverSoftwareBitmap != null) {
-                DrawCoverImage(sender, ds, _settingsService.IsDynamicCoverOverlay);
+                DrawCoverImage(sender, ds);
             }
 
             // Lyrics only layer
@@ -450,7 +455,7 @@ namespace BetterLyrics.WinUI3.Views {
 
                 // Scale
                 ds.Transform = Matrix3x2.CreateScale(line.Scale, new Vector2(centerX, centerY)) * Matrix3x2.CreateTranslation(0, _totalYScroll);
-                //Debug.WriteLine(_totalYScroll);
+                // _logger.LogDebug(_totalYScroll);
 
                 ds.DrawTextLayout(line.TextLayout, position, Colors.Transparent);
 
@@ -460,7 +465,7 @@ namespace BetterLyrics.WinUI3.Views {
 
         }
 
-        private void DrawCoverImage(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool dynamic) {
+        private void DrawCoverImage(ICanvasAnimatedControl control, CanvasDrawingSession ds) {
 
             ds.Transform = Matrix3x2.CreateRotation(_coverBitmapRotateAngle, control.Size.ToVector2() * 0.5f);
 
@@ -518,7 +523,7 @@ namespace BetterLyrics.WinUI3.Views {
 
             }
 
-            if (_lyricsLines.LastOrDefault()?.TextLayout == null || _isRelayoutLyricsNeeded) {
+            if (_lyricsLines.LastOrDefault()?.TextLayout == null) {
                 LayoutLyrics();
             }
 
@@ -542,7 +547,7 @@ namespace BetterLyrics.WinUI3.Views {
         }
 
         private Tuple<int, int> GetVisibleLyricsLineIndexBoundaries() {
-            //Debug.WriteLine($"{_startVisibleLineIndex} {_endVisibleLineIndex}");
+            // _logger.LogDebug($"{_startVisibleLineIndex} {_endVisibleLineIndex}");
             return new Tuple<int, int>(_startVisibleLineIndex, _endVisibleLineIndex);
         }
 
@@ -725,11 +730,20 @@ namespace BetterLyrics.WinUI3.Views {
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e) {
-            if (App.Current.SettingsWindow == null) {
-                App.Current.SettingsWindow = new MainWindow();
-                App.Current.SettingsWindow!.Navigate(typeof(SettingsPage));
+            if (App.Current.SettingsWindow is null) {
+                var settingsWindow = new MainWindow();
+                settingsWindow.Navigate(typeof(SettingsPage));
+                App.Current.SettingsWindow = settingsWindow;
             }
-            App.Current.SettingsWindow.AppWindow.Show();
+
+            var appWindow = App.Current.SettingsWindow.AppWindow;
+
+            if (appWindow.Presenter is OverlappedPresenter presenter) {
+                presenter.Restore();
+            }
+
+            appWindow.Show();
+            appWindow.MoveInZOrderAtTop();
         }
 
         private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args) {
@@ -750,6 +764,10 @@ namespace BetterLyrics.WinUI3.Views {
 
         private void InitDatabaseTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args) {
             _settingsService.IsFirstRun = false;
+        }
+
+        private void CoverArea_SizeChanged(object sender, SizeChangedEventArgs e) {
+            CoverImageGrid.Width = CoverImageGrid.Height = Math.Min(CoverArea.ActualWidth, CoverArea.ActualHeight);
         }
     }
 }
