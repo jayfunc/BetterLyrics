@@ -6,8 +6,10 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class SystemBackdropHelper
     {
-        public static SystemBackdrop? CreateSystemBackdrop(BackdropType backdropType) {
-            return backdropType switch {
+        public static SystemBackdrop? CreateSystemBackdrop(BackdropType backdropType)
+        {
+            return backdropType switch
+            {
                 BackdropType.None => null,
                 BackdropType.Mica => new MicaSystemBackdrop(MicaKind.Base),
                 BackdropType.MicaAlt => new MicaSystemBackdrop(MicaKind.BaseAlt),
@@ -18,6 +20,5 @@ namespace BetterLyrics.WinUI3.Helper
                 _ => null,
             };
         }
-
     }
 }
