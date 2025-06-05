@@ -68,11 +68,17 @@ Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(up
 
 ## Download it now
 
-[![](https://shorturl.at/fzpsa)](https://shorturl.at/JWOuG)
+<a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
+	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+</a>
 
 > **Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version, if you like you can purchase to support me)
 
-Or alternatively get it from [![](https://shorturl.at/SQu8I)](https://shorturl.at/jXbd7)
+Or alternatively get it from [![]()](https://shorturl.at/jXbd7)
+
+<a href="https://drive.google.com/file/d/1Hh8ijbODIksPmmRYujys7fXngw93Of7I/view?usp=drive_link">
+	<img src="https://pngimg.com/uploads/google_drive/google_drive_PNG9.png" width="100"/>
+</a>
 
 > .zip file, please follow [this doc](How2Install/How2Install.md) to properly install it
 
