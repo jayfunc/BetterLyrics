@@ -48,7 +48,7 @@
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\TestMusic.mp3">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 
