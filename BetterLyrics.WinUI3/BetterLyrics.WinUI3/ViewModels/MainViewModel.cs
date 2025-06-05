@@ -1,6 +1,7 @@
 ﻿using ATL;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Database;
+using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -17,7 +18,7 @@ using Windows.UI;
 using static ATL.LyricsInfo;
 
 namespace BetterLyrics.WinUI3.ViewModels {
-    public partial class MainViewModel : ObservableObject {
+    public partial class MainViewModel(DatabaseService databaseService) : ObservableObject {
 
         [ObservableProperty]
         private bool _isAnyMusicSessionExisted = false;
@@ -46,17 +47,18 @@ namespace BetterLyrics.WinUI3.ViewModels {
         [ObservableProperty]
         private bool _lyricsExisted = false;
 
-        private Helper.ColorThief _colorThief = new();
+        private readonly Helper.ColorThief _colorThief = new();
 
-        private readonly DatabaseService _databaseService;
-
-        public MainViewModel(DatabaseService databaseService) {
-            _databaseService = databaseService;
-        }
+        private readonly DatabaseService _databaseService = databaseService;
 
         public List<LyricsLine> GetLyrics(Track? track) {
             List<LyricsLine> result = [];
-            var lyricsPhrases = track?.Lyrics.SynchronizedLyrics;
+
+            if (track == null) {
+                return result;
+            }
+
+            var lyricsPhrases = track.Lyrics.SynchronizedLyrics;
 
             if (lyricsPhrases?.Count > 0) {
                 if (lyricsPhrases[0].TimestampMs > 0) {
@@ -100,7 +102,7 @@ namespace BetterLyrics.WinUI3.ViewModels {
 
         }
 
-        public async Task<(List<LyricsLine>, SoftwareBitmap?, uint, uint)> SetSongInfoAsync(GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps, ICanvasAnimatedControl control) {
+        public async Task<(List<LyricsLine>, SoftwareBitmap?, uint, uint)> SetSongInfoAsync(GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps) {
 
             SoftwareBitmap? coverSoftwareBitmap = null;
             uint coverImagePixelWidth = 0;

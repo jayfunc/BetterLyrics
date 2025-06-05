@@ -1,26 +1,18 @@
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Services.Settings;
-using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Behaviors;
 using DevWinUI;
-using Microsoft.UI;
-using Microsoft.UI.Composition;
-using Microsoft.UI.Composition.SystemBackdrops;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
-using WinRT;
-using WinRT.Interop;
+using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,14 +25,14 @@ namespace BetterLyrics.WinUI3 {
 
         private readonly OverlappedPresenter _presenter;
 
-        private SettingsService _settingsService;
+        private readonly SettingsService _settingsService;
 
         public static StackedNotificationsBehavior? StackedNotificationsBehavior { get; private set; }
 
         public MainWindow() {
             this.InitializeComponent();
 
-            _settingsService = Ioc.Default.GetService<SettingsService>();
+            _settingsService = Ioc.Default.GetService<SettingsService>()!;
 
             RootGrid.RequestedTheme = (ElementTheme)_settingsService.Theme;
             SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop((BackdropType)_settingsService.BackdropType);
@@ -72,14 +64,9 @@ namespace BetterLyrics.WinUI3 {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e) {
-            if (RootFrame.CanGoBack) {
-                RootFrame.GoBack();
-            }
-        }
-
         private void CloseButton_Click(object sender, RoutedEventArgs e) {
             if (RootFrame.CurrentSourcePageType == typeof(MainPage)) {
+                ((RootFrame.Content as MainPage)!.FindChild("LyricsCanvas") as CanvasAnimatedControl)!.Paused = true;
                 App.Current.Exit();
             } else if (RootFrame.CurrentSourcePageType == typeof(SettingsPage)) {
                 App.Current.SettingsWindow!.AppWindow.Hide();
@@ -133,7 +120,7 @@ namespace BetterLyrics.WinUI3 {
         }
 
         private void RootFrame_Navigated(object sender, NavigationEventArgs e) {
-            AppWindow.Title = Title = App.ResourceLoader.GetString($"{e.SourcePageType.Name}Title");
+            AppWindow.Title = Title = App.ResourceLoader!.GetString($"{e.SourcePageType.Name}Title");
         }
 
         private void AOTButton_Click(object sender, RoutedEventArgs e) {

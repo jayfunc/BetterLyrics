@@ -1,29 +1,16 @@
-﻿using ATL;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.Database;
+﻿using BetterLyrics.WinUI3.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using DevWinUI;
-using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Media;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Common;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Globalization;
 using Windows.Storage;
-using Windows.System;
 
 namespace BetterLyrics.WinUI3.Services.Settings {
     public partial class SettingsService : ObservableObject {
@@ -34,7 +21,7 @@ namespace BetterLyrics.WinUI3.Services.Settings {
         }
 
         [ObservableProperty]
-        private bool _isRebuildingLyricsIndexDatabase;
+        private bool _isRebuildingLyricsIndexDatabase = false;
 
         // Theme
         public int Theme {
@@ -46,19 +33,10 @@ namespace BetterLyrics.WinUI3.Services.Settings {
         }
 
         // Music
-        private ObservableCollection<MusicFolder> _musicLibraries;
+        private ObservableCollection<string> _musicLibraries;
 
-        public ObservableCollection<MusicFolder> MusicLibraries {
+        public ObservableCollection<string> MusicLibraries {
             get {
-                if (_musicLibraries == null) {
-                    var list = JsonConvert.DeserializeObject<List<MusicFolder>>(
-                        Get(SettingsKeys.MusicLibraries, SettingsDefaultValues.MusicLibraries)
-                    );
-
-                    _musicLibraries = new ObservableCollection<MusicFolder>(list);
-                    _musicLibraries.CollectionChanged += (_, _) => SaveMusicLibraries();
-                }
-
                 return _musicLibraries;
             }
             set {
@@ -157,24 +135,26 @@ namespace BetterLyrics.WinUI3.Services.Settings {
             set => Set(SettingsKeys.IsLyricsDynamicGlowEffectEnabled, value);
         }
 
-
         private readonly ApplicationDataContainer _localSettings;
-        private readonly DatabaseService _databaseService;
 
-        public SettingsService(DatabaseService databaseService) {
+        public SettingsService() {
             _localSettings = ApplicationData.Current.LocalSettings;
-            _databaseService = databaseService;
+
+            _musicLibraries = [.. JsonConvert.DeserializeObject<List<string>>(
+                    Get(SettingsKeys.MusicLibraries, SettingsDefaultValues.MusicLibraries)!)!];
+
+            _musicLibraries.CollectionChanged += (_, _) => SaveMusicLibraries();
         }
 
-        private T Get<T>(string key, T defaultValue = default) {
-            if (_localSettings.Values.TryGetValue(key, out object value)) {
+        private T? Get<T>(string key, T? defaultValue = default) {
+            if (_localSettings.Values.TryGetValue(key, out object? value)) {
                 return (T)Convert.ChangeType(value, typeof(T));
             }
 
             return defaultValue;
         }
 
-        private void Set<T>(string key, T value, [CallerMemberName] string propertyName = null) {
+        private void Set<T>(string key, T value, [CallerMemberName] string? propertyName = null) {
             _localSettings.Values[key] = value;
             OnPropertyChanged(propertyName);
         }

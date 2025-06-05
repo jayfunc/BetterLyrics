@@ -64,6 +64,12 @@ Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(up
 ![alt text](Screenshots/Snipaste_2025-06-03_17-52-05.png)
 ![alt text](Screenshots/Snipaste_2025-06-03_17-52-11.png)
 
+## Try it now
+
+Download latest version via [Google Drive](https://drive.google.com/file/d/1Hh8ijbODIksPmmRYujys7fXngw93Of7I/view?usp=sharing) or visit Microsoft Store (unavailable at the moment)
+
+To learn about how to install ".msixbundle" package, see [this doc](How2Install/How2Install.md).
+
 ## Many thanks to
 
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
