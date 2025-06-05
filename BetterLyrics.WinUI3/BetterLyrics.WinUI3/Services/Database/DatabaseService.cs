@@ -35,8 +35,8 @@ namespace BetterLyrics.WinUI3.Services.Database {
                             var track = new Track(file);
                             _connection.Insert(new MetadataIndex {
                                 Path = file,
-                                Title = track.Title == "" ? file : track.Title,
-                                Artist = track.Artist == "" ? file : track.Artist,
+                                Title = track.Title,
+                                Artist = track.Artist,
                             });
                         }
                     }
@@ -46,7 +46,10 @@ namespace BetterLyrics.WinUI3.Services.Database {
 
         public Track? GetMusicMetadata(string? title, string? artist) {
             var founds = _connection.Table<MetadataIndex>()
-                .Where(m => m.Title.Contains(title) && m.Artist.Contains(artist)).ToList();
+                // Look up by Title and Artist (these two props were fetched by reading metadata in music file befoe) first
+                // then by Path (music file name usually contains song name and artist so this can be a second way to look up for)
+                // Please note for .lrc file, only the second way works for it
+                .Where(m => (m.Title.Contains(title) && m.Artist.Contains(artist)) || (m.Path.Contains(title) && m.Path.Contains(artist))).ToList();
             if (founds == null || founds.Count == 0) {
                 return null;
             } else {
