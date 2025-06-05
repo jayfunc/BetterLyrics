@@ -28,6 +28,7 @@ namespace BetterLyrics.WinUI3.Services.Settings {
         public const string LyricsFontSize = "LyricsFontSize";
         public const string IsLyricsGlowEffectEnabled = "IsLyricsGlowEffectEnabled";
         public const string IsLyricsDynamicGlowEffectEnabled = "IsLyricsDynamicGlowEffectEnabled";
+        public const string LyricsFontColorType = "LyricsFontColorType";
     }
 
 }

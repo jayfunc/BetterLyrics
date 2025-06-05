@@ -68,7 +68,9 @@ Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(up
 
 ## Try it now
 
-Download latest version via [Google Drive](https://drive.google.com/file/d/1Hh8ijbODIksPmmRYujys7fXngw93Of7I/view?usp=sharing) or visit Microsoft Store (unavailable at the moment)
+[![alt text](https://static.vecteezy.com/system/resources/previews/035/563/715/large_2x/get-it-from-microsoft-store-download-our-app-for-windows-devices-free-vector.jpg)](https://apps.microsoft.com/detail/9P1WCD1P597R)
+
+or alternatively visit [Google Drive](https://drive.google.com/file/d/1Hh8ijbODIksPmmRYujys7fXngw93Of7I/view?usp=sharing).
 
 To learn about how to install ".msixbundle" package, see [this doc](How2Install/How2Install.md).
 

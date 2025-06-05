@@ -354,4 +354,13 @@
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>Log</value>
   </data>
+  <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
+    <value>Font color</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
+    <value>Album art accent color</value>
+  </data>
 </root>

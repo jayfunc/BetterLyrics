@@ -9,6 +9,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
@@ -29,8 +30,8 @@ namespace BetterLyrics.WinUI3.ViewModels {
         [ObservableProperty]
         private string? _artist;
 
-        public List<Color> CoverImageDominantColors { get; set; } =
-            [Colors.Transparent, Colors.Transparent, Colors.Transparent];
+        [ObservableProperty]
+        private ObservableCollection<Color> _coverImageDominantColors = [Colors.Transparent, Colors.Transparent, Colors.Transparent];
 
         [ObservableProperty]
         private BitmapImage? _coverImage;
@@ -54,11 +55,7 @@ namespace BetterLyrics.WinUI3.ViewModels {
         public List<LyricsLine> GetLyrics(Track? track) {
             List<LyricsLine> result = [];
 
-            if (track == null) {
-                return result;
-            }
-
-            var lyricsPhrases = track.Lyrics.SynchronizedLyrics;
+            var lyricsPhrases = track?.Lyrics.SynchronizedLyrics;
 
             if (lyricsPhrases?.Count > 0) {
                 if (lyricsPhrases[0].TimestampMs > 0) {
@@ -96,7 +93,11 @@ namespace BetterLyrics.WinUI3.ViewModels {
                 }
 
             }
+
             LyricsExisted = result.Count != 0;
+            if (!LyricsExisted) {
+                ShowLyricsOnly = false;
+            }
 
             return result;
 

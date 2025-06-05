@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3.Helper {
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
 
-        private static string TestMusicFileName => "TestMusic.mp3";
+        private static string TestMusicFileName => "AI - 甜度爆表.mp3";
         public static string TestMusicPath => Path.Combine(AssetsFolder, TestMusicFileName);
 
         public static void EnsureDirectories() {

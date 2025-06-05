@@ -10,9 +10,6 @@
 		<UseWinUI>true</UseWinUI>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<ItemGroup>
-		<None Remove="Assets\TestMusic.mp3" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<Manifest Include="$(ApplicationManifest)" />
@@ -47,9 +44,12 @@
 		<Content Update="Assets\Icon.png">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
-		<Content Update="Assets\TestMusic.mp3">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="Assets\AI - 甜度爆表.mp3">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<!-- Publish Properties -->

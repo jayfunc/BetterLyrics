@@ -354,4 +354,13 @@
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>紀錄</value>
   </data>
+  <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
+    <value>字體顏色</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
+    <value>預設</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
+    <value>專輯強調色</value>
+  </data>
 </root>

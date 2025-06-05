@@ -134,6 +134,10 @@ namespace BetterLyrics.WinUI3.Services.Settings {
             get => Get(SettingsKeys.IsLyricsDynamicGlowEffectEnabled, SettingsDefaultValues.IsLyricsDynamicGlowEffectEnabled);
             set => Set(SettingsKeys.IsLyricsDynamicGlowEffectEnabled, value);
         }
+        public int LyricsFontColorType {
+            get => Get(SettingsKeys.LyricsFontColorType, SettingsDefaultValues.LyricsFontColorType);
+            set => Set(SettingsKeys.LyricsFontColorType, value);
+        }
 
         private readonly ApplicationDataContainer _localSettings;
 

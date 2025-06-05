@@ -5,24 +5,27 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Media;
+using Windows.Media.Playback;
 using Windows.Storage.Pickers;
 using Windows.System;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels {
-    public partial class SettingsViewModel(DatabaseService databaseService, SettingsService settingsService) : ObservableObject {
+    public partial class SettingsViewModel(DatabaseService databaseService, SettingsService settingsService, MainViewModel mainViewModel) : ObservableObject {
+
+        private readonly MediaPlayer _mediaPlayer = new();
 
         private readonly DatabaseService _databaseService = databaseService;
 
-        [ObservableProperty]
-        private SettingsService _settingsService = settingsService;
+        public SettingsService SettingsService => settingsService;
 
-        [ObservableProperty]
-        private string _version = Helper.AppInfo.AppVersion;
+        public MainViewModel MainViewModel => mainViewModel;
+
+        public string Version => Helper.AppInfo.AppVersion;
 
         [RelayCommand]
         private async Task RebuildLyricsIndexDatabaseAsync() {
@@ -105,10 +108,8 @@ namespace BetterLyrics.WinUI3.ViewModels {
         [RelayCommand]
         private async Task PlayTestingMusicTask() {
             await AddFolderAsync(Helper.AppInfo.AssetsFolder);
-            Process.Start(new ProcessStartInfo {
-                FileName = Helper.AppInfo.TestMusicPath,
-                UseShellExecute = true
-            });
+            _mediaPlayer.SetUriSource(new Uri(Helper.AppInfo.TestMusicPath));
+            _mediaPlayer.Play();
         }
 
         [RelayCommand]

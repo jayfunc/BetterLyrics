@@ -206,6 +206,33 @@
                             </ComboBox>
                         </controls:SettingsCard>
 
+                        <controls:SettingsExpander x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon Glyph=&#xE8D3;}">
+                            <ComboBox SelectedIndex="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=TwoWay}">
+                                <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDefault" />
+                                <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDominant" />
+                            </ComboBox>
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Vertical">
+                                    <GridView ItemsSource="{x:Bind ViewModel.MainViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="0">
+                                        <GridView.ItemTemplate>
+                                            <DataTemplate>
+                                                <GridViewItem>
+                                                    <Border
+                                                        Width="64"
+                                                        Height="64"
+                                                        CornerRadius="4">
+                                                        <Border.Background>
+                                                            <SolidColorBrush Color="{Binding}" />
+                                                        </Border.Background>
+                                                    </Border>
+                                                </GridViewItem>
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+                                    </GridView>
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+
                         <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon Glyph=&#xE8E9;}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
