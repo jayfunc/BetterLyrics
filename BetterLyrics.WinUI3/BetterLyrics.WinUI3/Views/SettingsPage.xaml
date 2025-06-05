@@ -207,12 +207,40 @@
                         </controls:SettingsCard>
 
                         <controls:SettingsExpander x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon Glyph=&#xE8D3;}">
+                            <interactivity:Interaction.Behaviors>
+                                <interactivity:DataTriggerBehavior
+                                    Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                    ComparisonCondition="Equal"
+                                    Value="0">
+                                    <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="False" />
+                                </interactivity:DataTriggerBehavior>
+                                <interactivity:DataTriggerBehavior
+                                    Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                    ComparisonCondition="Equal"
+                                    Value="1">
+                                    <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="True" />
+                                </interactivity:DataTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
                             <ComboBox SelectedIndex="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=TwoWay}">
                                 <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDefault" />
                                 <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDominant" />
                             </ComboBox>
                             <controls:SettingsExpander.Items>
                                 <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Vertical">
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="1">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                     <GridView ItemsSource="{x:Bind ViewModel.MainViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="0">
                                         <GridView.ItemTemplate>
                                             <DataTemplate>

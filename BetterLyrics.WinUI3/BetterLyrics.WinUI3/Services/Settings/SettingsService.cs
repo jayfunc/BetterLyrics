@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.Globalization;
@@ -14,6 +15,38 @@ using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services.Settings {
     public partial class SettingsService : ObservableObject {
+
+        private readonly ApplicationDataContainer _localSettings;
+
+        public SettingsService() {
+
+            _localSettings = ApplicationData.Current.LocalSettings;
+
+            _musicLibraries = [.. JsonConvert.DeserializeObject<List<string>>(
+                    Get(SettingsKeys.MusicLibraries, SettingsDefaultValues.MusicLibraries)!)!];
+
+            _musicLibraries.CollectionChanged += (_, _) => SaveMusicLibraries();
+        }
+
+        private void WatchMultipleDirectories(IEnumerable<string> directories) {
+            foreach (var dir in directories) {
+                if (!Directory.Exists(dir)) continue;
+
+                var watcher = new FileSystemWatcher {
+                    Path = dir,
+                    Filter = "*.*",
+                    NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite,
+                    EnableRaisingEvents = true
+                };
+            }
+        }
+
+        private void OnFileCreated(object sender, FileSystemEventArgs e) {
+            App.DispatcherQueue.TryEnqueue(() =>
+            {
+                Debug.WriteLine($"[Created] {e.FullPath}");
+            });
+        }
 
         public bool IsFirstRun {
             get => Get(SettingsKeys.IsFirstRun, SettingsDefaultValues.IsFirstRun);
@@ -137,17 +170,6 @@ namespace BetterLyrics.WinUI3.Services.Settings {
         public int LyricsFontColorType {
             get => Get(SettingsKeys.LyricsFontColorType, SettingsDefaultValues.LyricsFontColorType);
             set => Set(SettingsKeys.LyricsFontColorType, value);
-        }
-
-        private readonly ApplicationDataContainer _localSettings;
-
-        public SettingsService() {
-            _localSettings = ApplicationData.Current.LocalSettings;
-
-            _musicLibraries = [.. JsonConvert.DeserializeObject<List<string>>(
-                    Get(SettingsKeys.MusicLibraries, SettingsDefaultValues.MusicLibraries)!)!];
-
-            _musicLibraries.CollectionChanged += (_, _) => SaveMusicLibraries();
         }
 
         private T? Get<T>(string key, T? defaultValue = default) {

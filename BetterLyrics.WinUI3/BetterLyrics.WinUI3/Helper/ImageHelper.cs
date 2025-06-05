@@ -1,8 +1,9 @@
-﻿using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
-using System;
+﻿using System;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -11,7 +12,9 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class ImageHelper
     {
-        public static async Task<InMemoryRandomAccessStream> GetStreamFromBytesAsync(byte[] imageBytes)
+        public static async Task<InMemoryRandomAccessStream> GetStreamFromBytesAsync(
+            byte[] imageBytes
+        )
         {
             if (imageBytes == null || imageBytes.Length == 0)
                 return null;
@@ -21,6 +24,14 @@ namespace BetterLyrics.WinUI3.Helper
             stream.Seek(0);
 
             return stream;
+        }
+
+        public static async Task<byte[]> ToByteArrayAsync(IRandomAccessStreamReference streamRef)
+        {
+            using IRandomAccessStream stream = await streamRef.OpenReadAsync();
+            using var memoryStream = new MemoryStream();
+            await stream.AsStreamForRead().CopyToAsync(memoryStream);
+            return memoryStream.ToArray();
         }
     }
 }
