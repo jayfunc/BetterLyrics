@@ -66,13 +66,15 @@ Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(up
 ![alt text](Screenshots/Snipaste_2025-06-03_17-52-05.png)
 ![alt text](Screenshots/Snipaste_2025-06-03_17-52-11.png)
 
-## Try it now
+## Download it now
 
-[![alt text](https://static.vecteezy.com/system/resources/previews/035/563/715/large_2x/get-it-from-microsoft-store-download-our-app-for-windows-devices-free-vector.jpg)](https://apps.microsoft.com/detail/9P1WCD1P597R)
+[![](https://shorturl.at/fzpsa)](https://shorturl.at/JWOuG)
 
-or alternatively visit [Google Drive](https://drive.google.com/file/d/1Hh8ijbODIksPmmRYujys7fXngw93Of7I/view?usp=sharing).
+> **Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version, if you like you can purchase to support me)
 
-To learn about how to install ".msixbundle" package, see [this doc](How2Install/How2Install.md).
+Or alternatively get it from [![](https://shorturl.at/SQu8I)](https://shorturl.at/jXbd7)
+
+> .zip file, please follow [this doc](How2Install/How2Install.md) to properly install it
 
 ## Many thanks to
 
