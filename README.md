@@ -35,9 +35,11 @@ We provide more than one setting item to better align with your preference
 
 - Language (English, Simplified Chinese, Traditional Chinese)
 
-## Demonstration video
+## Live demonstration
 
 ![alt text](Screenshots/Beelink-SER-8-Moonlight2025-06-0318-35-35-ezgif.com-video-to-gif-converter.gif)
+
+![alt text](Screenshots/BetterLyrics.WinUI3_igDdnc4rzW.gif)
 
 Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(uploaded on 31 May 2025) on Bilibili below (click the cover image to watch):
 

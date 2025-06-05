@@ -35,8 +35,8 @@ namespace BetterLyrics.WinUI3.Services.Database {
                             var track = new Track(file);
                             _connection.Insert(new MetadataIndex {
                                 Path = file,
-                                Title = track.Title,
-                                Artist = track.Artist,
+                                Title = track.Title == "" ? file : track.Title,
+                                Artist = track.Artist == "" ? file : track.Artist,
                             });
                         }
                     }
@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Services.Database {
 
         public Track? GetMusicMetadata(string? title, string? artist) {
             var founds = _connection.Table<MetadataIndex>()
-                .Where(m => m.Title == title && m.Artist == artist).ToList();
+                .Where(m => m.Title.Contains(title) && m.Artist.Contains(artist)).ToList();
             if (founds == null || founds.Count == 0) {
                 return null;
             } else {

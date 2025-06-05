@@ -33,8 +33,8 @@ namespace BetterLyrics.WinUI3.Helper {
 
         // Base Folders
         private static string LocalFolder => ApplicationData.Current.LocalFolder.Path;
-        private static string CacheFolder => ApplicationData.Current.LocalCacheFolder.Path;
-        public static string AssetsFolder => Path.Combine(AppContext.BaseDirectory, "Assets");
+        public static string CacheFolder => ApplicationData.Current.LocalCacheFolder.Path;
+        public static string AssetsFolder => Path.Combine(Package.Current.InstalledPath, "Assets");
 
         // Data Files
         private static string DatabaseFileName => "database.db";
