@@ -279,7 +279,7 @@
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>歌詞效果</value>
   </data>
-  <data name="SettingsPageAlbum.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumOverlay.Text" xml:space="preserve">
     <value>專輯背景</value>
   </data>
   <data name="SettingsPageAbout.Text" xml:space="preserve">
@@ -362,5 +362,11 @@
   </data>
   <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
     <value>專輯強調色</value>
+  </data>
+  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+    <value>專輯封面樣式</value>
+  </data>
+  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>圓角半徑</value>
   </data>
 </root>

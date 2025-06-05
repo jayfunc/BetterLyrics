@@ -27,6 +27,9 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const int CoverOverlayOpacity = 100; // 1.0
         public const int CoverOverlayBlurAmount = 200;
 
+        // Album art
+        public const int CoverImageRadius = 24;
+
         // Lyrics
         public const int LyricsAlignmentType = 1; // Center
         public const int LyricsBlurAmount = 0;
@@ -36,5 +39,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const bool IsLyricsGlowEffectEnabled = false;
         public const bool IsLyricsDynamicGlowEffectEnabled = false;
         public const int LyricsFontColorType = 0; // Default
+        public const int LyricsFontSelectedAccentColorIndex = 0;
     }
 }

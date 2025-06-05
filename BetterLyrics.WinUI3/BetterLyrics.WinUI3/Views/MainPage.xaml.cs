@@ -40,7 +40,7 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class MainPage : Page
     {
         public MainViewModel ViewModel => (MainViewModel)DataContext;
-        private readonly SettingsService _settingsService;
+        public SettingsService SettingsService { get; set; }
 
         private List<LyricsLine> _lyricsLines = [];
 
@@ -101,24 +101,21 @@ namespace BetterLyrics.WinUI3.Views
         {
             this.InitializeComponent();
 
+            _queueTimer = _dispatcherQueue.CreateTimer();
+
             _logger = Ioc.Default.GetService<ILogger<MainPage>>()!;
+            SettingsService = Ioc.Default.GetService<SettingsService>()!;
+            DataContext = Ioc.Default.GetService<MainViewModel>();
+
+            SettingsService.PropertyChanged += SettingsService_PropertyChanged;
+            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
 
             SetLyricsColor();
 
-            _settingsService = Ioc.Default.GetService<SettingsService>()!;
-
-            if (_settingsService.IsFirstRun)
+            if (SettingsService.IsFirstRun)
             {
                 WelcomeTeachingTip.IsOpen = true;
             }
-
-            _settingsService.PropertyChanged += SettingsService_PropertyChanged;
-
-            DataContext = Ioc.Default.GetService<MainViewModel>();
-
-            ViewModel.PropertyChanged += ViewModel_PropertyChanged;
-
-            _queueTimer = _dispatcherQueue.CreateTimer();
         }
 
         private async Task ForceToScrollToCurrentPlayingLineAsync()
@@ -135,20 +132,27 @@ namespace BetterLyrics.WinUI3.Views
         {
             switch (e.PropertyName)
             {
-                case nameof(_settingsService.LyricsFontSize):
-                case nameof(_settingsService.LyricsLineSpacingFactor):
+                case nameof(SettingsService.LyricsFontSize):
+                case nameof(SettingsService.LyricsLineSpacingFactor):
                     LayoutLyrics();
                     await ForceToScrollToCurrentPlayingLineAsync();
                     break;
-                case nameof(_settingsService.IsRebuildingLyricsIndexDatabase):
-                    if (!_settingsService.IsRebuildingLyricsIndexDatabase)
+                case nameof(SettingsService.IsRebuildingLyricsIndexDatabase):
+                    if (!SettingsService.IsRebuildingLyricsIndexDatabase)
                     {
                         CurrentSession_MediaPropertiesChanged(_currentSession, null);
                     }
                     break;
-                case nameof(_settingsService.Theme):
+                case nameof(SettingsService.Theme):
+                case nameof(SettingsService.LyricsFontColorType):
+                case nameof(SettingsService.LyricsFontSelectedAccentColorIndex):
                     await Task.Delay(1);
                     SetLyricsColor();
+                    break;
+                case nameof(SettingsService.CoverImageRadius):
+                    CoverImageGrid.CornerRadius = new CornerRadius(
+                        SettingsService.CoverImageRadius / 100f * (CoverImageGrid.ActualHeight / 2)
+                    );
                     break;
                 default:
                     break;
@@ -172,7 +176,19 @@ namespace BetterLyrics.WinUI3.Views
 
         private void SetLyricsColor()
         {
-            _lyricsColor = ((SolidColorBrush)LyricsCanvas.Foreground).Color;
+            switch ((LyricsFontColorType)SettingsService.LyricsFontColorType)
+            {
+                case LyricsFontColorType.Default:
+                    _lyricsColor = ((SolidColorBrush)LyricsCanvas.Foreground).Color;
+                    break;
+                case LyricsFontColorType.Dominant:
+                    _lyricsColor = ViewModel.CoverImageDominantColors[
+                        SettingsService.LyricsFontSelectedAccentColorIndex
+                    ];
+                    break;
+                default:
+                    break;
+            }
         }
 
         private async void InitMediaManager()
@@ -391,7 +407,7 @@ namespace BetterLyrics.WinUI3.Views
             var b = _lyricsColor.B;
 
             // Draw (dynamic) cover image as the very first layer
-            if (_settingsService.IsCoverOverlayEnabled && _coverSoftwareBitmap != null)
+            if (SettingsService.IsCoverOverlayEnabled && _coverSoftwareBitmap != null)
             {
                 DrawCoverImage(sender, ds);
             }
@@ -406,7 +422,7 @@ namespace BetterLyrics.WinUI3.Views
             using var glowedLyrics = new CanvasCommandList(sender);
             using (var glowedLyricsDs = glowedLyrics.CreateDrawingSession())
             {
-                if (_settingsService.IsLyricsGlowEffectEnabled)
+                if (SettingsService.IsLyricsGlowEffectEnabled)
                 {
                     glowedLyricsDs.DrawImage(
                         new GaussianBlurEffect
@@ -432,7 +448,7 @@ namespace BetterLyrics.WinUI3.Views
             // Mock gradient blurred lyrics layer
             using var combinedBlurredLyrics = new CanvasCommandList(sender);
             using var combinedBlurredLyricsDs = combinedBlurredLyrics.CreateDrawingSession();
-            if (_settingsService.LyricsBlurAmount == 0)
+            if (SettingsService.LyricsBlurAmount == 0)
             {
                 combinedBlurredLyricsDs.DrawImage(glowedLyrics);
             }
@@ -446,7 +462,7 @@ namespace BetterLyrics.WinUI3.Views
                     {
                         Source = glowedLyrics,
                         BlurAmount = (float)(
-                            _settingsService.LyricsBlurAmount * (1 - i / (0.5 - step))
+                            SettingsService.LyricsBlurAmount * (1 - i / (0.5 - step))
                         ),
                         Optimization = EffectOptimization.Quality,
                         BorderMode = EffectBorderMode.Soft,
@@ -483,7 +499,7 @@ namespace BetterLyrics.WinUI3.Views
                     maskedCombinedBlurredLyrics.CreateDrawingSession()
             )
             {
-                if (_settingsService.LyricsVerticalEdgeOpacity == 100)
+                if (SettingsService.LyricsVerticalEdgeOpacity == 100)
                 {
                     maskedCombinedBlurredLyricsDs.DrawImage(combinedBlurredLyrics);
                 }
@@ -538,7 +554,7 @@ namespace BetterLyrics.WinUI3.Views
                 float centerX = position.X;
                 float centerY = position.Y + (float)line.TextLayout.LayoutBounds.Height / 2;
 
-                switch ((LyricsAlignmentType)_settingsService.LyricsAlignmentType)
+                switch ((LyricsAlignmentType)SettingsService.LyricsAlignmentType)
                 {
                     case LyricsAlignmentType.Left:
                         line.TextLayout.HorizontalAlignment = CanvasHorizontalAlignment.Left;
@@ -632,10 +648,10 @@ namespace BetterLyrics.WinUI3.Views
 
             using var coverOverlayEffect = new OpacityEffect
             {
-                Opacity = _settingsService.CoverOverlayOpacity / 100f,
+                Opacity = SettingsService.CoverOverlayOpacity / 100f,
                 Source = new GaussianBlurEffect
                 {
-                    BlurAmount = _settingsService.CoverOverlayBlurAmount,
+                    BlurAmount = SettingsService.CoverOverlayBlurAmount,
                     Source = new ScaleEffect
                     {
                         InterpolationMode = CanvasImageInterpolation.HighQualityCubic,
@@ -664,9 +680,7 @@ namespace BetterLyrics.WinUI3.Views
             byte b
         )
         {
-            byte verticalEdgeAlpha = (byte)(
-                255 * _settingsService.LyricsVerticalEdgeOpacity / 100f
-            );
+            byte verticalEdgeAlpha = (byte)(255 * SettingsService.LyricsVerticalEdgeOpacity / 100f);
             using var maskBrush = new CanvasLinearGradientBrush(
                 control,
                 [
@@ -690,18 +704,18 @@ namespace BetterLyrics.WinUI3.Views
         {
             _currentTime += args.Timing.ElapsedTime;
 
-            if (_settingsService.IsDynamicCoverOverlay)
+            if (SettingsService.IsDynamicCoverOverlay)
             {
                 _coverBitmapRotateAngle += _coverRotateSpeed;
                 _coverBitmapRotateAngle %= MathF.PI * 2;
             }
-            if (_settingsService.IsLyricsDynamicGlowEffectEnabled)
+            if (SettingsService.IsLyricsDynamicGlowEffectEnabled)
             {
                 _lyricsGlowEffectAngle += _lyricsGlowEffectSpeed;
                 _lyricsGlowEffectAngle %= MathF.PI * 2;
             }
 
-            if (_settingsService.IsCoverOverlayEnabled && _coverSoftwareBitmap != null)
+            if (SettingsService.IsCoverOverlayEnabled && _coverSoftwareBitmap != null)
             {
                 var diagonal = Math.Sqrt(
                     Math.Pow(_lyricsAreaWidth, 2) + Math.Pow(_lyricsAreaHeight, 2)
@@ -850,7 +864,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             using CanvasTextFormat textFormat = new()
             {
-                FontSize = _settingsService.LyricsFontSize,
+                FontSize = SettingsService.LyricsFontSize,
                 HorizontalAlignment = CanvasHorizontalAlignment.Left,
                 VerticalAlignment = CanvasVerticalAlignment.Top,
                 FontWeight = FontWeights.Bold,
@@ -876,7 +890,7 @@ namespace BetterLyrics.WinUI3.Views
                 y +=
                     (float)line.TextLayout.LayoutBounds.Height
                     / line.TextLayout.LineCount
-                    * (line.TextLayout.LineCount + _settingsService.LyricsLineSpacingFactor);
+                    * (line.TextLayout.LineCount + SettingsService.LyricsLineSpacingFactor);
             }
         }
 
@@ -1028,7 +1042,7 @@ namespace BetterLyrics.WinUI3.Views
             TeachingTipClosedEventArgs args
         )
         {
-            _settingsService.IsFirstRun = false;
+            SettingsService.IsFirstRun = false;
         }
 
         private void CoverArea_SizeChanged(object sender, SizeChangedEventArgs e)

@@ -138,7 +138,7 @@
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
 
-                        <TextBlock x:Uid="SettingsPageAlbum" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock x:Uid="SettingsPageAlbumOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsExpander
                             x:Uid="SettingsPageCoverOverlay"
@@ -196,6 +196,27 @@
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
 
+                        <TextBlock x:Uid="SettingsPageAlbumStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon Glyph=&#xE71A;}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.SettingsService.CoverImageRadius, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="0,0,14,0"
+                                    VerticalAlignment="Center"
+                                    Text=" %" />
+                                <Slider
+                                    Maximum="100"
+                                    Minimum="0"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="2"
+                                    TickFrequency="2"
+                                    TickPlacement="Outside"
+                                    Value="{x:Bind ViewModel.SettingsService.CoverImageRadius, Mode=TwoWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+
                         <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon Glyph=&#xE8E3;}">
@@ -241,7 +262,7 @@
                                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                                         </interactivity:DataTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
-                                    <GridView ItemsSource="{x:Bind ViewModel.MainViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="0">
+                                    <GridView ItemsSource="{x:Bind ViewModel.MainViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.SettingsService.LyricsFontSelectedAccentColorIndex, Mode=TwoWay}">
                                         <GridView.ItemTemplate>
                                             <DataTemplate>
                                                 <GridViewItem>
