@@ -279,7 +279,7 @@
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>Lyrics effect</value>
   </data>
-  <data name="SettingsPageAlbum.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumOverlay.Text" xml:space="preserve">
     <value>Album background</value>
   </data>
   <data name="SettingsPageAbout.Text" xml:space="preserve">
@@ -362,5 +362,11 @@
   </data>
   <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
     <value>Album art accent color</value>
+  </data>
+  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+    <value>Album art style</value>
+  </data>
+  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>Corner radius</value>
   </data>
 </root>
