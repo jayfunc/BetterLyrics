@@ -28,10 +28,7 @@ using static CommunityToolkit.WinUI.Animations.Expressions.ExpressionValues;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class MainViewModel(
-        SettingsService settingsService,
-        DatabaseService databaseService
-    ) : ObservableObject
+    public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
         private bool _isAnyMusicSessionExisted = false;
@@ -43,12 +40,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private string? _artist;
 
         [ObservableProperty]
-        private ObservableCollection<Windows.UI.Color> _coverImageDominantColors =
-        [
-            Colors.Transparent,
-            Colors.Transparent,
-            Colors.Transparent,
-        ];
+        private ObservableCollection<Color> _coverImageDominantColors;
 
         [ObservableProperty]
         private BitmapImage? _coverImage;
@@ -65,10 +57,22 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         private bool _lyricsExisted = false;
 
-        private readonly Helper.ColorThief _colorThief = new();
+        private readonly ColorThief _colorThief = new();
 
-        private readonly SettingsService _settingsService = settingsService;
-        private readonly DatabaseService _databaseService = databaseService;
+        private readonly SettingsService _settingsService;
+        private readonly DatabaseService _databaseService;
+
+        private readonly int _accentColorCount = 3;
+
+        public MainViewModel(SettingsService settingsService, DatabaseService databaseService)
+        {
+            _settingsService = settingsService;
+            _databaseService = databaseService;
+            CoverImageDominantColors =
+            [
+                .. Enumerable.Repeat(Colors.Transparent, _accentColorCount),
+            ];
+        }
 
         public List<LyricsLine> GetLyrics(Track? track)
         {
@@ -165,8 +169,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 CoverImage = null;
                 CoverImageDominantColors =
                 [
-                    .. Enumerable.Repeat(Microsoft.UI.Colors.Transparent, 3),
+                    .. Enumerable.Repeat(Colors.Transparent, _accentColorCount),
                 ];
+                _settingsService.LyricsFontSelectedAccentColorIndex =
+                    _settingsService.LyricsFontSelectedAccentColorIndex;
             }
             else
             {
@@ -185,15 +191,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 CoverImageDominantColors =
                 [
-                    .. (await _colorThief.GetPalette(decoder, 3)).Select(quantizedColor =>
-                        Windows.UI.Color.FromArgb(
-                            quantizedColor.Color.A,
-                            quantizedColor.Color.R,
-                            quantizedColor.Color.G,
-                            quantizedColor.Color.B
-                        )
+                    .. (await _colorThief.GetPalette(decoder, _accentColorCount)).Select(color =>
+                        Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B)
                     ),
                 ];
+                _settingsService.LyricsFontSelectedAccentColorIndex =
+                    _settingsService.LyricsFontSelectedAccentColorIndex;
 
                 stream.Dispose();
             }

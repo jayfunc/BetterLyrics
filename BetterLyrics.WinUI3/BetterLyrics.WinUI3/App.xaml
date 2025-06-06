@@ -44,6 +44,7 @@
             <converter:ColorToBrushConverter x:Key="ColorToBrushConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
+            <converters:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
 
             <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
