@@ -243,7 +243,11 @@ namespace BetterLyrics.WinUI3.Services.Settings
                     SettingsKeys.LyricsFontSelectedAccentColorIndex,
                     SettingsDefaultValues.LyricsFontSelectedAccentColorIndex
                 );
-            set => Set(SettingsKeys.LyricsFontSelectedAccentColorIndex, value);
+            set
+            {
+                if (value >= 0)
+                    Set(SettingsKeys.LyricsFontSelectedAccentColorIndex, value);
+            }
         }
 
         private T? Get<T>(string key, T? defaultValue = default)

@@ -183,7 +183,13 @@ namespace BetterLyrics.WinUI3.Views
                     break;
                 case LyricsFontColorType.Dominant:
                     _lyricsColor = ViewModel.CoverImageDominantColors[
-                        SettingsService.LyricsFontSelectedAccentColorIndex
+                        Math.Max(
+                            0,
+                            Math.Min(
+                                ViewModel.CoverImageDominantColors.Count - 1,
+                                SettingsService.LyricsFontSelectedAccentColorIndex
+                            )
+                        )
                     ];
                     break;
                 default:

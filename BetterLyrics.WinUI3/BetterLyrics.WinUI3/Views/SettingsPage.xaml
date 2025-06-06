@@ -266,14 +266,22 @@
                                         <GridView.ItemTemplate>
                                             <DataTemplate>
                                                 <GridViewItem>
-                                                    <Border
-                                                        Width="64"
-                                                        Height="64"
-                                                        CornerRadius="4">
-                                                        <Border.Background>
-                                                            <SolidColorBrush Color="{Binding}" />
-                                                        </Border.Background>
-                                                    </Border>
+                                                    <StackPanel>
+                                                        <Border
+                                                            Width="64"
+                                                            Height="64"
+                                                            CornerRadius="4">
+                                                            <Border.Background>
+                                                                <SolidColorBrush Color="{Binding}" />
+                                                            </Border.Background>
+                                                        </Border>
+                                                        <TextBlock
+                                                            Margin="4,0,4,4"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Converter={StaticResource ColorToDisplayNameConverter}}"
+                                                            TextWrapping="WrapWholeWords" />
+                                                    </StackPanel>
                                                 </GridViewItem>
                                             </DataTemplate>
                                         </GridView.ItemTemplate>
@@ -380,7 +388,7 @@
 
                         <TextBlock x:Uid="SettingsPageAbout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                        <controls:SettingsCard Header="BetterLyrics" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Icon.png}">
+                        <controls:SettingsCard Header="BetterLyrics" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
                             <controls:SettingsCard.Description>
                                 <RichTextBlock>
                                     <Paragraph>

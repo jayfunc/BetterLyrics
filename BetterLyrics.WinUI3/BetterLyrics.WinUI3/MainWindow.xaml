@@ -57,6 +57,21 @@
             </interactivity:Interaction.Behaviors>
 
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+
+                <ImageIcon
+                    Height="24"
+                    Margin="16,0"
+                    Source="ms-appx:///Assets/Logo.png" />
+
+                <TextBlock
+                    x:Name="AppTitleTextBlock"
+                    Margin="0,-4,0,0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Title}" />
+
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <!--  Always On Top  -->
                 <AppBarButton
                     x:Name="AOTButton"
@@ -89,15 +104,6 @@
                     </Grid>
                 </AppBarButton>
 
-                <TextBlock
-                    x:Name="AppTitleTextBlock"
-                    Margin="0,-4,0,0"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind Title}" />
-
-            </StackPanel>
-
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <!--  Window Mini  -->
                 <AppBarButton
                     x:Name="MiniButton"

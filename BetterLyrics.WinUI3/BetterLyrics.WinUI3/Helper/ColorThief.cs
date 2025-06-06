@@ -118,9 +118,9 @@ namespace BetterLyrics.WinUI3.Helper
             return max;
         }
 
-        public Color FromRgb(int red, int green, int blue)
+        public RGB FromRgb(int red, int green, int blue)
         {
-            var color = new Color
+            var color = new RGB
             {
                 A = 255,
                 R = (byte)red,
@@ -135,7 +135,7 @@ namespace BetterLyrics.WinUI3.Helper
     /// <summary>
     ///     Defines a color in RGB space.
     /// </summary>
-    public struct Color
+    public struct RGB
     {
         /// <summary>
         ///     Get or Set the Alpha component value for sRGB.
@@ -663,18 +663,18 @@ namespace BetterLyrics.WinUI3.Helper
 
     public class QuantizedColor
     {
-        public QuantizedColor(Color color, int population)
+        public QuantizedColor(RGB color, int population)
         {
             Color = color;
             Population = population;
             IsDark = CalculateYiqLuma(color) < 128;
         }
 
-        public Color Color { get; private set; }
+        public RGB Color { get; private set; }
         public int Population { get; private set; }
         public bool IsDark { get; private set; }
 
-        public int CalculateYiqLuma(Color color)
+        public int CalculateYiqLuma(RGB color)
         {
             return Convert.ToInt32(
                 Math.Round((299 * color.R + 587 * color.G + 114 * color.B) / 1000f)
@@ -930,7 +930,7 @@ namespace BetterLyrics.WinUI3.Helper
             var palette = await GetPalette(sourceImage, 3, quality, ignoreWhite);
 
             var dominantColor = new QuantizedColor(
-                new Color
+                new RGB
                 {
                     A = Convert.ToByte(palette.Average(a => a.Color.A)),
                     R = Convert.ToByte(palette.Average(a => a.Color.R)),
