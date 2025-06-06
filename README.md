@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Icon.png" alt="" width="64"/>
+  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
 </div>
 
 <h2 align="center">

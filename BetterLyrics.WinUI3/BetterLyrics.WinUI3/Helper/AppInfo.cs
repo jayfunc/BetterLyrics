@@ -4,20 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Helper {
+namespace BetterLyrics.WinUI3.Helper
+{
     using System;
     using System.IO;
     using Windows.ApplicationModel;
     using Windows.Storage;
 
-    public static class AppInfo {
+    public static class AppInfo
+    {
         // App Metadata
         public const string AppName = "BetterLyrics";
         public const string AppDisplayName = "Better Lyrics";
         public const string AppAuthor = "Zhe Fang";
         public const string GithubUrl = "https://github.com/jayfunc/BetterLyrics";
-        public static string AppVersion {
-            get {
+        public static string AppVersion
+        {
+            get
+            {
                 var version = Package.Current.Id.Version;
                 return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
             }
@@ -28,7 +32,7 @@ namespace BetterLyrics.WinUI3.Helper {
 #if DEBUG
             true;
 #else
-        false;
+            false;
 #endif
 
         // Base Folders
@@ -46,10 +50,10 @@ namespace BetterLyrics.WinUI3.Helper {
         private static string TestMusicFileName => "AI - 甜度爆表.mp3";
         public static string TestMusicPath => Path.Combine(AssetsFolder, TestMusicFileName);
 
-        public static void EnsureDirectories() {
+        public static void EnsureDirectories()
+        {
             Directory.CreateDirectory(LogDirectory);
             Directory.CreateDirectory(LocalFolder);
         }
     }
-
 }

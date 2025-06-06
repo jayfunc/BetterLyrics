@@ -138,7 +138,7 @@
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
 
-                        <TextBlock x:Uid="SettingsPageAlbum" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock x:Uid="SettingsPageAlbumOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsExpander
                             x:Uid="SettingsPageCoverOverlay"
@@ -196,6 +196,27 @@
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
 
+                        <TextBlock x:Uid="SettingsPageAlbumStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon Glyph=&#xE71A;}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.SettingsService.CoverImageRadius, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="0,0,14,0"
+                                    VerticalAlignment="Center"
+                                    Text=" %" />
+                                <Slider
+                                    Maximum="100"
+                                    Minimum="0"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="2"
+                                    TickFrequency="2"
+                                    TickPlacement="Outside"
+                                    Value="{x:Bind ViewModel.SettingsService.CoverImageRadius, Mode=TwoWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+
                         <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon Glyph=&#xE8E3;}">
@@ -207,24 +228,60 @@
                         </controls:SettingsCard>
 
                         <controls:SettingsExpander x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon Glyph=&#xE8D3;}">
+                            <interactivity:Interaction.Behaviors>
+                                <interactivity:DataTriggerBehavior
+                                    Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                    ComparisonCondition="Equal"
+                                    Value="0">
+                                    <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="False" />
+                                </interactivity:DataTriggerBehavior>
+                                <interactivity:DataTriggerBehavior
+                                    Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                    ComparisonCondition="Equal"
+                                    Value="1">
+                                    <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="True" />
+                                </interactivity:DataTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
                             <ComboBox SelectedIndex="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=TwoWay}">
                                 <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDefault" />
                                 <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDominant" />
                             </ComboBox>
                             <controls:SettingsExpander.Items>
                                 <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Vertical">
-                                    <GridView ItemsSource="{x:Bind ViewModel.MainViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="0">
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.SettingsService.LyricsFontColorType, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="1">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <GridView ItemsSource="{x:Bind ViewModel.MainViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.SettingsService.LyricsFontSelectedAccentColorIndex, Mode=TwoWay}">
                                         <GridView.ItemTemplate>
                                             <DataTemplate>
                                                 <GridViewItem>
-                                                    <Border
-                                                        Width="64"
-                                                        Height="64"
-                                                        CornerRadius="4">
-                                                        <Border.Background>
-                                                            <SolidColorBrush Color="{Binding}" />
-                                                        </Border.Background>
-                                                    </Border>
+                                                    <StackPanel>
+                                                        <Border
+                                                            Width="64"
+                                                            Height="64"
+                                                            CornerRadius="4">
+                                                            <Border.Background>
+                                                                <SolidColorBrush Color="{Binding}" />
+                                                            </Border.Background>
+                                                        </Border>
+                                                        <TextBlock
+                                                            Margin="4,0,4,4"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Text="{Binding Converter={StaticResource ColorToDisplayNameConverter}}"
+                                                            TextWrapping="WrapWholeWords" />
+                                                    </StackPanel>
                                                 </GridViewItem>
                                             </DataTemplate>
                                         </GridView.ItemTemplate>
@@ -331,7 +388,7 @@
 
                         <TextBlock x:Uid="SettingsPageAbout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                        <controls:SettingsCard Header="BetterLyrics" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Icon.png}">
+                        <controls:SettingsCard Header="BetterLyrics" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
                             <controls:SettingsCard.Description>
                                 <RichTextBlock>
                                     <Paragraph>
