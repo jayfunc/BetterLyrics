@@ -43,5 +43,10 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const string LyricsFontColorType = "LyricsFontColorType";
         public const string LyricsFontSelectedAccentColorIndex =
             "LyricsFontSelectedAccentColorIndex";
+
+        // Notification
+        public const string NeverShowEnterFullScreenMessage = "NeverShowEnterFullScreenMessage";
+        public const string NeverShowEnterImmersiveModeMessage =
+            "NeverShowEnterImmersiveModeMessage";
     }
 }

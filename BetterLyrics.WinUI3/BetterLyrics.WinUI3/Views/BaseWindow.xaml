@@ -23,41 +23,23 @@
             Height="{StaticResource TitleBarCompactHeight}"
             VerticalAlignment="Top"
             Background="Transparent">
-
-            <Grid.Resources>
-
-                <Storyboard x:Name="TopCommandGridFadeInStoryboard">
-                    <DoubleAnimation
-                        EasingFunction="{StaticResource EaseIn}"
-                        Storyboard.TargetName="TopCommandGrid"
-                        Storyboard.TargetProperty="Opacity"
-                        To="1"
-                        Duration="0:0:0.2" />
-                </Storyboard>
-                <Storyboard x:Name="TopCommandGridFadeOutStoryboard">
-                    <DoubleAnimation
-                        EasingFunction="{StaticResource EaseOut}"
-                        Storyboard.TargetName="TopCommandGrid"
-                        Storyboard.TargetProperty="Opacity"
-                        To="0"
-                        Duration="0:0:0.2" />
-                </Storyboard>
-
-            </Grid.Resources>
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
 
             <interactivity:Interaction.Behaviors>
 
                 <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    Binding="{x:Bind WindowModel.SettingsService.IsImmersiveMode, Mode=OneWay}"
                     ComparisonCondition="Equal"
                     Value="False">
-                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource TopCommandGridFadeInStoryboard}" />
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
                 </interactivity:DataTriggerBehavior>
                 <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    Binding="{x:Bind WindowModel.SettingsService.IsImmersiveMode, Mode=OneWay}"
                     ComparisonCondition="Equal"
                     Value="True">
-                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource TopCommandGridFadeOutStoryboard}" />
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
                 </interactivity:DataTriggerBehavior>
 
             </interactivity:Interaction.Behaviors>
@@ -157,11 +139,21 @@
             VerticalAlignment="Bottom"
             Background="{ThemeResource SystemFillColorSolidAttentionBackgroundBrush}"
             IsClosable="False"
+            IsOpen="{x:Bind WindowModel.ShowInfoBar, Mode=OneWay}"
+            Message="{x:Bind WindowModel.Notification.Message, Mode=OneWay}"
             Opacity="0"
-            Severity="Informational">
+            Severity="{x:Bind WindowModel.Notification.Severity, Mode=OneWay}">
             <InfoBar.RenderTransform>
                 <TranslateTransform x:Name="HostInfoBarTransform" Y="20" />
             </InfoBar.RenderTransform>
+            <InfoBar.ActionButton>
+                <CheckBox
+                    x:Name="HostInfoBarCheckBox"
+                    x:Uid="BaseWindowHostInfoBarCheckBox"
+                    Command="{x:Bind WindowModel.SwitchInfoBarNeverShowItAgainCheckBoxCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Mode=OneWay}"
+                    Visibility="{x:Bind WindowModel.Notification.Visibility, Mode=OneWay}" />
+            </InfoBar.ActionButton>
             <InfoBar.Resources>
                 <Storyboard x:Key="InfoBarShowAndHideStoryboard">
                     <!--  Opacity  -->
@@ -182,7 +174,6 @@
                 </Storyboard>
             </InfoBar.Resources>
             <interactivity:Interaction.Behaviors>
-                <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
                 <interactivity:DataTriggerBehavior
                     Binding="{Binding ElementName=HostInfoBar, Path=IsOpen, Mode=OneWay}"
                     ComparisonCondition="Equal"

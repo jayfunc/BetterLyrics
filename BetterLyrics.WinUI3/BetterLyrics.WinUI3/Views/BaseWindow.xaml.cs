@@ -1,26 +1,18 @@
 using System;
-using System.ComponentModel.Design;
-using System.Diagnostics;
+using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.WinUI;
 using CommunityToolkit.WinUI.Behaviors;
 using DevWinUI;
-using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
-using Windows.UI.Input;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,24 +26,15 @@ namespace BetterLyrics.WinUI3.Views
     {
         public BaseWindowModel WindowModel { get; set; }
 
-        private SettingsService SettingsService { get; set; }
-
-        public static StackedNotificationsBehavior? StackedNotificationsBehavior
-        {
-            get;
-            private set;
-        }
-
         public BaseWindow()
         {
             this.InitializeComponent();
 
-            StackedNotificationsBehavior = NotificationQueue;
+            AppWindow.Changed += AppWindow_Changed;
 
             WindowModel = Ioc.Default.GetService<BaseWindowModel>()!;
 
-            SettingsService = Ioc.Default.GetService<SettingsService>()!;
-            SettingsService.PropertyChanged += SettingsService_PropertyChanged;
+            WindowModel.SettingsService.PropertyChanged += SettingsService_PropertyChanged;
 
             SettingsService_PropertyChanged(
                 null,
@@ -75,6 +58,11 @@ namespace BetterLyrics.WinUI3.Views
             SetTitleBar(TopCommandGrid);
         }
 
+        private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
+        {
+            UpdateTitleBarWindowButtonsVisibility();
+        }
+
         private void SettingsService_PropertyChanged(
             object? sender,
             System.ComponentModel.PropertyChangedEventArgs e
@@ -82,17 +70,17 @@ namespace BetterLyrics.WinUI3.Views
         {
             switch (e.PropertyName)
             {
-                case nameof(Services.Settings.SettingsService.Theme):
-                    RootGrid.RequestedTheme = (ElementTheme)SettingsService.Theme;
+                case nameof(SettingsService.Theme):
+                    RootGrid.RequestedTheme = (ElementTheme)WindowModel.SettingsService.Theme;
                     break;
-                case nameof(Services.Settings.SettingsService.BackdropType):
+                case nameof(SettingsService.BackdropType):
                     SystemBackdrop = null;
                     SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
-                        (BackdropType)SettingsService.BackdropType
+                        (BackdropType)WindowModel.SettingsService.BackdropType
                     );
                     break;
-                case nameof(Services.Settings.SettingsService.TitleBarType):
-                    switch ((TitleBarType)SettingsService.TitleBarType)
+                case nameof(SettingsService.TitleBarType):
+                    switch ((TitleBarType)WindowModel.SettingsService.TitleBarType)
                     {
                         case TitleBarType.Compact:
                             TopCommandGrid.Height = (double)
@@ -169,6 +157,8 @@ namespace BetterLyrics.WinUI3.Views
             if (AppWindow.Presenter is OverlappedPresenter overlappedPresenter)
             {
                 MinimiseButton.Visibility = AOTFlyoutItem.Visibility = Visibility.Visible;
+                FullScreenFlyoutItem.IsChecked = false;
+                AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
 
                 if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
                 {
@@ -188,6 +178,7 @@ namespace BetterLyrics.WinUI3.Views
                     RestoreButton.Visibility =
                     AOTFlyoutItem.Visibility =
                         Visibility.Collapsed;
+                FullScreenFlyoutItem.IsChecked = true;
             }
         }
 
@@ -201,7 +192,10 @@ namespace BetterLyrics.WinUI3.Views
         private void AOTFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             if (AppWindow.Presenter is OverlappedPresenter presenter)
-                AOTFlyoutItem.IsChecked = presenter.IsAlwaysOnTop = !presenter.IsAlwaysOnTop;
+            {
+                presenter.IsAlwaysOnTop = !presenter.IsAlwaysOnTop;
+                UpdateTitleBarWindowButtonsVisibility();
+            }
         }
 
         private void FullScreenFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -217,9 +211,14 @@ namespace BetterLyrics.WinUI3.Views
                     break;
                 case AppWindowPresenterKind.Overlapped:
                     AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-                    StackedNotificationsBehavior?.Show(
-                        App.ResourceLoader!.GetString("BaseWindowEnterFullScreenHint"),
-                        AnimationHelper.StackedNotificationsShowingDuration
+                    WeakReferenceMessenger.Default.Send(
+                        new ShowNotificatonMessage(
+                            new Models.Notification(
+                                App.ResourceLoader!.GetString("BaseWindowEnterFullScreenHint"),
+                                isForeverDismissable: true,
+                                relatedSettingsKeyName: SettingsKeys.NeverShowEnterFullScreenMessage
+                            )
+                        )
                     );
                     break;
                 default:
@@ -227,9 +226,6 @@ namespace BetterLyrics.WinUI3.Views
             }
 
             UpdateTitleBarWindowButtonsVisibility();
-
-            FullScreenFlyoutItem.IsChecked =
-                AppWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen;
         }
 
         private void RootGrid_KeyDown(object sender, KeyRoutedEventArgs e)

@@ -369,4 +369,7 @@
   <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>再次懸停以顯示切換按鈕</value>
   </data>
+  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>不再顯示此訊息</value>
+  </data>
 </root>

@@ -43,5 +43,9 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const bool IsLyricsDynamicGlowEffectEnabled = false;
         public const int LyricsFontColorType = 0; // Default
         public const int LyricsFontSelectedAccentColorIndex = 0;
+
+        // Notification
+        public const bool NeverShowEnterFullScreenMessage = false;
+        public const bool NeverShowEnterImmersiveModeMessage = false;
     }
 }

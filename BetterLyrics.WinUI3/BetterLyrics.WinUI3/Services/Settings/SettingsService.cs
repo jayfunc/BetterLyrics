@@ -238,6 +238,28 @@ namespace BetterLyrics.WinUI3.Services.Settings
             }
         }
 
+        //Notification
+        public bool NeverShowEnterFullScreenMessage
+        {
+            get =>
+                Get(
+                    SettingsKeys.NeverShowEnterFullScreenMessage,
+                    SettingsDefaultValues.NeverShowEnterFullScreenMessage
+                );
+            set => Set(SettingsKeys.NeverShowEnterFullScreenMessage, value);
+        }
+        public bool NeverShowEnterImmersiveModeMessage
+        {
+            get =>
+                Get(
+                    SettingsKeys.NeverShowEnterImmersiveModeMessage,
+                    SettingsDefaultValues.NeverShowEnterImmersiveModeMessage
+                );
+            set => Set(SettingsKeys.NeverShowEnterImmersiveModeMessage, value);
+        }
+
+        // Utils
+
         private T? Get<T>(string key, T? defaultValue = default)
         {
             if (_localSettings.Values.TryGetValue(key, out object? value))
