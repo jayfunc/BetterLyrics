@@ -32,12 +32,13 @@ namespace BetterLyrics.WinUI3
         private readonly ILogger<App> _logger;
 
         public static new App Current => (App)Application.Current;
-        public MainWindow? MainWindow { get; private set; }
-        public MainWindow? SettingsWindow { get; set; }
+        public BaseWindow? MainWindow { get; private set; }
+        public BaseWindow? SettingsWindow { get; set; }
 
         public static ResourceLoader? ResourceLoader { get; private set; }
 
-        public static DispatcherQueue DispatcherQueue => DispatcherQueue.GetForCurrentThread();
+        public static DispatcherQueue? DispatcherQueue { get; private set; }
+        public static DispatcherQueueTimer? DispatcherQueueTimer { get; private set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -47,7 +48,9 @@ namespace BetterLyrics.WinUI3
         {
             this.InitializeComponent();
 
-            App.ResourceLoader = new ResourceLoader();
+            DispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            DispatcherQueueTimer = DispatcherQueue.CreateTimer();
+            ResourceLoader = new ResourceLoader();
 
             Helper.AppInfo.EnsureDirectories();
             ConfigureServices();
@@ -67,7 +70,6 @@ namespace BetterLyrics.WinUI3
             // Register services
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
-                    .AddSingleton(DispatcherQueue.GetForCurrentThread())
                     .AddLogging(loggingBuilder =>
                     {
                         loggingBuilder.ClearProviders();
@@ -77,6 +79,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<SettingsService>()
                     .AddSingleton<DatabaseService>()
                     // ViewModels
+                    .AddSingleton<BaseWindowModel>()
                     .AddSingleton<MainViewModel>()
                     .AddSingleton<SettingsViewModel>()
                     .BuildServiceProvider()
@@ -101,7 +104,7 @@ namespace BetterLyrics.WinUI3
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             // Activate the window
-            MainWindow = new MainWindow();
+            MainWindow = new BaseWindow();
             MainWindow!.Navigate(typeof(MainPage));
             MainWindow.Activate();
         }

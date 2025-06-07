@@ -3,6 +3,7 @@
     x:Class="BetterLyrics.WinUI3.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -349,10 +350,13 @@
 
         <Grid
             x:Name="BottomCommandGrid"
-            Padding="2,0"
+            Margin="0,0,4,4"
+            HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Background="Transparent"
-            Opacity="0">
+            Opacity=".5"
+            PointerEntered="BottomCommandGrid_PointerEntered"
+            PointerExited="BottomCommandGrid_PointerExited">
 
             <Grid.Resources>
 
@@ -360,10 +364,10 @@
                     <DoubleAnimation
                         Storyboard.TargetName="BottomCommandGrid"
                         Storyboard.TargetProperty="Opacity"
-                        To="1"
+                        To=".5"
                         Duration="0:0:0.2" />
                 </Storyboard>
-                <Storyboard x:Name="BottomCommandGridFadeOutStoryboard" BeginTime="0:0:0.2">
+                <Storyboard x:Name="BottomCommandGridFadeOutStoryboard">
                     <DoubleAnimation
                         Storyboard.TargetName="BottomCommandGrid"
                         Storyboard.TargetProperty="Opacity"
@@ -375,34 +379,47 @@
 
             <interactivity:Interaction.Behaviors>
 
-                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="False">
                     <interactivity:ControlStoryboardAction Storyboard="{StaticResource BottomCommandGridFadeInStoryboard}" />
-                </interactivity:EventTriggerBehavior>
-                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="True">
                     <interactivity:ControlStoryboardAction Storyboard="{StaticResource BottomCommandGridFadeOutStoryboard}" />
-                </interactivity:EventTriggerBehavior>
+                </interactivity:DataTriggerBehavior>
 
             </interactivity:Interaction.Behaviors>
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                <AppBarButton
-                    x:Name="SettingsButton"
-                    Click="SettingsButton_Click"
-                    LabelPosition="Collapsed">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE713;" />
-                </AppBarButton>
-            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" Spacing="4">
 
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <AppBarToggleButton
+                <ToggleButton
+                    x:Name="ImmersiveModeButton"
+                    x:Uid="MainWindowImmersiveMode"
+                    IsChecked="{x:Bind SettingsService.IsImmersiveMode, Mode=TwoWay}"
+                    Style="{StaticResource GhostToggleButtonStyle}">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF131;" />
+                </ToggleButton>
+
+                <ToggleButton
                     x:Name="LyricsOnlyButton"
                     x:Uid="MainWindowLyricsOnly"
                     IsChecked="{x:Bind ViewModel.ShowLyricsOnly, Mode=TwoWay}"
-                    LabelPosition="Collapsed"
+                    Style="{StaticResource GhostToggleButtonStyle}"
                     Visibility="{x:Bind ViewModel.LyricsExisted, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE66C;" />
+                </ToggleButton>
 
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF15F;" />
-                </AppBarToggleButton>
+                <Button
+                    x:Name="SettingsButton"
+                    Click="SettingsButton_Click"
+                    Style="{StaticResource GhostButtonStyle}">
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF8B0;" />
+                </Button>
+
             </StackPanel>
 
         </Grid>
@@ -412,55 +429,7 @@
             x:Uid="MainPageWelcomeTeachingTip"
             Closed="WelcomeTeachingTip_Closed"
             IsOpen="False"
-            Target="{x:Bind RootGrid}">
-            <TeachingTip.Content>
-                <TextBlock Margin="{StaticResource TeachingTipDescriptionMargin}" Text="1/5" />
-            </TeachingTip.Content>
-        </TeachingTip>
-
-        <TeachingTip
-            x:Name="TopCommandTeachingTip"
-            x:Uid="MainPageTitleBarTeachingTip"
-            Closed="TopCommandTeachingTip_Closed"
-            IsOpen="False"
-            Target="{x:Bind TopPlaceholder}">
-            <TeachingTip.Content>
-                <TextBlock Margin="{StaticResource TeachingTipDescriptionMargin}" Text="2/5" />
-            </TeachingTip.Content>
-        </TeachingTip>
-
-        <TeachingTip
-            x:Name="BottomCommandTeachingTip"
-            x:Uid="MainPageBottomCommandTeachingTip"
-            Closed="BottomCommandTeachingTip_Closed"
-            IsOpen="False"
-            Target="{x:Bind BottomCommandGrid}">
-            <TeachingTip.Content>
-                <TextBlock Margin="{StaticResource TeachingTipDescriptionMargin}" Text="3/5" />
-            </TeachingTip.Content>
-        </TeachingTip>
-
-        <TeachingTip
-            x:Name="LyricsOnlyTeachingTip"
-            x:Uid="MainPageLyricsOnlyTeachingTip"
-            Closed="LyricsOnlyTeachingTip_Closed"
-            IsOpen="False"
-            Target="{x:Bind LyricsOnlyButton}">
-            <TeachingTip.Content>
-                <TextBlock Margin="{StaticResource TeachingTipDescriptionMargin}" Text="4/5" />
-            </TeachingTip.Content>
-        </TeachingTip>
-
-        <TeachingTip
-            x:Name="InitDatabaseTeachingTip"
-            x:Uid="MainPageInitDatabaseTeachingTip"
-            Closed="InitDatabaseTeachingTip_Closed"
-            IsOpen="False"
-            Target="{x:Bind SettingsButton}">
-            <TeachingTip.Content>
-                <TextBlock Margin="{StaticResource TeachingTipDescriptionMargin}" Text="5/5" />
-            </TeachingTip.Content>
-        </TeachingTip>
+            Target="{x:Bind SettingsButton}" />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>

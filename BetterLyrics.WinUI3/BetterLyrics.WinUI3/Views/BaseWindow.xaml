@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Window
-    x:Class="BetterLyrics.WinUI3.MainWindow"
+    x:Class="BetterLyrics.WinUI3.Views.BaseWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:BetterLyrics.WinUI3"
+    xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
-    SizeChanged="Window_SizeChanged"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" KeyDown="RootGrid_KeyDown">
 
         <Frame
             x:Name="RootFrame"
@@ -21,15 +20,15 @@
 
         <Grid
             x:Name="TopCommandGrid"
-            Padding="2,0"
+            Height="{StaticResource TitleBarCompactHeight}"
             VerticalAlignment="Top"
-            Background="Transparent"
-            Opacity="0">
+            Background="Transparent">
 
             <Grid.Resources>
 
                 <Storyboard x:Name="TopCommandGridFadeInStoryboard">
                     <DoubleAnimation
+                        EasingFunction="{StaticResource EaseIn}"
                         Storyboard.TargetName="TopCommandGrid"
                         Storyboard.TargetProperty="Opacity"
                         To="1"
@@ -37,6 +36,7 @@
                 </Storyboard>
                 <Storyboard x:Name="TopCommandGridFadeOutStoryboard">
                     <DoubleAnimation
+                        EasingFunction="{StaticResource EaseOut}"
                         Storyboard.TargetName="TopCommandGrid"
                         Storyboard.TargetProperty="Opacity"
                         To="0"
@@ -47,119 +47,118 @@
 
             <interactivity:Interaction.Behaviors>
 
-                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="False">
                     <interactivity:ControlStoryboardAction Storyboard="{StaticResource TopCommandGridFadeInStoryboard}" />
-                </interactivity:EventTriggerBehavior>
-                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="True">
                     <interactivity:ControlStoryboardAction Storyboard="{StaticResource TopCommandGridFadeOutStoryboard}" />
-                </interactivity:EventTriggerBehavior>
+                </interactivity:DataTriggerBehavior>
 
             </interactivity:Interaction.Behaviors>
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
 
                 <ImageIcon
-                    Height="24"
+                    x:Name="AppLogoImageIcon"
+                    Height="18"
                     Margin="16,0"
                     Source="ms-appx:///Assets/Logo.png" />
 
                 <TextBlock
                     x:Name="AppTitleTextBlock"
-                    Margin="0,-4,0,0"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind Title}" />
+                    FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                    FontWeight="SemiBold"
+                    Opacity=".5"
+                    Text="{x:Bind Title, Mode=OneWay}" />
 
             </StackPanel>
 
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <!--  Always On Top  -->
-                <AppBarButton
-                    x:Name="AOTButton"
-                    Click="AOTButton_Click"
-                    LabelPosition="Collapsed">
-                    <Grid>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE840;" />
-                        <FontIcon
-                            x:Name="PinnedFontIcon"
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE841;"
-                            Opacity="0">
-                            <FontIcon.Resources>
-                                <Storyboard x:Key="ShowPinnedFontIconStoryboard">
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="PinnedFontIcon"
-                                        Storyboard.TargetProperty="Opacity"
-                                        To="1"
-                                        Duration="0:0:0.3" />
-                                </Storyboard>
-                                <Storyboard x:Key="HidePinnedFontIconStoryboard">
-                                    <DoubleAnimation
-                                        Storyboard.TargetName="PinnedFontIcon"
-                                        Storyboard.TargetProperty="Opacity"
-                                        To="0"
-                                        Duration="0:0:0.3" />
-                                </Storyboard>
-                            </FontIcon.Resources>
-                        </FontIcon>
-                    </Grid>
-                </AppBarButton>
+            <StackPanel
+                HorizontalAlignment="Right"
+                Opacity=".5"
+                Orientation="Horizontal">
 
-                <!--  Window Mini  -->
-                <AppBarButton
-                    x:Name="MiniButton"
-                    Click="MiniButton_Click"
-                    LabelPosition="Collapsed"
-                    Visibility="Collapsed">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEE49;" />
-                </AppBarButton>
-                <!--  Window Unmini  -->
-                <AppBarButton
-                    x:Name="UnminiButton"
-                    Click="UnminiButton_Click"
-                    LabelPosition="Collapsed"
-                    Visibility="Collapsed">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEE47;" />
-                </AppBarButton>
+                <Button Style="{StaticResource TitleBarButtonStyle}">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        FontWeight="ExtraBold"
+                        Glyph="&#xE712;" />
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <ToggleMenuFlyoutItem
+                                x:Name="AOTFlyoutItem"
+                                x:Uid="BaseWindowAOTFlyoutItem"
+                                Click="AOTFlyoutItem_Click" />
+                            <ToggleMenuFlyoutItem
+                                x:Name="FullScreenFlyoutItem"
+                                x:Uid="BaseWindowFullScreenFlyoutItem"
+                                Click="FullScreenFlyoutItem_Click" />
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+
                 <!--  Window Minimise  -->
-                <AppBarButton
+                <Button
                     x:Name="MinimiseButton"
                     Click="MinimiseButton_Click"
-                    LabelPosition="Collapsed">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE921;" />
-                </AppBarButton>
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2D;" />
+                </Button>
                 <!--  Window Maximise  -->
-                <AppBarButton
+                <Button
                     x:Name="MaximiseButton"
                     Click="MaximiseButton_Click"
-                    LabelPosition="Collapsed">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE922;" />
-                </AppBarButton>
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2E;" />
+                </Button>
                 <!--  Window Restore  -->
-                <AppBarButton
+                <Button
                     x:Name="RestoreButton"
                     Click="RestoreButton_Click"
-                    LabelPosition="Collapsed"
+                    Style="{StaticResource TitleBarButtonStyle}"
                     Visibility="Collapsed">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE923;" />
-                </AppBarButton>
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2F;" />
+                </Button>
                 <!--  Window Close  -->
-                <AppBarButton
+                <Button
                     x:Name="CloseButton"
                     Click="CloseButton_Click"
-                    LabelPosition="Collapsed">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8BB;" />
-                </AppBarButton>
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2C;" />
+                </Button>
+
             </StackPanel>
 
         </Grid>
 
         <InfoBar
             x:Name="HostInfoBar"
-            Margin="18"
+            Margin="36"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
+            Background="{ThemeResource SystemFillColorSolidAttentionBackgroundBrush}"
             IsClosable="False"
-            Opacity="0">
+            Opacity="0"
+            Severity="Informational">
             <InfoBar.RenderTransform>
                 <TranslateTransform x:Name="HostInfoBarTransform" Y="20" />
             </InfoBar.RenderTransform>

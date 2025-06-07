@@ -27,6 +27,9 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const int CoverOverlayOpacity = 100; // 1.0
         public const int CoverOverlayBlurAmount = 200;
 
+        // Title bar
+        public const int TitleBarType = 0;
+
         // Album art
         public const int CoverImageRadius = 24;
 
