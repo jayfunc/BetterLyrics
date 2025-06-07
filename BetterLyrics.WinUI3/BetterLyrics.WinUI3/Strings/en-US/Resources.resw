@@ -276,6 +276,9 @@
   <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
     <value>Show lyrics only</value>
   </data>
+  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Immersive mode</value>
+  </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>Lyrics effect</value>
   </data>
@@ -309,35 +312,11 @@
   <data name="SettingsPageRebuildDatabaseDesc.Text" xml:space="preserve">
     <value>Rebuilding the database, please wait...</value>
   </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>Let's get started now</value>
-  </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>Welcome to BetterLyrics</value>
   </data>
-  <data name="MainPageTitleBarTeachingTip.Title" xml:space="preserve">
-    <value>The top area is the title bar</value>
-  </data>
-  <data name="MainPageTitleBarTeachingTip.Subtitle" xml:space="preserve">
-    <value>Hover on the top area to show it</value>
-  </data>
-  <data name="MainPageInitDatabaseTeachingTip.Title" xml:space="preserve">
-    <value>Setup lyrics database now</value>
-  </data>
-  <data name="MainPageInitDatabaseTeachingTip.Subtitle" xml:space="preserve">
-    <value>Hover on the bottom left corner and then click to open settings page</value>
-  </data>
-  <data name="MainPageBottomCommandTeachingTip.Subtitle" xml:space="preserve">
-    <value>Hover on the bottom area to show it</value>
-  </data>
-  <data name="MainPageBottomCommandTeachingTip.Title" xml:space="preserve">
-    <value>The bottom area is the command area</value>
-  </data>
-  <data name="MainPageLyricsOnlyTeachingTip.Title" xml:space="preserve">
-    <value>Toggle "show lyrics only" here</value>
-  </data>
-  <data name="MainPageLyricsOnlyTeachingTip.Subtitle" xml:space="preserve">
-    <value>When lyrics exist, you can switch them in the lower right corner</value>
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
+    <value>Let's setup lyrics database now</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>No music playing now</value>
@@ -368,5 +347,29 @@
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>Corner radius</value>
+  </data>
+  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>Title bar size</value>
+  </data>
+  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>Extended</value>
+  </data>
+  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
+    <value>Always on top</value>
+  </data>
+  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
+    <value>Press Esc to exit full screen mode</value>
+  </data>
+  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>Hover back again to show the toggle button</value>
+  </data>
+  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>Do not show this message again</value>
   </data>
 </root>

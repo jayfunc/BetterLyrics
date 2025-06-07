@@ -33,28 +33,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
             _musicLibraries.CollectionChanged += (_, _) => SaveMusicLibraries();
         }
 
-        private void WatchMultipleDirectories(IEnumerable<string> directories)
-        {
-            foreach (var dir in directories)
-            {
-                if (!Directory.Exists(dir))
-                    continue;
-
-                var watcher = new FileSystemWatcher
-                {
-                    Path = dir,
-                    Filter = "*.*",
-                    NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite,
-                    EnableRaisingEvents = true,
-                };
-            }
-        }
-
-        private void OnFileCreated(object sender, FileSystemEventArgs e)
-        {
-            App.DispatcherQueue.TryEnqueue(() => { });
-        }
-
         public bool IsFirstRun
         {
             get => Get(SettingsKeys.IsFirstRun, SettingsDefaultValues.IsFirstRun);
@@ -63,6 +41,9 @@ namespace BetterLyrics.WinUI3.Services.Settings
 
         [ObservableProperty]
         private bool _isRebuildingLyricsIndexDatabase = false;
+
+        [ObservableProperty]
+        private bool _isImmersiveMode = false;
 
         // Theme
         public int Theme
@@ -172,6 +153,13 @@ namespace BetterLyrics.WinUI3.Services.Settings
             set => Set(SettingsKeys.CoverOverlayBlurAmount, value);
         }
 
+        // Title bar
+        public int TitleBarType
+        {
+            get => Get(SettingsKeys.TitleBarType, SettingsDefaultValues.TitleBarType);
+            set => Set(SettingsKeys.TitleBarType, value);
+        }
+
         // Album art
         public int CoverImageRadius
         {
@@ -249,6 +237,28 @@ namespace BetterLyrics.WinUI3.Services.Settings
                     Set(SettingsKeys.LyricsFontSelectedAccentColorIndex, value);
             }
         }
+
+        //Notification
+        public bool NeverShowEnterFullScreenMessage
+        {
+            get =>
+                Get(
+                    SettingsKeys.NeverShowEnterFullScreenMessage,
+                    SettingsDefaultValues.NeverShowEnterFullScreenMessage
+                );
+            set => Set(SettingsKeys.NeverShowEnterFullScreenMessage, value);
+        }
+        public bool NeverShowEnterImmersiveModeMessage
+        {
+            get =>
+                Get(
+                    SettingsKeys.NeverShowEnterImmersiveModeMessage,
+                    SettingsDefaultValues.NeverShowEnterImmersiveModeMessage
+                );
+            set => Set(SettingsKeys.NeverShowEnterImmersiveModeMessage, value);
+        }
+
+        // Utils
 
         private T? Get<T>(string key, T? defaultValue = default)
         {

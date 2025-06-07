@@ -23,6 +23,8 @@
                 <Grid Margin="36,72,36,72">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
+                        <!--  Music lib  -->
+
                         <TextBlock x:Uid="SettingsPageLyricsLib" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsExpander
@@ -99,6 +101,8 @@
                             </StackPanel>
                         </controls:SettingsCard>
 
+                        <!--  App appearance  -->
+
                         <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
@@ -121,6 +125,13 @@
                             </ComboBox>
                         </controls:SettingsCard>
 
+                        <controls:SettingsCard x:Uid="SettingsPageTitleBarType" HeaderIcon="{ui:FontIcon Glyph=&#xE66A;}">
+                            <ComboBox x:Name="TitleBarTypeComboBox" SelectedIndex="{x:Bind ViewModel.SettingsService.TitleBarType, Mode=TwoWay}">
+                                <ComboBoxItem x:Uid="SettingsPageCompactTitleBar" />
+                                <ComboBoxItem x:Uid="SettingsPageExtendedTitleBar" />
+                            </ComboBox>
+                        </controls:SettingsCard>
+
                         <controls:SettingsExpander
                             x:Uid="SettingsPageLanguage"
                             HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}"
@@ -137,6 +148,8 @@
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
+
+                        <!--  Album art overlay  -->
 
                         <TextBlock x:Uid="SettingsPageAlbumOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
@@ -274,6 +287,9 @@
                                                             <Border.Background>
                                                                 <SolidColorBrush Color="{Binding}" />
                                                             </Border.Background>
+                                                            <Border.BackgroundTransition>
+                                                                <BrushTransition />
+                                                            </Border.BackgroundTransition>
                                                         </Border>
                                                         <TextBlock
                                                             Margin="4,0,4,4"

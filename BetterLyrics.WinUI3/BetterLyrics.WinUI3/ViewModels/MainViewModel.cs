@@ -132,7 +132,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             return result;
         }
 
-        public async Task<(List<LyricsLine>, SoftwareBitmap?, uint, uint)> SetSongInfoAsync(
+        public async Task<(List<LyricsLine>, SoftwareBitmap?)> SetSongInfoAsync(
             GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps
         )
         {
@@ -201,12 +201,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 stream.Dispose();
             }
 
-            return (
-                GetLyrics(track),
-                coverSoftwareBitmap,
-                coverImagePixelWidth,
-                coverImagePixelHeight
-            );
+            return (GetLyrics(track), coverSoftwareBitmap);
         }
     }
 }
