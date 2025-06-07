@@ -276,6 +276,9 @@
   <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
     <value>僅展示歌詞</value>
   </data>
+  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>沉浸模式</value>
+  </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>歌詞效果</value>
   </data>
@@ -309,35 +312,11 @@
   <data name="SettingsPageRebuildDatabaseDesc.Text" xml:space="preserve">
     <value>重構資料庫中，請稍候...</value>
   </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>來看看怎麼使用這款應用程式吧</value>
-  </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>歡迎使用 BetterLyrics</value>
   </data>
-  <data name="MainPageTitleBarTeachingTip.Title" xml:space="preserve">
-    <value>頂部區域是標題欄</value>
-  </data>
-  <data name="MainPageTitleBarTeachingTip.Subtitle" xml:space="preserve">
-    <value>懸停在頂部區域以顯示</value>
-  </data>
-  <data name="MainPageInitDatabaseTeachingTip.Title" xml:space="preserve">
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
     <value>現在就來初始化歌詞資料庫吧</value>
-  </data>
-  <data name="MainPageInitDatabaseTeachingTip.Subtitle" xml:space="preserve">
-    <value>懸停在左下角後點擊以進入設定頁面</value>
-  </data>
-  <data name="MainPageBottomCommandTeachingTip.Subtitle" xml:space="preserve">
-    <value>懸停在底部區域以顯示</value>
-  </data>
-  <data name="MainPageBottomCommandTeachingTip.Title" xml:space="preserve">
-    <value>底部區域是命令列</value>
-  </data>
-  <data name="MainPageLyricsOnlyTeachingTip.Title" xml:space="preserve">
-    <value>在此切換“僅展示歌詞”</value>
-  </data>
-  <data name="MainPageLyricsOnlyTeachingTip.Subtitle" xml:space="preserve">
-    <value>當歌詞存在時可在右下角進行切換</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>目前沒有正在播放的音樂</value>
@@ -368,5 +347,29 @@
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>圓角半徑</value>
+  </data>
+  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>標題列大小</value>
+  </data>
+  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>緊湊</value>
+  </data>
+  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>擴充</value>
+  </data>
+  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
+    <value>將應用置於頂層</value>
+  </data>
+  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
+    <value>全螢幕</value>
+  </data>
+  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
+    <value>按 Esc 退出全螢幕模式</value>
+  </data>
+  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>再次懸停以顯示切換按鈕</value>
+  </data>
+  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>不再顯示此訊息</value>
   </data>
 </root>

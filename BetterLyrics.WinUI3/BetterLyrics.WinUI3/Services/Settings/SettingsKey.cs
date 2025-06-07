@@ -26,6 +26,9 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const string CoverOverlayOpacity = "CoverOverlayOpacity";
         public const string CoverOverlayBlurAmount = "CoverOverlayBlurAmount";
 
+        // Title bar
+        public const string TitleBarType = "TitleBarType";
+
         // Album art
         public const string CoverImageRadius = "CoverImageRadius";
 
@@ -40,5 +43,10 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const string LyricsFontColorType = "LyricsFontColorType";
         public const string LyricsFontSelectedAccentColorIndex =
             "LyricsFontSelectedAccentColorIndex";
+
+        // Notification
+        public const string NeverShowEnterFullScreenMessage = "NeverShowEnterFullScreenMessage";
+        public const string NeverShowEnterImmersiveModeMessage =
+            "NeverShowEnterImmersiveModeMessage";
     }
 }
