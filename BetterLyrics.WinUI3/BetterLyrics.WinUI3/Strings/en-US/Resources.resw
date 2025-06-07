@@ -369,4 +369,7 @@
   <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>Hover back again to show the toggle button</value>
   </data>
+  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>Do not show this message again</value>
+  </data>
 </root>

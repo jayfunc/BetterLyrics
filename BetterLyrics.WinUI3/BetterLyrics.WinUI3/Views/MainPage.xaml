@@ -15,7 +15,7 @@
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+    <Grid x:Name="RootGrid">
         <Grid.Resources>
             <Thickness x:Key="TeachingTipDescriptionMargin">0,16,0,0</Thickness>
         </Grid.Resources>
@@ -35,38 +35,11 @@
                     Draw="LyricsCanvas_Draw"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                     Loaded="LyricsCanvas_Loaded"
+                    SizeChanged="LyricsCanvas_SizeChanged"
                     Update="LyricsCanvas_Update">
-
-                    <canvas:CanvasAnimatedControl.Resources>
-                        <Storyboard x:Key="LyricsCanvasFadeInStoryboard">
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LyricsCanvas" Storyboard.TargetProperty="Opacity">
-                                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                        <Storyboard x:Key="LyricsCanvasFadeOutStoryboard">
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LyricsCanvas" Storyboard.TargetProperty="Opacity">
-                                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
-                                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </canvas:CanvasAnimatedControl.Resources>
-
-                    <interactivity:Interaction.Behaviors>
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                            ComparisonCondition="Equal"
-                            Value="True">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource LyricsCanvasFadeOutStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                            ComparisonCondition="Equal"
-                            Value="False">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource LyricsCanvasFadeInStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-
+                    <canvas:CanvasAnimatedControl.OpacityTransition>
+                        <ScalarTransition />
+                    </canvas:CanvasAnimatedControl.OpacityTransition>
                 </canvas:CanvasAnimatedControl>
 
             </Grid>
@@ -112,6 +85,11 @@
                         <interactivity:ControlStoryboardAction Storyboard="{StaticResource ShowSongInfoGrid}" />
                     </interactivity:DataTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
+
+                <Grid
+                    x:Name="LyricsPlaceholderGrid"
+                    Grid.Column="2"
+                    SizeChanged="LyricsPlaceholderGrid_SizeChanged" />
 
                 <Grid
                     x:Name="SongInfoInnerGrid"
@@ -357,25 +335,9 @@
             Opacity=".5"
             PointerEntered="BottomCommandGrid_PointerEntered"
             PointerExited="BottomCommandGrid_PointerExited">
-
-            <Grid.Resources>
-
-                <Storyboard x:Name="BottomCommandGridFadeInStoryboard">
-                    <DoubleAnimation
-                        Storyboard.TargetName="BottomCommandGrid"
-                        Storyboard.TargetProperty="Opacity"
-                        To=".5"
-                        Duration="0:0:0.2" />
-                </Storyboard>
-                <Storyboard x:Name="BottomCommandGridFadeOutStoryboard">
-                    <DoubleAnimation
-                        Storyboard.TargetName="BottomCommandGrid"
-                        Storyboard.TargetProperty="Opacity"
-                        To="0"
-                        Duration="0:0:0.2" />
-                </Storyboard>
-
-            </Grid.Resources>
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
 
             <interactivity:Interaction.Behaviors>
 
@@ -383,13 +345,13 @@
                     Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
                     ComparisonCondition="Equal"
                     Value="False">
-                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource BottomCommandGridFadeInStoryboard}" />
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0.5" />
                 </interactivity:DataTriggerBehavior>
                 <interactivity:DataTriggerBehavior
                     Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
                     ComparisonCondition="Equal"
                     Value="True">
-                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource BottomCommandGridFadeOutStoryboard}" />
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
                 </interactivity:DataTriggerBehavior>
 
             </interactivity:Interaction.Behaviors>
