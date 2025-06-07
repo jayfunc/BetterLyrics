@@ -276,6 +276,9 @@
   <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
     <value>仅展示歌词</value>
   </data>
+  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>沉浸模式</value>
+  </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>歌词效果</value>
   </data>
@@ -309,35 +312,11 @@
   <data name="SettingsPageRebuildDatabaseDesc.Text" xml:space="preserve">
     <value>重构数据库中，请稍候...</value>
   </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>来看看怎么使用这款应用吧</value>
-  </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>欢迎使用 BetterLyrics</value>
   </data>
-  <data name="MainPageTitleBarTeachingTip.Title" xml:space="preserve">
-    <value>顶部区域是标题栏</value>
-  </data>
-  <data name="MainPageTitleBarTeachingTip.Subtitle" xml:space="preserve">
-    <value>悬停在顶部区域以显示</value>
-  </data>
-  <data name="MainPageInitDatabaseTeachingTip.Title" xml:space="preserve">
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
     <value>现在就来初始化歌词数据库吧</value>
-  </data>
-  <data name="MainPageInitDatabaseTeachingTip.Subtitle" xml:space="preserve">
-    <value>悬停在左下角后单击以进入设置页面</value>
-  </data>
-  <data name="MainPageBottomCommandTeachingTip.Subtitle" xml:space="preserve">
-    <value>悬停在底部区域以显示</value>
-  </data>
-  <data name="MainPageBottomCommandTeachingTip.Title" xml:space="preserve">
-    <value>底部区域是命令栏</value>
-  </data>
-  <data name="MainPageLyricsOnlyTeachingTip.Title" xml:space="preserve">
-    <value>在此处切换“仅展示歌词”</value>
-  </data>
-  <data name="MainPageLyricsOnlyTeachingTip.Subtitle" xml:space="preserve">
-    <value>当歌词存在时可在右下角进行切换</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>当前没有正在播放的音乐</value>
@@ -368,5 +347,26 @@
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>圆角半径</value>
+  </data>
+  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>标题栏大小</value>
+  </data>
+  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>紧凑</value>
+  </data>
+  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>扩展</value>
+  </data>
+  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
+    <value>将应用置于顶层</value>
+  </data>
+  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
+    <value>全屏</value>
+  </data>
+  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
+    <value>按 Esc 退出全屏模式</value>
+  </data>
+  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>再次悬停以显示切换按钮</value>
   </data>
 </root>

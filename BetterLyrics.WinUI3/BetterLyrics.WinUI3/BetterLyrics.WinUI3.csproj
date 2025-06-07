@@ -31,7 +31,8 @@
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
-    <PackageReference Include="DevWinUI" Version="8.2.0" />
+    <PackageReference Include="DevWinUI" Version="8.3.0" />
+    <PackageReference Include="DevWinUI.Controls" Version="8.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.5" />
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />

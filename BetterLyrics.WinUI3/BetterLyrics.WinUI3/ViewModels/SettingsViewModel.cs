@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Database;
 using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Windows.ApplicationModel.Core;
@@ -73,7 +75,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             bool existed = SettingsService.MusicLibraries.Any((x) => x == path);
             if (existed)
             {
-                MainWindow.StackedNotificationsBehavior?.Show(
+                BaseWindow.StackedNotificationsBehavior?.Show(
                     App.ResourceLoader!.GetString("SettingsPagePathExistedInfo"),
                     Helper.AnimationHelper.StackedNotificationsShowingDuration
                 );

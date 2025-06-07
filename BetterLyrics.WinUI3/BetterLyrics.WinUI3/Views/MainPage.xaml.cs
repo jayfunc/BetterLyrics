@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
+using DevWinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
@@ -23,6 +24,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Media;
@@ -40,7 +42,7 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class MainPage : Page
     {
         public MainViewModel ViewModel => (MainViewModel)DataContext;
-        public SettingsService SettingsService { get; set; }
+        private SettingsService SettingsService { get; set; }
 
         private List<LyricsLine> _lyricsLines = [];
 
@@ -58,8 +60,6 @@ namespace BetterLyrics.WinUI3.Views
 
         private readonly float _lyricsGlowEffectMinBlurAmount = 0f;
         private readonly float _lyricsGlowEffectMaxBlurAmount = 6f;
-
-        private readonly DispatcherQueueTimer _queueTimer;
 
         private TimeSpan _currentTime = TimeSpan.Zero;
 
@@ -88,8 +88,6 @@ namespace BetterLyrics.WinUI3.Views
 
         private bool _forceToScroll = false;
 
-        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
         private GlobalSystemMediaTransportControlsSessionManager? _sessionManager = null;
         private GlobalSystemMediaTransportControlsSession? _currentSession = null;
 
@@ -100,8 +98,6 @@ namespace BetterLyrics.WinUI3.Views
         public MainPage()
         {
             this.InitializeComponent();
-
-            _queueTimer = _dispatcherQueue.CreateTimer();
 
             _logger = Ioc.Default.GetService<ILogger<MainPage>>()!;
             SettingsService = Ioc.Default.GetService<SettingsService>()!;
@@ -153,6 +149,13 @@ namespace BetterLyrics.WinUI3.Views
                     CoverImageGrid.CornerRadius = new CornerRadius(
                         SettingsService.CoverImageRadius / 100f * (CoverImageGrid.ActualHeight / 2)
                     );
+                    break;
+                case nameof(SettingsService.IsImmersiveMode):
+                    if (SettingsService.IsImmersiveMode)
+                        BaseWindow.StackedNotificationsBehavior?.Show(
+                            App.ResourceLoader!.GetString("MainPageEnterImmersiveModeHint"),
+                            AnimationHelper.StackedNotificationsShowingDuration
+                        );
                     break;
                 default:
                     break;
@@ -231,7 +234,7 @@ namespace BetterLyrics.WinUI3.Views
             PlaybackInfoChangedEventArgs? args
         )
         {
-            _dispatcherQueue.TryEnqueue(
+            App.DispatcherQueue!.TryEnqueue(
                 DispatcherQueuePriority.Normal,
                 () =>
                 {
@@ -242,7 +245,7 @@ namespace BetterLyrics.WinUI3.Views
                     }
 
                     var playbackState = sender.GetPlaybackInfo().PlaybackStatus;
-                    _logger.LogDebug(playbackState.ToString());
+                    // _logger.LogDebug(playbackState.ToString());
 
                     switch (playbackState)
                     {
@@ -276,7 +279,7 @@ namespace BetterLyrics.WinUI3.Views
             SessionsChangedEventArgs? args
         )
         {
-            _logger.LogDebug("SessionManager_SessionsChanged");
+            // _logger.LogDebug("SessionManager_SessionsChanged");
         }
 
         private void SessionManager_CurrentSessionChanged(
@@ -284,7 +287,7 @@ namespace BetterLyrics.WinUI3.Views
             CurrentSessionChangedEventArgs? args
         )
         {
-            _logger.LogDebug("SessionManager_CurrentSessionChanged");
+            // _logger.LogDebug("SessionManager_CurrentSessionChanged");
             // Unregister events associated with the previous session
             if (_currentSession != null)
             {
@@ -318,11 +321,11 @@ namespace BetterLyrics.WinUI3.Views
             MediaPropertiesChangedEventArgs? args
         )
         {
-            _queueTimer.Debounce(
+            App.DispatcherQueueTimer!.Debounce(
                 () =>
                 {
-                    _logger.LogDebug("CurrentSession_MediaPropertiesChanged");
-                    _dispatcherQueue.TryEnqueue(
+                    // _logger.LogDebug("CurrentSession_MediaPropertiesChanged");
+                    App.DispatcherQueue!.TryEnqueue(
                         DispatcherQueuePriority.High,
                         async () =>
                         {
@@ -998,7 +1001,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (App.Current.SettingsWindow is null)
             {
-                var settingsWindow = new MainWindow();
+                var settingsWindow = new BaseWindow();
                 settingsWindow.Navigate(typeof(SettingsPage));
                 App.Current.SettingsWindow = settingsWindow;
             }
@@ -1016,38 +1019,6 @@ namespace BetterLyrics.WinUI3.Views
 
         private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
         {
-            TopCommandTeachingTip.IsOpen = true;
-        }
-
-        private void TopCommandTeachingTip_Closed(
-            TeachingTip sender,
-            TeachingTipClosedEventArgs args
-        )
-        {
-            BottomCommandTeachingTip.IsOpen = true;
-        }
-
-        private void BottomCommandTeachingTip_Closed(
-            TeachingTip sender,
-            TeachingTipClosedEventArgs args
-        )
-        {
-            LyricsOnlyTeachingTip.IsOpen = true;
-        }
-
-        private void LyricsOnlyTeachingTip_Closed(
-            TeachingTip sender,
-            TeachingTipClosedEventArgs args
-        )
-        {
-            InitDatabaseTeachingTip.IsOpen = true;
-        }
-
-        private void InitDatabaseTeachingTip_Closed(
-            TeachingTip sender,
-            TeachingTipClosedEventArgs args
-        )
-        {
             SettingsService.IsFirstRun = false;
         }
 
@@ -1057,6 +1028,28 @@ namespace BetterLyrics.WinUI3.Views
                 CoverArea.ActualWidth,
                 CoverArea.ActualHeight
             );
+        }
+
+        private void BottomCommandGrid_PointerEntered(
+            object sender,
+            Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
+        )
+        {
+            if (SettingsService.IsImmersiveMode)
+                (
+                    (Storyboard)BottomCommandGrid.Resources["BottomCommandGridFadeInStoryboard"]
+                ).Begin();
+        }
+
+        private void BottomCommandGrid_PointerExited(
+            object sender,
+            Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
+        )
+        {
+            if (SettingsService.IsImmersiveMode)
+                (
+                    (Storyboard)BottomCommandGrid.Resources["BottomCommandGridFadeOutStoryboard"]
+                ).Begin();
         }
     }
 }
