@@ -77,6 +77,10 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
+    - name: Add CommunityToolkit Azure DevOps NuGet source
+      run: |
+        dotnet nuget add source https://pkgs.dev.azure.com/dotnet/CommunityToolkit/_packaging/CommunityToolkit-Labs/nuget/v3/index.json --name CommunityToolkit-Labs --store-password-in-clear-text --configfile nuget.config
+
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test
