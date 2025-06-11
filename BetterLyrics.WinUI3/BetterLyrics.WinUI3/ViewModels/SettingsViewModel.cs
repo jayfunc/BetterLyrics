@@ -1,61 +1,127 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Database;
+using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DevWinUI;
+using Microsoft.UI.Xaml;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Windows.ApplicationModel.Core;
-using Windows.Media;
+using Windows.Globalization;
 using Windows.Media.Playback;
-using Windows.Storage.Pickers;
 using Windows.System;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class SettingsViewModel(
-        DatabaseService databaseService,
-        SettingsService settingsService,
-        MainViewModel mainViewModel
-    ) : ObservableObject
+    public partial class SettingsViewModel : BaseViewModel
     {
+        [ObservableProperty]
+        private bool _isRebuildingLyricsIndexDatabase = false;
+
+        // Music
+        private ObservableCollection<string> _musicLibraries;
+
+        public ObservableCollection<string> MusicLibraries
+        {
+            get { return _musicLibraries; }
+            set
+            {
+                if (_musicLibraries != null)
+                {
+                    _musicLibraries.CollectionChanged -= (_, _) => SaveMusicLibraries();
+                }
+
+                _musicLibraries = value;
+                _musicLibraries.CollectionChanged += (_, _) => SaveMusicLibraries();
+                SaveMusicLibraries();
+                OnPropertyChanged();
+            }
+        }
+
+        private void SaveMusicLibraries()
+        {
+            Set(SettingsKeys.MusicLibraries, JsonConvert.SerializeObject(MusicLibraries.ToList()));
+        }
+
+        // Language
+        public int Language
+        {
+            get => Get(SettingsKeys.Language, SettingsDefaultValues.Language);
+            set
+            {
+                Set(SettingsKeys.Language, value);
+                switch ((Models.Language)Language)
+                {
+                    case Models.Language.FollowSystem:
+                        ApplicationLanguages.PrimaryLanguageOverride = "";
+                        break;
+                    case Models.Language.English:
+                        ApplicationLanguages.PrimaryLanguageOverride = "en-US";
+                        break;
+                    case Models.Language.SimplifiedChinese:
+                        ApplicationLanguages.PrimaryLanguageOverride = "zh-CN";
+                        break;
+                    case Models.Language.TraditionalChinese:
+                        ApplicationLanguages.PrimaryLanguageOverride = "zh-TW";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         private readonly MediaPlayer _mediaPlayer = new();
 
-        private readonly DatabaseService _databaseService = databaseService;
+        private readonly IDatabaseService _databaseService;
 
-        public SettingsService SettingsService => settingsService;
+        public string Version => AppInfo.AppVersion;
 
-        public MainViewModel MainViewModel => mainViewModel;
+        public SettingsViewModel(IDatabaseService databaseService, ISettingsService settingsService)
+            : base(settingsService)
+        {
+            _databaseService = databaseService;
 
-        public string Version => Helper.AppInfo.AppVersion;
+            _musicLibraries =
+            [
+                .. JsonConvert.DeserializeObject<List<string>>(
+                    Get(SettingsKeys.MusicLibraries, SettingsDefaultValues.MusicLibraries)!
+                )!,
+            ];
+
+            _musicLibraries.CollectionChanged += (_, _) => SaveMusicLibraries();
+        }
 
         [RelayCommand]
         private async Task RebuildLyricsIndexDatabaseAsync()
         {
-            SettingsService.IsRebuildingLyricsIndexDatabase = true;
-            await _databaseService.RebuildMusicMetadataIndexDatabaseAsync(
-                SettingsService.MusicLibraries
-            );
-            SettingsService.IsRebuildingLyricsIndexDatabase = false;
+            IsRebuildingLyricsIndexDatabase = true;
+            await _databaseService.RebuildDatabaseAsync(MusicLibraries);
+            IsRebuildingLyricsIndexDatabase = false;
+            WeakReferenceMessenger.Default.Send(new ReFindSongInfoRequestedMessage());
         }
 
         public async Task RemoveFolderAsync(string path)
         {
-            SettingsService.MusicLibraries.Remove(path);
+            MusicLibraries.Remove(path);
             await RebuildLyricsIndexDatabaseAsync();
         }
 
         [RelayCommand]
         private async Task SelectAndAddFolderAsync()
         {
-            var picker = new FolderPicker();
+            var picker = new Windows.Storage.Pickers.FolderPicker();
 
             picker.FileTypeFilter.Add("*");
 
@@ -74,7 +140,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private async Task AddFolderAsync(string path)
         {
-            bool existed = SettingsService.MusicLibraries.Any((x) => x == path);
+            bool existed = MusicLibraries.Any((x) => x == path);
             if (existed)
             {
                 WeakReferenceMessenger.Default.Send(
@@ -87,7 +153,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                SettingsService.MusicLibraries.Add(path);
+                MusicLibraries.Add(path);
                 await RebuildLyricsIndexDatabaseAsync();
             }
         }

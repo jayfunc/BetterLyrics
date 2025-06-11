@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using BetterLyrics.WinUI3.Models;
+﻿using System.Text;
+using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services.Database;
+using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -13,11 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
-using Microsoft.Windows.AppLifecycle;
-using Newtonsoft.Json;
 using Serilog;
-using Serilog.Core;
-using Windows.ApplicationModel.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,8 +26,8 @@ namespace BetterLyrics.WinUI3
         private readonly ILogger<App> _logger;
 
         public static new App Current => (App)Application.Current;
-        public BaseWindow? MainWindow { get; private set; }
-        public BaseWindow? SettingsWindow { get; set; }
+        public HostWindow? MainWindow { get; private set; }
+        public HostWindow? SettingsWindow { get; set; }
 
         public static ResourceLoader? ResourceLoader { get; private set; }
 
@@ -76,12 +70,21 @@ namespace BetterLyrics.WinUI3
                         loggingBuilder.AddSerilog();
                     })
                     // Services
-                    .AddSingleton<SettingsService>()
-                    .AddSingleton<DatabaseService>()
+                    .AddSingleton<ISettingsService, SettingsService>()
+                    .AddSingleton<IDatabaseService, DatabaseService>()
+                    .AddSingleton<IPlaybackService, PlaybackService>()
+                    // Renderer
+                    .AddSingleton<AlbumArtRenderer>()
+                    .AddSingleton<LyricsRenderer>()
                     // ViewModels
-                    .AddSingleton<BaseWindowModel>()
+                    .AddSingleton<HostViewModel>()
+                    .AddSingleton<AlbumArtViewModel>()
                     .AddSingleton<MainViewModel>()
+                    .AddSingleton<BaseViewModel>()
+                    .AddSingleton<GlobalViewModel>()
                     .AddSingleton<SettingsViewModel>()
+                    .AddSingleton<LyricsViewModel>()
+                    .AddSingleton<AlbumArtOverlayViewModel>()
                     .BuildServiceProvider()
             );
         }
@@ -104,7 +107,7 @@ namespace BetterLyrics.WinUI3
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             // Activate the window
-            MainWindow = new BaseWindow();
+            MainWindow = new HostWindow();
             MainWindow!.Navigate(typeof(MainPage));
             MainWindow.Activate();
         }

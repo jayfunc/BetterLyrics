@@ -1,207 +1,214 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.Common;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ATL;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services.Database;
+using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DevWinUI;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.UI.Xaml;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Ude;
 using Windows.Graphics.Imaging;
-using Windows.Media.Control;
-using Windows.Storage.Streams;
 using Windows.UI;
-using static System.Net.Mime.MediaTypeNames;
-using static ATL.LyricsInfo;
-using static CommunityToolkit.WinUI.Animations.Expressions.ExpressionValues;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private bool _isAnyMusicSessionExisted = false;
-
-        [ObservableProperty]
-        private string? _title;
-
-        [ObservableProperty]
-        private string? _artist;
-
-        [ObservableProperty]
-        private ObservableCollection<Color> _coverImageDominantColors;
+        private ObservableCollection<bool> _isDisplayTypeEnabled =
+        [
+            .. Enumerable.Repeat(false, Enum.GetValues<DisplayType>().Length),
+        ];
 
         [ObservableProperty]
         private BitmapImage? _coverImage;
 
         [ObservableProperty]
+        private SongInfo? _songInfo = null;
+
+        [ObservableProperty]
+        private int _displayType = (int)Models.DisplayType.PlaceholderOnly;
+
+        private int? _preferredDisplayType = 2;
+
+        [ObservableProperty]
         private bool _aboutToUpdateUI;
 
         [ObservableProperty]
-        private bool _isSmallScreenMode;
+        private bool _isPlaying = false;
 
         [ObservableProperty]
-        private bool _showLyricsOnly = false;
+        private ObservableCollection<string> _matchedLocalFilePath = [];
 
-        [ObservableProperty]
-        private bool _lyricsExisted = false;
-
-        private readonly ColorThief _colorThief = new();
-
-        private readonly SettingsService _settingsService;
-        private readonly DatabaseService _databaseService;
-
-        private readonly int _accentColorCount = 3;
-
-        public MainViewModel(SettingsService settingsService, DatabaseService databaseService)
+        private bool _isImmersiveMode = false;
+        public bool IsImmersiveMode
         {
-            _settingsService = settingsService;
+            get => _isImmersiveMode;
+            set
+            {
+                _isImmersiveMode = value;
+                OnPropertyChanged();
+                WeakReferenceMessenger.Default.Send(new IsImmersiveModeChangedMessage(value));
+                if (value)
+                    WeakReferenceMessenger.Default.Send(
+                        new ShowNotificatonMessage(
+                            new Notification(
+                                App.ResourceLoader!.GetString("MainPageEnterImmersiveModeHint"),
+                                isForeverDismissable: true,
+                                relatedSettingsKeyName: SettingsKeys.NeverShowEnterImmersiveModeMessage
+                            )
+                        )
+                    );
+            }
+        }
+
+        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+        private readonly IDatabaseService _databaseService;
+
+        public MainViewModel(IPlaybackService playbackService, IDatabaseService databaseService)
+        {
             _databaseService = databaseService;
-            CoverImageDominantColors =
+
+            WeakReferenceMessenger.Default.Register<MainViewModel, PlayingStatusChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    _dispatcherQueue.TryEnqueue(
+                        DispatcherQueuePriority.High,
+                        () =>
+                        {
+                            IsPlaying = m.Value;
+                        }
+                    );
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<MainViewModel, SongInfoChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    _dispatcherQueue.TryEnqueue(
+                        DispatcherQueuePriority.High,
+                        async () =>
+                        {
+                            await UpdateSongInfoUI(m.Value);
+                        }
+                    );
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<MainViewModel, ReFindSongInfoRequestedMessage>(
+                this,
+                async (r, m) =>
+                {
+                    if (SongInfo == null || SongInfo.Title == null || SongInfo.Artist == null)
+                        return;
+
+                    await UpdateSongInfoUI(
+                        _databaseService.FindSongInfo(SongInfo, SongInfo.Title, SongInfo.Artist)
+                    );
+                }
+            );
+        }
+
+        private async Task UpdateSongInfoUI(SongInfo? songInfo)
+        {
+            AboutToUpdateUI = true;
+            await Task.Delay(AnimationHelper.StoryboardDefaultDuration);
+
+            SongInfo = songInfo;
+
+            await Task.Delay(1);
+
+            CoverImage =
+                (songInfo?.AlbumArt == null)
+                    ? null
+                    : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
+
+            IsDisplayTypeEnabled =
             [
-                .. Enumerable.Repeat(Colors.Transparent, _accentColorCount),
+                .. Enumerable.Repeat(false, Enum.GetValues<DisplayType>().Length),
             ];
-        }
 
-        public List<LyricsLine> GetLyrics(Track? track)
-        {
-            List<LyricsLine> result = [];
-
-            var lyricsPhrases = track?.Lyrics?.SynchronizedLyrics;
-
-            if (lyricsPhrases?.Count > 0)
+            if (songInfo == null)
             {
-                if (lyricsPhrases[0].TimestampMs > 0)
-                {
-                    var placeholder = new LyricsPhrase(0, " ");
-                    lyricsPhrases.Insert(0, placeholder);
-                    lyricsPhrases.Insert(0, placeholder);
-                }
-            }
-
-            LyricsLine? lyricsLine = null;
-
-            for (int i = 0; i < lyricsPhrases?.Count; i++)
-            {
-                var lyricsPhrase = lyricsPhrases[i];
-                int startTimestampMs = lyricsPhrase.TimestampMs;
-                int endTimestampMs;
-
-                if (i + 1 < lyricsPhrases.Count)
-                {
-                    endTimestampMs = lyricsPhrases[i + 1].TimestampMs;
-                }
-                else
-                {
-                    endTimestampMs = (int)track.DurationMs;
-                }
-
-                lyricsLine ??= new LyricsLine { StartPlayingTimestampMs = startTimestampMs };
-
-                lyricsLine.Texts.Add(lyricsPhrase.Text);
-
-                if (endTimestampMs == startTimestampMs)
-                {
-                    continue;
-                }
-                else
-                {
-                    lyricsLine.EndPlayingTimestampMs = endTimestampMs;
-                    result.Add(lyricsLine);
-                    lyricsLine = null;
-                }
-            }
-
-            LyricsExisted = result.Count != 0;
-            if (!LyricsExisted)
-            {
-                ShowLyricsOnly = false;
-            }
-
-            return result;
-        }
-
-        public async Task<(List<LyricsLine>, SoftwareBitmap?)> SetSongInfoAsync(
-            GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps
-        )
-        {
-            SoftwareBitmap? coverSoftwareBitmap = null;
-            uint coverImagePixelWidth = 0;
-            uint coverImagePixelHeight = 0;
-
-            Title = mediaProps?.Title;
-            Artist = mediaProps?.Artist;
-
-            IRandomAccessStream? stream = null;
-
-            var track = _databaseService.GetMusicMetadata(mediaProps);
-
-            if (mediaProps?.Thumbnail is IRandomAccessStreamReference reference)
-            {
-                stream = await reference.OpenReadAsync();
+                IsDisplayTypeEnabled[(int)Models.DisplayType.PlaceholderOnly] = true;
+                DisplayType = (int)Models.DisplayType.PlaceholderOnly;
             }
             else
             {
-                if (track?.EmbeddedPictures.Count > 0)
+                if (songInfo.LyricsLines?.Count > 0)
                 {
-                    var bytes = track.EmbeddedPictures[0].PictureData;
-                    if (bytes != null)
+                    IsDisplayTypeEnabled[(int)Models.DisplayType.LyricsOnly] = true;
+                }
+                if (songInfo.AlbumArt != null)
+                {
+                    IsDisplayTypeEnabled[(int)Models.DisplayType.AlbumArtOnly] = true;
+                }
+                IsDisplayTypeEnabled[(int)Models.DisplayType.SplitView] =
+                    IsDisplayTypeEnabled[(int)Models.DisplayType.LyricsOnly]
+                    && IsDisplayTypeEnabled[(int)Models.DisplayType.AlbumArtOnly];
+
+                // Set checked
+                if (
+                    IsDisplayTypeEnabled[(int)Models.DisplayType.SplitView]
+                    && _preferredDisplayType == (int)Models.DisplayType.SplitView
+                )
+                {
+                    DisplayType = (int)Models.DisplayType.SplitView;
+                }
+                else
+                {
+                    if (
+                        IsDisplayTypeEnabled[(int)Models.DisplayType.LyricsOnly]
+                        && _preferredDisplayType == (int)Models.DisplayType.LyricsOnly
+                    )
                     {
-                        stream = await Helper.ImageHelper.GetStreamFromBytesAsync(bytes);
+                        DisplayType = (int)Models.DisplayType.LyricsOnly;
+                    }
+                    else if (
+                        IsDisplayTypeEnabled[(int)Models.DisplayType.AlbumArtOnly]
+                        && _preferredDisplayType == (int)Models.DisplayType.AlbumArtOnly
+                    )
+                    {
+                        DisplayType = (int)Models.DisplayType.AlbumArtOnly;
                     }
                 }
             }
 
-            // Set cover image and dominant colors
-            if (stream == null)
-            {
-                CoverImage = null;
-                CoverImageDominantColors =
-                [
-                    .. Enumerable.Repeat(Colors.Transparent, _accentColorCount),
-                ];
-                _settingsService.LyricsFontSelectedAccentColorIndex =
-                    _settingsService.LyricsFontSelectedAccentColorIndex;
-            }
-            else
-            {
-                CoverImage = new BitmapImage();
-                await CoverImage.SetSourceAsync(stream);
-                stream.Seek(0);
+            AboutToUpdateUI = false;
+        }
 
-                var decoder = await BitmapDecoder.CreateAsync(stream);
-                coverImagePixelHeight = decoder.PixelHeight;
-                coverImagePixelWidth = decoder.PixelWidth;
+        public void OpenMatchedFileFolderInFileExplorer(string path)
+        {
+            Process.Start(
+                new ProcessStartInfo
+                {
+                    FileName = "explorer.exe",
+                    Arguments = $"/select,\"{path}\"",
+                    UseShellExecute = true,
+                }
+            );
+        }
 
-                coverSoftwareBitmap = await decoder.GetSoftwareBitmapAsync(
-                    BitmapPixelFormat.Bgra8,
-                    BitmapAlphaMode.Premultiplied
-                );
-
-                CoverImageDominantColors =
-                [
-                    .. (await _colorThief.GetPalette(decoder, _accentColorCount)).Select(color =>
-                        Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B)
-                    ),
-                ];
-                _settingsService.LyricsFontSelectedAccentColorIndex =
-                    _settingsService.LyricsFontSelectedAccentColorIndex;
-
-                stream.Dispose();
-            }
-
-            return (GetLyrics(track), coverSoftwareBitmap);
+        [RelayCommand]
+        private void OnDisplayTypeChanged(object value)
+        {
+            int index = Convert.ToInt32(value);
+            _preferredDisplayType = index;
+            DisplayType = index;
         }
     }
 }

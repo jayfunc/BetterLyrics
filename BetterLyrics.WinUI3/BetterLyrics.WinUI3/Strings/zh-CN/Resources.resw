@@ -273,8 +273,8 @@
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>字体大小</value>
   </data>
-  <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
-    <value>仅展示歌词</value>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>仅显示歌词</value>
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>沉浸模式</value>
@@ -370,6 +370,15 @@
     <value>再次悬停以显示切换按钮</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value> 不再显示此消息</value>
+    <value>不再显示此消息</value>
+  </data>
+  <data name="MainPageNoLocalFilesMatched" xml:space="preserve">
+    <value>找不到匹配的本地文件</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>仅显示专辑封面</value>
+  </data>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>分屏视图</value>
   </data>
 </root>

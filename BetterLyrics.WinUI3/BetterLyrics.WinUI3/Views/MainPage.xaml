@@ -6,6 +6,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
@@ -14,318 +15,231 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
+    <Page.Resources>
+        <converters:DoubleToVisibilityConverter
+            x:Key="LyricsOnlyToVisibilityConverter"
+            GreaterThan="0.9"
+            LessThan="1.1" />
+    </Page.Resources>
 
     <Grid x:Name="RootGrid">
-        <Grid.Resources>
-            <Thickness x:Key="TeachingTipDescriptionMargin">0,16,0,0</Thickness>
-        </Grid.Resources>
-        <Grid
-            x:Name="TopPlaceholder"
-            Height="36"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Top" />
+        <!--  Lyrics area  -->
+        <Grid x:Name="LyricsGrid">
+            <canvas:CanvasAnimatedControl
+                x:Name="LyricsCanvas"
+                Draw="LyricsCanvas_Draw"
+                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                Loaded="LyricsCanvas_Loaded"
+                Paused="{x:Bind ViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                SizeChanged="LyricsCanvas_SizeChanged"
+                Update="LyricsCanvas_Update" />
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
 
-        <Grid x:Name="MainGrid">
+        </Grid>
 
-            <!--  Lyrics area  -->
-            <Grid x:Name="LyricsGrid">
+        <!--  Song info area  -->
+        <Grid x:Name="SongInfoGrid" Margin="36">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="36" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
 
-                <canvas:CanvasAnimatedControl
-                    x:Name="LyricsCanvas"
-                    Draw="LyricsCanvas_Draw"
-                    Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                    Loaded="LyricsCanvas_Loaded"
-                    SizeChanged="LyricsCanvas_SizeChanged"
-                    Update="LyricsCanvas_Update">
-                    <canvas:CanvasAnimatedControl.OpacityTransition>
-                        <ScalarTransition />
-                    </canvas:CanvasAnimatedControl.OpacityTransition>
-                </canvas:CanvasAnimatedControl>
+            <Grid x:Name="LyricsPlaceholderGrid" SizeChanged="LyricsPlaceholderGrid_SizeChanged" />
 
-            </Grid>
-
-            <!--  Song info area  -->
-            <Grid x:Name="SongInfoGrid" Margin="36">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="SongInfoColumnDefinition" Width="*" />
-                    <ColumnDefinition x:Name="SpacerColumnDefinition" Width="36" />
-                    <ColumnDefinition x:Name="LyricsAreaColumnDefinition" Width="*" />
-                </Grid.ColumnDefinitions>
+            <Grid x:Name="SongInfoInnerGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" />
+                    <!--  Cover area  -->
+                    <RowDefinition Height="20*" />
+                    <!--  Spacer  -->
+                    <RowDefinition Height="2*" />
+                    <!--  Title and artist area  -->
+                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
 
                 <Grid.Resources>
-                    <Storyboard x:Key="HideSongInfoGrid">
+
+                    <!--  Animation for song info  -->
+                    <Storyboard x:Name="SongInfoStackPanelFadeInStoryboard">
                         <DoubleAnimation
-                            Storyboard.TargetName="SongInfoGrid"
+                            Storyboard.TargetName="SongInfoInnerGrid"
                             Storyboard.TargetProperty="Opacity"
-                            From="1"
-                            To="0"
-                            Duration="0:0:0.2" />
-                    </Storyboard>
-                    <Storyboard x:Key="ShowSongInfoGrid">
-                        <DoubleAnimation
-                            Storyboard.TargetName="SongInfoGrid"
-                            Storyboard.TargetProperty="Opacity"
-                            From="0"
                             To="1"
                             Duration="0:0:0.2" />
                     </Storyboard>
+                    <Storyboard x:Name="SongInfoStackPanelFadeOutStoryboard" BeginTime="0:0:0.2">
+                        <DoubleAnimation
+                            Storyboard.TargetName="SongInfoInnerGrid"
+                            Storyboard.TargetProperty="Opacity"
+                            To="0"
+                            Duration="0:0:0.2" />
+                    </Storyboard>
+
                 </Grid.Resources>
 
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.ShowLyricsOnly, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="True">
-                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource HideSongInfoGrid}" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.ShowLyricsOnly, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="False">
-                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource ShowSongInfoGrid}" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-
+                <!--  Cover area  -->
                 <Grid
-                    x:Name="LyricsPlaceholderGrid"
-                    Grid.Column="2"
-                    SizeChanged="LyricsPlaceholderGrid_SizeChanged" />
+                    x:Name="CoverArea"
+                    Grid.Row="1"
+                    SizeChanged="CoverArea_SizeChanged">
 
-                <Grid
-                    x:Name="SongInfoInnerGrid"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="4*" />
-                        <!--  Cover area  -->
-                        <RowDefinition Height="20*" />
-                        <!--  Spacer  -->
-                        <RowDefinition Height="2*" />
-                        <!--  Title and artist area  -->
-                        <RowDefinition Height="5*" />
-                        <RowDefinition Height="2*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.Resources>
-
-                        <!--  Animation for song info  -->
-                        <Storyboard x:Name="SongInfoStackPanelFadeInStoryboard">
-                            <DoubleAnimation
-                                Storyboard.TargetName="SongInfoInnerGrid"
-                                Storyboard.TargetProperty="Opacity"
-                                To="1"
-                                Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Name="SongInfoStackPanelFadeOutStoryboard" BeginTime="0:0:0.2">
-                            <DoubleAnimation
-                                Storyboard.TargetName="SongInfoInnerGrid"
-                                Storyboard.TargetProperty="Opacity"
-                                To="0"
-                                Duration="0:0:0.2" />
-                        </Storyboard>
-
-                    </Grid.Resources>
-
-                    <interactivity:Interaction.Behaviors>
-
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.IsSmallScreenMode, Mode=OneWay}"
-                            ComparisonCondition="Equal"
-                            Value="True">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource SongInfoStackPanelFadeOutStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.IsSmallScreenMode, Mode=OneWay}"
-                            ComparisonCondition="Equal"
-                            Value="False">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource SongInfoStackPanelFadeInStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-
-                    </interactivity:Interaction.Behaviors>
-
-                    <!--  Cover area  -->
-                    <Grid
-                        x:Name="CoverArea"
-                        Grid.Row="1"
-                        SizeChanged="CoverArea_SizeChanged">
-
-                        <Grid x:Name="CoverImageGrid" CornerRadius="24">
-                            <Image
-                                x:Name="CoverImage"
-                                Source="{x:Bind ViewModel.CoverImage, Mode=OneWay}"
-                                Stretch="Uniform">
-                                <Image.Resources>
-                                    <Storyboard x:Key="CoverIamgeFadeInStoryboard">
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                    <Storyboard x:Key="CoverIamgeFadeOutStoryboard">
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </Image.Resources>
-                                <interactivity:Interaction.Behaviors>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                        ComparisonCondition="Equal"
-                                        Value="True">
-                                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeOutStoryboard}" />
-                                    </interactivity:DataTriggerBehavior>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                        ComparisonCondition="Equal"
-                                        Value="False">
-                                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeInStoryboard}" />
-                                    </interactivity:DataTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                            </Image>
-                        </Grid>
-
+                    <Grid x:Name="CoverImageGrid" Loaded="CoverImageGrid_Loaded">
+                        <Image
+                            x:Name="CoverImage"
+                            Source="{x:Bind ViewModel.CoverImage, Mode=OneWay}"
+                            Stretch="Uniform">
+                            <Image.Resources>
+                                <Storyboard x:Key="CoverIamgeFadeInStoryboard">
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+                                <Storyboard x:Key="CoverIamgeFadeOutStoryboard">
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </Image.Resources>
+                            <interactivity:Interaction.Behaviors>
+                                <interactivity:DataTriggerBehavior
+                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                    ComparisonCondition="Equal"
+                                    Value="True">
+                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeOutStoryboard}" />
+                                </interactivity:DataTriggerBehavior>
+                                <interactivity:DataTriggerBehavior
+                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                    ComparisonCondition="Equal"
+                                    Value="False">
+                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeInStoryboard}" />
+                                </interactivity:DataTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </Image>
                     </Grid>
-
-                    <!--  Title and artist  -->
-                    <StackPanel Grid.Row="3" Orientation="Vertical">
-                        <!--  Song title  -->
-                        <controls:OpacityMaskView x:Name="TitleOpacityMaskView" HorizontalAlignment="Center">
-                            <controls:OpacityMaskView.OpacityMask>
-                                <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}" />
-                            </controls:OpacityMaskView.OpacityMask>
-
-                            <controls:OpacityMaskView.Resources>
-                                <Storyboard x:Key="TitleOpacityMaskViewFadeInStoryboard">
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TitleOpacityMaskView" Storyboard.TargetProperty="Opacity">
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                                <Storyboard x:Key="TitleOpacityMaskViewFadeOutStoryboard">
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TitleOpacityMaskView" Storyboard.TargetProperty="Opacity">
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </controls:OpacityMaskView.Resources>
-
-                            <interactivity:Interaction.Behaviors>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="True">
-                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource TitleOpacityMaskViewFadeOutStoryboard}" />
-                                </interactivity:DataTriggerBehavior>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="False">
-                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource TitleOpacityMaskViewFadeInStoryboard}" />
-                                </interactivity:DataTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-
-                            <labs:MarqueeText
-                                x:Name="TitleTextBlock"
-                                Behavior="Bouncing"
-                                FontSize="{StaticResource TitleTextBlockFontSize}"
-                                FontWeight="SemiBold"
-                                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                Text="{x:Bind ViewModel.Title, Mode=OneWay}" />
-                        </controls:OpacityMaskView>
-
-                        <!--  Song artist  -->
-                        <controls:OpacityMaskView x:Name="ArtistOpacityMaskView" HorizontalAlignment="Center">
-                            <controls:OpacityMaskView.OpacityMask>
-                                <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}" />
-                            </controls:OpacityMaskView.OpacityMask>
-                            <controls:OpacityMaskView.Resources>
-                                <Storyboard x:Key="ArtistOpacityMaskViewFadeInStoryboard">
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ArtistOpacityMaskView" Storyboard.TargetProperty="Opacity">
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                                <Storyboard x:Key="ArtistOpacityMaskViewFadeOutStoryboard">
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ArtistOpacityMaskView" Storyboard.TargetProperty="Opacity">
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </controls:OpacityMaskView.Resources>
-
-                            <interactivity:Interaction.Behaviors>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="True">
-                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource ArtistOpacityMaskViewFadeOutStoryboard}" />
-                                </interactivity:DataTriggerBehavior>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="False">
-                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource ArtistOpacityMaskViewFadeInStoryboard}" />
-                                </interactivity:DataTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-
-                            <labs:MarqueeText
-                                Behavior="Bouncing"
-                                FontSize="{StaticResource SubtitleTextBlockFontSize}"
-                                FontWeight="SemiBold"
-                                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                Opacity="0.5"
-                                Text="{x:Bind ViewModel.Artist, Mode=OneWay}" />
-                        </controls:OpacityMaskView>
-
-                    </StackPanel>
 
                 </Grid>
 
-                <TextBlock
-                    x:Name="MainPageNoMusicPlayingTextBlock"
-                    x:Uid="MainPageNoMusicPlaying"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource TitleTextBlockStyle}">
-                    <TextBlock.Resources>
-                        <Storyboard x:Key="ShowMainPageNoMusicPlayingTextBlockStoryboard">
-                            <DoubleAnimation
-                                Storyboard.TargetName="MainPageNoMusicPlayingTextBlock"
-                                Storyboard.TargetProperty="Opacity"
-                                To="1"
-                                Duration="0:0:0.2" />
-                        </Storyboard>
-                        <Storyboard x:Key="HideMainPageNoMusicPlayingTextBlockStoryboard">
-                            <DoubleAnimation
-                                Storyboard.TargetName="MainPageNoMusicPlayingTextBlock"
-                                Storyboard.TargetProperty="Opacity"
-                                To="0"
-                                Duration="0:0:0.2" />
-                        </Storyboard>
-                    </TextBlock.Resources>
-                    <interactivity:Interaction.Behaviors>
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.IsAnyMusicSessionExisted, Mode=OneWay}"
-                            ComparisonCondition="Equal"
-                            Value="True">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource HideMainPageNoMusicPlayingTextBlockStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.IsAnyMusicSessionExisted, Mode=OneWay}"
-                            ComparisonCondition="Equal"
-                            Value="False">
-                            <interactivity:ControlStoryboardAction Storyboard="{StaticResource ShowMainPageNoMusicPlayingTextBlockStoryboard}" />
-                        </interactivity:DataTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </TextBlock>
+                <!--  Title and artist  -->
+                <StackPanel Grid.Row="3" Orientation="Vertical">
+                    <!--  Song title  -->
+                    <controls:OpacityMaskView x:Name="TitleOpacityMaskView" HorizontalAlignment="Center">
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}" />
+                        </controls:OpacityMaskView.OpacityMask>
+
+                        <controls:OpacityMaskView.Resources>
+                            <Storyboard x:Key="TitleOpacityMaskViewFadeInStoryboard">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TitleOpacityMaskView" Storyboard.TargetProperty="Opacity">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="TitleOpacityMaskViewFadeOutStoryboard">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="TitleOpacityMaskView" Storyboard.TargetProperty="Opacity">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </controls:OpacityMaskView.Resources>
+
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:DataTriggerBehavior
+                                Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                ComparisonCondition="Equal"
+                                Value="True">
+                                <interactivity:ControlStoryboardAction Storyboard="{StaticResource TitleOpacityMaskViewFadeOutStoryboard}" />
+                            </interactivity:DataTriggerBehavior>
+                            <interactivity:DataTriggerBehavior
+                                Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                ComparisonCondition="Equal"
+                                Value="False">
+                                <interactivity:ControlStoryboardAction Storyboard="{StaticResource TitleOpacityMaskViewFadeInStoryboard}" />
+                            </interactivity:DataTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+
+                        <labs:MarqueeText
+                            x:Name="TitleTextBlock"
+                            Behavior="Bouncing"
+                            FontSize="{StaticResource TitleTextBlockFontSize}"
+                            FontWeight="SemiBold"
+                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                            Text="{x:Bind ViewModel.SongInfo.Title, Mode=OneWay}" />
+                    </controls:OpacityMaskView>
+
+                    <!--  Song artist  -->
+                    <controls:OpacityMaskView x:Name="ArtistOpacityMaskView" HorizontalAlignment="Center">
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle Fill="{StaticResource BaseHighEdgeHorizontalFadeBrush}" />
+                        </controls:OpacityMaskView.OpacityMask>
+                        <controls:OpacityMaskView.Resources>
+                            <Storyboard x:Key="ArtistOpacityMaskViewFadeInStoryboard">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ArtistOpacityMaskView" Storyboard.TargetProperty="Opacity">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                            <Storyboard x:Key="ArtistOpacityMaskViewFadeOutStoryboard">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ArtistOpacityMaskView" Storyboard.TargetProperty="Opacity">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </controls:OpacityMaskView.Resources>
+
+                        <interactivity:Interaction.Behaviors>
+                            <interactivity:DataTriggerBehavior
+                                Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                ComparisonCondition="Equal"
+                                Value="True">
+                                <interactivity:ControlStoryboardAction Storyboard="{StaticResource ArtistOpacityMaskViewFadeOutStoryboard}" />
+                            </interactivity:DataTriggerBehavior>
+                            <interactivity:DataTriggerBehavior
+                                Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                ComparisonCondition="Equal"
+                                Value="False">
+                                <interactivity:ControlStoryboardAction Storyboard="{StaticResource ArtistOpacityMaskViewFadeInStoryboard}" />
+                            </interactivity:DataTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+
+                        <labs:MarqueeText
+                            Behavior="Bouncing"
+                            FontSize="{StaticResource SubtitleTextBlockFontSize}"
+                            FontWeight="SemiBold"
+                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                            Opacity="0.5"
+                            Text="{x:Bind ViewModel.SongInfo.Artist, Mode=OneWay}" />
+                    </controls:OpacityMaskView>
+
+                </StackPanel>
 
             </Grid>
 
         </Grid>
 
+        <!--  No music playing placeholder  -->
+        <TextBlock
+            x:Name="MainPageNoMusicPlayingTextBlock"
+            x:Uid="MainPageNoMusicPlaying"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Style="{StaticResource TitleTextBlockStyle}">
+            <TextBlock.OpacityTransition>
+                <ScalarTransition />
+            </TextBlock.OpacityTransition>
+        </TextBlock>
+
+        <!--  Bottom-right command area  -->
         <Grid
             x:Name="BottomCommandGrid"
             Margin="0,0,4,4"
@@ -342,13 +256,13 @@
             <interactivity:Interaction.Behaviors>
 
                 <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    Binding="{x:Bind ViewModel.IsImmersiveMode, Mode=OneWay}"
                     ComparisonCondition="Equal"
                     Value="False">
                     <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0.5" />
                 </interactivity:DataTriggerBehavior>
                 <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind SettingsService.IsImmersiveMode, Mode=OneWay}"
+                    Binding="{x:Bind ViewModel.IsImmersiveMode, Mode=OneWay}"
                     ComparisonCondition="Equal"
                     Value="True">
                     <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
@@ -358,29 +272,107 @@
 
             <StackPanel HorizontalAlignment="Right" Spacing="4">
 
+                <Button
+                    x:Name="LyricsOnlyButton"
+                    x:Uid="MainWindowLyricsOnly"
+                    Content="{ui:FontIcon Glyph=&#xE97C;}"
+                    Style="{StaticResource GhostButtonStyle}">
+                    <Button.OpacityTransition>
+                        <ScalarTransition />
+                    </Button.OpacityTransition>
+                    <Button.Flyout>
+                        <Flyout>
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Padding" Value="12,2,12,8" />
+                                    <Setter Property="CornerRadius" Value="8" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.DisplayType, Mode=OneWay}">
+                                <RadioButton
+                                    x:Uid="MainPageAlbumArtOnly"
+                                    Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                                    IsEnabled="{x:Bind ViewModel.IsDisplayTypeEnabled[0], Mode=OneWay}"
+                                    Tag="0" />
+                                <RadioButton
+                                    x:Uid="MainPageLyriscOnly"
+                                    Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                                    IsEnabled="{x:Bind ViewModel.IsDisplayTypeEnabled[1], Mode=OneWay}"
+                                    Tag="1" />
+                                <RadioButton
+                                    x:Uid="MainPageSplitView"
+                                    Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
+                                    IsEnabled="{x:Bind ViewModel.IsDisplayTypeEnabled[2], Mode=OneWay}"
+                                    Tag="2" />
+                            </RadioButtons>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+
                 <ToggleButton
                     x:Name="ImmersiveModeButton"
                     x:Uid="MainWindowImmersiveMode"
-                    IsChecked="{x:Bind SettingsService.IsImmersiveMode, Mode=TwoWay}"
-                    Style="{StaticResource GhostToggleButtonStyle}">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF131;" />
-                </ToggleButton>
+                    Content="{ui:FontIcon Glyph=&#xF131;}"
+                    IsChecked="{x:Bind ViewModel.IsImmersiveMode, Mode=TwoWay}"
+                    Style="{StaticResource GhostToggleButtonStyle}" />
 
-                <ToggleButton
-                    x:Name="LyricsOnlyButton"
-                    x:Uid="MainWindowLyricsOnly"
-                    IsChecked="{x:Bind ViewModel.ShowLyricsOnly, Mode=TwoWay}"
-                    Style="{StaticResource GhostToggleButtonStyle}"
-                    Visibility="{x:Bind ViewModel.LyricsExisted, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE66C;" />
-                </ToggleButton>
+                <Button Content="{ui:FontIcon Glyph=&#xF167;}" Style="{StaticResource GhostButtonStyle}">
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Spacing="16">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xED35;" />
+                                    <TextBlock Text="{x:Bind ViewModel.SongInfo.SourceAppUserModelId, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC4F;" />
+                                    <TextBlock Text="{x:Bind ViewModel.SongInfo.Title, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77B;" />
+                                    <TextBlock Text="{x:Bind ViewModel.SongInfo.Artist, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E3;" />
+                                    <ListView ItemsSource="{x:Bind ViewModel.MatchedLocalFilePath, Mode=OneWay}" SelectionMode="None">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="Margin" Value="0" />
+                                                <Setter Property="Padding" Value="0" />
+                                                <Setter Property="MinWidth" Value="0" />
+                                                <Setter Property="MinHeight" Value="0" />
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Mode=OneWay}" />
+                                                    <Button
+                                                        Click="OpenMatchedFileButton_Click"
+                                                        Content="{ui:FontIcon Glyph=&#xE838;}"
+                                                        Style="{StaticResource GhostButtonStyle}"
+                                                        Tag="{Binding Mode=OneWay}"
+                                                        Visibility="{Binding Converter={StaticResource MatchedLocalFilesPathToVisibilityConverter}, Mode=OneWay}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
 
                 <Button
                     x:Name="SettingsButton"
                     Click="SettingsButton_Click"
-                    Style="{StaticResource GhostButtonStyle}">
-                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF8B0;" />
-                </Button>
+                    Content="{ui:FontIcon Glyph=&#xF8B0;}"
+                    Style="{StaticResource GhostButtonStyle}" />
 
             </StackPanel>
 
@@ -395,25 +387,75 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <!--  Narrow  -->
-                <VisualState x:Name="NarrowState">
+
+                <!--  Album art only  -->
+                <VisualState x:Name="AlbumArtOnly">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            To="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SongInfoColumnDefinition.Width" Value="0" />
+                        <Setter Target="SongInfoGrid.Opacity" Value="1" />
+                        <Setter Target="LyricsGrid.Opacity" Value="0" />
+                        <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
+                        <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="3" />
+                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
 
-                <!--  Wide  -->
-                <VisualState x:Name="WideState">
+                <!--  Lyrics only  -->
+                <VisualState x:Name="LyricsOnly">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="720" />
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            To="1" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SongInfoColumnDefinition.Width" Value="*" />
+                        <Setter Target="SongInfoGrid.Opacity" Value="0" />
+                        <Setter Target="LyricsGrid.Opacity" Value="1" />
+                        <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="0" />
+                        <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="3" />
+                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
+
+                <!--  Split view  -->
+                <VisualState x:Name="SplitView">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            To="2" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SongInfoGrid.Opacity" Value="1" />
+                        <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
+                        <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="LyricsGrid.Opacity" Value="1" />
+                        <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="2" />
+                        <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--  Placeholder only  -->
+                <VisualState x:Name="PlaceholderOnly">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            To="3" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SongInfoGrid.Opacity" Value="0" />
+                        <Setter Target="LyricsGrid.Opacity" Value="0" />
+                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>

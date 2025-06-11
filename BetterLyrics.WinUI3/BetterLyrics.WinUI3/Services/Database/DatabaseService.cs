@@ -4,18 +4,19 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using ATL;
-using BetterLyrics.WinUI3.Messages;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.Settings;
-using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
 using SQLite;
 using Ude;
 using Windows.Media.Control;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.Services.Database
 {
-    public class DatabaseService
+    public class DatabaseService : IDatabaseService
     {
         private readonly SQLiteConnection _connection;
 
@@ -30,7 +31,7 @@ namespace BetterLyrics.WinUI3.Services.Database
             }
         }
 
-        public async Task RebuildMusicMetadataIndexDatabaseAsync(IList<string> paths)
+        public async Task RebuildDatabaseAsync(IList<string> paths)
         {
             await Task.Run(() =>
             {
@@ -57,13 +58,27 @@ namespace BetterLyrics.WinUI3.Services.Database
             });
         }
 
-        public Track? GetMusicMetadata(
+        public async Task<SongInfo> FindSongInfoAsync(
             GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps
         )
         {
             if (mediaProps == null || mediaProps.Title == null || mediaProps.Artist == null)
-                return null;
+                return new();
 
+            var songInfo = new SongInfo { Title = mediaProps?.Title, Artist = mediaProps?.Artist };
+
+            // App.ResourceLoader!.GetString("MainPageNoLocalFilesMatched");
+
+            if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
+            {
+                songInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(streamReference);
+            }
+
+            return FindSongInfo(songInfo, mediaProps!.Title, mediaProps!.Artist);
+        }
+
+        public SongInfo FindSongInfo(SongInfo initSongInfo, string searchTitle, string searchArtist)
+        {
             var founds = _connection
                 .Table<MetadataIndex>()
                 // Look up by Title and Artist (these two props were fetched by reading metadata in music file befoe) first
@@ -73,66 +88,61 @@ namespace BetterLyrics.WinUI3.Services.Database
                     (
                         m.Title != null
                         && m.Artist != null
-                        && m.Title.Contains(mediaProps.Title)
-                        && m.Artist.Contains(mediaProps.Artist)
+                        && m.Title.Contains(searchTitle)
+                        && m.Artist.Contains(searchArtist)
                     )
                     || (
                         m.Path != null
-                        && m.Path.Contains(mediaProps.Title)
-                        && m.Path.Contains(mediaProps.Artist)
+                        && m.Path.Contains(searchTitle)
+                        && m.Path.Contains(searchArtist)
                     )
                 )
                 .ToList();
-            if (founds == null || founds.Count == 0)
+
+            foreach (var found in founds)
             {
-                return null;
-            }
-            else
-            {
-                var first = new Track(founds[0].Path);
-                if (founds.Count == 1)
+                if (initSongInfo.LyricsLines == null || initSongInfo.AlbumArt == null)
                 {
-                    return first;
+                    Track track = new(found.Path);
+                    initSongInfo.ParseLyrics(track);
+
+                    // Find lyrics
+                    if (initSongInfo.LyricsLines == null && found?.Path?.EndsWith(".lrc") == true)
+                    {
+                        using (FileStream fs = File.OpenRead(found.Path))
+                        {
+                            _charsetDetector.Feed(fs);
+                            _charsetDetector.DataEnd();
+                        }
+
+                        string content;
+                        if (_charsetDetector.Charset != null)
+                        {
+                            Encoding encoding = Encoding.GetEncoding(_charsetDetector.Charset);
+                            content = File.ReadAllText(found.Path, encoding);
+                        }
+                        else
+                        {
+                            content = File.ReadAllText(found.Path, Encoding.UTF8);
+                        }
+                        initSongInfo.ParseLyrics(track, content);
+                        initSongInfo.FilesUsed ??= [];
+                        initSongInfo.FilesUsed.Add(found.Path);
+                    }
+
+                    // Finf album art
+                    if (initSongInfo.AlbumArt == null)
+                    {
+                        if (track.EmbeddedPictures.Count > 0)
+                        {
+                            initSongInfo.AlbumArt = track.EmbeddedPictures[0].PictureData;
+                        }
+                    }
                 }
                 else
-                {
-                    if (first.Lyrics.Exists())
-                    {
-                        return first;
-                    }
-                    else
-                    {
-                        foreach (var found in founds)
-                        {
-                            if (found.Path.EndsWith(".lrc"))
-                            {
-                                using (FileStream fs = File.OpenRead(found.Path))
-                                {
-                                    _charsetDetector.Feed(fs);
-                                    _charsetDetector.DataEnd();
-                                }
-
-                                string content;
-                                if (_charsetDetector.Charset != null)
-                                {
-                                    Encoding encoding = Encoding.GetEncoding(
-                                        _charsetDetector.Charset
-                                    );
-                                    content = File.ReadAllText(found.Path, encoding);
-                                }
-                                else
-                                {
-                                    content = File.ReadAllText(found.Path, Encoding.UTF8);
-                                }
-                                first.Lyrics.ParseLRC(content);
-
-                                return first;
-                            }
-                        }
-                        return first;
-                    }
-                }
+                    break;
             }
+            return initSongInfo;
         }
     }
 }
