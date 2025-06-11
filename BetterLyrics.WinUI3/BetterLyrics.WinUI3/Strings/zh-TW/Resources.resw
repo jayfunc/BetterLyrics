@@ -372,7 +372,7 @@
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>不再顯示此訊息</value>
   </data>
-  <data name="MainPageNoLocalFilesMatched" xml:space="preserve">
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
     <value>找不到匹配的本地文件</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">

@@ -7,5 +7,8 @@ using BetterLyrics.WinUI3.Models;
 
 namespace BetterLyrics.WinUI3.Services.Playback
 {
-    public interface IPlaybackService { }
+    public interface IPlaybackService
+    {
+        void ReSendingMessages();
+    }
 }

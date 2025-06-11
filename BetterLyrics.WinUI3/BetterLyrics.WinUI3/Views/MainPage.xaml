@@ -288,24 +288,21 @@
                                     <Setter Property="CornerRadius" Value="8" />
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
-                            <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.DisplayType, Mode=OneWay}">
+                            <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
                                 <RadioButton
                                     x:Uid="MainPageAlbumArtOnly"
                                     Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                    IsEnabled="{x:Bind ViewModel.IsDisplayTypeEnabled[0], Mode=OneWay}"
                                     Tag="0" />
                                 <RadioButton
                                     x:Uid="MainPageLyriscOnly"
                                     Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                    IsEnabled="{x:Bind ViewModel.IsDisplayTypeEnabled[1], Mode=OneWay}"
                                     Tag="1" />
                                 <RadioButton
                                     x:Uid="MainPageSplitView"
                                     Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
                                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                    IsEnabled="{x:Bind ViewModel.IsDisplayTypeEnabled[2], Mode=OneWay}"
                                     Tag="2" />
                             </RadioButtons>
                         </Flyout>
@@ -337,7 +334,10 @@
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E3;" />
-                                    <ListView ItemsSource="{x:Bind ViewModel.MatchedLocalFilePath, Mode=OneWay}" SelectionMode="None">
+                                    <ListView
+                                        x:Name="MatchedFilesListView"
+                                        ItemsSource="{x:Bind ViewModel.SongInfo.FilesUsed, Mode=OneWay}"
+                                        SelectionMode="None">
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -356,12 +356,15 @@
                                                         Click="OpenMatchedFileButton_Click"
                                                         Content="{ui:FontIcon Glyph=&#xE838;}"
                                                         Style="{StaticResource GhostButtonStyle}"
-                                                        Tag="{Binding Mode=OneWay}"
-                                                        Visibility="{Binding Converter={StaticResource MatchedLocalFilesPathToVisibilityConverter}, Mode=OneWay}" />
+                                                        Tag="{Binding Mode=OneWay}" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
+                                    <TextBlock
+                                        x:Name="NoLocalFilesMatchedTextBlock"
+                                        x:Uid="MainPageNoLocalFilesMatched"
+                                        Visibility="Collapsed" />
                                 </StackPanel>
                             </StackPanel>
                         </Flyout>
@@ -386,19 +389,19 @@
             Target="{x:Bind SettingsButton}" />
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
+            <VisualStateGroup x:Name="LayoutStates">
 
                 <!--  Album art only  -->
                 <VisualState x:Name="AlbumArtOnly">
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SongInfoGrid.Opacity" Value="1" />
-                        <Setter Target="LyricsGrid.Opacity" Value="0" />
+                        <Setter Target="LyricsGrid.Opacity" Value="1" />
                         <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
                         <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="3" />
                         <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
@@ -410,7 +413,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="1" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -427,7 +430,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="2" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -446,7 +449,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -456,6 +459,18 @@
                     </VisualState.Setters>
                 </VisualState>
 
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="FilesMatchStates">
+                <VisualState x:Name="Matched" />
+                <VisualState x:Name="NotMatched">
+                    <VisualState.StateTriggers>
+                        <ui:IsNullOrEmptyStateTrigger Value="{x:Bind ViewModel.SongInfo.FilesUsed, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NoLocalFilesMatchedTextBlock.Visibility" Value="Visible" />
+                        <Setter Target="MatchedFilesListView.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>

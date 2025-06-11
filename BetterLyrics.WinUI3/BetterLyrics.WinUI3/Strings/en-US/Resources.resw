@@ -372,7 +372,7 @@
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>Do not show this message again</value>
   </data>
-  <data name="MainPageNoLocalFilesMatched" xml:space="preserve">
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
     <value>No local files matched</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">

@@ -8,7 +8,6 @@ using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
-using DevWinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -66,6 +65,8 @@ namespace BetterLyrics.WinUI3.Rendering
 
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
+        private DisplayType _displayType = DisplayType.PlaceholderOnly;
+
         public LyricsRenderer(LyricsViewModel settingsViewModel)
         {
             _viewModel = settingsViewModel;
@@ -122,6 +123,14 @@ namespace BetterLyrics.WinUI3.Rendering
                 async (r, m) =>
                 {
                     await ReLayoutAsync();
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<LyricsRenderer, DisplayTypeChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    _displayType = m.Value;
                 }
             );
         }
@@ -310,7 +319,8 @@ namespace BetterLyrics.WinUI3.Rendering
             using var lyrics = new CanvasCommandList(control);
             using (var lyricsDs = lyrics.CreateDrawingSession())
             {
-                DrawLyrics(control, lyricsDs);
+                if (_displayType == DisplayType.LyricsOnly || _displayType == DisplayType.SplitView)
+                    DrawLyrics(control, lyricsDs);
             }
 
             using var glowedLyrics = new CanvasCommandList(control);

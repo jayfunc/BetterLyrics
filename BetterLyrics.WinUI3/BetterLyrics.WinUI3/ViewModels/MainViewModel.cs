@@ -26,30 +26,21 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<bool> _isDisplayTypeEnabled =
-        [
-            .. Enumerable.Repeat(false, Enum.GetValues<DisplayType>().Length),
-        ];
-
-        [ObservableProperty]
         private BitmapImage? _coverImage;
 
         [ObservableProperty]
         private SongInfo? _songInfo = null;
 
         [ObservableProperty]
-        private int _displayType = (int)Models.DisplayType.PlaceholderOnly;
+        private DisplayType _displayType = DisplayType.PlaceholderOnly;
 
-        private int? _preferredDisplayType = 2;
+        private DisplayType? _preferredDisplayType = DisplayType.SplitView;
 
         [ObservableProperty]
         private bool _aboutToUpdateUI;
 
         [ObservableProperty]
         private bool _isPlaying = false;
-
-        [ObservableProperty]
-        private ObservableCollection<string> _matchedLocalFilePath = [];
 
         private bool _isImmersiveMode = false;
         public bool IsImmersiveMode
@@ -75,12 +66,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        private readonly IDatabaseService _databaseService;
-
-        public MainViewModel(IPlaybackService playbackService, IDatabaseService databaseService)
+        public MainViewModel(IPlaybackService playbackService)
         {
-            _databaseService = databaseService;
-
             WeakReferenceMessenger.Default.Register<MainViewModel, PlayingStatusChangedMessage>(
                 this,
                 (r, m) =>
@@ -108,19 +95,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                     );
                 }
             );
-
-            WeakReferenceMessenger.Default.Register<MainViewModel, ReFindSongInfoRequestedMessage>(
-                this,
-                async (r, m) =>
-                {
-                    if (SongInfo == null || SongInfo.Title == null || SongInfo.Artist == null)
-                        return;
-
-                    await UpdateSongInfoUI(
-                        _databaseService.FindSongInfo(SongInfo, SongInfo.Title, SongInfo.Artist)
-                    );
-                }
-            );
         }
 
         private async Task UpdateSongInfoUI(SongInfo? songInfo)
@@ -137,56 +111,20 @@ namespace BetterLyrics.WinUI3.ViewModels
                     ? null
                     : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
 
-            IsDisplayTypeEnabled =
-            [
-                .. Enumerable.Repeat(false, Enum.GetValues<DisplayType>().Length),
-            ];
-
             if (songInfo == null)
             {
-                IsDisplayTypeEnabled[(int)Models.DisplayType.PlaceholderOnly] = true;
-                DisplayType = (int)Models.DisplayType.PlaceholderOnly;
+                DisplayType = DisplayType.PlaceholderOnly;
+            }
+            else if (_preferredDisplayType is DisplayType preferredDisplayType)
+            {
+                DisplayType = preferredDisplayType;
             }
             else
             {
-                if (songInfo.LyricsLines?.Count > 0)
-                {
-                    IsDisplayTypeEnabled[(int)Models.DisplayType.LyricsOnly] = true;
-                }
-                if (songInfo.AlbumArt != null)
-                {
-                    IsDisplayTypeEnabled[(int)Models.DisplayType.AlbumArtOnly] = true;
-                }
-                IsDisplayTypeEnabled[(int)Models.DisplayType.SplitView] =
-                    IsDisplayTypeEnabled[(int)Models.DisplayType.LyricsOnly]
-                    && IsDisplayTypeEnabled[(int)Models.DisplayType.AlbumArtOnly];
-
-                // Set checked
-                if (
-                    IsDisplayTypeEnabled[(int)Models.DisplayType.SplitView]
-                    && _preferredDisplayType == (int)Models.DisplayType.SplitView
-                )
-                {
-                    DisplayType = (int)Models.DisplayType.SplitView;
-                }
-                else
-                {
-                    if (
-                        IsDisplayTypeEnabled[(int)Models.DisplayType.LyricsOnly]
-                        && _preferredDisplayType == (int)Models.DisplayType.LyricsOnly
-                    )
-                    {
-                        DisplayType = (int)Models.DisplayType.LyricsOnly;
-                    }
-                    else if (
-                        IsDisplayTypeEnabled[(int)Models.DisplayType.AlbumArtOnly]
-                        && _preferredDisplayType == (int)Models.DisplayType.AlbumArtOnly
-                    )
-                    {
-                        DisplayType = (int)Models.DisplayType.AlbumArtOnly;
-                    }
-                }
+                DisplayType = DisplayType.SplitView;
             }
+
+            WeakReferenceMessenger.Default.Send(new DisplayTypeChangedMessage(DisplayType));
 
             AboutToUpdateUI = false;
         }
@@ -207,8 +145,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void OnDisplayTypeChanged(object value)
         {
             int index = Convert.ToInt32(value);
-            _preferredDisplayType = index;
-            DisplayType = index;
+            _preferredDisplayType = (DisplayType)index;
+            DisplayType = (DisplayType)index;
+            WeakReferenceMessenger.Default.Send(new DisplayTypeChangedMessage(DisplayType));
         }
     }
 }
