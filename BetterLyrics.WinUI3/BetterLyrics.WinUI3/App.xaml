@@ -40,8 +40,10 @@
             <ExponentialEase x:Key="EaseIn" EasingMode="EaseIn" />
 
             <!--  Converter  -->
-            <converter:ThemeTypeToElementThemeConverter x:Key="ThemeTypeToElementThemeConverter" />
+            <converter:EnumToIntConverter x:Key="EnumToIntConverter" />
             <converter:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+            <converter:MatchedLocalFilesPathToVisibilityConverter x:Key="MatchedLocalFilesPathToVisibilityConverter" />
+            <converter:IntToCornerRadius x:Key="IntToCornerRadius" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
             <converters:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />

@@ -8,20 +8,27 @@ using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    internal class ThemeTypeToElementThemeConverter : IValueConverter
+    public class MatchedLocalFilesPathToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is int themeType)
+            if (value is string path)
             {
-                return (ElementTheme)themeType;
+                if (path == App.ResourceLoader!.GetString("MainPageNoLocalFilesMatched"))
+                {
+                    return Visibility.Collapsed;
+                }
+                else
+                {
+                    return Visibility.Visible;
+                }
             }
-            return ElementTheme.Default;
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return 0;
+            throw new NotImplementedException();
         }
     }
 }

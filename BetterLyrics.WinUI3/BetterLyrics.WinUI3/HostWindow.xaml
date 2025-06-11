@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Window
-    x:Class="BetterLyrics.WinUI3.Views.BaseWindow"
+    x:Class="BetterLyrics.WinUI3.HostWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
@@ -11,7 +11,10 @@
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" KeyDown="RootGrid_KeyDown">
+    <Grid
+        x:Name="RootGrid"
+        KeyDown="RootGrid_KeyDown"
+        RequestedTheme="{x:Bind GlobalSettingsViewModel.Theme, Mode=OneWay}">
 
         <Frame
             x:Name="RootFrame"
@@ -20,41 +23,24 @@
 
         <Grid
             x:Name="TopCommandGrid"
-            Height="{StaticResource TitleBarCompactHeight}"
+            Height="{x:Bind ViewModel.TitleBarHeight, Mode=OneWay}"
             VerticalAlignment="Top"
             Background="Transparent">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <interactivity:Interaction.Behaviors>
-
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind WindowModel.SettingsService.IsImmersiveMode, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="False">
-                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind WindowModel.SettingsService.IsImmersiveMode, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="True">
-                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                </interactivity:DataTriggerBehavior>
-
-            </interactivity:Interaction.Behaviors>
-
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
 
                 <ImageIcon
                     x:Name="AppLogoImageIcon"
-                    Height="18"
+                    Height="{x:Bind ViewModel.AppLogoImageIconHeight, Mode=OneWay}"
                     Margin="16,0"
                     Source="ms-appx:///Assets/Logo.png" />
 
                 <TextBlock
                     x:Name="AppTitleTextBlock"
-                    FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                    FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                     FontWeight="SemiBold"
                     Opacity=".5"
                     Text="{x:Bind Title, Mode=OneWay}" />
@@ -69,7 +55,7 @@
                 <Button Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
                         FontFamily="Segoe Fluent Icons"
-                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         FontWeight="ExtraBold"
                         Glyph="&#xE712;" />
                     <Button.Flyout>
@@ -93,7 +79,7 @@
                     Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
                         FontFamily="Segoe Fluent Icons"
-                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2D;" />
                 </Button>
                 <!--  Window Maximise  -->
@@ -103,7 +89,7 @@
                     Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
                         FontFamily="Segoe Fluent Icons"
-                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2E;" />
                 </Button>
                 <!--  Window Restore  -->
@@ -114,7 +100,7 @@
                     Visibility="Collapsed">
                     <FontIcon
                         FontFamily="Segoe Fluent Icons"
-                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2F;" />
                 </Button>
                 <!--  Window Close  -->
@@ -124,10 +110,9 @@
                     Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
                         FontFamily="Segoe Fluent Icons"
-                        FontSize="{x:Bind WindowModel.TitleBarFontSize, Mode=OneWay}"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2C;" />
                 </Button>
-
             </StackPanel>
 
         </Grid>
@@ -139,10 +124,10 @@
             VerticalAlignment="Bottom"
             Background="{ThemeResource SystemFillColorSolidAttentionBackgroundBrush}"
             IsClosable="False"
-            IsOpen="{x:Bind WindowModel.ShowInfoBar, Mode=OneWay}"
-            Message="{x:Bind WindowModel.Notification.Message, Mode=OneWay}"
+            IsOpen="{x:Bind ViewModel.ShowInfoBar, Mode=OneWay}"
+            Message="{x:Bind ViewModel.Notification.Message, Mode=OneWay}"
             Opacity="0"
-            Severity="{x:Bind WindowModel.Notification.Severity, Mode=OneWay}">
+            Severity="{x:Bind ViewModel.Notification.Severity, Mode=OneWay}">
             <InfoBar.RenderTransform>
                 <TranslateTransform x:Name="HostInfoBarTransform" Y="20" />
             </InfoBar.RenderTransform>
@@ -150,9 +135,9 @@
                 <CheckBox
                     x:Name="HostInfoBarCheckBox"
                     x:Uid="BaseWindowHostInfoBarCheckBox"
-                    Command="{x:Bind WindowModel.SwitchInfoBarNeverShowItAgainCheckBoxCommand}"
+                    Command="{x:Bind ViewModel.SwitchInfoBarNeverShowItAgainCheckBoxCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Mode=OneWay}"
-                    Visibility="{x:Bind WindowModel.Notification.Visibility, Mode=OneWay}" />
+                    Visibility="{x:Bind ViewModel.Notification.Visibility, Mode=OneWay}" />
             </InfoBar.ActionButton>
             <InfoBar.Resources>
                 <Storyboard x:Key="InfoBarShowAndHideStoryboard">

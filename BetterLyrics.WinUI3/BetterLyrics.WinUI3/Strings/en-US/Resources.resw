@@ -273,8 +273,8 @@
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>Font size</value>
   </data>
-  <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Show lyrics only</value>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>Lyrics only</value>
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Immersive mode</value>
@@ -371,5 +371,14 @@
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>Do not show this message again</value>
+  </data>
+  <data name="MainPageNoLocalFilesMatched" xml:space="preserve">
+    <value>No local files matched</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>Album art only</value>
+  </data>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>Split view</value>
   </data>
 </root>

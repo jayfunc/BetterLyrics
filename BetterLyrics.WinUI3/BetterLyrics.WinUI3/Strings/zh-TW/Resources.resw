@@ -273,8 +273,8 @@
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>字體大小</value>
   </data>
-  <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
-    <value>僅展示歌詞</value>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>僅顯示歌詞</value>
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>沉浸模式</value>
@@ -371,5 +371,14 @@
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>不再顯示此訊息</value>
+  </data>
+  <data name="MainPageNoLocalFilesMatched" xml:space="preserve">
+    <value>找不到匹配的本地文件</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>僅顯示專輯封面</value>
+  </data>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>分割畫面視圖</value>
   </data>
 </root>

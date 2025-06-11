@@ -1,29 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
-using System.Threading.Tasks;
+using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Messages;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Settings;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using BetterLyrics.WinUI3.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI;
 using Windows.Graphics.Imaging;
 
 namespace BetterLyrics.WinUI3.Rendering
 {
-    public class CoverBackgroundRenderer
+    public class AlbumArtRenderer
     {
-        private readonly SettingsService _settingsService;
-
-        public float RotateAngle { get; set; } = 0f;
+        private float _rotateAngle = 0f;
 
         private SoftwareBitmap? _lastSoftwareBitmap = null;
         private SoftwareBitmap? _softwareBitmap = null;
-        public SoftwareBitmap? SoftwareBitmap
+        private SoftwareBitmap? SoftwareBitmap
         {
             get => _softwareBitmap;
             set
@@ -45,17 +44,38 @@ namespace BetterLyrics.WinUI3.Rendering
         private DateTimeOffset _transitionStartTime;
         private bool _isTransitioning = false;
 
-        public CoverBackgroundRenderer()
+        private readonly float _coverRotateSpeed = 0.003f;
+
+        private readonly AlbumArtOverlayViewModel _viewModel;
+
+        public AlbumArtRenderer(AlbumArtOverlayViewModel albumArtRendererSettingsViewModel)
         {
-            _settingsService = Ioc.Default.GetService<SettingsService>()!;
+            _viewModel = albumArtRendererSettingsViewModel;
+
+            WeakReferenceMessenger.Default.Register<AlbumArtRenderer, SongInfoChangedMessage>(
+                this,
+                async (r, m) =>
+                {
+                    if (m.Value?.AlbumArt == null) { }
+                    else
+                    {
+                        SoftwareBitmap = await (
+                            await ImageHelper.GetDecoderFromByte(m.Value.AlbumArt)
+                        ).GetSoftwareBitmapAsync(
+                            BitmapPixelFormat.Bgra8,
+                            BitmapAlphaMode.Premultiplied
+                        );
+                    }
+                }
+            );
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (!_settingsService.IsCoverOverlayEnabled || SoftwareBitmap == null)
+            if (!_viewModel.IsCoverOverlayEnabled || SoftwareBitmap == null)
                 return;
 
-            ds.Transform = Matrix3x2.CreateRotation(RotateAngle, control.Size.ToVector2() * 0.5f);
+            ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
 
             var overlappedCovers = new CanvasCommandList(control);
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
@@ -72,10 +92,10 @@ namespace BetterLyrics.WinUI3.Rendering
 
             using var coverOverlayEffect = new OpacityEffect
             {
-                Opacity = _settingsService.CoverOverlayOpacity / 100f,
+                Opacity = _viewModel.CoverOverlayOpacity / 100f,
                 Source = new GaussianBlurEffect
                 {
-                    BlurAmount = _settingsService.CoverOverlayBlurAmount,
+                    BlurAmount = _viewModel.CoverOverlayBlurAmount,
                     Source = overlappedCovers,
                 },
             };
@@ -91,8 +111,8 @@ namespace BetterLyrics.WinUI3.Rendering
             float opacity
         )
         {
-            float imageWidth = (float)(softwareBitmap.PixelWidth * 96f / softwareBitmap.DpiX);
-            float imageHeight = (float)(softwareBitmap.PixelHeight * 96f / softwareBitmap.DpiY);
+            float imageWidth = (float)(softwareBitmap.PixelWidth * 96f / control.Dpi);
+            float imageHeight = (float)(softwareBitmap.PixelHeight * 96f / control.Dpi);
             var scaleFactor =
                 (float)Math.Sqrt(Math.Pow(control.Size.Width, 2) + Math.Pow(control.Size.Height, 2))
                 / Math.Min(imageWidth, imageHeight);
@@ -130,6 +150,12 @@ namespace BetterLyrics.WinUI3.Rendering
                     _lastSoftwareBitmap?.Dispose();
                     _lastSoftwareBitmap = null;
                 }
+            }
+
+            if (_viewModel.IsDynamicCoverOverlay)
+            {
+                _rotateAngle += _coverRotateSpeed;
+                _rotateAngle %= MathF.PI * 2;
             }
         }
     }

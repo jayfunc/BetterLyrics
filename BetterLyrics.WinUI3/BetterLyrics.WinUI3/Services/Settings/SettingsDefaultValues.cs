@@ -45,7 +45,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const int LyricsFontSelectedAccentColorIndex = 0;
 
         // Notification
-        public const bool NeverShowEnterFullScreenMessage = false;
-        public const bool NeverShowEnterImmersiveModeMessage = false;
+        public const bool NeverShowMessage = false;
     }
 }
