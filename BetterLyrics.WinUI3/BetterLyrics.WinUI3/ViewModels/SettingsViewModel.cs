@@ -85,13 +85,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly MediaPlayer _mediaPlayer = new();
 
         private readonly IDatabaseService _databaseService;
+        private readonly IPlaybackService _playbackService;
 
         public string Version => AppInfo.AppVersion;
 
-        public SettingsViewModel(IDatabaseService databaseService, ISettingsService settingsService)
+        public SettingsViewModel(
+            IDatabaseService databaseService,
+            ISettingsService settingsService,
+            IPlaybackService playbackService
+        )
             : base(settingsService)
         {
             _databaseService = databaseService;
+            _playbackService = playbackService;
 
             _musicLibraries =
             [
@@ -109,7 +115,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsRebuildingLyricsIndexDatabase = true;
             await _databaseService.RebuildDatabaseAsync(MusicLibraries);
             IsRebuildingLyricsIndexDatabase = false;
-            WeakReferenceMessenger.Default.Send(new ReFindSongInfoRequestedMessage());
+            _playbackService.ReSendingMessages();
         }
 
         public async Task RemoveFolderAsync(string path)

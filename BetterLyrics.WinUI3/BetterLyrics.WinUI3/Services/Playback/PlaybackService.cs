@@ -41,6 +41,14 @@ namespace BetterLyrics.WinUI3.Services.Playback
             SessionManager_CurrentSessionChanged(_sessionManager, null);
         }
 
+        public void ReSendingMessages()
+        {
+            // Re-send messages to update UI
+            CurrentSession_MediaPropertiesChanged(_currentSession, null);
+            CurrentSession_PlaybackInfoChanged(_currentSession, null);
+            CurrentSession_TimelinePropertiesChanged(_currentSession, null);
+        }
+
         /// <summary>
         /// Note: Non-UI thread
         /// </summary>
@@ -103,9 +111,7 @@ namespace BetterLyrics.WinUI3.Services.Playback
                     CurrentSession_TimelinePropertiesChanged;
             }
 
-            CurrentSession_MediaPropertiesChanged(_currentSession, null);
-            CurrentSession_PlaybackInfoChanged(_currentSession, null);
-            CurrentSession_TimelinePropertiesChanged(_currentSession, null);
+            ReSendingMessages();
         }
 
         /// <summary>

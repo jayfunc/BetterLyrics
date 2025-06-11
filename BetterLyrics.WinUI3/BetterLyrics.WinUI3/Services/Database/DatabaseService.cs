@@ -105,6 +105,11 @@ namespace BetterLyrics.WinUI3.Services.Database
                 {
                     Track track = new(found.Path);
                     initSongInfo.ParseLyrics(track);
+                    if (initSongInfo.LyricsLines != null)
+                    {
+                        initSongInfo.FilesUsed ??= [];
+                        initSongInfo.FilesUsed.Add(found.Path ?? string.Empty);
+                    }
 
                     // Find lyrics
                     if (initSongInfo.LyricsLines == null && found?.Path?.EndsWith(".lrc") == true)
@@ -136,6 +141,8 @@ namespace BetterLyrics.WinUI3.Services.Database
                         if (track.EmbeddedPictures.Count > 0)
                         {
                             initSongInfo.AlbumArt = track.EmbeddedPictures[0].PictureData;
+                            initSongInfo.FilesUsed ??= [];
+                            initSongInfo.FilesUsed.Add(found.Path);
                         }
                     }
                 }
