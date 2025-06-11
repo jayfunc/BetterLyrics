@@ -79,7 +79,7 @@ jobs:
 
     - name: Add CommunityToolkit Azure DevOps NuGet source
       run: |
-        dotnet nuget add source https://pkgs.dev.azure.com/dotnet/CommunityToolkit/_packaging/CommunityToolkit-Labs/nuget/v3/index.json --name CommunityToolkit-Labs --store-password-in-clear-text --configfile nuget.config
+        dotnet nuget add source https://pkgs.dev.azure.com/dotnet/CommunityToolkit/_packaging/CommunityToolkit-Labs/nuget/v3/index.json --name CommunityToolkit-Labs --store-password-in-clear-text
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
