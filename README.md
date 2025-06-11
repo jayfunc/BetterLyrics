@@ -147,4 +147,10 @@ So technically, as long as you are using the music apps (like
 <PackageReference Include="z440.atl.core" Version="6.24.0" />
 ```
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+
 ## Any issues and PRs are welcomed
+
+If you find a bug please file it in issues or if you have any ideas feel free to share it here.
