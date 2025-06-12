@@ -1,17 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using BetterLyrics.WinUI3.Messages;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
-using DevWinUI;
-using Microsoft.UI.Xaml;
-using Newtonsoft.Json;
-using Windows.Globalization;
 using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services.Settings

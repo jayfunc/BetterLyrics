@@ -381,4 +381,16 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>分屏视图</value>
   </data>
+  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
+    <value>切换显示模式</value>
+  </data>
+  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
+    <value>切换桌面歌词模式</value>
+  </data>
+  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>进入画中画模式</value>
+  </data>
+  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
+    <value>退出画中画模式</value>
+  </data>
 </root>

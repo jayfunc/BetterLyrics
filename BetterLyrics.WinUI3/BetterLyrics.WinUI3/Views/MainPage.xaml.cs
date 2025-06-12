@@ -9,6 +9,7 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -100,15 +101,15 @@ namespace BetterLyrics.WinUI3.Views
                 App.Current.SettingsWindow = settingsWindow;
             }
 
-            var appWindow = App.Current.SettingsWindow.AppWindow;
+            var settingsAppWindow = App.Current.SettingsWindow.AppWindow;
 
-            if (appWindow.Presenter is OverlappedPresenter presenter)
+            if (settingsAppWindow.Presenter is OverlappedPresenter presenter)
             {
                 presenter.Restore();
             }
 
-            appWindow.Show();
-            appWindow.MoveInZOrderAtTop();
+            settingsAppWindow.Show();
+            settingsAppWindow.MoveInZOrderAtTop();
         }
 
         private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)

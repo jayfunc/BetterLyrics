@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services.Database;
-using BetterLyrics.WinUI3.Services.Settings;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
-using DevWinUI;
-using Microsoft.UI.Dispatching;
 using Windows.Media.Control;
-using Windows.System;
 
 namespace BetterLyrics.WinUI3.Services.Playback
 {

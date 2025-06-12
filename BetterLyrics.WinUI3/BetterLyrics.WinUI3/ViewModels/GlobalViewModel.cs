@@ -1,13 +1,14 @@
 ﻿using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services.Settings;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using DevWinUI;
 using Microsoft.UI.Xaml;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public class GlobalViewModel : BaseViewModel
+    public partial class GlobalViewModel : BaseViewModel
     {
         public bool IsFirstRun
         {
@@ -45,7 +46,19 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
+        [ObservableProperty]
+        private DisplayType _displayType = DisplayType.PlaceholderOnly;
+
         public GlobalViewModel(ISettingsService settingsService)
-            : base(settingsService) { }
+            : base(settingsService)
+        {
+            WeakReferenceMessenger.Default.Register<GlobalViewModel, DisplayTypeChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    DisplayType = m.Value;
+                }
+            );
+        }
     }
 }

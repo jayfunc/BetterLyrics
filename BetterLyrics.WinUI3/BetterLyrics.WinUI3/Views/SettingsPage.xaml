@@ -119,8 +119,8 @@
                                 <ComboBoxItem x:Uid="SettingsPageMica" />
                                 <ComboBoxItem x:Uid="SettingsPageMicaAlt" />
                                 <ComboBoxItem x:Uid="SettingsPageDesktopAcrylic" />
-                                <ComboBoxItem x:Uid="SettingsPageAcrylicThin" />
-                                <ComboBoxItem x:Uid="SettingsPageAcrylicBase" />
+                                <!--<ComboBoxItem x:Uid="SettingsPageAcrylicThin" />
+                                <ComboBoxItem x:Uid="SettingsPageAcrylicBase" />-->
                                 <ComboBoxItem x:Uid="SettingsPageTransparent" />
                             </ComboBox>
                         </controls:SettingsCard>

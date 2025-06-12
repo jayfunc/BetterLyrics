@@ -9,6 +9,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
     <Grid
@@ -52,12 +53,26 @@
                 Opacity=".5"
                 Orientation="Horizontal">
 
-                <Button Style="{StaticResource TitleBarButtonStyle}">
-                    <FontIcon
-                        FontFamily="Segoe Fluent Icons"
-                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        FontWeight="ExtraBold"
-                        Glyph="&#xE712;" />
+                <Button x:Name="MoreButton" Style="{StaticResource TitleBarButtonStyle}">
+                    <Grid>
+                        <FontIcon
+                            Margin="0,0,0,8"
+                            FontFamily="Segoe Fluent Icons"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontWeight="ExtraBold"
+                            Glyph="&#xEF2D;" />
+                        <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontWeight="ExtraBold"
+                            Glyph="&#xEF2D;" />
+                        <FontIcon
+                            Margin="0,8,0,0"
+                            FontFamily="Segoe Fluent Icons"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontWeight="ExtraBold"
+                            Glyph="&#xEF2D;" />
+                    </Grid>
                     <Button.Flyout>
                         <MenuFlyout>
                             <ToggleMenuFlyoutItem
@@ -68,6 +83,14 @@
                                 x:Name="FullScreenFlyoutItem"
                                 x:Uid="BaseWindowFullScreenFlyoutItem"
                                 Click="FullScreenFlyoutItem_Click" />
+                            <MenuFlyoutItem
+                                x:Name="MiniFlyoutItem"
+                                x:Uid="BaseWindowMiniFlyoutItem"
+                                Click="MiniFlyoutItem_Click" />
+                            <MenuFlyoutItem
+                                x:Name="UnMiniFlyoutItem"
+                                x:Uid="BaseWindowUnMiniFlyoutItem"
+                                Click="UnMiniFlyoutItem_Click" />
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>
