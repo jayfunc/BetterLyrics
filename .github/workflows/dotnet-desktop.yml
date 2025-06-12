@@ -59,7 +59,7 @@ jobs:
 
     # Create the app package by building and packaging the project
     - name: Create the app package
-      run: msbuild
+      run: msbuild /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx
 
     # Remove the pfx
     - name: Remove the pfx
