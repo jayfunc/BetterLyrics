@@ -21,7 +21,7 @@ jobs:
       # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Solution_Name: your-solution-name # Replace with your solution name, i.e. App1.sln.
+      Solution_Name: BetterLyrics.sln # Replace with your solution name, i.e. App1.sln.
 
     steps:
       - name: Checkout
