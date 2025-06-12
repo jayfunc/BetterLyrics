@@ -405,3 +405,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/BetterLyrics.WinUI3/BetterLyrics.WinUI3 (Package)/BetterLyrics.WinUI3 (Package)_TemporaryKey.pfx
