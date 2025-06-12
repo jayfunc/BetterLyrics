@@ -54,12 +54,21 @@ jobs:
       - name: Decode the pfx
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
-          $certificatePath = Join-Path -Path $PWD -ChildPath "GitHubActionsWorkflow.pfx"
-          [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+          $pfxPath = Join-Path $PWD "GitHubActionsWorkflow.pfx"
+          [IO.File]::WriteAllBytes("$pfxPath", $pfx_cert_byte)
 
       # Create the app package by building and packaging the project
       - name: Create the app package
-        run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true
+        run: |
+          $pfxPath = Join-Path $PWD "GitHubActionsWorkflow.pfx"
+          msbuild $env:Solution_Name `
+          /p:Configuration=$env:Configuration `
+          /p:Platform=$env:Platform `
+          /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode `
+          /p:AppxBundle=$env:Appx_Bundle `
+          /p:PackageCertificateKeyFile=$pfxPath `
+          /p:AppxPackageDir="$env:Appx_Package_Dir" `
+          /p:GenerateAppxPackageOnBuild=true
         env:
           Appx_Bundle: Never
           Appx_Package_Build_Mode: SideloadOnly
