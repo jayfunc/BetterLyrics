@@ -61,9 +61,9 @@ jobs:
     - name: Create the app package
       run: msbuild $env:Solution_Name /p:Configuration=$env:Configuration /p:Platform=$env:Platform /p:UapAppxPackageBuildMode=$env:Appx_Package_Build_Mode /p:AppxBundle=$env:Appx_Bundle /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx /p:AppxPackageDir="$env:Appx_Package_Dir" /p:GenerateAppxPackageOnBuild=true
       env:
-        Appx_Bundle: Never
-        Appx_Package_Build_Mode: SideloadOnly
-        Appx_Package_Dir: Packages\
+        Appx_Bundle: Always
+        Appx_Package_Build_Mode: StoreUpload
+        Appx_Package_Dir: AppPackages\
         Configuration: ${{ matrix.configuration }}
         Platform: ${{ matrix.platform }}
 
