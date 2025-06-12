@@ -50,24 +50,13 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
-    # Decode the base 64 encoded pfx and save the Signing_Certificate
-    - name: Decode the pfx
-      run: |
-        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
-        $certificatePath = "GitHubActionsWorkflow.pfx"
-        [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
-
     # Create the app package by building and packaging the project
     - name: Create the app package
-      run: msbuild /p:PackageCertificateKeyFile=GitHubActionsWorkflow.pfx
-
-    # Remove the pfx
-    - name: Remove the pfx
-      run: Remove-Item -path GitHubActionsWorkflow.pfx
+      run: msbuild
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload MSIX package
       uses: actions/upload-artifact@v4
       with:
         name: MSIX Package
-        path: ${{ env.Solution_Name }}\\AppPackages
+        path: ${{ env.Solution_Name }}\\bin
