@@ -17,9 +17,13 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using Windows.UI;
+using WinUIEx;
+using SystemBackdrop = Microsoft.UI.Xaml.Media.SystemBackdrop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -30,9 +34,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         private SongInfo? _songInfo = null;
-
-        [ObservableProperty]
-        private DisplayType _displayType = DisplayType.PlaceholderOnly;
 
         private DisplayType? _preferredDisplayType = DisplayType.SplitView;
 
@@ -61,6 +62,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                             )
                         )
                     );
+            }
+        }
+
+        private bool _isDesktopMode = false;
+        public bool IsDesktopMode
+        {
+            get => _isDesktopMode;
+            set
+            {
+                _isDesktopMode = value;
+                OnPropertyChanged();
+                WeakReferenceMessenger.Default.Send(new IsDesktopModeChangedMessage(value));
             }
         }
 
@@ -111,20 +124,22 @@ namespace BetterLyrics.WinUI3.ViewModels
                     ? null
                     : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
 
+            DisplayType displayType;
+
             if (songInfo == null)
             {
-                DisplayType = DisplayType.PlaceholderOnly;
+                displayType = DisplayType.PlaceholderOnly;
             }
             else if (_preferredDisplayType is DisplayType preferredDisplayType)
             {
-                DisplayType = preferredDisplayType;
+                displayType = preferredDisplayType;
             }
             else
             {
-                DisplayType = DisplayType.SplitView;
+                displayType = DisplayType.SplitView;
             }
 
-            WeakReferenceMessenger.Default.Send(new DisplayTypeChangedMessage(DisplayType));
+            WeakReferenceMessenger.Default.Send(new DisplayTypeChangedMessage(displayType));
 
             AboutToUpdateUI = false;
         }
@@ -146,8 +161,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             int index = Convert.ToInt32(value);
             _preferredDisplayType = (DisplayType)index;
-            DisplayType = (DisplayType)index;
-            WeakReferenceMessenger.Default.Send(new DisplayTypeChangedMessage(DisplayType));
+            WeakReferenceMessenger.Default.Send(new DisplayTypeChangedMessage((DisplayType)index));
         }
     }
 }

@@ -381,4 +381,16 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Split view</value>
   </data>
+  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Change display type</value>
+  </data>
+  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle desktop lyrics mode</value>
+  </data>
+  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>Enter picture-in-picture mode</value>
+  </data>
+  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
+    <value>Exit picture-in-picture mode</value>
+  </data>
 </root>

@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3
         private readonly ILogger<App> _logger;
 
         public static new App Current => (App)Application.Current;
-        public HostWindow? MainWindow { get; private set; }
+        public HostWindow? MainWindow { get; set; }
         public HostWindow? SettingsWindow { get; set; }
 
         public static ResourceLoader? ResourceLoader { get; private set; }

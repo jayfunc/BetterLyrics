@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using DevWinUI;
 
 namespace BetterLyrics.WinUI3.Messages
 {
-    public class SystemBackdropChangedMessage(BackdropType value)
-        : ValueChangedMessage<BackdropType>(value) { }
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="value">If value is null, it means to refresh/update from settings</param>
+    public class SystemBackdropChangedMessage(BackdropType? value)
+        : ValueChangedMessage<BackdropType?>(value) { }
 }

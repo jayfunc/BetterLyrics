@@ -272,9 +272,20 @@
 
             <StackPanel HorizontalAlignment="Right" Spacing="4">
 
+                <ToggleButton
+                    x:Name="DesktopLyricsToggleButton"
+                    x:Uid="MainPageDesktopLyricsToggler"
+                    Content="{ui:FontIcon Glyph=&#xEB41;}"
+                    IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=TwoWay}"
+                    Style="{StaticResource GhostToggleButtonStyle}">
+                    <ToggleButton.OpacityTransition>
+                        <ScalarTransition />
+                    </ToggleButton.OpacityTransition>
+                </ToggleButton>
+
                 <Button
-                    x:Name="LyricsOnlyButton"
-                    x:Uid="MainWindowLyricsOnly"
+                    x:Name="DisplayTypeSwitchButton"
+                    x:Uid="MainPageDisplayTypeSwitcher"
                     Content="{ui:FontIcon Glyph=&#xE97C;}"
                     Style="{StaticResource GhostButtonStyle}">
                     <Button.OpacityTransition>
@@ -288,7 +299,7 @@
                                     <Setter Property="CornerRadius" Value="8" />
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
-                            <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
+                            <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
                                 <RadioButton
                                     x:Uid="MainPageAlbumArtOnly"
                                     Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
@@ -396,7 +407,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -413,7 +424,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="1" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -430,7 +441,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="2" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -449,7 +460,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -469,6 +480,27 @@
                     <VisualState.Setters>
                         <Setter Target="NoLocalFilesMatchedTextBlock.Visibility" Value="Visible" />
                         <Setter Target="MatchedFilesListView.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="DisplayTypeSwitcherStates">
+                <VisualState x:Name="MusicPlaying">
+                    <VisualState.StateTriggers>
+                        <ui:IsNotEqualStateTrigger Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay}" To="3" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DisplayTypeSwitchButton.Opacity" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NoMusicPlaying">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay}"
+                            To="3" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DisplayTypeSwitchButton.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
