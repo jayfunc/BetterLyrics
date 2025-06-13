@@ -13,7 +13,5 @@ namespace BetterLyrics.WinUI3.Rendering
     {
         public DesktopLyricsRenderer(DesktopLyricsViewModel viewModel)
             : base(viewModel) { }
-
-        public override List<LyricsLine> LyricsLines { get; set; } = [];
     }
 }

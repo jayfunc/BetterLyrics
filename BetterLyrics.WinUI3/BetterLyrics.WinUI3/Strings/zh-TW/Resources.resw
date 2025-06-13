@@ -385,7 +385,7 @@
     <value>切換顯示模式</value>
   </data>
   <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>切換桌面歌詞模式</value>
+    <value>顯示/隱藏桌面歌詞</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>進入畫中畫模式</value>

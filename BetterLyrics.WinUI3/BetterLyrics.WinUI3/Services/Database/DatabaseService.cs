@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using ATL;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Imaging;
 using SQLite;
 using Ude;
 using Windows.Media.Control;
-using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.Services.Database
@@ -24,7 +20,7 @@ namespace BetterLyrics.WinUI3.Services.Database
 
         public DatabaseService()
         {
-            _connection = new SQLiteConnection(Helper.AppInfo.DatabasePath);
+            _connection = new SQLiteConnection(AppInfo.DatabasePath);
             if (_connection.GetTableInfo("MetadataIndex").Count == 0)
             {
                 _connection.CreateTable<MetadataIndex>();

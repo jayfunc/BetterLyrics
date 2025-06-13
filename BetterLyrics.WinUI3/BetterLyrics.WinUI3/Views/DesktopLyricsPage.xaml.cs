@@ -56,7 +56,8 @@ namespace BetterLyrics.WinUI3.Views
                         DispatcherQueuePriority.High,
                         async () =>
                         {
-                            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas, m.Value?.LyricsLines);
+                            _lyricsRenderer.LyricsLines = m.Value?.LyricsLines ?? [];
+                            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
                         }
                     );
                 }
