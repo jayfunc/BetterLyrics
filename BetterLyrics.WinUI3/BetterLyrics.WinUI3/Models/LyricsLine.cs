@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Numerics;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Graphics.Canvas.Text;
-using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -36,7 +31,5 @@ namespace BetterLyrics.WinUI3.Models
         public float Scale { get; set; }
 
         public float Opacity { get; set; }
-
-        public CanvasTextLayout TextLayout { get; set; }
     }
 }

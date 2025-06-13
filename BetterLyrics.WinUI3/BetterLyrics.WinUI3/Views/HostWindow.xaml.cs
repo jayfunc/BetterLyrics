@@ -1,11 +1,9 @@
 using System;
-using System.Diagnostics;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
@@ -13,12 +11,11 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Navigation;
-using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace BetterLyrics.WinUI3
+namespace BetterLyrics.WinUI3.Views
 {
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
@@ -32,11 +29,6 @@ namespace BetterLyrics.WinUI3
         private readonly ILogger<HostWindow> _logger = Ioc.Default.GetService<
             ILogger<HostWindow>
         >()!;
-
-        private WindowStyle _savedWindowStyle;
-        private DisplayType _savedDisplayType;
-        private Windows.Graphics.SizeInt32 _savedWindowSize;
-        private Windows.Graphics.PointInt32 _savedWindowPos;
 
         public HostWindow()
         {
@@ -66,51 +58,6 @@ namespace BetterLyrics.WinUI3
                 (r, m) =>
                 {
                     TopCommandGrid.Opacity = m.Value ? 0 : 1;
-                }
-            );
-
-            WeakReferenceMessenger.Default.Register<IsDesktopModeChangedMessage>(
-                this,
-                (r, m) =>
-                {
-                    if (RootFrame.SourcePageType != typeof(MainPage))
-                        return;
-
-                    var overlappedPresenter = (OverlappedPresenter)AppWindow.Presenter;
-
-                    if (m.Value)
-                    {
-                        _savedWindowStyle = this.GetWindowStyle();
-                        _savedDisplayType = GlobalSettingsViewModel.DisplayType;
-                        _savedWindowSize = AppWindow.Size;
-                        _savedWindowPos = AppWindow.Position;
-
-                        GlobalSettingsViewModel.DisplayType = DisplayType.LyricsOnly;
-                        this.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
-                        SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
-                            BackdropType.Transparent
-                        );
-                        this.CenterOnScreen();
-                        var screenWidth = AppWindow.Position.X * 2 + AppWindow.Size.Width;
-                        AppWindow.Move(new Windows.Graphics.PointInt32(0, 0));
-                        AppWindow.Resize(new Windows.Graphics.SizeInt32(screenWidth, 64));
-
-                        TopCommandGrid.Visibility = Visibility.Collapsed;
-                        overlappedPresenter.IsAlwaysOnTop = true;
-                    }
-                    else
-                    {
-                        GlobalSettingsViewModel.DisplayType = _savedDisplayType;
-                        this.SetWindowStyle(_savedWindowStyle);
-                        SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
-                            GlobalSettingsViewModel.BackdropType
-                        );
-                        this.AppWindow.Move(_savedWindowPos);
-                        this.AppWindow.Resize(_savedWindowSize);
-
-                        TopCommandGrid.Visibility = Visibility.Visible;
-                        overlappedPresenter.IsAlwaysOnTop = false;
-                    }
                 }
             );
         }

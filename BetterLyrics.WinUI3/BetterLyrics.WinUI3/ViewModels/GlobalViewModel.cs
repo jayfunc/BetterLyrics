@@ -1,15 +1,16 @@
 ﻿using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class GlobalViewModel : BaseViewModel
+    public partial class GlobalViewModel : BaseSettingsViewModel
     {
+        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         public bool IsFirstRun
         {
             get => Get(SettingsKeys.IsFirstRun, SettingsDefaultValues.IsFirstRun);
@@ -49,6 +50,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         private DisplayType _displayType = DisplayType.PlaceholderOnly;
 
+        [ObservableProperty]
+        private bool _isPlaying = false;
+
         public GlobalViewModel(ISettingsService settingsService)
             : base(settingsService)
         {
@@ -57,6 +61,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 (r, m) =>
                 {
                     DisplayType = m.Value;
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<GlobalViewModel, PlayingStatusChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    _dispatcherQueue.TryEnqueue(
+                        DispatcherQueuePriority.High,
+                        () => IsPlaying = m.Value
+                    );
                 }
             );
         }

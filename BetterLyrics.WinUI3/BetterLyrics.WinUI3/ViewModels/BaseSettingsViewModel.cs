@@ -4,11 +4,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public class BaseViewModel : ObservableObject
+    public class BaseSettingsViewModel : ObservableObject
     {
         private readonly ISettingsService _settingsService;
 
-        public BaseViewModel(ISettingsService settingsService)
+        public BaseSettingsViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
         }

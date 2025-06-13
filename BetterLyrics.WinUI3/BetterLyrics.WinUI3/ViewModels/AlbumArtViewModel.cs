@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public class AlbumArtViewModel : BaseViewModel
+    public class AlbumArtViewModel : BaseSettingsViewModel
     {
         public int CoverImageRadius
         {

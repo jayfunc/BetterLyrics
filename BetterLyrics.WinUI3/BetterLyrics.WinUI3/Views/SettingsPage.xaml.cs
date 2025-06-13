@@ -1,3 +1,4 @@
+using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -17,8 +18,8 @@ namespace BetterLyrics.WinUI3.Views
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
         public AlbumArtOverlayViewModel AlbumArtRendererSettingsViewModel =>
             Ioc.Default.GetService<AlbumArtOverlayViewModel>()!;
-        public LyricsViewModel LyricsRendererSettingsViewModel =>
-            Ioc.Default.GetService<LyricsViewModel>()!;
+        public InAppLyricsViewModel LyricsRendererSettingsViewModel =>
+            Ioc.Default.GetService<InAppLyricsViewModel>()!;
         public GlobalViewModel GlobalSettingsViewModel =>
             Ioc.Default.GetService<GlobalViewModel>()!;
         public AlbumArtViewModel AlbumArtViewModel => Ioc.Default.GetService<AlbumArtViewModel>()!;

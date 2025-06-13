@@ -2,7 +2,7 @@
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class AlbumArtOverlayViewModel : BaseViewModel
+    public partial class AlbumArtOverlayViewModel : BaseSettingsViewModel
     {
         public AlbumArtOverlayViewModel(ISettingsService settingsService)
             : base(settingsService) { }

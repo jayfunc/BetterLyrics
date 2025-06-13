@@ -1,34 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Rendering;
-using BetterLyrics.WinUI3.Services.Database;
 using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.UI;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Windows.Graphics.Display;
-using Windows.Graphics.Imaging;
-using Windows.UI;
-using WinUIEx;
-using SystemBackdrop = Microsoft.UI.Xaml.Media.SystemBackdrop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
+        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
         [ObservableProperty]
         private BitmapImage? _coverImage;
 
@@ -39,9 +28,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         private bool _aboutToUpdateUI;
-
-        [ObservableProperty]
-        private bool _isPlaying = false;
 
         private bool _isImmersiveMode = false;
         public bool IsImmersiveMode
@@ -65,46 +51,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        private bool _isDesktopMode = false;
-        public bool IsDesktopMode
-        {
-            get => _isDesktopMode;
-            set
-            {
-                _isDesktopMode = value;
-                OnPropertyChanged();
-                WeakReferenceMessenger.Default.Send(new IsDesktopModeChangedMessage(value));
-            }
-        }
-
-        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
         public MainViewModel(IPlaybackService playbackService)
         {
-            WeakReferenceMessenger.Default.Register<MainViewModel, PlayingStatusChangedMessage>(
-                this,
-                (r, m) =>
-                {
-                    _dispatcherQueue.TryEnqueue(
-                        DispatcherQueuePriority.High,
-                        () =>
-                        {
-                            IsPlaying = m.Value;
-                        }
-                    );
-                }
-            );
-
             WeakReferenceMessenger.Default.Register<MainViewModel, SongInfoChangedMessage>(
                 this,
                 (r, m) =>
                 {
                     _dispatcherQueue.TryEnqueue(
                         DispatcherQueuePriority.High,
-                        async () =>
-                        {
-                            await UpdateSongInfoUI(m.Value);
-                        }
+                        async () => await UpdateSongInfoUI(m.Value)
                     );
                 }
             );

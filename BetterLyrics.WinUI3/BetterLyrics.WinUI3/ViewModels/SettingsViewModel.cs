@@ -22,7 +22,7 @@ using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class SettingsViewModel : BaseViewModel
+    public partial class SettingsViewModel : BaseSettingsViewModel
     {
         [ObservableProperty]
         private bool _isRebuildingLyricsIndexDatabase = false;
