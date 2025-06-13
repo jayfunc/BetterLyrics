@@ -14,12 +14,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
-    <Page.Resources>
-        <converters:DoubleToVisibilityConverter
-            x:Key="LyricsOnlyToVisibilityConverter"
-            GreaterThan="0.9"
-            LessThan="1.1" />
-    </Page.Resources>
 
     <Grid x:Name="RootGrid">
         <!--  Lyrics area  -->
@@ -37,8 +31,7 @@
 
         </Grid>
 
-        <!--  Song info area  -->
-        <Grid x:Name="SongInfoGrid" Margin="36">
+        <Grid Margin="36">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="36" />
@@ -48,8 +41,32 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <Grid x:Name="LyricsPlaceholderGrid" SizeChanged="LyricsPlaceholderGrid_SizeChanged" />
+            <!--  Lyrics placeholder  -->
+            <Grid
+                x:Name="LyricsPlaceholderGrid"
+                Opacity=".5"
+                SizeChanged="LyricsPlaceholderGrid_SizeChanged">
+                <Grid.OpacityTransition>
+                    <ScalarTransition />
+                </Grid.OpacityTransition>
+                <StackPanel
+                    x:Name="LyricsPlaceholderStackPanel"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Opacity="0"
+                    Spacing="12">
+                    <StackPanel.OpacityTransition>
+                        <ScalarTransition />
+                    </StackPanel.OpacityTransition>
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{StaticResource DisplayTextBlockFontSize}"
+                        Glyph="&#xE90B;" />
+                    <TextBlock FontSize="{StaticResource TitleTextBlockFontSize}" Text="Lyrics not found" />
+                </StackPanel>
+            </Grid>
 
+            <!--  Song info area  -->
             <Grid x:Name="SongInfoInnerGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="4*" />
@@ -61,26 +78,9 @@
                     <RowDefinition Height="5*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
-
-                <Grid.Resources>
-
-                    <!--  Animation for song info  -->
-                    <Storyboard x:Name="SongInfoStackPanelFadeInStoryboard">
-                        <DoubleAnimation
-                            Storyboard.TargetName="SongInfoInnerGrid"
-                            Storyboard.TargetProperty="Opacity"
-                            To="1"
-                            Duration="0:0:0.2" />
-                    </Storyboard>
-                    <Storyboard x:Name="SongInfoStackPanelFadeOutStoryboard" BeginTime="0:0:0.2">
-                        <DoubleAnimation
-                            Storyboard.TargetName="SongInfoInnerGrid"
-                            Storyboard.TargetProperty="Opacity"
-                            To="0"
-                            Duration="0:0:0.2" />
-                    </Storyboard>
-
-                </Grid.Resources>
+                <Grid.OpacityTransition>
+                    <ScalarTransition />
+                </Grid.OpacityTransition>
 
                 <!--  Cover area  -->
                 <Grid
@@ -285,7 +285,7 @@
                 <Button
                     x:Name="DisplayTypeSwitchButton"
                     x:Uid="MainPageDisplayTypeSwitcher"
-                    Content="{ui:FontIcon Glyph=&#xE97C;}"
+                    Content="{ui:FontIcon Glyph=&#xF246;}"
                     Style="{StaticResource GhostButtonStyle}">
                     <Button.OpacityTransition>
                         <ScalarTransition />
@@ -326,7 +326,10 @@
                     IsChecked="{x:Bind ViewModel.IsImmersiveMode, Mode=TwoWay}"
                     Style="{StaticResource GhostToggleButtonStyle}" />
 
-                <Button Content="{ui:FontIcon Glyph=&#xF167;}" Style="{StaticResource GhostButtonStyle}">
+                <Button
+                    x:Name="MusicInfoButton"
+                    Content="{ui:FontIcon Glyph=&#xF167;}"
+                    Style="{StaticResource GhostButtonStyle}">
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel Spacing="16">
@@ -410,10 +413,13 @@
                             To="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SongInfoGrid.Opacity" Value="1" />
                         <Setter Target="LyricsGrid.Opacity" Value="1" />
+                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="0" />
+                        <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="0" />
+                        <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="3" />
                         <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
                         <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="3" />
+                        <Setter Target="SongInfoInnerGrid.Opacity" Value="1" />
                         <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
@@ -427,10 +433,13 @@
                             To="1" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SongInfoGrid.Opacity" Value="0" />
+                        <Setter Target="SongInfoInnerGrid.Opacity" Value="0" />
+                        <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
+                        <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="3" />
                         <Setter Target="LyricsGrid.Opacity" Value="1" />
                         <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="0" />
                         <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="3" />
+                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="1" />
                         <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
@@ -444,12 +453,13 @@
                             To="2" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SongInfoGrid.Opacity" Value="1" />
                         <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
                         <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="SongInfoInnerGrid.Opacity" Value="1" />
                         <Setter Target="LyricsGrid.Opacity" Value="1" />
                         <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="2" />
                         <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="1" />
                         <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
@@ -463,13 +473,14 @@
                             To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SongInfoGrid.Opacity" Value="0" />
+                        <Setter Target="SongInfoInnerGrid.Opacity" Value="0" />
                         <Setter Target="LyricsGrid.Opacity" Value="0" />
+                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="0" />
                         <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="1" />
                     </VisualState.Setters>
                 </VisualState>
-
             </VisualStateGroup>
+
             <VisualStateGroup x:Name="FilesMatchStates">
                 <VisualState x:Name="Matched" />
                 <VisualState x:Name="NotMatched">
@@ -482,13 +493,36 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-            <VisualStateGroup x:Name="DisplayTypeSwitcherStates">
+
+            <VisualStateGroup x:Name="LyricsExistenceStates">
+                <VisualState x:Name="Existed">
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LyricsPlaceholderStackPanel.Opacity" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NotExisted">
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LyricsPlaceholderStackPanel.Opacity" Value=".5" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup x:Name="MusicPlayingStates">
                 <VisualState x:Name="MusicPlaying">
                     <VisualState.StateTriggers>
                         <ui:IsNotEqualStateTrigger Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay}" To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="DisplayTypeSwitchButton.Opacity" Value="1" />
+                        <Setter Target="DisplayTypeSwitchButton.Visibility" Value="Visible" />
+                        <Setter Target="DesktopLyricsToggleButton.Visibility" Value="Visible" />
+                        <Setter Target="ImmersiveModeButton.Visibility" Value="Visible" />
+                        <Setter Target="MusicInfoButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NoMusicPlaying">
@@ -499,7 +533,10 @@
                             To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="DisplayTypeSwitchButton.Opacity" Value="0" />
+                        <Setter Target="DisplayTypeSwitchButton.Visibility" Value="Collapsed" />
+                        <Setter Target="DesktopLyricsToggleButton.Visibility" Value="Collapsed" />
+                        <Setter Target="ImmersiveModeButton.Visibility" Value="Collapsed" />
+                        <Setter Target="MusicInfoButton.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

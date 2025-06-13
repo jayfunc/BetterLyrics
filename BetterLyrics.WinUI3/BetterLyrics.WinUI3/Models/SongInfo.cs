@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ATL;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services.Database;
-using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Windows.Graphics.Imaging;
-using Windows.Media.Control;
-using Windows.Storage.Streams;
-using Windows.UI;
 using static ATL.LyricsInfo;
 
 namespace BetterLyrics.WinUI3.Models
@@ -31,12 +18,13 @@ namespace BetterLyrics.WinUI3.Models
         private ObservableCollection<string>? _filesUsed;
 
         [ObservableProperty]
-        private bool? _isLyricsExisted;
+        private bool _isLyricsExisted = false;
 
         [ObservableProperty]
         private string? _sourceAppUserModelId = null;
 
-        public List<LyricsLine>? LyricsLines { get; set; } = null;
+        [ObservableProperty]
+        private List<LyricsLine>? _lyricsLines = null;
 
         public byte[]? AlbumArt { get; set; } = null;
 

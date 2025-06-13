@@ -61,7 +61,7 @@ namespace BetterLyrics.WinUI3.Rendering
 
         public TimeSpan CurrentTime { get; set; } = TimeSpan.Zero;
 
-        public abstract List<LyricsLine> LyricsLines { get; set; }
+        public List<LyricsLine> LyricsLines { get; set; } = [];
 
         private readonly ILyricsViewModel _viewModel;
 
@@ -286,13 +286,6 @@ namespace BetterLyrics.WinUI3.Rendering
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
             }
-
-            //ds.DrawText(
-            //    $"show range: from {_startVisibleLineIndex} to {_endVisibleLineIndex}, current: {GetCurrentPlayingLineIndex()}",
-            //    new Vector2(10, 10),
-            //    Colors.Red
-            //);
-            ds.DrawText($"{LimitedLineWidth}", new Vector2(10, 10), Colors.Red);
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
@@ -431,18 +424,10 @@ namespace BetterLyrics.WinUI3.Rendering
             _forceToScroll = false;
         }
 
-        public async Task ReLayoutAsync(
-            ICanvasAnimatedControl control,
-            IList<LyricsLine>? updatedLyricsLines = null
-        )
+        public async Task ReLayoutAsync(ICanvasAnimatedControl control)
         {
             if (control == null)
                 return;
-
-            if (updatedLyricsLines != null)
-            {
-                LyricsLines = [.. updatedLyricsLines];
-            }
 
             _textFormat.FontSize = _viewModel.LyricsFontSize;
 

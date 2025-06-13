@@ -26,8 +26,6 @@ namespace BetterLyrics.WinUI3.Views
     {
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        private double _limitedLineWidth = 0;
-
         public MainViewModel ViewModel => (MainViewModel)DataContext;
 
         private GlobalViewModel GlobalSettingsViewModel { get; set; } =
@@ -86,7 +84,8 @@ namespace BetterLyrics.WinUI3.Views
                         DispatcherQueuePriority.High,
                         async () =>
                         {
-                            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas, m.Value?.LyricsLines);
+                            _lyricsRenderer.LyricsLines = m.Value?.LyricsLines ?? [];
+                            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
                         }
                     );
                 }
@@ -121,13 +120,20 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             using var ds = args.DrawingSession;
+
             _albumArtRenderer.Draw(sender, ds);
-            if (
-                GlobalSettingsViewModel.DisplayType == DisplayType.SplitView
-                || GlobalSettingsViewModel.DisplayType == DisplayType.LyricsOnly
-            )
+
+            switch (GlobalSettingsViewModel.DisplayType)
             {
-                _lyricsRenderer.Draw(sender, ds);
+                case DisplayType.AlbumArtOnly:
+                case DisplayType.PlaceholderOnly:
+                    break;
+                case DisplayType.LyricsOnly:
+                case DisplayType.SplitView:
+                    _lyricsRenderer.Draw(sender, ds);
+                    break;
+                default:
+                    break;
             }
         }
 

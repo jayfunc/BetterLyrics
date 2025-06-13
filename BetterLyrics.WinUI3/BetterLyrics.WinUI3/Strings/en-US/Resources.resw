@@ -385,7 +385,7 @@
     <value>Change display type</value>
   </data>
   <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Toggle desktop lyrics mode</value>
+    <value>Show/hide desktop lyrics</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>Enter picture-in-picture mode</value>

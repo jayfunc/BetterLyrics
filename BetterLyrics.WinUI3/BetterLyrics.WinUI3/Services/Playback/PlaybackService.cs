@@ -1,6 +1,7 @@
 ﻿using System;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Database;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;

@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.Views
             this.CenterOnScreen();
             var screenWidth = AppWindow.Position.X * 2 + AppWindow.Size.Width;
             AppWindow.Move(new Windows.Graphics.PointInt32(0, 0));
-            AppWindow.Resize(new Windows.Graphics.SizeInt32(screenWidth, 64));
+            AppWindow.Resize(new Windows.Graphics.SizeInt32(screenWidth, 72));
 
             // Always on top
             ((OverlappedPresenter)AppWindow.Presenter).IsAlwaysOnTop = true;

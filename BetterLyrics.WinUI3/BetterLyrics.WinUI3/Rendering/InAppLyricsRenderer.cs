@@ -14,7 +14,5 @@ namespace BetterLyrics.WinUI3.Rendering
     {
         public InAppLyricsRenderer(InAppLyricsViewModel viewModel)
             : base(viewModel) { }
-
-        public override List<LyricsLine> LyricsLines { get; set; } = [];
     }
 }
