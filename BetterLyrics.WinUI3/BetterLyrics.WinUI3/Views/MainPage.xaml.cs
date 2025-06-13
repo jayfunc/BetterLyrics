@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using BetterLyrics.WinUI3.Messages;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -9,7 +11,8 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using WinUIEx;
+using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
+using DispatcherQueuePriority = Microsoft.UI.Dispatching.DispatcherQueuePriority;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -21,12 +24,17 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+        private double _limitedLineWidth = 0;
+
         public MainViewModel ViewModel => (MainViewModel)DataContext;
 
         private GlobalViewModel GlobalSettingsViewModel { get; set; } =
             Ioc.Default.GetService<GlobalViewModel>()!;
 
-        private readonly LyricsRenderer _lyricsRenderer = Ioc.Default.GetService<LyricsRenderer>()!;
+        private readonly InAppLyricsRenderer _lyricsRenderer =
+            Ioc.Default.GetService<InAppLyricsRenderer>()!;
 
         private readonly AlbumArtRenderer _albumArtRenderer =
             Ioc.Default.GetService<AlbumArtRenderer>()!;
@@ -39,6 +47,8 @@ namespace BetterLyrics.WinUI3.Views
         public MainPage()
         {
             this.InitializeComponent();
+
+            Debug.WriteLine("hashcode for InAppLyricsRenderer: " + _lyricsRenderer.GetHashCode());
 
             DataContext = Ioc.Default.GetService<MainViewModel>();
 
@@ -54,6 +64,42 @@ namespace BetterLyrics.WinUI3.Views
                 (r, m) =>
                 {
                     UpdateAlbumArtCornerRadius(m.Value);
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<
+                MainPage,
+                DesktopLyricsRelayoutRequestedMessage
+            >(
+                this,
+                async (r, m) =>
+                {
+                    await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<MainPage, SongInfoChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    _dispatcherQueue.TryEnqueue(
+                        DispatcherQueuePriority.High,
+                        async () =>
+                        {
+                            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas, m.Value?.LyricsLines);
+                        }
+                    );
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<MainPage, PlayingPositionChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    _dispatcherQueue.TryEnqueue(
+                        DispatcherQueuePriority.High,
+                        () => _lyricsRenderer.CurrentTime = m.Value
+                    );
                 }
             );
         }
@@ -75,9 +121,14 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             using var ds = args.DrawingSession;
-
             _albumArtRenderer.Draw(sender, ds);
-            _lyricsRenderer.Draw(sender, ds);
+            if (
+                GlobalSettingsViewModel.DisplayType == DisplayType.SplitView
+                || GlobalSettingsViewModel.DisplayType == DisplayType.LyricsOnly
+            )
+            {
+                _lyricsRenderer.Draw(sender, ds);
+            }
         }
 
         // Comsumes CPU related resources
@@ -86,10 +137,10 @@ namespace BetterLyrics.WinUI3.Views
             CanvasAnimatedUpdateEventArgs args
         )
         {
-            _lyricsRenderer.AddElapsedTime(args.Timing.ElapsedTime);
-
             _albumArtRenderer.Calculate(sender);
-            _lyricsRenderer.CalculateAsync();
+
+            _lyricsRenderer.AddElapsedTime(args.Timing.ElapsedTime);
+            _lyricsRenderer.Calculate(sender);
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -146,14 +197,7 @@ namespace BetterLyrics.WinUI3.Views
         private async void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             _lyricsRenderer.LimitedLineWidth = e.NewSize.Width;
-            await _lyricsRenderer.ReLayoutAsync();
-        }
-
-        private async void LyricsCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            _lyricsRenderer.CanvasWidth = e.NewSize.Width;
-            _lyricsRenderer.CanvasHeight = e.NewSize.Height;
-            await _lyricsRenderer.ReLayoutAsync();
+            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
         }
 
         private void OpenMatchedFileButton_Click(object sender, RoutedEventArgs e)
@@ -161,14 +205,33 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.OpenMatchedFileFolderInFileExplorer((string)(sender as Button)!.Tag);
         }
 
-        private void LyricsCanvas_Loaded(object sender, RoutedEventArgs e)
-        {
-            _lyricsRenderer.Control = (ICanvasAnimatedControl)sender;
-        }
-
         private void CoverImageGrid_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateAlbumArtCornerRadius(AlbumArtViewModel.CoverImageRadius);
+        }
+
+        private void DesktopLyricsToggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (App.Current.OverlayWindow is null)
+            {
+                var overlayWindow = new OverlayWindow();
+                overlayWindow.Navigate(typeof(DesktopLyricsPage));
+                App.Current.OverlayWindow = overlayWindow;
+            }
+
+            var overlayAppWindow = App.Current.OverlayWindow!.AppWindow;
+            overlayAppWindow.Show();
+        }
+
+        private void DesktopLyricsToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var overlayAppWindow = App.Current.OverlayWindow!.AppWindow;
+            overlayAppWindow.Hide();
+        }
+
+        private async void LyricsCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
         }
     }
 }

@@ -33,16 +33,29 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const string CoverImageRadius = "CoverImageRadius";
 
         // Lyrics
-        public const string LyricsAlignmentType = "LyricsAlignmentType";
-        public const string LyricsBlurAmount = "LyricsBlurAmount";
-        public const string LyricsVerticalEdgeOpacity = "LyricsVerticalEdgeOpacity";
-        public const string LyricsLineSpacingFactor = "LyricsLineSpacingFactor";
-        public const string LyricsFontSize = "LyricsFontSize";
-        public const string IsLyricsGlowEffectEnabled = "IsLyricsGlowEffectEnabled";
-        public const string IsLyricsDynamicGlowEffectEnabled = "IsLyricsDynamicGlowEffectEnabled";
-        public const string LyricsFontColorType = "LyricsFontColorType";
-        public const string LyricsFontSelectedAccentColorIndex =
-            "LyricsFontSelectedAccentColorIndex";
+        public const string InAppLyricsAlignmentType = "InAppLyricsAlignmentType";
+        public const string InAppLyricsBlurAmount = "InAppLyricsBlurAmount";
+        public const string InAppLyricsVerticalEdgeOpacity = "InAppLyricsVerticalEdgeOpacity";
+        public const string InAppLyricsLineSpacingFactor = "InAppLyricsLineSpacingFactor";
+        public const string InAppLyricsFontSize = "InAppLyricsFontSize";
+        public const string IsInAppLyricsGlowEffectEnabled = "IsInAppLyricsGlowEffectEnabled";
+        public const string IsInAppLyricsDynamicGlowEffectEnabled =
+            "IsInAppLyricsDynamicGlowEffectEnabled";
+        public const string InAppLyricsFontColorType = "InAppLyricsFontColorType";
+        public const string InAppLyricsFontSelectedAccentColorIndex =
+            "InAppLyricsFontSelectedAccentColorIndex";
+
+        public const string DesktopLyricsAlignmentType = "DesktopLyricsAlignmentType";
+        public const string DesktopLyricsBlurAmount = "DesktopLyricsBlurAmount";
+        public const string DesktopLyricsVerticalEdgeOpacity = "DesktopLyricsVerticalEdgeOpacity";
+        public const string DesktopLyricsLineSpacingFactor = "DesktopLyricsLineSpacingFactor";
+        public const string DesktopLyricsFontSize = "DesktopLyricsFontSize";
+        public const string IsDesktopLyricsGlowEffectEnabled = "IsDesktopLyricsGlowEffectEnabled";
+        public const string IsDesktopLyricsDynamicGlowEffectEnabled =
+            "IsDesktopLyricsDynamicGlowEffectEnabled";
+        public const string DesktopLyricsFontColorType = "DesktopLyricsFontColorType";
+        public const string DesktopLyricsFontSelectedAccentColorIndex =
+            "DesktopLyricsFontSelectedAccentColorIndex";
 
         // Notification
         public const string NeverShowEnterFullScreenMessage = "NeverShowEnterFullScreenMessage";

@@ -13,7 +13,6 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    NavigationCacheMode="Required"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:DoubleToVisibilityConverter
@@ -30,8 +29,7 @@
                 Draw="LyricsCanvas_Draw"
                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                 Loaded="LyricsCanvas_Loaded"
-                Paused="{x:Bind ViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                SizeChanged="LyricsCanvas_SizeChanged"
+                Paused="{x:Bind GlobalSettingsViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
                 Update="LyricsCanvas_Update" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
@@ -275,9 +273,10 @@
                 <ToggleButton
                     x:Name="DesktopLyricsToggleButton"
                     x:Uid="MainPageDesktopLyricsToggler"
+                    Checked="DesktopLyricsToggleButton_Checked"
                     Content="{ui:FontIcon Glyph=&#xEB41;}"
-                    IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=TwoWay}"
-                    Style="{StaticResource GhostToggleButtonStyle}">
+                    Style="{StaticResource GhostToggleButtonStyle}"
+                    Unchecked="DesktopLyricsToggleButton_Unchecked">
                     <ToggleButton.OpacityTransition>
                         <ScalarTransition />
                     </ToggleButton.OpacityTransition>

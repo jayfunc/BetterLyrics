@@ -81,6 +81,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="BetterLyrics.WinUI3 %28Package%29_TemporaryKey.pfx" />
     <Content Include="Images\LargeTile.scale-100.png" />
     <Content Include="Images\LargeTile.scale-125.png" />
     <Content Include="Images\LargeTile.scale-150.png" />

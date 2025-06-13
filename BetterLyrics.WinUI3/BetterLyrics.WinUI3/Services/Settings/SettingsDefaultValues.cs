@@ -34,15 +34,25 @@ namespace BetterLyrics.WinUI3.Services.Settings
         public const int CoverImageRadius = 24;
 
         // Lyrics
-        public const int LyricsAlignmentType = 1; // Center
-        public const int LyricsBlurAmount = 0;
-        public const int LyricsVerticalEdgeOpacity = 0; // 0.0
-        public const float LyricsLineSpacingFactor = 0.5f;
-        public const int LyricsFontSize = 28;
-        public const bool IsLyricsGlowEffectEnabled = false;
-        public const bool IsLyricsDynamicGlowEffectEnabled = false;
-        public const int LyricsFontColorType = 0; // Default
-        public const int LyricsFontSelectedAccentColorIndex = 0;
+        public const int InAppLyricsAlignmentType = 1; // Center
+        public const int InAppLyricsBlurAmount = 0;
+        public const int InAppLyricsVerticalEdgeOpacity = 0; // 0.0
+        public const float InAppLyricsLineSpacingFactor = 0.5f;
+        public const int InAppLyricsFontSize = 28;
+        public const bool IsInAppLyricsGlowEffectEnabled = false;
+        public const bool IsInAppLyricsDynamicGlowEffectEnabled = false;
+        public const int InAppLyricsFontColorType = 0; // Default
+        public const int InAppLyricsFontSelectedAccentColorIndex = 0;
+
+        public const int DesktopLyricsAlignmentType = 1; // Center
+        public const int DesktopLyricsBlurAmount = 0;
+        public const int DesktopLyricsVerticalEdgeOpacity = 0; // 0.0
+        public const float DesktopLyricsLineSpacingFactor = 0.5f;
+        public const int DesktopLyricsFontSize = 28;
+        public const bool IsDesktopLyricsGlowEffectEnabled = false;
+        public const bool IsDesktopLyricsDynamicGlowEffectEnabled = false;
+        public const int DesktopLyricsFontColorType = 0; // Default
+        public const int DesktopLyricsFontSelectedAccentColorIndex = 0;
 
         // Notification
         public const bool NeverShowMessage = false;

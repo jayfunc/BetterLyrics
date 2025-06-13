@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Rendering
+namespace BetterLyrics.WinUI3.ViewModels
 {
-    public interface IRenderer { }
+    public class OverlayViewModel { }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services.Database;
 using BetterLyrics.WinUI3.Services.Playback;
@@ -12,6 +13,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,6 +30,7 @@ namespace BetterLyrics.WinUI3
         public static new App Current => (App)Application.Current;
         public HostWindow? MainWindow { get; set; }
         public HostWindow? SettingsWindow { get; set; }
+        public OverlayWindow? OverlayWindow { get; set; }
 
         public static ResourceLoader? ResourceLoader { get; private set; }
 
@@ -51,7 +54,7 @@ namespace BetterLyrics.WinUI3
 
             _logger = Ioc.Default.GetService<ILogger<App>>()!;
 
-            UnhandledException += App_UnhandledException;
+            // UnhandledException += App_UnhandledException;
         }
 
         private static void ConfigureServices()
@@ -75,15 +78,17 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IPlaybackService, PlaybackService>()
                     // Renderer
                     .AddSingleton<AlbumArtRenderer>()
-                    .AddSingleton<LyricsRenderer>()
+                    .AddSingleton<InAppLyricsRenderer>()
+                    .AddSingleton<DesktopLyricsRenderer>()
                     // ViewModels
                     .AddSingleton<HostViewModel>()
                     .AddSingleton<AlbumArtViewModel>()
                     .AddSingleton<MainViewModel>()
-                    .AddSingleton<BaseViewModel>()
+                    .AddSingleton<BaseSettingsViewModel>()
                     .AddSingleton<GlobalViewModel>()
                     .AddSingleton<SettingsViewModel>()
-                    .AddSingleton<LyricsViewModel>()
+                    .AddSingleton<InAppLyricsViewModel>()
+                    .AddSingleton<DesktopLyricsViewModel>()
                     .AddSingleton<AlbumArtOverlayViewModel>()
                     .BuildServiceProvider()
             );
@@ -102,9 +107,14 @@ namespace BetterLyrics.WinUI3
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            var overlayWindow = new OverlayWindow();
+            overlayWindow.Navigate(typeof(DesktopLyricsPage));
+            overlayWindow.Hide();
+            App.Current.OverlayWindow = overlayWindow;
 
             // Activate the window
             MainWindow = new HostWindow();

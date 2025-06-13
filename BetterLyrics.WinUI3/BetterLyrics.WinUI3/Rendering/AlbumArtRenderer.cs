@@ -12,12 +12,15 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using Microsoft.UI.Dispatching;
 using Windows.Graphics.Imaging;
 
 namespace BetterLyrics.WinUI3.Rendering
 {
     public class AlbumArtRenderer
     {
+        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
         private float _rotateAngle = 0f;
 
         private SoftwareBitmap? _lastSoftwareBitmap = null;
@@ -54,18 +57,24 @@ namespace BetterLyrics.WinUI3.Rendering
 
             WeakReferenceMessenger.Default.Register<AlbumArtRenderer, SongInfoChangedMessage>(
                 this,
-                async (r, m) =>
+                (r, m) =>
                 {
-                    if (m.Value?.AlbumArt == null) { }
-                    else
-                    {
-                        SoftwareBitmap = await (
-                            await ImageHelper.GetDecoderFromByte(m.Value.AlbumArt)
-                        ).GetSoftwareBitmapAsync(
-                            BitmapPixelFormat.Bgra8,
-                            BitmapAlphaMode.Premultiplied
-                        );
-                    }
+                    _dispatcherQueue.TryEnqueue(
+                        DispatcherQueuePriority.High,
+                        async () =>
+                        {
+                            if (m.Value?.AlbumArt == null) { }
+                            else
+                            {
+                                SoftwareBitmap = await (
+                                    await ImageHelper.GetDecoderFromByte(m.Value.AlbumArt)
+                                ).GetSoftwareBitmapAsync(
+                                    BitmapPixelFormat.Bgra8,
+                                    BitmapAlphaMode.Premultiplied
+                                );
+                            }
+                        }
+                    );
                 }
             );
         }
@@ -77,7 +86,7 @@ namespace BetterLyrics.WinUI3.Rendering
 
             ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
 
-            var overlappedCovers = new CanvasCommandList(control);
+            var overlappedCovers = new CanvasCommandList(control.Device);
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
 
             if (_isTransitioning && _lastSoftwareBitmap != null)

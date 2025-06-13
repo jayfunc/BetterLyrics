@@ -10,7 +10,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
-    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -233,7 +232,7 @@
                         <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon Glyph=&#xE8E3;}">
-                            <ComboBox SelectedIndex="{x:Bind LyricsRendererSettingsViewModel.LyricsAlignmentType, Mode=TwoWay}">
+                            <ComboBox SelectedIndex="{x:Bind LyricsRendererSettingsViewModel.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                 <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
                                 <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
                                 <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
@@ -243,19 +242,19 @@
                         <controls:SettingsExpander x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon Glyph=&#xE8D3;}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay}"
+                                    Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                                     ComparisonCondition="Equal"
                                     Value="0">
                                     <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="False" />
                                 </interactivity:DataTriggerBehavior>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay}"
+                                    Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                                     ComparisonCondition="Equal"
                                     Value="1">
                                     <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="True" />
                                 </interactivity:DataTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
-                            <ComboBox SelectedIndex="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=TwoWay}">
+                            <ComboBox SelectedIndex="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                 <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDefault" />
                                 <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDominant" />
                             </ComboBox>
@@ -263,13 +262,13 @@
                                 <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Vertical">
                                     <interactivity:Interaction.Behaviors>
                                         <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay}"
+                                            Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                                             ComparisonCondition="Equal"
                                             Value="0">
                                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                                         </interactivity:DataTriggerBehavior>
                                         <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay}"
+                                            Binding="{x:Bind LyricsRendererSettingsViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                                             ComparisonCondition="Equal"
                                             Value="1">
                                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
