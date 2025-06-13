@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Rendering;
@@ -8,9 +10,13 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using WinRT;
+using WinRT.Interop;
 using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
 using DispatcherQueuePriority = Microsoft.UI.Dispatching.DispatcherQueuePriority;
 
@@ -65,10 +71,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
             );
 
-            WeakReferenceMessenger.Default.Register<
-                MainPage,
-                DesktopLyricsRelayoutRequestedMessage
-            >(
+            WeakReferenceMessenger.Default.Register<MainPage, InAppLyricsRelayoutRequestedMessage>(
                 this,
                 async (r, m) =>
                 {
@@ -218,21 +221,44 @@ namespace BetterLyrics.WinUI3.Views
 
         private void DesktopLyricsToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (App.Current.OverlayWindow is null)
-            {
-                var overlayWindow = new OverlayWindow();
-                overlayWindow.Navigate(typeof(DesktopLyricsPage));
-                App.Current.OverlayWindow = overlayWindow;
-            }
+            TransparentAppBarHelper.Enable(App.Current.OverlayWindow!, 48);
 
-            var overlayAppWindow = App.Current.OverlayWindow!.AppWindow;
-            overlayAppWindow.Show();
+            Color color = WindowColorHelper.GetDominantColorBelow(
+                WindowNative.GetWindowHandle(App.Current.OverlayWindow!)
+            );
+
+            var config = new SystemBackdropConfiguration
+            {
+                IsInputActive = true,
+                Theme = SystemBackdropTheme.Default,
+            };
+
+            var micaController = new MicaController();
+
+            micaController.TintColor = Windows.UI.Color.FromArgb(
+                color.A,
+                color.R,
+                color.G,
+                color.B
+            ); // 指定自定义颜色
+            micaController.TintOpacity = 0.7f;
+            micaController.FallbackColor = Colors.Black;
+
+            // 配置 Backdrop（假设你已经满足系统要求）
+            micaController.AddSystemBackdropTarget(
+                (
+                    App.Current.OverlayWindow!
+                ).As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>()
+            );
+            micaController.SetSystemBackdropConfiguration(config);
         }
 
         private void DesktopLyricsToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             var overlayAppWindow = App.Current.OverlayWindow!.AppWindow;
             overlayAppWindow.Hide();
+
+            TransparentAppBarHelper.Disable(App.Current.OverlayWindow);
         }
 
         private async void LyricsCanvas_Loaded(object sender, RoutedEventArgs e)

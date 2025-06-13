@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BetterLyrics.WinUI3.Models;
-
-namespace BetterLyrics.WinUI3.Services.Settings
+﻿namespace BetterLyrics.WinUI3.Services.Settings
 {
     public static class SettingsDefaultValues
     {
@@ -36,7 +29,7 @@ namespace BetterLyrics.WinUI3.Services.Settings
         // Lyrics
         public const int InAppLyricsAlignmentType = 1; // Center
         public const int InAppLyricsBlurAmount = 0;
-        public const int InAppLyricsVerticalEdgeOpacity = 0; // 0.0
+        public const int InAppLyricsVerticalEdgeOpacity = 0; // 0 % = 0.0
         public const float InAppLyricsLineSpacingFactor = 0.5f;
         public const int InAppLyricsFontSize = 28;
         public const bool IsInAppLyricsGlowEffectEnabled = false;
@@ -46,9 +39,9 @@ namespace BetterLyrics.WinUI3.Services.Settings
 
         public const int DesktopLyricsAlignmentType = 1; // Center
         public const int DesktopLyricsBlurAmount = 0;
-        public const int DesktopLyricsVerticalEdgeOpacity = 0; // 0.0
+        public const int DesktopLyricsVerticalEdgeOpacity = 0; // 0 % = 0.0
         public const float DesktopLyricsLineSpacingFactor = 0.5f;
-        public const int DesktopLyricsFontSize = 28;
+        public const int DesktopLyricsFontSize = 24;
         public const bool IsDesktopLyricsGlowEffectEnabled = false;
         public const bool IsDesktopLyricsDynamicGlowEffectEnabled = false;
         public const int DesktopLyricsFontColorType = 0; // Default
