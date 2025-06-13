@@ -62,7 +62,7 @@
                         FontFamily="Segoe Fluent Icons"
                         FontSize="{StaticResource DisplayTextBlockFontSize}"
                         Glyph="&#xE90B;" />
-                    <TextBlock FontSize="{StaticResource TitleTextBlockFontSize}" Text="Lyrics not found" />
+                    <TextBlock x:Uid="MainPageLyricsNotFound" FontSize="{StaticResource TitleTextBlockFontSize}" />
                 </StackPanel>
             </Grid>
 

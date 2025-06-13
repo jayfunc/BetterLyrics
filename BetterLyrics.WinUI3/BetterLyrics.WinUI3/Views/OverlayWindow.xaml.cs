@@ -24,22 +24,26 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
 
             // Hide border
-            this.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
+            this.SetWindowStyle(WindowStyle.Popup);
+
+            //this.SetExtendedWindowStyle(
+            //    ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent
+            //);
 
             // Hide from taskbar and alt-tab
             this.SetIsShownInSwitchers(false);
 
             // Transparent window
-            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
+            // SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.DesktopAcrylic);
 
             // Stretch to screen width
-            this.CenterOnScreen();
-            var screenWidth = AppWindow.Position.X * 2 + AppWindow.Size.Width;
-            AppWindow.Move(new Windows.Graphics.PointInt32(0, 0));
-            AppWindow.Resize(new Windows.Graphics.SizeInt32(screenWidth, 72));
+            //this.CenterOnScreen();
+            //var screenWidth = AppWindow.Position.X * 2 + AppWindow.Size.Width;
+            //AppWindow.Move(new Windows.Graphics.PointInt32(0, 0));
+            //AppWindow.Resize(new Windows.Graphics.SizeInt32(screenWidth, 72));
 
             // Always on top
-            ((OverlappedPresenter)AppWindow.Presenter).IsAlwaysOnTop = true;
+            // ((OverlappedPresenter)AppWindow.Presenter).IsAlwaysOnTop = true;
         }
 
         public void Navigate(Type type)

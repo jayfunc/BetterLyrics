@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Drawing;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Rendering;
@@ -10,6 +12,8 @@ using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,8 +38,6 @@ namespace BetterLyrics.WinUI3.Views
         public DesktopLyricsPage()
         {
             this.InitializeComponent();
-
-            Debug.WriteLine("hashcode for DesktopLyricsRenderer: " + _lyricsRenderer.GetHashCode());
 
             WeakReferenceMessenger.Default.Register<
                 DesktopLyricsPage,

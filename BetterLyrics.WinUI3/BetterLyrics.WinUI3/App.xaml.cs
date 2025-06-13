@@ -113,8 +113,7 @@ namespace BetterLyrics.WinUI3
 
             var overlayWindow = new OverlayWindow();
             overlayWindow.Navigate(typeof(DesktopLyricsPage));
-            overlayWindow.Hide();
-            App.Current.OverlayWindow = overlayWindow;
+            Current.OverlayWindow = overlayWindow;
 
             // Activate the window
             MainWindow = new HostWindow();

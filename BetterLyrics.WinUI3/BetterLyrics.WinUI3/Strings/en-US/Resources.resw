@@ -393,4 +393,7 @@
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>Exit picture-in-picture mode</value>
   </data>
+  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+    <value>Lyrics not found</value>
+  </data>
 </root>

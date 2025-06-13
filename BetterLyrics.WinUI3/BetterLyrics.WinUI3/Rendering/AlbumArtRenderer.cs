@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Numerics;
-using System.Text;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Windows.Graphics.Imaging;
 
@@ -120,8 +115,10 @@ namespace BetterLyrics.WinUI3.Rendering
             float opacity
         )
         {
-            float imageWidth = (float)(softwareBitmap.PixelWidth * 96f / control.Dpi);
-            float imageHeight = (float)(softwareBitmap.PixelHeight * 96f / control.Dpi);
+            using var canvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, softwareBitmap);
+            float imageWidth = (float)canvasBitmap.Size.Width;
+            float imageHeight = (float)canvasBitmap.Size.Height;
+
             var scaleFactor =
                 (float)Math.Sqrt(Math.Pow(control.Size.Width, 2) + Math.Pow(control.Size.Height, 2))
                 / Math.Min(imageWidth, imageHeight);
@@ -134,7 +131,7 @@ namespace BetterLyrics.WinUI3.Rendering
                         InterpolationMode = CanvasImageInterpolation.HighQualityCubic,
                         BorderMode = EffectBorderMode.Hard,
                         Scale = new Vector2(scaleFactor),
-                        Source = CanvasBitmap.CreateFromSoftwareBitmap(control, softwareBitmap),
+                        Source = canvasBitmap,
                     },
                     Opacity = opacity,
                 },

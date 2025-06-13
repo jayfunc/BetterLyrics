@@ -393,4 +393,7 @@
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>退出画中画模式</value>
   </data>
+  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+    <value>未找到歌词</value>
+  </data>
 </root>
