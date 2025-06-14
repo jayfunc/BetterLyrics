@@ -91,7 +91,7 @@
     <InheritWinAppVersionFrom>AssemblyVersion</InheritWinAppVersionFrom>
     <PackageVersionSettings>AssemblyVersion.None.None</PackageVersionSettings>
     <Version>2025.6.0</Version>
-    <AssemblyVersion>2025.6.14.1656</AssemblyVersion>
-    <FileVersion>2025.6.14.1656</FileVersion>
+    <AssemblyVersion>2025.6.14.1952</AssemblyVersion>
+    <FileVersion>2025.6.14.1952</FileVersion>
   </PropertyGroup>
 </Project>
