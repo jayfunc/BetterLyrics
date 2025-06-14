@@ -12,7 +12,6 @@ using BetterLyrics.WinUI3.ViewModels.Lyrics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace BetterInAppLyrics.WinUI3.ViewModels
@@ -32,8 +31,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.InAppLyricsAlignmentType, (int)value);
                 _lyricsAlignmentType = value;
+                Set(SettingsKeys.InAppLyricsAlignmentType, (int)value);
             }
         }
         private int? _lyricsBlurAmount;
@@ -49,8 +48,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.InAppLyricsBlurAmount, value);
                 _lyricsBlurAmount = value;
+                Set(SettingsKeys.InAppLyricsBlurAmount, value);
             }
         }
 
@@ -67,8 +66,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.InAppLyricsVerticalEdgeOpacity, value);
                 _lyricsVerticalEdgeOpacity = value;
+                Set(SettingsKeys.InAppLyricsVerticalEdgeOpacity, value);
             }
         }
 
@@ -85,8 +84,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.InAppLyricsLineSpacingFactor, value);
                 _lyricsLineSpacingFactor = value;
+                Set(SettingsKeys.InAppLyricsLineSpacingFactor, value);
             }
         }
 
@@ -103,8 +102,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.InAppLyricsFontSize, value);
                 _lyricsFontSize = value;
+                Set(SettingsKeys.InAppLyricsFontSize, value);
             }
         }
 
@@ -121,8 +120,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.IsInAppLyricsGlowEffectEnabled, value);
                 _isLyricsGlowEffectEnabled = value;
+                Set(SettingsKeys.IsInAppLyricsGlowEffectEnabled, value);
             }
         }
 
@@ -139,8 +138,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.IsInAppLyricsDynamicGlowEffectEnabled, value);
                 _isLyricsDynamicGlowEffectEnabled = value;
+                Set(SettingsKeys.IsInAppLyricsDynamicGlowEffectEnabled, value);
             }
         }
 
@@ -157,9 +156,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.InAppLyricsFontColorType, (int)value);
                 _lyricsFontColorType = value;
-                WeakReferenceMessenger.Default.Send(new LyricsFontColorChangedMessage());
+                Set(SettingsKeys.InAppLyricsFontColorType, (int)value);
             }
         }
 
@@ -178,9 +176,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             {
                 if (value >= 0)
                 {
-                    Set(SettingsKeys.InAppLyricsFontSelectedAccentColorIndex, value);
                     _lyricsFontSelectedAccentColorIndex = value;
-                    WeakReferenceMessenger.Default.Send(new LyricsFontColorChangedMessage());
+                    Set(SettingsKeys.InAppLyricsFontSelectedAccentColorIndex, value);
                 }
             }
         }

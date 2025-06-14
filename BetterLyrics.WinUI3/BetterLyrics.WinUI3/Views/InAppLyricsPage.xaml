@@ -348,7 +348,7 @@
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E3;" />
                                     <ListView
                                         x:Name="MatchedFilesListView"
-                                        ItemsSource="{x:Bind ViewModel.SongInfo.FilesUsed, Mode=OneWay}"
+                                        ItemsSource="{x:Bind ViewModel.SongInfo.FilesFound, Mode=OneWay}"
                                         SelectionMode="None">
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
@@ -484,7 +484,7 @@
                 <VisualState x:Name="Matched" />
                 <VisualState x:Name="NotMatched">
                     <VisualState.StateTriggers>
-                        <ui:IsNullOrEmptyStateTrigger Value="{x:Bind ViewModel.SongInfo.FilesUsed, Mode=OneWay}" />
+                        <ui:IsNullOrEmptyStateTrigger Value="{x:Bind ViewModel.SongInfo.FilesFound, Mode=OneWay}" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="NoLocalFilesMatchedTextBlock.Visibility" Value="Visible" />

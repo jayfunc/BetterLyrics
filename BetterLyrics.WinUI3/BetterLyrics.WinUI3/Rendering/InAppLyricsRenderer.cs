@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BetterInAppLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Models;
+﻿using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.ViewModels.Lyrics;
 
 namespace BetterLyrics.WinUI3.Rendering
 {
     class InAppLyricsRenderer : BaseLyricsRenderer
     {
-        public InAppLyricsRenderer(InAppLyricsViewModel viewModel)
-            : base(viewModel) { }
+        public InAppLyricsRenderer(InAppLyricsViewModel viewModel, GlobalViewModel globalViewModel)
+            : base(viewModel, globalViewModel) { }
     }
 }

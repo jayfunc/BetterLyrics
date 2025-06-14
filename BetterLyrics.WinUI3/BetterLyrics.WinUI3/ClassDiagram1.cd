@@ -47,7 +47,7 @@
   <Class Name="BetterLyrics.WinUI3.ViewModels.GlobalViewModel" Collapsed="true">
     <Position X="9.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIJAAAAABAACAAQAAAABAAAAAAAAAAAAAAAgAAACAA=</HashCode>
+      <HashCode>AAIIgAAAABAAAAAQAAAABAAAAAAAQAAAAAAAgAAACAA=</HashCode>
       <FileName>ViewModels\GlobalViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -75,7 +75,7 @@
   <Class Name="BetterLyrics.WinUI3.Views.DesktopLyricsPage" Collapsed="true">
     <Position X="2.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAEAAAAAAAAEEAAAAACAQAAgAAAAEA=</HashCode>
+      <HashCode>AAQAAAAAAAAAEAAEAAAAAAAAEEAAAAACAQAAgAAAAAA=</HashCode>
       <FileName>Views\DesktopLyricsPage.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

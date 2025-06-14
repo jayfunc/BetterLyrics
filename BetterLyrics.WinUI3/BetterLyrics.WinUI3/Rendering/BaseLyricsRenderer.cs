@@ -5,6 +5,7 @@ using System.Numerics;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.ViewModels.Lyrics;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Graphics.Canvas;
@@ -14,15 +15,22 @@ using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Rendering
 {
-    public abstract class BaseLyricsRenderer
+    public abstract class BaseLyricsRenderer : BaseRenderer
     {
-        private CanvasTextFormat _textFormat;
+        private CanvasTextFormat _textFormat = new()
+        {
+            HorizontalAlignment = CanvasHorizontalAlignment.Left,
+            VerticalAlignment = CanvasVerticalAlignment.Top,
+            FontWeight = FontWeights.Bold,
+            //FontFamily = "Segoe UI Mono",
+        };
 
         private Color _fontColor;
 
@@ -67,8 +75,6 @@ namespace BetterLyrics.WinUI3.Rendering
             }
         }
 
-        public TimeSpan CurrentTime { get; set; } = TimeSpan.Zero;
-
         private bool _isLyricsUpdated = true;
 
         private List<LyricsLine> _lyricsLines = [];
@@ -87,43 +93,20 @@ namespace BetterLyrics.WinUI3.Rendering
 
         private bool _isRelayoutNeeded = true;
 
-        private float _fontSize = 0;
-        private float _lineSpacingFactor = 0;
+        private float? _fontSize;
+        private float? _lineSpacingFactor;
+
+        private ElementTheme? _elementTheme;
+        private LyricsFontColorType? _fontColorType;
+        private int? _selectedFontAccentColorIndex;
 
         private readonly ILyricsViewModel _viewModel;
+        private readonly GlobalViewModel _globalViewModel;
 
-        public BaseLyricsRenderer(ILyricsViewModel viewModel)
+        public BaseLyricsRenderer(ILyricsViewModel viewModel, GlobalViewModel globalViewModel)
         {
             _viewModel = viewModel;
-            _textFormat = new()
-            {
-                FontSize = viewModel.LyricsFontSize,
-                HorizontalAlignment = CanvasHorizontalAlignment.Left,
-                VerticalAlignment = CanvasVerticalAlignment.Top,
-                FontWeight = FontWeights.Bold,
-                //FontFamily = "Segoe UI Mono",
-            };
-
-            UpdateFontColor();
-
-            WeakReferenceMessenger.Default.Register<BaseLyricsRenderer, ThemeChangedMessage>(
-                this,
-                (r, m) =>
-                {
-                    UpdateFontColor();
-                }
-            );
-
-            WeakReferenceMessenger.Default.Register<
-                BaseLyricsRenderer,
-                LyricsFontColorChangedMessage
-            >(
-                this,
-                (r, m) =>
-                {
-                    UpdateFontColor();
-                }
-            );
+            _globalViewModel = globalViewModel;
         }
 
         public void SetLimitedLineWidth(double width)
@@ -131,26 +114,31 @@ namespace BetterLyrics.WinUI3.Rendering
             LimitedLineWidth = width;
         }
 
-        public void AddElapsedTime(TimeSpan elapsedTime)
-        {
-            CurrentTime += elapsedTime;
-        }
-
         private void UpdateFontColor()
         {
             switch (_viewModel.LyricsFontColorType)
             {
                 case LyricsFontColorType.Default:
-                    _fontColor = (
-                        App.Current.Resources["ControlFillColorDefaultBrush"] as SolidColorBrush
-                    )!.Color;
+                    switch (_globalViewModel.Theme)
+                    {
+                        case ElementTheme.Default:
+                            break;
+                        case ElementTheme.Light:
+                            _fontColor = Colors.DarkGray;
+                            break;
+                        case ElementTheme.Dark:
+                            _fontColor = Colors.WhiteSmoke;
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 case LyricsFontColorType.Dominant:
-                    _fontColor = _viewModel.CoverImageDominantColors[
+                    _fontColor = _globalViewModel.CoverImageDominantColors[
                         Math.Max(
                             0,
                             Math.Min(
-                                _viewModel.CoverImageDominantColors.Count - 1,
+                                _globalViewModel.CoverImageDominantColors.Count - 1,
                                 _viewModel.LyricsFontSelectedAccentColorIndex
                             )
                         )
@@ -166,7 +154,7 @@ namespace BetterLyrics.WinUI3.Rendering
             for (int i = 0; i < LyricsLines.Count; i++)
             {
                 var line = LyricsLines[i];
-                if (line.EndPlayingTimestampMs < CurrentTime.TotalMilliseconds)
+                if (line.EndPlayingTimestampMs < TotalTime.TotalMilliseconds)
                 {
                     continue;
                 }
@@ -456,7 +444,7 @@ namespace BetterLyrics.WinUI3.Rendering
             if (control == null)
                 return;
 
-            _textFormat.FontSize = _fontSize;
+            _textFormat.FontSize = _fontSize ?? 0;
 
             float y = 0;
 
@@ -478,7 +466,7 @@ namespace BetterLyrics.WinUI3.Rendering
                 y +=
                     (float)textLayout.LayoutBounds.Height
                     / textLayout.LineCount
-                    * (textLayout.LineCount + _lineSpacingFactor);
+                    * (textLayout.LineCount + (_lineSpacingFactor ?? 0));
             }
         }
 
@@ -503,6 +491,21 @@ namespace BetterLyrics.WinUI3.Rendering
                 _isRelayoutNeeded = false;
                 _isLyricsUpdated = false;
                 _isLimitedLineWidthUpdated = false;
+            }
+
+            if (
+                _elementTheme == null
+                || _elementTheme != _globalViewModel.Theme
+                || _fontColorType == null
+                || _fontColorType != _viewModel.LyricsFontColorType
+                || _selectedFontAccentColorIndex == null
+                || _selectedFontAccentColorIndex != _viewModel.LyricsFontSelectedAccentColorIndex
+            )
+            {
+                _elementTheme = _globalViewModel.Theme;
+                _fontColorType = _viewModel.LyricsFontColorType;
+                _selectedFontAccentColorIndex = _viewModel.LyricsFontSelectedAccentColorIndex;
+                UpdateFontColor();
             }
 
             int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
@@ -555,11 +558,11 @@ namespace BetterLyrics.WinUI3.Rendering
                     opacity = _highlightedOpacity;
 
                     playProgress =
-                        ((float)CurrentTime.TotalMilliseconds - line.StartPlayingTimestampMs)
+                        ((float)TotalTime.TotalMilliseconds - line.StartPlayingTimestampMs)
                         / line.DurationMs;
 
                     var durationFromStartMs =
-                        CurrentTime.TotalMilliseconds - line.StartPlayingTimestampMs;
+                        TotalTime.TotalMilliseconds - line.StartPlayingTimestampMs;
                     lineEntering = durationFromStartMs <= lineEnteringDurationMs;
                     if (lineEntering)
                     {
@@ -580,7 +583,7 @@ namespace BetterLyrics.WinUI3.Rendering
                         playProgress = 1;
 
                         var durationToEndMs =
-                            CurrentTime.TotalMilliseconds - line.EndPlayingTimestampMs;
+                            TotalTime.TotalMilliseconds - line.EndPlayingTimestampMs;
                         lineExiting = durationToEndMs <= lineExitingDurationMs;
                         if (lineExiting)
                         {
@@ -641,7 +644,7 @@ namespace BetterLyrics.WinUI3.Rendering
             );
 
             var lineScrollingProgress =
-                (CurrentTime.TotalMilliseconds - currentPlayingLine.StartPlayingTimestampMs)
+                (TotalTime.TotalMilliseconds - currentPlayingLine.StartPlayingTimestampMs)
                 / Math.Min(_lineScrollDurationMs, currentPlayingLine.DurationMs);
 
             var targetYScrollOffset = (float)(

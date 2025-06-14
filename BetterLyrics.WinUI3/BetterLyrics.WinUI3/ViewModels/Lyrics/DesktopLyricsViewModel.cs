@@ -6,7 +6,6 @@ using BetterLyrics.WinUI3.ViewModels.Lyrics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.UI.Xaml.Documents;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -25,8 +24,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.DesktopLyricsAlignmentType, (int)value);
                 _lyricsAlignmentType = value;
+                Set(SettingsKeys.DesktopLyricsAlignmentType, (int)value);
             }
         }
         private int? _lyricsBlurAmount;
@@ -42,8 +41,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.DesktopLyricsBlurAmount, value);
                 _lyricsBlurAmount = value;
+                Set(SettingsKeys.DesktopLyricsBlurAmount, value);
             }
         }
 
@@ -60,8 +59,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.DesktopLyricsVerticalEdgeOpacity, value);
                 _lyricsVerticalEdgeOpacity = value;
+                Set(SettingsKeys.DesktopLyricsVerticalEdgeOpacity, value);
             }
         }
 
@@ -78,8 +77,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.DesktopLyricsLineSpacingFactor, value);
                 _lyricsLineSpacingFactor = value;
+                Set(SettingsKeys.DesktopLyricsLineSpacingFactor, value);
             }
         }
 
@@ -96,8 +95,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.DesktopLyricsFontSize, value);
                 _lyricsFontSize = value;
+                Set(SettingsKeys.DesktopLyricsFontSize, value);
             }
         }
 
@@ -114,8 +113,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.IsDesktopLyricsGlowEffectEnabled, value);
                 _isLyricsGlowEffectEnabled = value;
+                Set(SettingsKeys.IsDesktopLyricsGlowEffectEnabled, value);
             }
         }
 
@@ -132,8 +131,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.IsDesktopLyricsDynamicGlowEffectEnabled, value);
                 _isLyricsDynamicGlowEffectEnabled = value;
+                Set(SettingsKeys.IsDesktopLyricsDynamicGlowEffectEnabled, value);
             }
         }
 
@@ -150,9 +149,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             set
             {
-                Set(SettingsKeys.DesktopLyricsFontColorType, (int)value);
                 _lyricsFontColorType = value;
-                WeakReferenceMessenger.Default.Send(new LyricsFontColorChangedMessage());
+                Set(SettingsKeys.DesktopLyricsFontColorType, (int)value);
             }
         }
 
@@ -171,9 +169,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (value >= 0)
                 {
-                    Set(SettingsKeys.DesktopLyricsFontSelectedAccentColorIndex, value);
                     _lyricsFontSelectedAccentColorIndex = value;
-                    WeakReferenceMessenger.Default.Send(new LyricsFontColorChangedMessage());
+                    Set(SettingsKeys.DesktopLyricsFontSelectedAccentColorIndex, value);
                 }
             }
         }

@@ -77,8 +77,6 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
                     // ViewModels (Transient)
-                    .AddTransient<BaseSettingsViewModel>()
-                    .AddTransient<BaseLyricsViewModel>()
                     // ViewModels (Singleton)
                     .AddSingleton<HostViewModel>()
                     .AddSingleton<AlbumArtViewModel>()
@@ -91,6 +89,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<AlbumArtRenderer>()
                     .AddSingleton<InAppLyricsRenderer>()
                     .AddSingleton<DesktopLyricsRenderer>()
+                    .AddSingleton<DesktopBackgroundRenderer>()
                     .BuildServiceProvider()
             );
         }

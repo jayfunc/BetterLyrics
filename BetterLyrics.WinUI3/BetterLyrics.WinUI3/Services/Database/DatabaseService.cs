@@ -97,17 +97,18 @@ namespace BetterLyrics.WinUI3.Services.Database
 
             foreach (var found in founds)
             {
+                initSongInfo.FilesFound ??= [];
+                initSongInfo.FilesFound.Add(found.Path!);
                 if (initSongInfo.LyricsLines == null || initSongInfo.AlbumArt == null)
                 {
                     Track track = new(found.Path);
                     initSongInfo.ParseLyrics(track);
+                    // Successfully parse lyrics info from metadata in music file
                     if (initSongInfo.LyricsLines != null)
                     {
-                        initSongInfo.FilesUsed ??= [];
-                        initSongInfo.FilesUsed.Add(found.Path ?? string.Empty);
+                        // Used as lyrics source
                     }
-
-                    // Find lyrics
+                    // Find lyrics file
                     if (initSongInfo.LyricsLines == null && found?.Path?.EndsWith(".lrc") == true)
                     {
                         using (FileStream fs = File.OpenRead(found.Path))
@@ -127,8 +128,7 @@ namespace BetterLyrics.WinUI3.Services.Database
                             content = File.ReadAllText(found.Path, Encoding.UTF8);
                         }
                         initSongInfo.ParseLyrics(track, content);
-                        initSongInfo.FilesUsed ??= [];
-                        initSongInfo.FilesUsed.Add(found.Path);
+                        // Used as lyrics source
                     }
 
                     // Finf album art
@@ -137,8 +137,7 @@ namespace BetterLyrics.WinUI3.Services.Database
                         if (track.EmbeddedPictures.Count > 0)
                         {
                             initSongInfo.AlbumArt = track.EmbeddedPictures[0].PictureData;
-                            initSongInfo.FilesUsed ??= [];
-                            initSongInfo.FilesUsed.Add(found.Path);
+                            // Used as album art source
                         }
                     }
                 }

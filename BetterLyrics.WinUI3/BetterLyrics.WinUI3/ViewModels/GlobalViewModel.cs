@@ -1,10 +1,15 @@
-﻿using BetterLyrics.WinUI3.Messages;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -20,11 +25,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public ElementTheme Theme
         {
             get => (ElementTheme)Get(SettingsKeys.ThemeType, SettingsDefaultValues.ThemeType);
-            set
-            {
-                Set(SettingsKeys.ThemeType, (int)value);
-                WeakReferenceMessenger.Default.Send(new ThemeChangedMessage(value));
-            }
+            set { Set(SettingsKeys.ThemeType, (int)value); }
         }
 
         public BackdropType BackdropType
@@ -56,6 +57,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         private System.Drawing.Color _activatedWindowAccentColor = System.Drawing.Color.Transparent;
 
+        private ObservableCollection<Color> _coverImageDominantColors =
+        [
+            .. Enumerable.Repeat(Colors.Transparent, ImageHelper.AccentColorCount),
+        ];
+
+        public ObservableCollection<Color> CoverImageDominantColors
+        {
+            get => _coverImageDominantColors;
+            set
+            {
+                _coverImageDominantColors = value;
+                OnPropertyChanged();
+            }
+        }
+
         public GlobalViewModel(ISettingsService settingsService)
             : base(settingsService)
         {
@@ -74,6 +90,34 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _dispatcherQueue.TryEnqueue(
                         DispatcherQueuePriority.High,
                         () => IsPlaying = m.Value
+                    );
+                }
+            );
+
+            WeakReferenceMessenger.Default.Register<GlobalViewModel, SongInfoChangedMessage>(
+                this,
+                (r, m) =>
+                {
+                    _dispatcherQueue.TryEnqueue(
+                        DispatcherQueuePriority.High,
+                        async () =>
+                        {
+                            if (m.Value?.AlbumArt == null)
+                                CoverImageDominantColors =
+                                [
+                                    .. Enumerable.Repeat(
+                                        Colors.Transparent,
+                                        ImageHelper.AccentColorCount
+                                    ),
+                                ];
+                            else
+                            {
+                                CoverImageDominantColors =
+                                [
+                                    .. await ImageHelper.GetAccentColorsFromByte(m.Value.AlbumArt),
+                                ];
+                            }
+                        }
                     );
                 }
             );
