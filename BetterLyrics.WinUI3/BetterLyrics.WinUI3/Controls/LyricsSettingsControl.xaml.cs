@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.ViewModels.Lyrics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -38,5 +39,19 @@ namespace BetterLyrics.WinUI3.Controls
             typeof(LyricsSettingsControl),
             new PropertyMetadata(null)
         );
+
+        public GlobalViewModel GlobalViewModel
+        {
+            get => (GlobalViewModel)GetValue(GlobalViewModelProperty);
+            set => SetValue(GlobalViewModelProperty, value);
+        }
+
+        public static readonly DependencyProperty GlobalViewModelProperty =
+            DependencyProperty.Register(
+                nameof(GlobalViewModel),
+                typeof(GlobalViewModel),
+                typeof(LyricsSettingsControl),
+                new PropertyMetadata(null)
+            );
     }
 }

@@ -244,10 +244,10 @@
                         </controls:Segmented>
                         <controls:SwitchPresenter Value="{Binding SelectedItem.Tag, ElementName=LyricsSegmentedControl}">
                             <controls:Case Value="InApp">
-                                <uc:LyricsSettingsControl ViewModel="{x:Bind InAppLyricsViewModel, Mode=OneWay}" />
+                                <uc:LyricsSettingsControl GlobalViewModel="{x:Bind GlobalSettingsViewModel, Mode=OneWay}" ViewModel="{x:Bind InAppLyricsViewModel, Mode=OneWay}" />
                             </controls:Case>
                             <controls:Case Value="Desktop">
-                                <uc:LyricsSettingsControl ViewModel="{x:Bind DesktopLyricsViewModel, Mode=OneWay}" />
+                                <uc:LyricsSettingsControl GlobalViewModel="{x:Bind GlobalSettingsViewModel, Mode=OneWay}" ViewModel="{x:Bind DesktopLyricsViewModel, Mode=OneWay}" />
                             </controls:Case>
                         </controls:SwitchPresenter>
 

@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Models
         private string? _artist;
 
         [ObservableProperty]
-        private ObservableCollection<string>? _filesUsed;
+        private ObservableCollection<string>? _filesFound;
 
         [ObservableProperty]
         private bool _isLyricsExisted = false;
@@ -37,7 +37,7 @@ namespace BetterLyrics.WinUI3.Models
         /// <param name="overrideRaw"></param>
         public void ParseLyrics(Track track, string? overrideRaw = null)
         {
-            List<LyricsLine> result = [];
+            List<LyricsLine>? result = null;
 
             if (overrideRaw != null)
                 track.Lyrics.ParseLRC(overrideRaw);
@@ -82,13 +82,19 @@ namespace BetterLyrics.WinUI3.Models
                 else
                 {
                     lyricsLine.EndPlayingTimestampMs = endTimestampMs;
+                    result ??= [];
                     result.Add(lyricsLine);
                     lyricsLine = null;
                 }
             }
 
+            if (result != null && result.Count == 0)
+            {
+                result = null;
+            }
+
             LyricsLines = result;
-            IsLyricsExisted = result.Count != 0;
+            IsLyricsExisted = result != null;
         }
     }
 }

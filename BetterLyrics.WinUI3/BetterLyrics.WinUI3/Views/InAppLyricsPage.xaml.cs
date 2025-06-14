@@ -98,7 +98,7 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     _dispatcherQueue.TryEnqueue(
                         DispatcherQueuePriority.High,
-                        () => _lyricsRenderer.CurrentTime = m.Value
+                        () => _lyricsRenderer.TotalTime = m.Value
                     );
                 }
             );
@@ -146,7 +146,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             _albumArtRenderer.Calculate(sender);
 
-            _lyricsRenderer.AddElapsedTime(args.Timing.ElapsedTime);
+            _lyricsRenderer.TotalTime += args.Timing.ElapsedTime;
             _lyricsRenderer.Calculate(sender);
         }
 

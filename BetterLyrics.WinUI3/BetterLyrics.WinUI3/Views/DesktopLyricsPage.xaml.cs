@@ -23,6 +23,9 @@ namespace BetterLyrics.WinUI3.Views
         private readonly DesktopLyricsRenderer _lyricsRenderer =
             Ioc.Default.GetService<DesktopLyricsRenderer>()!;
 
+        private readonly DesktopBackgroundRenderer _lyricsBackgroundRenderer =
+            Ioc.Default.GetService<DesktopBackgroundRenderer>()!;
+
         public DesktopLyricsViewModel ViewModel => (DesktopLyricsViewModel)DataContext;
 
         private GlobalViewModel GlobalSettingsViewModel { get; set; } =
@@ -56,7 +59,7 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     _dispatcherQueue.TryEnqueue(
                         DispatcherQueuePriority.High,
-                        () => _lyricsRenderer.CurrentTime = m.Value
+                        () => _lyricsRenderer.TotalTime = m.Value
                     );
                 }
             );
@@ -68,8 +71,8 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             using var ds = args.DrawingSession;
-            _lyricsRenderer.UpdateTransition((float)args.Timing.ElapsedTime.TotalSeconds);
-            _lyricsRenderer.DrawBackground(sender, ds);
+
+            _lyricsBackgroundRenderer.Draw(sender, ds);
             _lyricsRenderer.Draw(sender, ds);
         }
 
@@ -78,7 +81,10 @@ namespace BetterLyrics.WinUI3.Views
             CanvasAnimatedUpdateEventArgs args
         )
         {
-            _lyricsRenderer.AddElapsedTime(args.Timing.ElapsedTime);
+            _lyricsBackgroundRenderer.ElapsedTime = args.Timing.ElapsedTime;
+            _lyricsBackgroundRenderer.Calculate();
+
+            _lyricsRenderer.TotalTime += args.Timing.ElapsedTime;
             _lyricsRenderer.Calculate(sender);
         }
 
