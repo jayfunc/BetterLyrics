@@ -7,37 +7,73 @@ namespace BetterLyrics.WinUI3.ViewModels
         public AlbumArtOverlayViewModel(ISettingsService settingsService)
             : base(settingsService) { }
 
+        private bool? _isCoverOverlayEnabled = null;
         public bool IsCoverOverlayEnabled
         {
-            get =>
-                Get(
+            get
+            {
+                _isCoverOverlayEnabled ??= Get(
                     SettingsKeys.IsCoverOverlayEnabled,
                     SettingsDefaultValues.IsCoverOverlayEnabled
                 );
-            set => Set(SettingsKeys.IsCoverOverlayEnabled, value);
+                return _isCoverOverlayEnabled ?? false;
+            }
+            set
+            {
+                _isCoverOverlayEnabled = value;
+                Set(SettingsKeys.IsCoverOverlayEnabled, value);
+            }
         }
-        public bool IsDynamicCoverOverlay
+        private bool? _isDynamicCoverOverlayEnabled = null;
+        public bool IsDynamicCoverOverlayEnabled
         {
-            get =>
-                Get(
-                    SettingsKeys.IsDynamicCoverOverlay,
-                    SettingsDefaultValues.IsDynamicCoverOverlay
+            get
+            {
+                _isDynamicCoverOverlayEnabled ??= Get(
+                    SettingsKeys.IsDynamicCoverOverlayEnabled,
+                    SettingsDefaultValues.IsDynamicCoverOverlayEnabled
                 );
-            set => Set(SettingsKeys.IsDynamicCoverOverlay, value);
+                return _isDynamicCoverOverlayEnabled ?? false;
+            }
+            set
+            {
+                _isDynamicCoverOverlayEnabled = value;
+                Set(SettingsKeys.IsDynamicCoverOverlayEnabled, value);
+            }
         }
+        private int? _coverOverlayOpacity;
         public int CoverOverlayOpacity
         {
-            get => Get(SettingsKeys.CoverOverlayOpacity, SettingsDefaultValues.CoverOverlayOpacity);
-            set => Set(SettingsKeys.CoverOverlayOpacity, value);
+            get
+            {
+                _coverOverlayOpacity ??= Get(
+                    SettingsKeys.CoverOverlayOpacity,
+                    SettingsDefaultValues.CoverOverlayOpacity
+                );
+                return _coverOverlayOpacity ?? 0;
+            }
+            set
+            {
+                _coverOverlayOpacity = value;
+                Set(SettingsKeys.CoverOverlayOpacity, value);
+            }
         }
+        private int? _coverOverlayBlurAmount;
         public int CoverOverlayBlurAmount
         {
-            get =>
-                Get(
+            get
+            {
+                _coverOverlayBlurAmount ??= Get(
                     SettingsKeys.CoverOverlayBlurAmount,
                     SettingsDefaultValues.CoverOverlayBlurAmount
                 );
-            set => Set(SettingsKeys.CoverOverlayBlurAmount, value);
+                return _coverOverlayBlurAmount ?? 0;
+            }
+            set
+            {
+                _coverOverlayBlurAmount = value;
+                Set(SettingsKeys.CoverOverlayBlurAmount, value);
+            }
         }
     }
 }

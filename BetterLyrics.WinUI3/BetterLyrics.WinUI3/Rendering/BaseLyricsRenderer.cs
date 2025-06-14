@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
@@ -15,11 +13,8 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Text;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -57,11 +52,43 @@ namespace BetterLyrics.WinUI3.Rendering
 
         private readonly double _rightMargin = 36;
 
-        public double LimitedLineWidth { get; set; } = 0;
+        private bool _isLimitedLineWidthUpdated = false;
+        private double _limitedLineWidth = 0;
+        public double LimitedLineWidth
+        {
+            get => _limitedLineWidth;
+            set
+            {
+                if (_limitedLineWidth != value)
+                {
+                    _limitedLineWidth = value;
+                    _isLimitedLineWidthUpdated = true;
+                }
+            }
+        }
 
         public TimeSpan CurrentTime { get; set; } = TimeSpan.Zero;
 
-        public List<LyricsLine> LyricsLines { get; set; } = [];
+        private bool _isLyricsUpdated = true;
+
+        private List<LyricsLine> _lyricsLines = [];
+        public List<LyricsLine> LyricsLines
+        {
+            get => _lyricsLines;
+            set
+            {
+                if (_lyricsLines != value)
+                {
+                    _lyricsLines = value;
+                    _isLyricsUpdated = true;
+                }
+            }
+        }
+
+        private bool _isRelayoutNeeded = true;
+
+        private float _fontSize = 0;
+        private float _lineSpacingFactor = 0;
 
         private readonly ILyricsViewModel _viewModel;
 
@@ -394,6 +421,13 @@ namespace BetterLyrics.WinUI3.Rendering
 
             // Draw the final composed layer
             ds.DrawImage(maskedCombinedBlurredLyrics);
+
+            ds.DrawText(
+                $"{_fontSize}, {_lineSpacingFactor}, {_isRelayoutNeeded}",
+                10,
+                10,
+                Colors.Red
+            );
         }
 
         private void DrawGradientOpacityMask(
@@ -417,19 +451,12 @@ namespace BetterLyrics.WinUI3.Rendering
             ds.FillRectangle(new Rect(0, 0, control.Size.Width, control.Size.Height), maskBrush);
         }
 
-        public async Task ForceToScrollToCurrentPlayingLineAsync()
-        {
-            _forceToScroll = true;
-            await Task.Delay(1);
-            _forceToScroll = false;
-        }
-
-        public async Task ReLayoutAsync(ICanvasAnimatedControl control)
+        private void ReLayout(ICanvasAnimatedControl control)
         {
             if (control == null)
                 return;
 
-            _textFormat.FontSize = _viewModel.LyricsFontSize;
+            _textFormat.FontSize = _fontSize;
 
             float y = 0;
 
@@ -451,14 +478,33 @@ namespace BetterLyrics.WinUI3.Rendering
                 y +=
                     (float)textLayout.LayoutBounds.Height
                     / textLayout.LineCount
-                    * (textLayout.LineCount + _viewModel.LyricsLineSpacingFactor);
+                    * (textLayout.LineCount + _lineSpacingFactor);
             }
-
-            await ForceToScrollToCurrentPlayingLineAsync();
         }
 
         public void Calculate(ICanvasAnimatedControl control)
         {
+            if (
+                _isLyricsUpdated
+                || _isLimitedLineWidthUpdated
+                || _fontSize != _viewModel.LyricsFontSize
+                || _lineSpacingFactor != _viewModel.LyricsLineSpacingFactor
+            )
+            {
+                _fontSize = _viewModel.LyricsFontSize;
+                _lineSpacingFactor = _viewModel.LyricsLineSpacingFactor;
+                _isRelayoutNeeded = true;
+                _forceToScroll = true;
+            }
+
+            if (_isRelayoutNeeded)
+            {
+                ReLayout(control);
+                _isRelayoutNeeded = false;
+                _isLyricsUpdated = false;
+                _isLimitedLineWidthUpdated = false;
+            }
+
             int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
             CalculateScaleAndOpacity(currentPlayingLineIndex);
             CalculatePosition(control, currentPlayingLineIndex);
@@ -620,6 +666,7 @@ namespace BetterLyrics.WinUI3.Rendering
                 if (_forceToScroll && Math.Abs(targetYScrollOffset) >= 1)
                 {
                     _totalYScroll = _lastTotalYScroll + targetYScrollOffset;
+                    _forceToScroll = false;
                 }
                 _lastTotalYScroll = _totalYScroll;
             }

@@ -53,6 +53,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         private bool _isPlaying = false;
 
+        [ObservableProperty]
+        private System.Drawing.Color _activatedWindowAccentColor = System.Drawing.Color.Transparent;
+
         public GlobalViewModel(ISettingsService settingsService)
             : base(settingsService)
         {

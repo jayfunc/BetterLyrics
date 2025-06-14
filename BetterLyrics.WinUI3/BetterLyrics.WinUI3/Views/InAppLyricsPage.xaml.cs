@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
@@ -28,11 +29,11 @@ namespace BetterLyrics.WinUI3.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class InAppLyricsPage : Page
     {
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        public MainViewModel ViewModel => (MainViewModel)DataContext;
+        public InAppLyricsViewModel ViewModel => (InAppLyricsViewModel)DataContext;
 
         private GlobalViewModel GlobalSettingsViewModel { get; set; } =
             Ioc.Default.GetService<GlobalViewModel>()!;
@@ -43,18 +44,20 @@ namespace BetterLyrics.WinUI3.Views
         private readonly AlbumArtRenderer _albumArtRenderer =
             Ioc.Default.GetService<AlbumArtRenderer>()!;
 
-        private readonly ILogger<MainPage> _logger = Ioc.Default.GetService<ILogger<MainPage>>()!;
+        private readonly ILogger<InAppLyricsPage> _logger = Ioc.Default.GetService<
+            ILogger<InAppLyricsPage>
+        >()!;
 
         public AlbumArtViewModel AlbumArtViewModel { get; set; } =
             Ioc.Default.GetService<AlbumArtViewModel>()!;
 
-        public MainPage()
+        public InAppLyricsPage()
         {
             this.InitializeComponent();
 
             Debug.WriteLine("hashcode for InAppLyricsRenderer: " + _lyricsRenderer.GetHashCode());
 
-            DataContext = Ioc.Default.GetService<MainViewModel>();
+            DataContext = Ioc.Default.GetService<InAppLyricsViewModel>();
 
             // set lyrics font color
 
@@ -63,7 +66,10 @@ namespace BetterLyrics.WinUI3.Views
                 WelcomeTeachingTip.IsOpen = true;
             }
 
-            WeakReferenceMessenger.Default.Register<MainPage, AlbumArtCornerRadiusChangedMessage>(
+            WeakReferenceMessenger.Default.Register<
+                InAppLyricsPage,
+                AlbumArtCornerRadiusChangedMessage
+            >(
                 this,
                 (r, m) =>
                 {
@@ -71,15 +77,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
             );
 
-            WeakReferenceMessenger.Default.Register<MainPage, InAppLyricsRelayoutRequestedMessage>(
-                this,
-                async (r, m) =>
-                {
-                    await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
-                }
-            );
-
-            WeakReferenceMessenger.Default.Register<MainPage, SongInfoChangedMessage>(
+            WeakReferenceMessenger.Default.Register<InAppLyricsPage, SongInfoChangedMessage>(
                 this,
                 (r, m) =>
                 {
@@ -87,14 +85,14 @@ namespace BetterLyrics.WinUI3.Views
                         DispatcherQueuePriority.High,
                         async () =>
                         {
+                            await ViewModel.UpdateSongInfoUI(m.Value);
                             _lyricsRenderer.LyricsLines = m.Value?.LyricsLines ?? [];
-                            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
                         }
                     );
                 }
             );
 
-            WeakReferenceMessenger.Default.Register<MainPage, PlayingPositionChangedMessage>(
+            WeakReferenceMessenger.Default.Register<InAppLyricsPage, PlayingPositionChangedMessage>(
                 this,
                 (r, m) =>
                 {
@@ -154,22 +152,10 @@ namespace BetterLyrics.WinUI3.Views
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (App.Current.SettingsWindow is null)
-            {
-                var settingsWindow = new HostWindow();
-                settingsWindow.Navigate(typeof(SettingsPage));
-                App.Current.SettingsWindow = settingsWindow;
-            }
-
-            var settingsAppWindow = App.Current.SettingsWindow.AppWindow;
-
-            if (settingsAppWindow.Presenter is OverlappedPresenter presenter)
-            {
-                presenter.Restore();
-            }
-
-            settingsAppWindow.Show();
-            settingsAppWindow.MoveInZOrderAtTop();
+            var settingsWindow = WindowHelper.CreateHostWindow();
+            settingsWindow.Navigate(typeof(SettingsPage));
+            settingsWindow.Activate();
+            App.Current.SettingsWindow = settingsWindow;
         }
 
         private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
@@ -203,10 +189,9 @@ namespace BetterLyrics.WinUI3.Views
                 BottomCommandGrid.Opacity = 0;
         }
 
-        private async void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             _lyricsRenderer.LimitedLineWidth = e.NewSize.Width;
-            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
         }
 
         private void OpenMatchedFileButton_Click(object sender, RoutedEventArgs e)
@@ -221,49 +206,18 @@ namespace BetterLyrics.WinUI3.Views
 
         private void DesktopLyricsToggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            TransparentAppBarHelper.Enable(App.Current.OverlayWindow!, 48);
-
-            Color color = WindowColorHelper.GetDominantColorBelow(
-                WindowNative.GetWindowHandle(App.Current.OverlayWindow!)
-            );
-
-            var config = new SystemBackdropConfiguration
-            {
-                IsInputActive = true,
-                Theme = SystemBackdropTheme.Default,
-            };
-
-            var micaController = new MicaController();
-
-            micaController.TintColor = Windows.UI.Color.FromArgb(
-                color.A,
-                color.R,
-                color.G,
-                color.B
-            ); // 指定自定义颜色
-            micaController.TintOpacity = 0.7f;
-            micaController.FallbackColor = Colors.Black;
-
-            // 配置 Backdrop（假设你已经满足系统要求）
-            micaController.AddSystemBackdropTarget(
-                (
-                    App.Current.OverlayWindow!
-                ).As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>()
-            );
-            micaController.SetSystemBackdropConfiguration(config);
+            var overlayWindow = WindowHelper.CreateOverlayWindow();
+            overlayWindow.Navigate(typeof(DesktopLyricsPage));
+            overlayWindow.Activate();
+            App.Current.OverlayWindow = overlayWindow;
         }
 
         private void DesktopLyricsToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            var overlayAppWindow = App.Current.OverlayWindow!.AppWindow;
-            overlayAppWindow.Hide();
-
-            TransparentAppBarHelper.Disable(App.Current.OverlayWindow);
-        }
-
-        private async void LyricsCanvas_Loaded(object sender, RoutedEventArgs e)
-        {
-            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
+            var overlayWindow = App.Current.OverlayWindow!;
+            TransparentAppBarHelper.Disable(overlayWindow);
+            overlayWindow.Close();
+            App.Current.OverlayWindow = null;
         }
     }
 }

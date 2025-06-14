@@ -54,7 +54,7 @@ namespace BetterLyrics.WinUI3
 
             _logger = Ioc.Default.GetService<ILogger<App>>()!;
 
-            // UnhandledException += App_UnhandledException;
+            UnhandledException += App_UnhandledException;
         }
 
         private static void ConfigureServices()
@@ -72,24 +72,25 @@ namespace BetterLyrics.WinUI3
                         loggingBuilder.ClearProviders();
                         loggingBuilder.AddSerilog();
                     })
-                    // Services
+                    // Services (Singleton)
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
-                    // Renderer
-                    .AddSingleton<AlbumArtRenderer>()
-                    .AddSingleton<InAppLyricsRenderer>()
-                    .AddSingleton<DesktopLyricsRenderer>()
-                    // ViewModels
+                    // ViewModels (Transient)
+                    .AddTransient<BaseSettingsViewModel>()
+                    .AddTransient<BaseLyricsViewModel>()
+                    // ViewModels (Singleton)
                     .AddSingleton<HostViewModel>()
                     .AddSingleton<AlbumArtViewModel>()
-                    .AddSingleton<MainViewModel>()
-                    .AddSingleton<BaseSettingsViewModel>()
                     .AddSingleton<GlobalViewModel>()
                     .AddSingleton<SettingsViewModel>()
                     .AddSingleton<InAppLyricsViewModel>()
                     .AddSingleton<DesktopLyricsViewModel>()
                     .AddSingleton<AlbumArtOverlayViewModel>()
+                    // Renderer (Singleton)
+                    .AddSingleton<AlbumArtRenderer>()
+                    .AddSingleton<InAppLyricsRenderer>()
+                    .AddSingleton<DesktopLyricsRenderer>()
                     .BuildServiceProvider()
             );
         }
@@ -111,13 +112,9 @@ namespace BetterLyrics.WinUI3
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            var overlayWindow = new OverlayWindow();
-            overlayWindow.Navigate(typeof(DesktopLyricsPage));
-            Current.OverlayWindow = overlayWindow;
-
             // Activate the window
             MainWindow = new HostWindow();
-            MainWindow!.Navigate(typeof(MainPage));
+            MainWindow!.Navigate(typeof(InAppLyricsPage));
             MainWindow.Activate();
         }
     }

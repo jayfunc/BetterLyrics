@@ -1,19 +1,12 @@
-using System.Diagnostics;
-using System.Drawing;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,10 +20,10 @@ namespace BetterLyrics.WinUI3.Views
     {
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        private double _limitedLineWidth = 0;
-
         private readonly DesktopLyricsRenderer _lyricsRenderer =
             Ioc.Default.GetService<DesktopLyricsRenderer>()!;
+
+        public DesktopLyricsViewModel ViewModel => (DesktopLyricsViewModel)DataContext;
 
         private GlobalViewModel GlobalSettingsViewModel { get; set; } =
             Ioc.Default.GetService<GlobalViewModel>()!;
@@ -38,17 +31,7 @@ namespace BetterLyrics.WinUI3.Views
         public DesktopLyricsPage()
         {
             this.InitializeComponent();
-
-            WeakReferenceMessenger.Default.Register<
-                DesktopLyricsPage,
-                DesktopLyricsRelayoutRequestedMessage
-            >(
-                this,
-                async (r, m) =>
-                {
-                    await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
-                }
-            );
+            DataContext = Ioc.Default.GetService<DesktopLyricsViewModel>();
 
             WeakReferenceMessenger.Default.Register<DesktopLyricsPage, SongInfoChangedMessage>(
                 this,
@@ -56,10 +39,9 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     _dispatcherQueue.TryEnqueue(
                         DispatcherQueuePriority.High,
-                        async () =>
+                        () =>
                         {
                             _lyricsRenderer.LyricsLines = m.Value?.LyricsLines ?? [];
-                            await _lyricsRenderer.ReLayoutAsync(LyricsCanvas);
                         }
                     );
                 }
@@ -86,6 +68,8 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             using var ds = args.DrawingSession;
+            _lyricsRenderer.UpdateTransition((float)args.Timing.ElapsedTime.TotalSeconds);
+            _lyricsRenderer.DrawBackground(sender, ds);
             _lyricsRenderer.Draw(sender, ds);
         }
 

@@ -22,7 +22,7 @@ namespace BetterLyrics.WinUI3.Services.Settings
         // Backdrop
         public const string BackdropType = "BackdropType";
         public const string IsCoverOverlayEnabled = "IsCoverOverlayEnabled";
-        public const string IsDynamicCoverOverlay = "IsDynamicCoverOverlay";
+        public const string IsDynamicCoverOverlayEnabled = "IsDynamicCoverOverlayEnabled";
         public const string CoverOverlayOpacity = "CoverOverlayOpacity";
         public const string CoverOverlayBlurAmount = "CoverOverlayBlurAmount";
 

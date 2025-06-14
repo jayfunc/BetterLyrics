@@ -1,17 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BetterLyrics.WinUI3.Views;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Windows.Storage;
+using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public class WindowHelper
     {
-        public static Window CreateWindow()
+        public static HostWindow CreateHostWindow()
         {
-            Window newWindow = new Window { SystemBackdrop = new MicaBackdrop() };
+            HostWindow newWindow = new() { SystemBackdrop = new MicaBackdrop() };
+            TrackWindow(newWindow);
+            return newWindow;
+        }
+
+        public static OverlayWindow CreateOverlayWindow()
+        {
+            OverlayWindow newWindow = new();
+            TransparentAppBarHelper.Enable(newWindow, 48);
+
             TrackWindow(newWindow);
             return newWindow;
         }

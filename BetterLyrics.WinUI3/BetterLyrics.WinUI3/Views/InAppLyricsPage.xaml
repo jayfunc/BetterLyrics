@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Page
-    x:Class="BetterLyrics.WinUI3.Views.MainPage"
+    x:Class="BetterLyrics.WinUI3.Views.InAppLyricsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
@@ -22,7 +22,6 @@
                 x:Name="LyricsCanvas"
                 Draw="LyricsCanvas_Draw"
                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                Loaded="LyricsCanvas_Loaded"
                 Paused="{x:Bind GlobalSettingsViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
                 Update="LyricsCanvas_Update" />
             <Grid.OpacityTransition>

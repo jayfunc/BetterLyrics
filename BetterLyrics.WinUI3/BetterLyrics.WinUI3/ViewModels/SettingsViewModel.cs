@@ -128,12 +128,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             picker.FileTypeFilter.Add("*");
 
-            var hwnd = WindowNative.GetWindowHandle(App.Current.MainWindow);
+            var hwnd = WindowNative.GetWindowHandle(App.Current.SettingsWindow);
             InitializeWithWindow.Initialize(picker, hwnd);
 
             var folder = await picker.PickSingleFolderAsync();
-
-            App.Current.SettingsWindow!.AppWindow.MoveInZOrderAtTop();
 
             if (folder != null)
             {

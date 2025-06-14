@@ -225,11 +225,8 @@
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="MainPageTitle" xml:space="preserve">
+  <data name="InAppLyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
-  </data>
-  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>Lyrics style</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>Alignment</value>
@@ -278,9 +275,6 @@
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Immersive mode</value>
-  </data>
-  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>Lyrics effect</value>
   </data>
   <data name="SettingsPageAlbumOverlay.Text" xml:space="preserve">
     <value>Album background</value>
@@ -395,5 +389,14 @@
   </data>
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
     <value>Lyrics not found</value>
+  </data>
+  <data name="SettingsPageLyrics.Text" xml:space="preserve">
+    <value>Lyrics style &amp; effect</value>
+  </data>
+  <data name="SettingsPageInAppLyrics.Content" xml:space="preserve">
+    <value>In-app lyrics</value>
+  </data>
+  <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
+    <value>Desktop lyrics</value>
   </data>
 </root>

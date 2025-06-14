@@ -158,7 +158,7 @@ namespace BetterLyrics.WinUI3.Rendering
                 }
             }
 
-            if (_viewModel.IsDynamicCoverOverlay)
+            if (_viewModel.IsDynamicCoverOverlayEnabled)
             {
                 _rotateAngle += _coverRotateSpeed;
                 _rotateAngle %= MathF.PI * 2;

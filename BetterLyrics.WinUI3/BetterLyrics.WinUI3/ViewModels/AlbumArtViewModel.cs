@@ -11,12 +11,21 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public class AlbumArtViewModel : BaseSettingsViewModel
     {
+        private int? _coverImageRadius;
         public int CoverImageRadius
         {
-            get => Get(SettingsKeys.CoverImageRadius, SettingsDefaultValues.CoverImageRadius);
+            get
+            {
+                _coverImageRadius ??= Get(
+                    SettingsKeys.CoverImageRadius,
+                    SettingsDefaultValues.CoverImageRadius
+                );
+                return _coverImageRadius ?? 0;
+            }
             set
             {
                 Set(SettingsKeys.CoverImageRadius, value);
+                _coverImageRadius = value;
                 WeakReferenceMessenger.Default.Send(new AlbumArtCornerRadiusChangedMessage(value));
             }
         }

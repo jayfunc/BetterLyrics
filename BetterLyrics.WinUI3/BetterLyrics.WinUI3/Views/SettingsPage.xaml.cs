@@ -18,8 +18,10 @@ namespace BetterLyrics.WinUI3.Views
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
         public AlbumArtOverlayViewModel AlbumArtRendererSettingsViewModel =>
             Ioc.Default.GetService<AlbumArtOverlayViewModel>()!;
-        public InAppLyricsViewModel LyricsRendererSettingsViewModel =>
+        public InAppLyricsViewModel InAppLyricsViewModel =>
             Ioc.Default.GetService<InAppLyricsViewModel>()!;
+        public DesktopLyricsViewModel DesktopLyricsViewModel =>
+            Ioc.Default.GetService<DesktopLyricsViewModel>()!;
         public GlobalViewModel GlobalSettingsViewModel =>
             Ioc.Default.GetService<GlobalViewModel>()!;
         public AlbumArtViewModel AlbumArtViewModel => Ioc.Default.GetService<AlbumArtViewModel>()!;
