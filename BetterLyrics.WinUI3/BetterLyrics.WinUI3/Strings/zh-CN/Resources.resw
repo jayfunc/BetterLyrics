@@ -225,11 +225,8 @@
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>设置</value>
   </data>
-  <data name="MainPageTitle" xml:space="preserve">
+  <data name="InAppLyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
-  </data>
-  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>歌词样式</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>对齐方式</value>
@@ -278,9 +275,6 @@
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>沉浸模式</value>
-  </data>
-  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>歌词效果</value>
   </data>
   <data name="SettingsPageAlbumOverlay.Text" xml:space="preserve">
     <value>专辑背景</value>
@@ -395,5 +389,14 @@
   </data>
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
     <value>未找到歌词</value>
+  </data>
+  <data name="SettingsPageLyrics.Text" xml:space="preserve">
+    <value>歌词样式与动效</value>
+  </data>
+  <data name="SettingsPageInAppLyrics.Content" xml:space="preserve">
+    <value>应用内歌词</value>
+  </data>
+  <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
+    <value>桌面歌词</value>
   </data>
 </root>

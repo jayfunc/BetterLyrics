@@ -64,7 +64,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateBackdrop(BackdropType? backdropType)
         {
-            if (RootFrame.SourcePageType == typeof(MainPage))
+            if (RootFrame.SourcePageType == typeof(InAppLyricsPage))
                 SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
                     backdropType ?? GlobalSettingsViewModel.BackdropType
                 );
@@ -90,14 +90,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (RootFrame.CurrentSourcePageType == typeof(MainPage))
-            {
-                App.Current.Exit();
-            }
-            else if (RootFrame.CurrentSourcePageType == typeof(SettingsPage))
-            {
-                App.Current.SettingsWindow!.AppWindow.Hide();
-            }
+            Close();
         }
 
         private void MaximiseButton_Click(object sender, RoutedEventArgs e)

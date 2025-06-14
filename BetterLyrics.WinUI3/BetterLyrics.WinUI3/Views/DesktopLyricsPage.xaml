@@ -5,8 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -19,5 +21,40 @@
             Draw="LyricsCanvas_Draw"
             Paused="{x:Bind GlobalSettingsViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
             Update="LyricsCanvas_Update" />
+        <Grid
+            x:Name="RightCommandGrid"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Opacity="0">
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
+            <Button
+                x:Name="SettingsButton"
+                Command="{x:Bind ViewModel.ToggleSettingsPopupCommand}"
+                Style="{StaticResource GhostButtonStyle}">
+                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF8B0;" />
+            </Button>
+            <Popup
+                x:Name="SettingsPopup"
+                DesiredPlacement="Bottom"
+                IsOpen="{x:Bind ViewModel.IsSettingsPopupOpened, Mode=OneWay}">
+                <uc:LyricsSettingsControl ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
+            </Popup>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                    <interactivity:ChangePropertyAction
+                        PropertyName="Opacity"
+                        TargetObject="{Binding ElementName=RightCommandGrid}"
+                        Value="1" />
+                </interactivity:EventTriggerBehavior>
+                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                    <interactivity:ChangePropertyAction
+                        PropertyName="Opacity"
+                        TargetObject="{Binding ElementName=RightCommandGrid}"
+                        Value="0" />
+                </interactivity:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </Grid>
     </Grid>
 </Page>

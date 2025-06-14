@@ -16,7 +16,7 @@
         // Backdrop
         public const int BackdropType = 5; // Acrylic Base
         public const bool IsCoverOverlayEnabled = true;
-        public const bool IsDynamicCoverOverlay = true;
+        public const bool IsDynamicCoverOverlayEnabled = true;
         public const int CoverOverlayOpacity = 100; // 1.0
         public const int CoverOverlayBlurAmount = 200;
 

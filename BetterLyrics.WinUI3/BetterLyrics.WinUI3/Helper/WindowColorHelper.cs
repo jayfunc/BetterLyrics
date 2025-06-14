@@ -7,48 +7,30 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class WindowColorHelper
     {
-        public static Color GetDominantColorBelow(
-            IntPtr myHwnd,
-            int sampleWidth = 64,
-            int sampleHeight = 64
-        )
+        public static Color GetDominantColorBelow(IntPtr myHwnd)
         {
-            // 获取屏幕坐标中，在窗口下方的某个点
             if (!GetWindowRect(myHwnd, out RECT myRect))
                 return Color.Transparent;
 
-            POINT pt = new()
-            {
-                x = (myRect.Left + myRect.Right) / 2,
-                y = myRect.Bottom + 1, // 紧贴窗口底部
-            };
+            int screenWidth = GetSystemMetrics(SystemMetric.SM_CXSCREEN);
+            int sampleHeight = 1;
+            int sampleY = myRect.Bottom + 1;
 
-            IntPtr hwndBelow = WindowFromPoint(pt);
-
-            if (hwndBelow == myHwnd || hwndBelow == IntPtr.Zero)
-                return Color.Transparent;
-
-            return GetAverageColorFromWindow(hwndBelow, sampleWidth, sampleHeight);
+            return GetAverageColorFromScreenRegion(0, sampleY, screenWidth, sampleHeight);
         }
 
-        private static Color GetAverageColorFromWindow(IntPtr hwnd, int width, int height)
+        private static Color GetAverageColorFromScreenRegion(int x, int y, int width, int height)
         {
-            if (!GetWindowRect(hwnd, out RECT rect))
-                return Color.Transparent;
-
-            int w = Math.Min(width, rect.Right - rect.Left);
-            int h = Math.Min(height, rect.Bottom - rect.Top);
-
-            using Bitmap bmp = new(w, h, PixelFormat.Format32bppArgb);
+            using Bitmap bmp = new(width, height, PixelFormat.Format32bppArgb);
             using Graphics gDest = Graphics.FromImage(bmp);
 
             IntPtr hdcDest = gDest.GetHdc();
-            IntPtr hdcSrc = GetWindowDC(hwnd);
+            IntPtr hdcSrc = GetDC(IntPtr.Zero); // Entire screen
 
-            BitBlt(hdcDest, 0, 0, w, h, hdcSrc, rect.Left, rect.Top, SRCCOPY);
+            BitBlt(hdcDest, 0, 0, width, height, hdcSrc, x, y, SRCCOPY);
 
             gDest.ReleaseHdc(hdcDest);
-            ReleaseDC(hwnd, hdcSrc);
+            ReleaseDC(IntPtr.Zero, hdcSrc);
 
             return ComputeAverageColor(bmp);
         }
@@ -81,13 +63,10 @@ namespace BetterLyrics.WinUI3.Helper
         private const int SRCCOPY = 0x00CC0020;
 
         [DllImport("user32.dll")]
-        private static extern IntPtr WindowFromPoint(POINT Point);
-
-        [DllImport("user32.dll")]
         private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr GetWindowDC(IntPtr hWnd);
+        private static extern IntPtr GetDC(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         private static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
@@ -105,11 +84,13 @@ namespace BetterLyrics.WinUI3.Helper
             int dwRop
         );
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct POINT
+        [DllImport("user32.dll")]
+        private static extern int GetSystemMetrics(SystemMetric smIndex);
+
+        private enum SystemMetric
         {
-            public int x;
-            public int y;
+            SM_CXSCREEN = 0,
+            SM_CYSCREEN = 1,
         }
 
         [StructLayout(LayoutKind.Sequential)]
