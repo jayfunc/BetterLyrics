@@ -63,6 +63,11 @@ namespace BetterLyrics.WinUI3.Views
                 }
             );
 
+            Closed += (_, _) =>
+            {
+                windowWatcher.Stop();
+            };
+
             windowWatcher.Start();
 
             UpdateAccentColor(hwnd);
