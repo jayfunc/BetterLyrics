@@ -17,9 +17,10 @@ Your smooth dynamic local lyrics display built with WinUI 3
 - Dynamic blur album art as background
 - Smooth lyrics fade in/out, zoom in/out effects
 - Smooth user interface change from song to song
-- **Gradient** Karaoke effect on every single character
+- Gradient Karaoke effect on every single character
+- Immersive desktop lyrics
 
-Coding in progress...
+> This project is still under development now, bugs and unexpected behaviors may be existed in the latest dev branch.
 
 ## Customize in your way
 
@@ -41,13 +42,15 @@ We provide more than one setting item to better align with your preference
 
 ![alt text](Screenshots/BetterLyrics.WinUI3_igDdnc4rzW.gif)
 
-Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(uploaded on 31 May 2025) on Bilibili below (click the cover image to watch):
+![alt text](Screenshots/Code_HhDCqJZYEZ.gif)
 
-[![Bilibili](https://i1.hdslb.com/bfs/archive/75a7a1a3803b617574090a91c59785b6c40d0fe5.jpg@672w_378h_1c.avif)](https://b23.tv/QjKkYmL)
+> **Highlighted feature**: Immersive lyrics shown on top of the screen (automatically follow current activated windows's accent color)
+
+Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
 
 ## Screenshots
 
-### Split view
+### In-app lyrics
 
 Non-immersive mode
 
@@ -56,21 +59,21 @@ Non-immersive mode
 Immersive mode
 ![alt text](Screenshots/Snipaste_2025-06-03_16-47-43.png)
 
-### Lyrics only
+Lyrics only
 
 ![alt text](Screenshots/Snipaste_2025-06-03_17-51-22.png)
 
-### Fullscreen
+Fullscreen
 
 ![alt text](Screenshots/Snipaste_2025-06-03_18-36-05.png)
 
-### Settings
+### Desktop lyrics
 
-![alt text](Screenshots/Snipaste_2025-06-07_17-32-02.png)
-![alt text](Screenshots/Snipaste_2025-06-07_17-32-17.png)
-![alt text](Screenshots/Snipaste_2025-06-07_17-32-23.png)
+![alt text](Screenshots/image.png)
 
-## Download it now
+## Try it now
+
+### Stable version
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
@@ -81,6 +84,10 @@ Immersive mode
 Or alternatively get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases/latest) page for the link)
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
+
+### Latest dev version
+
+You can `git clone` this project and build it yourself.
 
 ## Setup your app
 
@@ -122,29 +129,44 @@ So technically, as long as you are using the music apps (like
 - [BetterNCM](https://github.com/std-microblock/BetterNCM)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
 
 ## Third-party libraries that this project uses
 
 ```
-<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
-<PackageReference Include="DevWinUI" Version="8.3.0" />
-<PackageReference Include="DevWinUI.Controls" Version="8.3.0" />
-<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
-<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.5" />
-<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
-<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
-<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250513003" />
-<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
-<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
-<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.5" />
-<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-<PackageReference Include="z440.atl.core" Version="6.24.0" />
+CommunityToolkit.Labs.WinUI.MarqueeText
+CommunityToolkit.Labs.WinUI.OpacityMaskView
+CommunityToolkit.Mvvm
+CommunityToolkit.WinUI.Behaviors
+CommunityToolkit.WinUI.Controls.Primitives
+CommunityToolkit.WinUI.Controls.Segmented
+CommunityToolkit.WinUI.Controls.SettingsControls
+CommunityToolkit.WinUI.Converters
+CommunityToolkit.WinUI.Extensions
+CommunityToolkit.WinUI.Helpers
+CommunityToolkit.WinUI.Media
+Microsoft.Extensions.DependencyInjection
+Microsoft.Extensions.Logging
+Microsoft.Graphics.Win2D
+Microsoft.Windows.SDK.BuildTools
+Microsoft.WindowsAppSDK
+Microsoft.Xaml.Behaviors.WinUI.Managed
+Newtonsoft.Json
+Serilog.Extensions.Logging
+Serilog.Sinks.File
+sqlite-net-pcl
+System.Drawing.Common
+System.Text.Encoding.CodePages
+Ude.NetStandard
+WinUIEx
+z440.atl.core
+
 ```
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+
 ## Any issues and PRs are welcomed
+
+If you find a bug please file it in issues or if you have any ideas feel free to share it here.
