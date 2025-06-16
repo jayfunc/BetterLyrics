@@ -41,13 +41,6 @@ namespace BetterLyrics.WinUI3.Views
             DataContext = Ioc.Default.GetService<InAppLyricsPageViewModel>();
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            var settingsWindow = WindowHelper.CreateHostWindow();
-            settingsWindow.Navigate(typeof(SettingsPage));
-            settingsWindow.Activate();
-        }
-
         private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
         {
             ViewModel.IsFirstRun = false;
@@ -87,22 +80,6 @@ namespace BetterLyrics.WinUI3.Views
         private void OpenMatchedFileButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.OpenMatchedFileFolderInFileExplorer((string)(sender as HyperlinkButton)!.Tag);
-        }
-
-        private void DesktopLyricsToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            var overlayWindow = WindowHelper.CreateOverlayWindow();
-            overlayWindow.Navigate(typeof(DesktopLyricsPage));
-            overlayWindow.Activate();
-            App.Current.OverlayWindow = overlayWindow;
-        }
-
-        private void DesktopLyricsToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            var overlayWindow = App.Current.OverlayWindow!;
-            TransparentAppBarHelper.Disable(overlayWindow);
-            overlayWindow.Close();
-            App.Current.OverlayWindow = null;
         }
 
         private void CoverImageGrid_SizeChanged(object sender, SizeChangedEventArgs e)

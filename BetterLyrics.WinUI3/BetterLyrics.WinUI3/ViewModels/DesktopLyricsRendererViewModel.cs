@@ -142,6 +142,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     LyricsFontSelectedAccentColorIndex = message.NewValue;
                 }
+                else if (
+                    message.PropertyName
+                    == nameof(DesktopLyricsSettingsControlViewModel.LyricsFontSize)
+                )
+                {
+                    LyricsFontSize = message.NewValue;
+                }
             }
         }
 
@@ -195,13 +202,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 )
                 {
                     LyricsLineSpacingFactor = message.NewValue;
-                }
-                else if (
-                    message.PropertyName
-                    == nameof(DesktopLyricsSettingsControlViewModel.LyricsFontSize)
-                )
-                {
-                    LyricsFontSize = message.NewValue;
                 }
             }
         }

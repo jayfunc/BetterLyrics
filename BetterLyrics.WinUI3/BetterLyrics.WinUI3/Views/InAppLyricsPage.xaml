@@ -270,10 +270,8 @@
                 <ToggleButton
                     x:Name="DesktopLyricsToggleButton"
                     x:Uid="MainPageDesktopLyricsToggler"
-                    Checked="DesktopLyricsToggleButton_Checked"
                     Content="{ui:FontIcon Glyph=&#xEB41;}"
-                    Style="{StaticResource GhostToggleButtonStyle}"
-                    Unchecked="DesktopLyricsToggleButton_Unchecked">
+                    Style="{StaticResource GhostToggleButtonStyle}">
                     <ToggleButton.OpacityTransition>
                         <ScalarTransition />
                     </ToggleButton.OpacityTransition>
@@ -385,7 +383,6 @@
 
                 <Button
                     x:Name="SettingsButton"
-                    Click="SettingsButton_Click"
                     Content="{ui:FontIcon Glyph=&#xF8B0;}"
                     Style="{StaticResource GhostButtonStyle}" />
 

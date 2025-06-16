@@ -3,14 +3,15 @@
   <Class Name="BetterLyrics.WinUI3.HostWindowViewModel" Collapsed="true">
     <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABAAAAgAABAAAAAAABAABAAAggAAQAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>ABCAAAgAABAAAAAAABAABAAAggAAQAAQAIAAAAAAAAg=</HashCode>
       <FileName>ViewModels\HostWindowViewModel.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="BetterLyrics.WinUI3.ViewModels.SettingsViewModel" Collapsed="true">
     <Position X="7.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAQABAAACZAAAgIQEAAABAAAAFCBAAACIAAAYIAAAiA=</HashCode>
+      <HashCode>IAQABAAACZABAgIQEAAABAAAAFCBAAACIAAAYIAAAiA=</HashCode>
       <FileName>ViewModels\SettingsViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -20,7 +21,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAQAAAAACAAA=</HashCode>
       <FileName>Views\DesktopLyricsPage.xaml.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />
 </ClassDiagram>

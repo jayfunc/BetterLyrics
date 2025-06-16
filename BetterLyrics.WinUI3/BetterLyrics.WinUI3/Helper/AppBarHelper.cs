@@ -7,46 +7,36 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using WinRT.Interop;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public static class TransparentAppBarHelper
+    public static class AppBarHelper
     {
         // 记录哪些 HWND 已经注册 AppBar
-        private static readonly HashSet<IntPtr> _registered = new();
+        private static readonly HashSet<IntPtr> _registered = [];
 
         /// <summary>
-        /// 启用透明 AppBar 功能。
+        /// Enable AppBar function
         /// </summary>
-        /// <param name="window">目标 WinUI 3 Window</param>
-        /// <param name="height">刘海高度（像素）</param>
-        /// <param name="clickThrough">是否点击穿透</param>
-        public static void Enable(Window window, int height = 50, bool clickThrough = true)
+        /// <param name="window">Target window</param>
+        /// <param name="appBarHeight">App bar height</param>
+        /// <param name="clickThrough">Is click-through enabled</param>
+        public static void Enable(Window window, int appBarHeight)
         {
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
 
-            // 设置扩展样式：透明 (LAYERED) + 置顶 + 可选穿透
-            // int exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            //exStyle |= WS_EX_LAYERED; // 允许透明
-            //if (clickThrough)
-            //    exStyle |= WS_EX_TRANSPARENT; // 点击穿透
-            // SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
+            RegisterAppBar(hwnd, appBarHeight);
 
-            // 透明背景（完全不影响视觉；不改变 Alpha 也行）
-            //SetLayeredWindowAttributes(hwnd, 0, 255, LWA_ALPHA);
-
-            // 注册 AppBar
-            RegisterAppBar(hwnd, height);
-
-            // 调整窗口位置与大小（示例：屏幕宽度 × 指定高度）
             int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+            int screenHeight = GetSystemMetrics(SM_CYSCREEN);
             SetWindowPos(
                 hwnd,
                 HWND_TOPMOST,
                 0,
                 0,
                 screenWidth,
-                height,
+                appBarHeight,
                 SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
             );
         }
@@ -62,22 +52,6 @@ namespace BetterLyrics.WinUI3.Helper
             // 移除 WS_EX_TRANSPARENT（可根据需求恢复其他样式）
             int exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             exStyle &= ~WS_EX_TRANSPARENT;
-            SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
-        }
-
-        /// <summary>
-        /// 切换点击穿透开关。
-        /// </summary>
-        public static void SetClickThrough(Window window, bool enable)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-            int exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-
-            if (enable)
-                exStyle |= WS_EX_TRANSPARENT;
-            else
-                exStyle &= ~WS_EX_TRANSPARENT;
-
             SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
         }
 
@@ -150,9 +124,7 @@ namespace BetterLyrics.WinUI3.Helper
         #region Win32 Helper & 常量
 
         private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_LAYERED = 0x80000;
         private const int WS_EX_TRANSPARENT = 0x20;
-        private const int LWA_ALPHA = 0x2;
 
         private const int SWP_NOACTIVATE = 0x0010;
         private const int SWP_NOOWNERZORDER = 0x0200;
@@ -160,6 +132,7 @@ namespace BetterLyrics.WinUI3.Helper
         private static readonly IntPtr HWND_TOPMOST = new(-1);
 
         private const int SM_CXSCREEN = 0;
+        private const int SM_CYSCREEN = 0;
 
         [DllImport("user32.dll")]
         private static extern int GetSystemMetrics(int nIndex);

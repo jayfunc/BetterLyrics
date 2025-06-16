@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -26,15 +27,28 @@ namespace BetterLyrics.WinUI3.Controls
             InitializeComponent();
         }
 
-        public ILyricsSettingsControlViewModel ViewModel
+        //public ILyricsSettingsControlViewModel ViewModel
+        //{
+        //    get => (ILyricsSettingsControlViewModel)GetValue(ViewModelProperty);
+        //    set => SetValue(ViewModelProperty, value);
+        //}
+
+        //public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
+        //    nameof(ViewModel),
+        //    typeof(ILyricsSettingsControlViewModel),
+        //    typeof(LyricsSettingsControl),
+        //    new PropertyMetadata(null)
+        //);
+
+        public BaseLyricsSettingsControlViewModel ViewModel
         {
-            get => (ILyricsSettingsControlViewModel)GetValue(ViewModelProperty);
+            get => (BaseLyricsSettingsControlViewModel)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
             nameof(ViewModel),
-            typeof(ILyricsSettingsControlViewModel),
+            typeof(BaseLyricsSettingsControlViewModel),
             typeof(LyricsSettingsControl),
             new PropertyMetadata(null)
         );

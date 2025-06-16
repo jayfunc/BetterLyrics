@@ -26,7 +26,8 @@
             x:Name="TopCommandGrid"
             Height="{x:Bind ViewModel.TitleBarHeight, Mode=OneWay}"
             VerticalAlignment="Top"
-            Background="Transparent">
+            Background="Transparent"
+            Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>

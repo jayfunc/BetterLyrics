@@ -21,7 +21,11 @@ namespace BetterLyrics.WinUI3.Views
         public OverlayWindowViewModel ViewModel =>
             Ioc.Default.GetRequiredService<OverlayWindowViewModel>();
 
-        public OverlayWindow()
+        public OverlayWindow(
+            bool alwaysOnTop = true,
+            bool clickThrough = false,
+            bool listenOnActivatedWindowChange = false
+        )
         {
             this.InitializeComponent();
 
@@ -32,45 +36,36 @@ namespace BetterLyrics.WinUI3.Views
             // Hide border
             this.SetWindowStyle(WindowStyle.Popup);
 
-            //this.SetExtendedWindowStyle(
-            //    ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent
-            //);
+            if (clickThrough)
+                this.SetExtendedWindowStyle(
+                    ExtendedWindowStyle.Transparent | ExtendedWindowStyle.Layered
+                );
 
             // Hide from taskbar and alt-tab
             this.SetIsShownInSwitchers(false);
 
             SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
 
-            // Transparent window
-            // SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.DesktopAcrylic);
+            if (alwaysOnTop)
+                ((OverlappedPresenter)AppWindow.Presenter).IsAlwaysOnTop = true;
 
-            // Stretch to screen width
-            //this.CenterOnScreen();
-            //var screenWidth = AppWindow.Position.X * 2 + AppWindow.Size.Width;
-            //AppWindow.Move(new Windows.Graphics.PointInt32(0, 0));
-            //AppWindow.Resize(new Windows.Graphics.SizeInt32(screenWidth, 72));
-
-            // Always on top
-            // ((OverlappedPresenter)AppWindow.Presenter).IsAlwaysOnTop = true;
-
-            var hwnd = WindowNative.GetWindowHandle(this);
-
-            var windowWatcher = new ForegroundWindowWatcherHelper(
-                hwnd,
-                onWindowChanged =>
-                {
-                    ViewModel.UpdateAccentColor(hwnd);
-                }
-            );
-
-            Closed += (_, _) =>
+            if (listenOnActivatedWindowChange)
             {
-                windowWatcher.Stop();
-            };
-
-            windowWatcher.Start();
-
-            ViewModel.UpdateAccentColor(hwnd);
+                var hwnd = WindowNative.GetWindowHandle(this);
+                var windowWatcher = new ForegroundWindowWatcherHelper(
+                    hwnd,
+                    onWindowChanged =>
+                    {
+                        ViewModel.UpdateAccentColor(hwnd);
+                    }
+                );
+                Closed += (_, _) =>
+                {
+                    windowWatcher.Stop();
+                };
+                windowWatcher.Start();
+                ViewModel.UpdateAccentColor(hwnd);
+            }
         }
 
         public void Navigate(Type type)

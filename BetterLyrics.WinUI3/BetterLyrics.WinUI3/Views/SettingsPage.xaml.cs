@@ -16,15 +16,15 @@ namespace BetterLyrics.WinUI3.Views
     {
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
         public InAppLyricsSettingsControlViewModel InAppLyricsSettingsControlViewModel =>
-            Ioc.Default.GetService<InAppLyricsSettingsControlViewModel>()!;
+            Ioc.Default.GetRequiredService<InAppLyricsSettingsControlViewModel>();
 
         public DesktopLyricsSettingsControlViewModel DesktopLyricsSettingsControlViewModel =>
-            Ioc.Default.GetService<DesktopLyricsSettingsControlViewModel>()!;
+            Ioc.Default.GetRequiredService<DesktopLyricsSettingsControlViewModel>();
 
         public SettingsPage()
         {
             this.InitializeComponent();
-            DataContext = Ioc.Default.GetService<SettingsViewModel>();
+            DataContext = Ioc.Default.GetRequiredService<SettingsViewModel>();
         }
 
         private void SettingsPageOpenPathButton_Click(

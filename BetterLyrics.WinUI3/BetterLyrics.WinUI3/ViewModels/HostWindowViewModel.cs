@@ -7,11 +7,14 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 
 namespace BetterLyrics.WinUI3
 {
-    public partial class HostWindowViewModel : BaseWindowViewModel
+    public partial class HostWindowViewModel
+        : BaseWindowViewModel,
+            IRecipient<PropertyChangedMessage<bool>>
     {
         [ObservableProperty]
         public partial double AppLogoImageIconHeight { get; set; } = 18;
@@ -36,6 +39,12 @@ namespace BetterLyrics.WinUI3
         [NotifyPropertyChangedRecipients]
         public override partial TitleBarType TitleBarType { get; set; }
 
+        [ObservableProperty]
+        public partial bool IsImmersiveMode { get; set; }
+
+        [ObservableProperty]
+        public partial int TopCommandGridOpacity { get; set; } = 1;
+
         public HostWindowViewModel(ISettingsService settingsService)
             : base(settingsService)
         {
@@ -58,6 +67,18 @@ namespace BetterLyrics.WinUI3
                     }
                 }
             );
+        }
+
+        partial void OnIsImmersiveModeChanged(bool value)
+        {
+            if (value)
+            {
+                TopCommandGridOpacity = 0;
+            }
+            else
+            {
+                TopCommandGridOpacity = 1;
+            }
         }
 
         partial void OnBackdropTypeChanged(BackdropType value) { }
@@ -94,6 +115,17 @@ namespace BetterLyrics.WinUI3
             //    return _settingsService.Get(key, SettingsDefaultValues.NeverShowMessage);
             //return null;
             return null;
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is InAppLyricsPageViewModel)
+            {
+                if (message.PropertyName == nameof(InAppLyricsPageViewModel.IsImmersiveMode))
+                {
+                    IsImmersiveMode = message.NewValue;
+                }
+            }
         }
     }
 }

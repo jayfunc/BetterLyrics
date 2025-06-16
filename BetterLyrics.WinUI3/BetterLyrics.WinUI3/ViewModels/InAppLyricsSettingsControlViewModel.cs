@@ -1,63 +1,48 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using BetterLyrics.WinUI3;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace BetterInAppLyrics.WinUI3.ViewModels
 {
-    public partial class InAppLyricsSettingsControlViewModel
-        : BaseLyricsSettingsControlViewModel,
-            ILyricsSettingsControlViewModel
+    public partial class InAppLyricsSettingsControlViewModel : BaseLyricsSettingsControlViewModel
     {
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial LyricsAlignmentType LyricsAlignmentType { get; set; }
+        public override partial LyricsAlignmentType LyricsAlignmentType { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial int LyricsBlurAmount { get; set; }
+        public override partial int LyricsBlurAmount { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial int LyricsVerticalEdgeOpacity { get; set; }
+        public override partial int LyricsVerticalEdgeOpacity { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial float LyricsLineSpacingFactor { get; set; }
+        public override partial float LyricsLineSpacingFactor { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial int LyricsFontSize { get; set; }
+        public override partial int LyricsFontSize { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial bool IsLyricsGlowEffectEnabled { get; set; }
+        public override partial bool IsLyricsGlowEffectEnabled { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial bool IsLyricsDynamicGlowEffectEnabled { get; set; }
+        public override partial bool IsLyricsDynamicGlowEffectEnabled { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial LyricsFontColorType LyricsFontColorType { get; set; }
+        public override partial LyricsFontColorType LyricsFontColorType { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial int LyricsFontSelectedAccentColorIndex { get; set; }
-
-        private readonly ISettingsService _settingsService;
+        public override partial int LyricsFontSelectedAccentColorIndex { get; set; }
 
         public InAppLyricsSettingsControlViewModel(
             ISettingsService settingsService,
@@ -66,7 +51,6 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             : base(settingsService, playbackService)
         {
             IsActive = true;
-            _settingsService = settingsService;
 
             LyricsAlignmentType = _settingsService.InAppLyricsAlignmentType;
             LyricsBlurAmount = _settingsService.InAppLyricsBlurAmount;

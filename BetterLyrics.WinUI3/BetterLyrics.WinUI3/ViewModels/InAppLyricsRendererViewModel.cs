@@ -29,7 +29,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<float>>,
             IRecipient<PropertyChangedMessage<double>>,
             IRecipient<PropertyChangedMessage<bool>>,
-            IRecipient<PropertyChangedMessage<DisplayType>>
+            IRecipient<PropertyChangedMessage<DisplayType>>,
+            IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
+            IRecipient<PropertyChangedMessage<LyricsAlignmentType>>
     {
         public DisplayType DisplayType { get; set; }
 
@@ -286,6 +288,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     LyricsFontSelectedAccentColorIndex = message.NewValue;
                 }
+                else if (
+                    message.PropertyName
+                    == nameof(InAppLyricsSettingsControlViewModel.LyricsFontSize)
+                )
+                {
+                    LyricsFontSize = message.NewValue;
+                }
             }
         }
 
@@ -327,13 +336,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 )
                 {
                     LyricsLineSpacingFactor = message.NewValue;
-                }
-                else if (
-                    message.PropertyName
-                    == nameof(InAppLyricsSettingsControlViewModel.LyricsFontSize)
-                )
-                {
-                    LyricsFontSize = message.NewValue;
                 }
             }
         }
