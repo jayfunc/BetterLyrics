@@ -15,7 +15,7 @@
     <Grid
         x:Name="RootGrid"
         KeyDown="RootGrid_KeyDown"
-        RequestedTheme="{x:Bind GlobalSettingsViewModel.Theme, Mode=OneWay}">
+        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
 
         <Frame
             x:Name="RootFrame"

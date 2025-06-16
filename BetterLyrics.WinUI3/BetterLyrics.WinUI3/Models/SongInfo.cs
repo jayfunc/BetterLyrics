@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using ATL;
+using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI;
+using Windows.UI;
 using static ATL.LyricsInfo;
 
 namespace BetterLyrics.WinUI3.Models
@@ -9,24 +13,27 @@ namespace BetterLyrics.WinUI3.Models
     public partial class SongInfo : ObservableObject
     {
         [ObservableProperty]
-        private string? _title;
+        public partial string? Title { get; set; }
 
         [ObservableProperty]
-        private string? _artist;
+        public partial string? Artist { get; set; }
 
         [ObservableProperty]
-        private ObservableCollection<string>? _filesFound;
+        public partial ObservableCollection<string>? FilesFound { get; set; }
 
         [ObservableProperty]
-        private bool _isLyricsExisted = false;
+        public partial bool IsLyricsExisted { get; set; } = false;
 
         [ObservableProperty]
-        private string? _sourceAppUserModelId = null;
+        public partial string? SourceAppUserModelId { get; set; } = null;
 
         [ObservableProperty]
-        private List<LyricsLine>? _lyricsLines = null;
-
+        public partial List<LyricsLine>? LyricsLines { get; set; } = null;
         public byte[]? AlbumArt { get; set; } = null;
+
+        [ObservableProperty]
+        public partial ObservableCollection<Color> CoverImageDominantColors { get; set; } =
+            [.. Enumerable.Repeat(Colors.Transparent, ImageHelper.AccentColorCount)];
 
         public SongInfo() { }
 

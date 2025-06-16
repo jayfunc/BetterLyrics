@@ -8,6 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:renderer="using:BetterLyrics.WinUI3.Renderer"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     mc:Ignorable="d">
 
@@ -16,11 +17,7 @@
             x:Name="LyricsPlaceholderGrid"
             Margin="36,0"
             SizeChanged="LyricsPlaceholderGrid_SizeChanged" />
-        <canvas:CanvasAnimatedControl
-            x:Name="LyricsCanvas"
-            Draw="LyricsCanvas_Draw"
-            Paused="{x:Bind GlobalSettingsViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-            Update="LyricsCanvas_Update" />
+        <renderer:DesktopLyricsRenderer />
         <Grid
             x:Name="RightCommandGrid"
             HorizontalAlignment="Right"
@@ -39,7 +36,7 @@
                 x:Name="SettingsPopup"
                 DesiredPlacement="Bottom"
                 IsOpen="{x:Bind ViewModel.IsSettingsPopupOpened, Mode=OneWay}">
-                <uc:LyricsSettingsControl ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
+                <uc:LyricsSettingsControl ViewModel="{x:Bind DesktopLyricsSettingsControlViewModel, Mode=OneWay}" />
             </Popup>
             <interactivity:Interaction.Behaviors>
                 <interactivity:EventTriggerBehavior EventName="PointerEntered">

@@ -56,7 +56,7 @@
                                 <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                             </interactivity:DataTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
-                        <GridView ItemsSource="{x:Bind GlobalViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.LyricsFontSelectedAccentColorIndex, Mode=TwoWay}">
+                        <GridView ItemsSource="{x:Bind ViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.LyricsFontSelectedAccentColorIndex, Mode=TwoWay}">
                             <GridView.ItemTemplate>
                                 <DataTemplate>
                                     <GridViewItem>

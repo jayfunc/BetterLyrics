@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,29 +11,34 @@ using Microsoft.UI.Xaml;
 
 namespace BetterLyrics.WinUI3
 {
-    public partial class HostViewModel : ObservableObject
+    public partial class HostWindowViewModel : BaseWindowViewModel
     {
-        private readonly ISettingsService _settingsService;
+        [ObservableProperty]
+        public partial double AppLogoImageIconHeight { get; set; } = 18;
 
         [ObservableProperty]
-        private double _appLogoImageIconHeight = 18;
+        public partial double TitleBarFontSize { get; set; } = 11;
 
         [ObservableProperty]
-        private double _titleBarFontSize = 11;
+        public partial double TitleBarHeight { get; set; } = 48;
 
         [ObservableProperty]
-        private double _titleBarHeight = 48;
+        public partial Notification Notification { get; set; } = new();
 
         [ObservableProperty]
-        private Notification _notification = new();
+        public partial bool ShowInfoBar { get; set; } = false;
 
         [ObservableProperty]
-        private bool _showInfoBar = false;
+        [NotifyPropertyChangedRecipients]
+        public override partial BackdropType BackdropType { get; set; }
 
-        public HostViewModel(ISettingsService settingsService)
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public override partial TitleBarType TitleBarType { get; set; }
+
+        public HostWindowViewModel(ISettingsService settingsService)
+            : base(settingsService)
         {
-            _settingsService = settingsService;
-
             WeakReferenceMessenger.Default.Register<ShowNotificatonMessage>(
                 this,
                 async (r, m) =>
@@ -52,19 +58,13 @@ namespace BetterLyrics.WinUI3
                     }
                 }
             );
-
-            WeakReferenceMessenger.Default.Register<TitleBarTypeChangedMessage>(
-                this,
-                (r, m) =>
-                {
-                    UpdateTitleBarStyle(m.Value);
-                }
-            );
         }
 
-        public void UpdateTitleBarStyle(TitleBarType titleBarType)
+        partial void OnBackdropTypeChanged(BackdropType value) { }
+
+        partial void OnTitleBarTypeChanged(TitleBarType value)
         {
-            switch (titleBarType)
+            switch (value)
             {
                 case TitleBarType.Compact:
                     TitleBarHeight = (double)App.Current.Resources["TitleBarCompactHeight"];
@@ -84,14 +84,15 @@ namespace BetterLyrics.WinUI3
         [RelayCommand]
         private void SwitchInfoBarNeverShowItAgainCheckBox(bool value)
         {
-            if (Notification.RelatedSettingsKeyName is string key)
-                _settingsService.Set(key, value);
+            //if (Notification.RelatedSettingsKeyName is string key)
+            //    _settingsService.SetValue(key, value);
         }
 
         private bool? AlreadyForeverDismissedThisMessage()
         {
-            if (Notification.RelatedSettingsKeyName is string key)
-                return _settingsService.Get(key, SettingsDefaultValues.NeverShowMessage);
+            //if (Notification.RelatedSettingsKeyName is string key)
+            //    return _settingsService.Get(key, SettingsDefaultValues.NeverShowMessage);
+            //return null;
             return null;
         }
     }

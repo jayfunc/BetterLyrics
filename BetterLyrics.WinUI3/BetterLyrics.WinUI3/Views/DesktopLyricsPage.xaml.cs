@@ -1,5 +1,4 @@
 using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -18,79 +17,20 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class DesktopLyricsPage : Page
     {
-        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        public DesktopLyricsPageViewModel ViewModel => (DesktopLyricsPageViewModel)DataContext;
 
-        private readonly DesktopLyricsRenderer _lyricsRenderer =
-            Ioc.Default.GetService<DesktopLyricsRenderer>()!;
-
-        private readonly DesktopBackgroundRenderer _lyricsBackgroundRenderer =
-            Ioc.Default.GetService<DesktopBackgroundRenderer>()!;
-
-        public DesktopLyricsViewModel ViewModel => (DesktopLyricsViewModel)DataContext;
-
-        private GlobalViewModel GlobalSettingsViewModel { get; set; } =
-            Ioc.Default.GetService<GlobalViewModel>()!;
+        public DesktopLyricsSettingsControlViewModel DesktopLyricsSettingsControlViewModel =>
+            Ioc.Default.GetService<DesktopLyricsSettingsControlViewModel>()!;
 
         public DesktopLyricsPage()
         {
             this.InitializeComponent();
-            DataContext = Ioc.Default.GetService<DesktopLyricsViewModel>();
-
-            WeakReferenceMessenger.Default.Register<DesktopLyricsPage, SongInfoChangedMessage>(
-                this,
-                (r, m) =>
-                {
-                    _dispatcherQueue.TryEnqueue(
-                        DispatcherQueuePriority.High,
-                        () =>
-                        {
-                            _lyricsRenderer.LyricsLines = m.Value?.LyricsLines ?? [];
-                        }
-                    );
-                }
-            );
-
-            WeakReferenceMessenger.Default.Register<
-                DesktopLyricsPage,
-                PlayingPositionChangedMessage
-            >(
-                this,
-                (r, m) =>
-                {
-                    _dispatcherQueue.TryEnqueue(
-                        DispatcherQueuePriority.High,
-                        () => _lyricsRenderer.TotalTime = m.Value
-                    );
-                }
-            );
-        }
-
-        private void LyricsCanvas_Draw(
-            ICanvasAnimatedControl sender,
-            CanvasAnimatedDrawEventArgs args
-        )
-        {
-            using var ds = args.DrawingSession;
-
-            _lyricsBackgroundRenderer.Draw(sender, ds);
-            _lyricsRenderer.Draw(sender, ds);
-        }
-
-        private void LyricsCanvas_Update(
-            ICanvasAnimatedControl sender,
-            CanvasAnimatedUpdateEventArgs args
-        )
-        {
-            _lyricsBackgroundRenderer.ElapsedTime = args.Timing.ElapsedTime;
-            _lyricsBackgroundRenderer.Calculate();
-
-            _lyricsRenderer.TotalTime += args.Timing.ElapsedTime;
-            _lyricsRenderer.Calculate(sender);
+            DataContext = Ioc.Default.GetService<DesktopLyricsPageViewModel>();
         }
 
         private void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            _lyricsRenderer.LimitedLineWidth = e.NewSize.Width;
+            ViewModel.LimitedLineWidth = e.NewSize.Width;
         }
     }
 }

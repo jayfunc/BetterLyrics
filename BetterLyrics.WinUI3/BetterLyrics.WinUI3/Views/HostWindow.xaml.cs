@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -20,11 +21,12 @@ namespace BetterLyrics.WinUI3.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HostWindow : Window
+    public sealed partial class HostWindow
+        : Window,
+            IRecipient<PropertyChangedMessage<BackdropType>>
     {
-        public HostViewModel ViewModel { get; set; } = Ioc.Default.GetService<HostViewModel>()!;
-        public GlobalViewModel GlobalSettingsViewModel { get; set; } =
-            Ioc.Default.GetService<GlobalViewModel>()!;
+        public HostWindowViewModel ViewModel { get; set; } =
+            Ioc.Default.GetService<HostWindowViewModel>()!;
 
         private readonly ILogger<HostWindow> _logger = Ioc.Default.GetService<
             ILogger<HostWindow>
@@ -41,18 +43,6 @@ namespace BetterLyrics.WinUI3.Views
 
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
 
-            UpdateBackdrop(GlobalSettingsViewModel.BackdropType);
-
-            ViewModel.UpdateTitleBarStyle(GlobalSettingsViewModel.TitleBarType);
-
-            WeakReferenceMessenger.Default.Register<SystemBackdropChangedMessage>(
-                this,
-                (r, m) =>
-                {
-                    UpdateBackdrop(m.Value);
-                }
-            );
-
             WeakReferenceMessenger.Default.Register<IsImmersiveModeChangedMessage>(
                 this,
                 (r, m) =>
@@ -60,16 +50,6 @@ namespace BetterLyrics.WinUI3.Views
                     TopCommandGrid.Opacity = m.Value ? 0 : 1;
                 }
             );
-        }
-
-        private void UpdateBackdrop(BackdropType? backdropType)
-        {
-            if (RootFrame.SourcePageType == typeof(InAppLyricsPage))
-                SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
-                    backdropType ?? GlobalSettingsViewModel.BackdropType
-                );
-            else
-                SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Mica);
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -196,15 +176,15 @@ namespace BetterLyrics.WinUI3.Views
                     break;
                 case AppWindowPresenterKind.Overlapped:
                     AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-                    WeakReferenceMessenger.Default.Send(
-                        new ShowNotificatonMessage(
-                            new Models.Notification(
-                                App.ResourceLoader!.GetString("BaseWindowEnterFullScreenHint"),
-                                isForeverDismissable: true,
-                                relatedSettingsKeyName: SettingsKeys.NeverShowEnterFullScreenMessage
-                            )
-                        )
-                    );
+                    //WeakReferenceMessenger.Default.Send(
+                    //    new ShowNotificatonMessage(
+                    //        new Models.Notification(
+                    //            App.ResourceLoader!.GetString("BaseWindowEnterFullScreenHint"),
+                    //            isForeverDismissable: true,
+                    //            relatedSettingsKeyName: SettingsKeys.NeverShowEnterFullScreenMessage
+                    //        )
+                    //    )
+                    //);
                     break;
                 default:
                     break;
@@ -228,6 +208,11 @@ namespace BetterLyrics.WinUI3.Views
         private void UnMiniFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+        }
+
+        public void Receive(PropertyChangedMessage<BackdropType> message)
+        {
+            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(message.NewValue);
         }
     }
 }

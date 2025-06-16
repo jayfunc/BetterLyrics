@@ -399,4 +399,7 @@
   <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
     <value>Desktop lyrics</value>
   </data>
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>This folder is already included in the existing folder and does not need to be added again</value>
+  </data>
 </root>

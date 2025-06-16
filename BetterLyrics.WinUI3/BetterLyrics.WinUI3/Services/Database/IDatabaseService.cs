@@ -16,6 +16,10 @@ namespace BetterLyrics.WinUI3.Services.Database
             GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps
         );
 
-        SongInfo FindSongInfo(SongInfo initSongInfo, string searchTitle, string searchArtist);
+        Task<SongInfo> FindSongInfoAsync(
+            SongInfo initSongInfo,
+            string searchTitle,
+            string searchArtist
+        );
     }
 }
