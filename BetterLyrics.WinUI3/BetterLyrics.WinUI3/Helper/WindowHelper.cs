@@ -12,22 +12,6 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class WindowHelper
     {
-        public static HostWindow CreateHostWindow()
-        {
-            HostWindow newWindow = new() { SystemBackdrop = new MicaBackdrop() };
-            TrackWindow(newWindow);
-            return newWindow;
-        }
-
-        public static OverlayWindow CreateOverlayWindow()
-        {
-            OverlayWindow newWindow = new();
-            TransparentAppBarHelper.Enable(newWindow, 48);
-
-            TrackWindow(newWindow);
-            return newWindow;
-        }
-
         public static void TrackWindow(Window window)
         {
             window.Closed += (sender, args) =>

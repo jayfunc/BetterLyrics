@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using BetterInAppLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services.Database;
 using BetterLyrics.WinUI3.Services.Playback;
@@ -28,8 +29,10 @@ namespace BetterLyrics.WinUI3
         private readonly ILogger<App> _logger;
 
         public static new App Current => (App)Application.Current;
-        public HostWindow? MainWindow { get; set; }
-        public OverlayWindow? OverlayWindow { get; set; }
+        public HostWindow? InAppLyricsWindow { get; set; }
+        public OverlayWindow? DesktopLyricsWindow { get; set; }
+        public HostWindow? SettingsWindow { get; set; }
+        public OverlayWindow SystemTrayWindow { get; set; }
 
         public static ResourceLoader? ResourceLoader { get; private set; }
 
@@ -76,6 +79,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
                     // ViewModels (Singleton)
+                    .AddSingleton<SystemTrayPageViewModel>()
                     .AddSingleton<HostWindowViewModel>()
                     .AddSingleton<OverlayWindowViewModel>()
                     .AddSingleton<SettingsViewModel>()
@@ -106,10 +110,10 @@ namespace BetterLyrics.WinUI3
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            // Activate the window
-            MainWindow = new HostWindow();
-            MainWindow!.Navigate(typeof(InAppLyricsPage));
-            MainWindow.Activate();
+            SystemTrayWindow = new OverlayWindow(clickThrough: true);
+            WindowHelper.TrackWindow(SystemTrayWindow);
+            SystemTrayWindow.Navigate(typeof(SystemTrayPage));
+            SystemTrayWindow.Activate();
         }
     }
 }

@@ -16,6 +16,7 @@
     <None Remove="Renderer\InAppLyricsRenderer.xaml" />
     <None Remove="Views\DesktopLyricsPage.xaml" />
     <None Remove="Views\OverlayWindow.xaml" />
+    <None Remove="Views\SystemTrayPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo.ico" />
@@ -35,6 +36,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
@@ -84,6 +86,11 @@
   <ItemGroup>
     <Folder Include="ViewModels\Lyrics\" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SystemTrayPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <!-- Publish Properties -->
   <PropertyGroup>
     <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
@@ -107,7 +114,7 @@
     <InheritWinAppVersionFrom>AssemblyVersion</InheritWinAppVersionFrom>
     <PackageVersionSettings>AssemblyVersion.None.None</PackageVersionSettings>
     <Version>2025.6.0</Version>
-    <AssemblyVersion>2025.6.16.0225</AssemblyVersion>
-    <FileVersion>2025.6.16.0225</FileVersion>
+    <AssemblyVersion>2025.6.16.1548</AssemblyVersion>
+    <FileVersion>2025.6.16.1548</FileVersion>
   </PropertyGroup>
 </Project>

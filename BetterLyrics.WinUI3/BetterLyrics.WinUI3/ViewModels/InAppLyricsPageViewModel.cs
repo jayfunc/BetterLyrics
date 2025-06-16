@@ -27,6 +27,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
+        public partial double LimitedLineHeight { get; set; } = 0.0;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         public partial DisplayType DisplayType { get; set; } = DisplayType.PlaceholderOnly;
 
         [ObservableProperty]

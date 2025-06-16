@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -42,6 +43,8 @@ namespace BetterLyrics.WinUI3.Views
             SetTitleBar(TopCommandGrid);
 
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
+
+            SystemBackdrop = new MicaBackdrop();
 
             WeakReferenceMessenger.Default.Register<IsImmersiveModeChangedMessage>(
                 this,

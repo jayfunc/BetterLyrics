@@ -11,6 +11,7 @@ using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -26,7 +27,9 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class BaseLyricsRendererViewModel : BaseRendererViewModel
+    public partial class BaseLyricsRendererViewModel
+        : BaseRendererViewModel,
+            IRecipient<PropertyChangedMessage<ElementTheme>>
     {
         private CanvasTextFormat _textFormat = new()
         {
@@ -43,6 +46,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsPlaying { get; set; }
 
         private Color _fontColor;
+
+        private Color _lightFontColor = Colors.White;
+        private Color _darkFontColor = Colors.Black;
 
         private readonly float _defaultOpacity = 0.3f;
         private readonly float _highlightedOpacity = 1.0f;
@@ -69,42 +75,31 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly float _lyricsGlowEffectMaxBlurAmount = 6f;
 
         private readonly double _rightMargin = 36;
+        private readonly float _topMargin = 0f;
 
-        private bool _isLimitedLineWidthUpdated = false;
-        private double _limitedLineWidth = 0;
-        public double LimitedLineWidth
-        {
-            get => _limitedLineWidth;
-            set
-            {
-                if (_limitedLineWidth != value)
-                {
-                    _limitedLineWidth = value;
-                    _isLimitedLineWidthUpdated = true;
-                }
-            }
-        }
-
-        private bool _isSongInfoUpdated = true;
+        [ObservableProperty]
+        public partial double LimitedLineWidth { get; set; }
 
         private bool _isRelayoutNeeded = true;
 
-        private float? _fontSize;
-        private float? _lineSpacingFactor;
-
-        private ElementTheme? _elementTheme;
-        private LyricsFontColorType? _fontColorType;
-        private int? _selectedFontAccentColorIndex;
-
-        public ElementTheme Theme { get; set; }
+        [ObservableProperty]
+        public partial ElementTheme Theme { get; set; }
         public List<Color> CoverImageDominantColors { get; set; }
 
-        public LyricsFontColorType LyricsFontColorType { get; set; }
-        public int LyricsFontSelectedAccentColorIndex { get; set; }
+        [ObservableProperty]
+        public partial LyricsFontColorType LyricsFontColorType { get; set; }
+
+        [ObservableProperty]
+        public partial int LyricsFontSelectedAccentColorIndex { get; set; }
+
         public LyricsAlignmentType LyricsAlignmentType { get; set; }
         public int LyricsVerticalEdgeOpacity { get; set; }
-        public float LyricsLineSpacingFactor { get; set; }
-        public float LyricsFontSize { get; set; }
+
+        [ObservableProperty]
+        public partial float LyricsLineSpacingFactor { get; set; }
+
+        [ObservableProperty]
+        public partial int LyricsFontSize { get; set; }
         public int LyricsBlurAmount { get; set; }
         public bool IsLyricsGlowEffectEnabled { get; set; }
         public bool IsLyricsDynamicGlowEffectEnabled { get; set; }
@@ -131,13 +126,43 @@ namespace BetterLyrics.WinUI3.ViewModels
             TotalTime = _playbackService.Position;
         }
 
+        partial void OnLimitedLineWidthChanged(double value)
+        {
+            _isRelayoutNeeded = true;
+        }
+
         partial void OnSongInfoChanged(SongInfo? value)
         {
             if (value != null)
             {
                 CoverImageDominantColors = [.. value.CoverImageDominantColors];
             }
-            _isSongInfoUpdated = true;
+            _isRelayoutNeeded = true;
+        }
+
+        partial void OnLyricsFontSizeChanged(int value)
+        {
+            _isRelayoutNeeded = true;
+        }
+
+        partial void OnLyricsLineSpacingFactorChanged(float value)
+        {
+            _isRelayoutNeeded = true;
+        }
+
+        partial void OnLyricsFontColorTypeChanged(LyricsFontColorType value)
+        {
+            UpdateFontColor();
+        }
+
+        partial void OnLyricsFontSelectedAccentColorIndexChanged(int value)
+        {
+            UpdateFontColor();
+        }
+
+        partial void OnThemeChanged(ElementTheme value)
+        {
+            UpdateFontColor();
         }
 
         private void UpdateFontColor()
@@ -148,12 +173,23 @@ namespace BetterLyrics.WinUI3.ViewModels
                     switch (Theme)
                     {
                         case ElementTheme.Default:
+                            switch (Application.Current.RequestedTheme)
+                            {
+                                case ApplicationTheme.Light:
+                                    _fontColor = _darkFontColor;
+                                    break;
+                                case ApplicationTheme.Dark:
+                                    _fontColor = _lightFontColor;
+                                    break;
+                                default:
+                                    break;
+                            }
                             break;
                         case ElementTheme.Light:
-                            _fontColor = Colors.DarkGray;
+                            _fontColor = _darkFontColor;
                             break;
                         case ElementTheme.Dark:
-                            _fontColor = Colors.WhiteSmoke;
+                            _fontColor = _lightFontColor;
                             break;
                         default:
                             break;
@@ -228,7 +264,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 using var textLayout = new CanvasTextLayout(
                     control,
-                    line.Text,
+                    line?.Text,
                     _textFormat,
                     (float)LimitedLineWidth,
                     (float)control.Size.Height
@@ -435,13 +471,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             // Draw the final composed layer
             ds.DrawImage(maskedCombinedBlurredLyrics);
-
-            ds.DrawText(
-                $"{_fontSize}, {_lineSpacingFactor}, {_isRelayoutNeeded}",
-                10,
-                10,
-                Colors.Red
-            );
         }
 
         private void DrawGradientOpacityMask(
@@ -470,9 +499,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (control == null)
                 return;
 
-            _textFormat.FontSize = _fontSize ?? 0;
+            _textFormat.FontSize = LyricsFontSize;
 
-            float y = 0;
+            float y = _topMargin;
 
             // Init Positions
             for (int i = 0; i < SongInfo?.LyricsLines?.Count; i++)
@@ -492,7 +521,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 y +=
                     (float)textLayout.LayoutBounds.Height
                     / textLayout.LineCount
-                    * (textLayout.LineCount + (_lineSpacingFactor ?? 0));
+                    * (textLayout.LineCount + LyricsLineSpacingFactor);
             }
         }
 
@@ -503,40 +532,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             base.Calculate(control, args);
 
-            if (
-                _isSongInfoUpdated
-                || _isLimitedLineWidthUpdated
-                || _fontSize != LyricsFontSize
-                || _lineSpacingFactor != LyricsLineSpacingFactor
-            )
-            {
-                _fontSize = LyricsFontSize;
-                _lineSpacingFactor = LyricsLineSpacingFactor;
-                _isRelayoutNeeded = true;
-                _forceToScroll = true;
-            }
-
             if (_isRelayoutNeeded)
             {
                 ReLayout(control);
                 _isRelayoutNeeded = false;
-                _isSongInfoUpdated = false;
-                _isLimitedLineWidthUpdated = false;
-            }
-
-            if (
-                _elementTheme == null
-                || _elementTheme != Theme
-                || _fontColorType == null
-                || _fontColorType != LyricsFontColorType
-                || _selectedFontAccentColorIndex == null
-                || _selectedFontAccentColorIndex != LyricsFontSelectedAccentColorIndex
-            )
-            {
-                _elementTheme = Theme;
-                _fontColorType = LyricsFontColorType;
-                _selectedFontAccentColorIndex = LyricsFontSelectedAccentColorIndex;
-                UpdateFontColor();
+                _forceToScroll = true;
             }
 
             int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
@@ -756,6 +756,17 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (_startVisibleLineIndex != -1 && _endVisibleLineIndex == -1)
             {
                 _endVisibleLineIndex = endLineIndex;
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            if (message.Sender is SettingsViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsViewModel.ThemeType))
+                {
+                    Theme = message.NewValue;
+                }
             }
         }
     }
