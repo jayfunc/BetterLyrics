@@ -399,4 +399,7 @@
   <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
     <value>桌面歌詞</value>
   </data>
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>該資料夾已包含在已有資料夾中，無需再次添加</value>
+  </data>
 </root>

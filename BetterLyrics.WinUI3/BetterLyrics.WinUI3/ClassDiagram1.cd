@@ -1,81 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BetterLyrics.WinUI3.ViewModels.BaseLyricsViewModel" Collapsed="true">
-    <Position X="6.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\Lyrics\BaseLyricsViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BetterLyrics.WinUI3.ViewModels.DesktopLyricsViewModel" Collapsed="true">
-    <Position X="5" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAEABBAAABIwCwCAQEQAIAAEABIAAhAAAAAAAAAABAA=</HashCode>
-      <FileName>ViewModels\Lyrics\DesktopLyricsViewModel.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BetterInAppLyrics.WinUI3.ViewModels.InAppLyricsViewModel" Collapsed="true">
-    <Position X="7.5" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAGEBBAAABKwCQiAwAQAIAAAABIAAhAAAAAEAIAABAA=</HashCode>
-      <FileName>ViewModels\Lyrics\InAppLyricsViewModel.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="BetterLyrics.WinUI3.ViewModels.AlbumArtOverlayViewModel" Collapsed="true">
-    <Position X="2.75" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAABAAACAIAAAADIAAAAQAAAAA=</HashCode>
-      <FileName>ViewModels\AlbumArtOverlayViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BetterLyrics.WinUI3.ViewModels.AlbumArtViewModel" Collapsed="true">
-    <Position X="5" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\AlbumArtViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BetterLyrics.WinUI3.ViewModels.BaseSettingsViewModel" Collapsed="true">
-    <Position X="6.25" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAACAAABABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\BaseSettingsViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BetterLyrics.WinUI3.ViewModels.GlobalViewModel" Collapsed="true">
-    <Position X="9.75" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIIgAAAABAAAAAQAAAABAAAAAAAQAAAAAAAgAAACAA=</HashCode>
-      <FileName>ViewModels\GlobalViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BetterLyrics.WinUI3.HostViewModel" Collapsed="true">
+  <Class Name="BetterLyrics.WinUI3.HostWindowViewModel" Collapsed="true">
     <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAACAAAAAAAABAAAAAAgCAAAIgAAAEAAAAAAAA=</HashCode>
-      <FileName>ViewModels\HostViewModel.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="BetterLyrics.WinUI3.ViewModels.OverlayViewModel" Collapsed="true">
-    <Position X="10" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ViewModels\OverlayViewModel.cs</FileName>
+      <HashCode>ABAAAAgAABAAAAAAABAABAAAggAAQAAAAIAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\HostWindowViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BetterLyrics.WinUI3.ViewModels.SettingsViewModel" Collapsed="true">
     <Position X="7.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAQAAAAACYQAAiAQEAAAAAAAAFCBAAAAAAEAQIAAAiA=</HashCode>
+      <HashCode>IAQABAAACZAAAgIQEAAABAAAAFCBAAACIAAAYIAAAiA=</HashCode>
       <FileName>ViewModels\SettingsViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BetterLyrics.WinUI3.Views.DesktopLyricsPage" Collapsed="true">
     <Position X="2.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAEAAEAAAAAAAAEEAAAAACAQAAgAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAQAAAAACAAA=</HashCode>
       <FileName>Views\DesktopLyricsPage.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />

@@ -29,7 +29,6 @@ namespace BetterLyrics.WinUI3
 
         public static new App Current => (App)Application.Current;
         public HostWindow? MainWindow { get; set; }
-        public HostWindow? SettingsWindow { get; set; }
         public OverlayWindow? OverlayWindow { get; set; }
 
         public static ResourceLoader? ResourceLoader { get; private set; }
@@ -76,20 +75,16 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
-                    // ViewModels (Transient)
                     // ViewModels (Singleton)
-                    .AddSingleton<HostViewModel>()
-                    .AddSingleton<AlbumArtViewModel>()
-                    .AddSingleton<GlobalViewModel>()
+                    .AddSingleton<HostWindowViewModel>()
+                    .AddSingleton<OverlayWindowViewModel>()
                     .AddSingleton<SettingsViewModel>()
-                    .AddSingleton<InAppLyricsViewModel>()
-                    .AddSingleton<DesktopLyricsViewModel>()
-                    .AddSingleton<AlbumArtOverlayViewModel>()
-                    // Renderer (Singleton)
-                    .AddSingleton<AlbumArtRenderer>()
-                    .AddSingleton<InAppLyricsRenderer>()
-                    .AddSingleton<DesktopLyricsRenderer>()
-                    .AddSingleton<DesktopBackgroundRenderer>()
+                    .AddSingleton<InAppLyricsPageViewModel>()
+                    .AddSingleton<InAppLyricsRendererViewModel>()
+                    .AddSingleton<InAppLyricsSettingsControlViewModel>()
+                    .AddSingleton<DesktopLyricsPageViewModel>()
+                    .AddSingleton<DesktopLyricsRendererViewModel>()
+                    .AddSingleton<DesktopLyricsSettingsControlViewModel>()
                     .BuildServiceProvider()
             );
         }

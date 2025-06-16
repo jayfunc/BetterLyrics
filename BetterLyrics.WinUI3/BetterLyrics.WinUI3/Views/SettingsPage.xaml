@@ -79,7 +79,10 @@
                             </controls:SettingsExpander.ItemsHeader>
                             <controls:SettingsExpander.ItemsFooter>
                                 <controls:SettingsCard x:Uid="SettingsPageAddFolder" Style="{StaticResource DefaultSettingsExpanderItemStyle}">
-                                    <Button x:Uid="SettingsPageAddFolderButton" Command="{x:Bind ViewModel.SelectAndAddFolderCommand}" />
+                                    <Button
+                                        x:Uid="SettingsPageAddFolderButton"
+                                        Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
+                                        CommandParameter="{Binding ElementName=RootGrid}" />
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.ItemsFooter>
                         </controls:SettingsExpander>
@@ -106,7 +109,7 @@
                         <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <controls:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon Glyph=&#xE790;}">
-                            <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind GlobalSettingsViewModel.Theme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind ViewModel.ThemeType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                 <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
                                 <ComboBoxItem x:Uid="SettingsPageLight" />
                                 <ComboBoxItem x:Uid="SettingsPageDark" />
@@ -114,7 +117,7 @@
                         </controls:SettingsCard>
 
                         <controls:SettingsCard x:Uid="SettingsPageBackdrop" HeaderIcon="{ui:FontIcon Glyph=&#xF5EF;}">
-                            <ComboBox x:Name="BackdropComboBox" SelectedIndex="{x:Bind GlobalSettingsViewModel.BackdropType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBox x:Name="BackdropComboBox" SelectedIndex="{x:Bind ViewModel.BackdropType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                 <ComboBoxItem x:Uid="SettingsPageNoBackdrop" />
                                 <ComboBoxItem x:Uid="SettingsPageMica" />
                                 <ComboBoxItem x:Uid="SettingsPageMicaAlt" />
@@ -126,7 +129,7 @@
                         </controls:SettingsCard>
 
                         <controls:SettingsCard x:Uid="SettingsPageTitleBarType" HeaderIcon="{ui:FontIcon Glyph=&#xE66A;}">
-                            <ComboBox x:Name="TitleBarTypeComboBox" SelectedIndex="{x:Bind GlobalSettingsViewModel.TitleBarType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBox x:Name="TitleBarTypeComboBox" SelectedIndex="{x:Bind ViewModel.TitleBarType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                 <ComboBoxItem x:Uid="SettingsPageCompactTitleBar" />
                                 <ComboBoxItem x:Uid="SettingsPageExtendedTitleBar" />
                             </ComboBox>
@@ -136,7 +139,7 @@
                             x:Uid="SettingsPageLanguage"
                             HeaderIcon="{ui:FontIcon Glyph=&#xF2B7;}"
                             IsExpanded="True">
-                            <ComboBox SelectedIndex="{x:Bind ViewModel.Language, Mode=TwoWay}">
+                            <ComboBox SelectedIndex="{x:Bind ViewModel.Language, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                 <ComboBoxItem x:Uid="SettingsPageSystemLanguage" />
                                 <ComboBoxItem x:Uid="SettingsPageEN" />
                                 <ComboBoxItem x:Uid="SettingsPageSC" />
@@ -162,17 +165,17 @@
                                     <TextBlock x:Uid="SettingsPageCoverOverlayGPUUsage" />
                                 </StackPanel>
                             </controls:SettingsExpander.Description>
-                            <ToggleSwitch IsOn="{x:Bind AlbumArtRendererSettingsViewModel.IsCoverOverlayEnabled, Mode=TwoWay}" />
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=TwoWay}" />
                             <controls:SettingsExpander.Items>
 
-                                <controls:SettingsCard x:Uid="SettingsPageDynamicCoverOverlay" IsEnabled="{x:Bind AlbumArtRendererSettingsViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
-                                    <ToggleSwitch IsOn="{x:Bind AlbumArtRendererSettingsViewModel.IsDynamicCoverOverlayEnabled, Mode=TwoWay}" />
+                                <controls:SettingsCard x:Uid="SettingsPageDynamicCoverOverlay" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsDynamicCoverOverlayEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageCoverOverlayOpacity" IsEnabled="{x:Bind AlbumArtRendererSettingsViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <controls:SettingsCard x:Uid="SettingsPageCoverOverlayOpacity" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
-                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind AlbumArtRendererSettingsViewModel.CoverOverlayOpacity, Mode=OneWay}" />
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.CoverOverlayOpacity, Mode=OneWay}" />
                                         <TextBlock
                                             Margin="0,0,14,0"
                                             VerticalAlignment="Center"
@@ -184,17 +187,17 @@
                                             StepFrequency="1"
                                             TickFrequency="1"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind AlbumArtRendererSettingsViewModel.CoverOverlayOpacity, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.CoverOverlayOpacity, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageCoverOverlayBlurAmount" IsEnabled="{x:Bind AlbumArtRendererSettingsViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <controls:SettingsCard x:Uid="SettingsPageCoverOverlayBlurAmount" IsEnabled="{x:Bind ViewModel.IsCoverOverlayEnabled, Mode=OneWay}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
                                         <TextBlock
                                             Margin="0,0,14,0"
                                             VerticalAlignment="Center"
-                                            Text="{x:Bind AlbumArtRendererSettingsViewModel.CoverOverlayBlurAmount, Mode=OneWay}" />
+                                            Text="{x:Bind ViewModel.CoverOverlayBlurAmount, Mode=OneWay}" />
                                         <Slider
                                             Maximum="200"
                                             Minimum="50"
@@ -202,7 +205,7 @@
                                             StepFrequency="10"
                                             TickFrequency="10"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind AlbumArtRendererSettingsViewModel.CoverOverlayBlurAmount, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.CoverOverlayBlurAmount, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
@@ -214,7 +217,7 @@
                         <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon Glyph=&#xE71A;}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
-                                <TextBlock VerticalAlignment="Center" Text="{x:Bind AlbumArtViewModel.CoverImageRadius, Mode=OneWay}" />
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.CoverImageRadius, Mode=OneWay}" />
                                 <TextBlock
                                     Margin="0,0,14,0"
                                     VerticalAlignment="Center"
@@ -226,7 +229,7 @@
                                     StepFrequency="2"
                                     TickFrequency="2"
                                     TickPlacement="Outside"
-                                    Value="{x:Bind AlbumArtViewModel.CoverImageRadius, Mode=TwoWay}" />
+                                    Value="{x:Bind ViewModel.CoverImageRadius, Mode=TwoWay}" />
                             </StackPanel>
                         </controls:SettingsCard>
 
@@ -244,10 +247,10 @@
                         </controls:Segmented>
                         <controls:SwitchPresenter Value="{Binding SelectedItem.Tag, ElementName=LyricsSegmentedControl}">
                             <controls:Case Value="InApp">
-                                <uc:LyricsSettingsControl GlobalViewModel="{x:Bind GlobalSettingsViewModel, Mode=OneWay}" ViewModel="{x:Bind InAppLyricsViewModel, Mode=OneWay}" />
+                                <uc:LyricsSettingsControl ViewModel="{x:Bind InAppLyricsSettingsControlViewModel, Mode=OneWay}" />
                             </controls:Case>
                             <controls:Case Value="Desktop">
-                                <uc:LyricsSettingsControl GlobalViewModel="{x:Bind GlobalSettingsViewModel, Mode=OneWay}" ViewModel="{x:Bind DesktopLyricsViewModel, Mode=OneWay}" />
+                                <uc:LyricsSettingsControl ViewModel="{x:Bind DesktopLyricsSettingsControlViewModel, Mode=OneWay}" />
                             </controls:Case>
                         </controls:SwitchPresenter>
 

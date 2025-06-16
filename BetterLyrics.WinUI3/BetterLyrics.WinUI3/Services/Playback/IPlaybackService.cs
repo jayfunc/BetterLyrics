@@ -1,7 +1,15 @@
-﻿namespace BetterLyrics.WinUI3.Services.Playback
+﻿using System;
+using BetterLyrics.WinUI3.Models;
+
+namespace BetterLyrics.WinUI3.Services.Playback
 {
     public interface IPlaybackService
     {
-        void ReSendingMessages();
+        event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
+        event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
+        event EventHandler<PositionChangedEventArgs>? PositionChanged;
+        SongInfo? SongInfo { get; }
+        bool IsPlaying { get; }
+        TimeSpan Position { get; }
     }
 }

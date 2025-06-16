@@ -1,5 +1,4 @@
 using BetterInAppLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -16,15 +15,11 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class SettingsPage : Page
     {
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
-        public AlbumArtOverlayViewModel AlbumArtRendererSettingsViewModel =>
-            Ioc.Default.GetService<AlbumArtOverlayViewModel>()!;
-        public InAppLyricsViewModel InAppLyricsViewModel =>
-            Ioc.Default.GetService<InAppLyricsViewModel>()!;
-        public DesktopLyricsViewModel DesktopLyricsViewModel =>
-            Ioc.Default.GetService<DesktopLyricsViewModel>()!;
-        public GlobalViewModel GlobalSettingsViewModel =>
-            Ioc.Default.GetService<GlobalViewModel>()!;
-        public AlbumArtViewModel AlbumArtViewModel => Ioc.Default.GetService<AlbumArtViewModel>()!;
+        public InAppLyricsSettingsControlViewModel InAppLyricsSettingsControlViewModel =>
+            Ioc.Default.GetService<InAppLyricsSettingsControlViewModel>()!;
+
+        public DesktopLyricsSettingsControlViewModel DesktopLyricsSettingsControlViewModel =>
+            Ioc.Default.GetService<DesktopLyricsSettingsControlViewModel>()!;
 
         public SettingsPage()
         {
@@ -37,7 +32,7 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            SettingsViewModel.OpenMusicFolder((string)(sender as HyperlinkButton)!.Tag);
+            ViewModel.OpenMusicFolder((string)(sender as HyperlinkButton)!.Tag);
         }
 
         private async void SettingsPageRemovePathButton_Click(

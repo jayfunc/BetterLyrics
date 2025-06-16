@@ -12,22 +12,17 @@
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:renderer="using:BetterLyrics.WinUI3.Renderer"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
         <!--  Lyrics area  -->
         <Grid x:Name="LyricsGrid">
-            <canvas:CanvasAnimatedControl
-                x:Name="LyricsCanvas"
-                Draw="LyricsCanvas_Draw"
-                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                Paused="{x:Bind GlobalSettingsViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                Update="LyricsCanvas_Update" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
-
+            <renderer:InAppLyricsRenderer />
         </Grid>
 
         <Grid Margin="36">
@@ -87,7 +82,10 @@
                     Grid.Row="1"
                     SizeChanged="CoverArea_SizeChanged">
 
-                    <Grid x:Name="CoverImageGrid" Loaded="CoverImageGrid_Loaded">
+                    <Grid
+                        x:Name="CoverImageGrid"
+                        CornerRadius="{x:Bind ViewModel.CoverImageGridCornerRadius, Mode=OneWay}"
+                        SizeChanged="CoverImageGrid_SizeChanged">
                         <Image
                             x:Name="CoverImage"
                             Source="{x:Bind ViewModel.CoverImage, Mode=OneWay}"
@@ -297,7 +295,7 @@
                                     <Setter Property="CornerRadius" Value="8" />
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
-                            <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
+                            <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
                                 <RadioButton
                                     x:Uid="MainPageAlbumArtOnly"
                                     Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
@@ -353,7 +351,7 @@
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="ListViewItem">
                                                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                                 <Setter Property="Margin" Value="0" />
                                                 <Setter Property="Padding" Value="0" />
                                                 <Setter Property="MinWidth" Value="0" />
@@ -362,14 +360,16 @@
                                         </ListView.ItemContainerStyle>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Mode=OneWay}" />
-                                                    <Button
-                                                        Click="OpenMatchedFileButton_Click"
-                                                        Content="{ui:FontIcon Glyph=&#xE838;}"
-                                                        Style="{StaticResource GhostButtonStyle}"
-                                                        Tag="{Binding Mode=OneWay}" />
-                                                </StackPanel>
+                                                <HyperlinkButton
+                                                    VerticalAlignment="Center"
+                                                    Click="OpenMatchedFileButton_Click"
+                                                    RelativePanel.AlignLeftWithPanel="True"
+                                                    Tag="{Binding Mode=OneWay}">
+                                                    <TextBlock
+                                                        MaxWidth="300"
+                                                        Text="{Binding Mode=OneWay}"
+                                                        TextWrapping="Wrap" />
+                                                </HyperlinkButton>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
@@ -397,7 +397,7 @@
             x:Name="WelcomeTeachingTip"
             x:Uid="MainPageWelcomeTeachingTip"
             Closed="WelcomeTeachingTip_Closed"
-            IsOpen="False"
+            IsOpen="{x:Bind ViewModel.IsWelcomeTeachingTipOpen, Mode=OneWay}"
             Target="{x:Bind SettingsButton}" />
 
         <VisualStateManager.VisualStateGroups>
@@ -408,7 +408,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -428,7 +428,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="1" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -448,7 +448,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="2" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -468,7 +468,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                             To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
@@ -515,7 +515,7 @@
             <VisualStateGroup x:Name="MusicPlayingStates">
                 <VisualState x:Name="MusicPlaying">
                     <VisualState.StateTriggers>
-                        <ui:IsNotEqualStateTrigger Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay}" To="3" />
+                        <ui:IsNotEqualStateTrigger Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}" To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="DisplayTypeSwitchButton.Visibility" Value="Visible" />
@@ -528,7 +528,7 @@
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
                             Comparison="Equal"
-                            Value="{x:Bind GlobalSettingsViewModel.DisplayType, Mode=OneWay}"
+                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay}"
                             To="3" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>

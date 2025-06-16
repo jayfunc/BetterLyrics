@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ATL;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using Microsoft.UI;
 using SQLite;
 using Ude;
 using Windows.Media.Control;
@@ -32,11 +34,14 @@ namespace BetterLyrics.WinUI3.Services.Database
             await Task.Run(() =>
             {
                 _connection.DeleteAll<MetadataIndex>();
+
                 foreach (var path in paths)
                 {
                     if (Directory.Exists(path))
                     {
-                        foreach (var file in Directory.GetFiles(path))
+                        foreach (
+                            var file in Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
+                        )
                         {
                             var fileExtension = Path.GetExtension(file);
                             var track = new Track(file);
@@ -70,10 +75,14 @@ namespace BetterLyrics.WinUI3.Services.Database
                 songInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(streamReference);
             }
 
-            return FindSongInfo(songInfo, mediaProps!.Title, mediaProps!.Artist);
+            return await FindSongInfoAsync(songInfo, mediaProps!.Title, mediaProps!.Artist);
         }
 
-        public SongInfo FindSongInfo(SongInfo initSongInfo, string searchTitle, string searchArtist)
+        public async Task<SongInfo> FindSongInfoAsync(
+            SongInfo initSongInfo,
+            string searchTitle,
+            string searchArtist
+        )
         {
             var founds = _connection
                 .Table<MetadataIndex>()
@@ -144,6 +153,22 @@ namespace BetterLyrics.WinUI3.Services.Database
                 else
                     break;
             }
+
+            if (initSongInfo.AlbumArt == null)
+            {
+                initSongInfo.CoverImageDominantColors =
+                [
+                    .. Enumerable.Repeat(Colors.Transparent, ImageHelper.AccentColorCount),
+                ];
+            }
+            else
+            {
+                initSongInfo.CoverImageDominantColors =
+                [
+                    .. await ImageHelper.GetAccentColorsFromByte(initSongInfo.AlbumArt),
+                ];
+            }
+
             return initSongInfo;
         }
     }

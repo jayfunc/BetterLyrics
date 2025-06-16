@@ -1,28 +1,48 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Database;
-using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
 using Windows.Media.Control;
 
 namespace BetterLyrics.WinUI3.Services.Playback
 {
     public partial class PlaybackService : IPlaybackService
     {
+        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+        public event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
+        public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
+        public event EventHandler<PositionChangedEventArgs>? PositionChanged;
+
         private GlobalSystemMediaTransportControlsSessionManager? _sessionManager = null;
         private GlobalSystemMediaTransportControlsSession? _currentSession = null;
+
+        public SongInfo? SongInfo { get; private set; }
+        public bool IsPlaying { get; private set; }
+        public TimeSpan Position { get; private set; }
 
         private readonly IDatabaseService _databaseService;
 
         public PlaybackService(IDatabaseService databaseService)
         {
             _databaseService = databaseService;
-            InitMediaManager();
+            InitMediaManager().ConfigureAwait(true);
         }
 
-        private async void InitMediaManager()
+        private async Task<SongInfo> GetSongInfoAsync()
+        {
+            var songInfo = await _databaseService.FindSongInfoAsync(
+                await _currentSession?.TryGetMediaPropertiesAsync()
+            );
+            songInfo.SourceAppUserModelId = _currentSession?.SourceAppUserModelId;
+            return songInfo;
+        }
+
+        private async Task InitMediaManager()
         {
             _sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
             _sessionManager.CurrentSessionChanged += SessionManager_CurrentSessionChanged;
@@ -30,7 +50,7 @@ namespace BetterLyrics.WinUI3.Services.Playback
             SessionManager_CurrentSessionChanged(_sessionManager, null);
         }
 
-        public void ReSendingMessages()
+        private void ReSendingMessages()
         {
             // Re-send messages to update UI
             CurrentSession_MediaPropertiesChanged(_currentSession, null);
@@ -50,28 +70,33 @@ namespace BetterLyrics.WinUI3.Services.Playback
         {
             if (sender == null)
             {
-                WeakReferenceMessenger.Default.Send(new PlayingStatusChangedMessage(false));
-                return;
+                IsPlaying = false;
             }
-
-            var playbackState = sender.GetPlaybackInfo().PlaybackStatus;
-            // _logger.LogDebug(playbackState.ToString());
-
-            switch (playbackState)
+            else
             {
-                case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
-                case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Opened:
-                case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Changing:
-                case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Stopped:
-                case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused:
-                    WeakReferenceMessenger.Default.Send(new PlayingStatusChangedMessage(false));
-                    return;
-                case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing:
-                    WeakReferenceMessenger.Default.Send(new PlayingStatusChangedMessage(true));
-                    return;
-                default:
-                    return;
+                var playbackState = sender.GetPlaybackInfo().PlaybackStatus;
+                // _logger.LogDebug(playbackState.ToString());
+
+                switch (playbackState)
+                {
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Opened:
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Changing:
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Stopped:
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused:
+                        IsPlaying = false;
+                        break;
+                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing:
+                        IsPlaying = true;
+                        break;
+                    default:
+                        break;
+                }
             }
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(IsPlaying));
+            });
         }
 
         private void SessionManager_CurrentSessionChanged(
@@ -118,21 +143,19 @@ namespace BetterLyrics.WinUI3.Services.Playback
                 {
                     // _logger.LogDebug("CurrentSession_MediaPropertiesChanged");
                     if (sender == null)
-                        WeakReferenceMessenger.Default.Send(new SongInfoChangedMessage(null));
+                        SongInfo = null;
                     else
                     {
                         try
                         {
-                            var songInfo = await _databaseService.FindSongInfoAsync(
-                                await sender.TryGetMediaPropertiesAsync()
-                            );
-                            songInfo.SourceAppUserModelId = sender.SourceAppUserModelId;
-                            WeakReferenceMessenger.Default.Send(
-                                new SongInfoChangedMessage(songInfo)
-                            );
+                            SongInfo = await GetSongInfoAsync();
                         }
                         catch (Exception) { }
                     }
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(SongInfo));
+                    });
                 },
                 TimeSpan.FromMilliseconds(AnimationHelper.DebounceDefaultDuration)
             );
@@ -145,15 +168,16 @@ namespace BetterLyrics.WinUI3.Services.Playback
         {
             if (sender == null)
             {
-                WeakReferenceMessenger.Default.Send(
-                    new PlayingPositionChangedMessage(TimeSpan.Zero)
-                );
+                Position = TimeSpan.Zero;
             }
             else
-                WeakReferenceMessenger.Default.Send(
-                    new PlayingPositionChangedMessage(sender.GetTimelineProperties().Position)
-                );
-
+            {
+                Position = sender.GetTimelineProperties().Position;
+            }
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                PositionChanged?.Invoke(this, new PositionChangedEventArgs(Position));
+            });
             // _logger.LogDebug(_currentTime);
         }
     }

@@ -1,9 +1,12 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using System.Collections.ObjectModel;
+using BetterLyrics.WinUI3.Models;
+using Windows.UI;
 
-namespace BetterLyrics.WinUI3.ViewModels.Lyrics
+namespace BetterLyrics.WinUI3.ViewModels
 {
-    public interface ILyricsViewModel
+    public interface ILyricsSettingsControlViewModel
     {
+        ObservableCollection<Color> CoverImageDominantColors { get; set; }
         LyricsAlignmentType LyricsAlignmentType { get; set; }
         int LyricsBlurAmount { get; set; }
         int LyricsVerticalEdgeOpacity { get; set; }

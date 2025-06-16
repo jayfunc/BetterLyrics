@@ -18,8 +18,8 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class OverlayWindow : Window
     {
-        private readonly GlobalViewModel _globalViewModel =
-            Ioc.Default.GetService<GlobalViewModel>()!;
+        public OverlayWindowViewModel ViewModel =>
+            Ioc.Default.GetRequiredService<OverlayWindowViewModel>();
 
         public OverlayWindow()
         {
@@ -59,7 +59,7 @@ namespace BetterLyrics.WinUI3.Views
                 hwnd,
                 onWindowChanged =>
                 {
-                    UpdateAccentColor(hwnd);
+                    ViewModel.UpdateAccentColor(hwnd);
                 }
             );
 
@@ -70,14 +70,7 @@ namespace BetterLyrics.WinUI3.Views
 
             windowWatcher.Start();
 
-            UpdateAccentColor(hwnd);
-        }
-
-        private void UpdateAccentColor(nint hwnd)
-        {
-            _globalViewModel.ActivatedWindowAccentColor = WindowColorHelper.GetDominantColorBelow(
-                hwnd
-            );
+            ViewModel.UpdateAccentColor(hwnd);
         }
 
         public void Navigate(Type type)
