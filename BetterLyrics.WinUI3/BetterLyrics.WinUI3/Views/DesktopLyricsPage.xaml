@@ -13,45 +13,47 @@
     mc:Ignorable="d">
 
     <Grid>
+        <interactivity:Interaction.Behaviors>
+            <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                <interactivity:ChangePropertyAction
+                    PropertyName="Opacity"
+                    TargetObject="{Binding ElementName=RightCommandArea}"
+                    Value=".5" />
+            </interactivity:EventTriggerBehavior>
+            <interactivity:EventTriggerBehavior EventName="PointerExited">
+                <interactivity:ChangePropertyAction
+                    PropertyName="Opacity"
+                    TargetObject="{Binding ElementName=RightCommandArea}"
+                    Value="0" />
+            </interactivity:EventTriggerBehavior>
+        </interactivity:Interaction.Behaviors>
         <Grid
             x:Name="LyricsPlaceholderGrid"
             Margin="36,0"
             SizeChanged="LyricsPlaceholderGrid_SizeChanged" />
         <renderer:DesktopLyricsRenderer />
-        <Grid
-            x:Name="RightCommandGrid"
+
+        <StackPanel
+            x:Name="RightCommandArea"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            Opacity="0">
-            <Grid.OpacityTransition>
+            Loaded="RightCommandArea_Loaded"
+            Orientation="Horizontal">
+            <StackPanel.OpacityTransition>
                 <ScalarTransition />
-            </Grid.OpacityTransition>
+            </StackPanel.OpacityTransition>
+            <Button
+                x:Name="InAppLyricsSwitchButton"
+                Click="InAppLyricsSwitchButton_Click"
+                Style="{StaticResource GhostButtonStyle}">
+                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xED1E;" />
+            </Button>
             <Button
                 x:Name="SettingsButton"
-                Command="{x:Bind ViewModel.ToggleSettingsPopupCommand}"
+                Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
                 Style="{StaticResource GhostButtonStyle}">
-                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF8B0;" />
+                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE713;" />
             </Button>
-            <Popup
-                x:Name="SettingsPopup"
-                DesiredPlacement="Bottom"
-                IsOpen="{x:Bind ViewModel.IsSettingsPopupOpened, Mode=OneWay}">
-                <uc:LyricsSettingsControl ViewModel="{x:Bind DesktopLyricsSettingsControlViewModel, Mode=OneWay}" />
-            </Popup>
-            <interactivity:Interaction.Behaviors>
-                <interactivity:EventTriggerBehavior EventName="PointerEntered">
-                    <interactivity:ChangePropertyAction
-                        PropertyName="Opacity"
-                        TargetObject="{Binding ElementName=RightCommandGrid}"
-                        Value="1" />
-                </interactivity:EventTriggerBehavior>
-                <interactivity:EventTriggerBehavior EventName="PointerExited">
-                    <interactivity:ChangePropertyAction
-                        PropertyName="Opacity"
-                        TargetObject="{Binding ElementName=RightCommandGrid}"
-                        Value="0" />
-                </interactivity:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-        </Grid>
+        </StackPanel>
     </Grid>
 </Page>

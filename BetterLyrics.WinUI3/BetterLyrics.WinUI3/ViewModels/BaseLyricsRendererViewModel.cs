@@ -22,6 +22,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -31,7 +32,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         : BaseRendererViewModel,
             IRecipient<PropertyChangedMessage<ElementTheme>>
     {
-        private CanvasTextFormat _textFormat = new()
+        private protected CanvasTextFormat _textFormat = new()
         {
             HorizontalAlignment = CanvasHorizontalAlignment.Left,
             VerticalAlignment = CanvasVerticalAlignment.Top,
@@ -40,12 +41,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         };
 
         [ObservableProperty]
-        public partial SongInfo? SongInfo { get; set; }
+        public virtual partial SongInfo? SongInfo { get; set; }
 
         [ObservableProperty]
         public partial bool IsPlaying { get; set; }
 
-        private Color _fontColor;
+        private protected Color _fontColor;
 
         private Color _lightFontColor = Colors.White;
         private Color _darkFontColor = Colors.Black;
@@ -80,7 +81,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial double LimitedLineWidth { get; set; }
 
-        private bool _isRelayoutNeeded = true;
+        private protected bool _isRelayoutNeeded = true;
 
         [ObservableProperty]
         public partial ElementTheme Theme { get; set; }
@@ -88,9 +89,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial LyricsFontColorType LyricsFontColorType { get; set; }
-
-        [ObservableProperty]
-        public partial int LyricsFontSelectedAccentColorIndex { get; set; }
 
         public LyricsAlignmentType LyricsAlignmentType { get; set; }
         public int LyricsVerticalEdgeOpacity { get; set; }
@@ -117,10 +115,35 @@ namespace BetterLyrics.WinUI3.ViewModels
                 .. Enumerable.Repeat(Colors.Transparent, ImageHelper.AccentColorCount),
             ];
             _playbackService = playbackService;
-            _playbackService.IsPlayingChanged += (_, args) => IsPlaying = args.IsPlaying;
-            _playbackService.SongInfoChanged += (_, args) => SongInfo = args.SongInfo;
-            _playbackService.PositionChanged += (_, args) => TotalTime = args.Position;
+            _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
+            _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
+            _playbackService.PositionChanged += PlaybackService_PositionChanged;
 
+            RefreshPlaybackInfo();
+        }
+
+        public void RequestRelayout()
+        {
+            _isRelayoutNeeded = true;
+        }
+
+        private void PlaybackService_PositionChanged(object? sender, PositionChangedEventArgs e)
+        {
+            TotalTime = e.Position;
+        }
+
+        private void PlaybackService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
+        {
+            SongInfo = e.SongInfo;
+        }
+
+        private void PlaybackService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
+        {
+            IsPlaying = e.IsPlaying;
+        }
+
+        public void RefreshPlaybackInfo()
+        {
             IsPlaying = _playbackService.IsPlaying;
             SongInfo = _playbackService.SongInfo;
             TotalTime = _playbackService.Position;
@@ -155,17 +178,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             UpdateFontColor();
         }
 
-        partial void OnLyricsFontSelectedAccentColorIndexChanged(int value)
-        {
-            UpdateFontColor();
-        }
-
         partial void OnThemeChanged(ElementTheme value)
         {
             UpdateFontColor();
         }
 
-        private void UpdateFontColor()
+        private protected void UpdateFontColor()
         {
             switch (LyricsFontColorType)
             {
@@ -196,15 +214,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     break;
                 case LyricsFontColorType.Dominant:
-                    _fontColor = CoverImageDominantColors[
-                        Math.Max(
-                            0,
-                            Math.Min(
-                                CoverImageDominantColors.Count - 1,
-                                LyricsFontSelectedAccentColorIndex
-                            )
-                        )
-                    ];
+                    _fontColor = CoverImageDominantColors[0];
                     break;
                 default:
                     break;

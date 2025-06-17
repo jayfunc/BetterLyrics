@@ -40,10 +40,6 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
         [NotifyPropertyChangedRecipients]
         public override partial LyricsFontColorType LyricsFontColorType { get; set; }
 
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public override partial int LyricsFontSelectedAccentColorIndex { get; set; }
-
         public InAppLyricsSettingsControlViewModel(
             ISettingsService settingsService,
             IPlaybackService playbackService
@@ -61,8 +57,6 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             IsLyricsDynamicGlowEffectEnabled =
                 _settingsService.IsInAppLyricsDynamicGlowEffectEnabled;
             LyricsFontColorType = _settingsService.InAppLyricsFontColorType;
-            LyricsFontSelectedAccentColorIndex =
-                _settingsService.InAppLyricsFontSelectedAccentColorIndex;
         }
 
         partial void OnLyricsAlignmentTypeChanged(LyricsAlignmentType value)
@@ -103,11 +97,6 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
         partial void OnLyricsFontColorTypeChanged(LyricsFontColorType value)
         {
             _settingsService.InAppLyricsFontColorType = value;
-        }
-
-        partial void OnLyricsFontSelectedAccentColorIndexChanged(int value)
-        {
-            _settingsService.InAppLyricsFontSelectedAccentColorIndex = value;
         }
     }
 }

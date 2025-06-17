@@ -1,6 +1,6 @@
 ﻿namespace BetterLyrics.WinUI3.Models
 {
-    public enum DisplayType
+    public enum InAppLyricsDisplayType
     {
         AlbumArtOnly,
         LyricsOnly,

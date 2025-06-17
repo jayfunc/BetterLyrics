@@ -22,16 +22,16 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<int>>
     {
         [ObservableProperty]
+        public partial bool IsDesktopLyricsOpened { get; set; } = false;
+
+        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial double LimitedLineWidth { get; set; } = 0.0;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial double LimitedLineHeight { get; set; } = 0.0;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial DisplayType DisplayType { get; set; } = DisplayType.PlaceholderOnly;
+        public partial InAppLyricsDisplayType DisplayType { get; set; } =
+            InAppLyricsDisplayType.PlaceholderOnly;
 
         [ObservableProperty]
         public partial BitmapImage? CoverImage { get; set; }
@@ -40,7 +40,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial SongInfo? SongInfo { get; set; } = null;
 
         [ObservableProperty]
-        public partial DisplayType? PreferredDisplayType { get; set; } = DisplayType.SplitView;
+        public partial InAppLyricsDisplayType? PreferredDisplayType { get; set; } =
+            InAppLyricsDisplayType.SplitView;
 
         [ObservableProperty]
         public partial bool AboutToUpdateUI { get; set; }
@@ -76,13 +77,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += async (_, args) =>
-                await UpdateSongInfoUI(args.SongInfo);
+                await UpdateSongInfoUI(args.SongInfo).ConfigureAwait(true);
 
             IsFirstRun = _settingsService.IsFirstRun;
-            Task.Run(async () =>
-            {
-                await UpdateSongInfoUI(_playbackService.SongInfo);
-            });
+
+            UpdateSongInfoUI(_playbackService.SongInfo).ConfigureAwait(true);
         }
 
         partial void OnCoverImageRadiusChanged(int value)
@@ -106,14 +105,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnIsFirstRunChanged(bool value)
         {
             IsWelcomeTeachingTipOpen = value;
+            _settingsService.IsFirstRun = false;
         }
 
         [RelayCommand]
         private void OnDisplayTypeChanged(object value)
         {
             int index = Convert.ToInt32(value);
-            PreferredDisplayType = (DisplayType)index;
-            DisplayType = (DisplayType)index;
+            PreferredDisplayType = (InAppLyricsDisplayType)index;
+            DisplayType = (InAppLyricsDisplayType)index;
+        }
+
+        [RelayCommand]
+        private void OpenSettingsWindow()
+        {
+            WindowHelper.OpenSettingsWindow();
         }
 
         public async Task UpdateSongInfoUI(SongInfo? songInfo)
@@ -123,26 +129,24 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             SongInfo = songInfo;
 
-            await Task.Delay(1);
-
             CoverImage =
                 (songInfo?.AlbumArt == null)
                     ? null
                     : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
 
-            DisplayType displayType;
+            InAppLyricsDisplayType displayType;
 
             if (songInfo == null)
             {
-                displayType = DisplayType.PlaceholderOnly;
+                displayType = InAppLyricsDisplayType.PlaceholderOnly;
             }
-            else if (PreferredDisplayType is DisplayType preferredDisplayType)
+            else if (PreferredDisplayType is InAppLyricsDisplayType preferredDisplayType)
             {
                 displayType = preferredDisplayType;
             }
             else
             {
-                displayType = DisplayType.SplitView;
+                displayType = InAppLyricsDisplayType.SplitView;
             }
 
             DisplayType = displayType;

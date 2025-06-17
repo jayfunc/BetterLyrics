@@ -21,71 +21,12 @@
                 </ComboBox>
             </controls:SettingsCard>
 
-            <controls:SettingsExpander x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon Glyph=&#xE8D3;}">
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="False" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="IsExpanded" Value="True" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
+            <controls:SettingsCard x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon Glyph=&#xE8D3;}">
                 <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDefault" />
                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDominant" />
                 </ComboBox>
-                <controls:SettingsExpander.Items>
-                    <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Vertical">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind ViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="Equal"
-                                Value="0">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </interactivity:DataTriggerBehavior>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind ViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="Equal"
-                                Value="1">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </interactivity:DataTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                        <GridView ItemsSource="{x:Bind ViewModel.CoverImageDominantColors, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.LyricsFontSelectedAccentColorIndex, Mode=TwoWay}">
-                            <GridView.ItemTemplate>
-                                <DataTemplate>
-                                    <GridViewItem>
-                                        <StackPanel>
-                                            <Border
-                                                Width="64"
-                                                Height="64"
-                                                CornerRadius="4">
-                                                <Border.Background>
-                                                    <SolidColorBrush Color="{Binding}" />
-                                                </Border.Background>
-                                                <Border.BackgroundTransition>
-                                                    <BrushTransition />
-                                                </Border.BackgroundTransition>
-                                            </Border>
-                                            <TextBlock
-                                                Margin="4,0,4,4"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Text="{Binding Converter={StaticResource ColorToDisplayNameConverter}}"
-                                                TextWrapping="WrapWholeWords" />
-                                        </StackPanel>
-                                    </GridViewItem>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
-                    </controls:SettingsCard>
-                </controls:SettingsExpander.Items>
-            </controls:SettingsExpander>
+            </controls:SettingsCard>
 
             <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon Glyph=&#xE8E9;}">
                 <StackPanel Orientation="Horizontal">

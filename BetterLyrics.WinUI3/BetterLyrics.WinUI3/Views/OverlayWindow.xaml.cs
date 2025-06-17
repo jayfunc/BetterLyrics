@@ -21,6 +21,8 @@ namespace BetterLyrics.WinUI3.Views
         public OverlayWindowViewModel ViewModel =>
             Ioc.Default.GetRequiredService<OverlayWindowViewModel>();
 
+        private readonly bool _listenOnActivatedWindowChange;
+
         public OverlayWindow(
             bool alwaysOnTop = true,
             bool clickThrough = false,
@@ -28,6 +30,8 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             this.InitializeComponent();
+
+            _listenOnActivatedWindowChange = listenOnActivatedWindowChange;
 
             // Hide titlebar
             ExtendsContentIntoTitleBar = true;
@@ -64,13 +68,21 @@ namespace BetterLyrics.WinUI3.Views
                     windowWatcher.Stop();
                 };
                 windowWatcher.Start();
-                ViewModel.UpdateAccentColor(hwnd);
             }
         }
 
         public void Navigate(Type type)
         {
             RootFrame.Navigate(type);
+        }
+
+        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_listenOnActivatedWindowChange)
+            {
+                var hwnd = WindowNative.GetWindowHandle(this);
+                ViewModel.UpdateAccentColor(hwnd);
+            }
         }
     }
 }

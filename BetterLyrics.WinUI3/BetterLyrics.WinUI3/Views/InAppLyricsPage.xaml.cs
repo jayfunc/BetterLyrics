@@ -1,26 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Drawing;
-using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.ViewModels;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Extensions.Logging;
-using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
-using Microsoft.UI.Composition.SystemBackdrops;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using WinRT;
-using WinRT.Interop;
-using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
-using DispatcherQueuePriority = Microsoft.UI.Dispatching.DispatcherQueuePriority;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -85,6 +68,12 @@ namespace BetterLyrics.WinUI3.Views
         private void CoverImageGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.CoverImageGridActualHeight = e.NewSize.Height;
+        }
+
+        private void DesktopLyricsToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.GetWindowForElement(this).Close();
+            WindowHelper.OpenDesktopLyricsWindow();
         }
     }
 }

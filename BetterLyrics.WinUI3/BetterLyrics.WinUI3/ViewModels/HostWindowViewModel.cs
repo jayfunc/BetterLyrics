@@ -17,13 +17,13 @@ namespace BetterLyrics.WinUI3
             IRecipient<PropertyChangedMessage<bool>>
     {
         [ObservableProperty]
-        public partial double AppLogoImageIconHeight { get; set; } = 18;
+        public partial double AppLogoImageIconHeight { get; set; }
 
         [ObservableProperty]
-        public partial double TitleBarFontSize { get; set; } = 11;
+        public partial double TitleBarFontSize { get; set; }
 
         [ObservableProperty]
-        public partial double TitleBarHeight { get; set; } = 48;
+        public partial double TitleBarHeight { get; set; }
 
         [ObservableProperty]
         public partial Notification Notification { get; set; } = new();
@@ -32,11 +32,9 @@ namespace BetterLyrics.WinUI3
         public partial bool ShowInfoBar { get; set; } = false;
 
         [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
         public override partial BackdropType BackdropType { get; set; }
 
         [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
         public override partial TitleBarType TitleBarType { get; set; }
 
         [ObservableProperty]
@@ -48,6 +46,10 @@ namespace BetterLyrics.WinUI3
         public HostWindowViewModel(ISettingsService settingsService)
             : base(settingsService)
         {
+            TitleBarType = _settingsService.TitleBarType;
+            OnTitleBarTypeChanged(TitleBarType);
+            BackdropType = _settingsService.BackdropType;
+
             WeakReferenceMessenger.Default.Register<ShowNotificatonMessage>(
                 this,
                 async (r, m) =>
@@ -88,18 +90,17 @@ namespace BetterLyrics.WinUI3
             switch (value)
             {
                 case TitleBarType.Compact:
-                    TitleBarHeight = (double)App.Current.Resources["TitleBarCompactHeight"];
                     AppLogoImageIconHeight = 18;
                     TitleBarFontSize = 11;
                     break;
                 case TitleBarType.Extended:
-                    TitleBarHeight = (double)App.Current.Resources["TitleBarExpandedHeight"];
                     AppLogoImageIconHeight = 20;
                     TitleBarFontSize = 14;
                     break;
                 default:
                     break;
             }
+            TitleBarHeight = value.GetHeight();
         }
 
         [RelayCommand]

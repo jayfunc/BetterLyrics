@@ -1,3 +1,5 @@
+using System;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -31,6 +33,19 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.LimitedLineWidth = e.NewSize.Width;
+        }
+
+        private void InAppLyricsSwitchButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = WindowHelper.GetWindowForElement(this);
+            AppBarHelper.Disable(window);
+            window.Close();
+            WindowHelper.OpenInAppLyricsWindow();
+        }
+
+        private void RightCommandArea_Loaded(object sender, RoutedEventArgs e)
+        {
+            RightCommandArea.Opacity = 0;
         }
     }
 }

@@ -267,15 +267,16 @@
 
             <StackPanel HorizontalAlignment="Right" Spacing="4">
 
-                <ToggleButton
+                <Button
                     x:Name="DesktopLyricsToggleButton"
+                    Click="DesktopLyricsToggleButton_Click"
                     x:Uid="MainPageDesktopLyricsToggler"
                     Content="{ui:FontIcon Glyph=&#xEB41;}"
-                    Style="{StaticResource GhostToggleButtonStyle}">
-                    <ToggleButton.OpacityTransition>
+                    Style="{StaticResource GhostButtonStyle}">
+                    <Button.OpacityTransition>
                         <ScalarTransition />
-                    </ToggleButton.OpacityTransition>
-                </ToggleButton>
+                    </Button.OpacityTransition>
+                </Button>
 
                 <Button
                     x:Name="DisplayTypeSwitchButton"
@@ -383,6 +384,7 @@
 
                 <Button
                     x:Name="SettingsButton"
+                    Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
                     Content="{ui:FontIcon Glyph=&#xF8B0;}"
                     Style="{StaticResource GhostButtonStyle}" />
 

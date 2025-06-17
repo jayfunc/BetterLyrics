@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,9 @@ using System.Threading.Tasks;
 using ATL;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using Lyricify.Lyrics.Helpers;
+using Lyricify.Lyrics.Models;
+using Lyricify.Lyrics.Searchers;
 using Microsoft.UI;
 using SQLite;
 using Ude;
@@ -168,6 +173,8 @@ namespace BetterLyrics.WinUI3.Services.Database
                     .. await ImageHelper.GetAccentColorsFromByte(initSongInfo.AlbumArt),
                 ];
             }
+
+            if (initSongInfo.LyricsLines == null) { }
 
             return initSongInfo;
         }

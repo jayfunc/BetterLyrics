@@ -55,7 +55,7 @@ namespace BetterLyrics.WinUI3.Models
             {
                 if (lyricsPhrases[0].TimestampMs > 0)
                 {
-                    var placeholder = new LyricsPhrase(0, " ");
+                    var placeholder = new LyricsPhrase(0, $"{track.Artist} - {track.Title}");
                     lyricsPhrases.Insert(0, placeholder);
                     lyricsPhrases.Insert(0, placeholder);
                 }

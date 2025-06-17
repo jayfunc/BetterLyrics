@@ -45,5 +45,10 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             ViewModel.Calculate(sender, args);
         }
+
+        private void LyricsCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RequestRelayout();
+        }
     }
 }

@@ -5,10 +5,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -34,8 +36,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public abstract LyricsFontColorType LyricsFontColorType { get; set; }
 
-        public abstract int LyricsFontSelectedAccentColorIndex { get; set; }
-
         private readonly IPlaybackService _playbackService;
 
         public BaseLyricsSettingsControlViewModel(
@@ -48,11 +48,29 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _playbackService.SongInfoChanged += (s, e) =>
             {
-                CoverImageDominantColors =
-                    _playbackService.SongInfo?.CoverImageDominantColors ?? [];
+                UpdateCoverImageDominantColors(e.SongInfo?.CoverImageDominantColors);
             };
 
-            CoverImageDominantColors = _playbackService.SongInfo?.CoverImageDominantColors ?? [];
+            UpdateCoverImageDominantColors(_playbackService.SongInfo?.CoverImageDominantColors);
+        }
+
+        private void UpdateCoverImageDominantColors(ObservableCollection<Color>? value)
+        {
+            CoverImageDominantColors ??=
+            [
+                .. Enumerable.Repeat(Colors.Transparent, ImageHelper.AccentColorCount),
+            ];
+            for (int i = 0; i < CoverImageDominantColors.Count; i++)
+            {
+                CoverImageDominantColors[i] = Colors.Transparent;
+            }
+            if (value != null)
+            {
+                for (int i = 0; i < Math.Min(value.Count, CoverImageDominantColors.Count); i++)
+                {
+                    CoverImageDominantColors[i] = value[i];
+                }
+            }
         }
     }
 }
