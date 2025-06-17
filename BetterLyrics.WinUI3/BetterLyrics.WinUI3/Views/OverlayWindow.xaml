@@ -9,7 +9,7 @@
     Title="OverlayWindow"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded">
         <Frame x:Name="RootFrame" />
     </Grid>
 </Window>

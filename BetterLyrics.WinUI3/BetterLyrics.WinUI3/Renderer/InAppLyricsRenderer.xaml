@@ -13,6 +13,7 @@
         <canvas:CanvasAnimatedControl
             x:Name="LyricsCanvas"
             Draw="LyricsCanvas_Draw"
+            Loaded="LyricsCanvas_Loaded"
             Paused="{x:Bind ViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
             Update="LyricsCanvas_Update" />
     </Grid>

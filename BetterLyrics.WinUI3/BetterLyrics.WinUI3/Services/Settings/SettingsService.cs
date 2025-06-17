@@ -23,6 +23,9 @@ namespace BetterLyrics.WinUI3.Services.Settings
         private const string MusicLibrariesKey = "MusicLibraries";
         private const string BackdropTypeKey = "BackdropType";
 
+        // App behavior
+        private const string AutoStartWindowTypeKey = "AutoStartWindowType";
+
         // Album art
         private const string IsCoverOverlayEnabledKey = "IsCoverOverlayEnabled";
         private const string IsDynamicCoverOverlayEnabledKey = "IsDynamicCoverOverlayEnabled";
@@ -41,8 +44,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
         private const string IsInAppLyricsDynamicGlowEffectEnabledKey =
             "IsInAppLyricsDynamicGlowEffectEnabled";
         private const string InAppLyricsFontColorTypeKey = "InAppLyricsFontColorType";
-        private const string InAppLyricsFontSelectedAccentColorIndexKey =
-            "InAppLyricsFontSelectedAccentColorIndex";
 
         // Desktop lyrics
         private const string DesktopLyricsAlignmentTypeKey = "DesktopLyricsAlignmentType";
@@ -56,8 +57,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
         private const string IsDesktopLyricsDynamicGlowEffectEnabledKey =
             "IsDesktopLyricsDynamicGlowEffectEnabled";
         private const string DesktopLyricsFontColorTypeKey = "DesktopLyricsFontColorType";
-        private const string DesktopLyricsFontSelectedAccentColorIndexKey =
-            "DesktopLyricsFontSelectedAccentColorIndex";
 
         // Notification
         private const string NeverShowEnterFullScreenMessageKey = "NeverShowEnterFullScreenMessage";
@@ -86,6 +85,12 @@ namespace BetterLyrics.WinUI3.Services.Settings
         {
             get => (BackdropType)GetValue<int>(BackdropTypeKey);
             set => SetValue(BackdropTypeKey, (int)value);
+        }
+
+        public AutoStartWindowType AutoStartWindowType
+        {
+            get => (AutoStartWindowType)GetValue<int>(AutoStartWindowTypeKey);
+            set => SetValue(AutoStartWindowTypeKey, (int)value);
         }
 
         public List<string> MusicLibraries
@@ -229,18 +234,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
             set => SetValue(DesktopLyricsFontColorTypeKey, (int)value);
         }
 
-        public int InAppLyricsFontSelectedAccentColorIndex
-        {
-            get => GetValue<int>(InAppLyricsFontSelectedAccentColorIndexKey);
-            set => SetValue(InAppLyricsFontSelectedAccentColorIndexKey, value);
-        }
-
-        public int DesktopLyricsFontSelectedAccentColorIndex
-        {
-            get => GetValue<int>(DesktopLyricsFontSelectedAccentColorIndexKey);
-            set => SetValue(DesktopLyricsFontSelectedAccentColorIndexKey, value);
-        }
-
         public SettingsService()
         {
             _localSettings = ApplicationData.Current.LocalSettings;
@@ -251,6 +244,8 @@ namespace BetterLyrics.WinUI3.Services.Settings
             SetDefault(LanguageKey, (int)Language.FollowSystem);
             SetDefault(MusicLibrariesKey, "[]");
             SetDefault(BackdropTypeKey, (int)Models.BackdropType.DesktopAcrylic);
+            // App behavior
+            SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.InAppLyrics);
             // Album art
             SetDefault(IsCoverOverlayEnabledKey, true);
             SetDefault(IsDynamicCoverOverlayEnabledKey, true);
@@ -265,8 +260,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
             SetDefault(DesktopLyricsBlurAmountKey, 0);
             SetDefault(InAppLyricsFontColorTypeKey, (int)LyricsFontColorType.Default);
             SetDefault(DesktopLyricsFontColorTypeKey, (int)LyricsFontColorType.Default);
-            SetDefault(InAppLyricsFontSelectedAccentColorIndexKey, 0);
-            SetDefault(DesktopLyricsFontSelectedAccentColorIndexKey, 0);
             SetDefault(InAppLyricsFontSizeKey, 28);
             SetDefault(DesktopLyricsFontSizeKey, 16);
             SetDefault(InAppLyricsLineSpacingFactorKey, 0.5f);

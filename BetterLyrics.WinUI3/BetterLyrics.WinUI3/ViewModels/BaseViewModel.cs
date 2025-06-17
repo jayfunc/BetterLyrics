@@ -1,11 +1,12 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using BetterLyrics.WinUI3.Services.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class BaseViewModel : ObservableRecipient
+    public partial class BaseViewModel : ObservableRecipient, IDisposable
     {
         private protected readonly ISettingsService _settingsService;
 
@@ -16,6 +17,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             IsActive = true;
             _settingsService = settingsService;
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

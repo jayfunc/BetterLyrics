@@ -29,13 +29,16 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<float>>,
             IRecipient<PropertyChangedMessage<double>>,
             IRecipient<PropertyChangedMessage<bool>>,
-            IRecipient<PropertyChangedMessage<DisplayType>>,
+            IRecipient<PropertyChangedMessage<InAppLyricsDisplayType>>,
             IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
             IRecipient<PropertyChangedMessage<LyricsAlignmentType>>
     {
-        public DisplayType DisplayType { get; set; }
+        public InAppLyricsDisplayType DisplayType { get; set; }
 
         private float _rotateAngle = 0f;
+
+        [ObservableProperty]
+        public override partial SongInfo? SongInfo { get; set; }
 
         private SoftwareBitmap? _lastSoftwareBitmap = null;
         private SoftwareBitmap? _softwareBitmap = null;
@@ -82,8 +85,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
 
             LyricsFontColorType = _settingsService.InAppLyricsFontColorType;
-            LyricsFontSelectedAccentColorIndex =
-                _settingsService.InAppLyricsFontSelectedAccentColorIndex;
             LyricsAlignmentType = _settingsService.InAppLyricsAlignmentType;
             LyricsVerticalEdgeOpacity = _settingsService.InAppLyricsVerticalEdgeOpacity;
             LyricsLineSpacingFactor = _settingsService.InAppLyricsLineSpacingFactor;
@@ -93,16 +94,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsLyricsDynamicGlowEffectEnabled =
                 _settingsService.IsInAppLyricsDynamicGlowEffectEnabled;
 
-            _playbackService.SongInfoChanged += async (_, args) =>
-            {
-                if (args.SongInfo?.AlbumArt is byte[] bytes)
-                    SoftwareBitmap = await (
-                        await ImageHelper.GetDecoderFromByte(bytes)
-                    ).GetSoftwareBitmapAsync(
-                        BitmapPixelFormat.Bgra8,
-                        BitmapAlphaMode.Premultiplied
-                    );
-            };
+            UpdateFontColor();
+        }
+
+        async partial void OnSongInfoChanged(SongInfo? value)
+        {
+            if (value?.AlbumArt is byte[] bytes)
+                SoftwareBitmap = await (
+                    await ImageHelper.GetDecoderFromByte(bytes)
+                ).GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
         }
 
         public override void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
@@ -140,11 +140,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             switch (DisplayType)
             {
-                case DisplayType.AlbumArtOnly:
-                case DisplayType.PlaceholderOnly:
+                case InAppLyricsDisplayType.AlbumArtOnly:
+                case InAppLyricsDisplayType.PlaceholderOnly:
                     break;
-                case DisplayType.LyricsOnly:
-                case DisplayType.SplitView:
+                case InAppLyricsDisplayType.LyricsOnly:
+                case InAppLyricsDisplayType.SplitView:
                     base.Draw(control, ds);
                     break;
                 default:
@@ -281,15 +281,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else if (
                     message.PropertyName
-                    == nameof(
-                        InAppLyricsSettingsControlViewModel.LyricsFontSelectedAccentColorIndex
-                    )
-                )
-                {
-                    LyricsFontSelectedAccentColorIndex = message.NewValue;
-                }
-                else if (
-                    message.PropertyName
                     == nameof(InAppLyricsSettingsControlViewModel.LyricsFontSize)
                 )
                 {
@@ -351,7 +342,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void Receive(PropertyChangedMessage<DisplayType> message)
+        public void Receive(PropertyChangedMessage<InAppLyricsDisplayType> message)
         {
             DisplayType = message.NewValue;
         }

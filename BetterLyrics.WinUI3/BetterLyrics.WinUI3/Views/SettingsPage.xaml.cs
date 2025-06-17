@@ -42,5 +42,13 @@ namespace BetterLyrics.WinUI3.Views
         {
             await ViewModel.RemoveFolderAsync((string)(sender as HyperlinkButton)!.Tag);
         }
+
+        private void NavView_SelectionChanged(
+            NavigationView sender,
+            NavigationViewSelectionChangedEventArgs args
+        )
+        {
+            ViewModel.NavViewSelectedItemTag = (args.SelectedItem as NavigationViewItem)!.Tag;
+        }
     }
 }

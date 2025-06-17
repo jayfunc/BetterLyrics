@@ -1,17 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BetterLyrics.WinUI3.Views;
-using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using Windows.Storage;
-using WinRT.Interop;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class WindowHelper
+    public static class WindowHelper
     {
+        public static void OpenSystemTrayWindow()
+        {
+            var window = new OverlayWindow(clickThrough: true);
+            TrackWindow(window);
+            window.Navigate(typeof(SystemTrayPage));
+            window.Activate();
+        }
+
+        public static void OpenDesktopLyricsWindow()
+        {
+            var window = new OverlayWindow(listenOnActivatedWindowChange: true);
+            TrackWindow(window);
+            window.Navigate(typeof(DesktopLyricsPage));
+            AppBarHelper.Enable(window, 48);
+            window.Activate();
+        }
+
+        public static void OpenSettingsWindow()
+        {
+            var window = new HostWindow();
+            TrackWindow(window);
+            window.Navigate(typeof(SettingsPage));
+            window.Activate();
+        }
+
+        public static void OpenInAppLyricsWindow()
+        {
+            var window = new HostWindow();
+            TrackWindow(window);
+            window.Navigate(typeof(InAppLyricsPage));
+            window.Activate();
+        }
+
         public static void TrackWindow(Window window)
         {
             window.Closed += (sender, args) =>
@@ -58,21 +86,5 @@ namespace BetterLyrics.WinUI3.Helper
         }
 
         private static List<Window> _activeWindows = new List<Window>();
-
-        public static StorageFolder GetAppLocalFolder()
-        {
-            StorageFolder localFolder;
-            if (!NativeHelper.IsAppPackaged)
-            {
-                localFolder = Task.Run(async () =>
-                    await StorageFolder.GetFolderFromPathAsync(System.AppContext.BaseDirectory)
-                ).Result;
-            }
-            else
-            {
-                localFolder = ApplicationData.Current.LocalFolder;
-            }
-            return localFolder;
-        }
     }
 }

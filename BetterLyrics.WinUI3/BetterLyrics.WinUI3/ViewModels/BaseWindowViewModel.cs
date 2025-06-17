@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using System;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.Views;

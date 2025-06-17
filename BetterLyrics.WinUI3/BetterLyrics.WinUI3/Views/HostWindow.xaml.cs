@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.WinUI.Behaviors;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -45,14 +46,6 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
 
             SystemBackdrop = new MicaBackdrop();
-
-            WeakReferenceMessenger.Default.Register<IsImmersiveModeChangedMessage>(
-                this,
-                (r, m) =>
-                {
-                    TopCommandGrid.Opacity = m.Value ? 0 : 1;
-                }
-            );
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -179,15 +172,6 @@ namespace BetterLyrics.WinUI3.Views
                     break;
                 case AppWindowPresenterKind.Overlapped:
                     AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-                    //WeakReferenceMessenger.Default.Send(
-                    //    new ShowNotificatonMessage(
-                    //        new Models.Notification(
-                    //            App.ResourceLoader!.GetString("BaseWindowEnterFullScreenHint"),
-                    //            isForeverDismissable: true,
-                    //            relatedSettingsKeyName: SettingsKeys.NeverShowEnterFullScreenMessage
-                    //        )
-                    //    )
-                    //);
                     break;
                 default:
                     break;

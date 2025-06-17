@@ -29,10 +29,6 @@ namespace BetterLyrics.WinUI3
         private readonly ILogger<App> _logger;
 
         public static new App Current => (App)Application.Current;
-        public HostWindow? InAppLyricsWindow { get; set; }
-        public OverlayWindow? DesktopLyricsWindow { get; set; }
-        public HostWindow? SettingsWindow { get; set; }
-        public OverlayWindow SystemTrayWindow { get; set; }
 
         public static ResourceLoader? ResourceLoader { get; private set; }
 
@@ -51,6 +47,7 @@ namespace BetterLyrics.WinUI3
             DispatcherQueueTimer = DispatcherQueue.CreateTimer();
             ResourceLoader = new ResourceLoader();
 
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Helper.AppInfo.EnsureDirectories();
             ConfigureServices();
 
@@ -108,12 +105,7 @@ namespace BetterLyrics.WinUI3
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            SystemTrayWindow = new OverlayWindow(clickThrough: true);
-            WindowHelper.TrackWindow(SystemTrayWindow);
-            SystemTrayWindow.Navigate(typeof(SystemTrayPage));
-            SystemTrayWindow.Activate();
+            WindowHelper.OpenSystemTrayWindow();
         }
     }
 }

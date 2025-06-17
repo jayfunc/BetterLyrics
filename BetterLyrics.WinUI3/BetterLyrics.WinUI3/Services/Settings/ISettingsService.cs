@@ -7,16 +7,30 @@ namespace BetterLyrics.WinUI3.Services.Settings
     public interface ISettingsService
     {
         bool IsFirstRun { get; set; }
-        ElementTheme ThemeType { get; set; }
-        Language Language { get; set; }
+
+        // Lyrics lib
         List<string> MusicLibraries { get; set; }
+
+        // App appearance
+        ElementTheme ThemeType { get; set; }
         BackdropType BackdropType { get; set; }
+        TitleBarType TitleBarType { get; set; }
+        Language Language { get; set; }
+
+        // App behavior
+        AutoStartWindowType AutoStartWindowType { get; set; }
+
+        // Album art background
+
         bool IsCoverOverlayEnabled { get; set; }
         bool IsDynamicCoverOverlayEnabled { get; set; }
         int CoverOverlayOpacity { get; set; }
         int CoverOverlayBlurAmount { get; set; }
-        TitleBarType TitleBarType { get; set; }
+
+        // Album art cover style
         int CoverImageRadius { get; set; }
+
+        // Lyrics style and effetc (In-app lyics)
         LyricsAlignmentType InAppLyricsAlignmentType { get; set; }
         int InAppLyricsBlurAmount { get; set; }
         int InAppLyricsVerticalEdgeOpacity { get; set; }
@@ -25,7 +39,8 @@ namespace BetterLyrics.WinUI3.Services.Settings
         bool IsInAppLyricsGlowEffectEnabled { get; set; }
         bool IsInAppLyricsDynamicGlowEffectEnabled { get; set; }
         LyricsFontColorType InAppLyricsFontColorType { get; set; }
-        int InAppLyricsFontSelectedAccentColorIndex { get; set; }
+
+        // Lyrics style and effect (Desktop lyrisc)
         int DesktopLyricsBlurAmount { get; set; }
         int DesktopLyricsVerticalEdgeOpacity { get; set; }
         float DesktopLyricsLineSpacingFactor { get; set; }
@@ -34,6 +49,5 @@ namespace BetterLyrics.WinUI3.Services.Settings
         bool IsDesktopLyricsDynamicGlowEffectEnabled { get; set; }
         LyricsAlignmentType DesktopLyricsAlignmentType { get; set; }
         LyricsFontColorType DesktopLyricsFontColorType { get; set; }
-        int DesktopLyricsFontSelectedAccentColorIndex { get; set; }
     }
 }

@@ -276,16 +276,16 @@
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>沉浸模式</value>
   </data>
-  <data name="SettingsPageAlbumOverlay.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
     <value>專輯背景</value>
   </data>
-  <data name="SettingsPageAbout.Text" xml:space="preserve">
+  <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>關於</value>
   </data>
-  <data name="SettingsPageLyricsLib.Text" xml:space="preserve">
+  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
     <value>歌詞庫</value>
   </data>
-  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
     <value>應用外觀</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
@@ -315,7 +315,7 @@
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>目前沒有正在播放的音樂</value>
   </data>
-  <data name="SettingsPageDev.Text" xml:space="preserve">
+  <data name="SettingsPageDev.Content" xml:space="preserve">
     <value>開發者選項</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
@@ -336,7 +336,7 @@
   <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
     <value>專輯強調色</value>
   </data>
-  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>專輯封面樣式</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
@@ -379,7 +379,7 @@
     <value>切換顯示模式</value>
   </data>
   <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>顯示/隱藏桌面歌詞</value>
+    <value>切換到桌面歌詞模式</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>進入畫中畫模式</value>
@@ -390,16 +390,34 @@
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
     <value>找不到歌詞</value>
   </data>
-  <data name="SettingsPageLyrics.Text" xml:space="preserve">
-    <value>歌詞樣式與動效</value>
-  </data>
   <data name="SettingsPageInAppLyrics.Content" xml:space="preserve">
-    <value>應用程式內歌詞</value>
+    <value>應用程式內歌詞樣式與動效</value>
   </data>
   <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
-    <value>桌面歌詞</value>
+    <value>桌面歌詞樣式與動效</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>該資料夾已包含在已有資料夾中，無需再次添加</value>
+  </data>
+  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+    <value>應用行為</value>
+  </data>
+  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>啟動應用程式時</value>
+  </data>
+  <data name="SettingsPageAutoStartWindow.Description" xml:space="preserve">
+    <value>应用在启动时会驻留系统托盘，在此处选择后续自动化操作</value>
+  </data>
+  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
+    <value>啟動應用程式內歌詞模式</value>
+  </data>
+  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
+    <value>啟動桌面歌詞模式</value>
+  </data>
+  <data name="SettingsPageAutoStartNothing.Content" xml:space="preserve">
+    <value>不打開任何視窗</value>
+  </data>
+  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
+    <value>找不到歌詞</value>
   </data>
 </root>

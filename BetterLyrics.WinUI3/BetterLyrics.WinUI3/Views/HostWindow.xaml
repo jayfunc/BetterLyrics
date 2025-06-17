@@ -155,14 +155,6 @@
             <InfoBar.RenderTransform>
                 <TranslateTransform x:Name="HostInfoBarTransform" Y="20" />
             </InfoBar.RenderTransform>
-            <InfoBar.ActionButton>
-                <CheckBox
-                    x:Name="HostInfoBarCheckBox"
-                    x:Uid="BaseWindowHostInfoBarCheckBox"
-                    Command="{x:Bind ViewModel.SwitchInfoBarNeverShowItAgainCheckBoxCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked, Mode=OneWay}"
-                    Visibility="{x:Bind ViewModel.Notification.Visibility, Mode=OneWay}" />
-            </InfoBar.ActionButton>
             <InfoBar.Resources>
                 <Storyboard x:Key="InfoBarShowAndHideStoryboard">
                     <!--  Opacity  -->

@@ -13,7 +13,34 @@
         <canvas:CanvasAnimatedControl
             x:Name="LyricsCanvas"
             Draw="LyricsCanvas_Draw"
+            Loaded="LyricsCanvas_Loaded"
             Paused="{x:Bind ViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
             Update="LyricsCanvas_Update" />
+        <Grid x:Name="LyricsNotFound">
+            <TextBlock
+                x:Uid="DesktopLyricsRendererPageLyricsNotFound"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
+        </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="LyricsExistenceStates">
+                <VisualState x:Name="Existed">
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LyricsNotFound.Opacity" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NotExisted">
+                    <VisualState.StateTriggers>
+                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LyricsNotFound.Opacity" Value=".5" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using System.Numerics;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
@@ -6,6 +7,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.UI;
 
@@ -36,8 +38,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             : base(settingsService, playbackService)
         {
             LyricsFontColorType = _settingsService.DesktopLyricsFontColorType;
-            LyricsFontSelectedAccentColorIndex =
-                _settingsService.DesktopLyricsFontSelectedAccentColorIndex;
             LyricsAlignmentType = _settingsService.DesktopLyricsAlignmentType;
             LyricsVerticalEdgeOpacity = _settingsService.DesktopLyricsVerticalEdgeOpacity;
             LyricsLineSpacingFactor = _settingsService.DesktopLyricsLineSpacingFactor;
@@ -48,7 +48,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _settingsService.IsDesktopLyricsDynamicGlowEffectEnabled;
 
             _startColor = _targetColor = ActivatedWindowAccentColor;
-            _progress = 1f;
+            _progress = 0f;
+
+            UpdateFontColor();
         }
 
         public override void Calculate(
@@ -87,7 +89,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                 ? ColorHelper.GetInterpolatedColor(_progress, _startColor, _targetColor)
                 : _targetColor;
 
-            ds.FillRectangle(control.Size.ToRect(), color);
+            float padding = 0f;
+            var rect = control.Size.ToRect();
+            rect.X += padding;
+            rect.Y += padding;
+            rect.Width -= 2 * padding;
+            rect.Height -= 2 * padding;
+
+            ds.FillRectangle(rect, color);
 
             base.Draw(control, ds);
         }
@@ -132,15 +141,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 )
                 {
                     LyricsBlurAmount = message.NewValue;
-                }
-                else if (
-                    message.PropertyName
-                    == nameof(
-                        DesktopLyricsSettingsControlViewModel.LyricsFontSelectedAccentColorIndex
-                    )
-                )
-                {
-                    LyricsFontSelectedAccentColorIndex = message.NewValue;
                 }
                 else if (
                     message.PropertyName

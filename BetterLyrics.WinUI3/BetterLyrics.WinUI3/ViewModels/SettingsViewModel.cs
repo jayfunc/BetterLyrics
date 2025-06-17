@@ -23,6 +23,7 @@ using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI;
 using WinRT.Interop;
+using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -42,6 +43,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial TitleBarType TitleBarType { get; set; }
+
+        [ObservableProperty]
+        public partial AutoStartWindowType AutoStartWindowType { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -115,10 +119,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public string Version { get; set; } = AppInfo.AppVersion;
 
+        [ObservableProperty]
+        public partial object NavViewSelectedItemTag { get; set; } = "LyricsLib";
+
+        [ObservableProperty]
+        public partial Thickness RootGridMargin { get; set; } = new(0, 0, 0, 0);
+
         public SettingsViewModel(IDatabaseService databaseService, ISettingsService settingsService)
         {
             _databaseService = databaseService;
             _settingsService = settingsService;
+
+            RootGridMargin = new Thickness(0, _settingsService.TitleBarType.GetHeight(), 0, 0);
 
             MusicLibraries = [.. _settingsService.MusicLibraries];
             Language = _settingsService.Language;
@@ -126,6 +138,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             ThemeType = _settingsService.ThemeType;
             BackdropType = _settingsService.BackdropType;
             TitleBarType = _settingsService.TitleBarType;
+
+            AutoStartWindowType = _settingsService.AutoStartWindowType;
 
             IsCoverOverlayEnabled = _settingsService.IsCoverOverlayEnabled;
             IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
@@ -151,6 +165,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnTitleBarTypeChanged(TitleBarType value)
         {
             _settingsService.TitleBarType = value;
+            RootGridMargin = new Thickness(0, value.GetHeight(), 0, 0);
+        }
+
+        partial void OnAutoStartWindowTypeChanged(AutoStartWindowType value)
+        {
+            _settingsService.AutoStartWindowType = value;
         }
 
         partial void OnCoverImageRadiusChanged(int value)
@@ -206,7 +226,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (folder != null)
             {
-                if (MusicLibraries.Any((item) => item.StartsWith(folder.Path)))
+                if (MusicLibraries.Any((item) => folder.Path.StartsWith(item)))
                 {
                     WeakReferenceMessenger.Default.Send(
                         new ShowNotificatonMessage(

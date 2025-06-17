@@ -18,17 +18,9 @@
         NoLeftClickDelay="True"
         ToolTipText="BetterLyrics">
         <tb:TaskbarIcon.ContextFlyout>
-            <MenuFlyout AreOpenCloseAnimationsEnabled="True">
-                <ToggleMenuFlyoutItem
-                    Command="{x:Bind ViewModel.InAppLyricsToggledCommand}"
-                    IsChecked="{x:Bind ViewModel.IsInAppLyricsOpened, Mode=OneWay}"
-                    Text="In-app lyrics" />
-                <ToggleMenuFlyoutItem
-                    Command="{x:Bind ViewModel.DesktopLyricsToggledCommand}"
-                    IsChecked="{x:Bind ViewModel.IsDesktopLyricsOpened, Mode=OneWay}"
-                    Text="Desktop lyrics" />
+            <MenuFlyout AreOpenCloseAnimationsEnabled="True" LightDismissOverlayMode="On">
                 <MenuFlyoutItem Command="{x:Bind ViewModel.OpenSettingsWindowCommand}" Text="Settings" />
-                <MenuFlyoutItem Text="Exit" />
+                <MenuFlyoutItem Command="{x:Bind ViewModel.ExitAppCommand}" Text="Exit" />
             </MenuFlyout>
         </tb:TaskbarIcon.ContextFlyout>
     </tb:TaskbarIcon>
