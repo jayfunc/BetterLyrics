@@ -161,17 +161,13 @@ namespace BetterLyrics.WinUI3.Services.Database
 
             if (initSongInfo.AlbumArt == null)
             {
-                initSongInfo.CoverImageDominantColors =
-                [
-                    .. Enumerable.Repeat(Colors.Transparent, ImageHelper.AccentColorCount),
-                ];
+                initSongInfo.CoverImageDominantColors = null;
             }
             else
             {
-                initSongInfo.CoverImageDominantColors =
-                [
-                    .. await ImageHelper.GetAccentColorsFromByte(initSongInfo.AlbumArt),
-                ];
+                initSongInfo.CoverImageDominantColors = await ImageHelper.GetAccentColorsFromByte(
+                    initSongInfo.AlbumArt
+                );
             }
 
             if (initSongInfo.LyricsLines == null) { }

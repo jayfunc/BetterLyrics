@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Page
-    x:Class="BetterLyrics.WinUI3.Views.InAppLyricsPage"
+    x:Class="BetterLyrics.WinUI3.Views.LyricsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
@@ -22,7 +22,7 @@
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
-            <renderer:InAppLyricsRenderer />
+            <renderer:LyricsRenderer />
         </Grid>
 
         <Grid Margin="36">
@@ -63,13 +63,13 @@
             <!--  Song info area  -->
             <Grid x:Name="SongInfoInnerGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="4*" />
-                    <!--  Cover area  -->
-                    <RowDefinition Height="20*" />
-                    <!--  Spacer  -->
                     <RowDefinition Height="2*" />
+                    <!--  Cover area  -->
+                    <RowDefinition Height="9*" />
+                    <!--  Spacer  -->
+                    <RowDefinition Height="*" />
                     <!--  Title and artist area  -->
-                    <RowDefinition Height="5*" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
                 <Grid.OpacityTransition>
@@ -124,7 +124,10 @@
                 </Grid>
 
                 <!--  Title and artist  -->
-                <StackPanel Grid.Row="3" Orientation="Vertical">
+                <StackPanel
+                    Grid.Row="3"
+                    VerticalAlignment="Top"
+                    Orientation="Vertical">
                     <!--  Song title  -->
                     <controls:OpacityMaskView x:Name="TitleOpacityMaskView" HorizontalAlignment="Center">
                         <controls:OpacityMaskView.OpacityMask>
@@ -241,42 +244,15 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Background="Transparent"
-            Opacity=".5"
+            Opacity="0"
             PointerEntered="BottomCommandGrid_PointerEntered"
-            PointerExited="BottomCommandGrid_PointerExited">
+            PointerExited="BottomCommandGrid_PointerExited"
+            Visibility="{x:Bind ViewModel.IsNotMockMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <interactivity:Interaction.Behaviors>
-
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.IsImmersiveMode, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="False">
-                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0.5" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.IsImmersiveMode, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="True">
-                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                </interactivity:DataTriggerBehavior>
-
-            </interactivity:Interaction.Behaviors>
-
             <StackPanel HorizontalAlignment="Right" Spacing="4">
-
-                <Button
-                    x:Name="DesktopLyricsToggleButton"
-                    Click="DesktopLyricsToggleButton_Click"
-                    x:Uid="MainPageDesktopLyricsToggler"
-                    Content="{ui:FontIcon Glyph=&#xEB41;}"
-                    Style="{StaticResource GhostButtonStyle}">
-                    <Button.OpacityTransition>
-                        <ScalarTransition />
-                    </Button.OpacityTransition>
-                </Button>
 
                 <Button
                     x:Name="DisplayTypeSwitchButton"
@@ -314,13 +290,6 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
-
-                <ToggleButton
-                    x:Name="ImmersiveModeButton"
-                    x:Uid="MainWindowImmersiveMode"
-                    Content="{ui:FontIcon Glyph=&#xF131;}"
-                    IsChecked="{x:Bind ViewModel.IsImmersiveMode, Mode=TwoWay}"
-                    Style="{StaticResource GhostToggleButtonStyle}" />
 
                 <Button
                     x:Name="MusicInfoButton"
@@ -518,8 +487,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="DisplayTypeSwitchButton.Visibility" Value="Visible" />
-                        <Setter Target="DesktopLyricsToggleButton.Visibility" Value="Visible" />
-                        <Setter Target="ImmersiveModeButton.Visibility" Value="Visible" />
                         <Setter Target="MusicInfoButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
@@ -532,8 +499,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="DisplayTypeSwitchButton.Visibility" Value="Collapsed" />
-                        <Setter Target="DesktopLyricsToggleButton.Visibility" Value="Collapsed" />
-                        <Setter Target="ImmersiveModeButton.Visibility" Value="Collapsed" />
                         <Setter Target="MusicInfoButton.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>

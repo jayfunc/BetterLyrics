@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
@@ -17,9 +18,10 @@ using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class InAppLyricsPageViewModel
+    public partial class LyricsPageViewModel
         : BaseViewModel,
-            IRecipient<PropertyChangedMessage<int>>
+            IRecipient<PropertyChangedMessage<int>>,
+            IRecipient<PropertyChangedMessage<bool>>
     {
         [ObservableProperty]
         public partial bool IsDesktopLyricsOpened { get; set; } = false;
@@ -30,8 +32,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial InAppLyricsDisplayType DisplayType { get; set; } =
-            InAppLyricsDisplayType.PlaceholderOnly;
+        public partial LyricsDisplayType DisplayType { get; set; } =
+            LyricsDisplayType.PlaceholderOnly;
 
         [ObservableProperty]
         public partial BitmapImage? CoverImage { get; set; }
@@ -40,15 +42,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial SongInfo? SongInfo { get; set; } = null;
 
         [ObservableProperty]
-        public partial InAppLyricsDisplayType? PreferredDisplayType { get; set; } =
-            InAppLyricsDisplayType.SplitView;
+        public partial LyricsDisplayType? PreferredDisplayType { get; set; } =
+            LyricsDisplayType.SplitView;
 
         [ObservableProperty]
         public partial bool AboutToUpdateUI { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsImmersiveMode { get; set; }
 
         [ObservableProperty]
         public partial double CoverImageGridActualHeight { get; set; }
@@ -65,9 +63,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial bool IsFirstRun { get; set; }
 
+        [ObservableProperty]
+        public partial bool IsNotMockMode { get; set; } = true;
+
         private readonly IPlaybackService _playbackService;
 
-        public InAppLyricsPageViewModel(
+        public LyricsPageViewModel(
             ISettingsService settingsService,
             IPlaybackService playbackService
         )
@@ -112,8 +113,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void OnDisplayTypeChanged(object value)
         {
             int index = Convert.ToInt32(value);
-            PreferredDisplayType = (InAppLyricsDisplayType)index;
-            DisplayType = (InAppLyricsDisplayType)index;
+            PreferredDisplayType = (LyricsDisplayType)index;
+            DisplayType = (LyricsDisplayType)index;
         }
 
         [RelayCommand]
@@ -134,19 +135,19 @@ namespace BetterLyrics.WinUI3.ViewModels
                     ? null
                     : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
 
-            InAppLyricsDisplayType displayType;
+            LyricsDisplayType displayType;
 
             if (songInfo == null)
             {
-                displayType = InAppLyricsDisplayType.PlaceholderOnly;
+                displayType = LyricsDisplayType.PlaceholderOnly;
             }
-            else if (PreferredDisplayType is InAppLyricsDisplayType preferredDisplayType)
+            else if (PreferredDisplayType is LyricsDisplayType preferredDisplayType)
             {
                 displayType = preferredDisplayType;
             }
             else
             {
-                displayType = InAppLyricsDisplayType.SplitView;
+                displayType = LyricsDisplayType.SplitView;
             }
 
             DisplayType = displayType;
@@ -173,6 +174,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsViewModel.CoverImageRadius))
                 {
                     CoverImageRadius = message.NewValue;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is HostWindowViewModel)
+            {
+                if (message.PropertyName == nameof(HostWindowViewModel.IsDockMode))
+                {
+                    IsNotMockMode = !message.NewValue;
                 }
             }
         }

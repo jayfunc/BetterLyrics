@@ -1,4 +1,5 @@
 ﻿using System;
+using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
 
 namespace BetterLyrics.WinUI3.Services.Playback

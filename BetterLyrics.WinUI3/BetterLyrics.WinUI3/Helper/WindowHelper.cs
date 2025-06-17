@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BetterLyrics.WinUI3.Views;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using WinUIEx;
 
@@ -7,46 +9,61 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class WindowHelper
     {
-        public static void OpenSystemTrayWindow()
+        private static readonly Dictionary<Type, Window> _windowCache = new();
+
+        public static void HideSystemTitleBar(this Window window)
         {
-            var window = new OverlayWindow(clickThrough: true);
-            TrackWindow(window);
-            window.Navigate(typeof(SystemTrayPage));
-            window.Activate();
+            window.ExtendsContentIntoTitleBar = true;
+            window.AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
         }
 
-        public static void OpenDesktopLyricsWindow()
+        public static void HideSystemTitleBarAndSetCustomTitleBar(
+            this Window window,
+            UIElement titleBar
+        )
         {
-            var window = new OverlayWindow(listenOnActivatedWindowChange: true);
-            TrackWindow(window);
-            window.Navigate(typeof(DesktopLyricsPage));
-            AppBarHelper.Enable(window, 48);
-            window.Activate();
+            window.HideSystemTitleBar();
+            window.SetTitleBar(titleBar);
         }
 
         public static void OpenSettingsWindow()
         {
-            var window = new HostWindow();
-            TrackWindow(window);
-            window.Navigate(typeof(SettingsPage));
-            window.Activate();
+            OpenOrShowWindow(typeof(SettingsPage));
         }
 
-        public static void OpenInAppLyricsWindow()
+        public static void OpenLyricsWindow()
         {
-            var window = new HostWindow();
-            TrackWindow(window);
-            window.Navigate(typeof(InAppLyricsPage));
-            window.Activate();
+            OpenOrShowWindow(typeof(LyricsPage));
         }
 
-        public static void TrackWindow(Window window)
+        private static void OpenOrShowWindow(Type pageType)
         {
-            window.Closed += (sender, args) =>
+            if (_windowCache.TryGetValue(pageType, out var window))
             {
-                _activeWindows.Remove(window);
-            };
-            _activeWindows.Add(window);
+                if (window is HostWindow hostWindow)
+                {
+                    hostWindow.Navigate(pageType);
+                }
+                window.TryShow();
+            }
+            else
+            {
+                var newWindow = new HostWindow();
+                TrackWindow(newWindow, pageType);
+                newWindow.Navigate(pageType);
+                newWindow.Activate();
+            }
+        }
+
+        public static void TrackWindow(Window window, Type pageType = null)
+        {
+            if (pageType != null)
+            {
+                _windowCache[pageType] = window;
+            }
+
+            if (!_activeWindows.Contains(window))
+                _activeWindows.Add(window);
         }
 
         public static Window GetWindowForElement(UIElement element)
@@ -86,5 +103,21 @@ namespace BetterLyrics.WinUI3.Helper
         }
 
         private static List<Window> _activeWindows = new List<Window>();
+
+        public static void TryShow(this Window window)
+        {
+            if (window is not null)
+            {
+                window.Activate();
+            }
+        }
+
+        public static void TryHide(this Window window)
+        {
+            if (window is not null)
+            {
+                window.Hide();
+            }
+        }
     }
 }

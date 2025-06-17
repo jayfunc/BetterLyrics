@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Enums;
 using Microsoft.UI.Xaml;
 
 namespace BetterLyrics.WinUI3.Services.Settings

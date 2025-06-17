@@ -76,16 +76,11 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
                     // ViewModels (Singleton)
-                    .AddSingleton<SystemTrayPageViewModel>()
                     .AddSingleton<HostWindowViewModel>()
-                    .AddSingleton<OverlayWindowViewModel>()
                     .AddSingleton<SettingsViewModel>()
-                    .AddSingleton<InAppLyricsPageViewModel>()
-                    .AddSingleton<InAppLyricsRendererViewModel>()
-                    .AddSingleton<InAppLyricsSettingsControlViewModel>()
-                    .AddSingleton<DesktopLyricsPageViewModel>()
-                    .AddSingleton<DesktopLyricsRendererViewModel>()
-                    .AddSingleton<DesktopLyricsSettingsControlViewModel>()
+                    .AddSingleton<LyricsPageViewModel>()
+                    .AddSingleton<LyricsRendererViewModel>()
+                    .AddSingleton<LyricsSettingsControlViewModel>()
                     .BuildServiceProvider()
             );
         }
@@ -105,7 +100,7 @@ namespace BetterLyrics.WinUI3
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            WindowHelper.OpenSystemTrayWindow();
+            WindowHelper.OpenLyricsWindow();
         }
     }
 }

@@ -12,11 +12,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\LyricsSettingsControl.xaml" />
-    <None Remove="Renderer\DesktopLyricsRenderer.xaml" />
-    <None Remove="Renderer\InAppLyricsRenderer.xaml" />
-    <None Remove="Views\DesktopLyricsPage.xaml" />
-    <None Remove="Views\OverlayWindow.xaml" />
-    <None Remove="Views\SystemTrayPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo.ico" />
@@ -75,22 +70,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\DesktopLyricsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\OverlayWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="ViewModels\Lyrics\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\SystemTrayPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <!-- Publish Properties -->
   <PropertyGroup>
@@ -115,7 +95,7 @@
     <InheritWinAppVersionFrom>AssemblyVersion</InheritWinAppVersionFrom>
     <PackageVersionSettings>AssemblyVersion.None.None</PackageVersionSettings>
     <Version>2025.6.0</Version>
-    <AssemblyVersion>2025.6.17.0154</AssemblyVersion>
-    <FileVersion>2025.6.17.0154</FileVersion>
+    <AssemblyVersion>2025.6.17.1756</AssemblyVersion>
+    <FileVersion>2025.6.17.1756</FileVersion>
   </PropertyGroup>
 </Project>

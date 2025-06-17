@@ -1,50 +1,53 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.Playback;
 using BetterLyrics.WinUI3.Services.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI;
+using Windows.UI;
 
 namespace BetterInAppLyrics.WinUI3.ViewModels
 {
-    public partial class InAppLyricsSettingsControlViewModel : BaseLyricsSettingsControlViewModel
+    public partial class LyricsSettingsControlViewModel : BaseViewModel
     {
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial LyricsAlignmentType LyricsAlignmentType { get; set; }
+        public partial LyricsAlignmentType LyricsAlignmentType { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial int LyricsBlurAmount { get; set; }
+        public partial int LyricsBlurAmount { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial int LyricsVerticalEdgeOpacity { get; set; }
+        public partial int LyricsVerticalEdgeOpacity { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial float LyricsLineSpacingFactor { get; set; }
+        public partial float LyricsLineSpacingFactor { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial int LyricsFontSize { get; set; }
+        public partial int LyricsFontSize { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial bool IsLyricsGlowEffectEnabled { get; set; }
+        public partial bool IsLyricsGlowEffectEnabled { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial bool IsLyricsDynamicGlowEffectEnabled { get; set; }
+        public partial bool IsLyricsDynamicGlowEffectEnabled { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public override partial LyricsFontColorType LyricsFontColorType { get; set; }
+        public partial LyricsFontColorType LyricsFontColorType { get; set; }
 
-        public InAppLyricsSettingsControlViewModel(
-            ISettingsService settingsService,
-            IPlaybackService playbackService
-        )
-            : base(settingsService, playbackService)
+        public LyricsSettingsControlViewModel(ISettingsService settingsService)
+            : base(settingsService)
         {
             IsActive = true;
 

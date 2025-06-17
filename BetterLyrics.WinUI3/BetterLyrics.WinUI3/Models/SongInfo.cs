@@ -32,8 +32,7 @@ namespace BetterLyrics.WinUI3.Models
         public byte[]? AlbumArt { get; set; } = null;
 
         [ObservableProperty]
-        public partial ObservableCollection<Color> CoverImageDominantColors { get; set; } =
-            [.. Enumerable.Repeat(Colors.Transparent, ImageHelper.AccentColorCount)];
+        public partial List<Color>? CoverImageDominantColors { get; set; } = null;
 
         public SongInfo() { }
 

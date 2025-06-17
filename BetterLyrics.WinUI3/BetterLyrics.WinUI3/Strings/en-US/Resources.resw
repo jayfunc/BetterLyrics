@@ -223,9 +223,9 @@
     <value>Album art background opacity</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Settings - BetterLyrics</value>
   </data>
-  <data name="InAppLyricsPageTitle" xml:space="preserve">
+  <data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
@@ -382,7 +382,7 @@
     <value>Switch to desktop lyrics mode</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>Enter picture-in-picture mode</value>
+    <value>Picture-in-picture mode</value>
   </data>
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>Exit picture-in-picture mode</value>
@@ -390,8 +390,8 @@
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
     <value>Lyrics not found</value>
   </data>
-  <data name="SettingsPageInAppLyrics.Content" xml:space="preserve">
-    <value>In-app lyrics style &amp; effect</value>
+  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+    <value>Lyrics style &amp; effect</value>
   </data>
   <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
     <value>Desktop lyrics style &amp; effect</value>
@@ -419,5 +419,11 @@
   </data>
   <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
     <value>Lyrics not found</value>
+  </data>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>System tray - BetterLyrics</value>
+  </data>
+  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
+    <value>Dock mode</value>
   </data>
 </root>
