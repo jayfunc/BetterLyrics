@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Enums
 {
-    public enum LyricsWindowType
+    public enum AutoStartWindowType
     {
+        None,
         InAppLyrics,
         DesktopLyrics,
     }

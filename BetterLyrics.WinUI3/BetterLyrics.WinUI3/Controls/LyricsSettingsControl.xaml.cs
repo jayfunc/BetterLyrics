@@ -40,15 +40,15 @@ namespace BetterLyrics.WinUI3.Controls
         //    new PropertyMetadata(null)
         //);
 
-        public BaseLyricsSettingsControlViewModel ViewModel
+        public LyricsSettingsControlViewModel ViewModel
         {
-            get => (BaseLyricsSettingsControlViewModel)GetValue(ViewModelProperty);
+            get => (LyricsSettingsControlViewModel)GetValue(ViewModelProperty);
             set => SetValue(ViewModelProperty, value);
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register(
             nameof(ViewModel),
-            typeof(BaseLyricsSettingsControlViewModel),
+            typeof(LyricsSettingsControlViewModel),
             typeof(LyricsSettingsControl),
             new PropertyMetadata(null)
         );

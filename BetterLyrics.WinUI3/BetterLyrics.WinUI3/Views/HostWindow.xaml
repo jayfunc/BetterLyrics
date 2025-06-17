@@ -14,7 +14,7 @@
 
     <Grid
         x:Name="RootGrid"
-        KeyDown="RootGrid_KeyDown"
+        Loaded="RootGrid_Loaded"
         RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
 
         <Frame
@@ -27,7 +27,9 @@
             Height="{x:Bind ViewModel.TitleBarHeight, Mode=OneWay}"
             VerticalAlignment="Top"
             Background="Transparent"
-            Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}">
+            Opacity="0"
+            PointerEntered="TopCommandGrid_PointerEntered"
+            PointerExited="TopCommandGrid_PointerExited">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -44,15 +46,11 @@
                     x:Name="AppTitleTextBlock"
                     FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                     FontWeight="SemiBold"
-                    Opacity=".5"
                     Text="{x:Bind Title, Mode=OneWay}" />
 
             </StackPanel>
 
-            <StackPanel
-                HorizontalAlignment="Right"
-                Opacity=".5"
-                Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
                 <Button x:Name="MoreButton" Style="{StaticResource TitleBarButtonStyle}">
                     <Grid>
@@ -84,14 +82,14 @@
                                 x:Name="FullScreenFlyoutItem"
                                 x:Uid="BaseWindowFullScreenFlyoutItem"
                                 Click="FullScreenFlyoutItem_Click" />
-                            <MenuFlyoutItem
+                            <ToggleMenuFlyoutItem
+                                x:Name="DockFlyoutItem"
+                                x:Uid="HostWindowDockFlyoutItem"
+                                Click="DockFlyoutItem_Click" />
+                            <ToggleMenuFlyoutItem
                                 x:Name="MiniFlyoutItem"
                                 x:Uid="BaseWindowMiniFlyoutItem"
                                 Click="MiniFlyoutItem_Click" />
-                            <MenuFlyoutItem
-                                x:Name="UnMiniFlyoutItem"
-                                x:Uid="BaseWindowUnMiniFlyoutItem"
-                                Click="UnMiniFlyoutItem_Click" />
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>

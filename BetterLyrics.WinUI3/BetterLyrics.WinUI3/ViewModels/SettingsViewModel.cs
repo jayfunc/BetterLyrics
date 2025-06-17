@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
@@ -89,22 +90,22 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [ObservableProperty]
-        public partial Models.Language Language { get; set; }
+        public partial Enums.Language Language { get; set; }
 
-        partial void OnLanguageChanged(Models.Language value)
+        partial void OnLanguageChanged(Enums.Language value)
         {
             switch (value)
             {
-                case Models.Language.FollowSystem:
+                case Enums.Language.FollowSystem:
                     ApplicationLanguages.PrimaryLanguageOverride = "";
                     break;
-                case Models.Language.English:
+                case Enums.Language.English:
                     ApplicationLanguages.PrimaryLanguageOverride = "en-US";
                     break;
-                case Models.Language.SimplifiedChinese:
+                case Enums.Language.SimplifiedChinese:
                     ApplicationLanguages.PrimaryLanguageOverride = "zh-CN";
                     break;
-                case Models.Language.TraditionalChinese:
+                case Enums.Language.TraditionalChinese:
                     ApplicationLanguages.PrimaryLanguageOverride = "zh-TW";
                     break;
                 default:

@@ -9,14 +9,14 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public sealed partial class InAppLyricsRenderer : UserControl
+    public sealed partial class LyricsRenderer : UserControl
     {
-        public InAppLyricsRendererViewModel ViewModel { get; set; }
+        public LyricsRendererViewModel ViewModel { get; set; }
 
-        public InAppLyricsRenderer()
+        public LyricsRenderer()
         {
             InitializeComponent();
-            ViewModel = Ioc.Default.GetRequiredService<InAppLyricsRendererViewModel>();
+            ViewModel = Ioc.Default.GetRequiredService<LyricsRendererViewModel>();
         }
 
         private void LyricsCanvas_Draw(

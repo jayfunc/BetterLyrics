@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using Newtonsoft.Json;
@@ -243,7 +243,7 @@ namespace BetterLyrics.WinUI3.Services.Settings
             SetDefault(ThemeTypeKey, (int)ElementTheme.Default);
             SetDefault(LanguageKey, (int)Language.FollowSystem);
             SetDefault(MusicLibrariesKey, "[]");
-            SetDefault(BackdropTypeKey, (int)Models.BackdropType.DesktopAcrylic);
+            SetDefault(BackdropTypeKey, (int)BackdropType.DesktopAcrylic);
             // App behavior
             SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.InAppLyrics);
             // Album art

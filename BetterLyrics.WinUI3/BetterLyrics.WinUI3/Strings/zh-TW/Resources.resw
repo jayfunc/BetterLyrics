@@ -223,9 +223,9 @@
     <value>專輯圖片背景不透明度</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>設定</value>
+    <value>設定 - BetterLyrics</value>
   </data>
-  <data name="InAppLyricsPageTitle" xml:space="preserve">
+  <data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
@@ -382,7 +382,7 @@
     <value>切換到桌面歌詞模式</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>進入畫中畫模式</value>
+    <value>畫中畫模式</value>
   </data>
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>退出畫中畫模式</value>
@@ -390,8 +390,8 @@
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
     <value>找不到歌詞</value>
   </data>
-  <data name="SettingsPageInAppLyrics.Content" xml:space="preserve">
-    <value>應用程式內歌詞樣式與動效</value>
+  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+    <value>歌詞樣式與動效</value>
   </data>
   <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
     <value>桌面歌詞樣式與動效</value>
@@ -419,5 +419,11 @@
   </data>
   <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
     <value>找不到歌詞</value>
+  </data>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>系統托盤 - BetterLyrics</value>
+  </data>
+  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
+    <value>停靠模式</value>
   </data>
 </root>

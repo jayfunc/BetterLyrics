@@ -45,13 +45,9 @@
                     Icon="{ui:FontIcon Glyph=&#xE80A;}"
                     Tag="AlbumArtStyle" />
                 <NavigationViewItem
-                    x:Uid="SettingsPageInAppLyrics"
+                    x:Uid="SettingsPageLyrics"
                     Icon="{ui:FontIcon Glyph=&#xED1E;}"
-                    Tag="InAppLyrics" />
-                <NavigationViewItem
-                    x:Uid="SettingsPageDesktopLyrics"
-                    Icon="{ui:FontIcon Glyph=&#xEB41;}"
-                    Tag="DesktopLyrics" />
+                    Tag="Lyrics" />
                 <NavigationViewItem
                     x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon Glyph=&#xE946;}"
@@ -297,12 +293,8 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <controls:Case Value="InAppLyrics">
-                            <uc:LyricsSettingsControl ViewModel="{x:Bind InAppLyricsSettingsControlViewModel}" />
-                        </controls:Case>
-
-                        <controls:Case Value="DesktopLyrics">
-                            <uc:LyricsSettingsControl ViewModel="{x:Bind DesktopLyricsSettingsControlViewModel}" />
+                        <controls:Case Value="Lyrics">
+                            <uc:LyricsSettingsControl ViewModel="{x:Bind LyricsSettingsControlViewModel}" />
                         </controls:Case>
 
                         <controls:Case Value="About">

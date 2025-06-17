@@ -11,20 +11,63 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public static class AppBarHelper
+    public static class DockHelper
     {
-        // 记录哪些 HWND 已经注册 AppBar
         private static readonly HashSet<IntPtr> _registered = [];
 
-        /// <summary>
-        /// Enable AppBar function
-        /// </summary>
-        /// <param name="window">Target window</param>
-        /// <param name="appBarHeight">App bar height</param>
-        /// <param name="clickThrough">Is click-through enabled</param>
+        private static readonly Dictionary<IntPtr, RECT> _originalPositions = [];
+
+        private static readonly Dictionary<IntPtr, WindowStyle> _originalWindowStyle = [];
+
+        public static void Disable(Window window)
+        {
+            window.SetIsShownInSwitchers(true);
+            window.ExtendsContentIntoTitleBar = true;
+
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            window.SetWindowStyle(_originalWindowStyle[hwnd]);
+            _originalWindowStyle.Remove(hwnd);
+
+            if (_originalPositions.TryGetValue(hwnd, out var rect))
+            {
+                SetWindowPos(
+                    hwnd,
+                    IntPtr.Zero,
+                    rect.left,
+                    rect.top,
+                    rect.right - rect.left,
+                    rect.bottom - rect.top,
+                    SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
+                );
+                _originalPositions.Remove(hwnd);
+            }
+
+            window.SetIsAlwaysOnTop(false);
+
+            UnregisterAppBar(hwnd);
+        }
+
         public static void Enable(Window window, int appBarHeight)
         {
+            window.SetIsShownInSwitchers(false);
+            window.ExtendsContentIntoTitleBar = false;
+
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            if (!_originalWindowStyle.ContainsKey(hwnd))
+            {
+                _originalWindowStyle[hwnd] = window.GetWindowStyle();
+            }
+            window.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
+
+            if (!_originalPositions.ContainsKey(hwnd))
+            {
+                if (GetWindowRect(hwnd, out var rect))
+                {
+                    _originalPositions[hwnd] = rect;
+                }
+            }
 
             RegisterAppBar(hwnd, appBarHeight);
 
@@ -32,30 +75,21 @@ namespace BetterLyrics.WinUI3.Helper
             int screenHeight = GetSystemMetrics(SM_CYSCREEN);
             SetWindowPos(
                 hwnd,
-                HWND_TOPMOST,
+                IntPtr.Zero,
                 0,
                 0,
                 screenWidth,
                 appBarHeight,
                 SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
             );
+
+            window.SetIsAlwaysOnTop(true);
         }
 
-        /// <summary>
-        /// 关闭并注销 AppBar，占位恢复。
-        /// </summary>
-        public static void Disable(Window window)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-            UnregisterAppBar(hwnd);
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
-            // 移除 WS_EX_TRANSPARENT（可根据需求恢复其他样式）
-            int exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            exStyle &= ~WS_EX_TRANSPARENT;
-            SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
-        }
-
-        #region AppBar 注册逻辑
+        #region AppBar registration
         private const uint ABM_NEW = 0x00000000;
         private const uint ABM_REMOVE = 0x00000001;
         private const uint ABM_SETPOS = 0x00000003;
@@ -121,27 +155,17 @@ namespace BetterLyrics.WinUI3.Helper
         }
         #endregion
 
-        #region Win32 Helper & 常量
-
-        private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_TRANSPARENT = 0x20;
+        #region Win32 Helper and Constants
 
         private const int SWP_NOACTIVATE = 0x0010;
         private const int SWP_NOOWNERZORDER = 0x0200;
         private const int SWP_SHOWWINDOW = 0x0040;
-        private static readonly IntPtr HWND_TOPMOST = new(-1);
 
         private const int SM_CXSCREEN = 0;
         private const int SM_CYSCREEN = 0;
 
         [DllImport("user32.dll")]
         private static extern int GetSystemMetrics(int nIndex);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool SetWindowPos(
@@ -152,14 +176,6 @@ namespace BetterLyrics.WinUI3.Helper
             int cx,
             int cy,
             uint uFlags
-        );
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool SetLayeredWindowAttributes(
-            IntPtr hwnd,
-            uint crKey,
-            byte bAlpha,
-            uint dwFlags
         );
         #endregion
     }

@@ -2,8 +2,12 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -13,15 +17,15 @@ namespace BetterLyrics.WinUI3.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class InAppLyricsPage : Page
+    public sealed partial class LyricsPage : Page
     {
-        public InAppLyricsPageViewModel ViewModel => (InAppLyricsPageViewModel)DataContext;
+        public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
 
-        public InAppLyricsPage()
+        public LyricsPage()
         {
             this.InitializeComponent();
 
-            DataContext = Ioc.Default.GetService<InAppLyricsPageViewModel>();
+            DataContext = Ioc.Default.GetService<LyricsPageViewModel>();
         }
 
         private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
@@ -42,7 +46,7 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
         )
         {
-            if (ViewModel.IsImmersiveMode && BottomCommandGrid.Opacity == 0)
+            if (BottomCommandGrid.Opacity == 0)
                 BottomCommandGrid.Opacity = .5;
         }
 
@@ -51,7 +55,7 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
         )
         {
-            if (ViewModel.IsImmersiveMode && BottomCommandGrid.Opacity == .5)
+            if (BottomCommandGrid.Opacity == .5)
                 BottomCommandGrid.Opacity = 0;
         }
 
@@ -68,12 +72,6 @@ namespace BetterLyrics.WinUI3.Views
         private void CoverImageGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.CoverImageGridActualHeight = e.NewSize.Height;
-        }
-
-        private void DesktopLyricsToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHelper.GetWindowForElement(this).Close();
-            WindowHelper.OpenDesktopLyricsWindow();
         }
     }
 }

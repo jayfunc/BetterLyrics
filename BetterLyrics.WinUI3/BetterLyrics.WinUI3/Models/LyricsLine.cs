@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using BetterLyrics.WinUI3.Enums;
 
 namespace BetterLyrics.WinUI3.Models
 {

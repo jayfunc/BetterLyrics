@@ -15,11 +15,8 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class SettingsPage : Page
     {
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
-        public InAppLyricsSettingsControlViewModel InAppLyricsSettingsControlViewModel =>
-            Ioc.Default.GetRequiredService<InAppLyricsSettingsControlViewModel>();
-
-        public DesktopLyricsSettingsControlViewModel DesktopLyricsSettingsControlViewModel =>
-            Ioc.Default.GetRequiredService<DesktopLyricsSettingsControlViewModel>();
+        public LyricsSettingsControlViewModel LyricsSettingsControlViewModel =>
+            Ioc.Default.GetRequiredService<LyricsSettingsControlViewModel>();
 
         public SettingsPage()
         {

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Enums
 {
-    public enum LyricsAlignmentType
+    public enum LyricsType
     {
-        Left,
-        Center,
-        Right,
+        InAppLyrics,
+        DesktopLyrics,
     }
 }

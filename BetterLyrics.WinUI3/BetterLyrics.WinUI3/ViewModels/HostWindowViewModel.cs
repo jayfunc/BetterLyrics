@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
@@ -9,13 +10,18 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3
 {
     public partial class HostWindowViewModel
-        : BaseWindowViewModel,
-            IRecipient<PropertyChangedMessage<bool>>
+        : BaseViewModel,
+            IRecipient<PropertyChangedMessage<TitleBarType>>,
+            IRecipient<PropertyChangedMessage<ElementTheme>>
     {
+        [ObservableProperty]
+        public partial ElementTheme ThemeType { get; set; }
+
         [ObservableProperty]
         public partial double AppLogoImageIconHeight { get; set; }
 
@@ -32,23 +38,22 @@ namespace BetterLyrics.WinUI3
         public partial bool ShowInfoBar { get; set; } = false;
 
         [ObservableProperty]
-        public override partial BackdropType BackdropType { get; set; }
+        public partial TitleBarType TitleBarType { get; set; }
 
         [ObservableProperty]
-        public override partial TitleBarType TitleBarType { get; set; }
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsDockMode { get; set; } = false;
 
         [ObservableProperty]
-        public partial bool IsImmersiveMode { get; set; }
-
-        [ObservableProperty]
-        public partial int TopCommandGridOpacity { get; set; } = 1;
+        [NotifyPropertyChangedRecipients]
+        public partial Color ActivatedWindowAccentColor { get; set; }
 
         public HostWindowViewModel(ISettingsService settingsService)
             : base(settingsService)
         {
             TitleBarType = _settingsService.TitleBarType;
+            ThemeType = _settingsService.ThemeType;
             OnTitleBarTypeChanged(TitleBarType);
-            BackdropType = _settingsService.BackdropType;
 
             WeakReferenceMessenger.Default.Register<ShowNotificatonMessage>(
                 this,
@@ -71,19 +76,12 @@ namespace BetterLyrics.WinUI3
             );
         }
 
-        partial void OnIsImmersiveModeChanged(bool value)
+        public void UpdateAccentColor(nint hwnd)
         {
-            if (value)
-            {
-                TopCommandGridOpacity = 0;
-            }
-            else
-            {
-                TopCommandGridOpacity = 1;
-            }
+            ActivatedWindowAccentColor = WindowColorHelper
+                .GetDominantColorBelow(hwnd)
+                .ToWindowsUIColor();
         }
-
-        partial void OnBackdropTypeChanged(BackdropType value) { }
 
         partial void OnTitleBarTypeChanged(TitleBarType value)
         {
@@ -118,15 +116,20 @@ namespace BetterLyrics.WinUI3
             return null;
         }
 
-        public void Receive(PropertyChangedMessage<bool> message)
+        public void Receive(PropertyChangedMessage<TitleBarType> message)
         {
-            if (message.Sender is InAppLyricsPageViewModel)
+            if (message.Sender is SettingsViewModel)
             {
-                if (message.PropertyName == nameof(InAppLyricsPageViewModel.IsImmersiveMode))
+                if (message.PropertyName == nameof(SettingsViewModel.TitleBarType))
                 {
-                    IsImmersiveMode = message.NewValue;
+                    TitleBarType = message.NewValue;
                 }
             }
+        }
+
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            ThemeType = message.NewValue;
         }
     }
 }
