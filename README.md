@@ -126,7 +126,7 @@ So technically, as long as you are using the music apps (like
 
 ## Inspired by
 
-- [BetterNCM](https://github.com/std-microblock/BetterNCM)
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
