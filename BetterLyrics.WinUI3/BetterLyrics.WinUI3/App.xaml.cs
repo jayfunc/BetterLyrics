@@ -71,12 +71,12 @@ namespace BetterLyrics.WinUI3
                         loggingBuilder.ClearProviders();
                         loggingBuilder.AddSerilog();
                     })
-                    // Services (Singleton)
+                    // Services
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
-                    // ViewModels (Singleton)
-                    .AddSingleton<HostWindowViewModel>()
+                    // ViewModels
+                    .AddTransient<HostWindowViewModel>()
                     .AddSingleton<SettingsViewModel>()
                     .AddSingleton<LyricsPageViewModel>()
                     .AddSingleton<LyricsRendererViewModel>()

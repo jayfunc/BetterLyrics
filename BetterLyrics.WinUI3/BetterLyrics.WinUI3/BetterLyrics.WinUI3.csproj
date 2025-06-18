@@ -11,6 +11,9 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\CustomTransform.bin" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Logo.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -12,10 +12,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid
-        x:Name="RootGrid"
-        Loaded="RootGrid_Loaded"
-        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
+    <Grid x:Name="RootGrid" RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
 
         <Frame
             x:Name="RootFrame"
@@ -85,7 +82,8 @@
                             <ToggleMenuFlyoutItem
                                 x:Name="DockFlyoutItem"
                                 x:Uid="HostWindowDockFlyoutItem"
-                                Click="DockFlyoutItem_Click" />
+                                Command="{x:Bind ViewModel.ToggleDockModeCommand}"
+                                IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
                             <ToggleMenuFlyoutItem
                                 x:Name="MiniFlyoutItem"
                                 x:Uid="BaseWindowMiniFlyoutItem"
