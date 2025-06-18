@@ -20,6 +20,10 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
+        public partial LyricsFontWeight LyricsFontWeight { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         public partial int LyricsBlurAmount { get; set; }
 
         [ObservableProperty]
@@ -40,66 +44,71 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial bool IsLyricsDynamicGlowEffectEnabled { get; set; }
+        public partial LyricsFontColorType LyricsFontColorType { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial LyricsFontColorType LyricsFontColorType { get; set; }
+        public partial LyricsGlowEffectScope LyricsGlowEffectScope { get; set; }
 
         public LyricsSettingsControlViewModel(ISettingsService settingsService)
             : base(settingsService)
         {
             IsActive = true;
 
-            LyricsAlignmentType = _settingsService.InAppLyricsAlignmentType;
-            LyricsBlurAmount = _settingsService.InAppLyricsBlurAmount;
-            LyricsVerticalEdgeOpacity = _settingsService.InAppLyricsVerticalEdgeOpacity;
-            LyricsLineSpacingFactor = _settingsService.InAppLyricsLineSpacingFactor;
-            LyricsFontSize = _settingsService.InAppLyricsFontSize;
-            IsLyricsGlowEffectEnabled = _settingsService.IsInAppLyricsGlowEffectEnabled;
-            IsLyricsDynamicGlowEffectEnabled =
-                _settingsService.IsInAppLyricsDynamicGlowEffectEnabled;
-            LyricsFontColorType = _settingsService.InAppLyricsFontColorType;
+            LyricsAlignmentType = _settingsService.LyricsAlignmentType;
+            LyricsFontWeight = _settingsService.LyricsFontWeight;
+            LyricsBlurAmount = _settingsService.LyricsBlurAmount;
+            LyricsVerticalEdgeOpacity = _settingsService.LyricsVerticalEdgeOpacity;
+            LyricsLineSpacingFactor = _settingsService.LyricsLineSpacingFactor;
+            LyricsFontSize = _settingsService.LyricsFontSize;
+            IsLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
+            LyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
+            LyricsFontColorType = _settingsService.LyricsFontColorType;
         }
 
         partial void OnLyricsAlignmentTypeChanged(LyricsAlignmentType value)
         {
-            _settingsService.InAppLyricsAlignmentType = value;
+            _settingsService.LyricsAlignmentType = value;
+        }
+
+        partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
+        {
+            _settingsService.LyricsFontWeight = value;
         }
 
         partial void OnLyricsBlurAmountChanged(int value)
         {
-            _settingsService.InAppLyricsBlurAmount = value;
+            _settingsService.LyricsBlurAmount = value;
         }
 
         partial void OnLyricsVerticalEdgeOpacityChanged(int value)
         {
-            _settingsService.InAppLyricsVerticalEdgeOpacity = value;
+            _settingsService.LyricsVerticalEdgeOpacity = value;
         }
 
         partial void OnLyricsLineSpacingFactorChanged(float value)
         {
-            _settingsService.InAppLyricsLineSpacingFactor = value;
+            _settingsService.LyricsLineSpacingFactor = value;
         }
 
         partial void OnLyricsFontSizeChanged(int value)
         {
-            _settingsService.InAppLyricsFontSize = value;
+            _settingsService.LyricsFontSize = value;
         }
 
         partial void OnIsLyricsGlowEffectEnabledChanged(bool value)
         {
-            _settingsService.IsInAppLyricsGlowEffectEnabled = value;
-        }
-
-        partial void OnIsLyricsDynamicGlowEffectEnabledChanged(bool value)
-        {
-            _settingsService.IsInAppLyricsDynamicGlowEffectEnabled = value;
+            _settingsService.IsLyricsGlowEffectEnabled = value;
         }
 
         partial void OnLyricsFontColorTypeChanged(LyricsFontColorType value)
         {
-            _settingsService.InAppLyricsFontColorType = value;
+            _settingsService.LyricsFontColorType = value;
+        }
+
+        partial void OnLyricsGlowEffectScopeChanged(LyricsGlowEffectScope value)
+        {
+            _settingsService?.LyricsGlowEffectScope = value;
         }
     }
 }

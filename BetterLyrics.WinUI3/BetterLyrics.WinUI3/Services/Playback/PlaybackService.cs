@@ -51,7 +51,7 @@ namespace BetterLyrics.WinUI3.Services.Playback
             SessionManager_CurrentSessionChanged(_sessionManager, null);
         }
 
-        private void ReSendingMessages()
+        public void ReSendingMessages()
         {
             // Re-send messages to update UI
             CurrentSession_MediaPropertiesChanged(_currentSession, null);

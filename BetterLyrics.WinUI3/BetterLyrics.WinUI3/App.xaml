@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:BetterLyrics.WinUI3.Converter"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
-    xmlns:local="using:BetterLyrics.WinUI3">
+    xmlns:local="using:BetterLyrics.WinUI3"
+    xmlns:media="using:CommunityToolkit.WinUI.Media">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

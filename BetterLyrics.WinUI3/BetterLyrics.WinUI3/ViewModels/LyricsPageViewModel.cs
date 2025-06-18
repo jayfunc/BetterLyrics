@@ -23,8 +23,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<int>>,
             IRecipient<PropertyChangedMessage<bool>>
     {
-        [ObservableProperty]
-        public partial bool IsDesktopLyricsOpened { get; set; } = false;
+        private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToDockMode;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -135,6 +134,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                     ? null
                     : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
 
+            TrySwitchToPreferredDisplayType(songInfo);
+
+            AboutToUpdateUI = false;
+        }
+
+        private void TrySwitchToPreferredDisplayType(SongInfo? songInfo)
+        {
             LyricsDisplayType displayType;
 
             if (songInfo == null)
@@ -151,8 +157,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             DisplayType = displayType;
-
-            AboutToUpdateUI = false;
         }
 
         public void OpenMatchedFileFolderInFileExplorer(string path)
@@ -185,6 +189,29 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(HostWindowViewModel.IsDockMode))
                 {
                     IsNotMockMode = !message.NewValue;
+                    if (message.NewValue)
+                    {
+                        _preferredDisplayTypeBeforeSwitchToDockMode = PreferredDisplayType;
+                        PreferredDisplayType = LyricsDisplayType.LyricsOnly;
+                    }
+                    else
+                    {
+                        PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToDockMode;
+                    }
+                    TrySwitchToPreferredDisplayType(SongInfo);
+                }
+            }
+            else if (message.Sender is SettingsViewModel)
+            {
+                if (
+                    message.PropertyName
+                    == nameof(SettingsViewModel.IsRebuildingLyricsIndexDatabase)
+                )
+                {
+                    if (!message.NewValue)
+                    {
+                        _playbackService.ReSendingMessages();
+                    }
                 }
             }
         }

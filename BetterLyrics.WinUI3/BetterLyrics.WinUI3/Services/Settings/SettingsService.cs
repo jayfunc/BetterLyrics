@@ -34,29 +34,17 @@ namespace BetterLyrics.WinUI3.Services.Settings
         private const string TitleBarTypeKey = "TitleBarType";
         private const string CoverImageRadiusKey = "CoverImageRadius";
 
-        // In-app lyrics
-        private const string InAppLyricsAlignmentTypeKey = "InAppLyricsAlignmentType";
-        private const string InAppLyricsBlurAmountKey = "InAppLyricsBlurAmount";
-        private const string InAppLyricsVerticalEdgeOpacityKey = "InAppLyricsVerticalEdgeOpacity";
-        private const string InAppLyricsLineSpacingFactorKey = "InAppLyricsLineSpacingFactor";
-        private const string InAppLyricsFontSizeKey = "InAppLyricsFontSize";
-        private const string IsInAppLyricsGlowEffectEnabledKey = "IsInAppLyricsGlowEffectEnabled";
-        private const string IsInAppLyricsDynamicGlowEffectEnabledKey =
-            "IsInAppLyricsDynamicGlowEffectEnabled";
-        private const string InAppLyricsFontColorTypeKey = "InAppLyricsFontColorType";
-
-        // Desktop lyrics
-        private const string DesktopLyricsAlignmentTypeKey = "DesktopLyricsAlignmentType";
-        private const string DesktopLyricsBlurAmountKey = "DesktopLyricsBlurAmount";
-        private const string DesktopLyricsVerticalEdgeOpacityKey =
-            "DesktopLyricsVerticalEdgeOpacity";
-        private const string DesktopLyricsLineSpacingFactorKey = "DesktopLyricsLineSpacingFactor";
-        private const string DesktopLyricsFontSizeKey = "DesktopLyricsFontSize";
-        private const string IsDesktopLyricsGlowEffectEnabledKey =
-            "IsDesktopLyricsGlowEffectEnabled";
-        private const string IsDesktopLyricsDynamicGlowEffectEnabledKey =
-            "IsDesktopLyricsDynamicGlowEffectEnabled";
-        private const string DesktopLyricsFontColorTypeKey = "DesktopLyricsFontColorType";
+        private const string LyricsAlignmentTypeKey = "LyricsAlignmentType";
+        private const string LyricsFontWeightKey = "LyricsFontWeightKey";
+        private const string LyricsBlurAmountKey = "LyricsBlurAmount";
+        private const string LyricsVerticalEdgeOpacityKey = "LyricsVerticalEdgeOpacity";
+        private const string LyricsLineSpacingFactorKey = "LyricsLineSpacingFactor";
+        private const string LyricsFontSizeKey = "LyricsFontSize";
+        private const string IsLyricsGlowEffectEnabledKey = "IsLyricsGlowEffectEnabled";
+        private const string IsLyricsDynamicGlowEffectEnabledKey =
+            "IsLyricsDynamicGlowEffectEnabled";
+        private const string LyricsFontColorTypeKey = "LyricsFontColorType";
+        private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
 
         // Notification
         private const string NeverShowEnterFullScreenMessageKey = "NeverShowEnterFullScreenMessage";
@@ -138,100 +126,58 @@ namespace BetterLyrics.WinUI3.Services.Settings
             set => SetValue(CoverImageRadiusKey, value);
         }
 
-        public LyricsAlignmentType InAppLyricsAlignmentType
+        public LyricsAlignmentType LyricsAlignmentType
         {
-            get => (LyricsAlignmentType)GetValue<int>(InAppLyricsAlignmentTypeKey);
-            set => SetValue(InAppLyricsAlignmentTypeKey, (int)value);
+            get => (LyricsAlignmentType)GetValue<int>(LyricsAlignmentTypeKey);
+            set => SetValue(LyricsAlignmentTypeKey, (int)value);
         }
 
-        public LyricsAlignmentType DesktopLyricsAlignmentType
+        public LyricsFontWeight LyricsFontWeight
         {
-            get => (LyricsAlignmentType)GetValue<int>(DesktopLyricsAlignmentTypeKey);
-            set => SetValue(DesktopLyricsAlignmentTypeKey, (int)value);
+            get => (LyricsFontWeight)GetValue<int>(LyricsFontWeightKey);
+            set => SetValue(LyricsFontWeightKey, (int)value);
         }
 
-        public int InAppLyricsBlurAmount
+        public int LyricsBlurAmount
         {
-            get => GetValue<int>(InAppLyricsBlurAmountKey);
-            set => SetValue(InAppLyricsBlurAmountKey, value);
+            get => GetValue<int>(LyricsBlurAmountKey);
+            set => SetValue(LyricsBlurAmountKey, value);
         }
 
-        public int DesktopLyricsBlurAmount
+        public int LyricsVerticalEdgeOpacity
         {
-            get => GetValue<int>(DesktopLyricsBlurAmountKey);
-            set => SetValue(DesktopLyricsBlurAmountKey, value);
+            get => GetValue<int>(LyricsVerticalEdgeOpacityKey);
+            set => SetValue(LyricsVerticalEdgeOpacityKey, value);
         }
 
-        public int InAppLyricsVerticalEdgeOpacity
+        public float LyricsLineSpacingFactor
         {
-            get => GetValue<int>(InAppLyricsVerticalEdgeOpacityKey);
-            set => SetValue(InAppLyricsVerticalEdgeOpacityKey, value);
+            get => GetValue<float>(LyricsLineSpacingFactorKey);
+            set => SetValue(LyricsLineSpacingFactorKey, value);
         }
 
-        public int DesktopLyricsVerticalEdgeOpacity
+        public int LyricsFontSize
         {
-            get => GetValue<int>(DesktopLyricsVerticalEdgeOpacityKey);
-            set => SetValue(DesktopLyricsVerticalEdgeOpacityKey, value);
+            get => GetValue<int>(LyricsFontSizeKey);
+            set => SetValue(LyricsFontSizeKey, value);
         }
 
-        public float InAppLyricsLineSpacingFactor
+        public bool IsLyricsGlowEffectEnabled
         {
-            get => GetValue<float>(InAppLyricsLineSpacingFactorKey);
-            set => SetValue(InAppLyricsLineSpacingFactorKey, value);
+            get => GetValue<bool>(IsLyricsGlowEffectEnabledKey);
+            set => SetValue(IsLyricsGlowEffectEnabledKey, value);
         }
 
-        public float DesktopLyricsLineSpacingFactor
+        public LyricsGlowEffectScope LyricsGlowEffectScope
         {
-            get => GetValue<float>(DesktopLyricsLineSpacingFactorKey);
-            set => SetValue(DesktopLyricsLineSpacingFactorKey, value);
+            get => (LyricsGlowEffectScope)GetValue<int>(LyricsGlowEffectScopeKey);
+            set => SetValue(LyricsGlowEffectScopeKey, (int)value);
         }
 
-        public int InAppLyricsFontSize
+        public LyricsFontColorType LyricsFontColorType
         {
-            get => GetValue<int>(InAppLyricsFontSizeKey);
-            set => SetValue(InAppLyricsFontSizeKey, value);
-        }
-
-        public int DesktopLyricsFontSize
-        {
-            get => GetValue<int>(DesktopLyricsFontSizeKey);
-            set => SetValue(DesktopLyricsFontSizeKey, value);
-        }
-
-        public bool IsInAppLyricsGlowEffectEnabled
-        {
-            get => GetValue<bool>(IsInAppLyricsGlowEffectEnabledKey);
-            set => SetValue(IsInAppLyricsGlowEffectEnabledKey, value);
-        }
-
-        public bool IsDesktopLyricsGlowEffectEnabled
-        {
-            get => GetValue<bool>(IsDesktopLyricsGlowEffectEnabledKey);
-            set => SetValue(IsDesktopLyricsGlowEffectEnabledKey, value);
-        }
-
-        public bool IsInAppLyricsDynamicGlowEffectEnabled
-        {
-            get => GetValue<bool>(IsInAppLyricsDynamicGlowEffectEnabledKey);
-            set => SetValue(IsInAppLyricsDynamicGlowEffectEnabledKey, value);
-        }
-
-        public bool IsDesktopLyricsDynamicGlowEffectEnabled
-        {
-            get => GetValue<bool>(IsDesktopLyricsDynamicGlowEffectEnabledKey);
-            set => SetValue(IsDesktopLyricsDynamicGlowEffectEnabledKey, value);
-        }
-
-        public LyricsFontColorType InAppLyricsFontColorType
-        {
-            get => (LyricsFontColorType)GetValue<int>(InAppLyricsFontColorTypeKey);
-            set => SetValue(InAppLyricsFontColorTypeKey, (int)value);
-        }
-
-        public LyricsFontColorType DesktopLyricsFontColorType
-        {
-            get => (LyricsFontColorType)GetValue<int>(DesktopLyricsFontColorTypeKey);
-            set => SetValue(DesktopLyricsFontColorTypeKey, (int)value);
+            get => (LyricsFontColorType)GetValue<int>(LyricsFontColorTypeKey);
+            set => SetValue(LyricsFontColorTypeKey, (int)value);
         }
 
         public SettingsService()
@@ -245,7 +191,7 @@ namespace BetterLyrics.WinUI3.Services.Settings
             SetDefault(MusicLibrariesKey, "[]");
             SetDefault(BackdropTypeKey, (int)BackdropType.DesktopAcrylic);
             // App behavior
-            SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.InAppLyrics);
+            SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.StandardMode);
             // Album art
             SetDefault(IsCoverOverlayEnabledKey, true);
             SetDefault(IsDynamicCoverOverlayEnabledKey, true);
@@ -254,22 +200,15 @@ namespace BetterLyrics.WinUI3.Services.Settings
             SetDefault(TitleBarTypeKey, (int)TitleBarType.Compact);
             SetDefault(CoverImageRadiusKey, 24); // 24 %
             // Lyrics
-            SetDefault(InAppLyricsAlignmentTypeKey, (int)LyricsAlignmentType.Center);
-            SetDefault(DesktopLyricsAlignmentTypeKey, (int)LyricsAlignmentType.Center);
-            SetDefault(InAppLyricsBlurAmountKey, 0);
-            SetDefault(DesktopLyricsBlurAmountKey, 0);
-            SetDefault(InAppLyricsFontColorTypeKey, (int)LyricsFontColorType.Default);
-            SetDefault(DesktopLyricsFontColorTypeKey, (int)LyricsFontColorType.Default);
-            SetDefault(InAppLyricsFontSizeKey, 28);
-            SetDefault(DesktopLyricsFontSizeKey, 16);
-            SetDefault(InAppLyricsLineSpacingFactorKey, 0.5f);
-            SetDefault(DesktopLyricsLineSpacingFactorKey, 0.5f);
-            SetDefault(InAppLyricsVerticalEdgeOpacityKey, 0);
-            SetDefault(DesktopLyricsVerticalEdgeOpacityKey, 100);
-            SetDefault(IsInAppLyricsDynamicGlowEffectEnabledKey, false);
-            SetDefault(IsDesktopLyricsDynamicGlowEffectEnabledKey, false);
-            SetDefault(IsInAppLyricsGlowEffectEnabledKey, false);
-            SetDefault(IsDesktopLyricsGlowEffectEnabledKey, false);
+            SetDefault(LyricsAlignmentTypeKey, (int)LyricsAlignmentType.Center);
+            SetDefault(LyricsFontWeightKey, (int)LyricsFontWeight.Bold);
+            SetDefault(LyricsBlurAmountKey, 0);
+            SetDefault(LyricsFontColorTypeKey, (int)LyricsFontColorType.Default);
+            SetDefault(LyricsFontSizeKey, 28);
+            SetDefault(LyricsLineSpacingFactorKey, 0.5f);
+            SetDefault(LyricsVerticalEdgeOpacityKey, 0);
+            SetDefault(IsLyricsGlowEffectEnabledKey, false);
+            SetDefault(LyricsGlowEffectScopeKey, (int)LyricsGlowEffectScope.CurrentChar);
             // Notification
             SetDefault(NeverShowEnterFullScreenMessageKey, false);
             SetDefault(NeverShowEnterImmersiveModeMessageKey, false);
