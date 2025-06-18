@@ -33,6 +33,8 @@ namespace BetterLyrics.WinUI3.Services.Database
             {
                 _connection.DeleteAll<MetadataIndex>();
 
+                HashSet<string> insertedPaths = new();
+
                 foreach (var path in paths)
                 {
                     if (Directory.Exists(path))
@@ -41,16 +43,19 @@ namespace BetterLyrics.WinUI3.Services.Database
                             var file in Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
                         )
                         {
-                            var fileExtension = Path.GetExtension(file);
-                            var track = new Track(file);
-                            _connection.Insert(
-                                new MetadataIndex
-                                {
-                                    Path = file,
-                                    Title = track.Title,
-                                    Artist = track.Artist,
-                                }
-                            );
+                            if (!insertedPaths.Contains(file))
+                            {
+                                var track = new Track(file);
+                                _connection.Insert(
+                                    new MetadataIndex
+                                    {
+                                        Path = file,
+                                        Title = track.Title,
+                                        Artist = track.Artist,
+                                    }
+                                );
+                                insertedPaths.Add(file);
+                            }
                         }
                     }
                 }

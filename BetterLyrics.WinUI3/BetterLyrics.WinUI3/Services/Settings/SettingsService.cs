@@ -41,15 +41,8 @@ namespace BetterLyrics.WinUI3.Services.Settings
         private const string LyricsLineSpacingFactorKey = "LyricsLineSpacingFactor";
         private const string LyricsFontSizeKey = "LyricsFontSize";
         private const string IsLyricsGlowEffectEnabledKey = "IsLyricsGlowEffectEnabled";
-        private const string IsLyricsDynamicGlowEffectEnabledKey =
-            "IsLyricsDynamicGlowEffectEnabled";
         private const string LyricsFontColorTypeKey = "LyricsFontColorType";
         private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
-
-        // Notification
-        private const string NeverShowEnterFullScreenMessageKey = "NeverShowEnterFullScreenMessage";
-        private const string NeverShowEnterImmersiveModeMessageKey =
-            "NeverShowEnterImmersiveModeMessage";
 
         public bool IsFirstRun
         {
@@ -207,11 +200,8 @@ namespace BetterLyrics.WinUI3.Services.Settings
             SetDefault(LyricsFontSizeKey, 28);
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
             SetDefault(LyricsVerticalEdgeOpacityKey, 0);
-            SetDefault(IsLyricsGlowEffectEnabledKey, false);
+            SetDefault(IsLyricsGlowEffectEnabledKey, true);
             SetDefault(LyricsGlowEffectScopeKey, (int)LyricsGlowEffectScope.CurrentChar);
-            // Notification
-            SetDefault(NeverShowEnterFullScreenMessageKey, false);
-            SetDefault(NeverShowEnterImmersiveModeMessageKey, false);
         }
 
         private T? GetValue<T>(string key)

@@ -1,4 +1,5 @@
 using System;
+using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
@@ -25,30 +26,17 @@ namespace BetterLyrics.WinUI3.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HostWindow
-        : Window,
-            IRecipient<PropertyChangedMessage<BackdropType>>
+    public sealed partial class HostWindow : Window
     {
-        public HostWindowViewModel ViewModel { get; set; }
-
-        private ForegroundWindowWatcherHelper? _watcherHelper = null;
+        public HostWindowViewModel ViewModel { get; private set; } =
+            Ioc.Default.GetRequiredService<HostWindowViewModel>();
 
         private readonly ISettingsService _settingsService =
             Ioc.Default.GetRequiredService<ISettingsService>();
 
-        private readonly bool _listenOnActivatedWindowChange;
-
-        public HostWindow(
-            bool alwaysOnTop = false,
-            bool clickThrough = false,
-            bool listenOnActivatedWindowChange = false
-        )
+        public HostWindow(bool alwaysOnTop = false, bool clickThrough = false)
         {
             this.InitializeComponent();
-
-            ViewModel = Ioc.Default.GetRequiredService<HostWindowViewModel>();
-
-            _listenOnActivatedWindowChange = listenOnActivatedWindowChange;
 
             AppWindow.Changed += AppWindow_Changed;
 
@@ -59,37 +47,8 @@ namespace BetterLyrics.WinUI3.Views
                     ExtendedWindowStyle.Transparent | ExtendedWindowStyle.Layered
                 );
 
-            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
-                _settingsService.BackdropType
-            );
-
             if (alwaysOnTop)
                 ((OverlappedPresenter)AppWindow.Presenter).IsAlwaysOnTop = true;
-
-            if (listenOnActivatedWindowChange)
-            {
-                StartWatchWindowColorChange();
-            }
-        }
-
-        private void StartWatchWindowColorChange()
-        {
-            var hwnd = WindowNative.GetWindowHandle(this);
-            _watcherHelper = new ForegroundWindowWatcherHelper(
-                hwnd,
-                onWindowChanged =>
-                {
-                    ViewModel.UpdateAccentColor(hwnd);
-                }
-            );
-            _watcherHelper.Start();
-            ViewModel.UpdateAccentColor(hwnd);
-        }
-
-        private void StopWatchWindowColorChange()
-        {
-            _watcherHelper?.Stop();
-            _watcherHelper = null;
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -219,7 +178,7 @@ namespace BetterLyrics.WinUI3.Views
                 if (_settingsService.AutoStartWindowType == AutoStartWindowType.DockMode)
                 {
                     DockFlyoutItem.IsChecked = true;
-                    DockFlyoutItem_Click(null, null);
+                    ViewModel.ToggleDockModeCommand.Execute(null);
                 }
             }
         }
@@ -259,36 +218,6 @@ namespace BetterLyrics.WinUI3.Views
             {
                 AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
             }
-        }
-
-        public void Receive(PropertyChangedMessage<BackdropType> message)
-        {
-            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(message.NewValue);
-        }
-
-        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (_listenOnActivatedWindowChange)
-            {
-                var hwnd = WindowNative.GetWindowHandle(this);
-                ViewModel.UpdateAccentColor(hwnd);
-            }
-        }
-
-        private void DockFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (DockFlyoutItem.IsChecked)
-            {
-                DockHelper.Enable(this, 48);
-                StartWatchWindowColorChange();
-            }
-            else
-            {
-                DockHelper.Disable(this);
-                StopWatchWindowColorChange();
-            }
-            ViewModel.IsDockMode = DockFlyoutItem.IsChecked;
-            UpdateTitleBarWindowButtonsVisibility();
         }
 
         private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)

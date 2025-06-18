@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
@@ -9,16 +11,27 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using H.NotifyIcon.Interop;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using Windows.UI;
+using WinRT.Interop;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
     public partial class HostWindowViewModel
         : BaseViewModel,
             IRecipient<PropertyChangedMessage<TitleBarType>>,
-            IRecipient<PropertyChangedMessage<ElementTheme>>
+            IRecipient<PropertyChangedMessage<ElementTheme>>,
+            IRecipient<PropertyChangedMessage<BackdropType>>,
+            IRecipient<PropertyChangedMessage<int>>
     {
+        private ForegroundWindowWatcherHelper? _watcherHelper = null;
+
+        [ObservableProperty]
+        public partial Type FramePageType { get; set; }
+
         [ObservableProperty]
         public partial ElementTheme ThemeType { get; set; }
 
@@ -76,6 +89,39 @@ namespace BetterLyrics.WinUI3
             );
         }
 
+        private void StartWatchWindowColorChange()
+        {
+            var hwnd = WindowNative.GetWindowHandle(
+                WindowHelper.GetWindowByFramePageType(FramePageType)
+            );
+            _watcherHelper = new ForegroundWindowWatcherHelper(
+                hwnd,
+                onWindowChanged =>
+                {
+                    UpdateAccentColor(hwnd);
+                }
+            );
+            _watcherHelper.Start();
+            UpdateAccentColor(hwnd);
+        }
+
+        private void StopWatchWindowColorChange()
+        {
+            _watcherHelper?.Stop();
+            _watcherHelper = null;
+        }
+
+        partial void OnFramePageTypeChanged(Type value)
+        {
+            if (value != null)
+            {
+                var window = WindowHelper.GetWindowByFramePageType(FramePageType);
+                window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
+                    _settingsService.BackdropType
+                );
+            }
+        }
+
         public void UpdateAccentColor(nint hwnd)
         {
             ActivatedWindowAccentColor = WindowColorHelper
@@ -116,6 +162,24 @@ namespace BetterLyrics.WinUI3
             return null;
         }
 
+        [RelayCommand]
+        private void ToggleDockMode()
+        {
+            var window = WindowHelper.GetWindowByFramePageType(FramePageType);
+
+            IsDockMode = !IsDockMode;
+            if (IsDockMode)
+            {
+                DockHelper.Enable(window, _settingsService.LyricsFontSize * 3);
+                StartWatchWindowColorChange();
+            }
+            else
+            {
+                DockHelper.Disable(window);
+                StopWatchWindowColorChange();
+            }
+        }
+
         public void Receive(PropertyChangedMessage<TitleBarType> message)
         {
             if (message.Sender is SettingsViewModel)
@@ -130,6 +194,31 @@ namespace BetterLyrics.WinUI3
         public void Receive(PropertyChangedMessage<ElementTheme> message)
         {
             ThemeType = message.NewValue;
+        }
+
+        public void Receive(PropertyChangedMessage<BackdropType> message)
+        {
+            WindowHelper.GetWindowByFramePageType(FramePageType).SystemBackdrop =
+                SystemBackdropHelper.CreateSystemBackdrop(message.NewValue);
+        }
+
+        public void Receive(PropertyChangedMessage<int> message)
+        {
+            if (message.Sender is LyricsSettingsControlViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize))
+                {
+                    if (IsDockMode)
+                    {
+                        DockHelper.UpdateAppBarHeight(
+                            WindowNative.GetWindowHandle(
+                                WindowHelper.GetWindowByFramePageType(FramePageType)
+                            ),
+                            message.NewValue * 3
+                        );
+                    }
+                }
+            }
         }
     }
 }

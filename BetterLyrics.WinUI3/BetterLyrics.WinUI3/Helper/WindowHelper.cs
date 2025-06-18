@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using WinRT.Interop;
 using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Helper
@@ -40,16 +41,13 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (_windowCache.TryGetValue(pageType, out var window))
             {
-                if (window is HostWindow hostWindow)
-                {
-                    hostWindow.Navigate(pageType);
-                }
                 window.TryShow();
             }
             else
             {
                 var newWindow = new HostWindow();
                 TrackWindow(newWindow, pageType);
+                newWindow.ViewModel.FramePageType = pageType;
                 newWindow.Navigate(pageType);
                 newWindow.Activate();
             }
@@ -118,6 +116,18 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 window.Hide();
             }
+        }
+
+        public static Window GetWindowByFramePageType(Type type)
+        {
+            foreach (var cachedWindow in _windowCache)
+            {
+                if (cachedWindow.Key == type)
+                {
+                    return cachedWindow.Value;
+                }
+            }
+            return null;
         }
     }
 }

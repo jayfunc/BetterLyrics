@@ -36,40 +36,24 @@ We provide more than one setting item to better align with your preference
 
 - Language (English, Simplified Chinese, Traditional Chinese)
 
-## Live demonstration
-
-![alt text](Screenshots/Beelink-SER-8-Moonlight2025-06-0318-35-35-ezgif.com-video-to-gif-converter.gif)
-
-![alt text](Screenshots/BetterLyrics.WinUI3_igDdnc4rzW.gif)
-
-![alt text](Screenshots/Code_HhDCqJZYEZ.gif)
-
-> **Highlighted feature**: Immersive lyrics shown on top of the screen (automatically follow current activated windows's accent color)
-
-Or watch our introduction video「BetterLyrics 阶段性开发成果展示」(uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
 
 ## Screenshots
 
-### In-app lyrics
+![alt text](Screenshots/mode.png)
 
-Non-immersive mode
+![alt text](Screenshots/glow.png)
 
-![alt text](Screenshots/Snipaste_2025-06-07_17-36-26.png)
+![alt text](Screenshots/dock.png)
 
-Immersive mode
-![alt text](Screenshots/Snipaste_2025-06-03_16-47-43.png)
+![alt text](Screenshots/pip.png)
 
-Lyrics only
+![alt text](Screenshots/settings.png)
 
-![alt text](Screenshots/Snipaste_2025-06-03_17-51-22.png)
+![alt text](Screenshots/fs.png)
 
-Fullscreen
+## Demonstration
 
-![alt text](Screenshots/Snipaste_2025-06-03_18-36-05.png)
-
-### Desktop lyrics
-
-![alt text](Screenshots/image.png)
+Watch our introduction video「BetterLyrics 阶段性开发成果展示」(uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
 
 ## Try it now
 
@@ -126,7 +110,7 @@ So technically, as long as you are using the music apps (like
 
 ## Inspired by
 
-- [BetterNCM](https://github.com/std-microblock/BetterNCM)
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
