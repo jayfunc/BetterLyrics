@@ -12,6 +12,7 @@
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:renderer="using:BetterLyrics.WinUI3.Renderer"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">

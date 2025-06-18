@@ -31,6 +31,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class SettingsViewModel : ObservableRecipient
     {
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         public partial bool IsRebuildingLyricsIndexDatabase { get; set; } = false;
 
         [ObservableProperty]

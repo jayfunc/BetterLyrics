@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Enums
 {
-    public enum LyricsWindowType
+    public enum LyricsGlowEffectScope
     {
-        InAppLyrics,
-        DesktopLyrics,
+        WholeLyrics,
+        CurrentLine,
+        CurrentChar,
     }
 }

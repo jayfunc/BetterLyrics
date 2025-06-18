@@ -8,7 +8,6 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
     mc:Ignorable="d">
@@ -45,9 +44,13 @@
                     Icon="{ui:FontIcon Glyph=&#xE80A;}"
                     Tag="AlbumArtStyle" />
                 <NavigationViewItem
-                    x:Uid="SettingsPageLyrics"
-                    Icon="{ui:FontIcon Glyph=&#xED1E;}"
-                    Tag="Lyrics" />
+                    x:Uid="SettingsPageLyricsStyle"
+                    Icon="{ui:FontIcon Glyph=&#xEF60;}"
+                    Tag="LyricsStyle" />
+                <NavigationViewItem
+                    x:Uid="SettingsPageLyricsEffect"
+                    Icon="{ui:FontIcon Glyph=&#xF4A5;}"
+                    Tag="LyricsEffect" />
                 <NavigationViewItem
                     x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon Glyph=&#xE946;}"
@@ -200,7 +203,6 @@
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                                 <controls:SettingsCard x:Uid="SettingsPageAutoStartWindow">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.AutoStartWindowType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <ComboBoxItem x:Uid="SettingsPageAutoStartNothing" />
                                         <ComboBoxItem x:Uid="SettingsPageAutoStartInAppLyrics" />
                                         <ComboBoxItem x:Uid="SettingsPageAutoStartDesktopLyrics" />
                                     </ComboBox>
@@ -293,8 +295,147 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <controls:Case Value="Lyrics">
-                            <uc:LyricsSettingsControl ViewModel="{x:Bind LyricsSettingsControlViewModel}" />
+                        <controls:Case Value="LyricsStyle">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon Glyph=&#xE8E3;}">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon Glyph=&#xE8DD;}">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsFontWeight, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsThin" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsExtraLight" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsLight" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsSemiLight" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsNormal" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsMedium" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsSemiBold" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsBold" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsExtraBold" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsBlack" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsExtraBlack" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon Glyph=&#xE8D3;}">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDefault" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorDominant" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon Glyph=&#xE8E9;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ElementName=LyricsFontSizeSlider, Path=Value, Mode=OneWay}" />
+                                        <Slider
+                                            x:Name="LyricsFontSizeSlider"
+                                            Maximum="96"
+                                            Minimum="12"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="2"
+                                            TickFrequency="2"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsFontSize, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon Glyph=&#xF579;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding ElementName=LyricsLineSpacingFactorSlider, Path=Value, Mode=OneWay}" />
+                                        <TextBlock
+                                            x:Uid="SettingsPageLyricsLineSpacingFactorUnit"
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center" />
+                                        <Slider
+                                            x:Name="LyricsLineSpacingFactorSlider"
+                                            Maximum="2"
+                                            Minimum="0"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="0.1"
+                                            TickFrequency="0.1"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsLineSpacingFactor, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                            </StackPanel>
+                        </controls:Case>
+
+                        <controls:Case Value="LyricsEffect">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsVerticalEdgeOpacity" HeaderIcon="{ui:FontIcon Glyph=&#xF573;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding ElementName=LyricsVerticalEdgeOpacitySlider, Path=Value, Mode=OneWay}" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text=" %" />
+                                        <Slider
+                                            x:Name="LyricsVerticalEdgeOpacitySlider"
+                                            Maximum="100"
+                                            Minimum="0"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="1"
+                                            TickFrequency="1"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsVerticalEdgeOpacity, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount" HeaderIcon="{ui:FontIcon Glyph=&#xE727;}">
+                                    <controls:SettingsCard.Description>
+                                        <StackPanel>
+                                            <TextBlock x:Uid="SettingsPageLyricsBlurHighGPUUsage" Foreground="{ThemeResource SystemFillColorCautionBrush}" />
+                                            <TextBlock x:Uid="SettingsPageLyricsBlurAmountSideEffect" />
+                                        </StackPanel>
+                                    </controls:SettingsCard.Description>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ElementName=LyricsBlurAmountSlider, Path=Value, Mode=OneWay}" />
+                                        <Slider
+                                            x:Name="LyricsBlurAmountSlider"
+                                            Maximum="10"
+                                            Minimum="0"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="1"
+                                            TickFrequency="1"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsBlurAmount, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageLyricsGlowEffect"
+                                    HeaderIcon="{ui:FontIcon Glyph=&#xE9A9;}"
+                                    IsExpanded="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageLyricsGlowEffectScope" IsEnabled="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                            <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeWholeLyrics" />
+                                                <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentLine" />
+                                                <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentChar" />
+                                            </ComboBox>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
+                            </StackPanel>
                         </controls:Case>
 
                         <controls:Case Value="About">

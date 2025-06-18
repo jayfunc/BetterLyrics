@@ -31,6 +31,8 @@ namespace BetterLyrics.WinUI3.Views
     {
         public HostWindowViewModel ViewModel { get; set; }
 
+        private ForegroundWindowWatcherHelper? _watcherHelper = null;
+
         private readonly ISettingsService _settingsService =
             Ioc.Default.GetRequiredService<ISettingsService>();
 
@@ -66,16 +68,28 @@ namespace BetterLyrics.WinUI3.Views
 
             if (listenOnActivatedWindowChange)
             {
-                var hwnd = WindowNative.GetWindowHandle(this);
-                var windowWatcher = new ForegroundWindowWatcherHelper(
-                    hwnd,
-                    onWindowChanged =>
-                    {
-                        ViewModel.UpdateAccentColor(hwnd);
-                    }
-                );
-                windowWatcher.Start();
+                StartWatchWindowColorChange();
             }
+        }
+
+        private void StartWatchWindowColorChange()
+        {
+            var hwnd = WindowNative.GetWindowHandle(this);
+            _watcherHelper = new ForegroundWindowWatcherHelper(
+                hwnd,
+                onWindowChanged =>
+                {
+                    ViewModel.UpdateAccentColor(hwnd);
+                }
+            );
+            _watcherHelper.Start();
+            ViewModel.UpdateAccentColor(hwnd);
+        }
+
+        private void StopWatchWindowColorChange()
+        {
+            _watcherHelper?.Stop();
+            _watcherHelper = null;
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -200,6 +214,14 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.Title = Title = App.ResourceLoader!.GetString(
                 $"{e.SourcePageType.Name}Title"
             );
+            if (e.SourcePageType == typeof(LyricsPage))
+            {
+                if (_settingsService.AutoStartWindowType == AutoStartWindowType.DockMode)
+                {
+                    DockFlyoutItem.IsChecked = true;
+                    DockFlyoutItem_Click(null, null);
+                }
+            }
         }
 
         private void AOTFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -258,10 +280,12 @@ namespace BetterLyrics.WinUI3.Views
             if (DockFlyoutItem.IsChecked)
             {
                 DockHelper.Enable(this, 48);
+                StartWatchWindowColorChange();
             }
             else
             {
                 DockHelper.Disable(this);
+                StopWatchWindowColorChange();
             }
             ViewModel.IsDockMode = DockFlyoutItem.IsChecked;
             UpdateTitleBarWindowButtonsVisibility();
@@ -277,6 +301,11 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (TopCommandGrid.Opacity == .5)
                 TopCommandGrid.Opacity = 0;
+        }
+
+        private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenSettingsWindow();
         }
     }
 }

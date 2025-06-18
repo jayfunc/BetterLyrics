@@ -32,5 +32,24 @@ namespace BetterLyrics.WinUI3.Models
         public float Scale { get; set; }
 
         public float Opacity { get; set; }
+
+        public LyricsLine Clone()
+        {
+            return new LyricsLine
+            {
+                Texts = new List<string>(this.Texts),
+                LanguageIndex = this.LanguageIndex,
+                StartPlayingTimestampMs = this.StartPlayingTimestampMs,
+                EndPlayingTimestampMs = this.EndPlayingTimestampMs,
+                PlayingState = this.PlayingState,
+                EnteringProgress = this.EnteringProgress,
+                ExitingProgress = this.ExitingProgress,
+                PlayingProgress = this.PlayingProgress,
+                Position = this.Position,
+                CenterPosition = this.CenterPosition,
+                Scale = this.Scale,
+                Opacity = this.Opacity,
+            };
+        }
     }
 }

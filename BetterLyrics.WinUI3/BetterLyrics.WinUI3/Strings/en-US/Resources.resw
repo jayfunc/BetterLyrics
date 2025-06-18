@@ -291,8 +291,8 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Glow effect</value>
   </data>
-  <data name="SettingsPageLyricsDynamicGlowEffect.Header" xml:space="preserve">
-    <value>Dynamic glow effect</value>
+  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
+    <value>Glow effect scope</value>
   </data>
   <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
     <value>Rebuild lyrics index database</value>
@@ -390,11 +390,11 @@
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
     <value>Lyrics not found</value>
   </data>
-  <data name="SettingsPageLyrics.Content" xml:space="preserve">
-    <value>Lyrics style &amp; effect</value>
+  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+    <value>Lyrics effect</value>
   </data>
-  <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
-    <value>Desktop lyrics style &amp; effect</value>
+  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+    <value>Lyrics style</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>This folder is already included in the existing folder and does not need to be added again</value>
@@ -405,17 +405,11 @@
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>When starting the app</value>
   </data>
-  <data name="SettingsPageAutoStartWindow.Description" xml:space="preserve">
-    <value>The application will reside in the system tray when it is launched. Select the subsequent automated actions here</value>
-  </data>
   <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
-    <value>Activate in-app lyrics mode</value>
+    <value>Activate standard mode</value>
   </data>
   <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>Start desktop lyrics mode</value>
-  </data>
-  <data name="SettingsPageAutoStartNothing.Content" xml:space="preserve">
-    <value>Do not open any windows</value>
+    <value>Activate dock mode</value>
   </data>
   <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
     <value>Lyrics not found</value>
@@ -425,5 +419,53 @@
   </data>
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>Dock mode</value>
+  </data>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>Font weight</value>
+  </data>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>Thin</value>
+  </data>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>Extra Light</value>
+  </data>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>Semi Light</value>
+  </data>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>Semi Bold</value>
+  </data>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>Extra Bold</value>
+  </data>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>Extra Black</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
+    <value>Whole lyrics</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+    <value>Current line</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+    <value>Current char</value>
+  </data>
+  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
 </root>

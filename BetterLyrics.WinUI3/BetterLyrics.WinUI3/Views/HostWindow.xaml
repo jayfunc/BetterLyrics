@@ -90,6 +90,10 @@
                                 x:Name="MiniFlyoutItem"
                                 x:Uid="BaseWindowMiniFlyoutItem"
                                 Click="MiniFlyoutItem_Click" />
+                            <MenuFlyoutItem
+                                x:Name="SettingsFlyoutItem"
+                                x:Uid="HostWindowSettingsFlyoutItem"
+                                Click="SettingsMenuFlyoutItem_Click" />
                         </MenuFlyout>
                     </Button.Flyout>
                 </Button>

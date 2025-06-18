@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using BetterLyrics.WinUI3.Enums;
+using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
+using Windows.UI.Text;
 
 namespace BetterLyrics.WinUI3.Services.Settings
 {
@@ -30,24 +32,15 @@ namespace BetterLyrics.WinUI3.Services.Settings
         // Album art cover style
         int CoverImageRadius { get; set; }
 
-        // Lyrics style and effetc (In-app lyics)
-        LyricsAlignmentType InAppLyricsAlignmentType { get; set; }
-        int InAppLyricsBlurAmount { get; set; }
-        int InAppLyricsVerticalEdgeOpacity { get; set; }
-        float InAppLyricsLineSpacingFactor { get; set; }
-        int InAppLyricsFontSize { get; set; }
-        bool IsInAppLyricsGlowEffectEnabled { get; set; }
-        bool IsInAppLyricsDynamicGlowEffectEnabled { get; set; }
-        LyricsFontColorType InAppLyricsFontColorType { get; set; }
-
-        // Lyrics style and effect (Desktop lyrisc)
-        int DesktopLyricsBlurAmount { get; set; }
-        int DesktopLyricsVerticalEdgeOpacity { get; set; }
-        float DesktopLyricsLineSpacingFactor { get; set; }
-        int DesktopLyricsFontSize { get; set; }
-        bool IsDesktopLyricsGlowEffectEnabled { get; set; }
-        bool IsDesktopLyricsDynamicGlowEffectEnabled { get; set; }
-        LyricsAlignmentType DesktopLyricsAlignmentType { get; set; }
-        LyricsFontColorType DesktopLyricsFontColorType { get; set; }
+        // Lyrics style and effetc
+        LyricsAlignmentType LyricsAlignmentType { get; set; }
+        LyricsFontWeight LyricsFontWeight { get; set; }
+        int LyricsBlurAmount { get; set; }
+        int LyricsVerticalEdgeOpacity { get; set; }
+        float LyricsLineSpacingFactor { get; set; }
+        int LyricsFontSize { get; set; }
+        bool IsLyricsGlowEffectEnabled { get; set; }
+        LyricsGlowEffectScope LyricsGlowEffectScope { get; set; }
+        LyricsFontColorType LyricsFontColorType { get; set; }
     }
 }

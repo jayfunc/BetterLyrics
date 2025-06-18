@@ -291,8 +291,8 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>辉光效果</value>
   </data>
-  <data name="SettingsPageLyricsDynamicGlowEffect.Header" xml:space="preserve">
-    <value>动态辉光效果</value>
+  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
+    <value>辉光效果作用范围</value>
   </data>
   <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
     <value>重构歌词索引数据库</value>
@@ -390,11 +390,11 @@
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
     <value>未找到歌词</value>
   </data>
-  <data name="SettingsPageLyrics.Content" xml:space="preserve">
-    <value>歌词样式与动效</value>
+  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+    <value>歌词动效</value>
   </data>
-  <data name="SettingsPageDesktopLyrics.Content" xml:space="preserve">
-    <value>桌面歌词样式与动效</value>
+  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+    <value>歌词样式</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>该文件夹已包含在已有文件夹中，无需再次添加</value>
@@ -405,17 +405,11 @@
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>启动应用时</value>
   </data>
-  <data name="SettingsPageAutoStartWindow.Description" xml:space="preserve">
-    <value>应用在启动时会驻留系统托盘，在此处选择后续自动化操作</value>
-  </data>
   <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
-    <value>启动应用内歌词模式</value>
+    <value>启动标准模式</value>
   </data>
   <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>启动桌面歌词模式</value>
-  </data>
-  <data name="SettingsPageAutoStartNothing.Content" xml:space="preserve">
-    <value>不打开任何窗口</value>
+    <value>启动停靠模式</value>
   </data>
   <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
     <value>未找到歌词</value>
@@ -425,5 +419,53 @@
   </data>
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>停靠模式</value>
+  </data>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>字体粗细</value>
+  </data>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>极细</value>
+  </data>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>超细</value>
+  </data>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>细体</value>
+  </data>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>次细</value>
+  </data>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>中等</value>
+  </data>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>次粗</value>
+  </data>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>粗体</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>特粗</value>
+  </data>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>黑体</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>超黑</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
+    <value>全部歌词</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+    <value>当前行</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+    <value>当前字符</value>
+  </data>
+  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+    <value>设置</value>
   </data>
 </root>

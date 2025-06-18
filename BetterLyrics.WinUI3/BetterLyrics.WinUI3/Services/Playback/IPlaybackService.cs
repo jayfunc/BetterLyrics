@@ -9,6 +9,8 @@ namespace BetterLyrics.WinUI3.Services.Playback
         event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
         event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
         event EventHandler<PositionChangedEventArgs>? PositionChanged;
+
+        void ReSendingMessages();
         SongInfo? SongInfo { get; }
         bool IsPlaying { get; }
         TimeSpan Position { get; }
