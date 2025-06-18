@@ -43,7 +43,13 @@ We provide more than one setting item to better align with your preference
 
 ![alt text](Screenshots/glow.png)
 
+![alt text](Screenshots/glow.gif)
+
 ![alt text](Screenshots/dock.png)
+
+![alt text](Screenshots/immersive-dock.gif)
+
+![alt text](Screenshots/dock.gif)
 
 ![alt text](Screenshots/pip.png)
 
