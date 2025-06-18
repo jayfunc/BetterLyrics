@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Window
+    x:Class="BetterLyrics.WinUI3.Views.HostWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:BetterLyrics.WinUI3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid
+        x:Name="RootGrid"
+        Loaded="RootGrid_Loaded"
+        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
+
+        <Frame
+            x:Name="RootFrame"
+            Navigated="RootFrame_Navigated"
+            NavigationFailed="RootFrame_NavigationFailed" />
+
+        <Grid
+            x:Name="TopCommandGrid"
+            Height="{x:Bind ViewModel.TitleBarHeight, Mode=OneWay}"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            Opacity="0"
+            PointerEntered="TopCommandGrid_PointerEntered"
+            PointerExited="TopCommandGrid_PointerExited">
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
+
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+
+                <ImageIcon
+                    x:Name="AppLogoImageIcon"
+                    Height="{x:Bind ViewModel.AppLogoImageIconHeight, Mode=OneWay}"
+                    Margin="16,0"
+                    Source="ms-appx:///Assets/Logo.png" />
+
+                <TextBlock
+                    x:Name="AppTitleTextBlock"
+                    FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                    FontWeight="SemiBold"
+                    Text="{x:Bind Title, Mode=OneWay}" />
+
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                <Button x:Name="MoreButton" Style="{StaticResource TitleBarButtonStyle}">
+                    <Grid>
+                        <FontIcon
+                            Margin="0,0,0,8"
+                            FontFamily="Segoe Fluent Icons"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontWeight="ExtraBold"
+                            Glyph="&#xEF2D;" />
+                        <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontWeight="ExtraBold"
+                            Glyph="&#xEF2D;" />
+                        <FontIcon
+                            Margin="0,8,0,0"
+                            FontFamily="Segoe Fluent Icons"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontWeight="ExtraBold"
+                            Glyph="&#xEF2D;" />
+                    </Grid>
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <ToggleMenuFlyoutItem
+                                x:Name="AOTFlyoutItem"
+                                x:Uid="BaseWindowAOTFlyoutItem"
+                                Click="AOTFlyoutItem_Click" />
+                            <ToggleMenuFlyoutItem
+                                x:Name="FullScreenFlyoutItem"
+                                x:Uid="BaseWindowFullScreenFlyoutItem"
+                                Click="FullScreenFlyoutItem_Click" />
+                            <ToggleMenuFlyoutItem
+                                x:Name="DockFlyoutItem"
+                                x:Uid="HostWindowDockFlyoutItem"
+                                Click="DockFlyoutItem_Click" />
+                            <ToggleMenuFlyoutItem
+                                x:Name="MiniFlyoutItem"
+                                x:Uid="BaseWindowMiniFlyoutItem"
+                                Click="MiniFlyoutItem_Click" />
+                            <MenuFlyoutItem
+                                x:Name="SettingsFlyoutItem"
+                                x:Uid="HostWindowSettingsFlyoutItem"
+                                Click="SettingsMenuFlyoutItem_Click" />
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+
+                <!--  Window Minimise  -->
+                <Button
+                    x:Name="MinimiseButton"
+                    Click="MinimiseButton_Click"
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2D;" />
+                </Button>
+                <!--  Window Maximise  -->
+                <Button
+                    x:Name="MaximiseButton"
+                    Click="MaximiseButton_Click"
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2E;" />
+                </Button>
+                <!--  Window Restore  -->
+                <Button
+                    x:Name="RestoreButton"
+                    Click="RestoreButton_Click"
+                    Style="{StaticResource TitleBarButtonStyle}"
+                    Visibility="Collapsed">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2F;" />
+                </Button>
+                <!--  Window Close  -->
+                <Button
+                    x:Name="CloseButton"
+                    Click="CloseButton_Click"
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xEF2C;" />
+                </Button>
+            </StackPanel>
+
+        </Grid>
+
+        <InfoBar
+            x:Name="HostInfoBar"
+            Margin="36"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Background="{ThemeResource SystemFillColorSolidAttentionBackgroundBrush}"
+            IsClosable="False"
+            IsOpen="{x:Bind ViewModel.ShowInfoBar, Mode=OneWay}"
+            Message="{x:Bind ViewModel.Notification.Message, Mode=OneWay}"
+            Opacity="0"
+            Severity="{x:Bind ViewModel.Notification.Severity, Mode=OneWay}">
+            <InfoBar.RenderTransform>
+                <TranslateTransform x:Name="HostInfoBarTransform" Y="20" />
+            </InfoBar.RenderTransform>
+            <InfoBar.Resources>
+                <Storyboard x:Key="InfoBarShowAndHideStoryboard">
+                    <!--  Opacity  -->
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HostInfoBar" Storyboard.TargetProperty="Opacity">
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:3.6" Value="1" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:3.9" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <!--  Y  -->
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HostInfoBarTransform" Storyboard.TargetProperty="Y">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="20" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:3.6" Value="0" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:3.9" Value="20" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </InfoBar.Resources>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:DataTriggerBehavior
+                    Binding="{Binding ElementName=HostInfoBar, Path=IsOpen, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="True">
+                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource InfoBarShowAndHideStoryboard}" />
+                </interactivity:DataTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </InfoBar>
+
+    </Grid>
+</Window>

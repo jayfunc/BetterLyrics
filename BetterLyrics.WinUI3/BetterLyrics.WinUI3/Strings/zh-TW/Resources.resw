@@ -223,13 +223,10 @@
     <value>專輯圖片背景不透明度</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>設定</value>
+    <value>設定 - BetterLyrics</value>
   </data>
-  <data name="MainPageTitle" xml:space="preserve">
+  <data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
-  </data>
-  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>歌詞樣式</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>對齊方式</value>
@@ -273,32 +270,29 @@
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>字體大小</value>
   </data>
-  <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
-    <value>僅展示歌詞</value>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>僅顯示歌詞</value>
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>沉浸模式</value>
   </data>
-  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>歌詞效果</value>
-  </data>
-  <data name="SettingsPageAlbumOverlay.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
     <value>專輯背景</value>
   </data>
-  <data name="SettingsPageAbout.Text" xml:space="preserve">
+  <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>關於</value>
   </data>
-  <data name="SettingsPageLyricsLib.Text" xml:space="preserve">
+  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
     <value>歌詞庫</value>
   </data>
-  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
     <value>應用外觀</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>輝光效果</value>
   </data>
-  <data name="SettingsPageLyricsDynamicGlowEffect.Header" xml:space="preserve">
-    <value>動態輝光效果</value>
+  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
+    <value>輝光效果作用範圍</value>
   </data>
   <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
     <value>重構歌詞索引資料庫</value>
@@ -321,7 +315,7 @@
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>目前沒有正在播放的音樂</value>
   </data>
-  <data name="SettingsPageDev.Text" xml:space="preserve">
+  <data name="SettingsPageDev.Content" xml:space="preserve">
     <value>開發者選項</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
@@ -342,7 +336,7 @@
   <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
     <value>專輯強調色</value>
   </data>
-  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>專輯封面樣式</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
@@ -371,5 +365,107 @@
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>不再顯示此訊息</value>
+  </data>
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <value>找不到匹配的本地文件</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>僅顯示專輯封面</value>
+  </data>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>分割畫面視圖</value>
+  </data>
+  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
+    <value>切換顯示模式</value>
+  </data>
+  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
+    <value>切換到桌面歌詞模式</value>
+  </data>
+  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>畫中畫模式</value>
+  </data>
+  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
+    <value>退出畫中畫模式</value>
+  </data>
+  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+    <value>找不到歌詞</value>
+  </data>
+  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+    <value>歌詞動效</value>
+  </data>
+  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+    <value>歌詞樣式</value>
+  </data>
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>該資料夾已包含在已有資料夾中，無需再次添加</value>
+  </data>
+  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+    <value>應用行為</value>
+  </data>
+  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>啟動應用程式時</value>
+  </data>
+  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
+    <value>啟動標準模式</value>
+  </data>
+  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
+    <value>啟動停靠模式</value>
+  </data>
+  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
+    <value>找不到歌詞</value>
+  </data>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>系統托盤 - BetterLyrics</value>
+  </data>
+  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
+    <value>停靠模式</value>
+  </data>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>字體粗細</value>
+  </data>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>極細</value>
+  </data>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>超細</value>
+  </data>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>細體</value>
+  </data>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>次細</value>
+  </data>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>常規</value>
+  </data>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>中等</value>
+  </data>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>次粗</value>
+  </data>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>粗體</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>特粗</value>
+  </data>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>黑體</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>超黑</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
+    <value>全部歌詞</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+    <value>目前行</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+    <value>目前字元</value>
+  </data>
+  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+    <value>設定</value>
   </data>
 </root>

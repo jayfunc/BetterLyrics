@@ -223,13 +223,10 @@
     <value>Album art background opacity</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Settings - BetterLyrics</value>
   </data>
-  <data name="MainPageTitle" xml:space="preserve">
+  <data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
-  </data>
-  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>Lyrics style</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>Alignment</value>
@@ -273,32 +270,29 @@
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>Font size</value>
   </data>
-  <data name="MainWindowLyricsOnly.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Show lyrics only</value>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>Lyrics only</value>
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Immersive mode</value>
   </data>
-  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>Lyrics effect</value>
-  </data>
-  <data name="SettingsPageAlbumOverlay.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
     <value>Album background</value>
   </data>
-  <data name="SettingsPageAbout.Text" xml:space="preserve">
+  <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="SettingsPageLyricsLib.Text" xml:space="preserve">
+  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
     <value>Lyrics library</value>
   </data>
-  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
     <value>App appearance</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Glow effect</value>
   </data>
-  <data name="SettingsPageLyricsDynamicGlowEffect.Header" xml:space="preserve">
-    <value>Dynamic glow effect</value>
+  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
+    <value>Glow effect scope</value>
   </data>
   <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
     <value>Rebuild lyrics index database</value>
@@ -321,7 +315,7 @@
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>No music playing now</value>
   </data>
-  <data name="SettingsPageDev.Text" xml:space="preserve">
+  <data name="SettingsPageDev.Content" xml:space="preserve">
     <value>Developer options</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
@@ -342,7 +336,7 @@
   <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
     <value>Album art accent color</value>
   </data>
-  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>Album art style</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
@@ -371,5 +365,107 @@
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>Do not show this message again</value>
+  </data>
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <value>No local files matched</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>Album art only</value>
+  </data>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>Split view</value>
+  </data>
+  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Change display type</value>
+  </data>
+  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Switch to desktop lyrics mode</value>
+  </data>
+  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>Picture-in-picture mode</value>
+  </data>
+  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
+    <value>Exit picture-in-picture mode</value>
+  </data>
+  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+    <value>Lyrics not found</value>
+  </data>
+  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+    <value>Lyrics effect</value>
+  </data>
+  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+    <value>Lyrics style</value>
+  </data>
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>This folder is already included in the existing folder and does not need to be added again</value>
+  </data>
+  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+    <value>App behavior</value>
+  </data>
+  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>When starting the app</value>
+  </data>
+  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
+    <value>Activate standard mode</value>
+  </data>
+  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
+    <value>Activate dock mode</value>
+  </data>
+  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
+    <value>Lyrics not found</value>
+  </data>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>System tray - BetterLyrics</value>
+  </data>
+  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
+    <value>Dock mode</value>
+  </data>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>Font weight</value>
+  </data>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>Thin</value>
+  </data>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>Extra Light</value>
+  </data>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>Semi Light</value>
+  </data>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>Semi Bold</value>
+  </data>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>Extra Bold</value>
+  </data>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>Extra Black</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
+    <value>Whole lyrics</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+    <value>Current line</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+    <value>Current char</value>
+  </data>
+  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
 </root>

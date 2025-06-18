@@ -1,3 +1,4 @@
+using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -14,11 +15,13 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class SettingsPage : Page
     {
         public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
+        public LyricsSettingsControlViewModel LyricsSettingsControlViewModel =>
+            Ioc.Default.GetRequiredService<LyricsSettingsControlViewModel>();
 
         public SettingsPage()
         {
             this.InitializeComponent();
-            DataContext = Ioc.Default.GetService<SettingsViewModel>();
+            DataContext = Ioc.Default.GetRequiredService<SettingsViewModel>();
         }
 
         private void SettingsPageOpenPathButton_Click(
@@ -26,7 +29,7 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            SettingsViewModel.OpenMusicFolder((string)(sender as HyperlinkButton)!.Tag);
+            ViewModel.OpenMusicFolder((string)(sender as HyperlinkButton)!.Tag);
         }
 
         private async void SettingsPageRemovePathButton_Click(
@@ -35,6 +38,14 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             await ViewModel.RemoveFolderAsync((string)(sender as HyperlinkButton)!.Tag);
+        }
+
+        private void NavView_SelectionChanged(
+            NavigationView sender,
+            NavigationViewSelectionChangedEventArgs args
+        )
+        {
+            ViewModel.NavViewSelectedItemTag = (args.SelectedItem as NavigationViewItem)!.Tag;
         }
     }
 }
