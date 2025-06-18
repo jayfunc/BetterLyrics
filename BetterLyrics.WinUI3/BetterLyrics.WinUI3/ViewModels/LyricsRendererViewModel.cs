@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -52,12 +53,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             HorizontalAlignment = CanvasHorizontalAlignment.Left,
             VerticalAlignment = CanvasVerticalAlignment.Top,
-            //FontFamily = "Segoe UI Mono",
         };
 
         public LyricsDisplayType DisplayType { get; set; }
 
         private float _rotateAngle = 0f;
+        private byte[] _shaderByteCode = File.ReadAllBytes(AppInfo.CustomShaderPath);
 
         private Color ActivatedWindowAccentColor { get; set; } = Colors.Transparent;
 
@@ -344,6 +345,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             var (displayStartLineIndex, displayEndLineIndex) =
                 GetVisibleLyricsLineIndexBoundaries();
 
+            var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
+
             for (
                 int i = displayStartLineIndex;
                 source?.Count > 0 && i >= 0 && i < source?.Count && i <= displayEndLineIndex;
@@ -463,10 +466,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                         (float)(control.Size.Width - _rightMargin - LimitedLineWidth),
                         _totalYScroll + (float)(control.Size.Height / 2)
                     );
-                // _logger.LogDebug(_totalYScroll);
 
                 ds.DrawTextLayout(textLayout, position, Colors.Transparent);
-
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
             }
@@ -515,52 +516,81 @@ namespace BetterLyrics.WinUI3.ViewModels
             };
         }
 
+        private void DrawImmersiveBackground(
+            ICanvasAnimatedControl control,
+            CanvasDrawingSession ds,
+            bool withGradient
+        )
+        {
+            ds.FillRectangle(
+                new Rect(0, 0, control.Size.Width, control.Size.Height),
+                new CanvasLinearGradientBrush(
+                    control,
+                    [
+                        new CanvasGradientStop
+                        {
+                            Position = 0f,
+                            Color = withGradient
+                                ? Color.FromArgb(
+                                    211,
+                                    _currentBgColor.R,
+                                    _currentBgColor.G,
+                                    _currentBgColor.B
+                                )
+                                : _currentBgColor,
+                        },
+                        new CanvasGradientStop { Position = 1, Color = _currentBgColor },
+                    ]
+                )
+                {
+                    StartPoint = new Vector2(0, 0),
+                    EndPoint = new Vector2(0, (float)control.Size.Height),
+                }
+            );
+        }
+
+        private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        {
+            ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
+
+            var overlappedCovers = new CanvasCommandList(control.Device);
+            using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
+
+            if (_isTransitioning && _lastSoftwareBitmap != null)
+            {
+                DrawImgae(control, overlappedCoversDs, _lastSoftwareBitmap, 1 - _transitionAlpha);
+                DrawImgae(control, overlappedCoversDs, SoftwareBitmap, _transitionAlpha);
+            }
+            else
+            {
+                DrawImgae(control, overlappedCoversDs, SoftwareBitmap, 1);
+            }
+
+            using var coverOverlayEffect = new OpacityEffect
+            {
+                Opacity = CoverOverlayOpacity / 100f,
+                Source = new GaussianBlurEffect
+                {
+                    BlurAmount = CoverOverlayBlurAmount,
+                    Source = overlappedCovers,
+                },
+            };
+            ds.DrawImage(coverOverlayEffect);
+
+            ds.Transform = Matrix3x2.Identity;
+        }
+
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
+            bool isAlbumArtOverlayDrawn = IsCoverOverlayEnabled && SoftwareBitmap != null;
+            if (isAlbumArtOverlayDrawn)
+            {
+                DrawAlbumArtBackground(control, ds);
+            }
+
             if (IsDockMode)
             {
-                ds.FillRectangle(
-                    new Rect(0, 0, control.Size.Width, control.Size.Height),
-                    _currentBgColor
-                );
-            }
-            else if (IsCoverOverlayEnabled && SoftwareBitmap != null)
-            {
-                ds.Transform = Matrix3x2.CreateRotation(
-                    _rotateAngle,
-                    control.Size.ToVector2() * 0.5f
-                );
-
-                var overlappedCovers = new CanvasCommandList(control.Device);
-                using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
-
-                if (_isTransitioning && _lastSoftwareBitmap != null)
-                {
-                    DrawImgae(
-                        control,
-                        overlappedCoversDs,
-                        _lastSoftwareBitmap,
-                        1 - _transitionAlpha
-                    );
-                    DrawImgae(control, overlappedCoversDs, SoftwareBitmap, _transitionAlpha);
-                }
-                else
-                {
-                    DrawImgae(control, overlappedCoversDs, SoftwareBitmap, 1);
-                }
-
-                using var coverOverlayEffect = new OpacityEffect
-                {
-                    Opacity = CoverOverlayOpacity / 100f,
-                    Source = new GaussianBlurEffect
-                    {
-                        BlurAmount = CoverOverlayBlurAmount,
-                        Source = overlappedCovers,
-                    },
-                };
-                ds.DrawImage(coverOverlayEffect);
-
-                ds.Transform = Matrix3x2.Identity;
+                DrawImmersiveBackground(control, ds, isAlbumArtOverlayDrawn);
             }
 
             // Original lyrics only layer
@@ -637,11 +667,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             using (var glowedLyricsDs = glowedLyrics.CreateDrawingSession())
             {
                 glowedLyricsDs.DrawImage(
-                    new GaussianBlurEffect
+                    new ShadowEffect
                     {
                         Source = modifiedLyrics,
                         BlurAmount = _lyricsGlowEffectAmount,
-                        BorderMode = EffectBorderMode.Soft,
+                        ShadowColor = _fontColor,
                         Optimization = EffectOptimization.Quality,
                     }
                 );
@@ -649,11 +679,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             // Mock gradient blurred lyrics layer
-            using var combinedBlurredLyrics = new CanvasCommandList(control);
-            using var combinedBlurredLyricsDs = combinedBlurredLyrics.CreateDrawingSession();
+            using var blurredLyrics = new CanvasCommandList(control);
+            using var blurredLyricsDs = blurredLyrics.CreateDrawingSession();
             if (LyricsBlurAmount == 0)
             {
-                combinedBlurredLyricsDs.DrawImage(glowedLyrics);
+                blurredLyricsDs.DrawImage(glowedLyrics);
             }
             else
             {
@@ -661,7 +691,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 double overlapFactor = 0;
                 for (double i = 0; i <= 0.5 - step; i += step)
                 {
-                    using var blurredLyrics = new GaussianBlurEffect
+                    using var halfBlurredLyrics = new GaussianBlurEffect
                     {
                         Source = glowedLyrics,
                         BlurAmount = (float)(LyricsBlurAmount * (1 - i / (0.5 - step))),
@@ -670,7 +700,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     };
                     using var topCropped = new CropEffect
                     {
-                        Source = blurredLyrics,
+                        Source = halfBlurredLyrics,
                         SourceRectangle = new Rect(
                             0,
                             control.Size.Height * i,
@@ -680,7 +710,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     };
                     using var bottomCropped = new CropEffect
                     {
-                        Source = blurredLyrics,
+                        Source = halfBlurredLyrics,
                         SourceRectangle = new Rect(
                             0,
                             control.Size.Height * (1 - i - step * (1 + overlapFactor)),
@@ -688,21 +718,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                             control.Size.Height * step * (1 + overlapFactor)
                         ),
                     };
-                    combinedBlurredLyricsDs.DrawImage(topCropped);
-                    combinedBlurredLyricsDs.DrawImage(bottomCropped);
+                    blurredLyricsDs.DrawImage(topCropped);
+                    blurredLyricsDs.DrawImage(bottomCropped);
                 }
             }
 
             // Masked mock gradient blurred lyrics layer
-            using var maskedCombinedBlurredLyrics = new CanvasCommandList(control);
-            using (
-                var maskedCombinedBlurredLyricsDs =
-                    maskedCombinedBlurredLyrics.CreateDrawingSession()
-            )
+            using var maskedBlurredLyrics = new CanvasCommandList(control);
+            using (var maskedBlurredLyricsDs = maskedBlurredLyrics.CreateDrawingSession())
             {
                 if (LyricsVerticalEdgeOpacity == 100)
                 {
-                    maskedCombinedBlurredLyricsDs.DrawImage(combinedBlurredLyrics);
+                    maskedBlurredLyricsDs.DrawImage(blurredLyrics);
                 }
                 else
                 {
@@ -711,14 +738,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         DrawGradientOpacityMask(control, maskDs);
                     }
-                    maskedCombinedBlurredLyricsDs.DrawImage(
-                        new AlphaMaskEffect { Source = combinedBlurredLyrics, AlphaMask = mask }
+                    maskedBlurredLyricsDs.DrawImage(
+                        new AlphaMaskEffect { Source = blurredLyrics, AlphaMask = mask }
                     );
                 }
             }
 
             // Draw the final composed layer
-            ds.DrawImage(maskedCombinedBlurredLyrics);
+            ds.DrawImage(maskedBlurredLyrics);
         }
 
         private void DrawGradientOpacityMask(
@@ -831,12 +858,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
 
-            CalculateScaleAndOpacity(
-                SongInfo?.LyricsLines,
-                currentPlayingLineIndex,
-                _defaultOpacity
-            );
-            CalculatePosition(control, currentPlayingLineIndex);
+            CalculateLinesProps(SongInfo?.LyricsLines, currentPlayingLineIndex, _defaultOpacity);
+            CalculateCanvasYScrollOffset(control, currentPlayingLineIndex);
 
             if (IsLyricsGlowEffectEnabled)
             {
@@ -847,10 +870,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                     case LyricsGlowEffectScope.WholeLyrics:
                         break;
                     case LyricsGlowEffectScope.CurrentLine:
-                        CalculateScaleAndOpacity(_lyricsForGlowEffect, currentPlayingLineIndex, 0);
+                        CalculateLinesProps(_lyricsForGlowEffect, currentPlayingLineIndex, 0);
                         break;
                     case LyricsGlowEffectScope.CurrentChar:
-                        CalculateScaleAndOpacity(_lyricsForGlowEffect, currentPlayingLineIndex, 0);
+                        CalculateLinesProps(_lyricsForGlowEffect, currentPlayingLineIndex, 0);
                         break;
                     default:
                         break;
@@ -858,7 +881,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        private void CalculateScaleAndOpacity(
+        private void CalculateLinesProps(
             List<LyricsLine>? source,
             int currentPlayingLineIndex,
             float defaultOpacity
@@ -956,7 +979,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        private void CalculatePosition(ICanvasAnimatedControl control, int currentPlayingLineIndex)
+        private void CalculateCanvasYScrollOffset(
+            ICanvasAnimatedControl control,
+            int currentPlayingLineIndex
+        )
         {
             if (currentPlayingLineIndex < 0)
             {
@@ -1020,7 +1046,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _startVisibleLineIndex = _endVisibleLineIndex = -1;
 
-            // Update Positions
+            // Update visible line indices
             for (
                 int i = startLineIndex;
                 i >= 0 && i <= endLineIndex && i < SongInfo?.LyricsLines?.Count;

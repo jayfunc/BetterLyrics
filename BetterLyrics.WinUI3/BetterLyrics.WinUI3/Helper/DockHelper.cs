@@ -177,6 +177,44 @@ namespace BetterLyrics.WinUI3.Helper
             int cy,
             uint uFlags
         );
+
+        /// <summary>
+        /// 更改已注册 AppBar 的高度。
+        /// </summary>
+        /// <param name="window">目标窗口</param>
+        /// <param name="newHeight">新的高度</param>
+        public static void UpdateAppBarHeight(IntPtr hwnd, int newHeight)
+        {
+            if (!_registered.Contains(hwnd))
+                return;
+
+            APPBARDATA abd = new()
+            {
+                cbSize = Marshal.SizeOf<APPBARDATA>(),
+                hWnd = hwnd,
+                uEdge = ABE_TOP,
+                rc = new RECT
+                {
+                    left = 0,
+                    top = 0,
+                    right = GetSystemMetrics(SM_CXSCREEN),
+                    bottom = newHeight,
+                },
+            };
+
+            SHAppBarMessage(ABM_SETPOS, ref abd);
+
+            // 同步窗口实际高度
+            SetWindowPos(
+                hwnd,
+                IntPtr.Zero,
+                0,
+                0,
+                GetSystemMetrics(SM_CXSCREEN),
+                newHeight,
+                SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
+            );
+        }
         #endregion
     }
 }

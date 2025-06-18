@@ -11,7 +11,7 @@
   <Identity
     Name="37412.BetterLyrics"
     Publisher="CN=Zhe"
-    Version="1.0.3.0" />
+    Version="1.0.4.0" />
 
   <mp:PhoneIdentity PhoneProductId="ca4a4830-fc19-40d9-b823-53e2bff3d816" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
