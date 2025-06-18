@@ -112,6 +112,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 default:
                     break;
             }
+            _settingsService.Language = Language;
         }
 
         private readonly MediaPlayer _mediaPlayer = new();
