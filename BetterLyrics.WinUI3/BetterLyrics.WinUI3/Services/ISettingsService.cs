@@ -4,7 +4,7 @@ using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Windows.UI.Text;
 
-namespace BetterLyrics.WinUI3.Services.Settings
+namespace BetterLyrics.WinUI3.Services
 {
     public interface ISettingsService
     {
@@ -12,6 +12,7 @@ namespace BetterLyrics.WinUI3.Services.Settings
 
         // Lyrics lib
         List<string> MusicLibraries { get; set; }
+        bool IsOnlineLyricsEnabled { get; set; }
 
         // App appearance
         ElementTheme ThemeType { get; set; }

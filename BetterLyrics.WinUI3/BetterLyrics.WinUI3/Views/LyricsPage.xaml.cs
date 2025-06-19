@@ -64,11 +64,6 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.LimitedLineWidth = e.NewSize.Width;
         }
 
-        private void OpenMatchedFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.OpenMatchedFileFolderInFileExplorer((string)(sender as HyperlinkButton)!.Tag);
-        }
-
         private void CoverImageGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.CoverImageGridActualHeight = e.NewSize.Height;

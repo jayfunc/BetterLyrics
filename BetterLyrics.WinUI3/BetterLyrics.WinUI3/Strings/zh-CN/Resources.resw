@@ -121,7 +121,7 @@
     <value>本地音乐媒体库</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
-    <value>添加存放音乐或歌词的文件夹以构建歌词索引数据库</value>
+    <value>添加存放音乐或歌词的文件夹</value>
   </data>
   <data name="SettingsPageOpenPath.Content" xml:space="preserve">
     <value>在文件资源管理器中打开</value>
@@ -294,17 +294,11 @@
   <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
     <value>辉光效果作用范围</value>
   </data>
-  <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
-    <value>重构歌词索引数据库</value>
-  </data>
-  <data name="SettingsPageRebuildDatabaseButton.Content" xml:space="preserve">
-    <value>重构</value>
+  <data name="SettingsPageOnlineLyrics.Header" xml:space="preserve">
+    <value>在线搜索歌词</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>添加</value>
-  </data>
-  <data name="SettingsPageRebuildDatabaseDesc.Text" xml:space="preserve">
-    <value>重构数据库中，请稍候...</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>欢迎使用 BetterLyrics</value>

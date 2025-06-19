@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -8,23 +7,17 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.Database;
-using BetterLyrics.WinUI3.Services.Playback;
-using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Globalization;
 using Windows.Media.Playback;
 using Windows.System;
-using Windows.UI;
 using WinRT.Interop;
-using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -32,7 +25,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial bool IsRebuildingLyricsIndexDatabase { get; set; } = false;
+        public partial bool IsOnlineLyricsEnabled { get; set; } = false;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -80,14 +73,24 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (oldValue != null)
             {
-                oldValue.CollectionChanged -= (_, _) =>
-                    _settingsService.MusicLibraries = [.. MusicLibraries];
+                oldValue.CollectionChanged -= MusicLib_CollectionChanged;
             }
             if (newValue != null)
             {
-                newValue.CollectionChanged += (_, _) =>
-                    _settingsService.MusicLibraries = [.. MusicLibraries];
+                newValue.CollectionChanged += MusicLib_CollectionChanged;
+                _settingsService.MusicLibraries = [.. newValue];
+                _libWatcherService.UpdateWatchers([.. newValue]);
             }
+        }
+
+        private void MusicLib_CollectionChanged(
+            object? sender,
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs e
+        )
+        {
+            _settingsService.MusicLibraries = [.. MusicLibraries];
+            _libWatcherService.UpdateWatchers([.. MusicLibraries]);
+            Broadcast(MusicLibraries, MusicLibraries, nameof(MusicLibraries));
         }
 
         [ObservableProperty]
@@ -117,8 +120,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private readonly MediaPlayer _mediaPlayer = new();
 
-        private readonly IDatabaseService _databaseService;
         private readonly ISettingsService _settingsService;
+        private readonly ILibWatcherService _libWatcherService;
+        private readonly IPlaybackService _playbackService;
 
         public string Version { get; set; } = AppInfo.AppVersion;
 
@@ -128,14 +132,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial Thickness RootGridMargin { get; set; } = new(0, 0, 0, 0);
 
-        public SettingsViewModel(IDatabaseService databaseService, ISettingsService settingsService)
+        public SettingsViewModel(
+            ISettingsService settingsService,
+            ILibWatcherService libWatcherService,
+            IPlaybackService playbackService
+        )
         {
-            _databaseService = databaseService;
             _settingsService = settingsService;
+            _libWatcherService = libWatcherService;
+            _playbackService = playbackService;
 
             RootGridMargin = new Thickness(0, _settingsService.TitleBarType.GetHeight(), 0, 0);
 
             MusicLibraries = [.. _settingsService.MusicLibraries];
+            IsOnlineLyricsEnabled = _settingsService.IsOnlineLyricsEnabled;
+
             Language = _settingsService.Language;
             CoverImageRadius = _settingsService.CoverImageRadius;
             ThemeType = _settingsService.ThemeType;
@@ -150,9 +161,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
         }
 
-        partial void OnMusicLibrariesChanged(ObservableCollection<string> value)
+        partial void OnIsOnlineLyricsEnabledChanged(bool value)
         {
-            _settingsService.MusicLibraries = [.. value];
+            _settingsService.IsOnlineLyricsEnabled = value;
+            _playbackService.ReSendingMessages();
         }
 
         partial void OnThemeTypeChanged(ElementTheme value)
@@ -201,18 +213,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             _settingsService.CoverOverlayBlurAmount = value;
         }
 
-        [RelayCommand]
-        private async Task RebuildLyricsIndexDatabaseAsync()
-        {
-            IsRebuildingLyricsIndexDatabase = true;
-            await _databaseService.RebuildDatabaseAsync(MusicLibraries);
-            IsRebuildingLyricsIndexDatabase = false;
-        }
-
-        public async Task RemoveFolderAsync(string path)
+        public void RemoveFolderAsync(string path)
         {
             MusicLibraries.Remove(path);
-            await RebuildLyricsIndexDatabaseAsync();
         }
 
         [RelayCommand]
@@ -241,12 +244,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else
                 {
-                    await AddFolderAsync(folder.Path);
+                    AddFolderAsync(folder.Path);
                 }
             }
         }
 
-        private async Task AddFolderAsync(string path)
+        private void AddFolderAsync(string path)
         {
             bool existed = MusicLibraries.Any((x) => x == path);
             if (existed)
@@ -262,14 +265,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             else
             {
                 MusicLibraries.Add(path);
-                await RebuildLyricsIndexDatabaseAsync();
             }
         }
 
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Launcher.LaunchUriAsync(new Uri(Helper.AppInfo.GithubUrl));
+            await Launcher.LaunchUriAsync(new Uri(AppInfo.GithubUrl));
         }
 
         private void OpenFolderInFileExplorer(string path)
@@ -311,9 +313,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private async Task PlayTestingMusicTask()
+        private void PlayTestingMusicTask()
         {
-            await AddFolderAsync(AppInfo.AssetsFolder);
+            AddFolderAsync(AppInfo.AssetsFolder);
             _mediaPlayer.SetUriSource(new Uri(AppInfo.TestMusicPath));
             _mediaPlayer.Play();
         }

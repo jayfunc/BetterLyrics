@@ -2,7 +2,7 @@
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
 
-namespace BetterLyrics.WinUI3.Services.Playback
+namespace BetterLyrics.WinUI3.Services
 {
     public interface IPlaybackService
     {

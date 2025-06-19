@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Windows.Media;
 using Windows.Storage;
 
-namespace BetterLyrics.WinUI3.Services.Settings
+namespace BetterLyrics.WinUI3.Services
 {
     public class SettingsService : ISettingsService
     {
@@ -17,10 +17,13 @@ namespace BetterLyrics.WinUI3.Services.Settings
 
         private const string IsFirstRunKey = "IsFirstRun";
 
+        // Lyrics lib
+        private const string MusicLibrariesKey = "MusicLibraries";
+        private const string IsOnlineLyricsEnabledKey = "IsOnlineLyricsEnabled";
+
         // App appearance
         private const string ThemeTypeKey = "ThemeType";
         private const string LanguageKey = "Language";
-        private const string MusicLibrariesKey = "MusicLibraries";
         private const string BackdropTypeKey = "BackdropType";
 
         // App behavior
@@ -49,6 +52,20 @@ namespace BetterLyrics.WinUI3.Services.Settings
             get => GetValue<bool>(IsFirstRunKey);
             set => SetValue(IsFirstRunKey, value);
         }
+        public List<string> MusicLibraries
+        {
+            get =>
+                JsonConvert.DeserializeObject<List<string>>(
+                    GetValue<string>(MusicLibrariesKey) ?? "[]"
+                )!;
+            set => SetValue(MusicLibrariesKey, JsonConvert.SerializeObject(value));
+        }
+
+        public bool IsOnlineLyricsEnabled
+        {
+            get => GetValue<bool>(IsOnlineLyricsEnabledKey);
+            set => SetValue(IsOnlineLyricsEnabledKey, value);
+        }
 
         public ElementTheme ThemeType
         {
@@ -72,15 +89,6 @@ namespace BetterLyrics.WinUI3.Services.Settings
         {
             get => (AutoStartWindowType)GetValue<int>(AutoStartWindowTypeKey);
             set => SetValue(AutoStartWindowTypeKey, (int)value);
-        }
-
-        public List<string> MusicLibraries
-        {
-            get =>
-                JsonConvert.DeserializeObject<List<string>>(
-                    GetValue<string>(MusicLibrariesKey) ?? "[]"
-                )!;
-            set => SetValue(MusicLibrariesKey, JsonConvert.SerializeObject(value));
         }
 
         public bool IsCoverOverlayEnabled
@@ -178,10 +186,12 @@ namespace BetterLyrics.WinUI3.Services.Settings
             _localSettings = ApplicationData.Current.LocalSettings;
 
             SetDefault(IsFirstRunKey, true);
+            // Lyrics lib
+            SetDefault(MusicLibrariesKey, "[]");
+            SetDefault(IsOnlineLyricsEnabledKey, true);
             // App appearance
             SetDefault(ThemeTypeKey, (int)ElementTheme.Default);
             SetDefault(LanguageKey, (int)Language.FollowSystem);
-            SetDefault(MusicLibrariesKey, "[]");
             SetDefault(BackdropTypeKey, (int)BackdropType.DesktopAcrylic);
             // App behavior
             SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.StandardMode);
