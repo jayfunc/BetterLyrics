@@ -50,9 +50,6 @@ namespace BetterLyrics.WinUI3.Helper
         private static string TestMusicFileName => "AI - 甜度爆表.mp3";
         public static string TestMusicPath => Path.Combine(AssetsFolder, TestMusicFileName);
 
-        private static string CustomShaderFileName => "CustomTransform.bin";
-        public static string CustomShaderPath => Path.Combine(AssetsFolder, CustomShaderFileName);
-
         public static void EnsureDirectories()
         {
             Directory.CreateDirectory(LogDirectory);

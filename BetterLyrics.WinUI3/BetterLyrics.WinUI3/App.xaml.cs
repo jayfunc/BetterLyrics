@@ -2,9 +2,8 @@
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Rendering;
-using BetterLyrics.WinUI3.Services.Database;
-using BetterLyrics.WinUI3.Services.Playback;
-using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -73,8 +72,9 @@ namespace BetterLyrics.WinUI3
                     })
                     // Services
                     .AddSingleton<ISettingsService, SettingsService>()
-                    .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
+                    .AddSingleton<ILrcLibService, LrcLibService>()
+                    .AddSingleton<ILibWatcherService, LibWatcherService>()
                     // ViewModels
                     .AddTransient<HostWindowViewModel>()
                     .AddSingleton<SettingsViewModel>()

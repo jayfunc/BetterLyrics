@@ -32,12 +32,12 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.OpenMusicFolder((string)(sender as HyperlinkButton)!.Tag);
         }
 
-        private async void SettingsPageRemovePathButton_Click(
+        private void SettingsPageRemovePathButton_Click(
             object sender,
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            await ViewModel.RemoveFolderAsync((string)(sender as HyperlinkButton)!.Tag);
+            ViewModel.RemoveFolderAsync((string)(sender as HyperlinkButton)!.Tag);
         }
 
         private void NavView_SelectionChanged(

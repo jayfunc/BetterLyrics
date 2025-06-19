@@ -3,7 +3,7 @@ using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -220,21 +220,32 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            if (TopCommandGrid.Opacity == 0)
-                TopCommandGrid.Opacity = .5;
-        }
-
-        private void TopCommandGrid_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            if (TopCommandGrid.Opacity == .5)
-                TopCommandGrid.Opacity = 0;
-        }
-
         private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             WindowHelper.OpenSettingsWindow();
+        }
+
+        private void TopCommandGrid_PointerMoved(object sender, PointerRoutedEventArgs e) { }
+
+        private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            var point = e.GetCurrentPoint(RootGrid);
+            double y = point.Position.Y;
+
+            if (y >= 0 && y <= TopCommandGrid.ActualHeight + 5)
+            {
+                if (TopCommandGrid.Opacity == 0)
+                {
+                    TopCommandGrid.Opacity = .5;
+                }
+            }
+            else
+            {
+                if (TopCommandGrid.Opacity == .5)
+                {
+                    TopCommandGrid.Opacity = 0;
+                }
+            }
         }
     }
 }

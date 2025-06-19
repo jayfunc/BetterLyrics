@@ -1,5 +1,5 @@
 ﻿using System;
-using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 

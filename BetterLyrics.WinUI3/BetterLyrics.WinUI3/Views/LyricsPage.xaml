@@ -311,42 +311,6 @@
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77B;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.Artist, Mode=OneWay}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E3;" />
-                                    <ListView
-                                        x:Name="MatchedFilesListView"
-                                        ItemsSource="{x:Bind ViewModel.SongInfo.FilesFound, Mode=OneWay}"
-                                        SelectionMode="None">
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="ListViewItem">
-                                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                <Setter Property="Margin" Value="0" />
-                                                <Setter Property="Padding" Value="0" />
-                                                <Setter Property="MinWidth" Value="0" />
-                                                <Setter Property="MinHeight" Value="0" />
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <HyperlinkButton
-                                                    VerticalAlignment="Center"
-                                                    Click="OpenMatchedFileButton_Click"
-                                                    RelativePanel.AlignLeftWithPanel="True"
-                                                    Tag="{Binding Mode=OneWay}">
-                                                    <TextBlock
-                                                        MaxWidth="300"
-                                                        Text="{Binding Mode=OneWay}"
-                                                        TextWrapping="Wrap" />
-                                                </HyperlinkButton>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    <TextBlock
-                                        x:Name="NoLocalFilesMatchedTextBlock"
-                                        x:Uid="MainPageNoLocalFilesMatched"
-                                        Visibility="Collapsed" />
-                                </StackPanel>
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
@@ -449,31 +413,26 @@
                 </VisualState>
             </VisualStateGroup>
 
-            <VisualStateGroup x:Name="FilesMatchStates">
-                <VisualState x:Name="Matched" />
-                <VisualState x:Name="NotMatched">
+            <VisualStateGroup x:Name="LyricsStatus">
+                <VisualState x:Name="Loading">
                     <VisualState.StateTriggers>
-                        <ui:IsNullOrEmptyStateTrigger Value="{x:Bind ViewModel.SongInfo.FilesFound, Mode=OneWay}" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="NoLocalFilesMatchedTextBlock.Visibility" Value="Visible" />
-                        <Setter Target="MatchedFilesListView.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-
-            <VisualStateGroup x:Name="LyricsExistenceStates">
-                <VisualState x:Name="Existed">
-                    <VisualState.StateTriggers>
-                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay}" />
+                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.SongInfo.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="2" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="LyricsPlaceholderStackPanel.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="NotExisted">
+                <VisualState x:Name="Found">
                     <VisualState.StateTriggers>
-                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.SongInfo.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="1" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LyricsPlaceholderStackPanel.Opacity" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NotFound">
+                    <VisualState.StateTriggers>
+                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.SongInfo.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="LyricsPlaceholderStackPanel.Opacity" Value=".5" />

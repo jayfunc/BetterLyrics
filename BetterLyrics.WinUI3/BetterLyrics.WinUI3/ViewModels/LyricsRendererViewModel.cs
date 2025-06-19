@@ -13,8 +13,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Rendering;
-using BetterLyrics.WinUI3.Services.Playback;
-using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -58,9 +57,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         public LyricsDisplayType DisplayType { get; set; }
 
         private float _rotateAngle = 0f;
-        private byte[] _shaderByteCode = File.ReadAllBytes(AppInfo.CustomShaderPath);
 
         private Color ActivatedWindowAccentColor { get; set; } = Colors.Transparent;
+
+        private Color? _albumArtAccentColor = null;
 
         private bool IsDockMode { get; set; } = false;
 
@@ -233,10 +233,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         async partial void OnSongInfoChanged(SongInfo? value)
         {
             if (value?.AlbumArt is byte[] bytes)
+            {
                 SoftwareBitmap = await (
                     await ImageHelper.GetDecoderFromByte(bytes)
                 ).GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                _albumArtAccentColor = (
+                    await ImageHelper.GetAccentColorsFromByte(bytes)
+                ).FirstOrDefault();
+            }
+            else
+            {
+                SoftwareBitmap = null;
+                _albumArtAccentColor = null;
+            }
             UpdateFontColor();
+            TotalTime = TimeSpan.Zero;
             _isRelayoutNeeded = true;
         }
 
@@ -267,36 +278,39 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private protected void UpdateFontColor()
         {
-            switch (LyricsFontColorType)
+            Color fallback = Colors.Transparent;
+            switch (Theme)
             {
-                case LyricsFontColorType.Default:
-                    switch (Theme)
+                case ElementTheme.Default:
+                    switch (Application.Current.RequestedTheme)
                     {
-                        case ElementTheme.Default:
-                            switch (Application.Current.RequestedTheme)
-                            {
-                                case ApplicationTheme.Light:
-                                    _fontColor = _darkFontColor;
-                                    break;
-                                case ApplicationTheme.Dark:
-                                    _fontColor = _lightFontColor;
-                                    break;
-                                default:
-                                    break;
-                            }
+                        case ApplicationTheme.Light:
+                            fallback = _darkFontColor;
                             break;
-                        case ElementTheme.Light:
-                            _fontColor = _darkFontColor;
-                            break;
-                        case ElementTheme.Dark:
-                            _fontColor = _lightFontColor;
+                        case ApplicationTheme.Dark:
+                            fallback = _lightFontColor;
                             break;
                         default:
                             break;
                     }
                     break;
+                case ElementTheme.Light:
+                    fallback = _darkFontColor;
+                    break;
+                case ElementTheme.Dark:
+                    fallback = _lightFontColor;
+                    break;
+                default:
+                    break;
+            }
+
+            switch (LyricsFontColorType)
+            {
+                case LyricsFontColorType.Default:
+                    _fontColor = fallback;
+                    break;
                 case LyricsFontColorType.Dominant:
-                    _fontColor = SongInfo?.CoverImageDominantColors?[0] ?? _lightFontColor;
+                    _fontColor = _albumArtAccentColor ?? fallback;
                     break;
                 default:
                     break;

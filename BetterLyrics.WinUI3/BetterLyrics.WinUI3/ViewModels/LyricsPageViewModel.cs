@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
@@ -6,8 +7,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.Playback;
-using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -21,8 +21,11 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class LyricsPageViewModel
         : BaseViewModel,
             IRecipient<PropertyChangedMessage<int>>,
-            IRecipient<PropertyChangedMessage<bool>>
+            IRecipient<PropertyChangedMessage<bool>>,
+            IRecipient<PropertyChangedMessage<ObservableCollection<string>>>
     {
+        private readonly ILibWatcherService _libWatcherService;
+
         private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToDockMode;
 
         [ObservableProperty]
@@ -69,11 +72,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public LyricsPageViewModel(
             ISettingsService settingsService,
-            IPlaybackService playbackService
+            IPlaybackService playbackService,
+            ILibWatcherService libWatcherService
         )
             : base(settingsService)
         {
             CoverImageRadius = _settingsService.CoverImageRadius;
+
+            _libWatcherService = libWatcherService;
+            _libWatcherService.MusicLibraryFilesChanged +=
+                LibWatcherService_MusicLibraryFilesChanged;
 
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += async (_, args) =>
@@ -82,6 +90,14 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsFirstRun = _settingsService.IsFirstRun;
 
             UpdateSongInfoUI(_playbackService.SongInfo).ConfigureAwait(true);
+        }
+
+        private void LibWatcherService_MusicLibraryFilesChanged(
+            object? sender,
+            Events.LibChangedEventArgs e
+        )
+        {
+            _playbackService.ReSendingMessages();
         }
 
         partial void OnCoverImageRadiusChanged(int value)
@@ -203,15 +219,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else if (message.Sender is SettingsViewModel)
             {
-                if (
-                    message.PropertyName
-                    == nameof(SettingsViewModel.IsRebuildingLyricsIndexDatabase)
-                )
+                if (message.PropertyName == nameof(SettingsViewModel.MusicLibraries))
                 {
-                    if (!message.NewValue)
-                    {
-                        _playbackService.ReSendingMessages();
-                    }
+                    _playbackService.ReSendingMessages();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<ObservableCollection<string>> message)
+        {
+            if (message.Sender is SettingsViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsViewModel.MusicLibraries))
+                {
+                    _playbackService.ReSendingMessages();
                 }
             }
         }

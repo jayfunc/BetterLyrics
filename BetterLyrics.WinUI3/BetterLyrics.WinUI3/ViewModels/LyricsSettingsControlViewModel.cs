@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services.Playback;
-using BetterLyrics.WinUI3.Services.Settings;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI;
-using Windows.UI;
 
 namespace BetterInAppLyrics.WinUI3.ViewModels
 {

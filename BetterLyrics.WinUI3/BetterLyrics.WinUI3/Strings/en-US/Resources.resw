@@ -121,7 +121,7 @@
     <value>Local music libraries</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
-    <value>Add folders storing music or lyrics to build lyrics index database</value>
+    <value>Add folders storing music or lyrics</value>
   </data>
   <data name="SettingsPageOpenPath.Content" xml:space="preserve">
     <value>Open in file explorer</value>
@@ -294,17 +294,11 @@
   <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
     <value>Glow effect scope</value>
   </data>
-  <data name="SettingsPageRebuildDatabase.Header" xml:space="preserve">
-    <value>Rebuild lyrics index database</value>
-  </data>
-  <data name="SettingsPageRebuildDatabaseButton.Content" xml:space="preserve">
-    <value>Rebuild</value>
+  <data name="SettingsPageOnlineLyrics.Header" xml:space="preserve">
+    <value>Search lyrics online</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>Add</value>
-  </data>
-  <data name="SettingsPageRebuildDatabaseDesc.Text" xml:space="preserve">
-    <value>Rebuilding the database, please wait...</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>Welcome to BetterLyrics</value>

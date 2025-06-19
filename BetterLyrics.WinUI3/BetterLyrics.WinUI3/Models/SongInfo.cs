@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using ATL;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI;
@@ -19,10 +20,13 @@ namespace BetterLyrics.WinUI3.Models
         public partial string? Artist { get; set; }
 
         [ObservableProperty]
-        public partial ObservableCollection<string>? FilesFound { get; set; }
+        public partial string? Album { get; set; }
 
         [ObservableProperty]
-        public partial bool IsLyricsExisted { get; set; } = false;
+        public partial int? Duration { get; set; }
+
+        [ObservableProperty]
+        public partial LyricsStatus? LyricsStatus { get; set; }
 
         [ObservableProperty]
         public partial string? SourceAppUserModelId { get; set; } = null;
@@ -31,66 +35,65 @@ namespace BetterLyrics.WinUI3.Models
         public partial List<LyricsLine>? LyricsLines { get; set; } = null;
         public byte[]? AlbumArt { get; set; } = null;
 
-        [ObservableProperty]
-        public partial List<Color>? CoverImageDominantColors { get; set; } = null;
-
         public SongInfo() { }
 
         /// <summary>
         /// Try to parse lyrics from the track, optionally override the raw lyrics string.
         /// </summary>
         /// <param name="track"></param>
-        /// <param name="overrideRaw"></param>
-        public void ParseLyrics(Track track, string? overrideRaw = null)
+        /// <param name="raw"></param>
+        public void ParseLyrics(string? raw = null)
         {
             List<LyricsLine>? result = null;
 
-            if (overrideRaw != null)
-                track.Lyrics.ParseLRC(overrideRaw);
-
-            var lyricsPhrases = track.Lyrics.SynchronizedLyrics;
-
-            if (lyricsPhrases?.Count > 0)
+            Track track = new() { Lyrics = new() };
+            if (raw != null)
             {
-                if (lyricsPhrases[0].TimestampMs > 0)
-                {
-                    var placeholder = new LyricsPhrase(0, $"{track.Artist} - {track.Title}");
-                    lyricsPhrases.Insert(0, placeholder);
-                    lyricsPhrases.Insert(0, placeholder);
-                }
-            }
+                track.Lyrics.ParseLRC(raw);
+                var lyricsPhrases = track.Lyrics.SynchronizedLyrics;
 
-            LyricsLine? lyricsLine = null;
-
-            for (int i = 0; i < lyricsPhrases?.Count; i++)
-            {
-                var lyricsPhrase = lyricsPhrases[i];
-                int startTimestampMs = lyricsPhrase.TimestampMs;
-                int endTimestampMs;
-
-                if (i + 1 < lyricsPhrases.Count)
+                if (lyricsPhrases?.Count > 0)
                 {
-                    endTimestampMs = lyricsPhrases[i + 1].TimestampMs;
-                }
-                else
-                {
-                    endTimestampMs = (int)track.DurationMs;
+                    if (lyricsPhrases[0].TimestampMs > 0)
+                    {
+                        var placeholder = new LyricsPhrase(0, $"{Artist} - {Title}");
+                        lyricsPhrases.Insert(0, placeholder);
+                        lyricsPhrases.Insert(0, placeholder);
+                    }
                 }
 
-                lyricsLine ??= new LyricsLine { StartPlayingTimestampMs = startTimestampMs };
+                LyricsLine? lyricsLine = null;
 
-                lyricsLine.Texts.Add(lyricsPhrase.Text);
+                for (int i = 0; i < lyricsPhrases?.Count; i++)
+                {
+                    var lyricsPhrase = lyricsPhrases[i];
+                    int startTimestampMs = lyricsPhrase.TimestampMs;
+                    int endTimestampMs;
 
-                if (endTimestampMs == startTimestampMs)
-                {
-                    continue;
-                }
-                else
-                {
-                    lyricsLine.EndPlayingTimestampMs = endTimestampMs;
-                    result ??= [];
-                    result.Add(lyricsLine);
-                    lyricsLine = null;
+                    if (i + 1 < lyricsPhrases.Count)
+                    {
+                        endTimestampMs = lyricsPhrases[i + 1].TimestampMs;
+                    }
+                    else
+                    {
+                        endTimestampMs = (int)track.DurationMs;
+                    }
+
+                    lyricsLine ??= new LyricsLine { StartPlayingTimestampMs = startTimestampMs };
+
+                    lyricsLine.Texts.Add(lyricsPhrase.Text);
+
+                    if (endTimestampMs == startTimestampMs)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        lyricsLine.EndPlayingTimestampMs = endTimestampMs;
+                        result ??= [];
+                        result.Add(lyricsLine);
+                        lyricsLine = null;
+                    }
                 }
             }
 
@@ -100,7 +103,6 @@ namespace BetterLyrics.WinUI3.Models
             }
 
             LyricsLines = result;
-            IsLyricsExisted = result != null;
         }
     }
 }

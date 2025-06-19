@@ -73,7 +73,6 @@
                                 <controls:SettingsExpander
                                     x:Uid="SettingsPageMusicLib"
                                     HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}"
-                                    IsEnabled="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                                     IsExpanded="True"
                                     ItemsSource="{x:Bind ViewModel.MusicLibraries, Mode=OneWay}">
                                     <controls:SettingsExpander.ItemTemplate>
@@ -130,21 +129,8 @@
                                     </controls:SettingsExpander.ItemsFooter>
                                 </controls:SettingsExpander>
 
-                                <controls:SettingsCard
-                                    x:Uid="SettingsPageRebuildDatabase"
-                                    HeaderIcon="{ui:FontIcon Glyph=&#xE621;}"
-                                    IsEnabled="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
-                                    <controls:SettingsCard.Description>
-                                        <TextBlock x:Uid="SettingsPageRebuildDatabaseDesc" Visibility="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                                    </controls:SettingsCard.Description>
-                                    <StackPanel>
-                                        <Button x:Uid="SettingsPageRebuildDatabaseButton" Command="{x:Bind ViewModel.RebuildLyricsIndexDatabaseCommand}" />
-                                        <ProgressBar
-                                            IsIndeterminate="True"
-                                            ShowError="False"
-                                            ShowPaused="False"
-                                            Visibility="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                                    </StackPanel>
+                                <controls:SettingsCard x:Uid="SettingsPageOnlineLyrics" HeaderIcon="{ui:FontIcon Glyph=&#xF6FA;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsOnlineLyricsEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
                             </StackPanel>
