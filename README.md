@@ -104,14 +104,20 @@ So technically, as long as you are using the music apps (like
 
 ## Many thanks to
 
+- [LRCLIB](https://lrclib.net/)
+  - Online lyrics API provider
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
+  - Local music file metadata extractor
 - [DevWinUI](https://github.com/ghost1372/DevWinUI)
-- [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
+  - Provide easy ways to access Win32 API regarding windowing
 - [TagLib#](https://github.com/mono/taglib-sharp)
+  - Previously used it as metadata extractor
+- [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
 - [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
 - [cnblogs - .NET App 与 Windows 系统媒体控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
 - [Win2D 中的游戏循环：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
 - [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
+- [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
 
 ## Inspired by
 
