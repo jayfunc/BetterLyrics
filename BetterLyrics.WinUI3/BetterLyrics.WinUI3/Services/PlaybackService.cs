@@ -115,10 +115,8 @@ namespace BetterLyrics.WinUI3.Services
                         if (file.Contains(title) && file.Contains(artist))
                         {
                             Track track = new(file);
-                            if (track.Lyrics.SynchronizedLyrics.Count > 0)
-                            {
-                                lyricsRaw ??= track.Lyrics.FormatSynchToLRC();
-                            }
+                            albumArt ??= track.EmbeddedPictures.FirstOrDefault()?.PictureData;
+
                             if (file.EndsWith(".lrc"))
                             {
                                 lyricsRaw ??= await File.ReadAllTextAsync(
@@ -126,7 +124,17 @@ namespace BetterLyrics.WinUI3.Services
                                     FileHelper.GetEncoding(file)
                                 );
                             }
-                            albumArt ??= track.EmbeddedPictures.FirstOrDefault()?.PictureData;
+                            else if (file.EndsWith("qm.qrc"))
+                            {
+                                lyricsRaw ??= Lyricify.Lyrics.Decrypter.Qrc.Decrypter.DecryptLyrics(
+                                    await File.ReadAllTextAsync(file, System.Text.Encoding.UTF8)
+                                );
+                            }
+                            else if (track.Lyrics.SynchronizedLyrics.Count > 0)
+                            {
+                                lyricsRaw ??= track.Lyrics.FormatSynchToLRC();
+                            }
+
                             if (
                                 lyricsRaw != null
                                 && (
