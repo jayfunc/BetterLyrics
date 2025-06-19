@@ -90,7 +90,6 @@ So technically, as long as you are using the music apps (like
 - Windows Media Player
 - VLC Media Player
 - QQ 音乐
-- 网易云音乐
 - 酷狗音乐
 - 酷我音乐
 
