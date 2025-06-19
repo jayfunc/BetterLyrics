@@ -4,6 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 
+// This file is a fork of https://github.com/KSemenenko/ColorThief
+// and is used to extract dominant colors from images in WinUI3 application
+// I have modified it to fit the WinUI3 environment and removed unnecessary parts
+// Credits to KSemenenko for the original work.
+
 namespace BetterLyrics.WinUI3.Helper
 {
     /// <summary>
