@@ -162,6 +162,7 @@ namespace BetterLyrics.WinUI3.Views
                             RestoreButton.Visibility = Visibility.Collapsed;
                         }
                     }
+                    TopCommandGrid.Opacity = 0;
                     break;
                 default:
                     break;
