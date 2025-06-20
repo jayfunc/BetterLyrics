@@ -11,5 +11,6 @@ using Microsoft.UI.Xaml.Controls;
 namespace BetterLyrics.WinUI3.Messages
 {
     public class ShowNotificatonMessage(Notification value)
-        : ValueChangedMessage<Notification>(value) { }
+        : ValueChangedMessage<Notification>(value)
+    { }
 }

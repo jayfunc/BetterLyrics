@@ -294,8 +294,8 @@
   <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
     <value>輝光效果作用範圍</value>
   </data>
-  <data name="SettingsPageOnlineLyrics.Header" xml:space="preserve">
-    <value>在線搜尋歌詞</value>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
+    <value>配置歌詞搜尋服務</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>添加</value>
@@ -461,5 +461,23 @@
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="MainPageLyricsLoading.Text" xml:space="preserve">
+    <value>載入歌詞中...</value>
+  </data>
+  <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+    <value>本地 .lrc 文件</value>
+  </data>
+  <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+    <value>本地音樂文件</value>
+  </data>
+  <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
+    <value>LrcLib</value>
+  </data>
+  <data name="LyricsSearchProviderQQMusic" xml:space="preserve">
+    <value>QQ 音樂</value>
+  </data>
+  <data name="LyricsSearchProviderKugouMusic" xml:space="preserve">
+    <value>酷狗音乐</value>
   </data>
 </root>

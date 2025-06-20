@@ -22,10 +22,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         : BaseViewModel,
             IRecipient<PropertyChangedMessage<int>>,
             IRecipient<PropertyChangedMessage<bool>>,
-            IRecipient<PropertyChangedMessage<ObservableCollection<string>>>
+            IRecipient<PropertyChangedMessage<LyricsStatus>>
     {
-        private readonly ILibWatcherService _libWatcherService;
-
         private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToDockMode;
 
         [ObservableProperty]
@@ -44,8 +42,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial SongInfo? SongInfo { get; set; } = null;
 
         [ObservableProperty]
+        public partial LyricsStatus LyricsStatus { get; set; } = LyricsStatus.Loading;
+
+        [ObservableProperty]
         public partial LyricsDisplayType? PreferredDisplayType { get; set; } =
             LyricsDisplayType.SplitView;
+
+        [ObservableProperty]
+        public partial int LyricsFontSize { get; set; }
 
         [ObservableProperty]
         public partial bool AboutToUpdateUI { get; set; }
@@ -72,16 +76,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public LyricsPageViewModel(
             ISettingsService settingsService,
-            IPlaybackService playbackService,
-            ILibWatcherService libWatcherService
+            IPlaybackService playbackService
         )
             : base(settingsService)
         {
+            LyricsFontSize = _settingsService.LyricsFontSize;
             CoverImageRadius = _settingsService.CoverImageRadius;
-
-            _libWatcherService = libWatcherService;
-            _libWatcherService.MusicLibraryFilesChanged +=
-                LibWatcherService_MusicLibraryFilesChanged;
 
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += async (_, args) =>
@@ -90,14 +90,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsFirstRun = _settingsService.IsFirstRun;
 
             UpdateSongInfoUI(_playbackService.SongInfo).ConfigureAwait(true);
-        }
-
-        private void LibWatcherService_MusicLibraryFilesChanged(
-            object? sender,
-            Events.LibChangedEventArgs e
-        )
-        {
-            _playbackService.ReSendingMessages();
         }
 
         partial void OnCoverImageRadiusChanged(int value)
@@ -189,11 +181,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender.GetType() == typeof(SettingsViewModel))
+            if (message.Sender is SettingsViewModel)
             {
                 if (message.PropertyName == nameof(SettingsViewModel.CoverImageRadius))
                 {
                     CoverImageRadius = message.NewValue;
+                }
+            }
+            if (message.Sender is LyricsSettingsControlViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize))
+                {
+                    LyricsFontSize = message.NewValue;
                 }
             }
         }
@@ -217,22 +216,15 @@ namespace BetterLyrics.WinUI3.ViewModels
                     TrySwitchToPreferredDisplayType(SongInfo);
                 }
             }
-            else if (message.Sender is SettingsViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsViewModel.MusicLibraries))
-                {
-                    _playbackService.ReSendingMessages();
-                }
-            }
         }
 
-        public void Receive(PropertyChangedMessage<ObservableCollection<string>> message)
+        public void Receive(PropertyChangedMessage<LyricsStatus> message)
         {
-            if (message.Sender is SettingsViewModel)
+            if (message.Sender is LyricsRendererViewModel)
             {
-                if (message.PropertyName == nameof(SettingsViewModel.MusicLibraries))
+                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsStatus))
                 {
-                    _playbackService.ReSendingMessages();
+                    LyricsStatus = message.NewValue;
                 }
             }
         }

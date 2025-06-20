@@ -9,5 +9,5 @@ namespace BetterLyrics.WinUI3.Events
     public class PositionChangedEventArgs(TimeSpan position) : EventArgs()
     {
         public TimeSpan Position { get; set; } = position;
-    }
+}
 }

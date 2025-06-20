@@ -9,15 +9,15 @@ namespace BetterLyrics.WinUI3.Rendering
         : BaseViewModel(settingsService)
     {
         public TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
-        public TimeSpan ElapsedTime { get; set; } = TimeSpan.Zero;
+    public TimeSpan ElapsedTime { get; set; } = TimeSpan.Zero;
 
-        public virtual void Calculate(
-            ICanvasAnimatedControl control,
-            CanvasAnimatedUpdateEventArgs args
-        )
-        {
-            TotalTime += args.Timing.ElapsedTime;
-            ElapsedTime = args.Timing.ElapsedTime;
-        }
+    public virtual void Calculate(
+        ICanvasAnimatedControl control,
+        CanvasAnimatedUpdateEventArgs args
+    )
+    {
+        TotalTime += args.Timing.ElapsedTime;
+        ElapsedTime = args.Timing.ElapsedTime;
     }
+}
 }

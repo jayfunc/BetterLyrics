@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using Newtonsoft.Json;
@@ -19,7 +20,7 @@ namespace BetterLyrics.WinUI3.Services
 
         // Lyrics lib
         private const string MusicLibrariesKey = "MusicLibraries";
-        private const string IsOnlineLyricsEnabledKey = "IsOnlineLyricsEnabled";
+        private const string LyricsSearchProvidersInfoKey = "LyricsSearchProvidersInfo";
 
         // App appearance
         private const string ThemeTypeKey = "ThemeType";
@@ -61,10 +62,13 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(MusicLibrariesKey, JsonConvert.SerializeObject(value));
         }
 
-        public bool IsOnlineLyricsEnabled
+        public List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo
         {
-            get => GetValue<bool>(IsOnlineLyricsEnabledKey);
-            set => SetValue(IsOnlineLyricsEnabledKey, value);
+            get =>
+                JsonConvert.DeserializeObject<List<LyricsSearchProviderInfo>>(
+                    GetValue<string>(LyricsSearchProvidersInfoKey) ?? "[]"
+                )!;
+            set => SetValue(LyricsSearchProvidersInfoKey, JsonConvert.SerializeObject(value));
         }
 
         public ElementTheme ThemeType
@@ -188,7 +192,18 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IsFirstRunKey, true);
             // Lyrics lib
             SetDefault(MusicLibrariesKey, "[]");
-            SetDefault(IsOnlineLyricsEnabledKey, true);
+            SetDefault(
+                LyricsSearchProvidersInfoKey,
+                JsonConvert.SerializeObject(
+                    new List<LyricsSearchProviderInfo>()
+                    {
+                        new(LyricsSearchProvider.LocalMusicFile, true),
+                        new(LyricsSearchProvider.LocalLrcFile, true),
+                        new(LyricsSearchProvider.LrcLib, true),
+                        new(LyricsSearchProvider.QQMusic, true),
+                    }
+                )
+            );
             // App appearance
             SetDefault(ThemeTypeKey, (int)ElementTheme.Default);
             SetDefault(LanguageKey, (int)Language.FollowSystem);

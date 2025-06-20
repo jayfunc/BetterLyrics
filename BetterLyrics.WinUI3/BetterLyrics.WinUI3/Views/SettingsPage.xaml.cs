@@ -1,4 +1,6 @@
 using BetterInAppLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -46,6 +48,17 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             ViewModel.NavViewSelectedItemTag = (args.SelectedItem as NavigationViewItem)!.Tag;
+        }
+
+        private void LyricsSearchProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                if (toggleSwitch.DataContext is LyricsSearchProviderInfo providerInfo)
+                {
+                    ViewModel.ToggleLyricsSearchProvider(providerInfo);
+                }
+            }
         }
     }
 }

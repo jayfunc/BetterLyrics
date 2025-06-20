@@ -17,6 +17,10 @@ namespace BetterLyrics.WinUI3.Enums
             cdet.Feed(bytes, 0, bytes.Length);
             cdet.DataEnd();
             var encoding = cdet.Charset;
+            if (encoding == null)
+            {
+                return Encoding.UTF8;
+            }
             return Encoding.GetEncoding(encoding);
         }
     }

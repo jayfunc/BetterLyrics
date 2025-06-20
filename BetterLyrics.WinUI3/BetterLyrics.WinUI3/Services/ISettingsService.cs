@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Windows.UI.Text;
@@ -12,7 +13,7 @@ namespace BetterLyrics.WinUI3.Services
 
         // Lyrics lib
         List<string> MusicLibraries { get; set; }
-        bool IsOnlineLyricsEnabled { get; set; }
+        List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
 
         // App appearance
         ElementTheme ThemeType { get; set; }

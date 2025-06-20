@@ -10,5 +10,5 @@ namespace BetterLyrics.WinUI3.Events
     public class SongInfoChangedEventArgs(SongInfo? songInfo) : EventArgs
     {
         public SongInfo? SongInfo { get; set; } = songInfo;
-    }
+}
 }

@@ -45,6 +45,7 @@
             <converter:ColorToBrushConverter x:Key="ColorToBrushConverter" />
             <converter:MatchedLocalFilesPathToVisibilityConverter x:Key="MatchedLocalFilesPathToVisibilityConverter" />
             <converter:IntToCornerRadius x:Key="IntToCornerRadius" />
+            <converter:LyricsSearchProviderToDisplayNameConverter x:Key="LyricsSearchProviderToDisplayNameConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
             <converters:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />

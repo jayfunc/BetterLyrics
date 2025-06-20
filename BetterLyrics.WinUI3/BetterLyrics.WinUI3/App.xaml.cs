@@ -73,7 +73,7 @@ namespace BetterLyrics.WinUI3
                     // Services
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
-                    .AddSingleton<ILrcLibService, LrcLibService>()
+                    .AddSingleton<IMusicSearchService, MusicSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
                     // ViewModels
                     .AddTransient<HostWindowViewModel>()
