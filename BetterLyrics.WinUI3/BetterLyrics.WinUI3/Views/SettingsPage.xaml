@@ -8,6 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
     mc:Ignorable="d">
@@ -129,9 +130,22 @@
                                     </controls:SettingsExpander.ItemsFooter>
                                 </controls:SettingsExpander>
 
-                                <controls:SettingsCard x:Uid="SettingsPageOnlineLyrics" HeaderIcon="{ui:FontIcon Glyph=&#xF6FA;}">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsOnlineLyricsEnabled, Mode=TwoWay}" />
-                                </controls:SettingsCard>
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageLyricsSearchProvidersConfig"
+                                    HeaderIcon="{ui:FontIcon Glyph=&#xF6FA;}"
+                                    IsExpanded="True"
+                                    ItemsSource="{x:Bind ViewModel.LyricsSearchProvidersInfo, Mode=OneWay}">
+                                    <controls:SettingsExpander.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
+                                            <controls:SettingsCard
+                                                AllowDrop="True"
+                                                CanDrag="True"
+                                                Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
+                                            </controls:SettingsCard>
+                                        </DataTemplate>
+                                    </controls:SettingsExpander.ItemTemplate>
+                                </controls:SettingsExpander>
 
                             </StackPanel>
                         </controls:Case>

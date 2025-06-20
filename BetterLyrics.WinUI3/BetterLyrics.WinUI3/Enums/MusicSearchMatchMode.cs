@@ -1,6 +1,6 @@
 ﻿namespace BetterLyrics.WinUI3.Enums
 {
-    public enum SearchMatchMode
+    public enum MusicSearchMatchMode
     {
         TitleAndArtist,
         TitleArtistAlbumAndDuration,

@@ -12,19 +12,19 @@ namespace BetterLyrics.WinUI3.Models
     public partial class Notification : ObservableObject
     {
         [ObservableProperty]
-        private InfoBarSeverity _severity;
+        public partial InfoBarSeverity Severity { get; set; }
 
         [ObservableProperty]
-        private string? _message;
+        public partial string? Message { get; set; }
 
         [ObservableProperty]
-        private bool _isForeverDismissable;
+        public partial bool IsForeverDismissable { get; set; }
 
         [ObservableProperty]
-        private Visibility _visibility;
+        public partial Visibility Visibility { get; set; }
 
         [ObservableProperty]
-        private string? _relatedSettingsKeyName;
+        public partial string? RelatedSettingsKeyName { get; set; }
 
         public Notification(
             string? message = null,

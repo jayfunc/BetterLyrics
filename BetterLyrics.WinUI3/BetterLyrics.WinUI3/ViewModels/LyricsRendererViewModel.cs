@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -46,7 +48,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<LyricsAlignmentType>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
-            IRecipient<PropertyChangedMessage<LyricsGlowEffectScope>>
+            IRecipient<PropertyChangedMessage<LyricsGlowEffectScope>>,
+            IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
+            IRecipient<PropertyChangedMessage<ObservableCollection<string>>>
     {
         private protected CanvasTextFormat _textFormat = new()
         {
@@ -66,6 +70,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; }
+
+        private List<LyricsLine> _lyrics = [];
 
         private List<LyricsLine>? _lyricsForGlowEffect = [];
 
@@ -96,6 +102,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial bool IsPlaying { get; set; }
+
+        [NotifyPropertyChangedRecipients]
+        [ObservableProperty]
+        public partial LyricsStatus LyricsStatus { get; set; } = LyricsStatus.Loading;
 
         private protected Color _fontColor;
 
@@ -152,6 +162,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         public LyricsGlowEffectScope LyricsGlowEffectScope { get; set; }
 
         private protected readonly IPlaybackService _playbackService;
+        private protected readonly IMusicSearchService _musicSearchService;
+        private readonly ILibWatcherService _libWatcherService;
 
         private float _transitionAlpha = 1f;
         private TimeSpan _transitionDuration = TimeSpan.FromMilliseconds(1000);
@@ -168,10 +180,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public LyricsRendererViewModel(
             ISettingsService settingsService,
-            IPlaybackService playbackService
+            IPlaybackService playbackService,
+            IMusicSearchService musicSearchService,
+            ILibWatcherService libWatcherService
         )
             : base(settingsService)
         {
+            _libWatcherService = libWatcherService;
+            _musicSearchService = musicSearchService;
+            _playbackService = playbackService;
+
             CoverImageRadius = _settingsService.CoverImageRadius;
             IsCoverOverlayEnabled = _settingsService.IsCoverOverlayEnabled;
             IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
@@ -188,14 +206,54 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
             LyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
 
-            _playbackService = playbackService;
+            _libWatcherService.MusicLibraryFilesChanged +=
+                LibWatcherService_MusicLibraryFilesChanged;
+
             _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
             _playbackService.PositionChanged += PlaybackService_PositionChanged;
 
             RefreshPlaybackInfo();
-
             UpdateFontColor();
+        }
+
+        private void LibWatcherService_MusicLibraryFilesChanged(
+            object? sender,
+            Events.LibChangedEventArgs e
+        )
+        {
+            GetLyrics().ConfigureAwait(true);
+        }
+
+        /// <summary>
+        /// Should invoke this function when:
+        /// 1. The song info is changed (new song is played).
+        /// 2. Lyrics search provider info is changed (change order, enable or disable any provider).
+        /// 3. Local music/lyrics files are changed (added, removed, renamed).
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetLyrics()
+        {
+            _lyrics = [];
+            _isRelayoutNeeded = true;
+            LyricsStatus = LyricsStatus.Loading;
+            (var lyricsRaw, var lyricsFormat) = await _musicSearchService.SearchLyricsAsync(
+                SongInfo.Title,
+                SongInfo.Artist,
+                SongInfo.Album,
+                SongInfo.DurationMs ?? 0
+            );
+
+            if (lyricsRaw == null)
+            {
+                LyricsStatus = LyricsStatus.NotFound;
+            }
+            else
+            {
+                _lyrics = new LyricsParser().Parse(lyricsRaw, lyricsFormat);
+                _isRelayoutNeeded = true;
+                LyricsStatus = LyricsStatus.Found;
+            }
         }
 
         public void RequestRelayout()
@@ -211,6 +269,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void PlaybackService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
         {
             SongInfo = e.SongInfo;
+            GetLyrics().ConfigureAwait(true);
         }
 
         private void PlaybackService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
@@ -230,9 +289,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isRelayoutNeeded = true;
         }
 
-        async partial void OnSongInfoChanged(SongInfo? value)
+        async partial void OnSongInfoChanged(SongInfo? oldValue, SongInfo? newValue)
         {
-            if (value?.AlbumArt is byte[] bytes)
+            if (newValue == oldValue)
+            {
+                _isRelayoutNeeded = true;
+                return;
+            }
+
+            if (newValue?.AlbumArt is byte[] bytes)
             {
                 SoftwareBitmap = await (
                     await ImageHelper.GetDecoderFromByte(bytes)
@@ -319,10 +384,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int GetCurrentPlayingLineIndex()
         {
-            for (int i = 0; i < SongInfo?.LyricsLines?.Count; i++)
+            for (int i = 0; i < _lyrics?.Count; i++)
             {
-                var line = SongInfo?.LyricsLines?[i];
-                if (line.EndPlayingTimestampMs < TotalTime.TotalMilliseconds)
+                var line = _lyrics?[i];
+                if (line?.EndTimestampMs < TotalTime.TotalMilliseconds)
                 {
                     continue;
                 }
@@ -340,12 +405,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private Tuple<int, int> GetMaxLyricsLineIndexBoundaries()
         {
-            if (SongInfo == null || SongInfo.LyricsLines == null || SongInfo.LyricsLines.Count == 0)
+            if (SongInfo == null || _lyrics == null || _lyrics.Count == 0)
             {
                 return new Tuple<int, int>(-1, -1);
             }
 
-            return new Tuple<int, int>(0, SongInfo.LyricsLines.Count - 1);
+            return new Tuple<int, int>(0, _lyrics.Count - 1);
         }
 
         private void DrawLyrics(
@@ -621,7 +686,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         DrawLyrics(
                             control,
                             lyricsDs,
-                            SongInfo?.LyricsLines,
+                            _lyrics,
                             _defaultOpacity,
                             LyricsHighlightType.LineByLine
                         );
@@ -793,9 +858,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             float y = _topMargin;
 
             // Init Positions
-            for (int i = 0; i < SongInfo?.LyricsLines?.Count; i++)
+            for (int i = 0; i < _lyrics?.Count; i++)
             {
-                var line = SongInfo?.LyricsLines?[i];
+                var line = _lyrics?[i];
 
                 // Calculate layout bounds
                 using var textLayout = new CanvasTextLayout(
@@ -872,13 +937,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             int currentPlayingLineIndex = GetCurrentPlayingLineIndex();
 
-            CalculateLinesProps(SongInfo?.LyricsLines, currentPlayingLineIndex, _defaultOpacity);
+            CalculateLinesProps(_lyrics, currentPlayingLineIndex, _defaultOpacity);
             CalculateCanvasYScrollOffset(control, currentPlayingLineIndex);
 
             if (IsLyricsGlowEffectEnabled)
             {
                 // Deep copy lyrics lines for glow effect
-                _lyricsForGlowEffect = SongInfo?.LyricsLines?.Select(line => line.Clone()).ToList();
+                _lyricsForGlowEffect = _lyrics?.Select(line => line.Clone()).ToList();
                 switch (LyricsGlowEffectScope)
                 {
                     case LyricsGlowEffectScope.WholeLyrics:
@@ -938,11 +1003,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                     opacity = _highlightedOpacity;
 
                     playProgress =
-                        ((float)TotalTime.TotalMilliseconds - line.StartPlayingTimestampMs)
+                        ((float)TotalTime.TotalMilliseconds - line.StartTimestampMs)
                         / line.DurationMs;
 
-                    var durationFromStartMs =
-                        TotalTime.TotalMilliseconds - line.StartPlayingTimestampMs;
+                    var durationFromStartMs = TotalTime.TotalMilliseconds - line.StartTimestampMs;
                     lineEntering = durationFromStartMs <= lineEnteringDurationMs;
                     if (lineEntering)
                     {
@@ -962,8 +1026,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         line.PlayingState = LyricsPlayingState.Played;
                         playProgress = 1;
 
-                        var durationToEndMs =
-                            TotalTime.TotalMilliseconds - line.EndPlayingTimestampMs;
+                        var durationToEndMs = TotalTime.TotalMilliseconds - line.EndTimestampMs;
                         lineExiting = durationToEndMs <= lineExitingDurationMs;
                         if (lineExiting)
                         {
@@ -1011,7 +1074,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             // Set _scrollOffsetY
-            LyricsLine? currentPlayingLine = SongInfo?.LyricsLines?[currentPlayingLineIndex];
+            LyricsLine? currentPlayingLine = _lyrics?[currentPlayingLineIndex];
 
             if (currentPlayingLine == null)
             {
@@ -1027,13 +1090,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
 
             var lineScrollingProgress =
-                (TotalTime.TotalMilliseconds - currentPlayingLine.StartPlayingTimestampMs)
+                (TotalTime.TotalMilliseconds - currentPlayingLine.StartTimestampMs)
                 / Math.Min(_lineScrollDurationMs, currentPlayingLine.DurationMs);
 
             float targetYScrollOffset =
                 (float?)(
                     -currentPlayingLine.Position.Y
-                    + SongInfo?.LyricsLines?[0].Position.Y
+                    + _lyrics?[0].Position.Y
                     - playingTextLayout.LayoutBounds.Height / 2
                     - _lastTotalYScroll
                 ) ?? 0f;
@@ -1061,17 +1124,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             _startVisibleLineIndex = _endVisibleLineIndex = -1;
 
             // Update visible line indices
-            for (
-                int i = startLineIndex;
-                i >= 0 && i <= endLineIndex && i < SongInfo?.LyricsLines?.Count;
-                i++
-            )
+            for (int i = startLineIndex; i >= 0 && i <= endLineIndex && i < _lyrics?.Count; i++)
             {
-                var line = SongInfo?.LyricsLines?[i];
+                var line = _lyrics?[i];
 
                 using var textLayout = new CanvasTextLayout(
                     control,
-                    line.Text,
+                    line?.Text,
                     _textFormat,
                     (float)LimitedLineWidth,
                     (float)control.Size.Height
@@ -1327,6 +1386,32 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _colorTransitionProgress = 0f;
                     _isColorTransitioning = true;
                     ActivatedWindowAccentColor = message.NewValue;
+                }
+            }
+        }
+
+        public void Receive(
+            PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>> message
+        )
+        {
+            if (message.Sender is SettingsViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsViewModel.LyricsSearchProvidersInfo))
+                {
+                    // Lyrics search providers info changed, re-fetch lyrics
+                    GetLyrics().ConfigureAwait(true);
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<ObservableCollection<string>> message)
+        {
+            if (message.Sender is SettingsViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsViewModel.MusicLibraries))
+                {
+                    // Music lib changed, re-fetch lyrics
+                    GetLyrics().ConfigureAwait(true);
                 }
             }
         }

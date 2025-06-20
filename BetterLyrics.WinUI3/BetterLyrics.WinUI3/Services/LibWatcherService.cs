@@ -10,7 +10,6 @@ namespace BetterLyrics.WinUI3.Services
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using BetterLyrics.WinUI3.Services;
     using global::BetterLyrics.WinUI3.Events;
 
     namespace BetterLyrics.WinUI3.Services

@@ -9,5 +9,5 @@ namespace BetterLyrics.WinUI3.Events
     public class IsPlayingChangedEventArgs(bool isPlaying) : EventArgs
     {
         public bool IsPlaying { get; set; } = isPlaying;
-    }
+}
 }

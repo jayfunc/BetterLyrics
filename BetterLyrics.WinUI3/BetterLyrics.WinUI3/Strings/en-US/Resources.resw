@@ -294,8 +294,8 @@
   <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
     <value>Glow effect scope</value>
   </data>
-  <data name="SettingsPageOnlineLyrics.Header" xml:space="preserve">
-    <value>Search lyrics online</value>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
+    <value>Configure lyrics search providers</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>Add</value>
@@ -461,5 +461,23 @@
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="MainPageLyricsLoading.Text" xml:space="preserve">
+    <value>Loading lyrics...</value>
+  </data>
+  <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+    <value>Local .lrc files</value>
+  </data>
+  <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+    <value>Local music files</value>
+  </data>
+  <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
+    <value>LrcLib</value>
+  </data>
+  <data name="LyricsSearchProviderQQMusic" xml:space="preserve">
+    <value>QQ Music</value>
+  </data>
+  <data name="LyricsSearchProviderKugouMusic" xml:space="preserve">
+    <value>Kugou Music</value>
   </data>
 </root>

@@ -41,19 +41,21 @@ namespace BetterLyrics.WinUI3.Helper
         public static string AssetsFolder => Path.Combine(Package.Current.InstalledPath, "Assets");
 
         // Data Files
-        private static string DatabaseFileName => "database.db";
-        public static string DatabasePath => Path.Combine(LocalFolder, DatabaseFileName);
 
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
+
+        public static string OnlineLyricsCacheDirectory =>
+            Path.Combine(CacheFolder, "online-lyrics");
 
         private static string TestMusicFileName => "AI - 甜度爆表.mp3";
         public static string TestMusicPath => Path.Combine(AssetsFolder, TestMusicFileName);
 
         public static void EnsureDirectories()
         {
-            Directory.CreateDirectory(LogDirectory);
             Directory.CreateDirectory(LocalFolder);
+            Directory.CreateDirectory(LogDirectory);
+            Directory.CreateDirectory(OnlineLyricsCacheDirectory);
         }
     }
 }

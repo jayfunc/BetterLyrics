@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -25,10 +26,6 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial bool IsOnlineLyricsEnabled { get; set; } = false;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
         public partial ElementTheme ThemeType { get; set; }
 
         [ObservableProperty]
@@ -43,8 +40,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial AutoStartWindowType AutoStartWindowType { get; set; }
 
         [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
         public partial ObservableCollection<string> MusicLibraries { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial ObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -66,35 +66,49 @@ namespace BetterLyrics.WinUI3.ViewModels
         [NotifyPropertyChangedRecipients]
         public partial int CoverOverlayBlurAmount { get; set; }
 
-        partial void OnMusicLibrariesChanged(
-            ObservableCollection<string> oldValue,
-            ObservableCollection<string> newValue
-        )
-        {
-            if (oldValue != null)
-            {
-                oldValue.CollectionChanged -= MusicLib_CollectionChanged;
-            }
-            if (newValue != null)
-            {
-                newValue.CollectionChanged += MusicLib_CollectionChanged;
-                _settingsService.MusicLibraries = [.. newValue];
-                _libWatcherService.UpdateWatchers([.. newValue]);
-            }
-        }
-
-        private void MusicLib_CollectionChanged(
-            object? sender,
-            System.Collections.Specialized.NotifyCollectionChangedEventArgs e
-        )
-        {
-            _settingsService.MusicLibraries = [.. MusicLibraries];
-            _libWatcherService.UpdateWatchers([.. MusicLibraries]);
-            Broadcast(MusicLibraries, MusicLibraries, nameof(MusicLibraries));
-        }
-
         [ObservableProperty]
         public partial Enums.Language Language { get; set; }
+
+        private readonly MediaPlayer _mediaPlayer = new();
+
+        private readonly ISettingsService _settingsService;
+        private readonly ILibWatcherService _libWatcherService;
+
+        public string Version { get; set; } = AppInfo.AppVersion;
+
+        [ObservableProperty]
+        public partial object NavViewSelectedItemTag { get; set; } = "LyricsLib";
+
+        [ObservableProperty]
+        public partial Thickness RootGridMargin { get; set; } = new(0, 0, 0, 0);
+
+        public SettingsViewModel(
+            ISettingsService settingsService,
+            ILibWatcherService libWatcherService,
+            IPlaybackService playbackService
+        )
+        {
+            _settingsService = settingsService;
+            _libWatcherService = libWatcherService;
+
+            RootGridMargin = new Thickness(0, _settingsService.TitleBarType.GetHeight(), 0, 0);
+
+            MusicLibraries = [.. _settingsService.MusicLibraries];
+            LyricsSearchProvidersInfo = [.. _settingsService.LyricsSearchProvidersInfo];
+
+            Language = _settingsService.Language;
+            CoverImageRadius = _settingsService.CoverImageRadius;
+            ThemeType = _settingsService.ThemeType;
+            BackdropType = _settingsService.BackdropType;
+            TitleBarType = _settingsService.TitleBarType;
+
+            AutoStartWindowType = _settingsService.AutoStartWindowType;
+
+            IsCoverOverlayEnabled = _settingsService.IsCoverOverlayEnabled;
+            IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
+            CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
+            CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
+        }
 
         partial void OnLanguageChanged(Enums.Language value)
         {
@@ -116,55 +130,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                     break;
             }
             _settingsService.Language = Language;
-        }
-
-        private readonly MediaPlayer _mediaPlayer = new();
-
-        private readonly ISettingsService _settingsService;
-        private readonly ILibWatcherService _libWatcherService;
-        private readonly IPlaybackService _playbackService;
-
-        public string Version { get; set; } = AppInfo.AppVersion;
-
-        [ObservableProperty]
-        public partial object NavViewSelectedItemTag { get; set; } = "LyricsLib";
-
-        [ObservableProperty]
-        public partial Thickness RootGridMargin { get; set; } = new(0, 0, 0, 0);
-
-        public SettingsViewModel(
-            ISettingsService settingsService,
-            ILibWatcherService libWatcherService,
-            IPlaybackService playbackService
-        )
-        {
-            _settingsService = settingsService;
-            _libWatcherService = libWatcherService;
-            _playbackService = playbackService;
-
-            RootGridMargin = new Thickness(0, _settingsService.TitleBarType.GetHeight(), 0, 0);
-
-            MusicLibraries = [.. _settingsService.MusicLibraries];
-            IsOnlineLyricsEnabled = _settingsService.IsOnlineLyricsEnabled;
-
-            Language = _settingsService.Language;
-            CoverImageRadius = _settingsService.CoverImageRadius;
-            ThemeType = _settingsService.ThemeType;
-            BackdropType = _settingsService.BackdropType;
-            TitleBarType = _settingsService.TitleBarType;
-
-            AutoStartWindowType = _settingsService.AutoStartWindowType;
-
-            IsCoverOverlayEnabled = _settingsService.IsCoverOverlayEnabled;
-            IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
-            CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
-            CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
-        }
-
-        partial void OnIsOnlineLyricsEnabledChanged(bool value)
-        {
-            _settingsService.IsOnlineLyricsEnabled = value;
-            _playbackService.ReSendingMessages();
         }
 
         partial void OnThemeTypeChanged(ElementTheme value)
@@ -216,6 +181,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public void RemoveFolderAsync(string path)
         {
             MusicLibraries.Remove(path);
+            _settingsService.MusicLibraries = [.. MusicLibraries];
+            _libWatcherService.UpdateWatchers([.. MusicLibraries]);
+            Broadcast(MusicLibraries, MusicLibraries, nameof(MusicLibraries));
         }
 
         [RelayCommand]
@@ -265,6 +233,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             else
             {
                 MusicLibraries.Add(path);
+                _settingsService.MusicLibraries = [.. MusicLibraries];
+                _libWatcherService.UpdateWatchers([.. MusicLibraries]);
+                Broadcast(MusicLibraries, MusicLibraries, nameof(MusicLibraries));
             }
         }
 
@@ -324,6 +295,16 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void OpenLogFolder()
         {
             OpenFolderInFileExplorer(AppInfo.LogDirectory);
+        }
+
+        public void ToggleLyricsSearchProvider(LyricsSearchProviderInfo providerInfo)
+        {
+            _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
+            Broadcast(
+                LyricsSearchProvidersInfo,
+                LyricsSearchProvidersInfo,
+                nameof(LyricsSearchProvidersInfo)
+            );
         }
     }
 }
