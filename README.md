@@ -25,12 +25,12 @@ Your smooth dynamic local lyrics display built with WinUI 3
 ## Supported lyrics source
 
 - From your local storage
- - Music files (with embedded lyrics)
- - .lrc files
+  - Music files (with embedded lyrics)
+  - .lrc files
 
 - From online lyrics providers
- - LrcLib
- - QQ Music
+  - LrcLib
+  - QQ Music
 
 ## Customize in your way
 
