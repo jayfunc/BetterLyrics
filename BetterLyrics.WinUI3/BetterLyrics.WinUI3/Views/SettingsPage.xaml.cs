@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -59,6 +61,39 @@ namespace BetterLyrics.WinUI3.Views
                     ViewModel.ToggleLyricsSearchProvider(providerInfo);
                 }
             }
+        }
+
+        private void LyricsSearchProvidersSettingsExpander_Expanded(
+            object sender,
+            System.EventArgs e
+        )
+        {
+            if (LyricsSearchProvidersListView != null)
+            {
+                LyricsSearchProvidersListView.Visibility = Visibility.Visible;
+                LyricsSearchProvidersListView.Opacity = 1;
+            }
+        }
+
+        private async void LyricsSearchProvidersSettingsExpander_Collapsed(
+            object sender,
+            System.EventArgs e
+        )
+        {
+            if (LyricsSearchProvidersListView != null)
+            {
+                LyricsSearchProvidersListView.Opacity = 0;
+                await Task.Delay(300);
+                LyricsSearchProvidersListView.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void LyricsSearchProvidersListView_DragItemsCompleted(
+            ListViewBase sender,
+            DragItemsCompletedEventArgs args
+        )
+        {
+            ViewModel.OnLyricsSearchProvidersReordered();
         }
     }
 }
