@@ -213,7 +213,7 @@ namespace BetterLyrics.WinUI3.Services
             // Album art
             SetDefault(IsCoverOverlayEnabledKey, true);
             SetDefault(IsDynamicCoverOverlayEnabledKey, true);
-            SetDefault(CoverOverlayOpacityKey, 100); // 100 % = 1.1
+            SetDefault(CoverOverlayOpacityKey, 75); // 100 % = 1.0
             SetDefault(CoverOverlayBlurAmountKey, 200);
             SetDefault(TitleBarTypeKey, (int)TitleBarType.Compact);
             SetDefault(CoverImageRadiusKey, 24); // 24 %

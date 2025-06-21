@@ -1,11 +1,9 @@
 ﻿using System.Text;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,7 +11,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
-using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
