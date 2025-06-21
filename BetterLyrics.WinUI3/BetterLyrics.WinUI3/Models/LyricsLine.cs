@@ -13,12 +13,14 @@ namespace BetterLyrics.WinUI3.Models
 
         public string Text => Texts[LanguageIndex];
 
-        public int StartTimestampMs { get; set; }
-        public int EndTimestampMs { get; set; }
+        public List<CharTiming> CharTimings { get; set; } = [];
+
+        public int StartMs { get; set; }
+        public int EndMs { get; set; }
 
         public LyricsPlayingState PlayingState { get; set; }
 
-        public int DurationMs => EndTimestampMs - StartTimestampMs;
+        public int DurationMs => EndMs - StartMs;
 
         public float EnteringProgress { get; set; }
 
@@ -40,8 +42,9 @@ namespace BetterLyrics.WinUI3.Models
             {
                 Texts = new List<string>(this.Texts),
                 LanguageIndex = this.LanguageIndex,
-                StartTimestampMs = this.StartTimestampMs,
-                EndTimestampMs = this.EndTimestampMs,
+                CharTimings = this.CharTimings,
+                StartMs = this.StartMs,
+                EndMs = this.EndMs,
                 PlayingState = this.PlayingState,
                 EnteringProgress = this.EnteringProgress,
                 ExitingProgress = this.ExitingProgress,

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
+using Lyricify.Lyrics.Models;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -33,19 +34,15 @@ namespace BetterLyrics.WinUI3.Helper
                     break;
             }
 
-            if (
-                _lyricsLines != null
-                && _lyricsLines.Count > 0
-                && _lyricsLines[0].StartTimestampMs > 0
-            )
+            if (_lyricsLines != null && _lyricsLines.Count > 0 && _lyricsLines[0].StartMs > 0)
             {
                 _lyricsLines.Insert(
                     0,
                     new LyricsLine
                     {
-                        StartTimestampMs = 0,
-                        EndTimestampMs = _lyricsLines[0].StartTimestampMs,
-                        Texts = [artist != null && title != null ? $"{artist} - {title}" : ""],
+                        StartMs = 0,
+                        EndMs = _lyricsLines[0].StartMs,
+                        Texts = [""],
                     }
                 );
             }
@@ -82,7 +79,7 @@ namespace BetterLyrics.WinUI3.Helper
                         endTimestampMs = durationMs;
                     }
 
-                    lyricsLine ??= new LyricsLine { StartTimestampMs = startTimestampMs };
+                    lyricsLine ??= new LyricsLine { StartMs = startTimestampMs };
 
                     lyricsLine.Texts.Add(lyricsPhrase.Text);
 
@@ -92,7 +89,7 @@ namespace BetterLyrics.WinUI3.Helper
                     }
                     else
                     {
-                        lyricsLine.EndTimestampMs = endTimestampMs;
+                        lyricsLine.EndMs = endTimestampMs;
                         _lyricsLines.Add(lyricsLine);
                         lyricsLine = null;
                     }
@@ -110,22 +107,48 @@ namespace BetterLyrics.WinUI3.Helper
             if (lines != null && lines.Count > 0)
             {
                 _lyricsLines = [];
-                for (int i = 0; i < lines.Count; i++)
+                for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
                 {
-                    var lineRead = lines[i];
+                    var lineRead = lines[lineIndex];
                     var lineWrite = new LyricsLine
                     {
-                        StartTimestampMs = lineRead.StartTime ?? 0,
+                        StartMs = lineRead.StartTime ?? 0,
                         Texts = [lineRead.Text],
+                        CharTimings = [],
                     };
-                    if (i + 1 < lines.Count)
+
+                    var syllables = (lineRead as SyllableLineInfo)?.Syllables;
+                    if (syllables != null)
                     {
-                        lineWrite.EndTimestampMs = lines[i + 1].StartTime ?? 0;
+                        for (
+                            int syllableIndex = 0;
+                            syllableIndex < syllables.Count;
+                            syllableIndex++
+                        )
+                        {
+                            var syllable = syllables[syllableIndex];
+                            var charTiming = new CharTiming { StartMs = syllable.StartTime };
+                            if (syllableIndex + 1 < syllables.Count)
+                            {
+                                charTiming.EndMs = syllables[syllableIndex + 1].StartTime;
+                            }
+                            else
+                            {
+                                charTiming.EndMs = syllable.EndTime;
+                            }
+                            lineWrite.CharTimings.Add(charTiming);
+                        }
+                    }
+
+                    if (lineIndex + 1 < lines.Count)
+                    {
+                        lineWrite.EndMs = lines[lineIndex + 1].StartTime ?? 0;
                     }
                     else
                     {
-                        lineWrite.EndTimestampMs = (int)(durationMs ?? 0);
+                        lineWrite.EndMs = durationMs ?? 0;
                     }
+
                     _lyricsLines.Add(lineWrite);
                 }
             }

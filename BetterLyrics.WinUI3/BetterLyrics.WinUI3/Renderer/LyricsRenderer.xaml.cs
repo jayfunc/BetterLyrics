@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.Renderer
             Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedUpdateEventArgs args
         )
         {
-            ViewModel.Calculate(sender, args);
+            ViewModel.Update(sender, args);
         }
 
         private void LyricsCanvas_Loaded(object sender, RoutedEventArgs e)
