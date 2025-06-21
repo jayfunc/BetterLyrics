@@ -23,6 +23,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             window.SetIsShownInSwitchers(true);
             window.ExtendsContentIntoTitleBar = true;
+            window.SetIsAlwaysOnTop(false);
 
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
 
@@ -43,8 +44,6 @@ namespace BetterLyrics.WinUI3.Helper
                 _originalPositions.Remove(hwnd);
             }
 
-            window.SetIsAlwaysOnTop(false);
-
             UnregisterAppBar(hwnd);
         }
 
@@ -52,6 +51,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             window.SetIsShownInSwitchers(false);
             window.ExtendsContentIntoTitleBar = false;
+            window.SetIsAlwaysOnTop(true);
 
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
 
@@ -82,8 +82,6 @@ namespace BetterLyrics.WinUI3.Helper
                 appBarHeight,
                 SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
             );
-
-            window.SetIsAlwaysOnTop(true);
         }
 
         [DllImport("user32.dll", SetLastError = true)]

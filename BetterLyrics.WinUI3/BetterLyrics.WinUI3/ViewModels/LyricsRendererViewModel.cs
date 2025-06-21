@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Rendering;
 using BetterLyrics.WinUI3.Services;
-using BetterLyrics.WinUI3.Services.BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -25,11 +19,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.UI;
@@ -37,7 +27,7 @@ using Windows.UI;
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsRendererViewModel
-        : BaseRendererViewModel,
+        : BaseViewModel,
             IRecipient<PropertyChangedMessage<int>>,
             IRecipient<PropertyChangedMessage<float>>,
             IRecipient<PropertyChangedMessage<double>>,
@@ -57,6 +47,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             HorizontalAlignment = CanvasHorizontalAlignment.Left,
             VerticalAlignment = CanvasVerticalAlignment.Top,
         };
+
+        public TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
+        public TimeSpan ElapsedTime { get; set; } = TimeSpan.Zero;
 
         public LyricsDisplayType DisplayType { get; set; }
 
@@ -101,7 +94,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public int CoverOverlayBlurAmount { get; set; }
 
         [ObservableProperty]
-        public partial bool IsPlaying { get; set; }
+        public partial bool IsPlaying { get; set; } = true;
 
         [NotifyPropertyChangedRecipients]
         [ObservableProperty]
@@ -885,12 +878,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public override void Calculate(
-            ICanvasAnimatedControl control,
-            CanvasAnimatedUpdateEventArgs args
-        )
+        public void Calculate(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
-            base.Calculate(control, args);
+            if (IsPlaying)
+            {
+                TotalTime += args.Timing.ElapsedTime;
+                ElapsedTime = args.Timing.ElapsedTime;
+            }
 
             if (_isColorTransitioning)
             {
