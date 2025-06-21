@@ -58,6 +58,13 @@ namespace BetterLyrics.WinUI3.Services
             {
                 SongInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(streamReference);
             }
+            else
+            {
+                SongInfo.AlbumArt = _musicSearchService.SearchAlbumArtAsync(
+                    SongInfo.Title,
+                    SongInfo.Artist
+                );
+            }
 
             SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(SongInfo));
         }

@@ -238,10 +238,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isRelayoutNeeded = true;
             LyricsStatus = LyricsStatus.Loading;
             (var lyricsRaw, var lyricsFormat) = await _musicSearchService.SearchLyricsAsync(
-                SongInfo.Title,
-                SongInfo.Artist,
-                SongInfo.Album,
-                SongInfo.DurationMs ?? 0
+                SongInfo?.Title ?? "",
+                SongInfo?.Artist ?? "",
+                SongInfo?.Album ?? "",
+                SongInfo?.DurationMs ?? 0
             );
 
             if (lyricsRaw == null)
@@ -250,7 +250,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                _lyrics = new LyricsParser().Parse(lyricsRaw, lyricsFormat);
+                _lyrics = new LyricsParser().Parse(
+                    lyricsRaw,
+                    lyricsFormat,
+                    SongInfo.Title,
+                    SongInfo.Artist,
+                    (int)(SongInfo.DurationMs)
+                );
                 _isRelayoutNeeded = true;
                 LyricsStatus = LyricsStatus.Found;
             }

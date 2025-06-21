@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Helper
             switch (lyricsFormat)
             {
                 case LyricsFormat.Lrc:
-                    ParseLyricsFromLrc(raw);
+                    ParseLyricsFromLrc(raw, durationMs);
                     break;
                 case LyricsFormat.DecryptedQrc:
                     ParseLyricsFromQrc(raw, durationMs);
@@ -34,9 +34,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             if (
-                title != null
-                && artist != null
-                && _lyricsLines != null
+                _lyricsLines != null
                 && _lyricsLines.Count > 0
                 && _lyricsLines[0].StartTimestampMs > 0
             )
@@ -47,7 +45,7 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         StartTimestampMs = 0,
                         EndTimestampMs = _lyricsLines[0].StartTimestampMs,
-                        Texts = [$"{artist} - {title}"],
+                        Texts = [artist != null && title != null ? $"{artist} - {title}" : ""],
                     }
                 );
             }
@@ -59,7 +57,7 @@ namespace BetterLyrics.WinUI3.Helper
         /// </summary>
         /// <param name="track"></param>
         /// <param name="raw"></param>
-        private void ParseLyricsFromLrc(string raw)
+        private void ParseLyricsFromLrc(string raw, int durationMs)
         {
             Track track = new() { Lyrics = new() };
             track.Lyrics.ParseLRC(raw);
@@ -81,7 +79,7 @@ namespace BetterLyrics.WinUI3.Helper
                     }
                     else
                     {
-                        endTimestampMs = (int)track.DurationMs;
+                        endTimestampMs = durationMs;
                     }
 
                     lyricsLine ??= new LyricsLine { StartTimestampMs = startTimestampMs };

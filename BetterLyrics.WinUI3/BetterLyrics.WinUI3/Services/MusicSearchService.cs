@@ -30,6 +30,36 @@ namespace BetterLyrics.WinUI3.Services
             );
         }
 
+        public byte[]? SearchAlbumArtAsync(string title, string artist)
+        {
+            foreach (var path in _settingsService.MusicLibraries)
+            {
+                if (Directory.Exists(path))
+                {
+                    foreach (
+                        var file in Directory.GetFiles(path, $"*.*", SearchOption.AllDirectories)
+                    )
+                    {
+                        if (file.Contains(title) && file.Contains(artist))
+                        {
+                            Track track = new(file);
+                            if (track.Lyrics.SynchronizedLyrics.Count > 0)
+                            {
+                                // Get synchronized lyrics from the track (metadata)
+                                var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
+                                if (bytes != null)
+                                {
+                                    return bytes;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public async Task<(string?, LyricsFormat?)> SearchLyricsAsync(
             string title,
             string artist,
