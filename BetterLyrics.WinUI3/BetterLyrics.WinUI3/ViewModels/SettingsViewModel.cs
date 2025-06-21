@@ -186,6 +186,16 @@ namespace BetterLyrics.WinUI3.ViewModels
             Broadcast(MusicLibraries, MusicLibraries, nameof(MusicLibraries));
         }
 
+        public void OnLyricsSearchProvidersReordered()
+        {
+            _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
+            Broadcast(
+                LyricsSearchProvidersInfo,
+                LyricsSearchProvidersInfo,
+                nameof(LyricsSearchProvidersInfo)
+            );
+        }
+
         [RelayCommand]
         private async Task SelectAndAddFolderAsync(UIElement sender)
         {
