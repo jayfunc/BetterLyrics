@@ -17,10 +17,20 @@ Your smooth dynamic local lyrics display built with WinUI 3
 - Dynamic blur album art as background
 - Smooth lyrics fade in/out, zoom in/out effects
 - Smooth user interface change from song to song
-- Gradient Karaoke effect on every single character
-- Immersive desktop lyrics
+- Gradient Karaoke (with glow) effect on every single character
+- Immersive desktop lyrics (dock mode)
 
 > This project is still under development now, bugs and unexpected behaviors may be existed in the latest dev branch.
+
+## Supported lyrics source
+
+- From your local storage
+  - Music files (with embedded lyrics)
+  - .lrc files
+
+- From online lyrics providers
+  - LrcLib
+  - QQ Music
 
 ## Customize in your way
 
@@ -97,10 +107,7 @@ So technically, as long as you are using the music apps (like
 
 ## Future work
 
-- Watching file changes
-  When you downloading lyrics (using some other tools or your own scripts) while listening to new musics (non-existed on your local disks), this app can automatically load those new files.
-
-> Please note: we are not planning support directly load lyrics files via some music software APIs due to copyright issues.
+To be added later.
 
 ## Many thanks to
 
