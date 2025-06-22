@@ -5,10 +5,10 @@ namespace BetterLyrics.WinUI3.Models
     public partial class SongInfo : ObservableObject
     {
         [ObservableProperty]
-        public partial string? Title { get; set; }
+        public partial string Title { get; set; }
 
         [ObservableProperty]
-        public partial string? Artist { get; set; }
+        public partial string Artist { get; set; }
 
         [ObservableProperty]
         public partial string? Album { get; set; }
