@@ -240,10 +240,14 @@ namespace BetterLyrics.WinUI3.Services
 
             var json = await response.Content.ReadAsStringAsync();
 
-            var jArr = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(json);
-            if (jArr is not null && jArr.Count > 0)
+            var jArr = JsonSerializer.Deserialize(
+                json,
+                Serialization.SourceGenerationContext.Default.JsonElement
+            );
+            if (jArr.ValueKind == JsonValueKind.Array && jArr.GetArrayLength() > 0)
             {
-                var syncedLyrics = jArr![0]?.syncedLyrics?.ToString();
+                var first = jArr[0];
+                var syncedLyrics = first.GetProperty("syncedLyrics").GetString();
                 var result = string.IsNullOrWhiteSpace(syncedLyrics) ? null : syncedLyrics;
                 if (!string.IsNullOrWhiteSpace(result))
                 {

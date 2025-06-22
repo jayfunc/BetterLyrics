@@ -466,18 +466,24 @@
     <value>加载歌词中...</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
-    <value>本地 .lrc 文件</value>
+    <value>本地 .LRC 文件</value>
   </data>
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>本地音乐文件</value>
   </data>
   <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
-    <value>LrcLib</value>
+    <value>LRCLIB</value>
   </data>
   <data name="LyricsSearchProviderQQMusic" xml:space="preserve">
     <value>QQ 音乐</value>
   </data>
   <data name="LyricsSearchProviderKugouMusic" xml:space="preserve">
     <value>酷狗音乐</value>
+  </data>
+  <data name="SettingsPageJA.Content" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="SettingsPageKO.Content" xml:space="preserve">
+    <value>한국어</value>
   </data>
 </root>

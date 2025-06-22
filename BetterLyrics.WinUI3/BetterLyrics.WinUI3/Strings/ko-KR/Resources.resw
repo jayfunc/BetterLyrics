@@ -118,43 +118,43 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>本地音樂媒體庫</value>
+    <value>로컬 음악 도서관</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
-    <value>新增存放音樂或歌詞的資料夾</value>
+    <value>음악이나 가사를 저장하는 폴더 추가</value>
   </data>
   <data name="SettingsPageOpenPath.Content" xml:space="preserve">
-    <value>在檔案總管中開啟</value>
+    <value>파일 탐색기에서 열립니다</value>
   </data>
   <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
-    <value>在檔案總管中開啟</value>
+    <value>파일 탐색기에서 열립니다</value>
   </data>
   <data name="SettingsPageRemovePath.Content" xml:space="preserve">
-    <value>從應用程式中移除</value>
+    <value>앱에서 제거하십시오</value>
   </data>
   <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
-    <value>您可以安全刪除以下項目</value>
+    <value>다음 항목을 제거하는 것이 안전합니다</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
-    <value>路徑中的原始檔案和資料夾不會被刪除</value>
+    <value>이 경로의 원본 파일과 폴더는이 앱에서 제거 할 때 삭제되지 않습니다.</value>
   </data>
   <data name="SettingsPageAddFolder.Header" xml:space="preserve">
-    <value>新增資料夾</value>
+    <value>폴더를 추가하십시오</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>主題</value>
+    <value>주제</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
-    <value>語言</value>
+    <value>언어</value>
   </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>跟隨系統</value>
+    <value>시스템을 따르십시오</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
-    <value>淺色</value>
+    <value>빛</value>
   </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
-    <value>深色</value>
+    <value>어두운</value>
   </data>
   <data name="SettingsPageSC.Content" xml:space="preserve">
     <value>简体中文</value>
@@ -166,319 +166,319 @@
     <value>English</value>
   </data>
   <data name="SettingsPageGitHub.Header" xml:space="preserve">
-    <value>此應用程式已開源</value>
+    <value>이것은 오픈 소스 앱입니다</value>
   </data>
   <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
-    <value>在新視窗中開啟</value>
+    <value>새 창에서 열립니다</value>
   </data>
   <data name="SettingsPageGitHub.Description" xml:space="preserve">
-    <value>在 GitHub 上查看原始碼</value>
+    <value>GitHub의 소스 코드를 참조하십시오</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
-    <value>版本號</value>
+    <value>버전</value>
   </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
-    <value>無</value>
+    <value>없음</value>
   </data>
   <data name="SettingsPageMica.Content" xml:space="preserve">
-    <value>雲母</value>
+    <value>운모</value>
   </data>
   <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
-    <value>雲母（替代樣式）</value>
+    <value>운모 대체</value>
   </data>
   <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
-    <value>亞克力（桌面）</value>
+    <value>데스크탑 아크릴</value>
   </data>
   <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
-    <value>亞克力（基礎）</value>
+    <value>아크릴베이스</value>
   </data>
   <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
-    <value>亞克力（薄層）</value>
+    <value>아크릴 얇은</value>
   </data>
   <data name="SettingsPageTransparent.Content" xml:space="preserve">
-    <value>透明</value>
+    <value>투명한</value>
   </data>
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>背景材質</value>
+    <value>배경</value>
   </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
-    <value>預設</value>
+    <value>기본</value>
   </data>
   <data name="SettingsPageRestart.Content" xml:space="preserve">
-    <value>重啟應用程式以應用更改</value>
+    <value>변경 사항을 적용하려면 앱을 다시 시작하십시오</value>
   </data>
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
-    <value>無法在您的電腦中找到該路徑</value>
+    <value>경로는 컴퓨터에서 찾을 수 없습니다</value>
   </data>
   <data name="SettingsPagePathExistedInfo" xml:space="preserve">
-    <value>已新增過該資料夾，請勿重複新增</value>
+    <value>폴더가 추가되었습니다. 다시 추가하지 마십시오.</value>
   </data>
   <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
-    <value>疊加專輯圖片背景</value>
+    <value>오버레이 앨범 아트 배경</value>
   </data>
   <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
-    <value>動態專輯圖片背景</value>
+    <value>동적 앨범 아트 배경</value>
   </data>
   <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
-    <value>專輯圖片背景不透明度</value>
+    <value>앨범 아트 배경 불투명도</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>設定 - BetterLyrics</value>
+    <value>설정 - BetterLyrics</value>
   </data>
   <data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
-    <value>對齊方式</value>
+    <value>조정</value>
   </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>居中</value>
+    <value>센터</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>靠左</value>
+    <value>왼쪽</value>
   </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>靠右</value>
+    <value>오른쪽</value>
   </data>
   <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
-    <value>專輯圖片背景模糊度</value>
+    <value>앨범 아트 배경 흐림 금액</value>
   </data>
   <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
-    <value>模糊度</value>
+    <value>흐림 금액</value>
   </data>
   <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
-    <value>調整此數值將同步提升專輯圖片背景模糊強度</value>
+    <value>이 값을 조정하면 앨범 이미지의 배경 흐림 강도가 증가합니다.</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>目前值：</value>
+    <value>현재 가치 :</value>
   </data>
   <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
-    <value>啟用模糊（&gt; 0）時將顯著提升 GPU 佔用率</value>
+    <value>Blur가 활성화 될 때 상당히 높은 GPU 사용량 (&gt; 0)</value>
   </data>
   <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
-    <value>啟用此功能將略微提升 GPU 佔用率</value>
+    <value>이 기능을 활성화하면 GPU 사용률이 약간 증가합니다</value>
   </data>
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>上下邊緣不透明度</value>
+    <value>상단 및 하단 가장자리 불투명도</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
-    <value>行間距</value>
+    <value>라인 간격</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
-    <value> 倍行高</value>
+    <value>X 라인 높이</value>
   </data>
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
-    <value>字體大小</value>
+    <value>글꼴 크기</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
-    <value>僅顯示歌詞</value>
+    <value>가사 만</value>
   </data>
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
-    <value>沉浸模式</value>
+    <value>몰입 형 모드</value>
   </data>
   <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
-    <value>專輯背景</value>
+    <value>앨범 배경</value>
   </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
-    <value>關於</value>
+    <value>에 대한</value>
   </data>
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>歌詞庫</value>
+    <value>가사 도서관</value>
   </data>
   <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
-    <value>應用外觀</value>
+    <value>앱 모양</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
-    <value>輝光效果</value>
+    <value>글로우 효과</value>
   </data>
   <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
-    <value>輝光效果作用範圍</value>
+    <value>글로우 효과 범위</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>配置歌詞搜尋服務</value>
+    <value>가사 검색 제공 업체를 구성하십시오</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
-    <value>添加</value>
+    <value>추가하다</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
-    <value>歡迎使用 BetterLyrics</value>
+    <value>Betterlyrics에 오신 것을 환영합니다</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>現在就來初始化歌詞資料庫吧</value>
+    <value>지금 가사 데이터베이스를 설정합시다</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
-    <value>目前沒有正在播放的音樂</value>
+    <value>지금 음악이 재생되지 않습니다</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>開發者選項</value>
+    <value>개발자 옵션</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
-    <value>播放測試音樂</value>
+    <value>테스트 음악을 재생하십시오</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>使用系統播放器播放</value>
+    <value>시스템 플레이어를 사용하여 재생하십시오</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>紀錄</value>
+    <value>통나무</value>
   </data>
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
-    <value>字體顏色</value>
+    <value>글꼴 색상</value>
   </data>
   <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
-    <value>預設</value>
+    <value>기본</value>
   </data>
   <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
-    <value>專輯強調色</value>
+    <value>앨범 아트 악센트 색상</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
-    <value>專輯封面樣式</value>
+    <value>앨범 아트 스타일</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
-    <value>圓角半徑</value>
+    <value>코너 반경</value>
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
-    <value>標題列大小</value>
+    <value>제목 바 크기</value>
   </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
-    <value>緊湊</value>
+    <value>콤팩트</value>
   </data>
   <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
-    <value>擴充</value>
+    <value>펼친</value>
   </data>
   <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
-    <value>將應用置於頂層</value>
+    <value>항상 위에</value>
   </data>
   <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
-    <value>全螢幕</value>
+    <value>전체 화면</value>
   </data>
   <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
-    <value>按 Esc 退出全螢幕模式</value>
+    <value>ESC를 눌러 전체 화면 모드를 종료하십시오</value>
   </data>
   <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
-    <value>再次懸停以顯示切換按鈕</value>
+    <value>토글 버튼을 표시하려면 다시 다시 가져옵니다</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>不再顯示此訊息</value>
+    <value>이 메시지를 다시 표시하지 마십시오</value>
   </data>
   <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
-    <value>找不到匹配的本地文件</value>
+    <value>로컬 파일이 일치하지 않습니다</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>僅顯示專輯封面</value>
+    <value>앨범 아트 만</value>
   </data>
   <data name="MainPageSplitView.Content" xml:space="preserve">
-    <value>分割畫面視圖</value>
+    <value>분할보기</value>
   </data>
   <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
-    <value>切換顯示模式</value>
+    <value>디스플레이 유형을 변경하십시오</value>
   </data>
   <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>切換到桌面歌詞模式</value>
+    <value>데스크탑 가사 모드로 전환하십시오</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>畫中畫模式</value>
+    <value>사진 인당 모드</value>
   </data>
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
-    <value>退出畫中畫模式</value>
+    <value>Picture-in-Picture 모드 종료</value>
   </data>
   <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
-    <value>找不到歌詞</value>
+    <value>가사를 찾을 수 없습니다</value>
   </data>
   <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
-    <value>歌詞動效</value>
+    <value>가사 효과</value>
   </data>
   <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
-    <value>歌詞樣式</value>
+    <value>가사 스타일</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
-    <value>該資料夾已包含在已有資料夾中，無需再次添加</value>
+    <value>이 폴더는 이미 기존 폴더에 포함되어 있으며 다시 추가 할 필요가 없습니다.</value>
   </data>
   <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
-    <value>應用行為</value>
+    <value>앱 동작</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
-    <value>啟動應用程式時</value>
+    <value>앱을 시작할 때</value>
   </data>
   <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
-    <value>啟動標準模式</value>
+    <value>표준 모드를 ​​활성화합니다</value>
   </data>
   <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>啟動停靠模式</value>
+    <value>도크 모드를 활성화하십시오</value>
   </data>
   <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
-    <value>找不到歌詞</value>
+    <value>가사를 찾을 수 없습니다</value>
   </data>
   <data name="SystemTrayPageTitle" xml:space="preserve">
-    <value>系統托盤 - BetterLyrics</value>
+    <value>시스템 트레이 - BetterLyrics</value>
   </data>
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
-    <value>停靠模式</value>
+    <value>도크 모드</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
-    <value>字體粗細</value>
+    <value>글꼴 무게</value>
   </data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
-    <value>極細</value>
+    <value>얇은</value>
   </data>
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
-    <value>超細</value>
+    <value>여분의 빛</value>
   </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
-    <value>細體</value>
+    <value>빛</value>
   </data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
-    <value>次細</value>
+    <value>반 빛</value>
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
-    <value>常規</value>
+    <value>정상</value>
   </data>
   <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
-    <value>中等</value>
+    <value>중간</value>
   </data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
-    <value>次粗</value>
+    <value>반 대담한</value>
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
-    <value>粗體</value>
+    <value>용감한</value>
   </data>
   <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
-    <value>特粗</value>
+    <value>추가 대담한</value>
   </data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
-    <value>黑體</value>
+    <value>검은색</value>
   </data>
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
-    <value>超黑</value>
+    <value>여분의 검은 색</value>
   </data>
   <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>全部歌詞</value>
+    <value>전체 가사</value>
   </data>
   <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
-    <value>目前行</value>
+    <value>현재 라인</value>
   </data>
   <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
-    <value>目前字元</value>
+    <value>현재 숯</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
-    <value>設定</value>
+    <value>설정</value>
   </data>
   <data name="MainPageLyricsLoading.Text" xml:space="preserve">
-    <value>載入歌詞中...</value>
+    <value>가사로드 ...</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
-    <value>本地 .lrc 文件</value>
+    <value>로컬 .LRC 파일</value>
   </data>
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
-    <value>本地音樂文件</value>
+    <value>로컬 음악 파일</value>
   </data>
   <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
     <value>LRCLIB</value>
   </data>
   <data name="LyricsSearchProviderQQMusic" xml:space="preserve">
-    <value>QQ 音樂</value>
+    <value>QQ 음악</value>
   </data>
   <data name="LyricsSearchProviderKugouMusic" xml:space="preserve">
-    <value>酷狗音乐</value>
+    <value>쿠구 음악</value>
   </data>
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>

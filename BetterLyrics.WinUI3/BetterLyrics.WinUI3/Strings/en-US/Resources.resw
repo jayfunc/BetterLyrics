@@ -466,18 +466,24 @@
     <value>Loading lyrics...</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
-    <value>Local .lrc files</value>
+    <value>Local .LRC files</value>
   </data>
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>Local music files</value>
   </data>
   <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
-    <value>LrcLib</value>
+    <value>LRCLIB</value>
   </data>
   <data name="LyricsSearchProviderQQMusic" xml:space="preserve">
     <value>QQ Music</value>
   </data>
   <data name="LyricsSearchProviderKugouMusic" xml:space="preserve">
     <value>Kugou Music</value>
+  </data>
+  <data name="SettingsPageJA.Content" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="SettingsPageKO.Content" xml:space="preserve">
+    <value>한국어</value>
   </data>
 </root>

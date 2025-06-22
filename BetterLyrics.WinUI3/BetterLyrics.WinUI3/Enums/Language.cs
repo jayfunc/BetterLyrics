@@ -12,5 +12,7 @@ namespace BetterLyrics.WinUI3.Enums
         English,
         SimplifiedChinese,
         TraditionalChinese,
+        Japanese,
+        Korean,
     }
 }

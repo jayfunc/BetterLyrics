@@ -13,7 +13,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
-using Newtonsoft.Json.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Globalization;
 using Windows.Media.Playback;
@@ -125,6 +124,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                     break;
                 case Enums.Language.TraditionalChinese:
                     ApplicationLanguages.PrimaryLanguageOverride = "zh-TW";
+                    break;
+                case Enums.Language.Japanese:
+                    ApplicationLanguages.PrimaryLanguageOverride = "ja-JP";
+                    break;
+                case Enums.Language.Korean:
+                    ApplicationLanguages.PrimaryLanguageOverride = "ko-KR";
                     break;
                 default:
                     break;

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
+using BetterLyrics.WinUI3.Serialization;
 using Microsoft.UI.Xaml;
-using Newtonsoft.Json;
-using Windows.Media;
 using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services
@@ -56,19 +51,35 @@ namespace BetterLyrics.WinUI3.Services
         public List<string> MusicLibraries
         {
             get =>
-                JsonConvert.DeserializeObject<List<string>>(
-                    GetValue<string>(MusicLibrariesKey) ?? "[]"
+                System.Text.Json.JsonSerializer.Deserialize(
+                    GetValue<string>(MusicLibrariesKey) ?? "[]",
+                    SourceGenerationContext.Default.ListString
                 )!;
-            set => SetValue(MusicLibrariesKey, JsonConvert.SerializeObject(value));
+            set =>
+                SetValue(
+                    MusicLibrariesKey,
+                    System.Text.Json.JsonSerializer.Serialize(
+                        value,
+                        SourceGenerationContext.Default.ListString
+                    )
+                );
         }
 
         public List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo
         {
             get =>
-                JsonConvert.DeserializeObject<List<LyricsSearchProviderInfo>>(
-                    GetValue<string>(LyricsSearchProvidersInfoKey) ?? "[]"
+                System.Text.Json.JsonSerializer.Deserialize(
+                    GetValue<string>(LyricsSearchProvidersInfoKey) ?? "[]",
+                    SourceGenerationContext.Default.ListLyricsSearchProviderInfo
                 )!;
-            set => SetValue(LyricsSearchProvidersInfoKey, JsonConvert.SerializeObject(value));
+            set =>
+                SetValue(
+                    LyricsSearchProvidersInfoKey,
+                    System.Text.Json.JsonSerializer.Serialize(
+                        value,
+                        SourceGenerationContext.Default.ListLyricsSearchProviderInfo
+                    )
+                );
         }
 
         public ElementTheme ThemeType
@@ -194,14 +205,15 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(MusicLibrariesKey, "[]");
             SetDefault(
                 LyricsSearchProvidersInfoKey,
-                JsonConvert.SerializeObject(
+                System.Text.Json.JsonSerializer.Serialize(
                     new List<LyricsSearchProviderInfo>()
                     {
                         new(LyricsSearchProvider.LocalMusicFile, true),
                         new(LyricsSearchProvider.LocalLrcFile, true),
                         new(LyricsSearchProvider.LrcLib, true),
                         new(LyricsSearchProvider.QQMusic, true),
-                    }
+                    },
+                    SourceGenerationContext.Default.ListLyricsSearchProviderInfo
                 )
             );
             // App appearance

@@ -117,11 +117,11 @@ namespace BetterLyrics.WinUI3.Services
                 _currentSession.PlaybackInfoChanged += CurrentSession_PlaybackInfoChanged;
                 _currentSession.TimelinePropertiesChanged +=
                     CurrentSession_TimelinePropertiesChanged;
-
-                CurrentSession_MediaPropertiesChanged(_currentSession, null);
-                CurrentSession_PlaybackInfoChanged(_currentSession, null);
-                CurrentSession_TimelinePropertiesChanged(_currentSession, null);
             }
+
+            CurrentSession_MediaPropertiesChanged(_currentSession, null);
+            CurrentSession_PlaybackInfoChanged(_currentSession, null);
+            CurrentSession_TimelinePropertiesChanged(_currentSession, null);
         }
 
         /// <summary>
@@ -147,25 +147,43 @@ namespace BetterLyrics.WinUI3.Services
                 }
                 catch (Exception) { }
 
-                SongInfo = new SongInfo
+                if (mediaProps == null)
                 {
-                    Title = mediaProps?.Title ?? string.Empty,
-                    Artist = mediaProps?.Artist ?? string.Empty,
-                    Album = mediaProps?.AlbumTitle ?? string.Empty,
-                    DurationMs = _currentSession?.GetTimelineProperties().EndTime.TotalMilliseconds,
-                    SourceAppUserModelId = _currentSession?.SourceAppUserModelId,
-                };
-
-                if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
-                {
-                    SongInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(streamReference);
+                    SongInfo = null;
                 }
                 else
                 {
-                    SongInfo.AlbumArt = _musicSearchService.SearchAlbumArtAsync(
-                        SongInfo.Title,
-                        SongInfo.Artist
-                    );
+                    SongInfo = new SongInfo
+                    {
+                        Title = mediaProps.Title,
+                        Artist = mediaProps.Artist,
+                        Album = mediaProps?.AlbumTitle ?? string.Empty,
+                        DurationMs = _currentSession
+                            ?.GetTimelineProperties()
+                            .EndTime.TotalMilliseconds,
+                        SourceAppUserModelId = _currentSession?.SourceAppUserModelId,
+                    };
+
+                    if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
+                    {
+                        SongInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(streamReference);
+                    }
+                    else
+                    {
+                        SongInfo.AlbumArt = _musicSearchService.SearchAlbumArtAsync(
+                            SongInfo.Title,
+                            SongInfo.Artist
+                        );
+
+                        if (SongInfo.AlbumArt == null)
+                        {
+                            SongInfo.AlbumArt = await ImageHelper.CreateTextPlaceholderBytesAsync(
+                                $"{SongInfo.Artist} - {SongInfo.Title}",
+                                400,
+                                400
+                            );
+                        }
+                    }
                 }
             }
             _dispatcherQueue.TryEnqueue(
