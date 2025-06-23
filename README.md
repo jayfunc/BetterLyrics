@@ -39,15 +39,43 @@ Your smooth dynamic local lyrics display built with WinUI 3
 
 We provide more than one setting item to better align with your preference
 
-- Theme (light, dark, follow system)
+- Theme
+  - Light
+  - Dark
+  - Follow system
 
-- Backdrop (none, mica, acrylic, transparent)
+- Backdrop
+  - None
+  - Mica 
+  - Acrylic 
+  - Transparent
 
-- Album art as background (dynamic, blur amount, opacity)
+- Album art as background
+  - Dynamic
+  - Blur amount
+  - Opacity
 
-- Lyrics (alignment, font size, font color **(picked from album art accent color)** line spacing, opacity, blur amount, dynamic **glow** effect)
+- Album art as cover
+  - Corner radius
 
-- Language (English, Simplified Chinese, Traditional Chinese, Japanese, Korean)
+- Lyrics
+  - Alignment
+  - Font size
+  - Font color **(from album art accent color)** 
+  - Line spacing
+  - Opacity
+  - Blur amount
+  - Dynamic **glow** effect
+    - Whole lyrics
+    - Line by line
+    - Word by word
+
+- Language
+  - English
+  - Simplified Chinese
+  - Traditional Chinese
+  - Japanese
+  - Korean
 
 
 ## Screenshots
@@ -72,7 +100,7 @@ We provide more than one setting item to better align with your preference
 
 ## Demonstration
 
-Watch our introduction video「BetterLyrics 阶段性开发成果展示」(uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
+Watch our introduction video (uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
 
 ## Try it now
 
@@ -109,11 +137,11 @@ To be added later.
 - [LRCLIB](https://lrclib.net/)
   - Online lyrics API provider
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
-  - Local music file metadata extractor
+  - Used for extracting pictures in music files
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
   - Provide easy ways to access Win32 API regarding windowing
 - [TagLib#](https://github.com/mono/taglib-sharp)
-  - Previously used it as metadata extractor
+  - Used for reading original lyrics content
 - [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
 - [DevWinUI](https://github.com/ghost1372/DevWinUI)
 - [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
@@ -149,7 +177,7 @@ To be added later.
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
     <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
     <PackageReference Include="WinUIEx" Version="2.5.1" />
-    <PackageReference Include="z440.atl.core" Version="6.26.0" />
+    <PackageReference Include="z440.atl.core" Version="6.26.0" />S
 ```
 
 ## Star History

@@ -68,6 +68,10 @@
     <Folder Include="Controls\" />
     <Folder Include="ViewModels\Lyrics\" />
   </ItemGroup>
+  <!--Disable Trimming for Specific Packages-->
+  <ItemGroup>
+    <TrimmerRootAssembly Include="TagLibSharp" />
+  </ItemGroup>
   <!-- Publish Properties -->
   <PropertyGroup>
     <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>

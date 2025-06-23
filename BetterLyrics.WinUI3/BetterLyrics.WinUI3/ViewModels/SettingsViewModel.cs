@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
@@ -13,8 +14,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Windows.ApplicationModel.Core;
 using Windows.Globalization;
+using Windows.Media;
 using Windows.Media.Playback;
 using Windows.System;
 using WinRT.Interop;
@@ -68,11 +71,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial Enums.Language Language { get; set; }
 
-        private readonly MediaPlayer _mediaPlayer = new();
-
-        private readonly ISettingsService _settingsService;
-        private readonly ILibWatcherService _libWatcherService;
-
         public string Version { get; set; } = AppInfo.AppVersion;
 
         [ObservableProperty]
@@ -80,6 +78,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial Thickness RootGridMargin { get; set; } = new(0, 0, 0, 0);
+
+        private readonly MediaPlayer _mediaPlayer = new();
+        private readonly ISettingsService _settingsService;
+        private readonly ILibWatcherService _libWatcherService;
+        private readonly IPlaybackService _playbackService;
 
         public SettingsViewModel(
             ISettingsService settingsService,
@@ -89,6 +92,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _settingsService = settingsService;
             _libWatcherService = libWatcherService;
+            _playbackService = playbackService;
 
             RootGridMargin = new Thickness(0, _settingsService.TitleBarType.GetHeight(), 0, 0);
 
@@ -221,7 +225,20 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void AddFolderAsync(string path)
         {
-            if (LocalLyricsFolders.Any(x => x.Path == path))
+            var normalizedPath =
+                Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar)
+                + Path.DirectorySeparatorChar;
+
+            if (
+                LocalLyricsFolders.Any(x =>
+                    Path.GetFullPath(x.Path)
+                        .TrimEnd(Path.DirectorySeparatorChar)
+                        .Equals(
+                            normalizedPath.TrimEnd(Path.DirectorySeparatorChar),
+                            StringComparison.OrdinalIgnoreCase
+                        )
+                )
+            )
             {
                 WeakReferenceMessenger.Default.Send(
                     new ShowNotificatonMessage(
@@ -231,8 +248,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                     )
                 );
             }
-            else if (LocalLyricsFolders.Any((item) => path.StartsWith(item.Path)))
+            else if (
+                LocalLyricsFolders.Any(item =>
+                    normalizedPath.StartsWith(
+                        Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar)
+                            + Path.DirectorySeparatorChar,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                )
+            )
             {
+                // 添加的文件夹是现有文件夹的子文件夹
                 WeakReferenceMessenger.Default.Send(
                     new ShowNotificatonMessage(
                         new Notification(
@@ -241,12 +267,19 @@ namespace BetterLyrics.WinUI3.ViewModels
                     )
                 );
             }
-            else if (LocalLyricsFolders.Any((item) => item.Path.StartsWith(path)))
+            else if (
+                LocalLyricsFolders.Any(item =>
+                    Path.GetFullPath(item.Path)
+                        .TrimEnd(Path.DirectorySeparatorChar)
+                        .StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase)
+                )
+            )
             {
+                // 添加的文件夹是现有文件夹的父文件夹
                 WeakReferenceMessenger.Default.Send(
                     new ShowNotificatonMessage(
                         new Notification(
-                            App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo")
+                            App.ResourceLoader!.GetString("SettingsPagePathIncludingOthersInfo")
                         )
                     )
                 );

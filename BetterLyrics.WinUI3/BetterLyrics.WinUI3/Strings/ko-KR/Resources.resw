@@ -483,4 +483,7 @@
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>로컬 .TTML 파일</value>
   </data>
+  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>이 폴더에는 추가 된 폴더가 포함되어 있습니다. 폴더를 추가하려면이 폴더를 삭제하십시오.</value>
+  </data>
 </root>

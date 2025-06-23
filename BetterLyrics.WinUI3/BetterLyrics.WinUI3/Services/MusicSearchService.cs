@@ -42,7 +42,7 @@ namespace BetterLyrics.WinUI3.Services
                         )
                     )
                     {
-                        if (file.Contains(title) && file.Contains(artist))
+                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
                             Track track = new(file);
                             var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
@@ -152,6 +152,52 @@ namespace BetterLyrics.WinUI3.Services
             return (null, null);
         }
 
+        private static int LevenshteinDistance(string a, string b)
+        {
+            if (string.IsNullOrEmpty(a))
+                return b.Length;
+            if (string.IsNullOrEmpty(b))
+                return a.Length;
+            int[,] d = new int[a.Length + 1, b.Length + 1];
+            for (int i = 0; i <= a.Length; i++)
+                d[i, 0] = i;
+            for (int j = 0; j <= b.Length; j++)
+                d[0, j] = j;
+            for (int i = 1; i <= a.Length; i++)
+            for (int j = 1; j <= b.Length; j++)
+                d[i, j] = Math.Min(
+                    Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                    d[i - 1, j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)
+                );
+            return d[a.Length, b.Length];
+        }
+
+        // 判断相似度
+        private static bool FuzzyMatch(string fileName, string title, string artist)
+        {
+            var normFile = Normalize(fileName);
+            var normTarget1 = Normalize(title + artist);
+            var normTarget2 = Normalize(artist + title);
+
+            int dist1 = LevenshteinDistance(normFile, normTarget1);
+            int dist2 = LevenshteinDistance(normFile, normTarget2);
+
+            return dist1 <= 3 || dist2 <= 3; // 阈值可调整
+        }
+
+        private static string Normalize(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return "";
+            var sb = new StringBuilder();
+            foreach (var c in s.ToLowerInvariant())
+            {
+                if (char.IsLetterOrDigit(c))
+                    sb.Append(c);
+            }
+            return sb.ToString();
+        }
+
         private string? LocalLyricsSearchInMusicFiles(string title, string artist)
         {
             foreach (var folder in _settingsService.LocalLyricsFolders)
@@ -166,13 +212,15 @@ namespace BetterLyrics.WinUI3.Services
                         )
                     )
                     {
-                        if (file.Contains(title) && file.Contains(artist))
+                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
+                            //Track track = new(file);
+                            //var plain = track.Lyrics.UnsynchronizedLyrics;
+
                             try
                             {
-                                // TODO: replace TagLib with ATL or another library that supports AOT
-                                string plain = TagLib.File.Create(file).Tag.Lyrics;
-                                if (plain != string.Empty)
+                                var plain = TagLib.File.Create(file).Tag.Lyrics;
+                                if (plain != null && plain != string.Empty)
                                 {
                                     return plain;
                                 }
@@ -204,7 +252,7 @@ namespace BetterLyrics.WinUI3.Services
                         )
                     )
                     {
-                        if (file.Contains(title) && file.Contains(artist))
+                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
                             string? raw = await File.ReadAllTextAsync(
                                 file,

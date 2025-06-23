@@ -63,7 +63,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; }
 
-        private List<LyricsLine> _lyrics = [];
+        private List<List<LyricsLine>> _multiLangLyrics = [];
+        private int _langIndex = 0;
 
         private List<LyricsLine>? _lyricsForGlowEffect = [];
 
@@ -215,7 +216,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <returns></returns>
         private async Task RefreshLyricsAsync()
         {
-            _lyrics = [];
+            _multiLangLyrics = [];
             _isRelayoutNeeded = true;
             LyricsStatus = LyricsStatus.Loading;
             string? lyricsRaw = null;
@@ -237,7 +238,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else if (SongInfo != null)
             {
-                _lyrics = new LyricsParser().Parse(
+                _multiLangLyrics = new LyricsParser().Parse(
                     lyricsRaw,
                     lyricsFormat,
                     SongInfo.Title,
@@ -373,9 +374,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int GetCurrentPlayingLineIndex()
         {
-            for (int i = 0; i < _lyrics?.Count; i++)
+            for (int i = 0; i < _multiLangLyrics.SafeGet(_langIndex)?.Count; i++)
             {
-                var line = _lyrics?[i];
+                var line = _multiLangLyrics.SafeGet(_langIndex)?[i];
                 if (line?.EndMs < TotalTime.TotalMilliseconds)
                 {
                     continue;
@@ -394,12 +395,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private Tuple<int, int> GetMaxLyricsLineIndexBoundaries()
         {
-            if (SongInfo == null || _lyrics == null || _lyrics.Count == 0)
+            if (
+                SongInfo == null
+                || _multiLangLyrics.SafeGet(_langIndex) == null
+                || _multiLangLyrics[_langIndex].Count == 0
+            )
             {
                 return new Tuple<int, int>(-1, -1);
             }
 
-            return new Tuple<int, int>(0, _lyrics.Count - 1);
+            return new Tuple<int, int>(0, _multiLangLyrics[_langIndex].Count - 1);
         }
 
         private void DrawLyrics(
@@ -694,7 +699,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         DrawLyrics(
                             control,
                             lyricsDs,
-                            _lyrics,
+                            _multiLangLyrics.SafeGet(_langIndex),
                             _defaultOpacity,
                             LyricsHighlightType.LineByLine
                         );
@@ -870,9 +875,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             float y = _topMargin;
 
             // Init Positions
-            for (int i = 0; i < _lyrics?.Count; i++)
+            for (int i = 0; i < _multiLangLyrics.SafeGet(_langIndex)?.Count; i++)
             {
-                var line = _lyrics.SafeGet(i);
+                var line = _multiLangLyrics[_langIndex].SafeGet(i);
 
                 if (line == null)
                 {
@@ -933,13 +938,16 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _isRelayoutNeeded = false;
             }
 
-            UpdateLinesProps(_lyrics, _defaultOpacity);
+            UpdateLinesProps(_multiLangLyrics.SafeGet(_langIndex), _defaultOpacity);
             UpdateCanvasYScrollOffset(control);
 
             if (IsLyricsGlowEffectEnabled)
             {
                 // Deep copy lyrics lines for glow effect
-                _lyricsForGlowEffect = _lyrics?.Select(line => line.Clone()).ToList();
+                _lyricsForGlowEffect = _multiLangLyrics
+                    .SafeGet(_langIndex)
+                    ?.Select(line => line.Clone())
+                    .ToList();
                 switch (LyricsGlowEffectScope)
                 {
                     case LyricsGlowEffectScope.WholeLyrics:
@@ -1124,7 +1132,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             // Set _scrollOffsetY
-            LyricsLine? currentPlayingLine = _lyrics?[currentPlayingLineIndex];
+            LyricsLine? currentPlayingLine = _multiLangLyrics
+                .SafeGet(_langIndex)
+                ?[currentPlayingLineIndex];
 
             if (currentPlayingLine == null)
             {
@@ -1142,7 +1152,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             float targetYScrollOffset =
                 (float?)(
                     -currentPlayingLine.Position.Y
-                    + _lyrics?[0].Position.Y
+                    + _multiLangLyrics.SafeGet(_langIndex)?[0].Position.Y
                     - playingTextLayout.LayoutBounds.Height / 2
                 ) ?? 0f;
 
@@ -1159,9 +1169,14 @@ namespace BetterLyrics.WinUI3.ViewModels
             _startVisibleLineIndex = _endVisibleLineIndex = -1;
 
             // Update visible line indices
-            for (int i = startLineIndex; i >= 0 && i <= endLineIndex && i < _lyrics?.Count; i++)
+            for (int i = startLineIndex; i <= endLineIndex; i++)
             {
-                var line = _lyrics?[i];
+                var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
+
+                if (line == null)
+                {
+                    continue;
+                }
 
                 using var textLayout = new CanvasTextLayout(
                     control,

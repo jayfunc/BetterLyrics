@@ -11,9 +11,9 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class LyricsParser
     {
-        private List<LyricsLine> _lyricsLines = [];
+        private List<List<LyricsLine>> _multiLangLyricsLines = [];
 
-        public List<LyricsLine> Parse(
+        public List<List<LyricsLine>> Parse(
             string raw,
             LyricsFormat? lyricsFormat = null,
             string? title = null,
@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Helper
             int durationMs = 0
         )
         {
-            _lyricsLines = [];
+            _multiLangLyricsLines = [];
             switch (lyricsFormat)
             {
                 case LyricsFormat.Lrc:
@@ -34,21 +34,24 @@ namespace BetterLyrics.WinUI3.Helper
                 default:
                     break;
             }
+            return _multiLangLyricsLines;
+        }
 
-            if (_lyricsLines.Count > 0 && _lyricsLines[0].StartMs > 0)
+        private void PostProcessLyricsLines(List<LyricsLine> lines)
+        {
+            if (lines.Count > 0 && lines[0].StartMs > 0)
             {
-                _lyricsLines.Insert(
+                lines.Insert(
                     0,
                     new LyricsLine
                     {
                         StartMs = 0,
-                        EndMs = _lyricsLines[0].StartMs,
-                        Texts = [""],
+                        EndMs = lines[0].StartMs,
+                        Text = "",
                         CharTimings = [],
                     }
                 );
             }
-            return _lyricsLines;
         }
 
         private void ParseLrc(string raw, int durationMs)
@@ -66,13 +69,15 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 var matches = syllableRegex.Matches(line);
                 var syllables = new List<(int, string)>();
-                foreach (Match m in matches)
+                for (int i = 0; i < matches.Count; i++)
                 {
+                    var m = matches[i];
                     int min = int.Parse(m.Groups[2].Value);
                     int sec = int.Parse(m.Groups[3].Value);
                     int ms = int.Parse(m.Groups[4].Value.PadRight(3, '0'));
                     int totalMs = min * 60_000 + sec * 1000 + ms;
                     string text = m.Groups[6].Value;
+
                     syllables.Add((totalMs, text));
                 }
                 if (syllables.Count > 0)
@@ -105,37 +110,71 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
 
-            // 按时间排序
-            lrcLines = lrcLines.OrderBy(l => l.time).ToList();
+            // 按时间分组
+            var grouped = lrcLines.GroupBy(l => l.time).OrderBy(g => g.Key).ToList();
+            int languageCount = grouped.Max(g => g.Count());
 
-            // 构建 LyricsLine
-            for (int i = 0; i < lrcLines.Count; i++)
+            // 初始化每种语言的歌词列表
+            _multiLangLyricsLines.Clear();
+            for (int i = 0; i < languageCount; i++)
+                _multiLangLyricsLines.Add(new List<LyricsLine>());
+
+            // 遍历每个时间分组
+            foreach (var group in grouped)
             {
-                var (start, text, syllables) = lrcLines[i];
-                var line = new LyricsLine
+                var linesInGroup = group.ToList();
+                for (int langIdx = 0; langIdx < languageCount; langIdx++)
                 {
-                    StartMs = start,
-                    EndMs = (i + 1 < lrcLines.Count) ? lrcLines[i + 1].time : durationMs,
-                    Texts = [text],
-                    CharTimings = [],
-                };
-
-                if (syllables != null && syllables.Count > 0)
-                {
-                    for (int j = 0; j < syllables.Count; j++)
+                    // 如果该语言有翻译，取对应行，否则用原文（第一行）
+                    var (start, text, syllables) =
+                        langIdx < linesInGroup.Count ? linesInGroup[langIdx] : linesInGroup[0];
+                    var line = new LyricsLine
                     {
-                        var (charStart, charText) = syllables[j];
-                        int charEnd =
-                            (j + 1 < syllables.Count) ? syllables[j + 1].Item1 : line.EndMs;
-                        if (!string.IsNullOrEmpty(charText))
+                        StartMs = start,
+                        EndMs = 0, // 稍后统一修正
+                        Text = text,
+                        CharTimings = [],
+                    };
+                    if (syllables != null && syllables.Count > 0)
+                    {
+                        for (int j = 0; j < syllables.Count; j++)
                         {
+                            var (charStart, charText) = syllables[j];
+                            int charEnd = (j + 1 < syllables.Count) ? syllables[j + 1].Item1 : 0;
                             line.CharTimings.Add(
                                 new CharTiming { StartMs = charStart, EndMs = charEnd }
                             );
                         }
                     }
+                    _multiLangLyricsLines[langIdx].Add(line);
                 }
-                _lyricsLines.Add(line);
+            }
+
+            // 修正 EndMs
+            for (int langIdx = 0; langIdx < languageCount; langIdx++)
+            {
+                var linesInSingleLang = _multiLangLyricsLines[langIdx];
+                for (int i = 0; i < linesInSingleLang.Count; i++)
+                {
+                    if (i + 1 < linesInSingleLang.Count)
+                        linesInSingleLang[i].EndMs = linesInSingleLang[i + 1].StartMs;
+                    else
+                        linesInSingleLang[i].EndMs = durationMs;
+
+                    // 修正 CharTimings 的最后一个 EndMs
+                    var timings = linesInSingleLang[i].CharTimings;
+                    if (timings.Count > 0)
+                    {
+                        for (int j = 0; j < timings.Count; j++)
+                        {
+                            if (j + 1 < timings.Count)
+                                timings[j].EndMs = timings[j + 1].StartMs;
+                            else
+                                timings[j].EndMs = linesInSingleLang[i].EndMs;
+                        }
+                    }
+                }
+                PostProcessLyricsLines(linesInSingleLang);
             }
         }
 
@@ -143,6 +182,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             try
             {
+                List<LyricsLine> singleLangLyricsLine = [];
                 var xdoc = XDocument.Parse(raw);
                 var body = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "body");
                 if (body == null)
@@ -191,16 +231,18 @@ namespace BetterLyrics.WinUI3.Helper
                     if (spans.Count == 0)
                         text = p.Value.Trim();
 
-                    _lyricsLines.Add(
+                    singleLangLyricsLine.Add(
                         new LyricsLine
                         {
                             StartMs = pStartMs,
                             EndMs = pEndMs,
-                            Texts = [text],
+                            Text = text,
                             CharTimings = charTimings,
                         }
                     );
                 }
+                PostProcessLyricsLines(singleLangLyricsLine);
+                _multiLangLyricsLines.Add(singleLangLyricsLine);
             }
             catch
             {

@@ -483,4 +483,7 @@
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>本地 .TTML 文件</value>
   </data>
+  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>該文件夾包含已添加文件夾，請刪除這些文件夾以添加該文件夾</value>
+  </data>
 </root>
