@@ -1,30 +1,92 @@
-﻿using System;
+﻿// 2025/6/23 by Zhe Fang
+
+using Microsoft.UI.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.UI.Text;
 using Windows.UI.Text;
 
 namespace BetterLyrics.WinUI3.Enums
 {
+    #region Enums
+
+    /// <summary>
+    /// Defines the LyricsFontWeight
+    /// </summary>
     public enum LyricsFontWeight
     {
+        /// <summary>
+        /// Defines the Thin
+        /// </summary>
         Thin,
+
+        /// <summary>
+        /// Defines the ExtraLight
+        /// </summary>
         ExtraLight,
+
+        /// <summary>
+        /// Defines the Light
+        /// </summary>
         Light,
+
+        /// <summary>
+        /// Defines the SemiLight
+        /// </summary>
         SemiLight,
+
+        /// <summary>
+        /// Defines the Normal
+        /// </summary>
         Normal,
+
+        /// <summary>
+        /// Defines the Medium
+        /// </summary>
         Medium,
+
+        /// <summary>
+        /// Defines the SemiBold
+        /// </summary>
         SemiBold,
+
+        /// <summary>
+        /// Defines the Bold
+        /// </summary>
         Bold,
+
+        /// <summary>
+        /// Defines the ExtraBold
+        /// </summary>
         ExtraBold,
+
+        /// <summary>
+        /// Defines the Black
+        /// </summary>
         Black,
+
+        /// <summary>
+        /// Defines the ExtraBlack
+        /// </summary>
         ExtraBlack,
     }
 
+    #endregion
+
+    /// <summary>
+    /// Defines the <see cref="LyricsFontWeightExtensions" />
+    /// </summary>
     public static class LyricsFontWeightExtensions
     {
+        #region Methods
+
+        /// <summary>
+        /// The ToFontWeight
+        /// </summary>
+        /// <param name="weight">The weight<see cref="LyricsFontWeight"/></param>
+        /// <returns>The <see cref="FontWeight"/></returns>
         public static FontWeight ToFontWeight(this LyricsFontWeight weight)
         {
             return weight switch
@@ -47,5 +109,7 @@ namespace BetterLyrics.WinUI3.Enums
                 ),
             };
         }
+
+        #endregion
     }
 }

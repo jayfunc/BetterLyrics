@@ -1,18 +1,40 @@
-﻿using System;
+﻿// 2025/6/23 by Zhe Fang
+
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
 
 namespace BetterLyrics.WinUI3.Helper
 {
+    /// <summary>
+    /// Defines the <see cref="LyricsParser" />
+    /// </summary>
     public class LyricsParser
     {
+        #region Fields
+
+        /// <summary>
+        /// Defines the _multiLangLyricsLines
+        /// </summary>
         private List<List<LyricsLine>> _multiLangLyricsLines = [];
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The Parse
+        /// </summary>
+        /// <param name="raw">The raw<see cref="string"/></param>
+        /// <param name="lyricsFormat">The lyricsFormat<see cref="LyricsFormat?"/></param>
+        /// <param name="title">The title<see cref="string?"/></param>
+        /// <param name="artist">The artist<see cref="string?"/></param>
+        /// <param name="durationMs">The durationMs<see cref="int"/></param>
+        /// <returns>The <see cref="List{List{LyricsLine}}"/></returns>
         public List<List<LyricsLine>> Parse(
             string raw,
             LyricsFormat? lyricsFormat = null,
@@ -37,23 +59,11 @@ namespace BetterLyrics.WinUI3.Helper
             return _multiLangLyricsLines;
         }
 
-        private void PostProcessLyricsLines(List<LyricsLine> lines)
-        {
-            if (lines.Count > 0 && lines[0].StartMs > 0)
-            {
-                lines.Insert(
-                    0,
-                    new LyricsLine
-                    {
-                        StartMs = 0,
-                        EndMs = lines[0].StartMs,
-                        Text = "",
-                        CharTimings = [],
-                    }
-                );
-            }
-        }
-
+        /// <summary>
+        /// The ParseLrc
+        /// </summary>
+        /// <param name="raw">The raw<see cref="string"/></param>
+        /// <param name="durationMs">The durationMs<see cref="int"/></param>
         private void ParseLrc(string raw, int durationMs)
         {
             var lines = raw.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -178,6 +188,11 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
+        /// <summary>
+        /// The ParseTtml
+        /// </summary>
+        /// <param name="raw">The raw<see cref="string"/></param>
+        /// <param name="durationMs">The durationMs<see cref="int"/></param>
         private void ParseTtml(string raw, int durationMs)
         {
             try
@@ -250,6 +265,11 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
+        /// <summary>
+        /// The ParseTtmlTime
+        /// </summary>
+        /// <param name="t">The t<see cref="string?"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int ParseTtmlTime(string? t)
         {
             if (string.IsNullOrWhiteSpace(t))
@@ -310,5 +330,28 @@ namespace BetterLyrics.WinUI3.Helper
             }
             return 0;
         }
+
+        /// <summary>
+        /// The PostProcessLyricsLines
+        /// </summary>
+        /// <param name="lines">The lines<see cref="List{LyricsLine}"/></param>
+        private void PostProcessLyricsLines(List<LyricsLine> lines)
+        {
+            if (lines.Count > 0 && lines[0].StartMs > 0)
+            {
+                lines.Insert(
+                    0,
+                    new LyricsLine
+                    {
+                        StartMs = 0,
+                        EndMs = lines[0].StartMs,
+                        Text = "",
+                        CharTimings = [],
+                    }
+                );
+            }
+        }
+
+        #endregion
     }
 }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Threading.Tasks;
+﻿// 2025/6/23 by Zhe Fang
+
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,66 +11,42 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
-using WinUIEx.Messaging;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
+    /// <summary>
+    /// Defines the <see cref="LyricsPageViewModel" />
+    /// </summary>
     public partial class LyricsPageViewModel
         : BaseViewModel,
             IRecipient<PropertyChangedMessage<int>>,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<LyricsStatus>>
     {
-        private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToDockMode;
+        #region Fields
 
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial double LimitedLineWidth { get; set; } = 0.0;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial LyricsDisplayType DisplayType { get; set; } =
-            LyricsDisplayType.PlaceholderOnly;
-
-        [ObservableProperty]
-        public partial BitmapImage? CoverImage { get; set; }
-
-        [ObservableProperty]
-        public partial SongInfo? SongInfo { get; set; } = null;
-
-        [ObservableProperty]
-        public partial LyricsStatus LyricsStatus { get; set; } = LyricsStatus.Loading;
-
-        [ObservableProperty]
-        public partial LyricsDisplayType? PreferredDisplayType { get; set; } =
-            LyricsDisplayType.SplitView;
-
-        [ObservableProperty]
-        public partial int LyricsFontSize { get; set; }
-
-        [ObservableProperty]
-        public partial bool AboutToUpdateUI { get; set; }
-
-        [ObservableProperty]
-        public partial double CoverImageGridActualHeight { get; set; }
-
-        [ObservableProperty]
-        public partial int CoverImageRadius { get; set; }
-
-        [ObservableProperty]
-        public partial CornerRadius CoverImageGridCornerRadius { get; set; }
-
-        [ObservableProperty]
-        public partial bool IsWelcomeTeachingTipOpen { get; set; }
-
-        [ObservableProperty]
-        public partial bool IsFirstRun { get; set; }
-
-        [ObservableProperty]
-        public partial bool IsNotMockMode { get; set; } = true;
-
+        /// <summary>
+        /// Defines the _playbackService
+        /// </summary>
         private readonly IPlaybackService _playbackService;
 
+        /// <summary>
+        /// Defines the _preferredDisplayTypeBeforeSwitchToDockMode
+        /// </summary>
+        private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToDockMode;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LyricsPageViewModel"/> class.
+        /// </summary>
+        /// <param name="settingsService">The settingsService<see cref="ISettingsService"/></param>
+        /// <param name="playbackService">The playbackService<see cref="IPlaybackService"/></param>
         public LyricsPageViewModel(
             ISettingsService settingsService,
             IPlaybackService playbackService
@@ -92,81 +65,106 @@ namespace BetterLyrics.WinUI3.ViewModels
             UpdateSongInfoUI(_playbackService.SongInfo).ConfigureAwait(true);
         }
 
-        partial void OnCoverImageRadiusChanged(int value)
-        {
-            if (double.IsNaN(CoverImageGridActualHeight))
-                return;
+        #endregion
 
-            CoverImageGridCornerRadius = new CornerRadius(
-                value / 100f * CoverImageGridActualHeight / 2
-            );
-        }
+        #region Properties
 
-        partial void OnCoverImageGridActualHeightChanged(double value)
-        {
-            if (double.IsNaN(value))
-                return;
+        /// <summary>
+        /// Gets or sets a value indicating whether AboutToUpdateUI
+        /// </summary>
+        [ObservableProperty]
+        public partial bool AboutToUpdateUI { get; set; }
 
-            CoverImageGridCornerRadius = new CornerRadius(CoverImageRadius / 100f * value / 2);
-        }
+        /// <summary>
+        /// Gets or sets the CoverImage
+        /// </summary>
+        [ObservableProperty]
+        public partial BitmapImage? CoverImage { get; set; }
 
-        partial void OnIsFirstRunChanged(bool value)
-        {
-            IsWelcomeTeachingTipOpen = value;
-            _settingsService.IsFirstRun = false;
-        }
+        /// <summary>
+        /// Gets or sets the CoverImageGridActualHeight
+        /// </summary>
+        [ObservableProperty]
+        public partial double CoverImageGridActualHeight { get; set; }
 
-        [RelayCommand]
-        private void OnDisplayTypeChanged(object value)
-        {
-            int index = Convert.ToInt32(value);
-            PreferredDisplayType = (LyricsDisplayType)index;
-            DisplayType = (LyricsDisplayType)index;
-        }
+        /// <summary>
+        /// Gets or sets the CoverImageGridCornerRadius
+        /// </summary>
+        [ObservableProperty]
+        public partial CornerRadius CoverImageGridCornerRadius { get; set; }
 
-        [RelayCommand]
-        private void OpenSettingsWindow()
-        {
-            WindowHelper.OpenSettingsWindow();
-        }
+        /// <summary>
+        /// Gets or sets the CoverImageRadius
+        /// </summary>
+        [ObservableProperty]
+        public partial int CoverImageRadius { get; set; }
 
-        public async Task UpdateSongInfoUI(SongInfo? songInfo)
-        {
-            AboutToUpdateUI = true;
-            await Task.Delay(AnimationHelper.StoryboardDefaultDuration);
+        /// <summary>
+        /// Gets or sets the DisplayType
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsDisplayType DisplayType { get; set; } =
+            LyricsDisplayType.PlaceholderOnly;
 
-            SongInfo = songInfo;
+        /// <summary>
+        /// Gets or sets a value indicating whether IsFirstRun
+        /// </summary>
+        [ObservableProperty]
+        public partial bool IsFirstRun { get; set; }
 
-            CoverImage =
-                (songInfo?.AlbumArt == null)
-                    ? null
-                    : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
+        /// <summary>
+        /// Gets or sets a value indicating whether IsNotMockMode
+        /// </summary>
+        [ObservableProperty]
+        public partial bool IsNotMockMode { get; set; } = true;
 
-            TrySwitchToPreferredDisplayType(songInfo);
+        /// <summary>
+        /// Gets or sets a value indicating whether IsWelcomeTeachingTipOpen
+        /// </summary>
+        [ObservableProperty]
+        public partial bool IsWelcomeTeachingTipOpen { get; set; }
 
-            AboutToUpdateUI = false;
-        }
+        /// <summary>
+        /// Gets or sets the LimitedLineWidth
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial double LimitedLineWidth { get; set; } = 0.0;
 
-        private void TrySwitchToPreferredDisplayType(SongInfo? songInfo)
-        {
-            LyricsDisplayType displayType;
+        /// <summary>
+        /// Gets or sets the LyricsFontSize
+        /// </summary>
+        [ObservableProperty]
+        public partial int LyricsFontSize { get; set; }
 
-            if (songInfo == null)
-            {
-                displayType = LyricsDisplayType.PlaceholderOnly;
-            }
-            else if (PreferredDisplayType is LyricsDisplayType preferredDisplayType)
-            {
-                displayType = preferredDisplayType;
-            }
-            else
-            {
-                displayType = LyricsDisplayType.SplitView;
-            }
+        /// <summary>
+        /// Gets or sets the LyricsStatus
+        /// </summary>
+        [ObservableProperty]
+        public partial LyricsStatus LyricsStatus { get; set; } = LyricsStatus.Loading;
 
-            DisplayType = displayType;
-        }
+        /// <summary>
+        /// Gets or sets the PreferredDisplayType
+        /// </summary>
+        [ObservableProperty]
+        public partial LyricsDisplayType? PreferredDisplayType { get; set; } =
+            LyricsDisplayType.SplitView;
 
+        /// <summary>
+        /// Gets or sets the SongInfo
+        /// </summary>
+        [ObservableProperty]
+        public partial SongInfo? SongInfo { get; set; } = null;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The OpenMatchedFileFolderInFileExplorer
+        /// </summary>
+        /// <param name="path">The path<see cref="string"/></param>
         public void OpenMatchedFileFolderInFileExplorer(string path)
         {
             Process.Start(
@@ -179,24 +177,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
         }
 
-        public void Receive(PropertyChangedMessage<int> message)
-        {
-            if (message.Sender is SettingsViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsViewModel.CoverImageRadius))
-                {
-                    CoverImageRadius = message.NewValue;
-                }
-            }
-            if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize))
-                {
-                    LyricsFontSize = message.NewValue;
-                }
-            }
-        }
-
+        /// <summary>
+        /// The Receive
+        /// </summary>
+        /// <param name="message">The message<see cref="PropertyChangedMessage{bool}"/></param>
         public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is HostWindowViewModel)
@@ -218,6 +202,32 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
+        /// <summary>
+        /// The Receive
+        /// </summary>
+        /// <param name="message">The message<see cref="PropertyChangedMessage{int}"/></param>
+        public void Receive(PropertyChangedMessage<int> message)
+        {
+            if (message.Sender is SettingsViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsViewModel.CoverImageRadius))
+                {
+                    CoverImageRadius = message.NewValue;
+                }
+            }
+            if (message.Sender is LyricsSettingsControlViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize))
+                {
+                    LyricsFontSize = message.NewValue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// The Receive
+        /// </summary>
+        /// <param name="message">The message<see cref="PropertyChangedMessage{LyricsStatus}"/></param>
         public void Receive(PropertyChangedMessage<LyricsStatus> message)
         {
             if (message.Sender is LyricsRendererViewModel)
@@ -228,5 +238,110 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// The UpdateSongInfoUI
+        /// </summary>
+        /// <param name="songInfo">The songInfo<see cref="SongInfo?"/></param>
+        /// <returns>The <see cref="Task"/></returns>
+        public async Task UpdateSongInfoUI(SongInfo? songInfo)
+        {
+            AboutToUpdateUI = true;
+            await Task.Delay(AnimationHelper.StoryboardDefaultDuration);
+
+            SongInfo = songInfo;
+
+            CoverImage =
+                (songInfo?.AlbumArt == null)
+                    ? null
+                    : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
+
+            TrySwitchToPreferredDisplayType(songInfo);
+
+            AboutToUpdateUI = false;
+        }
+
+        /// <summary>
+        /// The OnDisplayTypeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="object"/></param>
+        [RelayCommand]
+        private void OnDisplayTypeChanged(object value)
+        {
+            int index = Convert.ToInt32(value);
+            PreferredDisplayType = (LyricsDisplayType)index;
+            DisplayType = (LyricsDisplayType)index;
+        }
+
+        /// <summary>
+        /// The OpenSettingsWindow
+        /// </summary>
+        [RelayCommand]
+        private void OpenSettingsWindow()
+        {
+            WindowHelper.OpenSettingsWindow();
+        }
+
+        /// <summary>
+        /// The TrySwitchToPreferredDisplayType
+        /// </summary>
+        /// <param name="songInfo">The songInfo<see cref="SongInfo?"/></param>
+        private void TrySwitchToPreferredDisplayType(SongInfo? songInfo)
+        {
+            LyricsDisplayType displayType;
+
+            if (songInfo == null)
+            {
+                displayType = LyricsDisplayType.PlaceholderOnly;
+            }
+            else if (PreferredDisplayType is LyricsDisplayType preferredDisplayType)
+            {
+                displayType = preferredDisplayType;
+            }
+            else
+            {
+                displayType = LyricsDisplayType.SplitView;
+            }
+
+            DisplayType = displayType;
+        }
+
+        /// <summary>
+        /// The OnCoverImageGridActualHeightChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="double"/></param>
+        partial void OnCoverImageGridActualHeightChanged(double value)
+        {
+            if (double.IsNaN(value))
+                return;
+
+            CoverImageGridCornerRadius = new CornerRadius(CoverImageRadius / 100f * value / 2);
+        }
+
+        /// <summary>
+        /// The OnCoverImageRadiusChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="int"/></param>
+        partial void OnCoverImageRadiusChanged(int value)
+        {
+            if (double.IsNaN(CoverImageGridActualHeight))
+                return;
+
+            CoverImageGridCornerRadius = new CornerRadius(
+                value / 100f * CoverImageGridActualHeight / 2
+            );
+        }
+
+        /// <summary>
+        /// The OnIsFirstRunChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="bool"/></param>
+        partial void OnIsFirstRunChanged(bool value)
+        {
+            IsWelcomeTeachingTipOpen = value;
+            _settingsService.IsFirstRun = false;
+        }
+
+        #endregion
     }
 }

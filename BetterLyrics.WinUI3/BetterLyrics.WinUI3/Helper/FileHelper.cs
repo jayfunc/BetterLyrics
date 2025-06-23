@@ -1,4 +1,6 @@
-﻿using System;
+﻿// 2025/6/23 by Zhe Fang
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,8 +10,18 @@ using Ude;
 
 namespace BetterLyrics.WinUI3.Helper
 {
+    /// <summary>
+    /// Defines the <see cref="FileHelper" />
+    /// </summary>
     public class FileHelper
     {
+        #region Methods
+
+        /// <summary>
+        /// The GetEncoding
+        /// </summary>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        /// <returns>The <see cref="Encoding"/></returns>
         public static Encoding GetEncoding(string filename)
         {
             var bytes = File.ReadAllBytes(filename);
@@ -23,5 +35,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             return Encoding.GetEncoding(encoding);
         }
+
+        #endregion
     }
 }
