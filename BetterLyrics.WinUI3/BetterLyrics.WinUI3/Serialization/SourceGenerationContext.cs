@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Models;
 namespace BetterLyrics.WinUI3.Serialization
 {
     [JsonSerializable(typeof(List<LyricsSearchProviderInfo>))]
+    [JsonSerializable(typeof(List<LocalLyricsFolder>))]
     [JsonSerializable(typeof(List<string>))]
     [JsonSerializable(typeof(JsonElement))]
     [JsonSourceGenerationOptions(WriteIndented = true)]

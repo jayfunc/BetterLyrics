@@ -12,7 +12,7 @@ namespace BetterLyrics.WinUI3.Services
         bool IsFirstRun { get; set; }
 
         // Lyrics lib
-        List<string> MusicLibraries { get; set; }
+        List<LocalLyricsFolder> LocalLyricsFolders { get; set; }
         List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
 
         // App appearance

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ude;
 
-namespace BetterLyrics.WinUI3.Enums
+namespace BetterLyrics.WinUI3.Helper
 {
     public class FileHelper
     {

@@ -123,9 +123,6 @@
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>新增存放音樂或歌詞的資料夾</value>
   </data>
-  <data name="SettingsPageOpenPath.Content" xml:space="preserve">
-    <value>在檔案總管中開啟</value>
-  </data>
   <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
     <value>在檔案總管中開啟</value>
   </data>
@@ -466,7 +463,7 @@
     <value>載入歌詞中...</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
-    <value>本地 .lrc 文件</value>
+    <value>本地 .lRC 文件</value>
   </data>
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>本地音樂文件</value>
@@ -474,16 +471,13 @@
   <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
     <value>LRCLIB</value>
   </data>
-  <data name="LyricsSearchProviderQQMusic" xml:space="preserve">
-    <value>QQ 音樂</value>
-  </data>
-  <data name="LyricsSearchProviderKugouMusic" xml:space="preserve">
-    <value>酷狗音乐</value>
-  </data>
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
+  </data>
+  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <value>本地 .ESLRC 文件</value>
   </data>
 </root>

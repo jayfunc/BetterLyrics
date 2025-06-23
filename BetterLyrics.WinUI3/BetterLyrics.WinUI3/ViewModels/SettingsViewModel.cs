@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial AutoStartWindowType AutoStartWindowType { get; set; }
 
         [ObservableProperty]
-        public partial ObservableCollection<string> MusicLibraries { get; set; }
+        public partial ObservableCollection<LocalLyricsFolder> LocalLyricsFolders { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -92,7 +92,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             RootGridMargin = new Thickness(0, _settingsService.TitleBarType.GetHeight(), 0, 0);
 
-            MusicLibraries = [.. _settingsService.MusicLibraries];
+            LocalLyricsFolders = [.. _settingsService.LocalLyricsFolders];
             LyricsSearchProvidersInfo = [.. _settingsService.LyricsSearchProvidersInfo];
 
             Language = _settingsService.Language;
@@ -183,12 +183,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             _settingsService.CoverOverlayBlurAmount = value;
         }
 
-        public void RemoveFolderAsync(string path)
+        public void RemoveFolderAsync(LocalLyricsFolder folder)
         {
-            MusicLibraries.Remove(path);
-            _settingsService.MusicLibraries = [.. MusicLibraries];
-            _libWatcherService.UpdateWatchers([.. MusicLibraries]);
-            Broadcast(MusicLibraries, MusicLibraries, nameof(MusicLibraries));
+            LocalLyricsFolders.Remove(folder);
+            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
+            _libWatcherService.UpdateWatchers([.. LocalLyricsFolders]);
+            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
         }
 
         public void OnLyricsSearchProvidersReordered()
@@ -215,27 +215,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (folder != null)
             {
-                if (MusicLibraries.Any((item) => folder.Path.StartsWith(item)))
-                {
-                    WeakReferenceMessenger.Default.Send(
-                        new ShowNotificatonMessage(
-                            new Notification(
-                                App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo")
-                            )
-                        )
-                    );
-                }
-                else
-                {
-                    AddFolderAsync(folder.Path);
-                }
+                AddFolderAsync(folder.Path);
             }
         }
 
         private void AddFolderAsync(string path)
         {
-            bool existed = MusicLibraries.Any((x) => x == path);
-            if (existed)
+            if (LocalLyricsFolders.Any(x => x.Path == path))
             {
                 WeakReferenceMessenger.Default.Send(
                     new ShowNotificatonMessage(
@@ -245,12 +231,32 @@ namespace BetterLyrics.WinUI3.ViewModels
                     )
                 );
             }
+            else if (LocalLyricsFolders.Any((item) => path.StartsWith(item.Path)))
+            {
+                WeakReferenceMessenger.Default.Send(
+                    new ShowNotificatonMessage(
+                        new Notification(
+                            App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo")
+                        )
+                    )
+                );
+            }
+            else if (LocalLyricsFolders.Any((item) => item.Path.StartsWith(path)))
+            {
+                WeakReferenceMessenger.Default.Send(
+                    new ShowNotificatonMessage(
+                        new Notification(
+                            App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo")
+                        )
+                    )
+                );
+            }
             else
             {
-                MusicLibraries.Add(path);
-                _settingsService.MusicLibraries = [.. MusicLibraries];
-                _libWatcherService.UpdateWatchers([.. MusicLibraries]);
-                Broadcast(MusicLibraries, MusicLibraries, nameof(MusicLibraries));
+                LocalLyricsFolders.Add(new LocalLyricsFolder(path, true));
+                _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
+                _libWatcherService.UpdateWatchers([.. LocalLyricsFolders]);
+                Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
             }
         }
 
@@ -272,9 +278,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
         }
 
-        public void OpenMusicFolder(string path)
+        public void OpenMusicFolder(LocalLyricsFolder folder)
         {
-            OpenFolderInFileExplorer(path);
+            OpenFolderInFileExplorer(folder.Path);
         }
 
         [RelayCommand]
@@ -320,6 +326,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 LyricsSearchProvidersInfo,
                 nameof(LyricsSearchProvidersInfo)
             );
+        }
+
+        public void ToggleLocalLyricsFolder(LocalLyricsFolder folder)
+        {
+            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
+            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
         }
     }
 }

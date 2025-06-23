@@ -9,8 +9,8 @@ namespace BetterLyrics.WinUI3.Enums
     public enum LyricsFormat
     {
         Lrc,
-        DecryptedQrc,
-        DecryptedKrc,
+        Eslrc,
+        Ttml,
     }
 
     public static class LyricsFormatExtensions
@@ -20,29 +20,36 @@ namespace BetterLyrics.WinUI3.Enums
             return format switch
             {
                 LyricsFormat.Lrc => ".lrc",
-                LyricsFormat.DecryptedQrc => ".decryptedqrc",
-                LyricsFormat.DecryptedKrc => ".decryptedkrc",
+                LyricsFormat.Eslrc => ".eslrc",
+                LyricsFormat.Ttml => ".ttml",
                 _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
             };
         }
 
-        public static List<string> GetSupportedLyricsFormatAsList()
+        public static LyricsFormat? Detect(string content)
         {
-            return [.. Enum.GetValues<LyricsFormat>().Select(format => format.ToFileExtension())];
-        }
-
-        public static LyricsFormat FromFileExtension(string extension)
-        {
-            return extension.ToLowerInvariant() switch
+            if (
+                content.StartsWith("<?xml")
+                && System.Text.RegularExpressions.Regex.IsMatch(content, @"<tt(:\w+)?\b")
+            )
             {
-                ".lrc" => LyricsFormat.Lrc,
-                ".qrc" => LyricsFormat.DecryptedQrc,
-                ".krc" => LyricsFormat.DecryptedKrc,
-                _ => throw new ArgumentException(
-                    $"Unsupported lyrics format: {extension}",
-                    nameof(extension)
-                ),
-            };
+                return LyricsFormat.Ttml;
+            }
+            // 检测标准LRC和增强型LRC
+            else if (
+                System.Text.RegularExpressions.Regex.IsMatch(content, @"\[\d{1,2}:\d{2}")
+                || System.Text.RegularExpressions.Regex.IsMatch(
+                    content,
+                    @"<\d{1,2}:\d{2}\.\d{2,3}>"
+                )
+            )
+            {
+                return LyricsFormat.Lrc;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
