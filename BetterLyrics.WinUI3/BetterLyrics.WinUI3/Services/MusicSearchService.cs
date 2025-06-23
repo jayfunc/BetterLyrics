@@ -44,14 +44,10 @@ namespace BetterLyrics.WinUI3.Services
                         if (file.Contains(title) && file.Contains(artist))
                         {
                             Track track = new(file);
-                            if (track.Lyrics.SynchronizedLyrics.Count > 0)
+                            var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
+                            if (bytes != null)
                             {
-                                // Get synchronized lyrics from the track (metadata)
-                                var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
-                                if (bytes != null)
-                                {
-                                    return bytes;
-                                }
+                                return bytes;
                             }
                         }
                     }
@@ -111,6 +107,13 @@ namespace BetterLyrics.WinUI3.Services
                             LyricsFormat.Eslrc
                         );
                         break;
+                    case LyricsSearchProvider.LocalTtmlFile:
+                        searchedLyrics = await LocalLyricsSearchInLyricsFiles(
+                            title,
+                            artist,
+                            LyricsFormat.Ttml
+                        );
+                        break;
                     case LyricsSearchProvider.LrcLib:
                         searchedLyrics = await SearchLrcLib(
                             title,
@@ -137,6 +140,8 @@ namespace BetterLyrics.WinUI3.Services
                             return (searchedLyrics, LyricsFormat.Lrc);
                         case LyricsSearchProvider.LocalEslrcFile:
                             return (searchedLyrics, LyricsFormat.Eslrc);
+                        case LyricsSearchProvider.LocalTtmlFile:
+                            return (searchedLyrics, LyricsFormat.Ttml);
                         default:
                             break;
                     }

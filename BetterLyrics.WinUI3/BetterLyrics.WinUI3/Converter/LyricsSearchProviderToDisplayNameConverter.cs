@@ -28,6 +28,9 @@ namespace BetterLyrics.WinUI3.Converter
                     LyricsSearchProvider.LocalEslrcFile => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderEslrcFile"
                     ),
+                    LyricsSearchProvider.LocalTtmlFile => App.ResourceLoader!.GetString(
+                        "LyricsSearchProviderTtmlFile"
+                    ),
                     _ => throw new ArgumentOutOfRangeException(nameof(provider), provider, null),
                 };
             }
