@@ -1,23 +1,45 @@
-﻿using System;
+﻿// 2025/6/23 by Zhe Fang
+
+using ATL;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
+using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using ATL;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 
 namespace BetterLyrics.WinUI3.Services
 {
+    /// <summary>
+    /// Defines the <see cref="MusicSearchService" />
+    /// </summary>
     public class MusicSearchService : IMusicSearchService
     {
+        #region Fields
+
+        /// <summary>
+        /// Defines the _httpClient
+        /// </summary>
         private readonly HttpClient _httpClient;
+
+        /// <summary>
+        /// Defines the _settingsService
+        /// </summary>
         private readonly ISettingsService _settingsService;
 
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MusicSearchService"/> class.
+        /// </summary>
+        /// <param name="settingsService">The settingsService<see cref="ISettingsService"/></param>
         public MusicSearchService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
@@ -28,6 +50,16 @@ namespace BetterLyrics.WinUI3.Services
             );
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The SearchAlbumArtAsync
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <returns>The <see cref="byte[]?"/></returns>
         public byte[]? SearchAlbumArtAsync(string title, string artist)
         {
             foreach (var folder in _settingsService.LocalLyricsFolders)
@@ -58,6 +90,15 @@ namespace BetterLyrics.WinUI3.Services
             return null;
         }
 
+        /// <summary>
+        /// The SearchLyricsAsync
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <param name="album">The album<see cref="string"/></param>
+        /// <param name="durationMs">The durationMs<see cref="double"/></param>
+        /// <param name="matchMode">The matchMode<see cref="MusicSearchMatchMode"/></param>
+        /// <returns>The <see cref="Task{(string?, LyricsFormat?)}"/></returns>
         public async Task<(string?, LyricsFormat?)> SearchLyricsAsync(
             string title,
             string artist,
@@ -152,27 +193,15 @@ namespace BetterLyrics.WinUI3.Services
             return (null, null);
         }
 
-        private static int LevenshteinDistance(string a, string b)
-        {
-            if (string.IsNullOrEmpty(a))
-                return b.Length;
-            if (string.IsNullOrEmpty(b))
-                return a.Length;
-            int[,] d = new int[a.Length + 1, b.Length + 1];
-            for (int i = 0; i <= a.Length; i++)
-                d[i, 0] = i;
-            for (int j = 0; j <= b.Length; j++)
-                d[0, j] = j;
-            for (int i = 1; i <= a.Length; i++)
-            for (int j = 1; j <= b.Length; j++)
-                d[i, j] = Math.Min(
-                    Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                    d[i - 1, j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)
-                );
-            return d[a.Length, b.Length];
-        }
-
         // 判断相似度
+
+        /// <summary>
+        /// The FuzzyMatch
+        /// </summary>
+        /// <param name="fileName">The fileName<see cref="string"/></param>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         private static bool FuzzyMatch(string fileName, string title, string artist)
         {
             var normFile = Normalize(fileName);
@@ -185,6 +214,37 @@ namespace BetterLyrics.WinUI3.Services
             return dist1 <= 3 || dist2 <= 3; // 阈值可调整
         }
 
+        /// <summary>
+        /// The LevenshteinDistance
+        /// </summary>
+        /// <param name="a">The a<see cref="string"/></param>
+        /// <param name="b">The b<see cref="string"/></param>
+        /// <returns>The <see cref="int"/></returns>
+        private static int LevenshteinDistance(string a, string b)
+        {
+            if (string.IsNullOrEmpty(a))
+                return b.Length;
+            if (string.IsNullOrEmpty(b))
+                return a.Length;
+            int[,] d = new int[a.Length + 1, b.Length + 1];
+            for (int i = 0; i <= a.Length; i++)
+                d[i, 0] = i;
+            for (int j = 0; j <= b.Length; j++)
+                d[0, j] = j;
+            for (int i = 1; i <= a.Length; i++)
+                for (int j = 1; j <= b.Length; j++)
+                    d[i, j] = Math.Min(
+                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)
+                    );
+            return d[a.Length, b.Length];
+        }
+
+        /// <summary>
+        /// The Normalize
+        /// </summary>
+        /// <param name="s">The s<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         private static string Normalize(string s)
         {
             if (string.IsNullOrWhiteSpace(s))
@@ -198,6 +258,71 @@ namespace BetterLyrics.WinUI3.Services
             return sb.ToString();
         }
 
+        /// <summary>
+        /// The SanitizeFileName
+        /// </summary>
+        /// <param name="fileName">The fileName<see cref="string"/></param>
+        /// <param name="replacement">The replacement<see cref="char"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        private static string SanitizeFileName(string fileName, char replacement = '_')
+        {
+            var invalidChars = Path.GetInvalidFileNameChars();
+            var sb = new StringBuilder(fileName.Length);
+            foreach (var c in fileName)
+            {
+                sb.Append(Array.IndexOf(invalidChars, c) >= 0 ? replacement : c);
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// The LocalLyricsSearchInLyricsFiles
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <param name="format">The format<see cref="LyricsFormat"/></param>
+        /// <returns>The <see cref="Task{string?}"/></returns>
+        private async Task<string?> LocalLyricsSearchInLyricsFiles(
+            string title,
+            string artist,
+            LyricsFormat format
+        )
+        {
+            foreach (var folder in _settingsService.LocalLyricsFolders)
+            {
+                if (Directory.Exists(folder.Path) && folder.IsEnabled)
+                {
+                    foreach (
+                        var file in Directory.GetFiles(
+                            folder.Path,
+                            $"*{format.ToFileExtension()}",
+                            SearchOption.AllDirectories
+                        )
+                    )
+                    {
+                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        {
+                            string? raw = await File.ReadAllTextAsync(
+                                file,
+                                FileHelper.GetEncoding(file)
+                            );
+                            if (raw != null)
+                            {
+                                return raw;
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// The LocalLyricsSearchInMusicFiles
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <returns>The <see cref="string?"/></returns>
         private string? LocalLyricsSearchInMusicFiles(string title, string artist)
         {
             foreach (var folder in _settingsService.LocalLyricsFolders)
@@ -234,41 +359,37 @@ namespace BetterLyrics.WinUI3.Services
             return null;
         }
 
-        private async Task<string?> LocalLyricsSearchInLyricsFiles(
-            string title,
-            string artist,
-            LyricsFormat format
-        )
+        /// <summary>
+        /// The ReadCache
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <param name="format">The format<see cref="LyricsFormat"/></param>
+        /// <returns>The <see cref="string?"/></returns>
+        private string? ReadCache(string title, string artist, LyricsFormat format)
         {
-            foreach (var folder in _settingsService.LocalLyricsFolders)
+            var safeArtist = SanitizeFileName(artist);
+            var safeTitle = SanitizeFileName(title);
+            var cacheFilePath = Path.Combine(
+                AppInfo.OnlineLyricsCacheDirectory,
+                $"{safeArtist} - {safeTitle}{format.ToFileExtension()}"
+            );
+            if (File.Exists(cacheFilePath))
             {
-                if (Directory.Exists(folder.Path) && folder.IsEnabled)
-                {
-                    foreach (
-                        var file in Directory.GetFiles(
-                            folder.Path,
-                            $"*{format.ToFileExtension()}",
-                            SearchOption.AllDirectories
-                        )
-                    )
-                    {
-                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
-                        {
-                            string? raw = await File.ReadAllTextAsync(
-                                file,
-                                FileHelper.GetEncoding(file)
-                            );
-                            if (raw != null)
-                            {
-                                return raw;
-                            }
-                        }
-                    }
-                }
+                return File.ReadAllText(cacheFilePath);
             }
             return null;
         }
 
+        /// <summary>
+        /// The SearchLrcLib
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <param name="album">The album<see cref="string"/></param>
+        /// <param name="duration">The duration<see cref="int"/></param>
+        /// <param name="matchMode">The matchMode<see cref="MusicSearchMatchMode"/></param>
+        /// <returns>The <see cref="Task{string?}"/></returns>
         private async Task<string?> SearchLrcLib(
             string title,
             string artist,
@@ -314,6 +435,13 @@ namespace BetterLyrics.WinUI3.Services
             return null;
         }
 
+        /// <summary>
+        /// The WriteCache
+        /// </summary>
+        /// <param name="title">The title<see cref="string"/></param>
+        /// <param name="artist">The artist<see cref="string"/></param>
+        /// <param name="lyrics">The lyrics<see cref="string"/></param>
+        /// <param name="format">The format<see cref="LyricsFormat"/></param>
         private void WriteCache(string title, string artist, string lyrics, LyricsFormat format)
         {
             var safeArtist = SanitizeFileName(artist);
@@ -325,30 +453,6 @@ namespace BetterLyrics.WinUI3.Services
             File.WriteAllText(cacheFilePath, lyrics);
         }
 
-        private string? ReadCache(string title, string artist, LyricsFormat format)
-        {
-            var safeArtist = SanitizeFileName(artist);
-            var safeTitle = SanitizeFileName(title);
-            var cacheFilePath = Path.Combine(
-                AppInfo.OnlineLyricsCacheDirectory,
-                $"{safeArtist} - {safeTitle}{format.ToFileExtension()}"
-            );
-            if (File.Exists(cacheFilePath))
-            {
-                return File.ReadAllText(cacheFilePath);
-            }
-            return null;
-        }
-
-        private static string SanitizeFileName(string fileName, char replacement = '_')
-        {
-            var invalidChars = Path.GetInvalidFileNameChars();
-            var sb = new StringBuilder(fileName.Length);
-            foreach (var c in fileName)
-            {
-                sb.Append(Array.IndexOf(invalidChars, c) >= 0 ? replacement : c);
-            }
-            return sb.ToString();
-        }
+        #endregion
     }
 }
