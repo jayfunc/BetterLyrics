@@ -7,11 +7,7 @@ namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsLine
     {
-        public List<string> Texts { get; set; } = [];
-
-        public int LanguageIndex { get; set; } = 0;
-
-        public string Text => Texts[LanguageIndex];
+        public string Text { get; set; } = "";
 
         public List<CharTiming> CharTimings { get; set; } = [];
 
@@ -40,8 +36,7 @@ namespace BetterLyrics.WinUI3.Models
         {
             return new LyricsLine
             {
-                Texts = new List<string>(this.Texts),
-                LanguageIndex = this.LanguageIndex,
+                Text = this.Text,
                 CharTimings = this.CharTimings,
                 StartMs = this.StartMs,
                 EndMs = this.EndMs,

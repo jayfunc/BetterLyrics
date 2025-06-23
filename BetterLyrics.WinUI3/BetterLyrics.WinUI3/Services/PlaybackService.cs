@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
+using Windows.ApplicationModel;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 
@@ -163,6 +164,15 @@ namespace BetterLyrics.WinUI3.Services
                             .EndTime.TotalMilliseconds,
                         SourceAppUserModelId = _currentSession?.SourceAppUserModelId,
                     };
+
+                    if (
+                        SongInfo.SourceAppUserModelId?.Contains(Package.Current.Id.FamilyName)
+                        ?? false
+                    )
+                    {
+                        SongInfo.Title = "甜度爆表";
+                        SongInfo.Artist = "AI";
+                    }
 
                     if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
                     {

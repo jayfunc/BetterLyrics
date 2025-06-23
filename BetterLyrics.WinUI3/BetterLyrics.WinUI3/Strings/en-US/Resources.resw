@@ -483,4 +483,7 @@
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>Local .TTML files</value>
   </data>
+  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>This folder contains added folders, please delete these folders to add the folder</value>
+  </data>
 </root>
