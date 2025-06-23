@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>地元の音楽図書館</value>
+  </data>
+  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <value>音楽や歌詞を保存するフォルダーを追加します</value>
+  </data>
+  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
+    <value>ファイルエクスプローラーで開きます</value>
+  </data>
+  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <value>アプリから削除します</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <value>次のアイテムを削除しても安全です</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <value>このパスの元のファイルとフォルダーは、このアプリから削除するときに削除されません</value>
+  </data>
+  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
+    <value>フォルダーを追加します</value>
+  </data>
+  <data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>テーマ</value>
+  </data>
+  <data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>システムをフォローします</value>
+  </data>
+  <data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>暗い</value>
+  </data>
+  <data name="SettingsPageSC.Content" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="SettingsPageTC.Content" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="SettingsPageEN.Content" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="SettingsPageGitHub.Header" xml:space="preserve">
+    <value>これはオープンソースアプリです</value>
+  </data>
+  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
+    <value>新しいウィンドウで開きます</value>
+  </data>
+  <data name="SettingsPageGitHub.Description" xml:space="preserve">
+    <value>GitHubのソースコードを参照してください</value>
+  </data>
+  <data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="SettingsPageMica.Content" xml:space="preserve">
+    <value>雲母</value>
+  </data>
+  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
+    <value>マイカル</value>
+  </data>
+  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
+    <value>デスクトップアクリル</value>
+  </data>
+  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
+    <value>アクリルベース</value>
+  </data>
+  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
+    <value>アクリル薄い</value>
+  </data>
+  <data name="SettingsPageTransparent.Content" xml:space="preserve">
+    <value>透明</value>
+  </data>
+  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
+    <value>背景</value>
+  </data>
+  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>変更を適用するためのアプリを再起動します</value>
+  </data>
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>パスはコンピューターでは見つかりません</value>
+  </data>
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>フォルダーが追加されました。二度と追加しないでください。</value>
+  </data>
+  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
+    <value>オーバーレイアルバムアートの背景</value>
+  </data>
+  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
+    <value>ダイナミックアルバムアートの背景</value>
+  </data>
+  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
+    <value>アルバムアートの背景不透明</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>設定 - BetterLyrics</value>
+  </data>
+  <data name="LyricsPageTitle" xml:space="preserve">
+    <value>BetterLyrics</value>
+  </data>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>アライメント</value>
+  </data>
+  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>中心</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
+    <value>アルバムアートバックグラウンドブラー量</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
+    <value>ぼやけの量</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
+    <value>この値を調整すると、アルバム画像のバックグラウンドブラー強度も増加します。</value>
+  </data>
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>現在の値：</value>
+  </data>
+  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
+    <value>ぼかしが有効になっている場合のGPU使用量が大幅に高くなります（&gt; 0）</value>
+  </data>
+  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
+    <value>この機能を有効にすると、GPUの使用率がわずかに増加します</value>
+  </data>
+  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+    <value>上端と下端の不透明度</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>ライン間隔</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+    <value>x線の高さ</value>
+  </data>
+  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>フォントサイズ</value>
+  </data>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>歌詞のみ</value>
+  </data>
+  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>没入モード</value>
+  </data>
+  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
+    <value>アルバムの背景</value>
+  </data>
+  <data name="SettingsPageAbout.Content" xml:space="preserve">
+    <value>について</value>
+  </data>
+  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
+    <value>歌詞ライブラリ</value>
+  </data>
+  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
+    <value>アプリの外観</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>グロー効果</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
+    <value>グローエフェクトスコープ</value>
+  </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
+    <value>歌詞検索プロバイダーを構成します</value>
+  </data>
+  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>追加</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
+    <value>BetterLyrics へようこそ</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
+    <value>今すぐ歌詞データベースをセットアップしましょう</value>
+  </data>
+  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <value>今は音楽が再生されていません</value>
+  </data>
+  <data name="SettingsPageDev.Content" xml:space="preserve">
+    <value>開発者オプション</value>
+  </data>
+  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <value>テスト音楽を再生します</value>
+  </data>
+  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+    <value>システムプレーヤーを使用して再生します</value>
+  </data>
+  <data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>ログ</value>
+  </data>
+  <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
+    <value>フォントカラー</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
+    <value>アルバムアートアクセントカラー</value>
+  </data>
+  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
+    <value>アルバムアートスタイル</value>
+  </data>
+  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>コーナー半径</value>
+  </data>
+  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>タイトルバーサイズ</value>
+  </data>
+  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>コンパクト</value>
+  </data>
+  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>拡張</value>
+  </data>
+  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
+    <value>常にトップ</value>
+  </data>
+  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
+    <value>全画面表示</value>
+  </data>
+  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
+    <value>ESCを押して、フルスクリーンモードを終了します</value>
+  </data>
+  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>再びホバリングして、トグルボタンを表示します</value>
+  </data>
+  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>このメッセージを二度と見せないでください</value>
+  </data>
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <value>一致するローカルファイルはありません</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>アルバムアートのみ</value>
+  </data>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>分割ビュー</value>
+  </data>
+  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
+    <value>表示タイプを変更します</value>
+  </data>
+  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
+    <value>デスクトップ歌詞モードに切り替えます</value>
+  </data>
+  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>ピクチャーインピクチャーモード</value>
+  </data>
+  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
+    <value>ピクチャーインピクチャーモードを終了します</value>
+  </data>
+  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+    <value>歌詞が見つかりません</value>
+  </data>
+  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+    <value>歌詞効果</value>
+  </data>
+  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+    <value>歌詞スタイル</value>
+  </data>
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>このフォルダーは既存のフォルダーに既に含まれており、再度追加する必要はありません</value>
+  </data>
+  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+    <value>アプリの動作</value>
+  </data>
+  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>アプリを起動するとき</value>
+  </data>
+  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
+    <value>標準モードをアクティブにします</value>
+  </data>
+  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
+    <value>ドックモードをアクティブにします</value>
+  </data>
+  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
+    <value>歌詞が見つかりません</value>
+  </data>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>システムトレイ - BetterLyrics</value>
+  </data>
+  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
+    <value>ドックモード</value>
+  </data>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>フォント重量</value>
+  </data>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>薄い</value>
+  </data>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>余分な光</value>
+  </data>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>半光</value>
+  </data>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>普通</value>
+  </data>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>中くらい</value>
+  </data>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>セミボールド</value>
+  </data>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>大胆な</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>余分な太字</value>
+  </data>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>黒</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>余分な黒</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
+    <value>歌詞全体</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+    <value>現在の行</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+    <value>現在の文字</value>
+  </data>
+  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="MainPageLyricsLoading.Text" xml:space="preserve">
+    <value>歌詞の読み込み...</value>
+  </data>
+  <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+    <value>ローカル.LRCファイル</value>
+  </data>
+  <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+    <value>ローカル音楽ファイル</value>
+  </data>
+  <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
+    <value>LRCLIB</value>
+  </data>
+  <data name="SettingsPageJA.Content" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="SettingsPageKO.Content" xml:space="preserve">
+    <value>한국어</value>
+  </data>
+  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <value>ローカル.ESLRCファイル</value>
+  </data>
+  <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
+    <value>ローカル.TTMLファイル</value>
+  </data>
+  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>このフォルダーには追加されたフォルダーが含まれています。これらのフォルダを削除してフォルダーを追加してください</value>
+  </data>
+</root>

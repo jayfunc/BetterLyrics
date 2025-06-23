@@ -12,7 +12,10 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
+    <Grid
+        x:Name="RootGrid"
+        PointerMoved="RootGrid_PointerMoved"
+        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
 
         <Frame
             x:Name="RootFrame"
@@ -25,8 +28,7 @@
             VerticalAlignment="Top"
             Background="Transparent"
             Opacity="0"
-            PointerEntered="TopCommandGrid_PointerEntered"
-            PointerExited="TopCommandGrid_PointerExited">
+            PointerMoved="TopCommandGrid_PointerMoved">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>

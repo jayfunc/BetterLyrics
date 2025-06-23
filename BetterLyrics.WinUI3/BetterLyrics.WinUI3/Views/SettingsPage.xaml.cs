@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -29,15 +33,15 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            ViewModel.OpenMusicFolder((string)(sender as HyperlinkButton)!.Tag);
+            ViewModel.OpenMusicFolder((LocalLyricsFolder)(sender as HyperlinkButton)!.Tag);
         }
 
-        private async void SettingsPageRemovePathButton_Click(
+        private void SettingsPageRemovePathButton_Click(
             object sender,
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            await ViewModel.RemoveFolderAsync((string)(sender as HyperlinkButton)!.Tag);
+            ViewModel.RemoveFolderAsync((LocalLyricsFolder)(sender as HyperlinkButton)!.Tag);
         }
 
         private void NavView_SelectionChanged(
@@ -46,6 +50,36 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             ViewModel.NavViewSelectedItemTag = (args.SelectedItem as NavigationViewItem)!.Tag;
+        }
+
+        private void LyricsSearchProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                if (toggleSwitch.DataContext is LyricsSearchProviderInfo providerInfo)
+                {
+                    ViewModel.ToggleLyricsSearchProvider(providerInfo);
+                }
+            }
+        }
+
+        private void LyricsSearchProvidersListView_DragItemsCompleted(
+            ListViewBase sender,
+            DragItemsCompletedEventArgs args
+        )
+        {
+            ViewModel.OnLyricsSearchProvidersReordered();
+        }
+
+        private void LocalLyricsFolderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                if (toggleSwitch.DataContext is LocalLyricsFolder localLyricsFolder)
+                {
+                    ViewModel.ToggleLocalLyricsFolder(localLyricsFolder);
+                }
+            }
         }
     }
 }

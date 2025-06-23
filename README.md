@@ -1,3 +1,5 @@
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md">_**点此处查看中文说明**_</a>
+
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
 </div>
@@ -17,24 +19,63 @@ Your smooth dynamic local lyrics display built with WinUI 3
 - Dynamic blur album art as background
 - Smooth lyrics fade in/out, zoom in/out effects
 - Smooth user interface change from song to song
-- Gradient Karaoke effect on every single character
-- Immersive desktop lyrics
+- Gradient Karaoke (with glow) effect on every single character
+- Immersive desktop lyrics (dock mode)
 
 > This project is still under development now, bugs and unexpected behaviors may be existed in the latest dev branch.
+
+## Supported lyrics source
+
+- From your local storage
+  - Music files (with embedded lyrics)
+  - [.lrc](https://en.wikipedia.org/wiki/LRC_(file_format)) files (with both core format and enhanced format)
+  - [.eslrc](https://github.com/ESLyric/release) files
+  - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
+
+- From online lyrics providers
+  - [LRCLIB](https://lrclib.net/)
 
 ## Customize in your way
 
 We provide more than one setting item to better align with your preference
 
-- Theme (light, dark, follow system)
+- Theme
+  - Light
+  - Dark
+  - Follow system
 
-- Backdrop (none, mica, acrylic, transparent)
+- Backdrop
+  - None
+  - Mica 
+  - Acrylic 
+  - Transparent
 
-- Album art as background (dynamic, blur amount, opacity)
+- Album art as background
+  - Dynamic
+  - Blur amount
+  - Opacity
 
-- Lyrics (alignment, font size, font color **(picked from album art accent color)** line spacing, opacity, blur amount, dynamic **glow** effect)
+- Album art as cover
+  - Corner radius
 
-- Language (English, Simplified Chinese, Traditional Chinese)
+- Lyrics
+  - Alignment
+  - Font size
+  - Font color **(from album art accent color)** 
+  - Line spacing
+  - Opacity
+  - Blur amount
+  - Dynamic **glow** effect
+    - Whole lyrics
+    - Line by line
+    - Word by word
+
+- Language
+  - English
+  - Simplified Chinese
+  - Traditional Chinese
+  - Japanese
+  - Korean
 
 
 ## Screenshots
@@ -43,7 +84,13 @@ We provide more than one setting item to better align with your preference
 
 ![alt text](Screenshots/glow.png)
 
+![alt text](Screenshots/glow.gif)
+
 ![alt text](Screenshots/dock.png)
+
+![alt text](Screenshots/immersive-dock.gif)
+
+![alt text](Screenshots/dock.gif)
 
 ![alt text](Screenshots/pip.png)
 
@@ -53,7 +100,7 @@ We provide more than one setting item to better align with your preference
 
 ## Demonstration
 
-Watch our introduction video「BetterLyrics 阶段性开发成果展示」(uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
+Watch our introduction video (uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
 
 ## Try it now
 
@@ -75,38 +122,33 @@ You can `git clone` this project and build it yourself.
 
 ## Setup your app
 
-This project relies on listening messages from [SMTC](https://learn.microsoft.com/en-ca/windows/uwp/audio-video-camera/integrate-with-systemmediatransportcontrols).
-So technically, as long as you are using the music apps (like
+This project relies on listening messages from [SMTC](https://learn.microsoft.com/en-ca/windows/uwp/audio-video-camera/integrate-with-systemmediatransportcontrols), so most of the music players will work.
 
-- Spotify
-- Groove Music
-- Apple Music
-- Windows Media Player
-- VLC Media Player
-- QQ 音乐
-- 网易云音乐
-- 酷狗音乐
-- 酷我音乐
+### About lyrics
 
-) which support SMTC, then possibly (I didn't test all of themif you find one fail to listen to, you can open an issue) all you need to do is just load your local music/lyrics lib and you are good to go.
+For a better experience, you can use [LDDC](https://github.com/chenmozhijin/LDDC) to download lyrics.
 
 ## Future work
 
-- Watching file changes
-  When you downloading lyrics (using some other tools or your own scripts) while listening to new musics (non-existed on your local disks), this app can automatically load those new files.
-
-> Please note: we are not planning support directly load lyrics files via some music software APIs due to copyright issues.
+To be added later.
 
 ## Many thanks to
 
+- [LRCLIB](https://lrclib.net/)
+  - Online lyrics API provider
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
-- [DevWinUI](https://github.com/ghost1372/DevWinUI)
-- [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
+  - Used for extracting pictures in music files
+- [WinUIEx](https://github.com/dotMorten/WinUIEx)
+  - Provide easy ways to access Win32 API regarding windowing
 - [TagLib#](https://github.com/mono/taglib-sharp)
+  - Used for reading original lyrics content
+- [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
+- [DevWinUI](https://github.com/ghost1372/DevWinUI)
 - [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
 - [cnblogs - .NET App 与 Windows 系统媒体控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
 - [Win2D 中的游戏循环：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
 - [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
+- [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
 
 ## Inspired by
 
@@ -118,33 +160,24 @@ So technically, as long as you are using the music apps (like
 ## Third-party libraries that this project uses
 
 ```
-CommunityToolkit.Labs.WinUI.MarqueeText
-CommunityToolkit.Labs.WinUI.OpacityMaskView
-CommunityToolkit.Mvvm
-CommunityToolkit.WinUI.Behaviors
-CommunityToolkit.WinUI.Controls.Primitives
-CommunityToolkit.WinUI.Controls.Segmented
-CommunityToolkit.WinUI.Controls.SettingsControls
-CommunityToolkit.WinUI.Converters
-CommunityToolkit.WinUI.Extensions
-CommunityToolkit.WinUI.Helpers
-CommunityToolkit.WinUI.Media
-Microsoft.Extensions.DependencyInjection
-Microsoft.Extensions.Logging
-Microsoft.Graphics.Win2D
-Microsoft.Windows.SDK.BuildTools
-Microsoft.WindowsAppSDK
-Microsoft.Xaml.Behaviors.WinUI.Managed
-Newtonsoft.Json
-Serilog.Extensions.Logging
-Serilog.Sinks.File
-sqlite-net-pcl
-System.Drawing.Common
-System.Text.Encoding.CodePages
-Ude.NetStandard
-WinUIEx
-z440.atl.core
-
+    <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
+    <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
+    <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
+    <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.6" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.6" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
+    <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
+    <PackageReference Include="WinUIEx" Version="2.5.1" />
+    <PackageReference Include="z440.atl.core" Version="6.26.0" />S
 ```
 
 ## Star History

@@ -8,6 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
     mc:Ignorable="d">
@@ -73,21 +74,26 @@
                                 <controls:SettingsExpander
                                     x:Uid="SettingsPageMusicLib"
                                     HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}"
-                                    IsEnabled="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                                     IsExpanded="True"
-                                    ItemsSource="{x:Bind ViewModel.MusicLibraries, Mode=OneWay}">
+                                    ItemsSource="{x:Bind ViewModel.LocalLyricsFolders, Mode=OneWay}">
                                     <controls:SettingsExpander.ItemTemplate>
                                         <DataTemplate>
-                                            <controls:SettingsCard Header="{Binding}">
-                                                <StackPanel Orientation="Horizontal">
+                                            <controls:SettingsCard>
+                                                <controls:SettingsCard.Header>
                                                     <HyperlinkButton
-                                                        x:Uid="SettingsPageOpenPath"
                                                         Click="SettingsPageOpenPathButton_Click"
+                                                        Content="{Binding Path, Mode=OneWay}"
                                                         Tag="{Binding}" />
+                                                </controls:SettingsCard.Header>
+                                                <StackPanel Orientation="Horizontal">
                                                     <HyperlinkButton
                                                         x:Uid="SettingsPageRemovePath"
                                                         Click="SettingsPageRemovePathButton_Click"
                                                         Tag="{Binding}" />
+                                                    <ToggleSwitch
+                                                        DataContext="{Binding}"
+                                                        IsOn="{Binding IsEnabled, Mode=TwoWay}"
+                                                        Toggled="LocalLyricsFolderToggleSwitch_Toggled" />
                                                 </StackPanel>
                                             </controls:SettingsCard>
                                         </DataTemplate>
@@ -104,13 +110,13 @@
                                             <interactivity:Interaction.Behaviors>
 
                                                 <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.MusicLibraries.Count, Mode=OneWay}"
+                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
                                                     ComparisonCondition="Equal"
                                                     Value="0">
                                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                                                 </interactivity:DataTriggerBehavior>
                                                 <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.MusicLibraries.Count, Mode=OneWay}"
+                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
                                                     ComparisonCondition="NotEqual"
                                                     Value="0">
                                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
@@ -131,21 +137,38 @@
                                 </controls:SettingsExpander>
 
                                 <controls:SettingsCard
-                                    x:Uid="SettingsPageRebuildDatabase"
-                                    HeaderIcon="{ui:FontIcon Glyph=&#xE621;}"
-                                    IsEnabled="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
-                                    <controls:SettingsCard.Description>
-                                        <TextBlock x:Uid="SettingsPageRebuildDatabaseDesc" Visibility="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                                    </controls:SettingsCard.Description>
-                                    <StackPanel>
-                                        <Button x:Uid="SettingsPageRebuildDatabaseButton" Command="{x:Bind ViewModel.RebuildLyricsIndexDatabaseCommand}" />
-                                        <ProgressBar
-                                            IsIndeterminate="True"
-                                            ShowError="False"
-                                            ShowPaused="False"
-                                            Visibility="{x:Bind ViewModel.IsRebuildingLyricsIndexDatabase, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                                    </StackPanel>
-                                </controls:SettingsCard>
+                                    x:Name="LyricsSearchProvidersSettingsExpander"
+                                    x:Uid="SettingsPageLyricsSearchProvidersConfig"
+                                    HeaderIcon="{ui:FontIcon Glyph=&#xF6FA;}" />
+
+                                <ListView
+                                    x:Name="LyricsSearchProvidersListView"
+                                    Margin="0,-4,0,0"
+                                    AllowDrop="True"
+                                    CanDragItems="True"
+                                    CanReorderItems="True"
+                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                                    ItemsSource="{x:Bind ViewModel.LyricsSearchProvidersInfo, Mode=OneWay}"
+                                    SelectionMode="None">
+                                    <ListView.OpacityTransition>
+                                        <ScalarTransition />
+                                    </ListView.OpacityTransition>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
+                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
+                                            </controls:SettingsCard>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
 
                             </StackPanel>
                         </controls:Case>
@@ -166,8 +189,6 @@
                                         <ComboBoxItem x:Uid="SettingsPageMica" />
                                         <ComboBoxItem x:Uid="SettingsPageMicaAlt" />
                                         <ComboBoxItem x:Uid="SettingsPageDesktopAcrylic" />
-                                        <!--<ComboBoxItem x:Uid="SettingsPageAcrylicThin" />
-                                <ComboBoxItem x:Uid="SettingsPageAcrylicBase" />-->
                                         <ComboBoxItem x:Uid="SettingsPageTransparent" />
                                     </ComboBox>
                                 </controls:SettingsCard>
@@ -188,6 +209,8 @@
                                         <ComboBoxItem x:Uid="SettingsPageEN" />
                                         <ComboBoxItem x:Uid="SettingsPageSC" />
                                         <ComboBoxItem x:Uid="SettingsPageTC" />
+                                        <ComboBoxItem x:Uid="SettingsPageJA" />
+                                        <ComboBoxItem x:Uid="SettingsPageKO" />
                                     </ComboBox>
                                     <controls:SettingsExpander.Items>
                                         <controls:SettingsCard>

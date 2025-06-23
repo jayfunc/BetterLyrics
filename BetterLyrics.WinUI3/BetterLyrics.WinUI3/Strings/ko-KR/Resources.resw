@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>로컬 음악 도서관</value>
+  </data>
+  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <value>음악이나 가사를 저장하는 폴더 추가</value>
+  </data>
+  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
+    <value>파일 탐색기에서 열립니다</value>
+  </data>
+  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <value>앱에서 제거하십시오</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <value>다음 항목을 제거하는 것이 안전합니다</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <value>이 경로의 원본 파일과 폴더는이 앱에서 제거 할 때 삭제되지 않습니다.</value>
+  </data>
+  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
+    <value>폴더를 추가하십시오</value>
+  </data>
+  <data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>주제</value>
+  </data>
+  <data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>언어</value>
+  </data>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>시스템을 따르십시오</value>
+  </data>
+  <data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>빛</value>
+  </data>
+  <data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>어두운</value>
+  </data>
+  <data name="SettingsPageSC.Content" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="SettingsPageTC.Content" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+  <data name="SettingsPageEN.Content" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="SettingsPageGitHub.Header" xml:space="preserve">
+    <value>이것은 오픈 소스 앱입니다</value>
+  </data>
+  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
+    <value>새 창에서 열립니다</value>
+  </data>
+  <data name="SettingsPageGitHub.Description" xml:space="preserve">
+    <value>GitHub의 소스 코드를 참조하십시오</value>
+  </data>
+  <data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>버전</value>
+  </data>
+  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>없음</value>
+  </data>
+  <data name="SettingsPageMica.Content" xml:space="preserve">
+    <value>운모</value>
+  </data>
+  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
+    <value>운모 대체</value>
+  </data>
+  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
+    <value>데스크탑 아크릴</value>
+  </data>
+  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
+    <value>아크릴베이스</value>
+  </data>
+  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
+    <value>아크릴 얇은</value>
+  </data>
+  <data name="SettingsPageTransparent.Content" xml:space="preserve">
+    <value>투명한</value>
+  </data>
+  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
+    <value>배경</value>
+  </data>
+  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+    <value>기본</value>
+  </data>
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>변경 사항을 적용하려면 앱을 다시 시작하십시오</value>
+  </data>
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>경로는 컴퓨터에서 찾을 수 없습니다</value>
+  </data>
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>폴더가 추가되었습니다. 다시 추가하지 마십시오.</value>
+  </data>
+  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
+    <value>오버레이 앨범 아트 배경</value>
+  </data>
+  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
+    <value>동적 앨범 아트 배경</value>
+  </data>
+  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
+    <value>앨범 아트 배경 불투명도</value>
+  </data>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>설정 - BetterLyrics</value>
+  </data>
+  <data name="LyricsPageTitle" xml:space="preserve">
+    <value>BetterLyrics</value>
+  </data>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>조정</value>
+  </data>
+  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>센터</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
+  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
+    <value>앨범 아트 배경 흐림 금액</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
+    <value>흐림 금액</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
+    <value>이 값을 조정하면 앨범 이미지의 배경 흐림 강도가 증가합니다.</value>
+  </data>
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>현재 가치 :</value>
+  </data>
+  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
+    <value>Blur가 활성화 될 때 상당히 높은 GPU 사용량 (&gt; 0)</value>
+  </data>
+  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
+    <value>이 기능을 활성화하면 GPU 사용률이 약간 증가합니다</value>
+  </data>
+  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+    <value>상단 및 하단 가장자리 불투명도</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>라인 간격</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+    <value>X 라인 높이</value>
+  </data>
+  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>글꼴 크기</value>
+  </data>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>가사 만</value>
+  </data>
+  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>몰입 형 모드</value>
+  </data>
+  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
+    <value>앨범 배경</value>
+  </data>
+  <data name="SettingsPageAbout.Content" xml:space="preserve">
+    <value>에 대한</value>
+  </data>
+  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
+    <value>가사 도서관</value>
+  </data>
+  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
+    <value>앱 모양</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>글로우 효과</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
+    <value>글로우 효과 범위</value>
+  </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
+    <value>가사 검색 제공 업체를 구성하십시오</value>
+  </data>
+  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>추가하다</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
+    <value>Betterlyrics에 오신 것을 환영합니다</value>
+  </data>
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
+    <value>지금 가사 데이터베이스를 설정합시다</value>
+  </data>
+  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <value>지금 음악이 재생되지 않습니다</value>
+  </data>
+  <data name="SettingsPageDev.Content" xml:space="preserve">
+    <value>개발자 옵션</value>
+  </data>
+  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <value>테스트 음악을 재생하십시오</value>
+  </data>
+  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+    <value>시스템 플레이어를 사용하여 재생하십시오</value>
+  </data>
+  <data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>통나무</value>
+  </data>
+  <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
+    <value>글꼴 색상</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
+    <value>기본</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
+    <value>앨범 아트 악센트 색상</value>
+  </data>
+  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
+    <value>앨범 아트 스타일</value>
+  </data>
+  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>코너 반경</value>
+  </data>
+  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>제목 바 크기</value>
+  </data>
+  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>콤팩트</value>
+  </data>
+  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>펼친</value>
+  </data>
+  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
+    <value>항상 위에</value>
+  </data>
+  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
+    <value>전체 화면</value>
+  </data>
+  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
+    <value>ESC를 눌러 전체 화면 모드를 종료하십시오</value>
+  </data>
+  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>토글 버튼을 표시하려면 다시 다시 가져옵니다</value>
+  </data>
+  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>이 메시지를 다시 표시하지 마십시오</value>
+  </data>
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <value>로컬 파일이 일치하지 않습니다</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>앨범 아트 만</value>
+  </data>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>분할보기</value>
+  </data>
+  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
+    <value>디스플레이 유형을 변경하십시오</value>
+  </data>
+  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
+    <value>데스크탑 가사 모드로 전환하십시오</value>
+  </data>
+  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>사진 인당 모드</value>
+  </data>
+  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
+    <value>Picture-in-Picture 모드 종료</value>
+  </data>
+  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+    <value>가사를 찾을 수 없습니다</value>
+  </data>
+  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+    <value>가사 효과</value>
+  </data>
+  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+    <value>가사 스타일</value>
+  </data>
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>이 폴더는 이미 기존 폴더에 포함되어 있으며 다시 추가 할 필요가 없습니다.</value>
+  </data>
+  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+    <value>앱 동작</value>
+  </data>
+  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>앱을 시작할 때</value>
+  </data>
+  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
+    <value>표준 모드를 ​​활성화합니다</value>
+  </data>
+  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
+    <value>도크 모드를 활성화하십시오</value>
+  </data>
+  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
+    <value>가사를 찾을 수 없습니다</value>
+  </data>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>시스템 트레이 - BetterLyrics</value>
+  </data>
+  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
+    <value>도크 모드</value>
+  </data>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>글꼴 무게</value>
+  </data>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>얇은</value>
+  </data>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>여분의 빛</value>
+  </data>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>빛</value>
+  </data>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>반 빛</value>
+  </data>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>정상</value>
+  </data>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>중간</value>
+  </data>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>반 대담한</value>
+  </data>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>용감한</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>추가 대담한</value>
+  </data>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>검은색</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>여분의 검은 색</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
+    <value>전체 가사</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+    <value>현재 라인</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+    <value>현재 숯</value>
+  </data>
+  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="MainPageLyricsLoading.Text" xml:space="preserve">
+    <value>가사로드 ...</value>
+  </data>
+  <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+    <value>로컬 .LRC 파일</value>
+  </data>
+  <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+    <value>로컬 음악 파일</value>
+  </data>
+  <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
+    <value>LRCLIB</value>
+  </data>
+  <data name="SettingsPageJA.Content" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="SettingsPageKO.Content" xml:space="preserve">
+    <value>한국어</value>
+  </data>
+  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <value>로컬 .ESLRC 파일</value>
+  </data>
+  <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
+    <value>로컬 .TTML 파일</value>
+  </data>
+  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>이 폴더에는 추가 된 폴더가 포함되어 있습니다. 폴더를 추가하려면이 폴더를 삭제하십시오.</value>
+  </data>
+</root>

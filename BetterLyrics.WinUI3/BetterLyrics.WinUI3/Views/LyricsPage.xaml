@@ -26,7 +26,7 @@
             <renderer:LyricsRenderer />
         </Grid>
 
-        <Grid Margin="36">
+        <Grid Margin="36,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="36" />
@@ -45,24 +45,34 @@
                     <ScalarTransition />
                 </Grid.OpacityTransition>
                 <StackPanel
-                    x:Name="LyricsPlaceholderStackPanel"
+                    x:Name="LyricsNotFoundPlaceholder"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Opacity="0"
+                    Orientation="Horizontal"
                     Spacing="12">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
-                    <FontIcon
-                        FontFamily="Segoe Fluent Icons"
-                        FontSize="{StaticResource DisplayTextBlockFontSize}"
-                        Glyph="&#xE90B;" />
-                    <TextBlock x:Uid="MainPageLyricsNotFound" FontSize="{StaticResource TitleTextBlockFontSize}" />
+                    <TextBlock x:Uid="MainPageLyricsNotFound" FontSize="{x:Bind ViewModel.LyricsFontSize, Mode=OneWay}" />
                 </StackPanel>
+                <StackPanel
+                    x:Name="LyricsLoadingPlaceholder"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Opacity="0"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <StackPanel.OpacityTransition>
+                        <ScalarTransition />
+                    </StackPanel.OpacityTransition>
+                    <TextBlock x:Uid="MainPageLyricsLoading" FontSize="{x:Bind ViewModel.LyricsFontSize, Mode=OneWay}" />
+                </StackPanel>
+
             </Grid>
 
             <!--  Song info area  -->
-            <Grid x:Name="SongInfoInnerGrid">
+            <Grid x:Name="SongInfoInnerGrid" Margin="0,36">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*" />
                     <!--  Cover area  -->
@@ -311,42 +321,6 @@
                                     <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77B;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.Artist, Mode=OneWay}" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E3;" />
-                                    <ListView
-                                        x:Name="MatchedFilesListView"
-                                        ItemsSource="{x:Bind ViewModel.SongInfo.FilesFound, Mode=OneWay}"
-                                        SelectionMode="None">
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="ListViewItem">
-                                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                <Setter Property="Margin" Value="0" />
-                                                <Setter Property="Padding" Value="0" />
-                                                <Setter Property="MinWidth" Value="0" />
-                                                <Setter Property="MinHeight" Value="0" />
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <HyperlinkButton
-                                                    VerticalAlignment="Center"
-                                                    Click="OpenMatchedFileButton_Click"
-                                                    RelativePanel.AlignLeftWithPanel="True"
-                                                    Tag="{Binding Mode=OneWay}">
-                                                    <TextBlock
-                                                        MaxWidth="300"
-                                                        Text="{Binding Mode=OneWay}"
-                                                        TextWrapping="Wrap" />
-                                                </HyperlinkButton>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    <TextBlock
-                                        x:Name="NoLocalFilesMatchedTextBlock"
-                                        x:Uid="MainPageNoLocalFilesMatched"
-                                        Visibility="Collapsed" />
-                                </StackPanel>
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
@@ -449,34 +423,32 @@
                 </VisualState>
             </VisualStateGroup>
 
-            <VisualStateGroup x:Name="FilesMatchStates">
-                <VisualState x:Name="Matched" />
-                <VisualState x:Name="NotMatched">
+            <VisualStateGroup x:Name="LyricsStatus">
+                <VisualState x:Name="Loading">
                     <VisualState.StateTriggers>
-                        <ui:IsNullOrEmptyStateTrigger Value="{x:Bind ViewModel.SongInfo.FilesFound, Mode=OneWay}" />
+                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="2" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="NoLocalFilesMatchedTextBlock.Visibility" Value="Visible" />
-                        <Setter Target="MatchedFilesListView.Visibility" Value="Collapsed" />
+                        <Setter Target="LyricsNotFoundPlaceholder.Opacity" Value="0" />
+                        <Setter Target="LyricsLoadingPlaceholder.Opacity" Value=".5" />
                     </VisualState.Setters>
                 </VisualState>
-            </VisualStateGroup>
-
-            <VisualStateGroup x:Name="LyricsExistenceStates">
-                <VisualState x:Name="Existed">
+                <VisualState x:Name="Found">
                     <VisualState.StateTriggers>
-                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay}" />
+                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="1" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="LyricsPlaceholderStackPanel.Opacity" Value="0" />
+                        <Setter Target="LyricsNotFoundPlaceholder.Opacity" Value="0" />
+                        <Setter Target="LyricsLoadingPlaceholder.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
-                <VisualState x:Name="NotExisted">
+                <VisualState x:Name="NotFound">
                     <VisualState.StateTriggers>
-                        <StateTrigger IsActive="{x:Bind ViewModel.SongInfo.IsLyricsExisted, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="LyricsPlaceholderStackPanel.Opacity" Value=".5" />
+                        <Setter Target="LyricsNotFoundPlaceholder.Opacity" Value=".5" />
+                        <Setter Target="LyricsLoadingPlaceholder.Opacity" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

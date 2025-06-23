@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BetterLyrics.WinUI3.Enums
+{
+    public enum LyricsFormat
+    {
+        Lrc,
+        Eslrc,
+        Ttml,
+    }
+
+    public static class LyricsFormatExtensions
+    {
+        public static string ToFileExtension(this LyricsFormat format)
+        {
+            return format switch
+            {
+                LyricsFormat.Lrc => ".lrc",
+                LyricsFormat.Eslrc => ".eslrc",
+                LyricsFormat.Ttml => ".ttml",
+                _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
+            };
+        }
+
+        public static LyricsFormat? Detect(string content)
+        {
+            if (
+                content.StartsWith("<?xml")
+                && System.Text.RegularExpressions.Regex.IsMatch(content, @"<tt(:\w+)?\b")
+            )
+            {
+                return LyricsFormat.Ttml;
+            }
+            // 检测标准LRC和增强型LRC
+            else if (
+                System.Text.RegularExpressions.Regex.IsMatch(content, @"\[\d{1,2}:\d{2}")
+                || System.Text.RegularExpressions.Regex.IsMatch(
+                    content,
+                    @"<\d{1,2}:\d{2}\.\d{2,3}>"
+                )
+            )
+            {
+                return LyricsFormat.Lrc;
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+}

@@ -1,23 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 
 namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsLine
     {
-        public List<string> Texts { get; set; } = [];
+        public string Text { get; set; } = "";
 
-        public int LanguageIndex { get; set; } = 0;
+        public List<CharTiming> CharTimings { get; set; } = [];
 
-        public string Text => Texts[LanguageIndex];
-
-        public int StartPlayingTimestampMs { get; set; }
-        public int EndPlayingTimestampMs { get; set; }
+        public int StartMs { get; set; }
+        public int EndMs { get; set; }
 
         public LyricsPlayingState PlayingState { get; set; }
 
-        public int DurationMs => EndPlayingTimestampMs - StartPlayingTimestampMs;
+        public int DurationMs => EndMs - StartMs;
 
         public float EnteringProgress { get; set; }
 
@@ -37,10 +36,10 @@ namespace BetterLyrics.WinUI3.Models
         {
             return new LyricsLine
             {
-                Texts = new List<string>(this.Texts),
-                LanguageIndex = this.LanguageIndex,
-                StartPlayingTimestampMs = this.StartPlayingTimestampMs,
-                EndPlayingTimestampMs = this.EndPlayingTimestampMs,
+                Text = this.Text,
+                CharTimings = this.CharTimings,
+                StartMs = this.StartMs,
+                EndMs = this.EndMs,
                 PlayingState = this.PlayingState,
                 EnteringProgress = this.EnteringProgress,
                 ExitingProgress = this.ExitingProgress,

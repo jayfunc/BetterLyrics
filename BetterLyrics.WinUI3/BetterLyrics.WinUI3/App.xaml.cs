@@ -1,12 +1,11 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Rendering;
-using BetterLyrics.WinUI3.Services.Database;
-using BetterLyrics.WinUI3.Services.Playback;
-using BetterLyrics.WinUI3.Services.Settings;
+using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,7 +13,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
-using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -48,19 +46,46 @@ namespace BetterLyrics.WinUI3
             ResourceLoader = new ResourceLoader();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            Helper.AppInfo.EnsureDirectories();
+            AppInfo.EnsureDirectories();
             ConfigureServices();
 
             _logger = Ioc.Default.GetService<ILogger<App>>()!;
 
             UnhandledException += App_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        }
+
+        private void CurrentDomain_FirstChanceException(
+            object? sender,
+            System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e
+        )
+        {
+            _logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
+        }
+
+        private void TaskScheduler_UnobservedTaskException(
+            object? sender,
+            UnobservedTaskExceptionEventArgs e
+        )
+        {
+            _logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
+        }
+
+        private void CurrentDomain_UnhandledException(
+            object sender,
+            System.UnhandledExceptionEventArgs e
+        )
+        {
+            _logger.LogError(e.ExceptionObject.ToString(), "CurrentDomain_UnhandledException");
         }
 
         private static void ConfigureServices()
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.File(Helper.AppInfo.LogFilePattern, rollingInterval: RollingInterval.Day)
+                .WriteTo.File(AppInfo.LogFilePattern, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             // Register services
@@ -73,8 +98,9 @@ namespace BetterLyrics.WinUI3
                     })
                     // Services
                     .AddSingleton<ISettingsService, SettingsService>()
-                    .AddSingleton<IDatabaseService, DatabaseService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
+                    .AddSingleton<IMusicSearchService, MusicSearchService>()
+                    .AddSingleton<ILibWatcherService, LibWatcherService>()
                     // ViewModels
                     .AddTransient<HostWindowViewModel>()
                     .AddSingleton<SettingsViewModel>()
