@@ -9,6 +9,7 @@ using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 
 namespace BetterLyrics.WinUI3.Services
 {
@@ -169,6 +170,7 @@ namespace BetterLyrics.WinUI3.Services
                         {
                             try
                             {
+                                // TODO: replace TagLib with ATL or another library that supports AOT
                                 string plain = TagLib.File.Create(file).Tag.Lyrics;
                                 if (plain != string.Empty)
                                 {

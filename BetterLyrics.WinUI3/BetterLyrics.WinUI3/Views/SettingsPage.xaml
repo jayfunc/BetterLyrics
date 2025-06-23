@@ -136,41 +136,39 @@
                                     </controls:SettingsExpander.ItemsFooter>
                                 </controls:SettingsExpander>
 
-                                <controls:SettingsExpander
+                                <controls:SettingsCard
                                     x:Name="LyricsSearchProvidersSettingsExpander"
                                     x:Uid="SettingsPageLyricsSearchProvidersConfig"
-                                    VerticalAlignment="Top"
-                                    HeaderIcon="{ui:FontIcon Glyph=&#xF6FA;}"
-                                    IsExpanded="True">
-                                    <controls:SettingsExpander.Items>
-                                        <ListView
-                                            x:Name="LyricsSearchProvidersListView"
-                                            AllowDrop="True"
-                                            CanDragItems="True"
-                                            CanReorderItems="True"
-                                            DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
-                                            ItemsSource="{x:Bind ViewModel.LyricsSearchProvidersInfo, Mode=OneWay}"
-                                            SelectionMode="None">
-                                            <ListView.OpacityTransition>
-                                                <ScalarTransition />
-                                            </ListView.OpacityTransition>
-                                            <ListView.ItemContainerStyle>
-                                                <Style TargetType="ListViewItem">
-                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                    <Setter Property="Margin" Value="0" />
-                                                    <Setter Property="Padding" Value="0" />
-                                                </Style>
-                                            </ListView.ItemContainerStyle>
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
-                                                    <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                                        <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
-                                                    </controls:SettingsCard>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </controls:SettingsExpander.Items>
-                                </controls:SettingsExpander>
+                                    HeaderIcon="{ui:FontIcon Glyph=&#xF6FA;}" />
+
+                                <ListView
+                                    x:Name="LyricsSearchProvidersListView"
+                                    Margin="0,-4,0,0"
+                                    AllowDrop="True"
+                                    CanDragItems="True"
+                                    CanReorderItems="True"
+                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                                    ItemsSource="{x:Bind ViewModel.LyricsSearchProvidersInfo, Mode=OneWay}"
+                                    SelectionMode="None">
+                                    <ListView.OpacityTransition>
+                                        <ScalarTransition />
+                                    </ListView.OpacityTransition>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
+                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
+                                            </controls:SettingsCard>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
 
                             </StackPanel>
                         </controls:Case>

@@ -27,12 +27,13 @@ Your smooth dynamic local lyrics display built with WinUI 3
 ## Supported lyrics source
 
 - From your local storage
-  - Music files (with embedded lyrics) (Read and parsed by [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet))
-  - .lrc files
+  - Music files (with embedded lyrics)
+  - [.lrc](https://en.wikipedia.org/wiki/LRC_(file_format)) files (with both core format and enhanced format)
+  - [.eslrc](https://github.com/ESLyric/release) files
+  - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
 
 - From online lyrics providers
   - [LRCLIB](https://lrclib.net/)
-  - QQ Music (Fetch and decoded by [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper))
 
 ## Customize in your way
 
@@ -46,7 +47,7 @@ We provide more than one setting item to better align with your preference
 
 - Lyrics (alignment, font size, font color **(picked from album art accent color)** line spacing, opacity, blur amount, dynamic **glow** effect)
 
-- Language (English, Simplified Chinese, Traditional Chinese)
+- Language (English, Simplified Chinese, Traditional Chinese, Japanese, Korean)
 
 
 ## Screenshots
@@ -93,19 +94,11 @@ You can `git clone` this project and build it yourself.
 
 ## Setup your app
 
-This project relies on listening messages from [SMTC](https://learn.microsoft.com/en-ca/windows/uwp/audio-video-camera/integrate-with-systemmediatransportcontrols).
-So technically, as long as you are using the music apps (like
+This project relies on listening messages from [SMTC](https://learn.microsoft.com/en-ca/windows/uwp/audio-video-camera/integrate-with-systemmediatransportcontrols), so most of the music players will work.
 
-- Spotify
-- Groove Music
-- Apple Music
-- Windows Media Player
-- VLC Media Player
-- QQ 音乐
-- 酷狗音乐
-- 酷我音乐
+### About lyrics
 
-) which support SMTC, then possibly (I didn't test all of themif you find one fail to listen to, you can open an issue) all you need to do is just load your local music/lyrics lib and you are good to go.
+For a better experience, please use 
 
 ## Future work
 
@@ -139,38 +132,24 @@ To be added later.
 ## Third-party libraries that this project uses
 
 ```
-    <PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.230830" />
-    <PackageReference
-      Include="CommunityToolkit.Labs.WinUI.OpacityMaskView"
-      Version="0.1.250513-build.2126"
-    />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.250402" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.250402" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.250402" />
-    <PackageReference
-      Include="CommunityToolkit.WinUI.Controls.SettingsControls"
-      Version="8.2.250402"
-    />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
-    <PackageReference Include="Lyricify.Lyrics.Helper" Version="0.1.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.6" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.6" />
+    <PackageReference Include="TagLibSharp" Version="2.3.0" />
     <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
     <PackageReference Include="WinUIEx" Version="2.5.1" />
-    <PackageReference Include="z440.atl.core" Version="6.25.0" />
+    <PackageReference Include="z440.atl.core" Version="6.26.0" />
 ```
 
 ## Star History
