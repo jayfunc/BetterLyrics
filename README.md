@@ -98,7 +98,7 @@ This project relies on listening messages from [SMTC](https://learn.microsoft.co
 
 ### About lyrics
 
-For a better experience, please use 
+For a better experience, you can use [LDDC](https://github.com/chenmozhijin/LDDC) to download lyrics.
 
 ## Future work
 
