@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
             IRecipient<PropertyChangedMessage<LyricsGlowEffectScope>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
-            IRecipient<PropertyChangedMessage<ObservableCollection<string>>>
+            IRecipient<PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>>>
     {
         private protected CanvasTextFormat _textFormat = new()
         {
@@ -76,8 +76,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public int CoverOverlayOpacity { get; set; }
         public int CoverOverlayBlurAmount { get; set; }
 
-        [ObservableProperty]
-        public partial bool IsPlaying { get; set; } = true;
+        private bool _isPlaying = true;
 
         [NotifyPropertyChangedRecipients]
         [ObservableProperty]
@@ -157,8 +156,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ValueTransition<float> _limitedLineWidthTransition = new(
             initialValue: 0f,
             durationSeconds: 0.8f,
-            interpolator: (from, to, progress) =>
-                from + (to - from) * EasingHelper.SmootherStep(progress)
+            interpolator: (from, to, progress) => to
         );
 
         public LyricsRendererViewModel(
@@ -268,12 +266,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void PlaybackService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
         {
-            IsPlaying = e.IsPlaying;
+            _isPlaying = e.IsPlaying;
         }
 
         public void RefreshPlaybackInfo()
         {
-            IsPlaying = _playbackService.IsPlaying;
+            _isPlaying = _playbackService.IsPlaying;
             SongInfo = _playbackService.SongInfo;
             TotalTime = _playbackService.Position;
         }
@@ -874,7 +872,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             // Init Positions
             for (int i = 0; i < _lyrics?.Count; i++)
             {
-                var line = _lyrics?[i];
+                var line = _lyrics.SafeGet(i);
+
+                if (line == null)
+                {
+                    continue;
+                }
 
                 // Calculate layout bounds
                 using var textLayout = new CanvasTextLayout(
@@ -895,7 +898,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
-            if (IsPlaying)
+            if (_isPlaying)
             {
                 TotalTime += args.Timing.ElapsedTime;
             }
@@ -1014,16 +1017,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
 
-            for (int i = startLineIndex; source?.Count > 0 && i <= endLineIndex; i++)
+            for (int i = startLineIndex; i <= endLineIndex; i++)
             {
-                var line = source?[i];
+                var line = source?.SafeGet(i);
+
+                if (line == null)
+                {
+                    continue;
+                }
 
                 bool linePlaying = i == currentPlayingLineIndex;
 
-                var lineEnteringDurationMs = Math.Min(
-                    line?.DurationMs ?? 0,
-                    _lineEnteringDurationMs
-                );
+                var lineEnteringDurationMs = Math.Min(line.DurationMs, _lineEnteringDurationMs);
                 var lineExitingDurationMs = _lineExitingDurationMs;
                 if (i + 1 <= endLineIndex)
                 {
@@ -1424,11 +1429,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void Receive(PropertyChangedMessage<ObservableCollection<string>> message)
+        public void Receive(PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message)
         {
             if (message.Sender is SettingsViewModel)
             {
-                if (message.PropertyName == nameof(SettingsViewModel.MusicLibraries))
+                if (message.PropertyName == nameof(SettingsViewModel.LocalLyricsFolders))
                 {
                     // Music lib changed, re-fetch lyrics
                     RefreshLyricsAsync().ConfigureAwait(true);

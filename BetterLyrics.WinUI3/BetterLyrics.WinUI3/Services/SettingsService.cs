@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
@@ -14,7 +16,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string IsFirstRunKey = "IsFirstRun";
 
         // Lyrics lib
-        private const string MusicLibrariesKey = "MusicLibraries";
+        private const string LocalLyricsFoldersKey = "LocalLyricsFolders";
         private const string LyricsSearchProvidersInfoKey = "LyricsSearchProvidersInfo";
 
         // App appearance
@@ -48,19 +50,19 @@ namespace BetterLyrics.WinUI3.Services
             get => GetValue<bool>(IsFirstRunKey);
             set => SetValue(IsFirstRunKey, value);
         }
-        public List<string> MusicLibraries
+        public List<LocalLyricsFolder> LocalLyricsFolders
         {
             get =>
                 System.Text.Json.JsonSerializer.Deserialize(
-                    GetValue<string>(MusicLibrariesKey) ?? "[]",
-                    SourceGenerationContext.Default.ListString
+                    GetValue<string>(LocalLyricsFoldersKey) ?? "[]",
+                    SourceGenerationContext.Default.ListLocalLyricsFolder
                 )!;
             set =>
                 SetValue(
-                    MusicLibrariesKey,
+                    LocalLyricsFoldersKey,
                     System.Text.Json.JsonSerializer.Serialize(
                         value,
-                        SourceGenerationContext.Default.ListString
+                        SourceGenerationContext.Default.ListLocalLyricsFolder
                     )
                 );
         }
@@ -202,20 +204,28 @@ namespace BetterLyrics.WinUI3.Services
 
             SetDefault(IsFirstRunKey, true);
             // Lyrics lib
-            SetDefault(MusicLibrariesKey, "[]");
+            SetDefault(LocalLyricsFoldersKey, "[]");
             SetDefault(
                 LyricsSearchProvidersInfoKey,
                 System.Text.Json.JsonSerializer.Serialize(
-                    new List<LyricsSearchProviderInfo>()
-                    {
-                        new(LyricsSearchProvider.LocalMusicFile, true),
-                        new(LyricsSearchProvider.LocalLrcFile, true),
-                        new(LyricsSearchProvider.LrcLib, true),
-                        new(LyricsSearchProvider.QQMusic, true),
-                    },
+                    Enum.GetValues<LyricsSearchProvider>()
+                        .Select(p => new LyricsSearchProviderInfo(p, true))
+                        .ToList(),
                     SourceGenerationContext.Default.ListLyricsSearchProviderInfo
                 )
             );
+            if (LyricsSearchProvidersInfo.Count != Enum.GetValues<LyricsSearchProvider>().Length)
+            {
+                LyricsSearchProvidersInfo = Enum.GetValues<LyricsSearchProvider>()
+                    .Select(p => new LyricsSearchProviderInfo(
+                        p,
+                        LyricsSearchProvidersInfo
+                            .Where(x => x.Provider == p)
+                            .FirstOrDefault()
+                            ?.IsEnabled ?? true
+                    ))
+                    .ToList();
+            }
             // App appearance
             SetDefault(ThemeTypeKey, (int)ElementTheme.Default);
             SetDefault(LanguageKey, (int)Language.FollowSystem);

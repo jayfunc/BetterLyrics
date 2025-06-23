@@ -75,19 +75,25 @@
                                     x:Uid="SettingsPageMusicLib"
                                     HeaderIcon="{ui:FontIcon Glyph=&#xE8B7;}"
                                     IsExpanded="True"
-                                    ItemsSource="{x:Bind ViewModel.MusicLibraries, Mode=OneWay}">
+                                    ItemsSource="{x:Bind ViewModel.LocalLyricsFolders, Mode=OneWay}">
                                     <controls:SettingsExpander.ItemTemplate>
                                         <DataTemplate>
-                                            <controls:SettingsCard Header="{Binding}">
-                                                <StackPanel Orientation="Horizontal">
+                                            <controls:SettingsCard>
+                                                <controls:SettingsCard.Header>
                                                     <HyperlinkButton
-                                                        x:Uid="SettingsPageOpenPath"
                                                         Click="SettingsPageOpenPathButton_Click"
+                                                        Content="{Binding Path, Mode=OneWay}"
                                                         Tag="{Binding}" />
+                                                </controls:SettingsCard.Header>
+                                                <StackPanel Orientation="Horizontal">
                                                     <HyperlinkButton
                                                         x:Uid="SettingsPageRemovePath"
                                                         Click="SettingsPageRemovePathButton_Click"
                                                         Tag="{Binding}" />
+                                                    <ToggleSwitch
+                                                        DataContext="{Binding}"
+                                                        IsOn="{Binding IsEnabled, Mode=TwoWay}"
+                                                        Toggled="LocalLyricsFolderToggleSwitch_Toggled" />
                                                 </StackPanel>
                                             </controls:SettingsCard>
                                         </DataTemplate>
@@ -104,13 +110,13 @@
                                             <interactivity:Interaction.Behaviors>
 
                                                 <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.MusicLibraries.Count, Mode=OneWay}"
+                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
                                                     ComparisonCondition="Equal"
                                                     Value="0">
                                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                                                 </interactivity:DataTriggerBehavior>
                                                 <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.MusicLibraries.Count, Mode=OneWay}"
+                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
                                                     ComparisonCondition="NotEqual"
                                                     Value="0">
                                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />

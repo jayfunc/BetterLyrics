@@ -33,7 +33,7 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            ViewModel.OpenMusicFolder((string)(sender as HyperlinkButton)!.Tag);
+            ViewModel.OpenMusicFolder((LocalLyricsFolder)(sender as HyperlinkButton)!.Tag);
         }
 
         private void SettingsPageRemovePathButton_Click(
@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            ViewModel.RemoveFolderAsync((string)(sender as HyperlinkButton)!.Tag);
+            ViewModel.RemoveFolderAsync((LocalLyricsFolder)(sender as HyperlinkButton)!.Tag);
         }
 
         private void NavView_SelectionChanged(
@@ -69,6 +69,17 @@ namespace BetterLyrics.WinUI3.Views
         )
         {
             ViewModel.OnLyricsSearchProvidersReordered();
+        }
+
+        private void LocalLyricsFolderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                if (toggleSwitch.DataContext is LocalLyricsFolder localLyricsFolder)
+                {
+                    ViewModel.ToggleLocalLyricsFolder(localLyricsFolder);
+                }
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -10,8 +8,7 @@ using System.Threading.Tasks;
 using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
-using Lyricify.Lyrics.Providers;
+using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services
 {
@@ -32,12 +29,16 @@ namespace BetterLyrics.WinUI3.Services
 
         public byte[]? SearchAlbumArtAsync(string title, string artist)
         {
-            foreach (var path in _settingsService.MusicLibraries)
+            foreach (var folder in _settingsService.LocalLyricsFolders)
             {
-                if (Directory.Exists(path))
+                if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
                     foreach (
-                        var file in Directory.GetFiles(path, $"*.*", SearchOption.AllDirectories)
+                        var file in Directory.GetFiles(
+                            folder.Path,
+                            $"*.*",
+                            SearchOption.AllDirectories
+                        )
                     )
                     {
                         if (file.Contains(title) && file.Contains(artist))
@@ -78,13 +79,11 @@ namespace BetterLyrics.WinUI3.Services
                 switch (provider.Provider)
                 {
                     case LyricsSearchProvider.LrcLib:
-                    case LyricsSearchProvider.QQMusic:
-                    case LyricsSearchProvider.KugouMusic:
                         // Check cache first
-                        var cachedLyrics = ReadCache(title, artist, provider.Provider);
+                        var cachedLyrics = ReadCache(title, artist, LyricsFormat.Lrc);
                         if (!string.IsNullOrWhiteSpace(cachedLyrics))
                         {
-                            return (cachedLyrics, provider.Provider.ToLyricsFormat());
+                            return (cachedLyrics, LyricsFormat.Lrc);
                         }
                         break;
                     default:
@@ -102,7 +101,14 @@ namespace BetterLyrics.WinUI3.Services
                         searchedLyrics = await LocalLyricsSearchInLyricsFiles(
                             title,
                             artist,
-                            provider.Provider.ToLyricsFormat()
+                            LyricsFormat.Lrc
+                        );
+                        break;
+                    case LyricsSearchProvider.LocalEslrcFile:
+                        searchedLyrics = await LocalLyricsSearchInLyricsFiles(
+                            title,
+                            artist,
+                            LyricsFormat.Eslrc
                         );
                         break;
                     case LyricsSearchProvider.LrcLib:
@@ -114,17 +120,6 @@ namespace BetterLyrics.WinUI3.Services
                             matchMode
                         );
                         break;
-                    case LyricsSearchProvider.QQMusic:
-                        searchedLyrics = await SearchQQMusic(
-                            title,
-                            artist,
-                            album,
-                            (int)durationMs,
-                            matchMode
-                        );
-                        break;
-                    case LyricsSearchProvider.KugouMusic:
-                        break;
                     default:
                         break;
                 }
@@ -134,14 +129,17 @@ namespace BetterLyrics.WinUI3.Services
                     switch (provider.Provider)
                     {
                         case LyricsSearchProvider.LrcLib:
-                        case LyricsSearchProvider.QQMusic:
-                        case LyricsSearchProvider.KugouMusic:
-                            WriteCache(title, artist, searchedLyrics, provider.Provider);
-                            break;
+                            WriteCache(title, artist, searchedLyrics, LyricsFormat.Lrc);
+                            return (searchedLyrics, LyricsFormat.Lrc);
+                        case LyricsSearchProvider.LocalMusicFile:
+                            return (searchedLyrics, LyricsFormatExtensions.Detect(searchedLyrics));
+                        case LyricsSearchProvider.LocalLrcFile:
+                            return (searchedLyrics, LyricsFormat.Lrc);
+                        case LyricsSearchProvider.LocalEslrcFile:
+                            return (searchedLyrics, LyricsFormat.Eslrc);
                         default:
                             break;
                     }
-                    return (searchedLyrics, provider.Provider.ToLyricsFormat());
                 }
             }
 
@@ -150,26 +148,29 @@ namespace BetterLyrics.WinUI3.Services
 
         private string? LocalLyricsSearchInMusicFiles(string title, string artist)
         {
-            foreach (var path in _settingsService.MusicLibraries)
+            foreach (var folder in _settingsService.LocalLyricsFolders)
             {
-                if (Directory.Exists(path))
+                if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
                     foreach (
-                        var file in Directory.GetFiles(path, $"*.*", SearchOption.AllDirectories)
+                        var file in Directory.GetFiles(
+                            folder.Path,
+                            $"*.*",
+                            SearchOption.AllDirectories
+                        )
                     )
                     {
                         if (file.Contains(title) && file.Contains(artist))
                         {
-                            Track track = new(file);
-                            if (track.Lyrics.SynchronizedLyrics.Count > 0)
+                            try
                             {
-                                // Get synchronized lyrics from the track (metadata)
-                                var lrc = track.Lyrics.FormatSynchToLRC();
-                                if (lrc != null)
+                                string plain = TagLib.File.Create(file).Tag.Lyrics;
+                                if (plain != string.Empty)
                                 {
-                                    return lrc;
+                                    return plain;
                                 }
                             }
+                            catch (Exception) { }
                         }
                     }
                 }
@@ -184,13 +185,13 @@ namespace BetterLyrics.WinUI3.Services
             LyricsFormat format
         )
         {
-            foreach (var path in _settingsService.MusicLibraries)
+            foreach (var folder in _settingsService.LocalLyricsFolders)
             {
-                if (Directory.Exists(path))
+                if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
                     foreach (
                         var file in Directory.GetFiles(
-                            path,
+                            folder.Path,
                             $"*{format.ToFileExtension()}",
                             SearchOption.AllDirectories
                         )
@@ -258,64 +259,24 @@ namespace BetterLyrics.WinUI3.Services
             return null;
         }
 
-        private async Task<string?> SearchQQMusic(
-            string title,
-            string artist,
-            string album,
-            int durationMs,
-            MusicSearchMatchMode matchMode
-        )
-        {
-            string? queryId = (
-                (
-                    await new Lyricify.Lyrics.Searchers.QQMusicSearcher().SearchForResult(
-                        new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
-                        {
-                            DurationMs =
-                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
-                                    ? durationMs
-                                    : null,
-                            Album =
-                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
-                                    ? album
-                                    : null,
-                            AlbumArtists = [artist],
-                            Artists = [artist],
-                            Title = title,
-                        }
-                    )
-                ) as Lyricify.Lyrics.Searchers.QQMusicSearchResult
-            )?.Id;
-            if (queryId is string id)
-            {
-                return (await Lyricify.Lyrics.Decrypter.Qrc.Helper.GetLyricsAsync(id))?.Lyrics;
-            }
-            return null;
-        }
-
-        private void WriteCache(
-            string title,
-            string artist,
-            string lyrics,
-            LyricsSearchProvider provider
-        )
+        private void WriteCache(string title, string artist, string lyrics, LyricsFormat format)
         {
             var safeArtist = SanitizeFileName(artist);
             var safeTitle = SanitizeFileName(title);
             var cacheFilePath = Path.Combine(
                 AppInfo.OnlineLyricsCacheDirectory,
-                $"{safeArtist} - {safeTitle}{provider.ToLyricsFormat().ToFileExtension()}"
+                $"{safeArtist} - {safeTitle}{format.ToFileExtension()}"
             );
             File.WriteAllText(cacheFilePath, lyrics);
         }
 
-        private string? ReadCache(string title, string artist, LyricsSearchProvider provider)
+        private string? ReadCache(string title, string artist, LyricsFormat format)
         {
             var safeArtist = SanitizeFileName(artist);
             var safeTitle = SanitizeFileName(title);
             var cacheFilePath = Path.Combine(
                 AppInfo.OnlineLyricsCacheDirectory,
-                $"{safeArtist} - {safeTitle}{provider.ToLyricsFormat().ToFileExtension()}"
+                $"{safeArtist} - {safeTitle}{format.ToFileExtension()}"
             );
             if (File.Exists(cacheFilePath))
             {

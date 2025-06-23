@@ -25,11 +25,8 @@ namespace BetterLyrics.WinUI3.Converter
                     LyricsSearchProvider.LrcLib => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderLrcLib"
                     ),
-                    LyricsSearchProvider.QQMusic => App.ResourceLoader!.GetString(
-                        "LyricsSearchProviderQQMusic"
-                    ),
-                    LyricsSearchProvider.KugouMusic => App.ResourceLoader!.GetString(
-                        "LyricsSearchProviderKugouMusic"
+                    LyricsSearchProvider.LocalEslrcFile => App.ResourceLoader!.GetString(
+                        "LyricsSearchProviderEslrcFile"
                     ),
                     _ => throw new ArgumentOutOfRangeException(nameof(provider), provider, null),
                 };

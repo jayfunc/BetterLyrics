@@ -123,9 +123,6 @@
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>음악이나 가사를 저장하는 폴더 추가</value>
   </data>
-  <data name="SettingsPageOpenPath.Content" xml:space="preserve">
-    <value>파일 탐색기에서 열립니다</value>
-  </data>
   <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
     <value>파일 탐색기에서 열립니다</value>
   </data>
@@ -474,16 +471,13 @@
   <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
     <value>LRCLIB</value>
   </data>
-  <data name="LyricsSearchProviderQQMusic" xml:space="preserve">
-    <value>QQ 음악</value>
-  </data>
-  <data name="LyricsSearchProviderKugouMusic" xml:space="preserve">
-    <value>쿠구 음악</value>
-  </data>
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
+  </data>
+  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <value>로컬 .ESLRC 파일</value>
   </data>
 </root>

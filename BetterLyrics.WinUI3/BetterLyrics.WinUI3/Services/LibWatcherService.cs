@@ -11,6 +11,7 @@ namespace BetterLyrics.WinUI3.Services
     using System.IO;
     using System.Linq;
     using global::BetterLyrics.WinUI3.Events;
+    using global::BetterLyrics.WinUI3.Models;
 
     namespace BetterLyrics.WinUI3.Services
     {
@@ -24,15 +25,15 @@ namespace BetterLyrics.WinUI3.Services
             public LibWatcherService(ISettingsService settingsService)
             {
                 _settingsService = settingsService;
-                UpdateWatchers(_settingsService.MusicLibraries);
+                UpdateWatchers(_settingsService.LocalLyricsFolders);
             }
 
-            public void UpdateWatchers(List<string> folders)
+            public void UpdateWatchers(List<LocalLyricsFolder> folders)
             {
                 // 移除不再监听的
                 foreach (var key in _watchers.Keys.ToList())
                 {
-                    if (!folders.Contains(key))
+                    if (!folders.Any(x => x.Path == key && x.IsEnabled))
                     {
                         _watchers[key].Dispose();
                         _watchers.Remove(key);
@@ -42,27 +43,37 @@ namespace BetterLyrics.WinUI3.Services
                 // 添加新的监听
                 foreach (var folder in folders)
                 {
-                    if (!_watchers.ContainsKey(folder) && Directory.Exists(folder))
+                    if (
+                        !_watchers.ContainsKey(folder.Path)
+                        && Directory.Exists(folder.Path)
+                        && folder.IsEnabled
+                    )
                     {
-                        var watcher = new FileSystemWatcher(folder)
+                        var watcher = new FileSystemWatcher(folder.Path)
                         {
                             IncludeSubdirectories = true,
                             EnableRaisingEvents = true,
                         };
-                        watcher.Created += (s, e) => OnChanged(folder, e);
-                        watcher.Changed += (s, e) => OnChanged(folder, e);
-                        watcher.Deleted += (s, e) => OnChanged(folder, e);
-                        watcher.Renamed += (s, e) => OnChanged(folder, e);
-                        _watchers[folder] = watcher;
+                        watcher.Created += (s, e) => OnChanged(folder.Path, e);
+                        watcher.Changed += (s, e) => OnChanged(folder.Path, e);
+                        watcher.Deleted += (s, e) => OnChanged(folder.Path, e);
+                        watcher.Renamed += (s, e) => OnChanged(folder.Path, e);
+                        _watchers[folder.Path] = watcher;
                     }
                 }
             }
 
             private void OnChanged(string folder, FileSystemEventArgs e)
             {
-                MusicLibraryFilesChanged?.Invoke(
-                    this,
-                    new LibChangedEventArgs(folder, e.FullPath, e.ChangeType)
+                App.DispatcherQueue!.TryEnqueue(
+                    Microsoft.UI.Dispatching.DispatcherQueuePriority.High,
+                    () =>
+                    {
+                        MusicLibraryFilesChanged?.Invoke(
+                            this,
+                            new LibChangedEventArgs(folder, e.FullPath, e.ChangeType)
+                        );
+                    }
                 );
             }
 

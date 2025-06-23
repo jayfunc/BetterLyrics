@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using Lyricify.Lyrics.Models;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -22,19 +22,21 @@ namespace BetterLyrics.WinUI3.Helper
             int durationMs = 0
         )
         {
+            _lyricsLines = [];
             switch (lyricsFormat)
             {
                 case LyricsFormat.Lrc:
-                    ParseLyricsFromLrc(raw, durationMs);
+                case LyricsFormat.Eslrc:
+                    ParseLrc(raw, durationMs);
                     break;
-                case LyricsFormat.DecryptedQrc:
-                    ParseLyricsFromQrc(raw, durationMs);
+                case LyricsFormat.Ttml:
+                    ParseTtml(raw, durationMs);
                     break;
                 default:
                     break;
             }
 
-            if (_lyricsLines != null && _lyricsLines.Count > 0 && _lyricsLines[0].StartMs > 0)
+            if (_lyricsLines.Count > 0 && _lyricsLines[0].StartMs > 0)
             {
                 _lyricsLines.Insert(
                     0,
@@ -43,115 +45,158 @@ namespace BetterLyrics.WinUI3.Helper
                         StartMs = 0,
                         EndMs = _lyricsLines[0].StartMs,
                         Texts = [""],
+                        CharTimings = [],
                     }
                 );
             }
             return _lyricsLines;
         }
 
-        /// <summary>
-        /// Try to parse lyrics from the track, optionally override the raw lyrics string.
-        /// </summary>
-        /// <param name="track"></param>
-        /// <param name="raw"></param>
-        private void ParseLyricsFromLrc(string raw, int durationMs)
+        private void ParseLrc(string raw, int durationMs)
         {
-            Track track = new() { Lyrics = new() };
-            track.Lyrics.ParseLRC(raw);
-            var lines = track.Lyrics.SynchronizedLyrics;
+            var lines = raw.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var lrcLines =
+                new List<(int time, string text, List<(int time, string text)> syllables)>();
 
-            if (lines != null && lines.Count > 0)
+            // 支持 [mm:ss.xx]字、<mm:ss.xx>字，毫秒两位或三位
+            var syllableRegex = new Regex(
+                @"(\[|\<)(\d{2}):(\d{2})\.(\d{2,3})(\]|\>)([^\[\]\<\>]*)"
+            );
+
+            foreach (var line in lines)
             {
-                _lyricsLines = [];
-                LyricsLine? lyricsLine = null;
-                for (int i = 0; i < lines.Count; i++)
+                var matches = syllableRegex.Matches(line);
+                var syllables = new List<(int, string)>();
+                foreach (Match m in matches)
                 {
-                    var lyricsPhrase = lines[i];
-                    int startTimestampMs = lyricsPhrase.TimestampMs;
-                    int endTimestampMs;
-
-                    if (i + 1 < lines.Count)
+                    int min = int.Parse(m.Groups[2].Value);
+                    int sec = int.Parse(m.Groups[3].Value);
+                    int ms = int.Parse(m.Groups[4].Value.PadRight(3, '0'));
+                    int totalMs = min * 60_000 + sec * 1000 + ms;
+                    string text = m.Groups[6].Value;
+                    syllables.Add((totalMs, text));
+                }
+                if (syllables.Count > 0)
+                {
+                    lrcLines.Add(
+                        (
+                            syllables[0].Item1,
+                            string.Concat(syllables.Select(s => s.Item2)),
+                            syllables
+                        )
+                    );
+                }
+                else
+                {
+                    // 普通LRC行
+                    var bracketRegex = new Regex(@"\[(\d{2}):(\d{2})\.(\d{2,3})\]");
+                    var bracketMatches = bracketRegex.Matches(line);
+                    string content = line;
+                    int? lineStartTime = null;
+                    if (bracketMatches.Count > 0)
                     {
-                        endTimestampMs = lines[i + 1].TimestampMs;
-                    }
-                    else
-                    {
-                        endTimestampMs = durationMs;
-                    }
-
-                    lyricsLine ??= new LyricsLine { StartMs = startTimestampMs };
-
-                    lyricsLine.Texts.Add(lyricsPhrase.Text);
-
-                    if (endTimestampMs == startTimestampMs)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        lyricsLine.EndMs = endTimestampMs;
-                        _lyricsLines.Add(lyricsLine);
-                        lyricsLine = null;
+                        var m = bracketMatches[0];
+                        int min = int.Parse(m.Groups[1].Value);
+                        int sec = int.Parse(m.Groups[2].Value);
+                        int ms = int.Parse(m.Groups[3].Value.PadRight(3, '0'));
+                        lineStartTime = min * 60_000 + sec * 1000 + ms;
+                        content = bracketRegex.Replace(line, "").Trim();
+                        lrcLines.Add((lineStartTime.Value, content, new List<(int, string)>()));
                     }
                 }
+            }
+
+            // 按时间排序
+            lrcLines = lrcLines.OrderBy(l => l.time).ToList();
+
+            // 构建 LyricsLine
+            for (int i = 0; i < lrcLines.Count; i++)
+            {
+                var (start, text, syllables) = lrcLines[i];
+                var line = new LyricsLine
+                {
+                    StartMs = start,
+                    EndMs = (i + 1 < lrcLines.Count) ? lrcLines[i + 1].time : durationMs,
+                    Texts = [text],
+                    CharTimings = [],
+                };
+
+                if (syllables != null && syllables.Count > 0)
+                {
+                    for (int j = 0; j < syllables.Count; j++)
+                    {
+                        var (charStart, charText) = syllables[j];
+                        int charEnd =
+                            (j + 1 < syllables.Count) ? syllables[j + 1].Item1 : line.EndMs;
+                        if (!string.IsNullOrEmpty(charText))
+                        {
+                            line.CharTimings.Add(
+                                new CharTiming { StartMs = charStart, EndMs = charEnd }
+                            );
+                        }
+                    }
+                }
+                _lyricsLines.Add(line);
             }
         }
 
-        private void ParseLyricsFromQrc(string raw, int? durationMs)
+        private void ParseTtml(string raw, int durationMs)
         {
-            var lines = Lyricify
-                .Lyrics.Parsers.QrcParser.Parse(raw)
-                .Lines?.Where(x => !string.IsNullOrWhiteSpace(x.Text))
-                .ToList();
-
-            if (lines != null && lines.Count > 0)
+            // 简单 TTML 解析
+            try
             {
-                _lyricsLines = [];
-                for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
+                var xdoc = XDocument.Parse(raw);
+                XNamespace ns = xdoc.Root?.Name.Namespace ?? "";
+                var body = xdoc.Descendants(ns + "body").FirstOrDefault();
+                if (body == null)
+                    return;
+                var ps = body.Descendants(ns + "p");
+                foreach (var p in ps)
                 {
-                    var lineRead = lines[lineIndex];
-                    var lineWrite = new LyricsLine
-                    {
-                        StartMs = lineRead.StartTime ?? 0,
-                        Texts = [lineRead.Text],
-                        CharTimings = [],
-                    };
-
-                    var syllables = (lineRead as SyllableLineInfo)?.Syllables;
-                    if (syllables != null)
-                    {
-                        for (
-                            int syllableIndex = 0;
-                            syllableIndex < syllables.Count;
-                            syllableIndex++
-                        )
+                    string text = p.Value.Trim();
+                    string? begin = p.Attribute("begin")?.Value;
+                    string? end = p.Attribute("end")?.Value;
+                    int startMs = ParseTtmlTime(begin);
+                    int endMs = ParseTtmlTime(end);
+                    _lyricsLines.Add(
+                        new LyricsLine
                         {
-                            var syllable = syllables[syllableIndex];
-                            var charTiming = new CharTiming { StartMs = syllable.StartTime };
-                            if (syllableIndex + 1 < syllables.Count)
-                            {
-                                charTiming.EndMs = syllables[syllableIndex + 1].StartTime;
-                            }
-                            else
-                            {
-                                charTiming.EndMs = syllable.EndTime;
-                            }
-                            lineWrite.CharTimings.Add(charTiming);
+                            StartMs = startMs,
+                            EndMs = endMs,
+                            Texts = [text],
+                            CharTimings = [],
                         }
-                    }
-
-                    if (lineIndex + 1 < lines.Count)
-                    {
-                        lineWrite.EndMs = lines[lineIndex + 1].StartTime ?? 0;
-                    }
-                    else
-                    {
-                        lineWrite.EndMs = durationMs ?? 0;
-                    }
-
-                    _lyricsLines.Add(lineWrite);
+                    );
                 }
             }
+            catch
+            {
+                // 解析失败，忽略
+            }
+        }
+
+        private int ParseTtmlTime(string? t)
+        {
+            if (string.IsNullOrEmpty(t))
+                return 0;
+            // 支持 "00:00:01.000" 或 "1.000s"
+            if (t.EndsWith("s"))
+            {
+                if (double.TryParse(t.TrimEnd('s'), out double seconds))
+                    return (int)(seconds * 1000);
+            }
+            else
+            {
+                var parts = t.Split(':');
+                if (parts.Length == 3)
+                {
+                    int h = int.Parse(parts[0]);
+                    int m = int.Parse(parts[1]);
+                    double s = double.Parse(parts[2]);
+                    return (int)((h * 3600 + m * 60 + s) * 1000);
+                }
+            }
+            return 0;
         }
     }
 }
