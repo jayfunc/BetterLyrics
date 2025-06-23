@@ -480,4 +480,7 @@
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
     <value>Local .ESLRC files</value>
   </data>
+  <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
+    <value>Local .TTML files</value>
+  </data>
 </root>

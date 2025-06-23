@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 
@@ -142,29 +141,63 @@ namespace BetterLyrics.WinUI3.Helper
 
         private void ParseTtml(string raw, int durationMs)
         {
-            // 简单 TTML 解析
             try
             {
                 var xdoc = XDocument.Parse(raw);
-                XNamespace ns = xdoc.Root?.Name.Namespace ?? "";
-                var body = xdoc.Descendants(ns + "body").FirstOrDefault();
+                var body = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "body");
                 if (body == null)
                     return;
-                var ps = body.Descendants(ns + "p");
+                var ps = body.Descendants().Where(e => e.Name.LocalName == "p");
                 foreach (var p in ps)
                 {
-                    string text = p.Value.Trim();
-                    string? begin = p.Attribute("begin")?.Value;
-                    string? end = p.Attribute("end")?.Value;
-                    int startMs = ParseTtmlTime(begin);
-                    int endMs = ParseTtmlTime(end);
+                    // 句级时间
+                    string? pBegin = p.Attribute("begin")?.Value;
+                    string? pEnd = p.Attribute("end")?.Value;
+                    int pStartMs = ParseTtmlTime(pBegin);
+                    int pEndMs = ParseTtmlTime(pEnd);
+
+                    // 处理分词分时
+                    var spans = p.Elements()
+                        .Where(s =>
+                            s.Name.LocalName == "span"
+                            && s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))
+                                == null
+                        )
+                        .ToList();
+
+                    string text = string.Concat(spans.Select(s => s.Value));
+                    var charTimings = new List<CharTiming>();
+
+                    for (int i = 0; i < spans.Count; i++)
+                    {
+                        var span = spans[i];
+                        string? sBegin = span.Attribute("begin")?.Value;
+                        string? sEnd = span.Attribute("end")?.Value;
+                        int sStartMs = ParseTtmlTime(sBegin);
+                        int sEndMs = ParseTtmlTime(sEnd);
+
+                        if (sStartMs == 0 && sEndMs == 0)
+                            continue;
+
+                        if (sEndMs == 0)
+                            sEndMs =
+                                (i + 1 < spans.Count)
+                                    ? ParseTtmlTime(spans[i + 1].Attribute("begin")?.Value)
+                                    : pEndMs;
+
+                        charTimings.Add(new CharTiming { StartMs = sStartMs, EndMs = sEndMs });
+                    }
+
+                    if (spans.Count == 0)
+                        text = p.Value.Trim();
+
                     _lyricsLines.Add(
                         new LyricsLine
                         {
-                            StartMs = startMs,
-                            EndMs = endMs,
+                            StartMs = pStartMs,
+                            EndMs = pEndMs,
                             Texts = [text],
-                            CharTimings = [],
+                            CharTimings = charTimings,
                         }
                     );
                 }
@@ -177,12 +210,22 @@ namespace BetterLyrics.WinUI3.Helper
 
         private int ParseTtmlTime(string? t)
         {
-            if (string.IsNullOrEmpty(t))
+            if (string.IsNullOrWhiteSpace(t))
                 return 0;
-            // 支持 "00:00:01.000" 或 "1.000s"
+
+            t = t.Trim();
+
+            // 支持 "1.000s"
             if (t.EndsWith("s"))
             {
-                if (double.TryParse(t.TrimEnd('s'), out double seconds))
+                if (
+                    double.TryParse(
+                        t.TrimEnd('s'),
+                        System.Globalization.NumberStyles.Float,
+                        System.Globalization.CultureInfo.InvariantCulture,
+                        out double seconds
+                    )
+                )
                     return (int)(seconds * 1000);
             }
             else
@@ -190,10 +233,37 @@ namespace BetterLyrics.WinUI3.Helper
                 var parts = t.Split(':');
                 if (parts.Length == 3)
                 {
+                    // hh:mm:ss.xxx
                     int h = int.Parse(parts[0]);
                     int m = int.Parse(parts[1]);
-                    double s = double.Parse(parts[2]);
+                    double s = double.Parse(
+                        parts[2],
+                        System.Globalization.CultureInfo.InvariantCulture
+                    );
                     return (int)((h * 3600 + m * 60 + s) * 1000);
+                }
+                else if (parts.Length == 2)
+                {
+                    // mm:ss.xxx
+                    int m = int.Parse(parts[0]);
+                    double s = double.Parse(
+                        parts[1],
+                        System.Globalization.CultureInfo.InvariantCulture
+                    );
+                    return (int)((m * 60 + s) * 1000);
+                }
+                else if (parts.Length == 1)
+                {
+                    // ss.xxx
+                    if (
+                        double.TryParse(
+                            parts[0],
+                            System.Globalization.NumberStyles.Float,
+                            System.Globalization.CultureInfo.InvariantCulture,
+                            out double s
+                        )
+                    )
+                        return (int)(s * 1000);
                 }
             }
             return 0;

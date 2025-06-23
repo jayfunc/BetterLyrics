@@ -6,5 +6,6 @@
         LocalMusicFile,
         LocalLrcFile,
         LocalEslrcFile,
+        LocalTtmlFile,
     }
 }
