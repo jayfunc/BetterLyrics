@@ -1,10 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System.Collections.Generic;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
-using System.Collections.Generic;
 using Windows.UI.Text;
 
 namespace BetterLyrics.WinUI3.Services
@@ -111,7 +111,7 @@ namespace BetterLyrics.WinUI3.Services
         /// <summary>
         /// Gets or sets the LyricsGlowEffectScope
         /// </summary>
-        LyricsGlowEffectScope LyricsGlowEffectScope { get; set; }
+        LineRenderingType LyricsGlowEffectScope { get; set; }
 
         /// <summary>
         /// Gets or sets the LyricsLineSpacingFactor

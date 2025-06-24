@@ -450,7 +450,6 @@
                                     <controls:SettingsExpander.Items>
                                         <controls:SettingsCard x:Uid="SettingsPageLyricsGlowEffectScope" IsEnabled="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
                                             <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeWholeLyrics" />
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentLine" />
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentChar" />
                                             </ComboBox>
