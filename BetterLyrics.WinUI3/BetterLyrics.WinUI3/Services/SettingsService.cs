@@ -196,7 +196,7 @@ namespace BetterLyrics.WinUI3.Services
             // Lyrics
             SetDefault(LyricsAlignmentTypeKey, (int)LyricsAlignmentType.Center);
             SetDefault(LyricsFontWeightKey, (int)LyricsFontWeight.Bold);
-            SetDefault(LyricsBlurAmountKey, 0);
+            SetDefault(LyricsBlurAmountKey, 5);
             SetDefault(LyricsFontColorTypeKey, (int)LyricsFontColorType.Default);
             SetDefault(LyricsFontSizeKey, 28);
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);

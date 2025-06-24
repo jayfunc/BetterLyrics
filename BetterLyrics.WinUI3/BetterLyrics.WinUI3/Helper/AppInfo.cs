@@ -63,13 +63,6 @@ namespace BetterLyrics.WinUI3.Helper
 
         // Environment Info
 
-        /// <summary>
-        /// Gets a value indicating whether IsDebug
-        /// </summary>
-        public static bool IsDebug =>
-#if DEBUG
-            true;
-
         // Data Files
 
         /// <summary>
@@ -92,10 +85,6 @@ namespace BetterLyrics.WinUI3.Helper
         /// Gets the TestMusicPath
         /// </summary>
         public static string TestMusicPath => Path.Combine(AssetsFolder, TestMusicFileName);
-
-#else
-            false;
-#endif
 
         // Base Folders
 

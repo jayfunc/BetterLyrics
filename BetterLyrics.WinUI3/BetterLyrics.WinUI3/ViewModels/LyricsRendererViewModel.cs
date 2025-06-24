@@ -55,8 +55,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// </summary>
         private readonly ValueTransition<float> _albumArtBgTransition = new(
             initialValue: 0f,
-            durationSeconds: 1.0f,
-            interpolator: (from, to, progress) => from + (to - from) * progress
+            durationSeconds: 1.0f
         );
 
         /// <summary>
@@ -65,8 +64,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ValueTransition<float> _canvasYScrollTransition = new(
             initialValue: 0f,
             durationSeconds: 0.8f,
-            interpolator: (from, to, progress) =>
-                from + (to - from) * EasingHelper.SmootherStep(progress)
+            easingType: EasingType.SmootherStep
         );
 
         /// <summary>
@@ -419,8 +417,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             // Original lyrics only layer
-            using var lyrics = new CanvasCommandList(control);
-            using (var lyricsDs = lyrics.CreateDrawingSession())
+            using var blurredLyrics = new CanvasCommandList(control);
+            using (var blurredLyricsDs = blurredLyrics.CreateDrawingSession())
             {
                 switch (DisplayType)
                 {
@@ -429,55 +427,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                         break;
                     case LyricsDisplayType.LyricsOnly:
                     case LyricsDisplayType.SplitView:
-                        DrawLyrics(control, lyricsDs, LineRenderingType.UntilCurrentChar);
+                        DrawLyrics(control, blurredLyricsDs, LineRenderingType.UntilCurrentChar);
                         break;
                     default:
                         break;
-                }
-            }
-
-            // Mock gradient blurred lyrics layer
-            using var blurredLyrics = new CanvasCommandList(control);
-            using var blurredLyricsDs = blurredLyrics.CreateDrawingSession();
-            if (LyricsBlurAmount == 0)
-            {
-                blurredLyricsDs.DrawImage(lyrics);
-            }
-            else
-            {
-                double step = 0.05;
-                double overlapFactor = 0;
-                for (double i = 0; i <= 0.5 - step; i += step)
-                {
-                    using var halfBlurredLyrics = new GaussianBlurEffect
-                    {
-                        Source = lyrics,
-                        BlurAmount = (float)(LyricsBlurAmount * (1 - i / (0.5 - step))),
-                        Optimization = EffectOptimization.Quality,
-                        BorderMode = EffectBorderMode.Soft,
-                    };
-                    using var topCropped = new CropEffect
-                    {
-                        Source = halfBlurredLyrics,
-                        SourceRectangle = new Rect(
-                            0,
-                            control.Size.Height * i,
-                            control.Size.Width,
-                            control.Size.Height * step * (1 + overlapFactor)
-                        ),
-                    };
-                    using var bottomCropped = new CropEffect
-                    {
-                        Source = halfBlurredLyrics,
-                        SourceRectangle = new Rect(
-                            0,
-                            control.Size.Height * (1 - i - step * (1 + overlapFactor)),
-                            control.Size.Width,
-                            control.Size.Height * step * (1 + overlapFactor)
-                        ),
-                    };
-                    blurredLyricsDs.DrawImage(topCropped);
-                    blurredLyricsDs.DrawImage(bottomCropped);
                 }
             }
 
@@ -980,12 +933,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             LineRenderingType currentLineHighlightType
         )
         {
-            var (displayStartLineIndex, displayEndLineIndex) =
-                GetVisibleLyricsLineIndexBoundaries();
-
             var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
 
-            for (int i = displayStartLineIndex; i <= displayEndLineIndex; i++)
+            for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
             {
                 var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
 
@@ -1014,9 +964,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 float centerX = position.X;
                 float centerY = position.Y + layoutHeight / 2;
 
-                // X offset for alignment, used for rectangle mask
-                float maskXOffset = 0f;
-
                 switch (LyricsAlignmentType)
                 {
                     case LyricsAlignmentType.Left:
@@ -1025,12 +972,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                     case LyricsAlignmentType.Center:
                         textLayout.HorizontalAlignment = CanvasHorizontalAlignment.Center;
                         centerX += (float)_limitedLineWidthTransition.Value / 2;
-                        maskXOffset = (_limitedLineWidthTransition.Value - layoutWidth) / 2;
                         break;
                     case LyricsAlignmentType.Right:
                         textLayout.HorizontalAlignment = CanvasHorizontalAlignment.Right;
                         centerX += (float)_limitedLineWidthTransition.Value;
-                        maskXOffset = _limitedLineWidthTransition.Value - layoutWidth;
                         break;
                     default:
                         break;
@@ -1054,42 +999,78 @@ namespace BetterLyrics.WinUI3.ViewModels
                     pureLyricsLineDs.DrawTextLayout(textLayout, position, _fontColor);
                 }
 
-                // Create and draw glow (shadow) effect
-                if (IsLyricsGlowEffectEnabled)
+                using var glowedLyrics = new CanvasCommandList(control);
+                using (var lyricsDs = glowedLyrics.CreateDrawingSession())
                 {
-                    ds.DrawImage(
-                        new ShadowEffect
-                        {
-                            Source = new AlphaMaskEffect
+                    // Create and draw glow (shadow) effect
+                    if (IsLyricsGlowEffectEnabled)
+                    {
+                        lyricsDs.DrawImage(
+                            new ShadowEffect
                             {
-                                Source = pureLyricsLine,
-                                AlphaMask = CreateLineMask(
-                                    control,
-                                    line,
-                                    LyricsGlowEffectScope,
-                                    false
-                                ),
-                            },
-                            BlurAmount = _lyricsGlowEffectAmount,
-                            ShadowColor = _fontColor,
-                            Optimization = EffectOptimization.Quality,
+                                Source = new AlphaMaskEffect
+                                {
+                                    Source = pureLyricsLine,
+                                    AlphaMask = CreateLineMask(
+                                        control,
+                                        line,
+                                        LyricsGlowEffectScope,
+                                        false
+                                    ),
+                                },
+                                BlurAmount = _lyricsGlowEffectAmount,
+                                ShadowColor = _fontColor,
+                                Optimization = EffectOptimization.Quality,
+                            }
+                        );
+                    }
+
+                    // Create and draw highlight (opacity changed) effect
+                    lyricsDs.DrawImage(
+                        new AlphaMaskEffect
+                        {
+                            Source = pureLyricsLine,
+                            AlphaMask = CreateLineMask(
+                                control,
+                                line,
+                                LineRenderingType.UntilCurrentChar,
+                                true
+                            ),
                         }
                     );
                 }
 
-                // Create and draw highlight (opacity changed) effect
-                ds.DrawImage(
-                    new AlphaMaskEffect
+                // Mock gradient blurred lyrics layer
+                using var blurredLyrics = new CanvasCommandList(control);
+                using var blurredLyricsDs = blurredLyrics.CreateDrawingSession();
+                if (LyricsBlurAmount == 0)
+                {
+                    blurredLyricsDs.DrawImage(glowedLyrics);
+                }
+                else
+                {
+                    int visibleLineCount = _endVisibleLineIndex - _startVisibleLineIndex + 1;
+                    int distanceFromPlayingLine = Math.Abs(i - currentPlayingLineIndex);
+
+                    line.BlurAmountTransition.StartTransition(
+                        LyricsBlurAmount * (distanceFromPlayingLine / (visibleLineCount / 2f))
+                    );
+                    if (line.BlurAmountTransition.IsTransitioning)
                     {
-                        Source = pureLyricsLine,
-                        AlphaMask = CreateLineMask(
-                            control,
-                            line,
-                            LineRenderingType.UntilCurrentChar,
-                            true
-                        ),
+                        line.BlurAmountTransition.Update(ElapsedTime);
                     }
-                );
+                    blurredLyricsDs.DrawImage(
+                        new GaussianBlurEffect
+                        {
+                            Source = glowedLyrics,
+                            BlurAmount = line.BlurAmountTransition.Value,
+                            Optimization = EffectOptimization.Quality,
+                            BorderMode = EffectBorderMode.Hard,
+                        }
+                    );
+                }
+
+                ds.DrawImage(blurredLyrics);
 
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;

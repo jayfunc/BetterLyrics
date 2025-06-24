@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using System;
+using BetterLyrics.WinUI3.Enums;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -73,6 +74,8 @@ namespace BetterLyrics.WinUI3.Helper
         /// </summary>
         private T _targetValue;
 
+        private EasingType? _easingType;
+
         #endregion
 
         #region Constructors
@@ -86,7 +89,8 @@ namespace BetterLyrics.WinUI3.Helper
         public ValueTransition(
             T initialValue,
             float durationSeconds,
-            Func<T, T, float, T> interpolator
+            Func<T, T, float, T> interpolator = null,
+            EasingType? easingType = null
         )
         {
             _currentValue = initialValue;
@@ -95,7 +99,22 @@ namespace BetterLyrics.WinUI3.Helper
             _durationSeconds = durationSeconds;
             _progress = 1f;
             _isTransitioning = false;
-            _interpolator = interpolator;
+
+            if (interpolator != null)
+            {
+                _interpolator = interpolator;
+                _easingType = null;
+            }
+            else if (easingType.HasValue)
+            {
+                _easingType = easingType;
+                _interpolator = GetInterpolatorByEasingType(easingType.Value);
+            }
+            else
+            {
+                _interpolator = GetInterpolatorByEasingType(EasingType.Linear);
+                _easingType = EasingType.Linear;
+            }
         }
 
         #endregion
@@ -115,6 +134,42 @@ namespace BetterLyrics.WinUI3.Helper
         #endregion
 
         #region Methods
+
+        private Func<T, T, float, T> GetInterpolatorByEasingType(EasingType type)
+        {
+            // 这里只以float为例，实际可根据T类型扩展
+            if (typeof(T) == typeof(float))
+            {
+                return (start, end, progress) =>
+                {
+                    float s = (float)(object)start;
+                    float e = (float)(object)end;
+                    float t = progress;
+                    switch (type)
+                    {
+                        case EasingType.EaseInOutQuad:
+                            t = EasingHelper.EaseInOutQuad(t);
+                            break;
+                        case EasingType.EaseInQuad:
+                            t = EasingHelper.EaseInQuad(t);
+                            break;
+                        case EasingType.EaseOutQuad:
+                            t = EasingHelper.EaseOutQuad(t);
+                            break;
+                        case EasingType.Linear:
+                            t = EasingHelper.Linear(t);
+                            break;
+                        case EasingType.SmootherStep:
+                            t = EasingHelper.SmootherStep(t);
+                            break;
+                        default:
+                            break;
+                    }
+                    return (T)(object)(s + (e - s) * t);
+                };
+            }
+            throw new NotSupportedException("当前类型未实现默认缓动插值");
+        }
 
         /// <summary>
         /// The Reset

@@ -211,7 +211,7 @@ namespace BetterLyrics.WinUI3.Services
             int dist1 = LevenshteinDistance(normFile, normTarget1);
             int dist2 = LevenshteinDistance(normFile, normTarget2);
 
-            return dist1 <= 3 || dist2 <= 3; // 阈值可调整
+            return dist1 <= 2 || dist2 <= 2; // 阈值可调整
         }
 
         /// <summary>
