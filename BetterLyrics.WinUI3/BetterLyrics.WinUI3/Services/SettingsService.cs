@@ -1,12 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
 using Microsoft.UI.Xaml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services
@@ -202,7 +202,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
             SetDefault(LyricsVerticalEdgeOpacityKey, 0);
             SetDefault(IsLyricsGlowEffectEnabledKey, true);
-            SetDefault(LyricsGlowEffectScopeKey, (int)LyricsGlowEffectScope.CurrentChar);
+            SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.CurrentCharOnly);
         }
 
         #endregion
@@ -212,52 +212,92 @@ namespace BetterLyrics.WinUI3.Services
         /// <summary>
         /// Gets or sets the AutoStartWindowType
         /// </summary>
-        public AutoStartWindowType AutoStartWindowType { get => (AutoStartWindowType)GetValue<int>(AutoStartWindowTypeKey); set => SetValue(AutoStartWindowTypeKey, (int)value); }
+        public AutoStartWindowType AutoStartWindowType
+        {
+            get => (AutoStartWindowType)GetValue<int>(AutoStartWindowTypeKey);
+            set => SetValue(AutoStartWindowTypeKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the BackdropType
         /// </summary>
-        public BackdropType BackdropType { get => (BackdropType)GetValue<int>(BackdropTypeKey); set => SetValue(BackdropTypeKey, (int)value); }
+        public BackdropType BackdropType
+        {
+            get => (BackdropType)GetValue<int>(BackdropTypeKey);
+            set => SetValue(BackdropTypeKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the CoverImageRadius
         /// </summary>
-        public int CoverImageRadius { get => GetValue<int>(CoverImageRadiusKey); set => SetValue(CoverImageRadiusKey, value); }
+        public int CoverImageRadius
+        {
+            get => GetValue<int>(CoverImageRadiusKey);
+            set => SetValue(CoverImageRadiusKey, value);
+        }
 
         /// <summary>
         /// Gets or sets the CoverOverlayBlurAmount
         /// </summary>
-        public int CoverOverlayBlurAmount { get => GetValue<int>(CoverOverlayBlurAmountKey); set => SetValue(CoverOverlayBlurAmountKey, value); }
+        public int CoverOverlayBlurAmount
+        {
+            get => GetValue<int>(CoverOverlayBlurAmountKey);
+            set => SetValue(CoverOverlayBlurAmountKey, value);
+        }
 
         /// <summary>
         /// Gets or sets the CoverOverlayOpacity
         /// </summary>
-        public int CoverOverlayOpacity { get => GetValue<int>(CoverOverlayOpacityKey); set => SetValue(CoverOverlayOpacityKey, value); }
+        public int CoverOverlayOpacity
+        {
+            get => GetValue<int>(CoverOverlayOpacityKey);
+            set => SetValue(CoverOverlayOpacityKey, value);
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsCoverOverlayEnabled
         /// </summary>
-        public bool IsCoverOverlayEnabled { get => GetValue<bool>(IsCoverOverlayEnabledKey); set => SetValue(IsCoverOverlayEnabledKey, value); }
+        public bool IsCoverOverlayEnabled
+        {
+            get => GetValue<bool>(IsCoverOverlayEnabledKey);
+            set => SetValue(IsCoverOverlayEnabledKey, value);
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsDynamicCoverOverlayEnabled
         /// </summary>
-        public bool IsDynamicCoverOverlayEnabled { get => GetValue<bool>(IsDynamicCoverOverlayEnabledKey); set => SetValue(IsDynamicCoverOverlayEnabledKey, value); }
+        public bool IsDynamicCoverOverlayEnabled
+        {
+            get => GetValue<bool>(IsDynamicCoverOverlayEnabledKey);
+            set => SetValue(IsDynamicCoverOverlayEnabledKey, value);
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsFirstRun
         /// </summary>
-        public bool IsFirstRun { get => GetValue<bool>(IsFirstRunKey); set => SetValue(IsFirstRunKey, value); }
+        public bool IsFirstRun
+        {
+            get => GetValue<bool>(IsFirstRunKey);
+            set => SetValue(IsFirstRunKey, value);
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether IsLyricsGlowEffectEnabled
         /// </summary>
-        public bool IsLyricsGlowEffectEnabled { get => GetValue<bool>(IsLyricsGlowEffectEnabledKey); set => SetValue(IsLyricsGlowEffectEnabledKey, value); }
+        public bool IsLyricsGlowEffectEnabled
+        {
+            get => GetValue<bool>(IsLyricsGlowEffectEnabledKey);
+            set => SetValue(IsLyricsGlowEffectEnabledKey, value);
+        }
 
         /// <summary>
         /// Gets or sets the Language
         /// </summary>
-        public Language Language { get => (Language)GetValue<int>(LanguageKey); set => SetValue(LanguageKey, (int)value); }
+        public Language Language
+        {
+            get => (Language)GetValue<int>(LanguageKey);
+            set => SetValue(LanguageKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the LocalLyricsFolders
@@ -268,7 +308,8 @@ namespace BetterLyrics.WinUI3.Services
                 System.Text.Json.JsonSerializer.Deserialize(
                     GetValue<string>(LocalLyricsFoldersKey) ?? "[]",
                     SourceGenerationContext.Default.ListLocalLyricsFolder
-                )!; set =>
+                )!;
+            set =>
                 SetValue(
                     LocalLyricsFoldersKey,
                     System.Text.Json.JsonSerializer.Serialize(
@@ -281,37 +322,65 @@ namespace BetterLyrics.WinUI3.Services
         /// <summary>
         /// Gets or sets the LyricsAlignmentType
         /// </summary>
-        public LyricsAlignmentType LyricsAlignmentType { get => (LyricsAlignmentType)GetValue<int>(LyricsAlignmentTypeKey); set => SetValue(LyricsAlignmentTypeKey, (int)value); }
+        public LyricsAlignmentType LyricsAlignmentType
+        {
+            get => (LyricsAlignmentType)GetValue<int>(LyricsAlignmentTypeKey);
+            set => SetValue(LyricsAlignmentTypeKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the LyricsBlurAmount
         /// </summary>
-        public int LyricsBlurAmount { get => GetValue<int>(LyricsBlurAmountKey); set => SetValue(LyricsBlurAmountKey, value); }
+        public int LyricsBlurAmount
+        {
+            get => GetValue<int>(LyricsBlurAmountKey);
+            set => SetValue(LyricsBlurAmountKey, value);
+        }
 
         /// <summary>
         /// Gets or sets the LyricsFontColorType
         /// </summary>
-        public LyricsFontColorType LyricsFontColorType { get => (LyricsFontColorType)GetValue<int>(LyricsFontColorTypeKey); set => SetValue(LyricsFontColorTypeKey, (int)value); }
+        public LyricsFontColorType LyricsFontColorType
+        {
+            get => (LyricsFontColorType)GetValue<int>(LyricsFontColorTypeKey);
+            set => SetValue(LyricsFontColorTypeKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the LyricsFontSize
         /// </summary>
-        public int LyricsFontSize { get => GetValue<int>(LyricsFontSizeKey); set => SetValue(LyricsFontSizeKey, value); }
+        public int LyricsFontSize
+        {
+            get => GetValue<int>(LyricsFontSizeKey);
+            set => SetValue(LyricsFontSizeKey, value);
+        }
 
         /// <summary>
         /// Gets or sets the LyricsFontWeight
         /// </summary>
-        public LyricsFontWeight LyricsFontWeight { get => (LyricsFontWeight)GetValue<int>(LyricsFontWeightKey); set => SetValue(LyricsFontWeightKey, (int)value); }
+        public LyricsFontWeight LyricsFontWeight
+        {
+            get => (LyricsFontWeight)GetValue<int>(LyricsFontWeightKey);
+            set => SetValue(LyricsFontWeightKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the LyricsGlowEffectScope
         /// </summary>
-        public LyricsGlowEffectScope LyricsGlowEffectScope { get => (LyricsGlowEffectScope)GetValue<int>(LyricsGlowEffectScopeKey); set => SetValue(LyricsGlowEffectScopeKey, (int)value); }
+        public LineRenderingType LyricsGlowEffectScope
+        {
+            get => (LineRenderingType)GetValue<int>(LyricsGlowEffectScopeKey);
+            set => SetValue(LyricsGlowEffectScopeKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the LyricsLineSpacingFactor
         /// </summary>
-        public float LyricsLineSpacingFactor { get => GetValue<float>(LyricsLineSpacingFactorKey); set => SetValue(LyricsLineSpacingFactorKey, value); }
+        public float LyricsLineSpacingFactor
+        {
+            get => GetValue<float>(LyricsLineSpacingFactorKey);
+            set => SetValue(LyricsLineSpacingFactorKey, value);
+        }
 
         /// <summary>
         /// Gets or sets the LyricsSearchProvidersInfo
@@ -322,7 +391,8 @@ namespace BetterLyrics.WinUI3.Services
                 System.Text.Json.JsonSerializer.Deserialize(
                     GetValue<string>(LyricsSearchProvidersInfoKey) ?? "[]",
                     SourceGenerationContext.Default.ListLyricsSearchProviderInfo
-                )!; set =>
+                )!;
+            set =>
                 SetValue(
                     LyricsSearchProvidersInfoKey,
                     System.Text.Json.JsonSerializer.Serialize(
@@ -335,17 +405,29 @@ namespace BetterLyrics.WinUI3.Services
         /// <summary>
         /// Gets or sets the LyricsVerticalEdgeOpacity
         /// </summary>
-        public int LyricsVerticalEdgeOpacity { get => GetValue<int>(LyricsVerticalEdgeOpacityKey); set => SetValue(LyricsVerticalEdgeOpacityKey, value); }
+        public int LyricsVerticalEdgeOpacity
+        {
+            get => GetValue<int>(LyricsVerticalEdgeOpacityKey);
+            set => SetValue(LyricsVerticalEdgeOpacityKey, value);
+        }
 
         /// <summary>
         /// Gets or sets the ThemeType
         /// </summary>
-        public ElementTheme ThemeType { get => (ElementTheme)GetValue<int>(ThemeTypeKey); set => SetValue(ThemeTypeKey, (int)value); }
+        public ElementTheme ThemeType
+        {
+            get => (ElementTheme)GetValue<int>(ThemeTypeKey);
+            set => SetValue(ThemeTypeKey, (int)value);
+        }
 
         /// <summary>
         /// Gets or sets the TitleBarType
         /// </summary>
-        public TitleBarType TitleBarType { get => (TitleBarType)GetValue<int>(TitleBarTypeKey); set => SetValue(TitleBarTypeKey, (int)value); }
+        public TitleBarType TitleBarType
+        {
+            get => (TitleBarType)GetValue<int>(TitleBarTypeKey);
+            set => SetValue(TitleBarTypeKey, (int)value);
+        }
 
         #endregion
 

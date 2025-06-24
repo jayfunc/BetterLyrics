@@ -13,7 +13,6 @@
         <canvas:CanvasAnimatedControl
             x:Name="LyricsCanvas"
             Draw="LyricsCanvas_Draw"
-            Loaded="LyricsCanvas_Loaded"
             Update="LyricsCanvas_Update" />
     </Grid>
 </UserControl>

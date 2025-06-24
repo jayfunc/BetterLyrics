@@ -85,7 +85,7 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
         /// </summary>
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial LyricsGlowEffectScope LyricsGlowEffectScope { get; set; }
+        public partial LineRenderingType LyricsGlowEffectScope { get; set; }
 
         /// <summary>
         /// Gets or sets the LyricsLineSpacingFactor
@@ -162,8 +162,8 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
         /// <summary>
         /// The OnLyricsGlowEffectScopeChanged
         /// </summary>
-        /// <param name="value">The value<see cref="LyricsGlowEffectScope"/></param>
-        partial void OnLyricsGlowEffectScopeChanged(LyricsGlowEffectScope value)
+        /// <param name="value">The value<see tef="LyricsGlowEffectScope"/></param>
+        partial void OnLyricsGlowEffectScopeChanged(LineRenderingType value)
         {
             _settingsService?.LyricsGlowEffectScope = value;
         }

@@ -1,8 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using ATL;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,6 +7,9 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ATL;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 
@@ -232,11 +232,11 @@ namespace BetterLyrics.WinUI3.Services
             for (int j = 0; j <= b.Length; j++)
                 d[0, j] = j;
             for (int i = 1; i <= a.Length; i++)
-                for (int j = 1; j <= b.Length; j++)
-                    d[i, j] = Math.Min(
-                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                        d[i - 1, j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)
-                    );
+            for (int j = 1; j <= b.Length; j++)
+                d[i, j] = Math.Min(
+                    Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                    d[i - 1, j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)
+                );
             return d[a.Length, b.Length];
         }
 
@@ -340,7 +340,8 @@ namespace BetterLyrics.WinUI3.Services
                         if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
                             //Track track = new(file);
-                            //var plain = track.Lyrics.UnsynchronizedLyrics;
+                            //var test1 = track.Lyrics.SynchronizedLyrics;
+                            //var test2 = track.Lyrics.UnsynchronizedLyrics;
 
                             try
                             {

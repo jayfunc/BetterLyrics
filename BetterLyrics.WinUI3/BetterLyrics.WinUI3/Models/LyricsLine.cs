@@ -1,9 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
 using System.Collections.Generic;
 using System.Numerics;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
+using Microsoft.Graphics.Canvas.Text;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -13,6 +14,8 @@ namespace BetterLyrics.WinUI3.Models
     public class LyricsLine
     {
         #region Properties
+
+        public CanvasTextLayout? CanvasTextLayout { get; set; }
 
         /// <summary>
         /// Gets or sets the CenterPosition
@@ -78,33 +81,6 @@ namespace BetterLyrics.WinUI3.Models
         /// Gets or sets the Text
         /// </summary>
         public string Text { get; set; } = "";
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The Clone
-        /// </summary>
-        /// <returns>The <see cref="LyricsLine"/></returns>
-        public LyricsLine Clone()
-        {
-            return new LyricsLine
-            {
-                Text = this.Text,
-                CharTimings = this.CharTimings,
-                StartMs = this.StartMs,
-                EndMs = this.EndMs,
-                PlayingState = this.PlayingState,
-                EnteringProgress = this.EnteringProgress,
-                ExitingProgress = this.ExitingProgress,
-                PlayingProgress = this.PlayingProgress,
-                Position = this.Position,
-                CenterPosition = this.CenterPosition,
-                Scale = this.Scale,
-                Opacity = this.Opacity,
-            };
-        }
 
         #endregion
     }
