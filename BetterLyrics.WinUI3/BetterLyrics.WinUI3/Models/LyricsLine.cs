@@ -82,6 +82,9 @@ namespace BetterLyrics.WinUI3.Models
         /// </summary>
         public string Text { get; set; } = "";
 
+        public ValueTransition<float> BlurAmountTransition { get; set; } =
+            new(initialValue: 0f, durationSeconds: 0.3f);
+
         #endregion
     }
 }
