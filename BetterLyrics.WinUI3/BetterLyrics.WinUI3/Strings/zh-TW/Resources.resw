@@ -411,6 +411,9 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>停靠模式</value>
   </data>
+  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>字體粗細</value>
   </data>
@@ -485,5 +488,8 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>該文件夾包含已添加文件夾，請刪除這些文件夾以添加該文件夾</value>
+  </data>
+  <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
+    <value>amll-ttml-db</value>
   </data>
 </root>

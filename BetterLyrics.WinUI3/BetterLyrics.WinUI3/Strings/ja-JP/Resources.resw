@@ -411,6 +411,9 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>ドックモード</value>
   </data>
+  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>フォント重量</value>
   </data>
@@ -485,5 +488,8 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>このフォルダーには追加されたフォルダーが含まれています。これらのフォルダを削除してフォルダーを追加してください</value>
+  </data>
+  <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
+    <value>amll-ttml-db</value>
   </data>
 </root>

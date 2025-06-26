@@ -1,5 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -11,9 +14,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -198,6 +198,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                         PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToDockMode;
                     }
                     TrySwitchToPreferredDisplayType(SongInfo);
+                }
+                else if (message.PropertyName == nameof(HostWindowViewModel.IsDesktopMode))
+                {
+                    if (message.NewValue) { }
+                    else { }
                 }
             }
         }

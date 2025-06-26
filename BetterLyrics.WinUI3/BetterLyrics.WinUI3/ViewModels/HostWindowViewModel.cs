@@ -1,5 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
+using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -7,17 +9,17 @@ using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
-using System;
-using System.Threading.Tasks;
 using Windows.UI;
 using WinRT.Interop;
 using WinUIEx;
+using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3
 {
@@ -104,6 +106,10 @@ namespace BetterLyrics.WinUI3
         [NotifyPropertyChangedRecipients]
         public partial bool IsDockMode { get; set; } = false;
 
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsDesktopMode { get; set; } = false;
+
         /// <summary>
         /// Gets or sets the Notification
         /// </summary>
@@ -175,7 +181,7 @@ namespace BetterLyrics.WinUI3
                 {
                     if (IsDockMode)
                     {
-                        DockHelper.UpdateAppBarHeight(
+                        DockModeHelper.UpdateAppBarHeight(
                             WindowNative.GetWindowHandle(
                                 WindowHelper.GetWindowByFramePageType(FramePageType)
                             ),
@@ -253,15 +259,6 @@ namespace BetterLyrics.WinUI3
         }
 
         /// <summary>
-        /// The SwitchInfoBarNeverShowItAgainCheckBox
-        /// </summary>
-        /// <param name="value">The value<see cref="bool"/></param>
-        [RelayCommand]
-        private void SwitchInfoBarNeverShowItAgainCheckBox(bool value)
-        {
-        }
-
-        /// <summary>
         /// The ToggleDockMode
         /// </summary>
         [RelayCommand]
@@ -272,13 +269,33 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
-                DockHelper.Enable(window, _settingsService.LyricsFontSize * 3);
+                DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 3);
                 StartWatchWindowColorChange();
             }
             else
             {
-                DockHelper.Disable(window);
+                DockModeHelper.Disable(window);
                 StopWatchWindowColorChange();
+            }
+        }
+
+        [RelayCommand]
+        private void ToggleDesktopMode()
+        {
+            var window = WindowHelper.GetWindowByFramePageType(FramePageType);
+
+            IsDesktopMode = !IsDesktopMode;
+            if (IsDesktopMode)
+            {
+                DesktopModeHelper.Enable(window);
+                WindowHelper.GetWindowByFramePageType(typeof(LyricsPage)).SystemBackdrop =
+                    SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
+            }
+            else
+            {
+                DesktopModeHelper.Disable(window);
+                WindowHelper.GetWindowByFramePageType(typeof(LyricsPage)).SystemBackdrop =
+                    SystemBackdropHelper.CreateSystemBackdrop(_settingsService.BackdropType);
             }
         }
 

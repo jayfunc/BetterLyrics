@@ -202,7 +202,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
             SetDefault(LyricsVerticalEdgeOpacityKey, 0);
             SetDefault(IsLyricsGlowEffectEnabledKey, true);
-            SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.CurrentCharOnly);
+            SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.UntilCurrentChar);
         }
 
         #endregion

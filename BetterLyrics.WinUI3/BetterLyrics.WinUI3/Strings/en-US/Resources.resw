@@ -411,6 +411,9 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>Dock mode</value>
   </data>
+  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>Desktop mode</value>
+  </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Font weight</value>
   </data>
@@ -485,5 +488,8 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>This folder contains added folders, please delete these folders to add the folder</value>
+  </data>
+  <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
+    <value>amll-ttml-db</value>
   </data>
 </root>

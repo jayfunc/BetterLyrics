@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Numerics;
-using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using Microsoft.Graphics.Canvas.Text;
 
@@ -15,6 +14,15 @@ namespace BetterLyrics.WinUI3.Models
     {
         #region Properties
 
+        /// <summary>
+        /// Gets or sets the BlurAmountTransition
+        /// </summary>
+        public ValueTransition<float> BlurAmountTransition { get; set; } =
+            new(initialValue: 0f, durationSeconds: 0.3f);
+
+        /// <summary>
+        /// Gets or sets the CanvasTextLayout
+        /// </summary>
         public CanvasTextLayout? CanvasTextLayout { get; set; }
 
         /// <summary>
@@ -37,30 +45,8 @@ namespace BetterLyrics.WinUI3.Models
         /// </summary>
         public int EndMs { get; set; }
 
-        /// <summary>
-        /// Gets or sets the EnteringProgress
-        /// </summary>
-        public float EnteringProgress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the ExitingProgress
-        /// </summary>
-        public float ExitingProgress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Opacity
-        /// </summary>
-        public float Opacity { get; set; }
-
-        /// <summary>
-        /// Gets or sets the PlayingProgress
-        /// </summary>
-        public float PlayingProgress { get; set; }
-
-        /// <summary>
-        /// Gets or sets the PlayingState
-        /// </summary>
-        public LyricsPlayingState PlayingState { get; set; }
+        public ValueTransition<float> HighlightOpacityTransition { get; set; } =
+            new(initialValue: 0f, durationSeconds: 0.3f);
 
         /// <summary>
         /// Gets or sets the Position
@@ -68,9 +54,10 @@ namespace BetterLyrics.WinUI3.Models
         public Vector2 Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the Scale
+        /// Gets or sets the ScaleTransition
         /// </summary>
-        public float Scale { get; set; }
+        public ValueTransition<float> ScaleTransition { get; set; } =
+            new(initialValue: 0.95f, durationSeconds: 0.3f);
 
         /// <summary>
         /// Gets or sets the StartMs
@@ -81,9 +68,6 @@ namespace BetterLyrics.WinUI3.Models
         /// Gets or sets the Text
         /// </summary>
         public string Text { get; set; } = "";
-
-        public ValueTransition<float> BlurAmountTransition { get; set; } =
-            new(initialValue: 0f, durationSeconds: 0.3f);
 
         #endregion
     }

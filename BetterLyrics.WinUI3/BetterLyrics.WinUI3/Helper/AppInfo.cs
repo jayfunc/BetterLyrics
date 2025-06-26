@@ -78,8 +78,14 @@ namespace BetterLyrics.WinUI3.Helper
         /// <summary>
         /// Gets the OnlineLyricsCacheDirectory
         /// </summary>
-        public static string OnlineLyricsCacheDirectory =>
-            Path.Combine(CacheFolder, "online-lyrics");
+        public static string LrcLibLyricsCacheDirectory =>
+            Path.Combine(CacheFolder, "lrclib-lyrics");
+
+        public static string AmllTtmlDbLyricsCacheDirectory =>
+            Path.Combine(CacheFolder, "amll-ttml-db-lyrics");
+
+        public static string AmllTtmlDbIndexPath =>
+            Path.Combine(CacheFolder, "amll-ttml-db-index.json");
 
         /// <summary>
         /// Gets the TestMusicPath
@@ -109,7 +115,8 @@ namespace BetterLyrics.WinUI3.Helper
         {
             Directory.CreateDirectory(LocalFolder);
             Directory.CreateDirectory(LogDirectory);
-            Directory.CreateDirectory(OnlineLyricsCacheDirectory);
+            Directory.CreateDirectory(LrcLibLyricsCacheDirectory);
+            Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
         }
 
         #endregion
