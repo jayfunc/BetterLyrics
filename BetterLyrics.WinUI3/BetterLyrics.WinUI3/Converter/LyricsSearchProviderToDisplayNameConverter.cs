@@ -1,8 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
 using BetterLyrics.WinUI3.Enums;
 using Microsoft.UI.Xaml.Data;
-using System;
 
 namespace BetterLyrics.WinUI3.Converter
 {
@@ -27,14 +27,17 @@ namespace BetterLyrics.WinUI3.Converter
             {
                 return provider switch
                 {
+                    LyricsSearchProvider.LrcLib => App.ResourceLoader!.GetString(
+                        "LyricsSearchProviderLrcLib"
+                    ),
+                    //LyricsSearchProvider.AmllTtmlDb => App.ResourceLoader!.GetString(
+                    //    "LyricsSearchProviderAmllTtmlDb"
+                    //),
                     LyricsSearchProvider.LocalLrcFile => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderLocalLrcFile"
                     ),
                     LyricsSearchProvider.LocalMusicFile => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderLocalMusicFile"
-                    ),
-                    LyricsSearchProvider.LrcLib => App.ResourceLoader!.GetString(
-                        "LyricsSearchProviderLrcLib"
                     ),
                     LyricsSearchProvider.LocalEslrcFile => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderEslrcFile"

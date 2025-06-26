@@ -32,21 +32,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     /// <summary>
     /// Defines the <see cref="LyricsRendererViewModel" />
     /// </summary>
-    public partial class LyricsRendererViewModel
-        : BaseViewModel,
-            IRecipient<PropertyChangedMessage<int>>,
-            IRecipient<PropertyChangedMessage<float>>,
-            IRecipient<PropertyChangedMessage<double>>,
-            IRecipient<PropertyChangedMessage<bool>>,
-            IRecipient<PropertyChangedMessage<Color>>,
-            IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
-            IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
-            IRecipient<PropertyChangedMessage<LyricsAlignmentType>>,
-            IRecipient<PropertyChangedMessage<ElementTheme>>,
-            IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
-            IRecipient<PropertyChangedMessage<LineRenderingType>>,
-            IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
-            IRecipient<PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>>>
+    public partial class LyricsRendererViewModel : BaseViewModel
     {
         #region Fields
 
@@ -80,7 +66,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <summary>
         /// Defines the _defaultScale
         /// </summary>
-        private readonly float _defaultScale = 0.95f;
+        private readonly float _defaultScale = 0.75f;
 
         /// <summary>
         /// Defines the _highlightedOpacity
@@ -95,7 +81,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <summary>
         /// Defines the _immersiveBgrTransition
         /// </summary>
-        private readonly ValueTransition<Color> _immersiveBgrTransition = new(
+        private readonly ValueTransition<Color> _immersiveBgTransition = new(
             initialValue: Colors.Transparent,
             durationSeconds: 0.3f,
             interpolator: (from, to, progress) =>
@@ -115,16 +101,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             durationSeconds: 0.8f,
             interpolator: (from, to, progress) => to
         );
-
-        /// <summary>
-        /// Defines the _lineEnteringDurationMs
-        /// </summary>
-        private readonly int _lineEnteringDurationMs = 800;
-
-        /// <summary>
-        /// Defines the _lineExitingDurationMs
-        /// </summary>
-        private readonly int _lineExitingDurationMs = 800;
 
         /// <summary>
         /// Defines the _lyricsGlowEffectAmount
@@ -400,872 +376,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         #region Methods
 
         /// <summary>
-        /// The Draw
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
-        {
-            if (IsCoverOverlayEnabled)
-            {
-                DrawAlbumArtBackground(control, ds);
-            }
-
-            if (IsDockMode)
-            {
-                DrawImmersiveBackground(control, ds, IsCoverOverlayEnabled);
-            }
-
-            // Original lyrics only layer
-            using var blurredLyrics = new CanvasCommandList(control);
-            using (var blurredLyricsDs = blurredLyrics.CreateDrawingSession())
-            {
-                switch (DisplayType)
-                {
-                    case LyricsDisplayType.AlbumArtOnly:
-                    case LyricsDisplayType.PlaceholderOnly:
-                        break;
-                    case LyricsDisplayType.LyricsOnly:
-                    case LyricsDisplayType.SplitView:
-                        DrawLyrics(control, blurredLyricsDs, LineRenderingType.UntilCurrentChar);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            // Masked mock gradient blurred lyrics layer
-            using var maskedBlurredLyrics = new CanvasCommandList(control);
-            using (var maskedBlurredLyricsDs = maskedBlurredLyrics.CreateDrawingSession())
-            {
-                if (LyricsVerticalEdgeOpacity == 100)
-                {
-                    maskedBlurredLyricsDs.DrawImage(blurredLyrics);
-                }
-                else
-                {
-                    using var mask = new CanvasCommandList(control);
-                    using (var maskDs = mask.CreateDrawingSession())
-                    {
-                        DrawGradientOpacityMask(control, maskDs);
-                    }
-                    maskedBlurredLyricsDs.DrawImage(
-                        new AlphaMaskEffect { Source = blurredLyrics, AlphaMask = mask }
-                    );
-                }
-            }
-
-            // Draw the final composed layer
-            ds.DrawImage(maskedBlurredLyrics);
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{ObservableCollection{LyricsSearchProviderInfo}}"/></param>
-        public void Receive(
-            PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>> message
-        )
-        {
-            if (message.Sender is SettingsViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsViewModel.LyricsSearchProvidersInfo))
-                {
-                    // Lyrics search providers info changed, re-fetch lyrics
-                    RefreshLyricsAsync().ConfigureAwait(true);
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{bool}"/></param>
-        public void Receive(PropertyChangedMessage<bool> message)
-        {
-            if (message.Sender is SettingsViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsViewModel.IsDynamicCoverOverlayEnabled))
-                {
-                    IsDynamicCoverOverlayEnabled = message.NewValue;
-                }
-                else if (message.PropertyName == nameof(SettingsViewModel.IsCoverOverlayEnabled))
-                {
-                    IsCoverOverlayEnabled = message.NewValue;
-                }
-            }
-            else if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled)
-                )
-                {
-                    IsLyricsGlowEffectEnabled = message.NewValue;
-                }
-            }
-            else if (message.Sender is HostWindowViewModel)
-            {
-                if (message.PropertyName == nameof(HostWindowViewModel.IsDockMode))
-                {
-                    IsDockMode = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{Color}"/></param>
-        public void Receive(PropertyChangedMessage<Color> message)
-        {
-            if (message.Sender is HostWindowViewModel)
-            {
-                if (message.PropertyName == nameof(HostWindowViewModel.ActivatedWindowAccentColor))
-                {
-                    _immersiveBgrTransition.StartTransition(message.NewValue);
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{double}"/></param>
-        public void Receive(PropertyChangedMessage<double> message)
-        {
-            if (message.Sender is LyricsPageViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsPageViewModel.LimitedLineWidth))
-                {
-                    _limitedLineWidthTransition.StartTransition((float)message.NewValue);
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{ElementTheme}"/></param>
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
-        {
-            if (message.Sender is SettingsViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsViewModel.ThemeType))
-                {
-                    Theme = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{float}"/></param>
-        public void Receive(PropertyChangedMessage<float> message)
-        {
-            if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsLineSpacingFactor)
-                )
-                {
-                    LyricsLineSpacingFactor = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{int}"/></param>
-        public void Receive(PropertyChangedMessage<int> message)
-        {
-            if (message.Sender is SettingsViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsViewModel.CoverImageRadius))
-                {
-                    CoverImageRadius = message.NewValue;
-                }
-                else if (message.PropertyName == nameof(SettingsViewModel.CoverOverlayOpacity))
-                {
-                    CoverOverlayOpacity = message.NewValue;
-                }
-                else if (message.PropertyName == nameof(SettingsViewModel.CoverOverlayBlurAmount))
-                {
-                    CoverOverlayBlurAmount = message.NewValue;
-                }
-            }
-            else if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsVerticalEdgeOpacity)
-                )
-                {
-                    LyricsVerticalEdgeOpacity = message.NewValue;
-                }
-                else if (
-                    message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsBlurAmount)
-                )
-                {
-                    LyricsBlurAmount = message.NewValue;
-                }
-                else if (
-                    message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize)
-                )
-                {
-                    LyricsFontSize = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{LyricsAlignmentType}"/></param>
-        public void Receive(PropertyChangedMessage<LyricsAlignmentType> message)
-        {
-            if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsAlignmentType)
-                )
-                {
-                    LyricsAlignmentType = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{LyricsDisplayType}"/></param>
-        public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
-        {
-            DisplayType = message.NewValue;
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{LyricsFontColorType}"/></param>
-        public void Receive(PropertyChangedMessage<LyricsFontColorType> message)
-        {
-            if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsFontColorType)
-                )
-                {
-                    LyricsFontColorType = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{LyricsFontWeight}"/></param>
-        public void Receive(PropertyChangedMessage<LyricsFontWeight> message)
-        {
-            if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontWeight))
-                {
-                    LyricsFontWeight = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{LyricsGlowEffectScope}"/></param>
-        public void Receive(PropertyChangedMessage<LineRenderingType> message)
-        {
-            if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsGlowEffectScope)
-                )
-                {
-                    LyricsGlowEffectScope = message.NewValue;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Receive
-        /// </summary>
-        /// <param name="message">The message<see cref="PropertyChangedMessage{ObservableCollection{LocalLyricsFolder}}"/></param>
-        public void Receive(PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message)
-        {
-            if (message.Sender is SettingsViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsViewModel.LocalLyricsFolders))
-                {
-                    // Music lib changed, re-fetch lyrics
-                    RefreshLyricsAsync().ConfigureAwait(true);
-                }
-            }
-        }
-
-        /// <summary>
-        /// The Update
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="args">The args<see cref="CanvasAnimatedUpdateEventArgs"/></param>
-        public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
-        {
-            if (_isPlaying)
-            {
-                TotalTime += args.Timing.ElapsedTime;
-            }
-
-            ElapsedTime = args.Timing.ElapsedTime;
-
-            if (_immersiveBgrTransition.IsTransitioning)
-            {
-                _immersiveBgrTransition.Update(ElapsedTime);
-            }
-
-            if (_albumArtBgTransition.IsTransitioning)
-            {
-                _albumArtBgTransition.Update(ElapsedTime);
-            }
-
-            if (IsDynamicCoverOverlayEnabled)
-            {
-                _rotateAngle += _coverRotateSpeed;
-                _rotateAngle %= MathF.PI * 2;
-            }
-
-            if (_limitedLineWidthTransition.IsTransitioning)
-            {
-                _limitedLineWidthTransition.Update(ElapsedTime);
-                _isRelayoutNeeded = true;
-            }
-
-            if (_isRelayoutNeeded)
-            {
-                ReLayout(control);
-                _isRelayoutNeeded = false;
-            }
-
-            UpdateLinesProps();
-            UpdateCanvasYScrollOffset(control);
-        }
-
-        /// <summary>
-        /// The DrawImgae
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        /// <param name="softwareBitmap">The softwareBitmap<see cref="SoftwareBitmap"/></param>
-        /// <param name="opacity">The opacity<see cref="float"/></param>
-        private static void DrawImgae(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds,
-            SoftwareBitmap softwareBitmap,
-            float opacity
-        )
-        {
-            using var canvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, softwareBitmap);
-            float imageWidth = (float)canvasBitmap.Size.Width;
-            float imageHeight = (float)canvasBitmap.Size.Height;
-
-            var scaleFactor =
-                (float)Math.Sqrt(Math.Pow(control.Size.Width, 2) + Math.Pow(control.Size.Height, 2))
-                / Math.Min(imageWidth, imageHeight);
-
-            ds.DrawImage(
-                new OpacityEffect
-                {
-                    Source = new ScaleEffect
-                    {
-                        InterpolationMode = CanvasImageInterpolation.HighQualityCubic,
-                        BorderMode = EffectBorderMode.Hard,
-                        Scale = new Vector2(scaleFactor),
-                        Source = canvasBitmap,
-                    },
-                    Opacity = opacity,
-                },
-                (float)control.Size.Width / 2 - imageWidth * scaleFactor / 2,
-                (float)control.Size.Height / 2 - imageHeight * scaleFactor / 2
-            );
-        }
-
-        /// <summary>
-        /// The DrawAlbumArtBackground
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
-        {
-            ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
-
-            var overlappedCovers = new CanvasCommandList(control.Device);
-            using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
-
-            if (_albumArtBgTransition.IsTransitioning)
-            {
-                if (_lastAlbumArtBitmap != null)
-                {
-                    DrawImgae(
-                        control,
-                        overlappedCoversDs,
-                        _lastAlbumArtBitmap,
-                        1 - _albumArtBgTransition.Value
-                    );
-                }
-                if (_albumArtBitmap != null)
-                {
-                    DrawImgae(
-                        control,
-                        overlappedCoversDs,
-                        _albumArtBitmap,
-                        _albumArtBgTransition.Value
-                    );
-                }
-            }
-            else if (_albumArtBitmap != null)
-            {
-                DrawImgae(control, overlappedCoversDs, _albumArtBitmap, 1f);
-            }
-
-            using var coverOverlayEffect = new OpacityEffect
-            {
-                Opacity = CoverOverlayOpacity / 100f,
-                Source = new GaussianBlurEffect
-                {
-                    BlurAmount = CoverOverlayBlurAmount,
-                    Source = overlappedCovers,
-                },
-            };
-            ds.DrawImage(coverOverlayEffect);
-
-            ds.Transform = Matrix3x2.Identity;
-        }
-
-        /// <summary>
-        /// The DrawGradientOpacityMask
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        private void DrawGradientOpacityMask(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds
-        )
-        {
-            byte verticalEdgeAlpha = (byte)(255 * LyricsVerticalEdgeOpacity / 100f);
-            using var maskBrush = new CanvasLinearGradientBrush(
-                control,
-                [
-                    new() { Position = 0, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
-                    new() { Position = 0.5f, Color = Color.FromArgb(255, 0, 0, 0) },
-                    new() { Position = 1, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
-                ]
-            )
-            {
-                StartPoint = new Vector2(0, 0),
-                EndPoint = new Vector2(0, (float)control.Size.Height),
-            };
-            ds.FillRectangle(new Rect(0, 0, control.Size.Width, control.Size.Height), maskBrush);
-        }
-
-        /// <summary>
-        /// The DrawImmersiveBackground
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        /// <param name="withGradient">The withGradient<see cref="bool"/></param>
-        private void DrawImmersiveBackground(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds,
-            bool withGradient
-        )
-        {
-            ds.FillRectangle(
-                new Rect(0, 0, control.Size.Width, control.Size.Height),
-                new CanvasLinearGradientBrush(
-                    control,
-                    [
-                        new CanvasGradientStop
-                        {
-                            Position = 0f,
-                            Color = withGradient
-                                ? Color.FromArgb(
-                                    211,
-                                    _immersiveBgrTransition.Value.R,
-                                    _immersiveBgrTransition.Value.G,
-                                    _immersiveBgrTransition.Value.B
-                                )
-                                : _immersiveBgrTransition.Value,
-                        },
-                        new CanvasGradientStop
-                        {
-                            Position = 1,
-                            Color = _immersiveBgrTransition.Value,
-                        },
-                    ]
-                )
-                {
-                    StartPoint = new Vector2(0, 0),
-                    EndPoint = new Vector2(0, (float)control.Size.Height),
-                }
-            );
-        }
-
-        /// <summary>
-        /// The DrawLyrics
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        /// <param name="currentLineHighlightType">The currentLineHighlightType<see cref="LyricsHighlightType"/></param>
-        private void DrawLyrics(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds,
-            LineRenderingType currentLineHighlightType
-        )
-        {
-            var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
-
-            for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
-            {
-                var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
-
-                if (line == null)
-                {
-                    continue;
-                }
-
-                var textLayout = line.CanvasTextLayout;
-
-                if (textLayout == null)
-                {
-                    continue;
-                }
-
-                var position = new Vector2(line.Position.X, line.Position.Y);
-
-                float layoutWidth = (float)textLayout.LayoutBounds.Width;
-                float layoutHeight = (float)textLayout.LayoutBounds.Height;
-
-                if (layoutWidth <= 0 || layoutHeight <= 0)
-                {
-                    continue;
-                }
-
-                float centerX = position.X;
-                float centerY = position.Y + layoutHeight / 2;
-
-                switch (LyricsAlignmentType)
-                {
-                    case LyricsAlignmentType.Left:
-                        textLayout.HorizontalAlignment = CanvasHorizontalAlignment.Left;
-                        break;
-                    case LyricsAlignmentType.Center:
-                        textLayout.HorizontalAlignment = CanvasHorizontalAlignment.Center;
-                        centerX += (float)_limitedLineWidthTransition.Value / 2;
-                        break;
-                    case LyricsAlignmentType.Right:
-                        textLayout.HorizontalAlignment = CanvasHorizontalAlignment.Right;
-                        centerX += (float)_limitedLineWidthTransition.Value;
-                        break;
-                    default:
-                        break;
-                }
-
-                float offsetToLeft =
-                    (float)control.Size.Width - _rightMargin - _limitedLineWidthTransition.Value;
-
-                // Scale
-                ds.Transform =
-                    Matrix3x2.CreateScale(line.Scale, new Vector2(centerX, centerY))
-                    * Matrix3x2.CreateTranslation(
-                        offsetToLeft,
-                        _canvasYScrollTransition.Value + (float)(control.Size.Height / 2)
-                    );
-
-                // Create the original lyrics line
-                using var pureLyricsLine = new CanvasCommandList(control);
-                using (var pureLyricsLineDs = pureLyricsLine.CreateDrawingSession())
-                {
-                    pureLyricsLineDs.DrawTextLayout(textLayout, position, _fontColor);
-                }
-
-                using var glowedLyrics = new CanvasCommandList(control);
-                using (var lyricsDs = glowedLyrics.CreateDrawingSession())
-                {
-                    // Create and draw glow (shadow) effect
-                    if (IsLyricsGlowEffectEnabled)
-                    {
-                        lyricsDs.DrawImage(
-                            new ShadowEffect
-                            {
-                                Source = new AlphaMaskEffect
-                                {
-                                    Source = pureLyricsLine,
-                                    AlphaMask = CreateLineMask(
-                                        control,
-                                        line,
-                                        LyricsGlowEffectScope,
-                                        false
-                                    ),
-                                },
-                                BlurAmount = _lyricsGlowEffectAmount,
-                                ShadowColor = _fontColor,
-                                Optimization = EffectOptimization.Quality,
-                            }
-                        );
-                    }
-
-                    // Create and draw highlight (opacity changed) effect
-                    lyricsDs.DrawImage(
-                        new AlphaMaskEffect
-                        {
-                            Source = pureLyricsLine,
-                            AlphaMask = CreateLineMask(
-                                control,
-                                line,
-                                LineRenderingType.UntilCurrentChar,
-                                true
-                            ),
-                        }
-                    );
-                }
-
-                // Mock gradient blurred lyrics layer
-                using var blurredLyrics = new CanvasCommandList(control);
-                using var blurredLyricsDs = blurredLyrics.CreateDrawingSession();
-                if (LyricsBlurAmount == 0)
-                {
-                    blurredLyricsDs.DrawImage(glowedLyrics);
-                }
-                else
-                {
-                    int visibleLineCount = _endVisibleLineIndex - _startVisibleLineIndex + 1;
-                    int distanceFromPlayingLine = Math.Abs(i - currentPlayingLineIndex);
-
-                    line.BlurAmountTransition.StartTransition(
-                        LyricsBlurAmount * (distanceFromPlayingLine / (visibleLineCount / 2f))
-                    );
-                    if (line.BlurAmountTransition.IsTransitioning)
-                    {
-                        line.BlurAmountTransition.Update(ElapsedTime);
-                    }
-                    blurredLyricsDs.DrawImage(
-                        new GaussianBlurEffect
-                        {
-                            Source = glowedLyrics,
-                            BlurAmount = line.BlurAmountTransition.Value,
-                            Optimization = EffectOptimization.Quality,
-                            BorderMode = EffectBorderMode.Hard,
-                        }
-                    );
-                }
-
-                ds.DrawImage(blurredLyrics);
-
-                // Reset scale
-                ds.Transform = Matrix3x2.Identity;
-            }
-        }
-
-        private CanvasCommandList CreateLineMask(
-            ICanvasAnimatedControl control,
-            LyricsLine line,
-            LineRenderingType lineMaskType,
-            bool isUnhighlightedAreaVisible
-        )
-        {
-            var alphaMask = new CanvasCommandList(control);
-
-            var textLayout = line.CanvasTextLayout;
-            if (textLayout == null)
-            {
-                return alphaMask;
-            }
-
-            using (var ds = alphaMask.CreateDrawingSession())
-            {
-                // Current playing char index
-                int charIndex = (int)(line.PlayingProgress * line.Text.Length);
-                int totalCharCountBefore = 0;
-                foreach (var lineMatrix in textLayout.LineMetrics)
-                {
-                    int lineCharCount = lineMatrix.CharacterCount;
-
-                    var region = textLayout
-                        .GetCharacterRegions(totalCharCountBefore, lineCharCount)
-                        .FirstOrDefault();
-
-                    var lineWidth = region.LayoutBounds.Width;
-                    var lineHeight = region.LayoutBounds.Height;
-
-                    var lineLeft = (float)region.LayoutBounds.X;
-                    var lineTop = (float)region.LayoutBounds.Y + line.Position.Y;
-                    var lineRight = lineLeft + lineWidth;
-
-                    if (
-                        totalCharCountBefore <= charIndex
-                        && charIndex < totalCharCountBefore + lineCharCount
-                    )
-                    {
-                        var currentRegion = textLayout
-                            .GetCharacterRegions(charIndex, 1)
-                            .FirstOrDefault();
-                        var charPlayingProgress =
-                            line.PlayingProgress * line.Text.Length - charIndex;
-
-                        // 确保小于右边距
-                        float fadeSpacing = 18f;
-
-                        float currentCharWidth = (float)currentRegion.LayoutBounds.Width;
-
-                        float currentPlayingX = 0f;
-
-                        // 行首行尾增加 fadeSpacing 以完成完整的淡入淡出效果
-                        if (region.LayoutBounds.Left == currentRegion.LayoutBounds.Left)
-                        {
-                            currentCharWidth += fadeSpacing;
-                            currentPlayingX =
-                                lineLeft - fadeSpacing + currentCharWidth * charPlayingProgress;
-                        }
-                        else if (region.LayoutBounds.Right == currentRegion.LayoutBounds.Right)
-                        {
-                            currentCharWidth += fadeSpacing;
-                            currentPlayingX =
-                                (float)currentRegion.LayoutBounds.Left
-                                + currentCharWidth * charPlayingProgress;
-                        }
-                        else
-                        {
-                            currentPlayingX =
-                                (float)currentRegion.LayoutBounds.Left
-                                + currentCharWidth * charPlayingProgress;
-                        }
-
-                        float beforeFadeInX = lineLeft - fadeSpacing * 2;
-
-                        float beforePlayingOpacity = lineMaskType switch
-                        {
-                            LineRenderingType.UntilCurrentChar => line.Opacity,
-                            LineRenderingType.CurrentCharOnly => isUnhighlightedAreaVisible
-                                ? _defaultOpacity
-                                : 0,
-                            _ => line.Opacity,
-                        };
-
-                        // 画当前字符淡入之前部分（已播放）
-                        ds?.FillRectangle(
-                            new Rect(
-                                beforeFadeInX,
-                                lineTop,
-                                currentPlayingX - fadeSpacing - beforeFadeInX,
-                                lineHeight
-                            ),
-                            Color.FromArgb((byte)(255 * beforePlayingOpacity), 200, 0, 0)
-                        );
-
-                        float fadeInStartX = currentPlayingX - fadeSpacing;
-                        float fadeInEndX = currentPlayingX;
-
-                        // 画正处在高亮字符之前 fadeSpaing 距离的渐变部分（淡入）
-                        ds?.FillRectangle(
-                            new Rect(fadeInStartX, lineTop, fadeSpacing, lineHeight),
-                            GetHorizontalFillBrush(
-                                control,
-                                [(0f, beforePlayingOpacity), (1f, line.Opacity)],
-                                fadeInStartX,
-                                fadeInEndX
-                            )
-                        );
-
-                        float afterPlayingOpacity = isUnhighlightedAreaVisible
-                            ? _defaultOpacity
-                            : 0;
-
-                        float fadeOutStartX = currentPlayingX;
-                        float fadeOutEndX = fadeOutStartX + fadeSpacing;
-
-                        // 画正处在高亮之后 fadeSpaing 距离的渐变部分（淡出）
-                        ds?.FillRectangle(
-                            new Rect(fadeOutStartX, lineTop, fadeSpacing, lineHeight),
-                            GetHorizontalFillBrush(
-                                control,
-                                [(0f, line.Opacity), (1f, afterPlayingOpacity)],
-                                fadeOutStartX,
-                                fadeOutEndX
-                            )
-                        );
-
-                        // 画渐变之后透明度为 _defaultOpacity 的部分（未播放）
-                        ds?.FillRectangle(
-                            new Rect(
-                                fadeOutEndX,
-                                lineTop,
-                                lineRight + fadeSpacing * 2 - fadeOutEndX,
-                                lineHeight
-                            ),
-                            Color.FromArgb((byte)(255 * afterPlayingOpacity), 0, 200, 0)
-                        );
-                    }
-                    else
-                    {
-                        if (charIndex < totalCharCountBefore)
-                        {
-                            // 当前子行未播放
-                            float opacity = isUnhighlightedAreaVisible ? _defaultOpacity : 0;
-                            ds?.FillRectangle(
-                                new Rect(lineLeft, lineTop, lineWidth, lineHeight),
-                                Color.FromArgb((byte)(255 * opacity), 0, 200, 0)
-                            );
-                        }
-                        else
-                        {
-                            // 当前子行已完全播放
-                            float opacity = lineMaskType switch
-                            {
-                                LineRenderingType.UntilCurrentChar => line.Opacity,
-                                LineRenderingType.CurrentCharOnly => _defaultOpacity,
-                                _ => line.Opacity,
-                            };
-                            if (!isUnhighlightedAreaVisible)
-                            {
-                                switch (lineMaskType)
-                                {
-                                    case LineRenderingType.UntilCurrentChar:
-                                        opacity *=
-                                            (line.Opacity - _defaultOpacity)
-                                            / (_highlightedOpacity - _defaultOpacity);
-                                        break;
-                                    case LineRenderingType.CurrentCharOnly:
-                                        opacity = 0;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            ds?.FillRectangle(
-                                new Rect(lineLeft, lineTop, lineWidth, lineHeight),
-                                Color.FromArgb((byte)(255 * opacity), 200, 0, 0)
-                            );
-                        }
-                    }
-                    totalCharCountBefore += lineCharCount;
-                }
-            }
-
-            return alphaMask;
-        }
-
-        /// <summary>
         /// The GetCurrentPlayingLineIndex
         /// </summary>
         /// <returns>The <see cref="int"/></returns>
@@ -1274,50 +384,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             for (int i = 0; i < _multiLangLyrics.SafeGet(_langIndex)?.Count; i++)
             {
                 var line = _multiLangLyrics.SafeGet(_langIndex)?[i];
-                if (line?.EndMs < TotalTime.TotalMilliseconds)
+                if (line == null)
                 {
                     continue;
                 }
-                return i;
+                if (
+                    line.StartMs <= TotalTime.TotalMilliseconds
+                    && TotalTime.TotalMilliseconds <= line.EndMs
+                )
+                {
+                    return i;
+                }
             }
 
             return -1;
-        }
-
-        /// <summary>
-        /// The GetHorizontalFillBrush
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="stopPosition">The stopPosition<see cref="float[]"/></param>
-        /// <param name="stopOpacity">The stopOpacity<see cref="float[]"/></param>
-        /// <param name="startX">The startX<see cref="float"/></param>
-        /// <param name="endX">The endX<see cref="float"/></param>
-        /// <returns>The <see cref="CanvasLinearGradientBrush"/></returns>
-        private CanvasLinearGradientBrush GetHorizontalFillBrush(
-            ICanvasAnimatedControl control,
-            List<(float position, float opacity)> stops,
-            float startX,
-            float endX
-        )
-        {
-            var r = _fontColor.R;
-            var g = _fontColor.G;
-            var b = _fontColor.B;
-
-            return new CanvasLinearGradientBrush(
-                control,
-                stops
-                    .Select(stops => new CanvasGradientStop
-                    {
-                        Position = stops.position,
-                        Color = Color.FromArgb((byte)(stops.opacity * 255), r, g, b),
-                    })
-                    .ToArray()
-            )
-            {
-                StartPoint = new Vector2(startX, 0),
-                EndPoint = new Vector2(endX, 0),
-            };
         }
 
         /// <summary>
@@ -1325,59 +405,64 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// </summary>
         /// <param name="line">The line<see cref="LyricsLine"/></param>
         /// <returns>The <see cref="float"/></returns>
-        private float GetLinePlayingProgress(LyricsLine line)
+        private void GetLinePlayingProgress(
+            LyricsLine line,
+            out int charStartIndex,
+            out int charLength,
+            out float charProgress
+        )
         {
-            float playProgress = 0f;
-            int now = (int)TotalTime.TotalMilliseconds;
+            charStartIndex = 0;
+            charLength = 0;
+            charProgress = 0f;
 
+            float now = (float)TotalTime.TotalMilliseconds;
+
+            // 1. 还没到本句
+            if (now < line.StartMs)
+            {
+                return;
+            }
+
+            // 2. 已经超过本句
+            if (now > line.EndMs)
+            {
+                return;
+            }
+
+            // 3. 有逐字时间轴
             if (line.CharTimings != null && line.CharTimings.Count > 0)
             {
-                int charIndex = 0;
-                for (; charIndex < line.CharTimings.Count; charIndex++)
+                int charTimingsCount = line.CharTimings.Count;
+                for (int i = 0; i < charTimingsCount; i++)
                 {
-                    var timing = line.CharTimings[charIndex];
-                    if (now < timing.StartMs)
-                    {
-                        // 当前时间还没到这个字，停在上一个字
-                        break;
-                    }
+                    var timing = line.CharTimings[i];
+
+                    // 当前时间在某个字的高亮区间
                     if (now >= timing.StartMs && now <= timing.EndMs)
                     {
-                        float charProgress = 1f;
+                        charStartIndex = timing.StartIndex;
+                        charLength = timing.Text.Length;
                         if (timing.EndMs != timing.StartMs)
                         {
-                            charProgress =
-                                (now - timing.StartMs) / (float)(timing.EndMs - timing.StartMs);
+                            charProgress = (now - timing.StartMs) / (timing.EndMs - timing.StartMs);
                         }
-                        // 当前时间在这个字的高亮区间
-                        playProgress = charIndex + charProgress;
-                        playProgress /= line.CharTimings.Count;
-                        return playProgress;
+                        else
+                        {
+                            charProgress = 0f;
+                        }
+                        return;
                     }
-                }
-                // 如果超出最后一个字的结束时间
-                if (now > line.CharTimings[^1].EndMs)
-                {
-                    // 如果还没到行尾，保持最后一个字高亮
-                    if (now < line.EndMs)
-                    {
-                        playProgress = 1f; // 全部字高亮
-                    }
-                    else
-                    {
-                        playProgress = 1f; // 行已结束
-                    }
-                }
-                else if (charIndex == 0)
-                {
-                    playProgress = 0f; // 还没到第一个字
                 }
             }
             else
             {
-                playProgress = (now - line.StartMs) / (float)(line.DurationMs);
+                // 没有逐字时间轴，直接线性
+                charProgress = (now - line.StartMs) / line.DurationMs;
+                charProgress = Math.Clamp(charProgress, 0f, 1f);
+                charStartIndex = 0;
+                charLength = line.Text.Length;
             }
-            return playProgress;
         }
 
         /// <summary>
@@ -1399,23 +484,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         /// <summary>
-        /// The GetVisibleLyricsLineIndexBoundaries
-        /// </summary>
-        /// <returns>The <see cref="Tuple{int, int}"/></returns>
-        private Tuple<int, int> GetVisibleLyricsLineIndexBoundaries()
-        {
-            // _logger.LogDebug($"{_startVisibleLineIndex} {_endVisibleLineIndex}");
-            return new Tuple<int, int>(_startVisibleLineIndex, _endVisibleLineIndex);
-        }
-
-        /// <summary>
         /// The LibWatcherService_MusicLibraryFilesChanged
         /// </summary>
         /// <param name="sender">The sender<see cref="object?"/></param>
         /// <param name="e">The e<see cref="Events.LibChangedEventArgs"/></param>
         private void LibWatcherService_MusicLibraryFilesChanged(
             object? sender,
-            Events.LibChangedEventArgs e
+            LibChangedEventArgs e
         )
         {
             RefreshLyricsAsync().ConfigureAwait(true);
@@ -1438,7 +513,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <param name="e">The e<see cref="PositionChangedEventArgs"/></param>
         private void PlaybackService_PositionChanged(object? sender, PositionChangedEventArgs e)
         {
-            TotalTime = e.Position;
+            if (Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds) > 100)
+                TotalTime = e.Position;
         }
 
         /// <summary>
@@ -1492,370 +568,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _isRelayoutNeeded = true;
                 LyricsStatus = LyricsStatus.Found;
             }
-        }
-
-        /// <summary>
-        /// Reassigns positions (x,y) to lyrics lines based on the current control size and font size
-        /// </summary>
-        /// <param name="control"></param>
-        private void ReLayout(ICanvasAnimatedControl control)
-        {
-            if (control == null)
-                return;
-
-            _textFormat.FontSize = LyricsFontSize;
-
-            float y = _topMargin;
-
-            // Init Positions
-            for (int i = 0; i < _multiLangLyrics.SafeGet(_langIndex)?.Count; i++)
-            {
-                var line = _multiLangLyrics[_langIndex].SafeGet(i);
-
-                if (line == null)
-                {
-                    continue;
-                }
-
-                if (line.CanvasTextLayout != null)
-                {
-                    line.CanvasTextLayout.Dispose();
-                    line.CanvasTextLayout = null;
-                }
-
-                // Calculate layout bounds
-                line.CanvasTextLayout = new CanvasTextLayout(
-                    control,
-                    line.Text,
-                    _textFormat,
-                    (float)_limitedLineWidthTransition.Value,
-                    (float)control.Size.Height
-                );
-
-                line.Position = new Vector2(0, y);
-
-                y +=
-                    (float)line.CanvasTextLayout.LayoutBounds.Height
-                    / line.CanvasTextLayout.LineCount
-                    * (line.CanvasTextLayout.LineCount + LyricsLineSpacingFactor);
-            }
-        }
-
-        /// <summary>
-        /// The UpdateCanvasYScrollOffset
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        private void UpdateCanvasYScrollOffset(ICanvasAnimatedControl control)
-        {
-            var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
-
-            var (startLineIndex, endLineIndex) = GetMaxLyricsLineIndexBoundaries();
-
-            if (startLineIndex < 0 || endLineIndex < 0)
-            {
-                return;
-            }
-
-            // Set _scrollOffsetY
-            LyricsLine? currentPlayingLine = _multiLangLyrics
-                .SafeGet(_langIndex)
-                ?.SafeGet(currentPlayingLineIndex);
-
-            var playingTextLayout = currentPlayingLine?.CanvasTextLayout;
-
-            if (currentPlayingLine == null || playingTextLayout == null)
-            {
-                return;
-            }
-
-            float targetYScrollOffset =
-                (float?)(
-                    -currentPlayingLine.Position.Y
-                    + _multiLangLyrics.SafeGet(_langIndex)?[0].Position.Y
-                    - playingTextLayout.LayoutBounds.Height / 2
-                ) ?? 0f;
-
-            if (!_canvasYScrollTransition.IsTransitioning)
-            {
-                _canvasYScrollTransition.StartTransition(targetYScrollOffset);
-            }
-
-            if (_canvasYScrollTransition.IsTransitioning)
-            {
-                _canvasYScrollTransition.Update(ElapsedTime);
-            }
-
-            _startVisibleLineIndex = _endVisibleLineIndex = -1;
-
-            // Update visible line indices
-            for (int i = startLineIndex; i <= endLineIndex; i++)
-            {
-                var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
-
-                if (line == null || line.CanvasTextLayout == null)
-                {
-                    continue;
-                }
-
-                var textLayout = line.CanvasTextLayout;
-
-                if (
-                    _canvasYScrollTransition.Value
-                        + (float)(control.Size.Height / 2)
-                        + line.Position.Y
-                        + textLayout.LayoutBounds.Height
-                    >= 0
-                )
-                {
-                    if (_startVisibleLineIndex == -1)
-                    {
-                        _startVisibleLineIndex = i;
-                    }
-                }
-                if (
-                    _canvasYScrollTransition.Value
-                        + (float)(control.Size.Height / 2)
-                        + line.Position.Y
-                        + textLayout.LayoutBounds.Height
-                    >= control.Size.Height
-                )
-                {
-                    if (_endVisibleLineIndex == -1)
-                    {
-                        _endVisibleLineIndex = i;
-                    }
-                }
-            }
-
-            if (_startVisibleLineIndex != -1 && _endVisibleLineIndex == -1)
-            {
-                _endVisibleLineIndex = endLineIndex;
-            }
-        }
-
-        /// <summary>
-        /// The UpdateFontColor
-        /// </summary>
-        private protected void UpdateFontColor()
-        {
-            Color fallback = Colors.Transparent;
-            switch (Theme)
-            {
-                case ElementTheme.Default:
-                    switch (Application.Current.RequestedTheme)
-                    {
-                        case ApplicationTheme.Light:
-                            fallback = _darkFontColor;
-                            break;
-                        case ApplicationTheme.Dark:
-                            fallback = _lightFontColor;
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case ElementTheme.Light:
-                    fallback = _darkFontColor;
-                    break;
-                case ElementTheme.Dark:
-                    fallback = _lightFontColor;
-                    break;
-                default:
-                    break;
-            }
-
-            switch (LyricsFontColorType)
-            {
-                case LyricsFontColorType.Default:
-                    _fontColor = fallback;
-                    break;
-                case LyricsFontColorType.Dominant:
-                    _fontColor = _albumArtAccentColor ?? fallback;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// The UpdateLinesProps
-        /// </summary>
-        /// <param name="source">The source<see cref="List{LyricsLine}?"/></param>
-        /// <param name="defaultOpacity">The defaultOpacity<see cref="float"/></param>
-        private void UpdateLinesProps()
-        {
-            var (startLineIndex, endLineIndex) = GetMaxLyricsLineIndexBoundaries();
-
-            var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
-
-            for (int i = startLineIndex; i <= endLineIndex; i++)
-            {
-                var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
-
-                if (line == null)
-                {
-                    continue;
-                }
-
-                bool linePlaying = i == currentPlayingLineIndex;
-
-                var lineEnteringDurationMs = Math.Min(line.DurationMs, _lineEnteringDurationMs);
-                var lineExitingDurationMs = _lineExitingDurationMs;
-                if (i + 1 <= endLineIndex)
-                {
-                    lineExitingDurationMs = Math.Min(
-                        _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i + 1)?.DurationMs ?? 0,
-                        lineExitingDurationMs
-                    );
-                }
-
-                float lineEnteringProgress = 0.0f;
-                float lineExitingProgress = 0.0f;
-
-                bool lineEntering = false;
-                bool lineExiting = false;
-
-                float scale = _defaultScale;
-                float opacity = _defaultOpacity;
-
-                float playProgress = 0;
-
-                if (linePlaying)
-                {
-                    line.PlayingState = LyricsPlayingState.Playing;
-
-                    scale = _highlightedScale;
-                    opacity = _highlightedOpacity;
-
-                    playProgress = GetLinePlayingProgress(line);
-
-                    var durationFromStartMs = TotalTime.TotalMilliseconds - line.StartMs;
-                    lineEntering = durationFromStartMs <= lineEnteringDurationMs;
-                    if (lineEntering)
-                    {
-                        lineEnteringProgress = (float)durationFromStartMs / lineEnteringDurationMs;
-                        scale =
-                            _defaultScale
-                            + (_highlightedScale - _defaultScale) * (float)lineEnteringProgress;
-                        opacity =
-                            _defaultOpacity
-                            + (_highlightedOpacity - _defaultOpacity) * (float)lineEnteringProgress;
-                    }
-                }
-                else
-                {
-                    if (i < currentPlayingLineIndex)
-                    {
-                        line.PlayingState = LyricsPlayingState.Played;
-                        playProgress = 1;
-
-                        var durationToEndMs = TotalTime.TotalMilliseconds - line.EndMs;
-                        lineExiting = durationToEndMs <= lineExitingDurationMs;
-                        if (lineExiting)
-                        {
-                            lineExitingProgress = (float)durationToEndMs / lineExitingDurationMs;
-                            scale =
-                                _highlightedScale
-                                - (_highlightedScale - _defaultScale) * (float)lineExitingProgress;
-                            opacity =
-                                _highlightedOpacity
-                                - (_highlightedOpacity - _defaultOpacity)
-                                    * (float)lineExitingProgress;
-                        }
-                    }
-                    else
-                    {
-                        line.PlayingState = LyricsPlayingState.NotPlayed;
-                    }
-                }
-
-                line.EnteringProgress = lineEnteringProgress;
-                line.ExitingProgress = lineExitingProgress;
-
-                line.Scale = scale;
-                line.Opacity = opacity;
-
-                line.PlayingProgress = playProgress;
-            }
-        }
-
-        /// <summary>
-        /// The OnLyricsFontColorTypeChanged
-        /// </summary>
-        /// <param name="value">The value<see cref="LyricsFontColorType"/></param>
-        partial void OnLyricsFontColorTypeChanged(LyricsFontColorType value)
-        {
-            UpdateFontColor();
-        }
-
-        /// <summary>
-        /// The OnLyricsFontSizeChanged
-        /// </summary>
-        /// <param name="value">The value<see cref="int"/></param>
-        partial void OnLyricsFontSizeChanged(int value)
-        {
-            _isRelayoutNeeded = true;
-        }
-
-        /// <summary>
-        /// The OnLyricsFontWeightChanged
-        /// </summary>
-        /// <param name="value">The value<see cref="LyricsFontWeight"/></param>
-        partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
-        {
-            _textFormat.FontWeight = value.ToFontWeight();
-        }
-
-        /// <summary>
-        /// The OnLyricsLineSpacingFactorChanged
-        /// </summary>
-        /// <param name="value">The value<see cref="float"/></param>
-        partial void OnLyricsLineSpacingFactorChanged(float value)
-        {
-            _isRelayoutNeeded = true;
-        }
-
-        /// <summary>
-        /// The OnSongInfoChanged
-        /// </summary>
-        /// <param name="oldValue">The oldValue<see cref="SongInfo?"/></param>
-        /// <param name="newValue">The newValue<see cref="SongInfo?"/></param>
-        async partial void OnSongInfoChanged(SongInfo? oldValue, SongInfo? newValue)
-        {
-            TotalTime = TimeSpan.Zero;
-
-            _lastAlbumArtBitmap = _albumArtBitmap;
-
-            if (newValue?.AlbumArt is byte[] bytes)
-            {
-                _albumArtBitmap = await (
-                    await ImageHelper.GetDecoderFromByte(bytes)
-                ).GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-                _albumArtAccentColor = (
-                    await ImageHelper.GetAccentColorsFromByte(bytes)
-                ).FirstOrDefault();
-            }
-            else
-            {
-                _albumArtBitmap = null;
-                _albumArtAccentColor = null;
-            }
-
-            UpdateFontColor();
-
-            _albumArtBgTransition.Reset(0f);
-            _albumArtBgTransition.StartTransition(1f);
-
-            await RefreshLyricsAsync();
-        }
-
-        /// <summary>
-        /// The OnThemeChanged
-        /// </summary>
-        /// <param name="value">The value<see cref="ElementTheme"/></param>
-        partial void OnThemeChanged(ElementTheme value)
-        {
-            UpdateFontColor();
         }
 
         #endregion

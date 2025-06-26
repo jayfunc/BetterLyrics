@@ -25,7 +25,9 @@ namespace BetterLyrics.WinUI3.Services
         /// <summary>
         /// Defines the _httpClient
         /// </summary>
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _lrcLibHttpClient;
+
+        private readonly HttpClient _amllTtmlDbHttpClient;
 
         /// <summary>
         /// Defines the _settingsService
@@ -43,11 +45,12 @@ namespace BetterLyrics.WinUI3.Services
         public MusicSearchService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.Add(
+            _lrcLibHttpClient = new HttpClient();
+            _lrcLibHttpClient.DefaultRequestHeaders.Add(
                 "User-Agent",
                 $"{AppInfo.AppName} {AppInfo.AppVersion} ({AppInfo.GithubUrl})"
             );
+            _amllTtmlDbHttpClient = new HttpClient();
         }
 
         #endregion
@@ -74,7 +77,7 @@ namespace BetterLyrics.WinUI3.Services
                         )
                     )
                     {
-                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        if (MusicMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
                             Track track = new(file);
                             var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
@@ -114,16 +117,36 @@ namespace BetterLyrics.WinUI3.Services
                     continue;
                 }
 
+                string? cachedLyrics;
+
                 switch (provider.Provider)
                 {
                     case LyricsSearchProvider.LrcLib:
                         // Check cache first
-                        var cachedLyrics = ReadCache(title, artist, LyricsFormat.Lrc);
+                        cachedLyrics = ReadCache(
+                            title,
+                            artist,
+                            LyricsFormat.Lrc,
+                            AppInfo.LrcLibLyricsCacheDirectory
+                        );
                         if (!string.IsNullOrWhiteSpace(cachedLyrics))
                         {
                             return (cachedLyrics, LyricsFormat.Lrc);
                         }
                         break;
+                    //case LyricsSearchProvider.AmllTtmlDb:
+                    //    // Check cache first
+                    //    cachedLyrics = ReadCache(
+                    //        title,
+                    //        artist,
+                    //        LyricsFormat.Ttml,
+                    //        AppInfo.AmllTtmlDbLyricsCacheDirectory
+                    //    );
+                    //    if (!string.IsNullOrWhiteSpace(cachedLyrics))
+                    //    {
+                    //        return (cachedLyrics, LyricsFormat.Ttml);
+                    //    }
+                    //    break;
                     default:
                         break;
                 }
@@ -157,7 +180,7 @@ namespace BetterLyrics.WinUI3.Services
                         );
                         break;
                     case LyricsSearchProvider.LrcLib:
-                        searchedLyrics = await SearchLrcLib(
+                        searchedLyrics = await SearchLrcLibAsync(
                             title,
                             artist,
                             album,
@@ -165,6 +188,9 @@ namespace BetterLyrics.WinUI3.Services
                             matchMode
                         );
                         break;
+                    //case LyricsSearchProvider.AmllTtmlDb:
+                    //    searchedLyrics = await SearchAmllTtmlDbAsync(title, artist);
+                    //    break;
                     default:
                         break;
                 }
@@ -174,8 +200,23 @@ namespace BetterLyrics.WinUI3.Services
                     switch (provider.Provider)
                     {
                         case LyricsSearchProvider.LrcLib:
-                            WriteCache(title, artist, searchedLyrics, LyricsFormat.Lrc);
+                            WriteCache(
+                                title,
+                                artist,
+                                searchedLyrics,
+                                LyricsFormat.Lrc,
+                                AppInfo.LrcLibLyricsCacheDirectory
+                            );
                             return (searchedLyrics, LyricsFormat.Lrc);
+                        //case LyricsSearchProvider.AmllTtmlDb:
+                        //    WriteCache(
+                        //        title,
+                        //        artist,
+                        //        searchedLyrics,
+                        //        LyricsFormat.Ttml,
+                        //        AppInfo.AmllTtmlDbLyricsCacheDirectory
+                        //    );
+                        //    return (searchedLyrics, LyricsFormat.Ttml);
                         case LyricsSearchProvider.LocalMusicFile:
                             return (searchedLyrics, LyricsFormatExtensions.Detect(searchedLyrics));
                         case LyricsSearchProvider.LocalLrcFile:
@@ -193,69 +234,9 @@ namespace BetterLyrics.WinUI3.Services
             return (null, null);
         }
 
-        // 判断相似度
-
-        /// <summary>
-        /// The FuzzyMatch
-        /// </summary>
-        /// <param name="fileName">The fileName<see cref="string"/></param>
-        /// <param name="title">The title<see cref="string"/></param>
-        /// <param name="artist">The artist<see cref="string"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        private static bool FuzzyMatch(string fileName, string title, string artist)
+        private static bool MusicMatch(string fileName, string title, string artist)
         {
-            var normFile = Normalize(fileName);
-            var normTarget1 = Normalize(title + artist);
-            var normTarget2 = Normalize(artist + title);
-
-            int dist1 = LevenshteinDistance(normFile, normTarget1);
-            int dist2 = LevenshteinDistance(normFile, normTarget2);
-
-            return dist1 <= 2 || dist2 <= 2; // 阈值可调整
-        }
-
-        /// <summary>
-        /// The LevenshteinDistance
-        /// </summary>
-        /// <param name="a">The a<see cref="string"/></param>
-        /// <param name="b">The b<see cref="string"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private static int LevenshteinDistance(string a, string b)
-        {
-            if (string.IsNullOrEmpty(a))
-                return b.Length;
-            if (string.IsNullOrEmpty(b))
-                return a.Length;
-            int[,] d = new int[a.Length + 1, b.Length + 1];
-            for (int i = 0; i <= a.Length; i++)
-                d[i, 0] = i;
-            for (int j = 0; j <= b.Length; j++)
-                d[0, j] = j;
-            for (int i = 1; i <= a.Length; i++)
-            for (int j = 1; j <= b.Length; j++)
-                d[i, j] = Math.Min(
-                    Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                    d[i - 1, j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)
-                );
-            return d[a.Length, b.Length];
-        }
-
-        /// <summary>
-        /// The Normalize
-        /// </summary>
-        /// <param name="s">The s<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        private static string Normalize(string s)
-        {
-            if (string.IsNullOrWhiteSpace(s))
-                return "";
-            var sb = new StringBuilder();
-            foreach (var c in s.ToLowerInvariant())
-            {
-                if (char.IsLetterOrDigit(c))
-                    sb.Append(c);
-            }
-            return sb.ToString();
+            return fileName.Contains(title) && fileName.Contains(artist);
         }
 
         /// <summary>
@@ -300,7 +281,7 @@ namespace BetterLyrics.WinUI3.Services
                         )
                     )
                     {
-                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        if (MusicMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
                             string? raw = await File.ReadAllTextAsync(
                                 file,
@@ -337,7 +318,7 @@ namespace BetterLyrics.WinUI3.Services
                         )
                     )
                     {
-                        if (FuzzyMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        if (MusicMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
                             //Track track = new(file);
                             //var test1 = track.Lyrics.SynchronizedLyrics;
@@ -367,12 +348,17 @@ namespace BetterLyrics.WinUI3.Services
         /// <param name="artist">The artist<see cref="string"/></param>
         /// <param name="format">The format<see cref="LyricsFormat"/></param>
         /// <returns>The <see cref="string?"/></returns>
-        private string? ReadCache(string title, string artist, LyricsFormat format)
+        private string? ReadCache(
+            string title,
+            string artist,
+            LyricsFormat format,
+            string cacheFolderPath
+        )
         {
             var safeArtist = SanitizeFileName(artist);
             var safeTitle = SanitizeFileName(title);
             var cacheFilePath = Path.Combine(
-                AppInfo.OnlineLyricsCacheDirectory,
+                cacheFolderPath,
                 $"{safeArtist} - {safeTitle}{format.ToFileExtension()}"
             );
             if (File.Exists(cacheFilePath))
@@ -391,7 +377,7 @@ namespace BetterLyrics.WinUI3.Services
         /// <param name="duration">The duration<see cref="int"/></param>
         /// <param name="matchMode">The matchMode<see cref="MusicSearchMatchMode"/></param>
         /// <returns>The <see cref="Task{string?}"/></returns>
-        private async Task<string?> SearchLrcLib(
+        private async Task<string?> SearchLrcLibAsync(
             string title,
             string artist,
             string album,
@@ -412,7 +398,7 @@ namespace BetterLyrics.WinUI3.Services
                     + $"&durationMs={Uri.EscapeDataString(duration.ToString())}";
             }
 
-            var response = await _httpClient.GetAsync(url);
+            var response = await _lrcLibHttpClient.GetAsync(url);
             if (!response.IsSuccessStatusCode)
                 return null;
 
@@ -437,18 +423,132 @@ namespace BetterLyrics.WinUI3.Services
         }
 
         /// <summary>
+        /// 本地检索 amll-ttml-db 索引并下载歌词内容
+        /// </summary>
+        /// <param name="title">歌曲名</param>
+        /// <param name="artist">歌手名</param>
+        /// <returns>歌词内容字符串，找不到返回 null</returns>
+        private async Task<string?> SearchAmllTtmlDbAsync(string title, string artist)
+        {
+            // 检索本地 JSONL 索引文件，查找 rawLyricFile
+            if (!File.Exists(AppInfo.AmllTtmlDbIndexPath))
+            {
+                var downloadOk = await DownloadAmllTtmlDbIndexAsync();
+                if (!downloadOk || !File.Exists(AppInfo.AmllTtmlDbIndexPath))
+                    return null;
+            }
+
+            string? rawLyricFile = null;
+            foreach (var line in File.ReadLines(AppInfo.AmllTtmlDbIndexPath))
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
+                try
+                {
+                    using var doc = JsonDocument.Parse(line);
+                    var root = doc.RootElement;
+                    if (!root.TryGetProperty("metadata", out var metadataArr))
+                        continue;
+                    string? musicName = null;
+                    string? artists = null;
+                    foreach (var meta in metadataArr.EnumerateArray())
+                    {
+                        if (meta.GetArrayLength() != 2)
+                            continue;
+                        var key = meta[0].GetString();
+                        var valueArr = meta[1];
+                        if (key == "musicName" && valueArr.GetArrayLength() > 0)
+                            musicName = valueArr[0].GetString();
+                        if (key == "artists" && valueArr.GetArrayLength() > 0)
+                            artists = valueArr[0].GetString();
+                    }
+                    if (musicName == null || artists == null)
+                        continue;
+
+                    if (MusicMatch($"{artists} - {musicName}", title, artist))
+                    {
+                        if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
+                        {
+                            rawLyricFile = rawLyricFileProp.GetString();
+                            break;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            if (string.IsNullOrWhiteSpace(rawLyricFile))
+                return null;
+
+            // 下载歌词内容
+            var url =
+                $"https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/raw-lyrics/{rawLyricFile}";
+            try
+            {
+                var response = await _amllTtmlDbHttpClient.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                    return null;
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 下载 amll-ttml-db 的 JSONL 索引文件到本地缓存目录
+        /// </summary>
+        /// <returns>下载成功返回 true，否则 false</returns>
+        public async Task<bool> DownloadAmllTtmlDbIndexAsync()
+        {
+            const string url =
+                "https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/metadata/raw-lyrics-index.jsonl";
+            try
+            {
+                using var response = await _amllTtmlDbHttpClient.GetAsync(
+                    url,
+                    HttpCompletionOption.ResponseHeadersRead
+                );
+                if (!response.IsSuccessStatusCode)
+                    return false;
+
+                await using var stream = await response.Content.ReadAsStreamAsync();
+                await using var fs = new FileStream(
+                    AppInfo.AmllTtmlDbIndexPath,
+                    FileMode.Create,
+                    FileAccess.Write,
+                    FileShare.None
+                );
+                await stream.CopyToAsync(fs);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// The WriteCache
         /// </summary>
         /// <param name="title">The title<see cref="string"/></param>
         /// <param name="artist">The artist<see cref="string"/></param>
         /// <param name="lyrics">The lyrics<see cref="string"/></param>
         /// <param name="format">The format<see cref="LyricsFormat"/></param>
-        private void WriteCache(string title, string artist, string lyrics, LyricsFormat format)
+        private void WriteCache(
+            string title,
+            string artist,
+            string lyrics,
+            LyricsFormat format,
+            string cacheFolderPath
+        )
         {
             var safeArtist = SanitizeFileName(artist);
             var safeTitle = SanitizeFileName(title);
             var cacheFilePath = Path.Combine(
-                AppInfo.OnlineLyricsCacheDirectory,
+                cacheFolderPath,
                 $"{safeArtist} - {safeTitle}{format.ToFileExtension()}"
             );
             File.WriteAllText(cacheFilePath, lyrics);

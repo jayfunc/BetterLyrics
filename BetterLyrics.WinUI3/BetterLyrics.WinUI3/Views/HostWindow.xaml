@@ -87,6 +87,11 @@
                                 Command="{x:Bind ViewModel.ToggleDockModeCommand}"
                                 IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
                             <ToggleMenuFlyoutItem
+                                x:Name="DesktopFlyoutItem"
+                                x:Uid="HostWindowDesktopFlyoutItem"
+                                Command="{x:Bind ViewModel.ToggleDesktopModeCommand}"
+                                IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=OneWay}" />
+                            <ToggleMenuFlyoutItem
                                 x:Name="MiniFlyoutItem"
                                 x:Uid="BaseWindowMiniFlyoutItem"
                                 Click="MiniFlyoutItem_Click" />

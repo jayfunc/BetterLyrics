@@ -25,6 +25,10 @@ namespace BetterLyrics.WinUI3.Models
         /// </summary>
         public int StartMs { get; set; }
 
+        public string Text { get; set; } = string.Empty;
+
+        public int StartIndex { get; set; }
+
         #endregion
     }
 }

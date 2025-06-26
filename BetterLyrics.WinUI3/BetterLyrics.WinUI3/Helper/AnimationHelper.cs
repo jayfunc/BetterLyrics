@@ -89,7 +89,7 @@ namespace BetterLyrics.WinUI3.Helper
         public ValueTransition(
             T initialValue,
             float durationSeconds,
-            Func<T, T, float, T> interpolator = null,
+            Func<T, T, float, T>? interpolator = null,
             EasingType? easingType = null
         )
         {

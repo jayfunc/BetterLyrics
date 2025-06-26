@@ -1,12 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Helper
         /// <param name="durationMs">The durationMs<see cref="int"/></param>
         private void ParseLrc(string raw, int durationMs)
         {
-            var lines = raw.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = raw.Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries);
             var lrcLines =
                 new List<(int time, string text, List<(int time, string text)> syllables)>();
 
@@ -114,7 +114,7 @@ namespace BetterLyrics.WinUI3.Helper
                         int sec = int.Parse(m.Groups[2].Value);
                         int ms = int.Parse(m.Groups[3].Value.PadRight(3, '0'));
                         lineStartTime = min * 60_000 + sec * 1000 + ms;
-                        content = bracketRegex.Replace(line, "").Trim();
+                        content = bracketRegex.Replace(line, "");
                         lrcLines.Add((lineStartTime.Value, content, new List<(int, string)>()));
                     }
                 }
@@ -147,13 +147,21 @@ namespace BetterLyrics.WinUI3.Helper
                     };
                     if (syllables != null && syllables.Count > 0)
                     {
+                        int currentIndex = 0;
                         for (int j = 0; j < syllables.Count; j++)
                         {
                             var (charStart, charText) = syllables[j];
-                            int charEnd = (j + 1 < syllables.Count) ? syllables[j + 1].Item1 : 0;
+                            int startIndex = currentIndex;
                             line.CharTimings.Add(
-                                new CharTiming { StartMs = charStart, EndMs = charEnd }
+                                new CharTiming
+                                {
+                                    StartMs = charStart,
+                                    EndMs = 0, // Fixed later
+                                    Text = charText ?? "",
+                                    StartIndex = startIndex,
+                                }
                             );
+                            currentIndex += charText?.Length ?? 0;
                         }
                     }
                     _multiLangLyricsLines[langIdx].Add(line);
@@ -167,20 +175,28 @@ namespace BetterLyrics.WinUI3.Helper
                 for (int i = 0; i < linesInSingleLang.Count; i++)
                 {
                     if (i + 1 < linesInSingleLang.Count)
+                    {
                         linesInSingleLang[i].EndMs = linesInSingleLang[i + 1].StartMs;
+                    }
                     else
+                    {
                         linesInSingleLang[i].EndMs = durationMs;
+                    }
 
-                    // 修正 CharTimings 的最后一个 EndMs
+                    // 修正 CharTimings 的 EndMs
                     var timings = linesInSingleLang[i].CharTimings;
                     if (timings.Count > 0)
                     {
                         for (int j = 0; j < timings.Count; j++)
                         {
                             if (j + 1 < timings.Count)
+                            {
                                 timings[j].EndMs = timings[j + 1].StartMs;
+                            }
                             else
+                            {
                                 timings[j].EndMs = linesInSingleLang[i].EndMs;
+                            }
                         }
                     }
                 }
@@ -220,7 +236,7 @@ namespace BetterLyrics.WinUI3.Helper
                         )
                         .ToList();
 
-                    string text = string.Concat(spans.Select(s => s.Value));
+                    string text = string.Concat(spans.Select(s => s));
                     var charTimings = new List<CharTiming>();
 
                     for (int i = 0; i < spans.Count; i++)
@@ -244,7 +260,7 @@ namespace BetterLyrics.WinUI3.Helper
                     }
 
                     if (spans.Count == 0)
-                        text = p.Value.Trim();
+                        text = p.Value;
 
                     singleLangLyricsLine.Add(
                         new LyricsLine
@@ -345,7 +361,7 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         StartMs = 0,
                         EndMs = lines[0].StartMs,
-                        Text = "",
+                        Text = "● ● ●",
                         CharTimings = [],
                     }
                 );
