@@ -1,8 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
-using System;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Converter
@@ -10,7 +10,7 @@ namespace BetterLyrics.WinUI3.Converter
     /// <summary>
     /// Defines the <see cref="ColorToBrushConverter" />
     /// </summary>
-    public class ColorToBrushConverter : IValueConverter
+    public partial class ColorToBrushConverter : IValueConverter
     {
         #region Methods
 

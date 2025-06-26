@@ -2,28 +2,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
-using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Brushes;
-using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
-using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Shapes;
-using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 
@@ -78,6 +66,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// </summary>
         private readonly float _highlightedScale = 1.0f;
 
+        private bool _isDebugOverlayEnabled = false;
+
         /// <summary>
         /// Defines the _immersiveBgrTransition
         /// </summary>
@@ -96,7 +86,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <summary>
         /// Defines the _limitedLineWidthTransition
         /// </summary>
-        private readonly ValueTransition<float> _limitedLineWidthTransition = new(
+        private readonly ValueTransition<float> _maxLyricsWidthTransition = new(
             initialValue: 0f,
             durationSeconds: 0.8f,
             interpolator: (from, to, progress) => to

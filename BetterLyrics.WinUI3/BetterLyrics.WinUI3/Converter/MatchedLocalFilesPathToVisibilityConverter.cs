@@ -1,15 +1,15 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
-using System;
 
 namespace BetterLyrics.WinUI3.Converter
 {
     /// <summary>
     /// Defines the <see cref="MatchedLocalFilesPathToVisibilityConverter" />
     /// </summary>
-    public class MatchedLocalFilesPathToVisibilityConverter : IValueConverter
+    public partial class MatchedLocalFilesPathToVisibilityConverter : IValueConverter
     {
         #region Methods
 

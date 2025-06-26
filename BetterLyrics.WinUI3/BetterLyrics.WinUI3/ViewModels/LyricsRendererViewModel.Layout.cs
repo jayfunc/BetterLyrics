@@ -43,9 +43,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _rotateAngle %= MathF.PI * 2;
             }
 
-            if (_limitedLineWidthTransition.IsTransitioning)
+            if (_maxLyricsWidthTransition.IsTransitioning)
             {
-                _limitedLineWidthTransition.Update(ElapsedTime);
+                _maxLyricsWidthTransition.Update(ElapsedTime);
                 _isRelayoutNeeded = true;
             }
 
@@ -53,9 +53,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 ReLayout(control);
                 _isRelayoutNeeded = false;
+                UpdateCanvasYScrollOffset(control, false);
+            }
+            else
+            {
+                UpdateCanvasYScrollOffset(control, true);
             }
 
-            UpdateCanvasYScrollOffset(control);
             UpdateLinesProps();
         }
 
@@ -63,7 +67,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// The UpdateCanvasYScrollOffset
         /// </summary>
         /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        private void UpdateCanvasYScrollOffset(ICanvasAnimatedControl control)
+        private void UpdateCanvasYScrollOffset(ICanvasAnimatedControl control, bool withAnimation)
         {
             var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
 
@@ -93,9 +97,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                     - playingTextLayout.LayoutBounds.Height / 2
                 ) ?? 0f;
 
-            if (!_canvasYScrollTransition.IsTransitioning)
+            if (withAnimation && !_canvasYScrollTransition.IsTransitioning)
             {
                 _canvasYScrollTransition.StartTransition(targetYScrollOffset);
+            }
+            else if (!withAnimation)
+            {
+                _canvasYScrollTransition.JumpTo(targetYScrollOffset);
             }
 
             if (_canvasYScrollTransition.IsTransitioning)
@@ -298,7 +306,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     control,
                     line.Text,
                     _textFormat,
-                    (float)_limitedLineWidthTransition.Value,
+                    (float)_maxLyricsWidthTransition.Value,
                     (float)control.Size.Height
                 );
 

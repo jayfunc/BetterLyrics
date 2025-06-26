@@ -294,6 +294,9 @@
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>Configure lyrics search providers</value>
   </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
+    <value>Drag to sort, the lyrics search order will be in the following order</value>
+  </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -315,8 +318,11 @@
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Play using system player</value>
   </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>Log</value>
+  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>Cache</value>
+  </data>
+  <data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>Including log files, network lyrics cache</value>
   </data>
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>Font color</value>
@@ -491,5 +497,17 @@
   </data>
   <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
     <value>amll-ttml-db</value>
+  </data>
+  <data name="LyricsSearchProviderQQ" xml:space="preserve">
+    <value>QQ</value>
+  </data>
+  <data name="LyricsSearchProviderNetease" xml:space="preserve">
+    <value>Netease</value>
+  </data>
+  <data name="LyricsSearchProviderKugou" xml:space="preserve">
+    <value>Kugou</value>
+  </data>
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>Show debug overlay</value>
   </data>
 </root>

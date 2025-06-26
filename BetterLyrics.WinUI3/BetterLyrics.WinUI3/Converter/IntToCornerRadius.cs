@@ -1,14 +1,14 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using Microsoft.UI.Xaml.Data;
 using System;
+using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converter
 {
     /// <summary>
     /// Defines the <see cref="IntToCornerRadius" />
     /// </summary>
-    public class IntToCornerRadius : IValueConverter
+    public partial class IntToCornerRadius : IValueConverter
     {
         #region Methods
 

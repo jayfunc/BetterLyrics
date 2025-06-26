@@ -1,10 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.Views
         /// <param name="e">The e<see cref="SizeChangedEventArgs"/></param>
         private void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ViewModel.LimitedLineWidth = e.NewSize.Width;
+            ViewModel.MaxLyricsWidth = e.NewSize.Width;
         }
 
         /// <summary>

@@ -294,6 +294,9 @@
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>가사 검색 제공 업체를 구성하십시오</value>
   </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
+    <value>정렬하기 위해 드래그하면 가사 검색 순서는 다음 순서로됩니다.</value>
+  </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>추가하다</value>
   </data>
@@ -315,8 +318,11 @@
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>시스템 플레이어를 사용하여 재생하십시오</value>
   </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>통나무</value>
+  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>은닉처</value>
+  </data>
+  <data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>로그 파일, 네트워크 가사 캐시 포함</value>
   </data>
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>글꼴 색상</value>
@@ -412,7 +418,7 @@
     <value>도크 모드</value>
   </data>
   <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
-    <value />
+    <value>데스크탑 모드</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>글꼴 무게</value>
@@ -491,5 +497,17 @@
   </data>
   <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
     <value>amll-ttml-db</value>
+  </data>
+  <data name="LyricsSearchProviderQQ" xml:space="preserve">
+    <value>QQ</value>
+  </data>
+  <data name="LyricsSearchProviderNetease" xml:space="preserve">
+    <value>Netease</value>
+  </data>
+  <data name="LyricsSearchProviderKugou" xml:space="preserve">
+    <value>Kugou</value>
+  </data>
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>디버그 오버레이를 표시하십시오</value>
   </data>
 </root>

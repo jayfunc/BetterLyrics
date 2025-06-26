@@ -56,6 +56,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
         {
             _textFormat.FontWeight = value.ToFontWeight();
+            _isRelayoutNeeded = true;
         }
 
         /// <summary>
@@ -128,6 +129,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     IsCoverOverlayEnabled = message.NewValue;
                 }
+                else if (message.PropertyName == nameof(SettingsViewModel.IsDebugOverlayEnabled))
+                {
+                    _isDebugOverlayEnabled = message.NewValue;
+                }
             }
             else if (message.Sender is LyricsSettingsControlViewModel)
             {
@@ -171,9 +176,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (message.Sender is LyricsPageViewModel)
             {
-                if (message.PropertyName == nameof(LyricsPageViewModel.LimitedLineWidth))
+                if (message.PropertyName == nameof(LyricsPageViewModel.MaxLyricsWidth))
                 {
-                    _limitedLineWidthTransition.StartTransition((float)message.NewValue);
+                    _maxLyricsWidthTransition.StartTransition((float)message.NewValue);
                 }
             }
         }

@@ -1,5 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
+using System.Text;
+using System.Threading.Tasks;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
@@ -12,9 +15,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
-using System;
-using System.Text;
-using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -183,7 +183,7 @@ namespace BetterLyrics.WinUI3
             UnobservedTaskExceptionEventArgs e
         )
         {
-            _logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
+            //_logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
         }
 
         #endregion
