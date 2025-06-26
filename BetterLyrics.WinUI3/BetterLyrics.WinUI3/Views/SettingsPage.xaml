@@ -481,8 +481,11 @@
                                 <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
                                     <Button x:Uid="SettingsPagePlayingMockMusicButton" Command="{x:Bind ViewModel.PlayTestingMusicTaskCommand}" />
                                 </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="SettingsPageLog">
-                                    <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenLogFolderCommand}" />
+                                <controls:SettingsCard x:Uid="SettingsPageCache">
+                                    <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
                             </StackPanel>
                         </controls:Case>

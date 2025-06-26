@@ -294,6 +294,9 @@
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>配置歌词搜索服务</value>
   </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
+    <value>拖动排序，歌词搜索顺序将按以下顺序</value>
+  </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>添加</value>
   </data>
@@ -315,8 +318,11 @@
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>使用系统播放器播放</value>
   </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>日志</value>
+  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>缓存</value>
+  </data>
+  <data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>包括日志文件，网络歌词缓存</value>
   </data>
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>字体颜色</value>
@@ -491,5 +497,17 @@
   </data>
   <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
     <value>amll-ttml-db</value>
+  </data>
+  <data name="LyricsSearchProviderQQ" xml:space="preserve">
+    <value>QQ</value>
+  </data>
+  <data name="LyricsSearchProviderNetease" xml:space="preserve">
+    <value>Netease</value>
+  </data>
+  <data name="LyricsSearchProviderKugou" xml:space="preserve">
+    <value>Kugou</value>
+  </data>
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>显示调试覆盖层</value>
   </data>
 </root>

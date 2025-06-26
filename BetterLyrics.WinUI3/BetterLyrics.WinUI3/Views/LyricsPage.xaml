@@ -93,44 +93,51 @@
                     Grid.Row="1"
                     SizeChanged="CoverArea_SizeChanged">
 
-                    <Grid
-                        x:Name="CoverImageGrid"
-                        CornerRadius="{x:Bind ViewModel.CoverImageGridCornerRadius, Mode=OneWay}"
-                        SizeChanged="CoverImageGrid_SizeChanged">
-                        <Image
-                            x:Name="CoverImage"
-                            Source="{x:Bind ViewModel.CoverImage, Mode=OneWay}"
-                            Stretch="Uniform">
-                            <Image.Resources>
-                                <Storyboard x:Key="CoverIamgeFadeInStoryboard">
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                                <Storyboard x:Key="CoverIamgeFadeOutStoryboard">
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </Image.Resources>
-                            <interactivity:Interaction.Behaviors>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="True">
-                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeOutStoryboard}" />
-                                </interactivity:DataTriggerBehavior>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="False">
-                                    <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeInStoryboard}" />
-                                </interactivity:DataTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </Image>
+                    <Grid x:Name="CoverImageGrid" SizeChanged="CoverImageGrid_SizeChanged">
+                        <Grid CornerRadius="{x:Bind ViewModel.CoverImageGridCornerRadius, Mode=OneWay}">
+                            <Image
+                                x:Name="CoverImage"
+                                Source="{x:Bind ViewModel.CoverImage, Mode=OneWay}"
+                                Stretch="Uniform">
+                                <Image.Resources>
+                                    <Storyboard x:Key="CoverIamgeFadeInStoryboard">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <Storyboard x:Key="CoverIamgeFadeOutStoryboard">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CoverImage" Storyboard.TargetProperty="Opacity">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </Image.Resources>
+                                <interactivity:Interaction.Behaviors>
+                                    <interactivity:DataTriggerBehavior
+                                        Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                        ComparisonCondition="Equal"
+                                        Value="True">
+                                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeOutStoryboard}" />
+                                    </interactivity:DataTriggerBehavior>
+                                    <interactivity:DataTriggerBehavior
+                                        Binding="{x:Bind ViewModel.AboutToUpdateUI, Mode=OneWay}"
+                                        ComparisonCondition="Equal"
+                                        Value="False">
+                                        <interactivity:ControlStoryboardAction Storyboard="{StaticResource CoverIamgeFadeInStoryboard}" />
+                                    </interactivity:DataTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </Image>
+                        </Grid>
+                        <ui:Effects.Shadow>
+                            <media:AttachedCardShadow
+                                BlurRadius="32"
+                                CornerRadius="{x:Bind ViewModel.CoverImageGridCornerRadius, Mode=OneWay, Converter={StaticResource CornerRadiusToDoubleConverter}}"
+                                InnerContentClipMode="CompositionMaskBrush"
+                                Opacity="0.5" />
+                        </ui:Effects.Shadow>
                     </Grid>
+
 
                 </Grid>
 
@@ -179,7 +186,7 @@
                             x:Name="TitleTextBlock"
                             Behavior="Bouncing"
                             FontSize="{StaticResource TitleTextBlockFontSize}"
-                            FontWeight="SemiBold"
+                            FontWeight="Bold"
                             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                             Text="{x:Bind ViewModel.SongInfo.Title, Mode=OneWay}" />
                     </controls:OpacityMaskView>
@@ -222,7 +229,6 @@
                         <labs:MarqueeText
                             Behavior="Bouncing"
                             FontSize="{StaticResource SubtitleTextBlockFontSize}"
-                            FontWeight="SemiBold"
                             Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                             Opacity="0.5"
                             Text="{x:Bind ViewModel.SongInfo.Artist, Mode=OneWay}" />

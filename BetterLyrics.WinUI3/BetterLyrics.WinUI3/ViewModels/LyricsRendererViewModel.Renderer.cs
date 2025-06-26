@@ -101,14 +101,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                     out int charLength,
                     out float charProgress
                 );
-                //ds.DrawText(
-                //    $"DEBUG: "
-                //        + $"播放行 {currentPlayingLineIndex}, 字符 {charStartIndex}, 长度 {charLength}, 进度 {charProgress}\n"
-                //        + $"可见行 [{_startVisibleLineIndex}, {_endVisibleLineIndex}]"
-                //        + $"当前时刻 {TotalTime}",
-                //    new Vector2(10, 10),
-                //    Colors.Red
-                //);
+
+                if (_isDebugOverlayEnabled)
+                {
+                    ds.DrawText(
+                        $"DEBUG: "
+                            + $"播放行 {currentPlayingLineIndex}, 字符 {charStartIndex}, 长度 {charLength}, 进度 {charProgress}\n"
+                            + $"可见行 [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n"
+                            + $"当前时刻 {TotalTime}",
+                        new Vector2(10, 10),
+                        Colors.Red
+                    );
+                }
             }
         }
 
@@ -318,18 +322,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                         break;
                     case LyricsAlignmentType.Center:
                         textLayout.HorizontalAlignment = CanvasHorizontalAlignment.Center;
-                        centerX += (float)_limitedLineWidthTransition.Value / 2;
+                        centerX += (float)_maxLyricsWidthTransition.Value / 2;
                         break;
                     case LyricsAlignmentType.Right:
                         textLayout.HorizontalAlignment = CanvasHorizontalAlignment.Right;
-                        centerX += (float)_limitedLineWidthTransition.Value;
+                        centerX += (float)_maxLyricsWidthTransition.Value;
                         break;
                     default:
                         break;
                 }
 
                 float offsetToLeft =
-                    (float)control.Size.Width - _rightMargin - _limitedLineWidthTransition.Value;
+                    (float)control.Size.Width - _rightMargin - _maxLyricsWidthTransition.Value;
 
                 // Scale
                 ds.Transform =

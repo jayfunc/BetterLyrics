@@ -130,7 +130,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// </summary>
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial double LimitedLineWidth { get; set; } = 0.0;
+        public partial double MaxLyricsWidth { get; set; } = 0.0;
 
         /// <summary>
         /// Gets or sets the LyricsFontSize

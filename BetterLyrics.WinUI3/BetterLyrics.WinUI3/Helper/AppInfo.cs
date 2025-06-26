@@ -83,6 +83,10 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string AmllTtmlDbLyricsCacheDirectory =>
             Path.Combine(CacheFolder, "amll-ttml-db-lyrics");
+        public static string QQLyricsCacheDirectory => Path.Combine(CacheFolder, "qq-lyrics");
+        public static string KugouLyricsCacheDirectory => Path.Combine(CacheFolder, "kugou-lyrics");
+        public static string NeteaseLyricsCacheDirectory =>
+            Path.Combine(CacheFolder, "netease-lyrics");
 
         public static string AmllTtmlDbIndexPath =>
             Path.Combine(CacheFolder, "amll-ttml-db-index.json");
@@ -116,6 +120,9 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(LocalFolder);
             Directory.CreateDirectory(LogDirectory);
             Directory.CreateDirectory(LrcLibLyricsCacheDirectory);
+            Directory.CreateDirectory(QQLyricsCacheDirectory);
+            Directory.CreateDirectory(KugouLyricsCacheDirectory);
+            Directory.CreateDirectory(NeteaseLyricsCacheDirectory);
             Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
         }
 

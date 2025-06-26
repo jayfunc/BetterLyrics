@@ -200,6 +200,19 @@ namespace BetterLyrics.WinUI3.Helper
         }
 
         /// <summary>
+        /// 立即跳转到指定值，无动画
+        /// </summary>
+        /// <param name="value">目标值</param>
+        public void JumpTo(T value)
+        {
+            _currentValue = value;
+            _startValue = value;
+            _targetValue = value;
+            _progress = 1f;
+            _isTransitioning = false;
+        }
+
+        /// <summary>
         /// The Update
         /// </summary>
         /// <param name="elapsedTime">The elapsedTime<see cref="TimeSpan"/></param>

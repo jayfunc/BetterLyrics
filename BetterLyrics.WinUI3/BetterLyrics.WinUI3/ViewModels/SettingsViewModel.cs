@@ -1,5 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
@@ -10,13 +17,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Globalization;
 using Windows.Media;
@@ -101,6 +101,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// </summary>
         [ObservableProperty]
         public partial AutoStartWindowType AutoStartWindowType { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsDebugOverlayEnabled { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the BackdropType
@@ -360,9 +364,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// The OpenLogFolder
         /// </summary>
         [RelayCommand]
-        private void OpenLogFolder()
+        private void OpenCacheFolder()
         {
-            OpenFolderInFileExplorer(AppInfo.LogDirectory);
+            OpenFolderInFileExplorer(AppInfo.CacheFolder);
         }
 
         /// <summary>

@@ -118,116 +118,107 @@ namespace BetterLyrics.WinUI3.Services
                 }
 
                 string? cachedLyrics;
+                LyricsFormat lyricsFormat = provider.Provider.GetLyricsFormat();
 
-                switch (provider.Provider)
+                // Check cache first
+                if (provider.Provider.IsRemote())
                 {
-                    case LyricsSearchProvider.LrcLib:
-                        // Check cache first
-                        cachedLyrics = ReadCache(
-                            title,
-                            artist,
-                            LyricsFormat.Lrc,
-                            AppInfo.LrcLibLyricsCacheDirectory
-                        );
-                        if (!string.IsNullOrWhiteSpace(cachedLyrics))
-                        {
-                            return (cachedLyrics, LyricsFormat.Lrc);
-                        }
-                        break;
-                    //case LyricsSearchProvider.AmllTtmlDb:
-                    //    // Check cache first
-                    //    cachedLyrics = ReadCache(
-                    //        title,
-                    //        artist,
-                    //        LyricsFormat.Ttml,
-                    //        AppInfo.AmllTtmlDbLyricsCacheDirectory
-                    //    );
-                    //    if (!string.IsNullOrWhiteSpace(cachedLyrics))
-                    //    {
-                    //        return (cachedLyrics, LyricsFormat.Ttml);
-                    //    }
-                    //    break;
-                    default:
-                        break;
+                    cachedLyrics = ReadCache(
+                        title,
+                        artist,
+                        lyricsFormat,
+                        provider.Provider.GetCacheDirectory()
+                    );
+                    if (!string.IsNullOrWhiteSpace(cachedLyrics))
+                    {
+                        return (cachedLyrics, lyricsFormat);
+                    }
                 }
 
                 string? searchedLyrics = null;
 
-                switch (provider.Provider)
+                if (provider.Provider.IsLocal())
                 {
-                    case LyricsSearchProvider.LocalMusicFile:
+                    if (provider.Provider == LyricsSearchProvider.LocalMusicFile)
+                    {
                         searchedLyrics = LocalLyricsSearchInMusicFiles(title, artist);
-                        break;
-                    case LyricsSearchProvider.LocalLrcFile:
+                    }
+                    else
+                    {
                         searchedLyrics = await LocalLyricsSearchInLyricsFiles(
                             title,
                             artist,
-                            LyricsFormat.Lrc
+                            lyricsFormat
                         );
-                        break;
-                    case LyricsSearchProvider.LocalEslrcFile:
-                        searchedLyrics = await LocalLyricsSearchInLyricsFiles(
-                            title,
-                            artist,
-                            LyricsFormat.Eslrc
-                        );
-                        break;
-                    case LyricsSearchProvider.LocalTtmlFile:
-                        searchedLyrics = await LocalLyricsSearchInLyricsFiles(
-                            title,
-                            artist,
-                            LyricsFormat.Ttml
-                        );
-                        break;
-                    case LyricsSearchProvider.LrcLib:
-                        searchedLyrics = await SearchLrcLibAsync(
-                            title,
-                            artist,
-                            album,
-                            (int)(durationMs / 1000),
-                            matchMode
-                        );
-                        break;
-                    //case LyricsSearchProvider.AmllTtmlDb:
-                    //    searchedLyrics = await SearchAmllTtmlDbAsync(title, artist);
-                    //    break;
-                    default:
-                        break;
+                    }
                 }
-
-                if (!string.IsNullOrWhiteSpace(searchedLyrics))
+                else
                 {
                     switch (provider.Provider)
                     {
                         case LyricsSearchProvider.LrcLib:
-                            WriteCache(
+                            searchedLyrics = await SearchLrcLibAsync(
                                 title,
                                 artist,
-                                searchedLyrics,
-                                LyricsFormat.Lrc,
-                                AppInfo.LrcLibLyricsCacheDirectory
+                                album,
+                                (int)(durationMs / 1000),
+                                matchMode
                             );
-                            return (searchedLyrics, LyricsFormat.Lrc);
-                        //case LyricsSearchProvider.AmllTtmlDb:
-                        //    WriteCache(
-                        //        title,
-                        //        artist,
-                        //        searchedLyrics,
-                        //        LyricsFormat.Ttml,
-                        //        AppInfo.AmllTtmlDbLyricsCacheDirectory
-                        //    );
-                        //    return (searchedLyrics, LyricsFormat.Ttml);
-                        case LyricsSearchProvider.LocalMusicFile:
-                            return (searchedLyrics, LyricsFormatExtensions.Detect(searchedLyrics));
-                        case LyricsSearchProvider.LocalLrcFile:
-                            return (searchedLyrics, LyricsFormat.Lrc);
-                        case LyricsSearchProvider.LocalEslrcFile:
-                            return (searchedLyrics, LyricsFormat.Eslrc);
-                        case LyricsSearchProvider.LocalTtmlFile:
-                            return (searchedLyrics, LyricsFormat.Ttml);
+                            break;
+                        case LyricsSearchProvider.QQ:
+                            searchedLyrics = await SearchQQAsync(
+                                title,
+                                artist,
+                                album,
+                                (int)durationMs,
+                                matchMode
+                            );
+                            break;
+                        case LyricsSearchProvider.Kugou:
+                            searchedLyrics = await SearchKugouAsync(
+                                title,
+                                artist,
+                                album,
+                                (int)durationMs,
+                                matchMode
+                            );
+                            break;
+                        case LyricsSearchProvider.Netease:
+                            searchedLyrics = await SearchNeteaseAsync(
+                                title,
+                                artist,
+                                album,
+                                (int)durationMs,
+                                matchMode
+                            );
+                            break;
+                        case LyricsSearchProvider.AmllTtmlDb:
+                            searchedLyrics = await SearchAmllTtmlDbAsync(title, artist);
+                            break;
                         default:
                             break;
                     }
+                }
+
+                if (!string.IsNullOrWhiteSpace(searchedLyrics))
+                {
+                    if (provider.Provider.IsRemote())
+                    {
+                        WriteCache(
+                            title,
+                            artist,
+                            searchedLyrics,
+                            lyricsFormat,
+                            provider.Provider.GetCacheDirectory()
+                        );
+                    }
+
+                    return (
+                        searchedLyrics,
+                        lyricsFormat == LyricsFormat.NotSpecified
+                            ? searchedLyrics.DetectFormat()
+                            : lyricsFormat
+                    );
                 }
             }
 
@@ -332,7 +323,10 @@ namespace BetterLyrics.WinUI3.Services
                                     return plain;
                                 }
                             }
-                            catch (Exception) { }
+                            catch (Exception e)
+                            {
+                                throw e;
+                            }
                         }
                     }
                 }
@@ -419,6 +413,124 @@ namespace BetterLyrics.WinUI3.Services
                 }
             }
 
+            return null;
+        }
+
+        private async Task<string?> SearchQQAsync(
+            string title,
+            string artist,
+            string album,
+            int durationMs,
+            MusicSearchMatchMode matchMode
+        )
+        {
+            string? queryId = (
+                (
+                    await new Lyricify.Lyrics.Searchers.QQMusicSearcher().SearchForResult(
+                        new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
+                        {
+                            DurationMs =
+                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
+                                    ? durationMs
+                                    : null,
+                            Album =
+                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
+                                    ? album
+                                    : null,
+                            AlbumArtists = [artist],
+                            Artists = [artist],
+                            Title = title,
+                        }
+                    )
+                ) as Lyricify.Lyrics.Searchers.QQMusicSearchResult
+            )?.Id;
+            if (queryId is string id)
+            {
+                return (await Lyricify.Lyrics.Decrypter.Qrc.Helper.GetLyricsAsync(id))?.Lyrics;
+            }
+            return null;
+        }
+
+        private async Task<string?> SearchKugouAsync(
+            string title,
+            string artist,
+            string album,
+            int durationMs,
+            MusicSearchMatchMode matchMode
+        )
+        {
+            string? queryHash = (
+                (
+                    await new Lyricify.Lyrics.Searchers.KugouSearcher().SearchForResult(
+                        new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
+                        {
+                            DurationMs =
+                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
+                                    ? durationMs
+                                    : null,
+                            Album =
+                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
+                                    ? album
+                                    : null,
+                            AlbumArtists = [artist],
+                            Artists = [artist],
+                            Title = title,
+                        }
+                    )
+                ) as Lyricify.Lyrics.Searchers.KugouSearchResult
+            )?.Hash;
+            if (queryHash != null)
+            {
+                var candidate = (
+                    await Lyricify.Lyrics.Helpers.ProviderHelper.KugouApi.GetSearchLyrics(
+                        hash: queryHash
+                    )
+                )?.Candidates.FirstOrDefault();
+                if (candidate != null)
+                {
+                    return await Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyricsAsync(
+                        candidate.Id,
+                        candidate.AccessKey
+                    );
+                }
+            }
+            return null;
+        }
+
+        private async Task<string?> SearchNeteaseAsync(
+            string title,
+            string artist,
+            string album,
+            int durationMs,
+            MusicSearchMatchMode matchMode
+        )
+        {
+            string? queryId = (
+                (
+                    await new Lyricify.Lyrics.Searchers.NeteaseSearcher().SearchForResult(
+                        new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
+                        {
+                            DurationMs =
+                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
+                                    ? durationMs
+                                    : null,
+                            Album =
+                                matchMode == MusicSearchMatchMode.TitleArtistAlbumAndDuration
+                                    ? album
+                                    : null,
+                            AlbumArtists = [artist],
+                            Artists = [artist],
+                            Title = title,
+                        }
+                    )
+                ) as Lyricify.Lyrics.Searchers.NeteaseSearchResult
+            )?.Id;
+            if (queryId != null)
+            {
+                return (await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyric(queryId))
+                    ?.Lrc
+                    .Lyric;
+            }
             return null;
         }
 

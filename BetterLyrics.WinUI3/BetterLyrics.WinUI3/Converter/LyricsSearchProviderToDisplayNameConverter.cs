@@ -9,7 +9,7 @@ namespace BetterLyrics.WinUI3.Converter
     /// <summary>
     /// Defines the <see cref="LyricsSearchProviderToDisplayNameConverter" />
     /// </summary>
-    public class LyricsSearchProviderToDisplayNameConverter : IValueConverter
+    public partial class LyricsSearchProviderToDisplayNameConverter : IValueConverter
     {
         #region Methods
 
@@ -30,9 +30,18 @@ namespace BetterLyrics.WinUI3.Converter
                     LyricsSearchProvider.LrcLib => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderLrcLib"
                     ),
-                    //LyricsSearchProvider.AmllTtmlDb => App.ResourceLoader!.GetString(
-                    //    "LyricsSearchProviderAmllTtmlDb"
-                    //),
+                    LyricsSearchProvider.QQ => App.ResourceLoader!.GetString(
+                        "LyricsSearchProviderQQ"
+                    ),
+                    LyricsSearchProvider.Netease => App.ResourceLoader!.GetString(
+                        "LyricsSearchProviderNetease"
+                    ),
+                    LyricsSearchProvider.Kugou => App.ResourceLoader!.GetString(
+                        "LyricsSearchProviderKugou"
+                    ),
+                    LyricsSearchProvider.AmllTtmlDb => App.ResourceLoader!.GetString(
+                        "LyricsSearchProviderAmllTtmlDb"
+                    ),
                     LyricsSearchProvider.LocalLrcFile => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderLocalLrcFile"
                     ),
@@ -45,7 +54,7 @@ namespace BetterLyrics.WinUI3.Converter
                     LyricsSearchProvider.LocalTtmlFile => App.ResourceLoader!.GetString(
                         "LyricsSearchProviderTtmlFile"
                     ),
-                    _ => throw new ArgumentOutOfRangeException(nameof(provider), provider, null),
+                    _ => "",
                 };
             }
             return "";

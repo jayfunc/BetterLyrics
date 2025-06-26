@@ -29,6 +29,9 @@ namespace BetterLyrics.WinUI3.Enums
         /// Defines the Ttml
         /// </summary>
         Ttml,
+        Qrc,
+        Krc,
+        NotSpecified,
     }
 
     #endregion
@@ -45,7 +48,7 @@ namespace BetterLyrics.WinUI3.Enums
         /// </summary>
         /// <param name="content">The content<see cref="string"/></param>
         /// <returns>The <see cref="LyricsFormat?"/></returns>
-        public static LyricsFormat? Detect(string content)
+        public static LyricsFormat? DetectFormat(this string content)
         {
             if (
                 content.StartsWith("<?xml")
@@ -81,9 +84,11 @@ namespace BetterLyrics.WinUI3.Enums
             return format switch
             {
                 LyricsFormat.Lrc => ".lrc",
+                LyricsFormat.Qrc => ".qrc",
+                LyricsFormat.Krc => ".krc",
                 LyricsFormat.Eslrc => ".eslrc",
                 LyricsFormat.Ttml => ".ttml",
-                _ => throw new ArgumentOutOfRangeException(nameof(format), format, null),
+                _ => ".*",
             };
         }
 
