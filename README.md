@@ -35,7 +35,7 @@ Your smooth dynamic lyrics display tool built with WinUI 3
 - From online lyrics providers
   - QQ Music
   - Netease Cloud Music
-  - Kugou Misic
+  - Kugou Music
   - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
   - [LRCLIB](https://lrclib.net/)
 
