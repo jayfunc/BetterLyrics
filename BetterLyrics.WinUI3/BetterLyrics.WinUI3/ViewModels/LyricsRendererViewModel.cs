@@ -356,10 +356,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// </summary>
         public TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether IsDockMode
-        /// </summary>
-        private bool IsDockMode { get; set; } = false;
+        private bool _isDockMode = false;
+
+        private bool _isDesktopMode = false;
 
         #endregion
 

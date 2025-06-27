@@ -510,4 +510,25 @@
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>디버그 오버레이를 표시하십시오</value>
   </data>
+  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
+    <value>의존성</value>
+  </data>
+  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>잠금</value>
+  </data>
+  <data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>열기 설정</value>
+  </data>
+  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>프로그램을 종료하십시오</value>
+  </data>
+  <data name="SystemTrayUnlock.Text" xml:space="preserve">
+    <value>창을 잠금 해제하십시오</value>
+  </data>
+  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>잠금</value>
+  </data>
+  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
+    <value>잠금 잠금을 해제하려면 시스템 트레이로 이동하여 잠금을 해제하십시오.</value>
+  </data>
 </root>

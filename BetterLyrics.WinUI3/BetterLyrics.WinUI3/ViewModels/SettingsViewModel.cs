@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -17,6 +18,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Globalization;
 using Windows.Media;
@@ -196,7 +198,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <summary>
         /// Gets or sets the Version
         /// </summary>
-        public string Version { get; set; } = AppInfo.AppVersion;
+        public string Version { get; set; } = Helper.AppInfo.AppVersion;
 
         #endregion
 
@@ -341,7 +343,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Launcher.LaunchUriAsync(new Uri(AppInfo.GithubUrl));
+            await Launcher.LaunchUriAsync(new Uri(Helper.AppInfo.GithubUrl));
         }
 
         /// <summary>
@@ -366,7 +368,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void OpenCacheFolder()
         {
-            OpenFolderInFileExplorer(AppInfo.CacheFolder);
+            OpenFolderInFileExplorer(Helper.AppInfo.CacheFolder);
         }
 
         /// <summary>
@@ -375,8 +377,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void PlayTestingMusicTask()
         {
-            AddFolderAsync(AppInfo.AssetsFolder);
-            _mediaPlayer.SetUriSource(new Uri(AppInfo.TestMusicPath));
+            AddFolderAsync(Helper.AppInfo.AssetsFolder);
+            _mediaPlayer.SetUriSource(new Uri(Helper.AppInfo.TestMusicPath));
             _mediaPlayer.Play();
         }
 

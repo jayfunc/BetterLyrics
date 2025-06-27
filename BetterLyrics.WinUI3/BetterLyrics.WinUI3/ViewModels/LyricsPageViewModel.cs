@@ -14,6 +14,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
+using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -36,7 +37,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <summary>
         /// Defines the _preferredDisplayTypeBeforeSwitchToDockMode
         /// </summary>
-        private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToDockMode;
+        private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToNonStandardMode;
 
         #endregion
 
@@ -188,22 +189,27 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(HostWindowViewModel.IsDockMode))
                 {
                     IsNotMockMode = !message.NewValue;
-                    if (message.NewValue)
-                    {
-                        _preferredDisplayTypeBeforeSwitchToDockMode = PreferredDisplayType;
-                        PreferredDisplayType = LyricsDisplayType.LyricsOnly;
-                    }
-                    else
-                    {
-                        PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToDockMode;
-                    }
+                    SetNonStandardModePreferredDisplayType(message.NewValue);
                     TrySwitchToPreferredDisplayType(SongInfo);
                 }
                 else if (message.PropertyName == nameof(HostWindowViewModel.IsDesktopMode))
                 {
-                    if (message.NewValue) { }
-                    else { }
+                    SetNonStandardModePreferredDisplayType(message.NewValue);
+                    TrySwitchToPreferredDisplayType(SongInfo);
                 }
+            }
+        }
+
+        private void SetNonStandardModePreferredDisplayType(bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                _preferredDisplayTypeBeforeSwitchToNonStandardMode = PreferredDisplayType;
+                PreferredDisplayType = LyricsDisplayType.LyricsOnly;
+            }
+            else
+            {
+                PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToNonStandardMode;
             }
         }
 

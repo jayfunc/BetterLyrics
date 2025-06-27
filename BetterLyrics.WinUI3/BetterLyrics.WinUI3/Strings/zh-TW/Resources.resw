@@ -510,4 +510,25 @@
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>顯示調試覆蓋層</value>
   </data>
+  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
+    <value>依賴</value>
+  </data>
+  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>鎖定</value>
+  </data>
+  <data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>打開設置</value>
+  </data>
+  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>退出程序</value>
+  </data>
+  <data name="SystemTrayUnlock.Text" xml:space="preserve">
+    <value>解鎖窗口</value>
+  </data>
+  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>鎖定</value>
+  </data>
+  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
+    <value>鎖定後解鎖，請轉到系統托盤解鎖</value>
+  </data>
 </root>

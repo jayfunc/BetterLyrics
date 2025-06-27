@@ -9,6 +9,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
     mc:Ignorable="d">
@@ -473,6 +474,9 @@
                                     Command="{x:Bind ViewModel.LaunchProjectGitHubPageCommand}"
                                     HeaderIcon="{ui:FontIcon Glyph=&#xE943;}"
                                     IsClickEnabled="True" />
+
+                                <uc:DependenciesSettingsExpander />
+
                             </StackPanel>
                         </controls:Case>
 

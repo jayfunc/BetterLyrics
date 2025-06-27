@@ -11,13 +11,10 @@ namespace BetterLyrics.WinUI3.Enums
     /// </summary>
     public enum LyricsSearchProvider
     {
-        /// <summary>
-        /// Defines the LrcLib
-        /// </summary>
-        LrcLib,
         QQ,
-        Netease,
         Kugou,
+        Netease,
+        LrcLib,
 
         AmllTtmlDb,
 
