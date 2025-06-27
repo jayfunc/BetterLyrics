@@ -9,7 +9,7 @@ BetterLyrics
 </div>
 
 <h3 align="center">
-Your smooth dynamic local lyrics display built with WinUI 3
+Your smooth dynamic lyrics display tool built with WinUI 3
 </div>
 
 ---
@@ -33,6 +33,10 @@ Your smooth dynamic local lyrics display built with WinUI 3
   - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
 
 - From online lyrics providers
+  - QQ Music
+  - Netease Cloud Music
+  - Kugou Misic
+  - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
   - [LRCLIB](https://lrclib.net/)
 
 ## Customize in your way
@@ -66,7 +70,6 @@ We provide more than one setting item to better align with your preference
   - Opacity
   - Blur amount
   - Dynamic **glow** effect
-    - Whole lyrics
     - Line by line
     - Word by word
 
