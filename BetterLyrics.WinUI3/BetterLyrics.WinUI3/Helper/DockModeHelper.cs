@@ -11,7 +11,7 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public static class DockHelper
+    public static class DockModeHelper
     {
         private static readonly HashSet<IntPtr> _registered = [];
 

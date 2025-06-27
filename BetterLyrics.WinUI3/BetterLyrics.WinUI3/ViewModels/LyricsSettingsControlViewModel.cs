@@ -1,48 +1,23 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿// 2025/6/23 by Zhe Fang
+
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterInAppLyrics.WinUI3.ViewModels
 {
+    /// <summary>
+    /// Defines the <see cref="LyricsSettingsControlViewModel" />
+    /// </summary>
     public partial class LyricsSettingsControlViewModel : BaseViewModel
     {
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial LyricsAlignmentType LyricsAlignmentType { get; set; }
+        #region Constructors
 
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial LyricsFontWeight LyricsFontWeight { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial int LyricsBlurAmount { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial int LyricsVerticalEdgeOpacity { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial float LyricsLineSpacingFactor { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial int LyricsFontSize { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsLyricsGlowEffectEnabled { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial LyricsFontColorType LyricsFontColorType { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial LyricsGlowEffectScope LyricsGlowEffectScope { get; set; }
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LyricsSettingsControlViewModel"/> class.
+        /// </summary>
+        /// <param name="settingsService">The settingsService<see cref="ISettingsService"/></param>
         public LyricsSettingsControlViewModel(ISettingsService settingsService)
             : base(settingsService)
         {
@@ -59,49 +34,158 @@ namespace BetterInAppLyrics.WinUI3.ViewModels
             LyricsFontColorType = _settingsService.LyricsFontColorType;
         }
 
-        partial void OnLyricsAlignmentTypeChanged(LyricsAlignmentType value)
-        {
-            _settingsService.LyricsAlignmentType = value;
-        }
+        #endregion
 
-        partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
-        {
-            _settingsService.LyricsFontWeight = value;
-        }
+        #region Properties
 
-        partial void OnLyricsBlurAmountChanged(int value)
-        {
-            _settingsService.LyricsBlurAmount = value;
-        }
+        /// <summary>
+        /// Gets or sets a value indicating whether IsLyricsGlowEffectEnabled
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsLyricsGlowEffectEnabled { get; set; }
 
-        partial void OnLyricsVerticalEdgeOpacityChanged(int value)
-        {
-            _settingsService.LyricsVerticalEdgeOpacity = value;
-        }
+        /// <summary>
+        /// Gets or sets the LyricsAlignmentType
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsAlignmentType LyricsAlignmentType { get; set; }
 
-        partial void OnLyricsLineSpacingFactorChanged(float value)
-        {
-            _settingsService.LyricsLineSpacingFactor = value;
-        }
+        /// <summary>
+        /// Gets or sets the LyricsBlurAmount
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsBlurAmount { get; set; }
 
-        partial void OnLyricsFontSizeChanged(int value)
-        {
-            _settingsService.LyricsFontSize = value;
-        }
+        /// <summary>
+        /// Gets or sets the LyricsFontColorType
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsFontColorType LyricsFontColorType { get; set; }
 
+        /// <summary>
+        /// Gets or sets the LyricsFontSize
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsFontSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the LyricsFontWeight
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsFontWeight LyricsFontWeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the LyricsGlowEffectScope
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LineRenderingType LyricsGlowEffectScope { get; set; }
+
+        /// <summary>
+        /// Gets or sets the LyricsLineSpacingFactor
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial float LyricsLineSpacingFactor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the LyricsVerticalEdgeOpacity
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsVerticalEdgeOpacity { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The OnIsLyricsGlowEffectEnabledChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="bool"/></param>
         partial void OnIsLyricsGlowEffectEnabledChanged(bool value)
         {
             _settingsService.IsLyricsGlowEffectEnabled = value;
         }
 
+        /// <summary>
+        /// The OnLyricsAlignmentTypeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="LyricsAlignmentType"/></param>
+        partial void OnLyricsAlignmentTypeChanged(LyricsAlignmentType value)
+        {
+            _settingsService.LyricsAlignmentType = value;
+        }
+
+        /// <summary>
+        /// The OnLyricsBlurAmountChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="int"/></param>
+        partial void OnLyricsBlurAmountChanged(int value)
+        {
+            _settingsService.LyricsBlurAmount = value;
+        }
+
+        /// <summary>
+        /// The OnLyricsFontColorTypeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="LyricsFontColorType"/></param>
         partial void OnLyricsFontColorTypeChanged(LyricsFontColorType value)
         {
             _settingsService.LyricsFontColorType = value;
         }
 
-        partial void OnLyricsGlowEffectScopeChanged(LyricsGlowEffectScope value)
+        /// <summary>
+        /// The OnLyricsFontSizeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="int"/></param>
+        partial void OnLyricsFontSizeChanged(int value)
+        {
+            _settingsService.LyricsFontSize = value;
+        }
+
+        /// <summary>
+        /// The OnLyricsFontWeightChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="LyricsFontWeight"/></param>
+        partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
+        {
+            _settingsService.LyricsFontWeight = value;
+        }
+
+        /// <summary>
+        /// The OnLyricsGlowEffectScopeChanged
+        /// </summary>
+        /// <param name="value">The value<see tef="LyricsGlowEffectScope"/></param>
+        partial void OnLyricsGlowEffectScopeChanged(LineRenderingType value)
         {
             _settingsService?.LyricsGlowEffectScope = value;
         }
+
+        /// <summary>
+        /// The OnLyricsLineSpacingFactorChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="float"/></param>
+        partial void OnLyricsLineSpacingFactorChanged(float value)
+        {
+            _settingsService.LyricsLineSpacingFactor = value;
+        }
+
+        /// <summary>
+        /// The OnLyricsVerticalEdgeOpacityChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="int"/></param>
+        partial void OnLyricsVerticalEdgeOpacityChanged(int value)
+        {
+            _settingsService.LyricsVerticalEdgeOpacity = value;
+        }
+
+        #endregion
     }
 }

@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.UI.Xaml;
+﻿// 2025/6/23 by Zhe Fang
+
+using System;
 using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    internal class EnumToIntConverter : IValueConverter
+    /// <summary>
+    /// Defines the <see cref="EnumToIntConverter" />
+    /// </summary>
+    internal partial class EnumToIntConverter : IValueConverter
     {
+        #region Methods
+
+        /// <summary>
+        /// The Convert
+        /// </summary>
+        /// <param name="value">The value<see cref="object"/></param>
+        /// <param name="targetType">The targetType<see cref="Type"/></param>
+        /// <param name="parameter">The parameter<see cref="object"/></param>
+        /// <param name="language">The language<see cref="string"/></param>
+        /// <returns>The <see cref="object"/></returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is Enum)
@@ -19,6 +29,14 @@ namespace BetterLyrics.WinUI3.Converter
             return 0;
         }
 
+        /// <summary>
+        /// The ConvertBack
+        /// </summary>
+        /// <param name="value">The value<see cref="object"/></param>
+        /// <param name="targetType">The targetType<see cref="Type"/></param>
+        /// <param name="parameter">The parameter<see cref="object"/></param>
+        /// <param name="language">The language<see cref="string"/></param>
+        /// <returns>The <see cref="object"/></returns>
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             if (value is int && targetType.IsEnum)
@@ -27,5 +45,7 @@ namespace BetterLyrics.WinUI3.Converter
             }
             return Enum.ToObject(targetType, 0);
         }
+
+        #endregion
     }
 }

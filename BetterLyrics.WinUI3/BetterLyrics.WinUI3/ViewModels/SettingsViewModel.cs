@@ -1,9 +1,12 @@
-﻿using System;
+﻿// 2025/6/23 by Zhe Fang
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -15,6 +18,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Globalization;
 using Windows.Media;
@@ -24,66 +28,43 @@ using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
+    /// <summary>
+    /// Defines the <see cref="SettingsViewModel" />
+    /// </summary>
     public partial class SettingsViewModel : ObservableRecipient
     {
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial ElementTheme ThemeType { get; set; }
+        #region Fields
 
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial BackdropType BackdropType { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial TitleBarType TitleBarType { get; set; }
-
-        [ObservableProperty]
-        public partial AutoStartWindowType AutoStartWindowType { get; set; }
-
-        [ObservableProperty]
-        public partial ObservableCollection<LocalLyricsFolder> LocalLyricsFolders { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial ObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial int CoverImageRadius { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsCoverOverlayEnabled { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsDynamicCoverOverlayEnabled { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial int CoverOverlayOpacity { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial int CoverOverlayBlurAmount { get; set; }
-
-        [ObservableProperty]
-        public partial Enums.Language Language { get; set; }
-
-        public string Version { get; set; } = AppInfo.AppVersion;
-
-        [ObservableProperty]
-        public partial object NavViewSelectedItemTag { get; set; } = "LyricsLib";
-
-        [ObservableProperty]
-        public partial Thickness RootGridMargin { get; set; } = new(0, 0, 0, 0);
-
-        private readonly MediaPlayer _mediaPlayer = new();
-        private readonly ISettingsService _settingsService;
+        /// <summary>
+        /// Defines the _libWatcherService
+        /// </summary>
         private readonly ILibWatcherService _libWatcherService;
+
+        /// <summary>
+        /// Defines the _mediaPlayer
+        /// </summary>
+        private readonly MediaPlayer _mediaPlayer = new();
+
+        /// <summary>
+        /// Defines the _playbackService
+        /// </summary>
         private readonly IPlaybackService _playbackService;
 
+        /// <summary>
+        /// Defines the _settingsService
+        /// </summary>
+        private readonly ISettingsService _settingsService;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsViewModel"/> class.
+        /// </summary>
+        /// <param name="settingsService">The settingsService<see cref="ISettingsService"/></param>
+        /// <param name="libWatcherService">The libWatcherService<see cref="ILibWatcherService"/></param>
+        /// <param name="playbackService">The playbackService<see cref="IPlaybackService"/></param>
         public SettingsViewModel(
             ISettingsService settingsService,
             ILibWatcherService libWatcherService,
@@ -113,88 +94,119 @@ namespace BetterLyrics.WinUI3.ViewModels
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
         }
 
-        partial void OnLanguageChanged(Enums.Language value)
-        {
-            switch (value)
-            {
-                case Enums.Language.FollowSystem:
-                    ApplicationLanguages.PrimaryLanguageOverride = "";
-                    break;
-                case Enums.Language.English:
-                    ApplicationLanguages.PrimaryLanguageOverride = "en-US";
-                    break;
-                case Enums.Language.SimplifiedChinese:
-                    ApplicationLanguages.PrimaryLanguageOverride = "zh-CN";
-                    break;
-                case Enums.Language.TraditionalChinese:
-                    ApplicationLanguages.PrimaryLanguageOverride = "zh-TW";
-                    break;
-                case Enums.Language.Japanese:
-                    ApplicationLanguages.PrimaryLanguageOverride = "ja-JP";
-                    break;
-                case Enums.Language.Korean:
-                    ApplicationLanguages.PrimaryLanguageOverride = "ko-KR";
-                    break;
-                default:
-                    break;
-            }
-            _settingsService.Language = Language;
-        }
+        #endregion
 
-        partial void OnThemeTypeChanged(ElementTheme value)
-        {
-            _settingsService.ThemeType = value;
-        }
+        #region Properties
 
-        partial void OnBackdropTypeChanged(BackdropType value)
-        {
-            _settingsService.BackdropType = value;
-        }
+        /// <summary>
+        /// Gets or sets the AutoStartWindowType
+        /// </summary>
+        [ObservableProperty]
+        public partial AutoStartWindowType AutoStartWindowType { get; set; }
 
-        partial void OnTitleBarTypeChanged(TitleBarType value)
-        {
-            _settingsService.TitleBarType = value;
-            RootGridMargin = new Thickness(0, value.GetHeight(), 0, 0);
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsDebugOverlayEnabled { get; set; } = false;
 
-        partial void OnAutoStartWindowTypeChanged(AutoStartWindowType value)
-        {
-            _settingsService.AutoStartWindowType = value;
-        }
+        /// <summary>
+        /// Gets or sets the BackdropType
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial BackdropType BackdropType { get; set; }
 
-        partial void OnCoverImageRadiusChanged(int value)
-        {
-            _settingsService.CoverImageRadius = value;
-        }
+        /// <summary>
+        /// Gets or sets the CoverImageRadius
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int CoverImageRadius { get; set; }
 
-        partial void OnIsCoverOverlayEnabledChanged(bool value)
-        {
-            _settingsService.IsCoverOverlayEnabled = value;
-        }
+        /// <summary>
+        /// Gets or sets the CoverOverlayBlurAmount
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int CoverOverlayBlurAmount { get; set; }
 
-        partial void OnIsDynamicCoverOverlayEnabledChanged(bool value)
-        {
-            _settingsService.IsDynamicCoverOverlayEnabled = value;
-        }
+        /// <summary>
+        /// Gets or sets the CoverOverlayOpacity
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int CoverOverlayOpacity { get; set; }
 
-        partial void OnCoverOverlayOpacityChanged(int value)
-        {
-            _settingsService.CoverOverlayOpacity = value;
-        }
+        /// <summary>
+        /// Gets or sets a value indicating whether IsCoverOverlayEnabled
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsCoverOverlayEnabled { get; set; }
 
-        partial void OnCoverOverlayBlurAmountChanged(int value)
-        {
-            _settingsService.CoverOverlayBlurAmount = value;
-        }
+        /// <summary>
+        /// Gets or sets a value indicating whether IsDynamicCoverOverlayEnabled
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsDynamicCoverOverlayEnabled { get; set; }
 
-        public void RemoveFolderAsync(LocalLyricsFolder folder)
-        {
-            LocalLyricsFolders.Remove(folder);
-            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
-            _libWatcherService.UpdateWatchers([.. LocalLyricsFolders]);
-            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
-        }
+        /// <summary>
+        /// Gets or sets the Language
+        /// </summary>
+        [ObservableProperty]
+        public partial Enums.Language Language { get; set; }
 
+        /// <summary>
+        /// Gets or sets the LocalLyricsFolders
+        /// </summary>
+        [ObservableProperty]
+        public partial ObservableCollection<LocalLyricsFolder> LocalLyricsFolders { get; set; }
+
+        /// <summary>
+        /// Gets or sets the LyricsSearchProvidersInfo
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial ObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the NavViewSelectedItemTag
+        /// </summary>
+        [ObservableProperty]
+        public partial object NavViewSelectedItemTag { get; set; } = "LyricsLib";
+
+        /// <summary>
+        /// Gets or sets the RootGridMargin
+        /// </summary>
+        [ObservableProperty]
+        public partial Thickness RootGridMargin { get; set; } = new(0, 0, 0, 0);
+
+        /// <summary>
+        /// Gets or sets the ThemeType
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial ElementTheme ThemeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TitleBarType
+        /// </summary>
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial TitleBarType TitleBarType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Version
+        /// </summary>
+        public string Version { get; set; } = Helper.AppInfo.AppVersion;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The OnLyricsSearchProvidersReordered
+        /// </summary>
         public void OnLyricsSearchProvidersReordered()
         {
             _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
@@ -205,24 +217,55 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
         }
 
-        [RelayCommand]
-        private async Task SelectAndAddFolderAsync(UIElement sender)
+        /// <summary>
+        /// The OpenMusicFolder
+        /// </summary>
+        /// <param name="folder">The folder<see cref="LocalLyricsFolder"/></param>
+        public void OpenMusicFolder(LocalLyricsFolder folder)
         {
-            var picker = new Windows.Storage.Pickers.FolderPicker();
-
-            picker.FileTypeFilter.Add("*");
-
-            var hwnd = WindowNative.GetWindowHandle(WindowHelper.GetWindowForElement(sender));
-            InitializeWithWindow.Initialize(picker, hwnd);
-
-            var folder = await picker.PickSingleFolderAsync();
-
-            if (folder != null)
-            {
-                AddFolderAsync(folder.Path);
-            }
+            OpenFolderInFileExplorer(folder.Path);
         }
 
+        /// <summary>
+        /// The RemoveFolderAsync
+        /// </summary>
+        /// <param name="folder">The folder<see cref="LocalLyricsFolder"/></param>
+        public void RemoveFolderAsync(LocalLyricsFolder folder)
+        {
+            LocalLyricsFolders.Remove(folder);
+            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
+            _libWatcherService.UpdateWatchers([.. LocalLyricsFolders]);
+            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
+        }
+
+        /// <summary>
+        /// The ToggleLocalLyricsFolder
+        /// </summary>
+        /// <param name="folder">The folder<see cref="LocalLyricsFolder"/></param>
+        public void ToggleLocalLyricsFolder(LocalLyricsFolder folder)
+        {
+            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
+            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
+        }
+
+        /// <summary>
+        /// The ToggleLyricsSearchProvider
+        /// </summary>
+        /// <param name="providerInfo">The providerInfo<see cref="LyricsSearchProviderInfo"/></param>
+        public void ToggleLyricsSearchProvider(LyricsSearchProviderInfo providerInfo)
+        {
+            _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
+            Broadcast(
+                LyricsSearchProvidersInfo,
+                LyricsSearchProvidersInfo,
+                nameof(LyricsSearchProvidersInfo)
+            );
+        }
+
+        /// <summary>
+        /// The AddFolderAsync
+        /// </summary>
+        /// <param name="path">The path<see cref="string"/></param>
         private void AddFolderAsync(string path)
         {
             var normalizedPath =
@@ -293,12 +336,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
+        /// <summary>
+        /// The LaunchProjectGitHubPageAsync
+        /// </summary>
+        /// <returns>The <see cref="Task"/></returns>
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Launcher.LaunchUriAsync(new Uri(AppInfo.GithubUrl));
+            await Launcher.LaunchUriAsync(new Uri(Helper.AppInfo.GithubUrl));
         }
 
+        /// <summary>
+        /// The OpenFolderInFileExplorer
+        /// </summary>
+        /// <param name="path">The path<see cref="string"/></param>
         private void OpenFolderInFileExplorer(string path)
         {
             Process.Start(
@@ -311,11 +362,29 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
         }
 
-        public void OpenMusicFolder(LocalLyricsFolder folder)
+        /// <summary>
+        /// The OpenLogFolder
+        /// </summary>
+        [RelayCommand]
+        private void OpenCacheFolder()
         {
-            OpenFolderInFileExplorer(folder.Path);
+            OpenFolderInFileExplorer(Helper.AppInfo.CacheFolder);
         }
 
+        /// <summary>
+        /// The PlayTestingMusicTask
+        /// </summary>
+        [RelayCommand]
+        private void PlayTestingMusicTask()
+        {
+            AddFolderAsync(Helper.AppInfo.AssetsFolder);
+            _mediaPlayer.SetUriSource(new Uri(Helper.AppInfo.TestMusicPath));
+            _mediaPlayer.Play();
+        }
+
+        /// <summary>
+        /// The RestartApp
+        /// </summary>
         [RelayCommand]
         private void RestartApp()
         {
@@ -337,34 +406,143 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
+        /// <summary>
+        /// The SelectAndAddFolderAsync
+        /// </summary>
+        /// <param name="sender">The sender<see cref="UIElement"/></param>
+        /// <returns>The <see cref="Task"/></returns>
         [RelayCommand]
-        private void PlayTestingMusicTask()
+        private async Task SelectAndAddFolderAsync(UIElement sender)
         {
-            AddFolderAsync(AppInfo.AssetsFolder);
-            _mediaPlayer.SetUriSource(new Uri(AppInfo.TestMusicPath));
-            _mediaPlayer.Play();
+            var picker = new Windows.Storage.Pickers.FolderPicker();
+
+            picker.FileTypeFilter.Add("*");
+
+            var hwnd = WindowNative.GetWindowHandle(WindowHelper.GetWindowForElement(sender));
+            InitializeWithWindow.Initialize(picker, hwnd);
+
+            var folder = await picker.PickSingleFolderAsync();
+
+            if (folder != null)
+            {
+                AddFolderAsync(folder.Path);
+            }
         }
 
-        [RelayCommand]
-        private void OpenLogFolder()
+        /// <summary>
+        /// The OnAutoStartWindowTypeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="AutoStartWindowType"/></param>
+        partial void OnAutoStartWindowTypeChanged(AutoStartWindowType value)
         {
-            OpenFolderInFileExplorer(AppInfo.LogDirectory);
+            _settingsService.AutoStartWindowType = value;
         }
 
-        public void ToggleLyricsSearchProvider(LyricsSearchProviderInfo providerInfo)
+        /// <summary>
+        /// The OnBackdropTypeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="BackdropType"/></param>
+        partial void OnBackdropTypeChanged(BackdropType value)
         {
-            _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
-            Broadcast(
-                LyricsSearchProvidersInfo,
-                LyricsSearchProvidersInfo,
-                nameof(LyricsSearchProvidersInfo)
-            );
+            _settingsService.BackdropType = value;
         }
 
-        public void ToggleLocalLyricsFolder(LocalLyricsFolder folder)
+        /// <summary>
+        /// The OnCoverImageRadiusChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="int"/></param>
+        partial void OnCoverImageRadiusChanged(int value)
         {
-            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
-            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
+            _settingsService.CoverImageRadius = value;
         }
+
+        /// <summary>
+        /// The OnCoverOverlayBlurAmountChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="int"/></param>
+        partial void OnCoverOverlayBlurAmountChanged(int value)
+        {
+            _settingsService.CoverOverlayBlurAmount = value;
+        }
+
+        /// <summary>
+        /// The OnCoverOverlayOpacityChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="int"/></param>
+        partial void OnCoverOverlayOpacityChanged(int value)
+        {
+            _settingsService.CoverOverlayOpacity = value;
+        }
+
+        /// <summary>
+        /// The OnIsCoverOverlayEnabledChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="bool"/></param>
+        partial void OnIsCoverOverlayEnabledChanged(bool value)
+        {
+            _settingsService.IsCoverOverlayEnabled = value;
+        }
+
+        /// <summary>
+        /// The OnIsDynamicCoverOverlayEnabledChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="bool"/></param>
+        partial void OnIsDynamicCoverOverlayEnabledChanged(bool value)
+        {
+            _settingsService.IsDynamicCoverOverlayEnabled = value;
+        }
+
+        /// <summary>
+        /// The OnLanguageChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="Enums.Language"/></param>
+        partial void OnLanguageChanged(Enums.Language value)
+        {
+            switch (value)
+            {
+                case Enums.Language.FollowSystem:
+                    ApplicationLanguages.PrimaryLanguageOverride = "";
+                    break;
+                case Enums.Language.English:
+                    ApplicationLanguages.PrimaryLanguageOverride = "en-US";
+                    break;
+                case Enums.Language.SimplifiedChinese:
+                    ApplicationLanguages.PrimaryLanguageOverride = "zh-CN";
+                    break;
+                case Enums.Language.TraditionalChinese:
+                    ApplicationLanguages.PrimaryLanguageOverride = "zh-TW";
+                    break;
+                case Enums.Language.Japanese:
+                    ApplicationLanguages.PrimaryLanguageOverride = "ja-JP";
+                    break;
+                case Enums.Language.Korean:
+                    ApplicationLanguages.PrimaryLanguageOverride = "ko-KR";
+                    break;
+                default:
+                    break;
+            }
+            _settingsService.Language = Language;
+        }
+
+        /// <summary>
+        /// The OnThemeTypeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="ElementTheme"/></param>
+        partial void OnThemeTypeChanged(ElementTheme value)
+        {
+            _settingsService.ThemeType = value;
+        }
+
+        /// <summary>
+        /// The OnTitleBarTypeChanged
+        /// </summary>
+        /// <param name="value">The value<see cref="TitleBarType"/></param>
+        partial void OnTitleBarTypeChanged(TitleBarType value)
+        {
+            _settingsService.TitleBarType = value;
+            RootGridMargin = new Thickness(0, value.GetHeight(), 0, 0);
+        }
+
+        #endregion
     }
 }

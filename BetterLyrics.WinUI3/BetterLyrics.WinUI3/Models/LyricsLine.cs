@@ -1,54 +1,74 @@
-﻿using System.Collections.Generic;
+﻿// 2025/6/23 by Zhe Fang
+
+using System.Collections.Generic;
 using System.Numerics;
-using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using Microsoft.Graphics.Canvas.Text;
 
 namespace BetterLyrics.WinUI3.Models
 {
+    /// <summary>
+    /// Defines the <see cref="LyricsLine" />
+    /// </summary>
     public class LyricsLine
     {
-        public string Text { get; set; } = "";
+        #region Properties
 
-        public List<CharTiming> CharTimings { get; set; } = [];
+        /// <summary>
+        /// Gets or sets the BlurAmountTransition
+        /// </summary>
+        public ValueTransition<float> BlurAmountTransition { get; set; } =
+            new(initialValue: 0f, durationSeconds: 0.3f);
 
-        public int StartMs { get; set; }
-        public int EndMs { get; set; }
+        /// <summary>
+        /// Gets or sets the CanvasTextLayout
+        /// </summary>
+        public CanvasTextLayout? CanvasTextLayout { get; set; }
 
-        public LyricsPlayingState PlayingState { get; set; }
-
-        public int DurationMs => EndMs - StartMs;
-
-        public float EnteringProgress { get; set; }
-
-        public float ExitingProgress { get; set; }
-
-        public float PlayingProgress { get; set; }
-
-        public Vector2 Position { get; set; }
-
+        /// <summary>
+        /// Gets or sets the CenterPosition
+        /// </summary>
         public Vector2 CenterPosition { get; set; }
 
-        public float Scale { get; set; }
+        /// <summary>
+        /// Gets or sets the CharTimings
+        /// </summary>
+        public List<CharTiming> CharTimings { get; set; } = [];
 
-        public float Opacity { get; set; }
+        /// <summary>
+        /// Gets the DurationMs
+        /// </summary>
+        public int DurationMs => EndMs - StartMs;
 
-        public LyricsLine Clone()
-        {
-            return new LyricsLine
-            {
-                Text = this.Text,
-                CharTimings = this.CharTimings,
-                StartMs = this.StartMs,
-                EndMs = this.EndMs,
-                PlayingState = this.PlayingState,
-                EnteringProgress = this.EnteringProgress,
-                ExitingProgress = this.ExitingProgress,
-                PlayingProgress = this.PlayingProgress,
-                Position = this.Position,
-                CenterPosition = this.CenterPosition,
-                Scale = this.Scale,
-                Opacity = this.Opacity,
-            };
-        }
+        /// <summary>
+        /// Gets or sets the EndMs
+        /// </summary>
+        public int EndMs { get; set; }
+
+        public ValueTransition<float> HighlightOpacityTransition { get; set; } =
+            new(initialValue: 0f, durationSeconds: 0.3f);
+
+        /// <summary>
+        /// Gets or sets the Position
+        /// </summary>
+        public Vector2 Position { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ScaleTransition
+        /// </summary>
+        public ValueTransition<float> ScaleTransition { get; set; } =
+            new(initialValue: 0.95f, durationSeconds: 0.3f);
+
+        /// <summary>
+        /// Gets or sets the StartMs
+        /// </summary>
+        public int StartMs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Text
+        /// </summary>
+        public string Text { get; set; } = "";
+
+        #endregion
     }
 }

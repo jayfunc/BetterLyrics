@@ -51,6 +51,30 @@
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
+                <Button
+                    x:Name="ClickThroughButton"
+                    x:Uid="HostWindowClickThroughButton"
+                    Command="{x:Bind ViewModel.LockWindowCommand}"
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Name="LockToolTip" x:Uid="HostWindowLockToolTip" />
+                    </ToolTipService.ToolTip>
+                    <interactivity:Interaction.Behaviors>
+                        <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                            <interactivity:ChangePropertyAction
+                                PropertyName="IsOpen"
+                                TargetObject="{x:Bind LockToolTip}"
+                                Value="True" />
+                        </interactivity:EventTriggerBehavior>
+                        <interactivity:EventTriggerBehavior EventName="PointerExited">
+                            <interactivity:ChangePropertyAction
+                                PropertyName="IsOpen"
+                                TargetObject="{x:Bind LockToolTip}"
+                                Value="False" />
+                        </interactivity:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </Button>
+
                 <Button x:Name="MoreButton" Style="{StaticResource TitleBarButtonStyle}">
                     <Grid>
                         <FontIcon
@@ -86,6 +110,11 @@
                                 x:Uid="HostWindowDockFlyoutItem"
                                 Command="{x:Bind ViewModel.ToggleDockModeCommand}"
                                 IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
+                            <ToggleMenuFlyoutItem
+                                x:Name="DesktopFlyoutItem"
+                                x:Uid="HostWindowDesktopFlyoutItem"
+                                Command="{x:Bind ViewModel.ToggleDesktopModeCommand}"
+                                IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=OneWay}" />
                             <ToggleMenuFlyoutItem
                                 x:Name="MiniFlyoutItem"
                                 x:Uid="BaseWindowMiniFlyoutItem"

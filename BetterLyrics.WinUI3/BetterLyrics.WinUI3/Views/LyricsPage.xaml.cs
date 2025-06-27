@@ -1,13 +1,13 @@
-﻿using System;
-using BetterLyrics.WinUI3.Helper;
+﻿// 2025/6/23 by Zhe Fang
+
+using System;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using WinUIEx;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,12 +15,15 @@ using WinUIEx;
 namespace BetterLyrics.WinUI3.Views
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// An empty page that can be used on its own or navigated to within a Frame
     /// </summary>
     public sealed partial class LyricsPage : Page
     {
-        public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
+        #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LyricsPage"/> class.
+        /// </summary>
         public LyricsPage()
         {
             this.InitializeComponent();
@@ -28,19 +31,24 @@ namespace BetterLyrics.WinUI3.Views
             DataContext = Ioc.Default.GetService<LyricsPageViewModel>();
         }
 
-        private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
-        {
-            ViewModel.IsFirstRun = false;
-        }
+        #endregion
 
-        private void CoverArea_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            CoverImageGrid.Width = CoverImageGrid.Height = Math.Min(
-                CoverArea.ActualWidth,
-                CoverArea.ActualHeight
-            );
-        }
+        #region Properties
 
+        /// <summary>
+        /// Gets the ViewModel
+        /// </summary>
+        public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// The BottomCommandGrid_PointerEntered
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="Microsoft.UI.Xaml.Input.PointerRoutedEventArgs"/></param>
         private void BottomCommandGrid_PointerEntered(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
@@ -50,6 +58,11 @@ namespace BetterLyrics.WinUI3.Views
                 BottomCommandGrid.Opacity = .5;
         }
 
+        /// <summary>
+        /// The BottomCommandGrid_PointerExited
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="Microsoft.UI.Xaml.Input.PointerRoutedEventArgs"/></param>
         private void BottomCommandGrid_PointerExited(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
@@ -59,14 +72,49 @@ namespace BetterLyrics.WinUI3.Views
                 BottomCommandGrid.Opacity = 0;
         }
 
-        private void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        /// <summary>
+        /// The CoverArea_SizeChanged
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="SizeChangedEventArgs"/></param>
+        private void CoverArea_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ViewModel.LimitedLineWidth = e.NewSize.Width;
+            CoverImageGrid.Width = CoverImageGrid.Height = Math.Min(
+                CoverArea.ActualWidth,
+                CoverArea.ActualHeight
+            );
         }
 
+        /// <summary>
+        /// The CoverImageGrid_SizeChanged
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="SizeChangedEventArgs"/></param>
         private void CoverImageGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.CoverImageGridActualHeight = e.NewSize.Height;
         }
+
+        /// <summary>
+        /// The LyricsPlaceholderGrid_SizeChanged
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="SizeChangedEventArgs"/></param>
+        private void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ViewModel.MaxLyricsWidth = e.NewSize.Width;
+        }
+
+        /// <summary>
+        /// The WelcomeTeachingTip_Closed
+        /// </summary>
+        /// <param name="sender">The sender<see cref="TeachingTip"/></param>
+        /// <param name="args">The args<see cref="TeachingTipClosedEventArgs"/></param>
+        private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
+        {
+            ViewModel.IsFirstRun = false;
+        }
+
+        #endregion
     }
 }

@@ -294,6 +294,9 @@
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>配置歌詞搜尋服務</value>
   </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
+    <value>拖動排序，歌詞搜索順序將按以下順序</value>
+  </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>添加</value>
   </data>
@@ -315,8 +318,11 @@
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>使用系統播放器播放</value>
   </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>紀錄</value>
+  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>快取</value>
+  </data>
+  <data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>包括日誌文件，網絡歌詞緩存</value>
   </data>
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>字體顏色</value>
@@ -411,6 +417,9 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>停靠模式</value>
   </data>
+  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>桌面模式</value>
+  </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>字體粗細</value>
   </data>
@@ -485,5 +494,41 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>該文件夾包含已添加文件夾，請刪除這些文件夾以添加該文件夾</value>
+  </data>
+  <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
+    <value>amll-ttml-db</value>
+  </data>
+  <data name="LyricsSearchProviderQQ" xml:space="preserve">
+    <value>QQ</value>
+  </data>
+  <data name="LyricsSearchProviderNetease" xml:space="preserve">
+    <value>Netease</value>
+  </data>
+  <data name="LyricsSearchProviderKugou" xml:space="preserve">
+    <value>Kugou</value>
+  </data>
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>顯示調試覆蓋層</value>
+  </data>
+  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
+    <value>依賴</value>
+  </data>
+  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>鎖定</value>
+  </data>
+  <data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>打開設置</value>
+  </data>
+  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>退出程序</value>
+  </data>
+  <data name="SystemTrayUnlock.Text" xml:space="preserve">
+    <value>解鎖窗口</value>
+  </data>
+  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>鎖定</value>
+  </data>
+  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
+    <value>鎖定後解鎖，請轉到系統托盤解鎖</value>
   </data>
 </root>

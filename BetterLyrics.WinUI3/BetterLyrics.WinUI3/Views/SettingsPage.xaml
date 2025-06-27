@@ -9,6 +9,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
     mc:Ignorable="d">
@@ -418,12 +419,6 @@
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount" HeaderIcon="{ui:FontIcon Glyph=&#xE727;}">
-                                    <controls:SettingsCard.Description>
-                                        <StackPanel>
-                                            <TextBlock x:Uid="SettingsPageLyricsBlurHighGPUUsage" Foreground="{ThemeResource SystemFillColorCautionBrush}" />
-                                            <TextBlock x:Uid="SettingsPageLyricsBlurAmountSideEffect" />
-                                        </StackPanel>
-                                    </controls:SettingsCard.Description>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
                                         <TextBlock
@@ -450,7 +445,6 @@
                                     <controls:SettingsExpander.Items>
                                         <controls:SettingsCard x:Uid="SettingsPageLyricsGlowEffectScope" IsEnabled="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
                                             <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeWholeLyrics" />
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentLine" />
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentChar" />
                                             </ComboBox>
@@ -480,6 +474,9 @@
                                     Command="{x:Bind ViewModel.LaunchProjectGitHubPageCommand}"
                                     HeaderIcon="{ui:FontIcon Glyph=&#xE943;}"
                                     IsClickEnabled="True" />
+
+                                <uc:DependenciesSettingsExpander />
+
                             </StackPanel>
                         </controls:Case>
 
@@ -488,8 +485,11 @@
                                 <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
                                     <Button x:Uid="SettingsPagePlayingMockMusicButton" Command="{x:Bind ViewModel.PlayTestingMusicTaskCommand}" />
                                 </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="SettingsPageLog">
-                                    <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenLogFolderCommand}" />
+                                <controls:SettingsCard x:Uid="SettingsPageCache">
+                                    <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
                             </StackPanel>
                         </controls:Case>

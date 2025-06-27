@@ -294,6 +294,9 @@
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>歌詞検索プロバイダーを構成します</value>
   </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
+    <value>ドラッグしてソートすると、歌詞の検索注文は次の順序で行われます</value>
+  </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>追加</value>
   </data>
@@ -315,8 +318,11 @@
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>システムプレーヤーを使用して再生します</value>
   </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>ログ</value>
+  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>キャッシュ</value>
+  </data>
+  <data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>ログファイル、ネットワーク歌詞キャッシュを含む</value>
   </data>
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>フォントカラー</value>
@@ -411,6 +417,9 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>ドックモード</value>
   </data>
+  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>デスクトップモード</value>
+  </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>フォント重量</value>
   </data>
@@ -485,5 +494,41 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>このフォルダーには追加されたフォルダーが含まれています。これらのフォルダを削除してフォルダーを追加してください</value>
+  </data>
+  <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
+    <value>amll-ttml-db</value>
+  </data>
+  <data name="LyricsSearchProviderQQ" xml:space="preserve">
+    <value>QQ</value>
+  </data>
+  <data name="LyricsSearchProviderNetease" xml:space="preserve">
+    <value>Netease</value>
+  </data>
+  <data name="LyricsSearchProviderKugou" xml:space="preserve">
+    <value>Kugou</value>
+  </data>
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>デバッグオーバーレイを表示します</value>
+  </data>
+  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
+    <value>依存関係</value>
+  </data>
+  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>ロック</value>
+  </data>
+  <data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>設定を開く</value>
+  </data>
+  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>プログラムを終了します</value>
+  </data>
+  <data name="SystemTrayUnlock.Text" xml:space="preserve">
+    <value>ウィンドウのロックを解除します</value>
+  </data>
+  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>ロック</value>
+  </data>
+  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
+    <value>ロック後にロックを解除するには、システムトレイに移動してロックを解除します</value>
   </data>
 </root>
