@@ -1,10 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System;
+using System.Collections.Generic;
 using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using System;
-using System.Collections.Generic;
 using WinRT.Interop;
 using WinUIEx;
 
@@ -134,6 +134,27 @@ namespace BetterLyrics.WinUI3.Helper
 
             if (!_activeWindows.Contains(window))
                 _activeWindows.Add(window);
+
+            window.Closed -= Window_Closed;
+            window.Closed += Window_Closed;
+        }
+
+        private static void Window_Closed(object sender, WindowEventArgs e)
+        {
+            if (sender is Window closedWindow)
+            {
+                _activeWindows.Remove(closedWindow);
+
+                // 从缓存移除
+                foreach (var kvp in _windowCache)
+                {
+                    if (kvp.Value == closedWindow)
+                    {
+                        _windowCache.Remove(kvp.Key);
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>

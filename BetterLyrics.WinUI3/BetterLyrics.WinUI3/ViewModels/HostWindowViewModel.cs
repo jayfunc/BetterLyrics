@@ -146,6 +146,10 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         public partial TitleBarType TitleBarType { get; set; }
 
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsLyricsWindowLocked { get; set; } = false;
+
         #endregion
 
         #region Methods
@@ -297,6 +301,14 @@ namespace BetterLyrics.WinUI3
                 WindowHelper.GetWindowByFramePageType(typeof(LyricsPage)).SystemBackdrop =
                     SystemBackdropHelper.CreateSystemBackdrop(_settingsService.BackdropType);
             }
+        }
+
+        [RelayCommand]
+        private void LockWindow()
+        {
+            var window = WindowHelper.GetWindowByFramePageType(FramePageType);
+            DesktopModeHelper.Lock(window);
+            IsLyricsWindowLocked = true;
         }
 
         /// <summary>

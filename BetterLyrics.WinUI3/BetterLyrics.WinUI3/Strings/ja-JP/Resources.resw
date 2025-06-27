@@ -510,4 +510,25 @@
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>デバッグオーバーレイを表示します</value>
   </data>
+  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
+    <value>依存関係</value>
+  </data>
+  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>ロック</value>
+  </data>
+  <data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>設定を開く</value>
+  </data>
+  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>プログラムを終了します</value>
+  </data>
+  <data name="SystemTrayUnlock.Text" xml:space="preserve">
+    <value>ウィンドウのロックを解除します</value>
+  </data>
+  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>ロック</value>
+  </data>
+  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
+    <value>ロック後にロックを解除するには、システムトレイに移動してロックを解除します</value>
+  </data>
 </root>

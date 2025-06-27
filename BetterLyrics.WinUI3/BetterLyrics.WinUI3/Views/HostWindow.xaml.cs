@@ -1,5 +1,6 @@
 // 2025/6/23 by Zhe Fang
 
+using System;
 using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -16,7 +17,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using System;
 using WinRT.Interop;
 using WinUIEx;
 
@@ -50,21 +50,32 @@ namespace BetterLyrics.WinUI3.Views
         /// </summary>
         /// <param name="alwaysOnTop">The alwaysOnTop<see cref="bool"/></param>
         /// <param name="clickThrough">The clickThrough<see cref="bool"/></param>
-        public HostWindow(bool alwaysOnTop = false, bool clickThrough = false)
+        public HostWindow()
         {
             this.InitializeComponent();
 
             AppWindow.Changed += AppWindow_Changed;
+            AppWindow.Closing += AppWindow_Closing;
 
             this.HideSystemTitleBarAndSetCustomTitleBar(TopCommandGrid);
+        }
 
-            if (clickThrough)
-                this.SetExtendedWindowStyle(
-                    ExtendedWindowStyle.Transparent | ExtendedWindowStyle.Layered
-                );
+        private void CloseOrExit()
+        {
+            if (RootFrame.SourcePageType == typeof(LyricsPage))
+            {
+                App.Current.Exit();
+            }
+            else
+            {
+                AppWindow.Hide();
+            }
+        }
 
-            if (alwaysOnTop)
-                ((OverlappedPresenter)AppWindow.Presenter).IsAlwaysOnTop = true;
+        private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+        {
+            args.Cancel = true;
+            CloseOrExit();
         }
 
         #endregion
@@ -119,14 +130,7 @@ namespace BetterLyrics.WinUI3.Views
         /// <param name="e">The e<see cref="RoutedEventArgs"/></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (RootFrame.SourcePageType == typeof(LyricsPage))
-            {
-                Application.Current.Exit();
-            }
-            else
-            {
-                AppWindow.Hide();
-            }
+            CloseOrExit();
         }
 
         /// <summary>
@@ -280,9 +284,7 @@ namespace BetterLyrics.WinUI3.Views
         /// </summary>
         /// <param name="sender">The sender<see cref="object"/></param>
         /// <param name="e">The e<see cref="PointerRoutedEventArgs"/></param>
-        private void TopCommandGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
-        {
-        }
+        private void TopCommandGrid_PointerMoved(object sender, PointerRoutedEventArgs e) { }
 
         /// <summary>
         /// The UpdateTitleBarWindowButtonsVisibility
@@ -298,6 +300,8 @@ namespace BetterLyrics.WinUI3.Views
                         MaximiseButton.Visibility =
                         RestoreButton.Visibility =
                         AOTFlyoutItem.Visibility =
+                        DesktopFlyoutItem.Visibility =
+                        ClickThroughButton.Visibility =
                         FullScreenFlyoutItem.Visibility =
                         DockFlyoutItem.Visibility =
                             Visibility.Collapsed;
@@ -307,6 +311,8 @@ namespace BetterLyrics.WinUI3.Views
                         MaximiseButton.Visibility =
                         RestoreButton.Visibility =
                         AOTFlyoutItem.Visibility =
+                        ClickThroughButton.Visibility =
+                        DesktopFlyoutItem.Visibility =
                         MiniFlyoutItem.Visibility =
                         DockFlyoutItem.Visibility =
                             Visibility.Collapsed;
@@ -321,18 +327,36 @@ namespace BetterLyrics.WinUI3.Views
                             MaximiseButton.Visibility =
                             RestoreButton.Visibility =
                             AOTFlyoutItem.Visibility =
+                            DesktopFlyoutItem.Visibility =
+                            ClickThroughButton.Visibility =
                             FullScreenFlyoutItem.Visibility =
                             MiniFlyoutItem.Visibility =
                                 Visibility.Collapsed;
+                    }
+                    else if (DesktopFlyoutItem.IsChecked)
+                    {
+                        MinimiseButton.Visibility =
+                            MaximiseButton.Visibility =
+                            RestoreButton.Visibility =
+                            DockFlyoutItem.Visibility =
+                            AOTFlyoutItem.Visibility =
+                            FullScreenFlyoutItem.Visibility =
+                            MiniFlyoutItem.Visibility =
+                                Visibility.Collapsed;
+
+                        ClickThroughButton.Visibility = Visibility.Visible;
                     }
                     else
                     {
                         MinimiseButton.Visibility =
                             AOTFlyoutItem.Visibility =
+                            DesktopFlyoutItem.Visibility =
+                            DockFlyoutItem.Visibility =
                             MiniFlyoutItem.Visibility =
                             FullScreenFlyoutItem.Visibility =
                                 Visibility.Visible;
                         FullScreenFlyoutItem.IsChecked = false;
+                        ClickThroughButton.Visibility = Visibility.Collapsed;
                         AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
 
                         if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
@@ -354,5 +378,12 @@ namespace BetterLyrics.WinUI3.Views
         }
 
         #endregion
+
+        private void ClickThroughButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.SetExtendedWindowStyle(
+                ExtendedWindowStyle.Transparent | ExtendedWindowStyle.Layered
+            );
+        }
     }
 }

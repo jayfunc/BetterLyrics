@@ -27,16 +27,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (IsCoverOverlayEnabled)
-            {
-                DrawAlbumArtBackground(control, ds);
-            }
-
-            if (IsDockMode)
-            {
-                DrawImmersiveBackground(control, ds, IsCoverOverlayEnabled);
-            }
-
             // Blurred lyrics layer
             using var blurredLyrics = new CanvasCommandList(control);
             using (var blurredLyricsDs = blurredLyrics.CreateDrawingSession())
@@ -76,34 +66,74 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
 
-            // For desktop mode
-            //ds.DrawImage(
-            //    new ShadowEffect
-            //    {
-            //        Source = maskedBlurredLyrics,
-            //        ShadowColor = Colors.Black,
-            //        BlurAmount = 8f,
-            //        Optimization = EffectOptimization.Quality,
-            //    }
-            //);
+            using var combined = new CanvasCommandList(control);
+            using var combinedDs = combined.CreateDrawingSession();
 
-            ds.DrawImage(maskedBlurredLyrics);
-
-            var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
-            var currentPlayingLine = _multiLangLyrics
-                .SafeGet(_langIndex)
-                ?.SafeGet(currentPlayingLineIndex);
-            if (currentPlayingLine != null)
+            if (IsCoverOverlayEnabled)
             {
-                GetLinePlayingProgress(
-                    currentPlayingLine,
-                    out int charStartIndex,
-                    out int charLength,
-                    out float charProgress
-                );
+                DrawAlbumArtBackground(control, combinedDs);
+            }
 
-                if (_isDebugOverlayEnabled)
+            if (_isDockMode)
+            {
+                DrawImmersiveBackground(control, combinedDs, IsCoverOverlayEnabled);
+            }
+
+            combinedDs.DrawImage(maskedBlurredLyrics);
+
+            if (_isDesktopMode)
+            {
+                float w = (float)control.Size.Width;
+                float h = (float)control.Size.Height;
+                float maskThickness = Math.Min(18f, Math.Min(w / 2, h / 2)); // 遮罩宽度
+                float cornerRadius = maskThickness / 2; // 圆角半径
+                float blurAmount = maskThickness / 2; // 高斯模糊强度
+
+                using var mask = new CanvasCommandList(control);
+                using (var maskDs = mask.CreateDrawingSession())
                 {
+                    // 画一个比窗口小一圈的圆角矩形
+                    var rect = new Rect(
+                        maskThickness,
+                        maskThickness,
+                        w - maskThickness * 2,
+                        h - maskThickness * 2
+                    );
+                    maskDs.FillRoundedRectangle(rect, cornerRadius, cornerRadius, Colors.White);
+                }
+
+                // 对圆角矩形做高斯模糊
+                var blurredMask = new GaussianBlurEffect
+                {
+                    Source = mask,
+                    BlurAmount = blurAmount,
+                    Optimization = EffectOptimization.Quality,
+                    BorderMode = EffectBorderMode.Soft,
+                };
+
+                ds.DrawImage(new AlphaMaskEffect { Source = combined, AlphaMask = blurredMask });
+            }
+            else
+            {
+                ds.DrawImage(combined);
+            }
+
+            if (_isDebugOverlayEnabled)
+            {
+                var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
+                var currentPlayingLine = _multiLangLyrics
+                    .SafeGet(_langIndex)
+                    ?.SafeGet(currentPlayingLineIndex);
+
+                if (currentPlayingLine != null)
+                {
+                    GetLinePlayingProgress(
+                        currentPlayingLine,
+                        out int charStartIndex,
+                        out int charLength,
+                        out float charProgress
+                    );
+
                     ds.DrawText(
                         $"DEBUG: "
                             + $"播放行 {currentPlayingLineIndex}, 字符 {charStartIndex}, 长度 {charLength}, 进度 {charProgress}\n"

@@ -125,6 +125,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
                     // ViewModels
                     .AddTransient<HostWindowViewModel>()
+                    .AddSingleton<SystemTrayViewModel>()
                     .AddSingleton<SettingsViewModel>()
                     .AddSingleton<LyricsPageViewModel>()
                     .AddSingleton<LyricsRendererViewModel>()

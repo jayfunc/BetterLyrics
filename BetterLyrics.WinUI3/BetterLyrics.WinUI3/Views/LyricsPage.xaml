@@ -14,6 +14,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:renderer="using:BetterLyrics.WinUI3.Renderer"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -134,7 +135,7 @@
                                 BlurRadius="32"
                                 CornerRadius="{x:Bind ViewModel.CoverImageGridCornerRadius, Mode=OneWay, Converter={StaticResource CornerRadiusToDoubleConverter}}"
                                 InnerContentClipMode="CompositionMaskBrush"
-                                Opacity="0.5" />
+                                Opacity="0.1" />
                         </ui:Effects.Shadow>
                     </Grid>
 
@@ -348,6 +349,8 @@
             Closed="WelcomeTeachingTip_Closed"
             IsOpen="{x:Bind ViewModel.IsWelcomeTeachingTipOpen, Mode=OneWay}"
             Target="{x:Bind SettingsButton}" />
+
+        <uc:SystemTray />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="LayoutStates">

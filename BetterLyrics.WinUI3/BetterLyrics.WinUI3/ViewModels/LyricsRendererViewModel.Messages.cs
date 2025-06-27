@@ -148,7 +148,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(HostWindowViewModel.IsDockMode))
                 {
-                    IsDockMode = message.NewValue;
+                    _isDockMode = message.NewValue;
+                }
+                else if (message.PropertyName == nameof(HostWindowViewModel.IsDesktopMode))
+                {
+                    _isDesktopMode = message.NewValue;
                 }
             }
         }
