@@ -8,7 +8,6 @@ using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
-using BetterLyrics.WinUI3.Services.BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -17,9 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
-using Microsoft.Windows.AppLifecycle;
 using Serilog;
-using Windows.ApplicationModel.Activation;
 
 namespace BetterLyrics.WinUI3
 {
@@ -27,6 +24,11 @@ namespace BetterLyrics.WinUI3
     {
 
         private readonly ILogger<App> _logger;
+
+        public static new App Current => (App)Application.Current;
+        public static DispatcherQueue? DispatcherQueue { get; private set; }
+        public static DispatcherQueueTimer? DispatcherQueueTimer { get; private set; }
+        public static ResourceLoader? ResourceLoader { get; private set; }
 
         public App()
         {
@@ -47,11 +49,6 @@ namespace BetterLyrics.WinUI3
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
-
-        public static new App Current => (App)Application.Current;
-
-        public static DispatcherQueue? DispatcherQueue { get; private set; }
-        public static DispatcherQueueTimer? DispatcherQueueTimer { get; private set; }
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
