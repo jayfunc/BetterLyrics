@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
+using static BetterLyrics.WinUI3.Helper.Win32Helper;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -16,15 +17,10 @@ namespace BetterLyrics.WinUI3.Helper
         private readonly IntPtr _selfHwnd;
         private readonly DispatcherTimer _pollingTimer;
         private DateTime _lastEventTime = DateTime.MinValue;
-        private const int ThrottleIntervalMs = 100;
+        private const int ThrottleIntervalMs = 1000;
 
         public delegate void WindowChangedHandler(IntPtr hwnd);
         private readonly WindowChangedHandler _onWindowChanged;
-
-        private const uint EVENT_SYSTEM_FOREGROUND = 0x0003;
-        private const uint EVENT_SYSTEM_MINIMIZEEND = 0x0017;
-        private const uint EVENT_OBJECT_LOCATIONCHANGE = 0x800B;
-        private const uint WINEVENT_OUTOFCONTEXT = 0x0000;
 
         public ForegroundWindowWatcherHelper(IntPtr selfHwnd, WindowChangedHandler onWindowChanged)
         {
@@ -104,39 +100,10 @@ namespace BetterLyrics.WinUI3.Helper
                 _currentForeground = hwnd;
                 _onWindowChanged?.Invoke(hwnd);
             }
-            else if (
-                (eventType == EVENT_OBJECT_LOCATIONCHANGE || eventType == EVENT_SYSTEM_MINIMIZEEND)
-                && hwnd == _currentForeground
-            )
+            else if ((eventType == EVENT_OBJECT_LOCATIONCHANGE || eventType == EVENT_SYSTEM_MINIMIZEEND) && hwnd == _currentForeground)
             {
                 _onWindowChanged?.Invoke(hwnd);
             }
         }
-
-        #region WinAPI
-        private delegate void WinEventDelegate(
-            IntPtr hWinEventHook,
-            uint eventType,
-            IntPtr hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        );
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr SetWinEventHook(
-            uint eventMin,
-            uint eventMax,
-            IntPtr hmodWinEventProc,
-            WinEventDelegate lpfnWinEventProc,
-            uint idProcess,
-            uint idThread,
-            uint dwFlags
-        );
-
-        [DllImport("user32.dll")]
-        private static extern bool UnhookWinEvent(IntPtr hWinEventHook);
-        #endregion
     }
 }

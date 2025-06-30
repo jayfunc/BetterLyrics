@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Window
-    x:Class="BetterLyrics.WinUI3.Views.HostWindow"
+    x:Class="BetterLyrics.WinUI3.Views.LyricsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
@@ -11,49 +11,33 @@
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
 
     <Grid
         x:Name="RootGrid"
         PointerMoved="RootGrid_PointerMoved"
         RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
 
-        <Frame
-            x:Name="RootFrame"
-            Navigated="RootFrame_Navigated"
-            NavigationFailed="RootFrame_NavigationFailed" />
+        <local:LyricsPage />
 
         <Grid
             x:Name="TopCommandGrid"
             Height="{x:Bind ViewModel.TitleBarHeight, Mode=OneWay}"
             VerticalAlignment="Top"
             Background="Transparent"
-            Opacity="0"
-            PointerMoved="TopCommandGrid_PointerMoved">
+            Opacity="0">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
-
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-
-                <ImageIcon
-                    x:Name="AppLogoImageIcon"
-                    Height="{x:Bind ViewModel.AppLogoImageIconHeight, Mode=OneWay}"
-                    Margin="16,0"
-                    Source="ms-appx:///Assets/Logo.png" />
-
-                <TextBlock
-                    x:Name="AppTitleTextBlock"
-                    FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                    FontWeight="SemiBold"
-                    Text="{x:Bind Title, Mode=OneWay}" />
-
-            </StackPanel>
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
                 <Button
                     x:Name="ClickThroughButton"
                     x:Uid="HostWindowClickThroughButton"
+                    Background="{ThemeResource SystemColorHighlightColor}"
                     Command="{x:Bind ViewModel.LockWindowCommand}"
                     Style="{StaticResource TitleBarButtonStyle}">
                     <ToolTipService.ToolTip>
@@ -79,18 +63,18 @@
                     <Grid>
                         <FontIcon
                             Margin="0,0,0,8"
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="{StaticResource FluentIcons}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                             FontWeight="ExtraBold"
                             Glyph="&#xEF2D;" />
                         <FontIcon
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="{StaticResource FluentIcons}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                             FontWeight="ExtraBold"
                             Glyph="&#xEF2D;" />
                         <FontIcon
                             Margin="0,8,0,0"
-                            FontFamily="Segoe Fluent Icons"
+                            FontFamily="{StaticResource FluentIcons}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                             FontWeight="ExtraBold"
                             Glyph="&#xEF2D;" />
@@ -133,7 +117,7 @@
                     Click="MinimiseButton_Click"
                     Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
-                        FontFamily="Segoe Fluent Icons"
+                        FontFamily="{StaticResource FluentIcons}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2D;" />
                 </Button>
@@ -143,7 +127,7 @@
                     Click="MaximiseButton_Click"
                     Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
-                        FontFamily="Segoe Fluent Icons"
+                        FontFamily="{StaticResource FluentIcons}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2E;" />
                 </Button>
@@ -154,7 +138,7 @@
                     Style="{StaticResource TitleBarButtonStyle}"
                     Visibility="Collapsed">
                     <FontIcon
-                        FontFamily="Segoe Fluent Icons"
+                        FontFamily="{StaticResource FluentIcons}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2F;" />
                 </Button>
@@ -164,7 +148,7 @@
                     Click="CloseButton_Click"
                     Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
-                        FontFamily="Segoe Fluent Icons"
+                        FontFamily="{StaticResource FluentIcons}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xEF2C;" />
                 </Button>

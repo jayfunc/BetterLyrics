@@ -91,6 +91,9 @@
 
             <!--  Dimensions  -->
 
+            <!--  Fonts  -->
+            <FontFamily x:Key="FluentIcons">ms-appx:///Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

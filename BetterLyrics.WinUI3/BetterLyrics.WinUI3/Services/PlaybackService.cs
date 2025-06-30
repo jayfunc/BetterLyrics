@@ -1,199 +1,124 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using ATL;
-using BetterLyrics.WinUI3.Enums;
+using System;
+using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
-using System;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.Services
 {
-    /// <summary>
-    /// Defines the <see cref="PlaybackService" />
-    /// </summary>
     public partial class PlaybackService : IPlaybackService
     {
-        #region Fields
-
-        /// <summary>
-        /// Defines the _dispatcherQueue
-        /// </summary>
         private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        /// <summary>
-        /// Defines the _musicSearchService
-        /// </summary>
         private readonly IMusicSearchService _musicSearchService;
 
-        /// <summary>
-        /// Defines the _currentSession
-        /// </summary>
         private GlobalSystemMediaTransportControlsSession? _currentSession = null;
 
-        /// <summary>
-        /// Defines the _sessionManager
-        /// </summary>
         private GlobalSystemMediaTransportControlsSessionManager? _sessionManager = null;
 
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlaybackService"/> class.
-        /// </summary>
-        /// <param name="settingsService">The settingsService<see cref="ISettingsService"/></param>
-        /// <param name="musicSearchService">The musicSearchService<see cref="IMusicSearchService"/></param>
-        public PlaybackService(
-            ISettingsService settingsService,
-            IMusicSearchService musicSearchService
-        )
+        public PlaybackService(ISettingsService settingsService, IMusicSearchService musicSearchService)
         {
             _musicSearchService = musicSearchService;
             InitMediaManager().ConfigureAwait(true);
         }
 
-        #endregion
-
-        #region Events
-
-        /// <summary>
-        /// Defines the IsPlayingChanged
-        /// </summary>
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
 
-        /// <summary>
-        /// Defines the PositionChanged
-        /// </summary>
         public event EventHandler<PositionChangedEventArgs>? PositionChanged;
 
-        /// <summary>
-        /// Defines the SongInfoChanged
-        /// </summary>
         public event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
 
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets a value indicating whether IsPlaying
-        /// </summary>
         public bool IsPlaying { get; private set; }
 
-        /// <summary>
-        /// Gets the Position
-        /// </summary>
         public TimeSpan Position { get; private set; }
 
-        /// <summary>
-        /// Gets the SongInfo
-        /// </summary>
         public SongInfo? SongInfo { get; private set; }
 
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Note: this func is invoked by non-UI thread
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private async void CurrentSession_MediaPropertiesChanged(
-            GlobalSystemMediaTransportControlsSession? sender,
-            MediaPropertiesChangedEventArgs? args
-        )
+        private void CurrentSession_MediaPropertiesChanged(GlobalSystemMediaTransportControlsSession? sender, MediaPropertiesChangedEventArgs? args)
         {
-            GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps = null;
-            if (sender == null)
-            {
-                SongInfo = null;
-            }
-            else
-            {
-                try
+            App.DispatcherQueueTimer!.Debounce(
+                async () =>
                 {
-                    mediaProps = await sender.TryGetMediaPropertiesAsync();
-                }
-                catch (Exception) { }
-
-                if (mediaProps == null)
-                {
-                    SongInfo = null;
-                }
-                else
-                {
-                    SongInfo = new SongInfo
+                    GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps = null;
+                    if (sender == null)
                     {
-                        Title = mediaProps.Title,
-                        Artist = mediaProps.Artist,
-                        Album = mediaProps?.AlbumTitle ?? string.Empty,
-                        DurationMs = _currentSession
-                            ?.GetTimelineProperties()
-                            .EndTime.TotalMilliseconds,
-                        SourceAppUserModelId = _currentSession?.SourceAppUserModelId,
-                    };
-
-                    if (
-                        SongInfo.SourceAppUserModelId?.Contains(Package.Current.Id.FamilyName)
-                        ?? false
-                    )
-                    {
-                        SongInfo.Title = "甜度爆表";
-                        SongInfo.Artist = "AI";
-                    }
-
-                    if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
-                    {
-                        SongInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(streamReference);
+                        SongInfo = null;
                     }
                     else
                     {
-                        SongInfo.AlbumArt = _musicSearchService.SearchAlbumArtAsync(
-                            SongInfo.Title,
-                            SongInfo.Artist
-                        );
-
-                        if (SongInfo.AlbumArt == null)
+                        try
                         {
-                            SongInfo.AlbumArt = await ImageHelper.CreateTextPlaceholderBytesAsync(
-                                $"{SongInfo.Artist} - {SongInfo.Title}",
-                                400,
-                                400
-                            );
+                            mediaProps = await sender.TryGetMediaPropertiesAsync();
+                        }
+                        catch (Exception) { }
+
+                        if (mediaProps == null)
+                        {
+                            SongInfo = null;
+                        }
+                        else
+                        {
+                            SongInfo = new SongInfo
+                            {
+                                Title = mediaProps.Title,
+                                Artist = mediaProps.Artist,
+                                Album = mediaProps?.AlbumTitle ?? string.Empty,
+                                DurationMs = _currentSession
+                                    ?.GetTimelineProperties()
+                                    .EndTime.TotalMilliseconds,
+                                SourceAppUserModelId = _currentSession?.SourceAppUserModelId,
+                            };
+
+                            if (SongInfo.SourceAppUserModelId?.Contains(Package.Current.Id.FamilyName) ?? false)
+                            {
+                                SongInfo.Title = "甜度爆表";
+                                SongInfo.Artist = "AI";
+                            }
+
+                            if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
+                            {
+                                SongInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(
+                                    streamReference
+                                );
+                            }
+                            else
+                            {
+                                SongInfo.AlbumArt = _musicSearchService.SearchAlbumArtAsync(
+                                    SongInfo.Title,
+                                    SongInfo.Artist
+                                );
+
+                                if (SongInfo.AlbumArt == null)
+                                {
+                                    SongInfo.AlbumArt =
+                                        await ImageHelper.CreateTextPlaceholderBytesAsync(
+                                            $"{SongInfo.Artist} - {SongInfo.Title}",
+                                            400,
+                                            400
+                                        );
+                                }
+                            }
                         }
                     }
-                }
-            }
-            _dispatcherQueue.TryEnqueue(
-                DispatcherQueuePriority.High,
-                () =>
-                {
-                    SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(SongInfo));
-                }
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
+                        () =>
+                        {
+                            SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(SongInfo));
+                        }
+                    );
+                },
+                TimeSpan.FromMilliseconds(300)
             );
         }
 
-        /// <summary>
-        /// Note: Non-UI thread
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        private void CurrentSession_PlaybackInfoChanged(
-            GlobalSystemMediaTransportControlsSession? sender,
-            PlaybackInfoChangedEventArgs? args
-        )
+        private void CurrentSession_PlaybackInfoChanged(GlobalSystemMediaTransportControlsSession? sender, PlaybackInfoChangedEventArgs? args)
         {
             if (sender == null)
             {
@@ -220,8 +145,7 @@ namespace BetterLyrics.WinUI3.Services
                         break;
                 }
             }
-            _dispatcherQueue.TryEnqueue(
-                DispatcherQueuePriority.High,
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
                 () =>
                 {
                     IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(IsPlaying));
@@ -229,15 +153,7 @@ namespace BetterLyrics.WinUI3.Services
             );
         }
 
-        /// <summary>
-        /// The CurrentSession_TimelinePropertiesChanged
-        /// </summary>
-        /// <param name="sender">The sender<see cref="GlobalSystemMediaTransportControlsSession?"/></param>
-        /// <param name="args">The args<see cref="TimelinePropertiesChangedEventArgs?"/></param>
-        private void CurrentSession_TimelinePropertiesChanged(
-            GlobalSystemMediaTransportControlsSession? sender,
-            TimelinePropertiesChangedEventArgs? args
-        )
+        private void CurrentSession_TimelinePropertiesChanged(GlobalSystemMediaTransportControlsSession? sender, TimelinePropertiesChangedEventArgs? args)
         {
             if (sender == null)
             {
@@ -256,10 +172,6 @@ namespace BetterLyrics.WinUI3.Services
             );
         }
 
-        /// <summary>
-        /// The InitMediaManager
-        /// </summary>
-        /// <returns>The <see cref="Task"/></returns>
         private async Task InitMediaManager()
         {
             _sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
@@ -268,11 +180,6 @@ namespace BetterLyrics.WinUI3.Services
             SessionManager_CurrentSessionChanged(_sessionManager, null);
         }
 
-        /// <summary>
-        /// The SessionManager_CurrentSessionChanged
-        /// </summary>
-        /// <param name="sender">The sender<see cref="GlobalSystemMediaTransportControlsSessionManager"/></param>
-        /// <param name="args">The args<see cref="CurrentSessionChangedEventArgs?"/></param>
         private void SessionManager_CurrentSessionChanged(
             GlobalSystemMediaTransportControlsSessionManager sender,
             CurrentSessionChangedEventArgs? args
@@ -303,7 +210,5 @@ namespace BetterLyrics.WinUI3.Services
             CurrentSession_PlaybackInfoChanged(_currentSession, null);
             CurrentSession_TimelinePropertiesChanged(_currentSession, null);
         }
-
-        #endregion
     }
 }

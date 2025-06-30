@@ -8,76 +8,54 @@ using System.Xml.Linq;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using Lyricify.Lyrics.Models;
-using Microsoft.UI.Xaml.Shapes;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    /// <summary>
-    /// Defines the <see cref="LyricsParser" />
-    /// </summary>
     public class LyricsParser
     {
-        #region Fields
-
-        /// <summary>
-        /// Defines the _multiLangLyricsLines
-        /// </summary>
         private List<List<LyricsLine>> _multiLangLyricsLines = [];
 
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The Parse
-        /// </summary>
-        /// <param name="raw">The raw<see cref="string"/></param>
-        /// <param name="lyricsFormat">The lyricsFormat<see cref="LyricsFormat?"/></param>
-        /// <param name="title">The title<see cref="string?"/></param>
-        /// <param name="artist">The artist<see cref="string?"/></param>
-        /// <param name="durationMs">The durationMs<see cref="int"/></param>
-        /// <returns>The <see cref="List{List{LyricsLine}}"/></returns>
-        public List<List<LyricsLine>> Parse(
-            string raw,
-            LyricsFormat? lyricsFormat = null,
-            string? title = null,
-            string? artist = null,
-            int durationMs = 0
-        )
+        public List<List<LyricsLine>> Parse(string? raw, LyricsFormat? lyricsFormat = null, string? title = null, string? artist = null, int durationMs = 0)
         {
             _multiLangLyricsLines = [];
-            switch (lyricsFormat)
+            if (raw == null)
             {
-                case LyricsFormat.Lrc:
-                case LyricsFormat.Eslrc:
-                    ParseLrc(raw, durationMs);
-                    break;
-                case LyricsFormat.Qrc:
-                    ParseUsingLyricify(
-                        Lyricify.Lyrics.Parsers.QrcParser.Parse(raw).Lines,
-                        durationMs
-                    );
-                    break;
-                case LyricsFormat.Krc:
-                    ParseUsingLyricify(
-                        Lyricify.Lyrics.Parsers.KrcParser.Parse(raw).Lines,
-                        durationMs
-                    );
-                    break;
-                case LyricsFormat.Ttml:
-                    ParseTtml(raw, durationMs);
-                    break;
-                default:
-                    break;
+                _multiLangLyricsLines.Add(
+                    [
+                        new LyricsLine
+                        {
+                            StartMs = 0,
+                            EndMs = durationMs,
+                            Text = App.ResourceLoader!.GetString("LyricsNotFound"),
+                            CharTimings = [],
+                        },
+                    ]
+                );
+            }
+            else
+            {
+                switch (lyricsFormat)
+                {
+                    case LyricsFormat.Lrc:
+                    case LyricsFormat.Eslrc:
+                        ParseLrc(raw, durationMs);
+                        break;
+                    case LyricsFormat.Qrc:
+                        ParseUsingLyricify(Lyricify.Lyrics.Parsers.QrcParser.Parse(raw).Lines, durationMs);
+                        break;
+                    case LyricsFormat.Krc:
+                        ParseUsingLyricify(Lyricify.Lyrics.Parsers.KrcParser.Parse(raw).Lines, durationMs);
+                        break;
+                    case LyricsFormat.Ttml:
+                        ParseTtml(raw, durationMs);
+                        break;
+                    default:
+                        break;
+                }
             }
             return _multiLangLyricsLines;
         }
 
-        /// <summary>
-        /// The ParseLrc
-        /// </summary>
-        /// <param name="raw">The raw<see cref="string"/></param>
-        /// <param name="durationMs">The durationMs<see cref="int"/></param>
         private void ParseLrc(string raw, int durationMs)
         {
             var lines = raw.Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries);
@@ -218,74 +196,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private void ParseUsingLyricify(List<ILineInfo>? lines, int durationMs)
-        {
-            List<LyricsLine> lyricsLines = [];
-
-            if (lines != null && lines.Count > 0)
-            {
-                lyricsLines = [];
-                for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
-                {
-                    var lineRead = lines[lineIndex];
-                    var lineWrite = new LyricsLine
-                    {
-                        StartMs = lineRead.StartTime ?? 0,
-                        Text = lineRead.Text,
-                        CharTimings = [],
-                    };
-
-                    if (lineIndex + 1 < lines.Count)
-                    {
-                        lineWrite.EndMs = lines[lineIndex + 1].StartTime ?? 0;
-                    }
-                    else
-                    {
-                        lineWrite.EndMs = durationMs;
-                    }
-
-                    var syllables = (lineRead as SyllableLineInfo)?.Syllables;
-                    if (syllables != null)
-                    {
-                        int startIndex = 0;
-                        for (
-                            int syllableIndex = 0;
-                            syllableIndex < syllables.Count;
-                            syllableIndex++
-                        )
-                        {
-                            var syllable = syllables[syllableIndex];
-                            var charTiming = new CharTiming
-                            {
-                                StartMs = syllable.StartTime,
-                                Text = syllable.Text,
-                                StartIndex = startIndex,
-                            };
-                            if (syllableIndex + 1 < syllables.Count)
-                            {
-                                charTiming.EndMs = syllables[syllableIndex + 1].StartTime;
-                            }
-                            else
-                            {
-                                charTiming.EndMs = lineWrite.EndMs;
-                            }
-                            lineWrite.CharTimings.Add(charTiming);
-                            startIndex += syllable.Text.Length;
-                        }
-                    }
-
-                    lyricsLines.Add(lineWrite);
-                }
-            }
-
-            _multiLangLyricsLines.Add(lyricsLines);
-        }
-
-        /// <summary>
-        /// The ParseTtml
-        /// </summary>
-        /// <param name="raw">The raw<see cref="string"/></param>
-        /// <param name="durationMs">The durationMs<see cref="int"/></param>
         private void ParseTtml(string raw, int durationMs)
         {
             try
@@ -358,11 +268,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        /// <summary>
-        /// The ParseTtmlTime
-        /// </summary>
-        /// <param name="t">The t<see cref="string?"/></param>
-        /// <returns>The <see cref="int"/></returns>
         private int ParseTtmlTime(string? t)
         {
             if (string.IsNullOrWhiteSpace(t))
@@ -424,10 +329,70 @@ namespace BetterLyrics.WinUI3.Helper
             return 0;
         }
 
-        /// <summary>
-        /// The PostProcessLyricsLines
-        /// </summary>
-        /// <param name="lines">The lines<see cref="List{LyricsLine}"/></param>
+        private void ParseUsingLyricify(List<ILineInfo>? lines, int durationMs)
+        {
+            lines = lines?.Where(x => x.Text != string.Empty).ToList();
+            List<LyricsLine> lyricsLines = [];
+
+            if (lines != null && lines.Count > 0)
+            {
+                lyricsLines = [];
+                for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
+                {
+                    var lineRead = lines[lineIndex];
+                    var lineWrite = new LyricsLine
+                    {
+                        StartMs = lineRead.StartTime ?? 0,
+                        Text = lineRead.Text,
+                        CharTimings = [],
+                    };
+
+                    if (lineIndex + 1 < lines.Count)
+                    {
+                        lineWrite.EndMs = lines[lineIndex + 1].StartTime ?? 0;
+                    }
+                    else
+                    {
+                        lineWrite.EndMs = durationMs;
+                    }
+
+                    var syllables = (lineRead as SyllableLineInfo)?.Syllables;
+                    if (syllables != null)
+                    {
+                        int startIndex = 0;
+                        for (
+                            int syllableIndex = 0;
+                            syllableIndex < syllables.Count;
+                            syllableIndex++
+                        )
+                        {
+                            var syllable = syllables[syllableIndex];
+                            var charTiming = new CharTiming
+                            {
+                                StartMs = syllable.StartTime,
+                                Text = syllable.Text,
+                                StartIndex = startIndex,
+                            };
+                            if (syllableIndex + 1 < syllables.Count)
+                            {
+                                charTiming.EndMs = syllables[syllableIndex + 1].StartTime;
+                            }
+                            else
+                            {
+                                charTiming.EndMs = lineWrite.EndMs;
+                            }
+                            lineWrite.CharTimings.Add(charTiming);
+                            startIndex += syllable.Text.Length;
+                        }
+                    }
+
+                    lyricsLines.Add(lineWrite);
+                }
+            }
+
+            _multiLangLyricsLines.Add(lyricsLines);
+        }
+
         private void PostProcessLyricsLines(List<LyricsLine> lines)
         {
             if (lines.Count > 0 && lines[0].StartMs > 0)
@@ -444,7 +409,5 @@ namespace BetterLyrics.WinUI3.Helper
                 );
             }
         }
-
-        #endregion
     }
 }

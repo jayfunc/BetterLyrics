@@ -6,42 +6,11 @@ namespace BetterLyrics.WinUI3.Helper
     using Windows.ApplicationModel;
     using Windows.Storage;
 
-    /// <summary>
-    /// Defines the <see cref="AppInfo" />
-    /// </summary>
     public static class AppInfo
     {
-        #region Constants
-
-        /// <summary>
-        /// Defines the AppAuthor
-        /// </summary>
         public const string AppAuthor = "Zhe Fang";
-
-        /// <summary>
-        /// Defines the AppDisplayName
-        /// </summary>
         public const string AppDisplayName = "Better Lyrics";
-
-        // App Metadata
-
-        /// <summary>
-        /// Defines the AppName
-        /// </summary>
         public const string AppName = "BetterLyrics";
-
-        /// <summary>
-        /// Defines the GithubUrl
-        /// </summary>
-        public const string GithubUrl = "https://github.com/jayfunc/BetterLyrics";
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the AppVersion
-        /// </summary>
         public static string AppVersion
         {
             get
@@ -51,70 +20,26 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        /// <summary>
-        /// Gets the AssetsFolder
-        /// </summary>
+        public const string GithubUrl = "https://github.com/jayfunc/BetterLyrics";
+
+
+        public const string DoNotAutoSelectLyricsModeTag = "DoNotAutoSelectLyricsMode";
+
+        public static string AmllTtmlDbIndexPath => Path.Combine(CacheFolder, "amll-ttml-db-index.json");
+        public static string AmllTtmlDbLyricsCacheDirectory => Path.Combine(CacheFolder, "amll-ttml-db-lyrics");
+
         public static string AssetsFolder => Path.Combine(Package.Current.InstalledPath, "Assets");
-
-        /// <summary>
-        /// Gets the CacheFolder
-        /// </summary>
         public static string CacheFolder => ApplicationData.Current.LocalCacheFolder.Path;
-
-        // Environment Info
-
-        // Data Files
-
-        /// <summary>
-        /// Gets the LogDirectory
-        /// </summary>
-        public static string LogDirectory => Path.Combine(CacheFolder, "logs");
-
-        /// <summary>
-        /// Gets the LogFilePattern
-        /// </summary>
-        public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
-
-        /// <summary>
-        /// Gets the OnlineLyricsCacheDirectory
-        /// </summary>
-        public static string LrcLibLyricsCacheDirectory =>
-            Path.Combine(CacheFolder, "lrclib-lyrics");
-
-        public static string AmllTtmlDbLyricsCacheDirectory =>
-            Path.Combine(CacheFolder, "amll-ttml-db-lyrics");
-        public static string QQLyricsCacheDirectory => Path.Combine(CacheFolder, "qq-lyrics");
         public static string KugouLyricsCacheDirectory => Path.Combine(CacheFolder, "kugou-lyrics");
-        public static string NeteaseLyricsCacheDirectory =>
-            Path.Combine(CacheFolder, "netease-lyrics");
-
-        public static string AmllTtmlDbIndexPath =>
-            Path.Combine(CacheFolder, "amll-ttml-db-index.json");
-
-        /// <summary>
-        /// Gets the TestMusicPath
-        /// </summary>
+        public static string LogDirectory => Path.Combine(CacheFolder, "logs");
+        public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
+        public static string LrcLibLyricsCacheDirectory => Path.Combine(CacheFolder, "lrclib-lyrics");
+        public static string NeteaseLyricsCacheDirectory => Path.Combine(CacheFolder, "netease-lyrics");
+        public static string QQLyricsCacheDirectory => Path.Combine(CacheFolder, "qq-lyrics");
         public static string TestMusicPath => Path.Combine(AssetsFolder, TestMusicFileName);
-
-        // Base Folders
-
-        /// <summary>
-        /// Gets the LocalFolder
-        /// </summary>
         private static string LocalFolder => ApplicationData.Current.LocalFolder.Path;
-
-        /// <summary>
-        /// Gets the TestMusicFileName
-        /// </summary>
         private static string TestMusicFileName => "AI - 甜度爆表.mp3";
 
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The EnsureDirectories
-        /// </summary>
         public static void EnsureDirectories()
         {
             Directory.CreateDirectory(LocalFolder);
@@ -125,7 +50,5 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(NeteaseLyricsCacheDirectory);
             Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
         }
-
-        #endregion
     }
 }
