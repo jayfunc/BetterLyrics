@@ -45,30 +45,6 @@
                 <Grid.OpacityTransition>
                     <ScalarTransition />
                 </Grid.OpacityTransition>
-                <StackPanel
-                    x:Name="LyricsNotFoundPlaceholder"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Opacity="0"
-                    Orientation="Horizontal"
-                    Spacing="12">
-                    <StackPanel.OpacityTransition>
-                        <ScalarTransition />
-                    </StackPanel.OpacityTransition>
-                    <TextBlock x:Uid="MainPageLyricsNotFound" FontSize="{x:Bind ViewModel.LyricsFontSize, Mode=OneWay}" />
-                </StackPanel>
-                <StackPanel
-                    x:Name="LyricsLoadingPlaceholder"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Opacity="0"
-                    Orientation="Horizontal"
-                    Spacing="12">
-                    <StackPanel.OpacityTransition>
-                        <ScalarTransition />
-                    </StackPanel.OpacityTransition>
-                    <TextBlock x:Uid="MainPageLyricsLoading" FontSize="{x:Bind ViewModel.LyricsFontSize, Mode=OneWay}" />
-                </StackPanel>
 
             </Grid>
 
@@ -241,20 +217,6 @@
 
         </Grid>
 
-        <!--  No music playing placeholder  -->
-        <TextBlock
-            x:Name="MainPageNoMusicPlayingTextBlock"
-            x:Uid="MainPageNoMusicPlaying"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Style="{StaticResource TitleTextBlockStyle}">
-            <TextBlock.OpacityTransition>
-                <ScalarTransition />
-            </TextBlock.OpacityTransition>
-        </TextBlock>
-
         <!--  Bottom-right command area  -->
         <Grid
             x:Name="BottomCommandGrid"
@@ -265,17 +227,46 @@
             Opacity="0"
             PointerEntered="BottomCommandGrid_PointerEntered"
             PointerExited="BottomCommandGrid_PointerExited"
-            Visibility="{x:Bind ViewModel.IsNotMockMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            Visibility="{x:Bind ViewModel.IsNotDockMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <StackPanel HorizontalAlignment="Right" Spacing="4">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+
+                <!--<Button Style="{StaticResource GhostButtonStyle}">
+                    <Grid>
+                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xF83E;" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="11"
+                            Text="0.1" />
+                    </Grid>
+                </Button>
+                <Button Style="{StaticResource GhostButtonStyle}">
+                    <Grid>
+                        <FontIcon
+                            FontFamily="{StaticResource FluentIcons}"
+                            Glyph="&#xF83E;"
+                            RenderTransformOrigin="0.5,0.5">
+                            <FontIcon.RenderTransform>
+                                <ScaleTransform ScaleX="-1" />
+                            </FontIcon.RenderTransform>
+                        </FontIcon>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="11"
+                            Text="0.1" />
+                    </Grid>
+                </Button>-->
 
                 <Button
                     x:Name="DisplayTypeSwitchButton"
                     x:Uid="MainPageDisplayTypeSwitcher"
-                    Content="{ui:FontIcon Glyph=&#xF246;}"
+                    Content="{ui:FontIcon FontFamily={StaticResource FluentIcons},
+                                          Glyph=&#xF246;}"
                     Style="{StaticResource GhostButtonStyle}">
                     <Button.OpacityTransition>
                         <ScalarTransition />
@@ -289,21 +280,9 @@
                                 </Style>
                             </Flyout.FlyoutPresenterStyle>
                             <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
-                                <RadioButton
-                                    x:Uid="MainPageAlbumArtOnly"
-                                    Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
-                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                    Tag="0" />
-                                <RadioButton
-                                    x:Uid="MainPageLyriscOnly"
-                                    Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
-                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                    Tag="1" />
-                                <RadioButton
-                                    x:Uid="MainPageSplitView"
-                                    Command="{x:Bind ViewModel.DisplayTypeChangedCommand}"
-                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Tag}"
-                                    Tag="2" />
+                                <RadioButton x:Uid="MainPageAlbumArtOnly" Click="AlbumArtOnlyRadioButton_Click" />
+                                <RadioButton x:Uid="MainPageLyriscOnly" Click="LyricsOnlyRadioButton_Click" />
+                                <RadioButton x:Uid="MainPageSplitView" Click="SplitViewRadioButton_Click" />
                             </RadioButtons>
                         </Flyout>
                     </Button.Flyout>
@@ -311,21 +290,22 @@
 
                 <Button
                     x:Name="MusicInfoButton"
-                    Content="{ui:FontIcon Glyph=&#xF167;}"
+                    Content="{ui:FontIcon FontFamily={StaticResource FluentIcons},
+                                          Glyph=&#xE946;}"
                     Style="{StaticResource GhostButtonStyle}">
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel Spacing="16">
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xED35;" />
+                                    <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xED35;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.SourceAppUserModelId, Mode=OneWay}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEC4F;" />
+                                    <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC4F;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.Title, Mode=OneWay}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE77B;" />
+                                    <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE77B;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.Artist, Mode=OneWay}" />
                                 </StackPanel>
                             </StackPanel>
@@ -336,7 +316,8 @@
                 <Button
                     x:Name="SettingsButton"
                     Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
-                    Content="{ui:FontIcon Glyph=&#xF8B0;}"
+                    Content="{ui:FontIcon FontFamily={StaticResource FluentIcons},
+                                          Glyph=&#xE713;}"
                     Style="{StaticResource GhostButtonStyle}" />
 
             </StackPanel>
@@ -353,115 +334,6 @@
         <uc:SystemTray />
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="LayoutStates">
-
-                <!--  Album art only  -->
-                <VisualState x:Name="AlbumArtOnly">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                            To="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="LyricsGrid.Opacity" Value="1" />
-                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="0" />
-                        <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="0" />
-                        <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="3" />
-                        <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
-                        <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="3" />
-                        <Setter Target="SongInfoInnerGrid.Opacity" Value="1" />
-                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--  Lyrics only  -->
-                <VisualState x:Name="LyricsOnly">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                            To="1" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SongInfoInnerGrid.Opacity" Value="0" />
-                        <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
-                        <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="3" />
-                        <Setter Target="LyricsGrid.Opacity" Value="1" />
-                        <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="0" />
-                        <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="3" />
-                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="1" />
-                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--  Split view  -->
-                <VisualState x:Name="SplitView">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                            To="2" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SongInfoInnerGrid.(Grid.Column)" Value="0" />
-                        <Setter Target="SongInfoInnerGrid.(Grid.ColumnSpan)" Value="1" />
-                        <Setter Target="SongInfoInnerGrid.Opacity" Value="1" />
-                        <Setter Target="LyricsGrid.Opacity" Value="1" />
-                        <Setter Target="LyricsPlaceholderGrid.(Grid.Column)" Value="2" />
-                        <Setter Target="LyricsPlaceholderGrid.(Grid.ColumnSpan)" Value="1" />
-                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="1" />
-                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--  Placeholder only  -->
-                <VisualState x:Name="PlaceholderOnly">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                            To="3" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SongInfoInnerGrid.Opacity" Value="0" />
-                        <Setter Target="LyricsGrid.Opacity" Value="0" />
-                        <Setter Target="LyricsPlaceholderGrid.Opacity" Value="0" />
-                        <Setter Target="MainPageNoMusicPlayingTextBlock.Opacity" Value="1" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-
-            <VisualStateGroup x:Name="LyricsStatus">
-                <VisualState x:Name="Loading">
-                    <VisualState.StateTriggers>
-                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="2" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="LyricsNotFoundPlaceholder.Opacity" Value="0" />
-                        <Setter Target="LyricsLoadingPlaceholder.Opacity" Value=".5" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Found">
-                    <VisualState.StateTriggers>
-                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="1" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="LyricsNotFoundPlaceholder.Opacity" Value="0" />
-                        <Setter Target="LyricsLoadingPlaceholder.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="NotFound">
-                    <VisualState.StateTriggers>
-                        <ui:IsEqualStateTrigger Value="{x:Bind ViewModel.LyricsStatus, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}" To="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="LyricsNotFoundPlaceholder.Opacity" Value=".5" />
-                        <Setter Target="LyricsLoadingPlaceholder.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-
             <VisualStateGroup x:Name="MusicPlayingStates">
                 <VisualState x:Name="MusicPlaying">
                     <VisualState.StateTriggers>

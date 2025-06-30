@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
@@ -20,11 +19,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsRendererViewModel
     {
-        /// <summary>
-        /// The Draw
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
             // Blurred lyrics layer
@@ -45,73 +39,34 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
 
-            // Masked mock gradient blurred lyrics layer
+            // Masked blurred lyrics layer
             using var maskedBlurredLyrics = new CanvasCommandList(control);
             using (var maskedBlurredLyricsDs = maskedBlurredLyrics.CreateDrawingSession())
             {
-                if (LyricsVerticalEdgeOpacity == 100)
-                {
-                    maskedBlurredLyricsDs.DrawImage(blurredLyrics);
-                }
-                else
-                {
-                    using var mask = new CanvasCommandList(control);
-                    using (var maskDs = mask.CreateDrawingSession())
+                maskedBlurredLyricsDs.DrawImage(
+                    new OpacityEffect
                     {
-                        DrawGradientOpacityMask(control, maskDs);
+                        Source = blurredLyrics,
+                        Opacity = _lyricsOpacityTransition.Value
                     }
-                    maskedBlurredLyricsDs.DrawImage(
-                        new AlphaMaskEffect { Source = blurredLyrics, AlphaMask = mask }
-                    );
-                }
+                );
             }
 
             using var combined = new CanvasCommandList(control);
             using var combinedDs = combined.CreateDrawingSession();
 
-            if (IsCoverOverlayEnabled)
-            {
-                DrawAlbumArtBackground(control, combinedDs);
-            }
+            DrawAlbumArtBackground(control, combinedDs);
 
             if (_isDockMode)
             {
-                DrawImmersiveBackground(control, combinedDs, IsCoverOverlayEnabled);
+                DrawImmersiveBackground(control, combinedDs);
             }
 
             combinedDs.DrawImage(maskedBlurredLyrics);
 
             if (_isDesktopMode)
             {
-                float w = (float)control.Size.Width;
-                float h = (float)control.Size.Height;
-                float maskThickness = Math.Min(18f, Math.Min(w / 2, h / 2)); // 遮罩宽度
-                float cornerRadius = maskThickness / 2; // 圆角半径
-                float blurAmount = maskThickness / 2; // 高斯模糊强度
-
-                using var mask = new CanvasCommandList(control);
-                using (var maskDs = mask.CreateDrawingSession())
-                {
-                    // 画一个比窗口小一圈的圆角矩形
-                    var rect = new Rect(
-                        maskThickness,
-                        maskThickness,
-                        w - maskThickness * 2,
-                        h - maskThickness * 2
-                    );
-                    maskDs.FillRoundedRectangle(rect, cornerRadius, cornerRadius, Colors.White);
-                }
-
-                // 对圆角矩形做高斯模糊
-                var blurredMask = new GaussianBlurEffect
-                {
-                    Source = mask,
-                    BlurAmount = blurAmount,
-                    Optimization = EffectOptimization.Quality,
-                    BorderMode = EffectBorderMode.Soft,
-                };
-
-                ds.DrawImage(new AlphaMaskEffect { Source = combined, AlphaMask = blurredMask });
+                ds.DrawImage(maskedBlurredLyrics);
             }
             else
             {
@@ -136,23 +91,17 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     ds.DrawText(
                         $"DEBUG: "
-                            + $"播放行 {currentPlayingLineIndex}, 字符 {charStartIndex}, 长度 {charLength}, 进度 {charProgress}\n"
-                            + $"可见行 [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n"
-                            + $"当前时刻 {TotalTime}",
+                            + $"Cur playing {currentPlayingLineIndex}, char start idx {charStartIndex}, length {charLength}, prog {charProgress}\n"
+                            + $"Visible lines [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n"
+                            + $"Cur time {TotalTime}\n" +
+                            $"Lang size: {_multiLangLyrics.Count}",
                         new Vector2(10, 10),
-                        Colors.Red
+                        ThemeTypeSent == Microsoft.UI.Xaml.ElementTheme.Light ? Colors.Black : Colors.White
                     );
                 }
             }
         }
 
-        /// <summary>
-        /// The DrawImgae
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        /// <param name="softwareBitmap">The softwareBitmap<see cref="SoftwareBitmap"/></param>
-        /// <param name="opacity">The opacity<see cref="float"/></param>
         private static void DrawImgae(
             ICanvasAnimatedControl control,
             CanvasDrawingSession ds,
@@ -185,11 +134,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
         }
 
-        /// <summary>
-        /// The DrawAlbumArtBackground
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
         private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
             ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
@@ -237,84 +181,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             ds.Transform = Matrix3x2.Identity;
         }
 
-        /// <summary>
-        /// The DrawGradientOpacityMask
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        private void DrawGradientOpacityMask(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds
-        )
-        {
-            byte verticalEdgeAlpha = (byte)(255 * LyricsVerticalEdgeOpacity / 100f);
-            using var maskBrush = new CanvasLinearGradientBrush(
-                control,
-                [
-                    new() { Position = 0, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
-                    new() { Position = 0.5f, Color = Color.FromArgb(255, 0, 0, 0) },
-                    new() { Position = 1, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
-                ]
-            )
-            {
-                StartPoint = new Vector2(0, 0),
-                EndPoint = new Vector2(0, (float)control.Size.Height),
-            };
-            ds.FillRectangle(new Rect(0, 0, control.Size.Width, control.Size.Height), maskBrush);
-        }
-
-        /// <summary>
-        /// The DrawImmersiveBackground
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        /// <param name="withGradient">The withGradient<see cref="bool"/></param>
-        private void DrawImmersiveBackground(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds,
-            bool withGradient
-        )
-        {
-            ds.FillRectangle(
-                new Rect(0, 0, control.Size.Width, control.Size.Height),
-                new CanvasLinearGradientBrush(
-                    control,
-                    [
-                        new CanvasGradientStop
-                        {
-                            Position = 0f,
-                            Color = withGradient
-                                ? Color.FromArgb(
-                                    211,
-                                    _immersiveBgTransition.Value.R,
-                                    _immersiveBgTransition.Value.G,
-                                    _immersiveBgTransition.Value.B
-                                )
-                                : _immersiveBgTransition.Value,
-                        },
-                        new CanvasGradientStop
-                        {
-                            Position = 1,
-                            Color = _immersiveBgTransition.Value,
-                        },
-                    ]
-                )
-                {
-                    StartPoint = new Vector2(0, 0),
-                    EndPoint = new Vector2(0, (float)control.Size.Height),
-                }
-            );
-        }
-
-        /// <summary>
-        /// The DrawLyrics
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="ds">The ds<see cref="CanvasDrawingSession"/></param>
-        /// <param name="currentLineHighlightType">The currentLineHighlightType<see cref="LyricsHighlightType"/></param>
         private void DrawBlurredLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
             var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
+
+            var currentPlayingLine = _multiLangLyrics
+                .SafeGet(_langIndex)
+                ?.SafeGet(currentPlayingLineIndex);
+
+            if (currentPlayingLine == null)
+            {
+                return;
+            }
 
             for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
             {
@@ -365,9 +243,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 float offsetToLeft =
                     (float)control.Size.Width - _rightMargin - _maxLyricsWidthTransition.Value;
 
-                // Scale
+                // 组合变换：缩放 -> 旋转 -> 平移
                 ds.Transform =
                     Matrix3x2.CreateScale(line.ScaleTransition.Value, new Vector2(centerX, centerY))
+                    * Matrix3x2.CreateRotation(
+                        line.AngleTransition.Value,
+                        currentPlayingLine.Position
+                    )
                     * Matrix3x2.CreateTranslation(
                         offsetToLeft,
                         _canvasYScrollTransition.Value + (float)(control.Size.Height / 2)
@@ -384,7 +266,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 ds.DrawImage(
                     new GaussianBlurEffect
                     {
-                        Source = new OpacityEffect { Source = lyrics, Opacity = _defaultOpacity },
+                        Source = new OpacityEffect { Source = lyrics, Opacity = line.OpacityTransition.Value },
                         BlurAmount = line.BlurAmountTransition.Value,
                         Optimization = EffectOptimization.Quality,
                         BorderMode = EffectBorderMode.Soft,
@@ -511,7 +393,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                                         },
                                         BlurAmount = _lyricsGlowEffectAmount,
                                         Optimization = EffectOptimization.Quality,
-                                        BorderMode = EffectBorderMode.Soft,
                                     }
                                     : new CanvasCommandList(control.Device),
                                 Foreground = new AlphaMaskEffect
@@ -530,15 +411,64 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        /// <summary>
-        /// The GetHorizontalFillBrush
-        /// </summary>
-        /// <param name="control">The control<see cref="ICanvasAnimatedControl"/></param>
-        /// <param name="stopPosition">The stopPosition<see cref="float[]"/></param>
-        /// <param name="stopOpacity">The stopOpacity<see cref="float[]"/></param>
-        /// <param name="startX">The startX<see cref="float"/></param>
-        /// <param name="endX">The endX<see cref="float"/></param>
-        /// <returns>The <see cref="CanvasLinearGradientBrush"/></returns>
+        private void DrawGradientOpacityMask(
+            ICanvasAnimatedControl control,
+            CanvasDrawingSession ds
+        )
+        {
+            byte verticalEdgeAlpha = (byte)(255 * LyricsVerticalEdgeOpacity / 100f);
+            using var maskBrush = new CanvasLinearGradientBrush(
+                control,
+                [
+                    new() { Position = 0, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
+                    new() { Position = 0.5f, Color = Color.FromArgb(255, 0, 0, 0) },
+                    new() { Position = 1, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
+                ]
+            )
+            {
+                StartPoint = new Vector2(0, 0),
+                EndPoint = new Vector2(0, (float)control.Size.Height),
+            };
+            ds.FillRectangle(new Rect(0, 0, control.Size.Width, control.Size.Height), maskBrush);
+        }
+
+        private void DrawImmersiveBackground(
+            ICanvasAnimatedControl control,
+            CanvasDrawingSession ds,
+            bool withGradient = true
+        )
+        {
+            ds.FillRectangle(
+                new Rect(0, 0, control.Size.Width, control.Size.Height),
+                new CanvasLinearGradientBrush(
+                    control,
+                    [
+                        new CanvasGradientStop
+                        {
+                            Position = 0f,
+                            Color = withGradient
+                                ? Color.FromArgb(
+                                    211,
+                                    _immersiveBgTransition.Value.R,
+                                    _immersiveBgTransition.Value.G,
+                                    _immersiveBgTransition.Value.B
+                                )
+                                : _immersiveBgTransition.Value,
+                        },
+                        new CanvasGradientStop
+                        {
+                            Position = 1,
+                            Color = _immersiveBgTransition.Value,
+                        },
+                    ]
+                )
+                {
+                    StartPoint = new Vector2(0, 0),
+                    EndPoint = new Vector2(0, (float)control.Size.Height),
+                }
+            );
+        }
+
         private CanvasLinearGradientBrush GetHorizontalFillBrush(
             ICanvasAnimatedControl control,
             List<(float position, float opacity)> stops,
@@ -560,6 +490,88 @@ namespace BetterLyrics.WinUI3.ViewModels
                 StartPoint = new Vector2(startX, 0),
                 EndPoint = new Vector2(startX + width, 0),
             };
+        }
+
+        void DrawShenGuang(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        {
+            float w = (float)control.Size.Width;
+            float h = (float)control.Size.Height;
+
+            float beamLength = h; // 光束长度等于画布高度
+            float beamAngle = (float)(Math.PI / 6); // 30°
+            float centerX = w / 2;
+            float centerY = h;
+            float angle = _shenGuangAngleTransition.Value;
+
+            var p0 = new Vector2(centerX, centerY);
+            var p1 = new Vector2(
+                centerX + beamLength * (float)Math.Cos(angle - beamAngle / 2),
+                centerY + beamLength * (float)Math.Sin(angle - beamAngle / 2)
+            );
+            var p2 = new Vector2(
+                centerX + beamLength * (float)Math.Cos(angle + beamAngle / 2),
+                centerY + beamLength * (float)Math.Sin(angle + beamAngle / 2)
+            );
+
+            using var path = new CanvasPathBuilder(control);
+            path.BeginFigure(p0);
+            path.AddLine(p1);
+            path.AddArc(
+                p2,
+                beamLength,
+                beamLength,
+                0,
+                CanvasSweepDirection.Clockwise,
+                CanvasArcSize.Small
+            );
+            path.EndFigure(CanvasFigureLoop.Closed);
+
+            using var geometry = CanvasGeometry.CreatePath(path);
+
+            // 渐变为白色，透明度递减
+            using var brush = new CanvasRadialGradientBrush(
+                control,
+                new[]
+                {
+                    new CanvasGradientStop
+                    {
+                        Position = 0f,
+                        Color = Color.FromArgb(180, 255, 255, 255),
+                    },
+                    new CanvasGradientStop
+                    {
+                        Position = 0.5f,
+                        Color = Color.FromArgb(60, 255, 255, 255),
+                    },
+                    new CanvasGradientStop
+                    {
+                        Position = 1f,
+                        Color = Color.FromArgb(0, 255, 255, 255),
+                    },
+                }
+            )
+            {
+                Center = p0,
+                OriginOffset = new Vector2(0, 0),
+                RadiusX = beamLength * 0.8f,
+                RadiusY = beamLength * 0.8f,
+            };
+
+            using var beamCmd = new CanvasCommandList(control);
+            using (var beamDs = beamCmd.CreateDrawingSession())
+            {
+                beamDs.FillGeometry(geometry, brush);
+            }
+
+            var blur = new GaussianBlurEffect
+            {
+                Source = beamCmd,
+                BlurAmount = 36f,
+                Optimization = EffectOptimization.Quality,
+                BorderMode = EffectBorderMode.Soft,
+            };
+
+            ds.DrawImage(blur);
         }
     }
 }

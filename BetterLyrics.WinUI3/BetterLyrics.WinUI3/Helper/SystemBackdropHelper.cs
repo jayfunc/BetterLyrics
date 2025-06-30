@@ -6,18 +6,8 @@ using Microsoft.UI.Xaml.Media;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    /// <summary>
-    /// Defines the <see cref="SystemBackdropHelper" />
-    /// </summary>
     public class SystemBackdropHelper
     {
-        #region Methods
-
-        /// <summary>
-        /// The CreateSystemBackdrop
-        /// </summary>
-        /// <param name="backdropType">The backdropType<see cref="BackdropType"/></param>
-        /// <returns>The <see cref="SystemBackdrop?"/></returns>
         public static SystemBackdrop? CreateSystemBackdrop(BackdropType backdropType)
         {
             return backdropType switch
@@ -30,7 +20,5 @@ namespace BetterLyrics.WinUI3.Helper
                 _ => null,
             };
         }
-
-        #endregion
     }
 }

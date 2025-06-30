@@ -1,72 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using BetterLyrics.WinUI3.Services;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using WinRT.Interop;
 using WinUIEx;
+using static BetterLyrics.WinUI3.Helper.Win32Helper;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public static class DesktopModeHelper
     {
-        private static readonly Dictionary<IntPtr, WindowStyle> _originalWindowStyles = [];
+        private static readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
         private static readonly Dictionary<IntPtr, bool> _clickThroughStates = [];
         private static readonly Dictionary<IntPtr, bool> _originalTopmostStates = [];
-        private static readonly Dictionary<
-            IntPtr,
-            (double X, double Y, double Width, double Height)
-        > _originalWindowBounds = [];
+        private static readonly Dictionary<IntPtr, (double X, double Y, double Width, double Height)> _originalWindowBounds = [];
+        private static readonly Dictionary<IntPtr, WindowStyle> _originalWindowStyles = [];
 
-        // 子类化相关
         private delegate nint WndProcDelegate(nint hWnd, uint msg, nint wParam, nint lParam);
-
-        public static void Enable(Window window)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
-            // 记录原始窗口位置和大小
-            var windowManager = WindowManager.Get(window);
-            if (!_originalWindowBounds.ContainsKey(hwnd))
-            {
-                _originalWindowBounds[hwnd] = (
-                    windowManager.AppWindow.Position.X,
-                    windowManager.AppWindow.Position.Y,
-                    windowManager.Width,
-                    windowManager.Height
-                );
-            }
-
-            // 获取主屏幕工作区
-            var displayArea = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(
-                windowManager.AppWindow.Id,
-                Microsoft.UI.Windowing.DisplayAreaFallback.Primary
-            );
-            var workArea = displayArea.WorkArea;
-
-            // 计算目标宽高和位置
-            int targetWidth = workArea.Width / 3;
-            int targetHeight = workArea.Height / 4;
-            int targetX = workArea.X + (workArea.Width - targetWidth) / 2; // 居中
-            int targetY = workArea.Y + workArea.Height - targetHeight - 64;
-
-            // 设置窗口大小和位置
-            windowManager.AppWindow.MoveAndResize(
-                new Windows.Graphics.RectInt32(targetX, targetY, targetWidth, targetHeight)
-            );
-
-            // 记忆原样式
-            if (!_originalWindowStyles.ContainsKey(hwnd))
-                _originalWindowStyles[hwnd] = window.GetWindowStyle();
-
-            // 记忆原TopMost状态
-            if (!_originalTopmostStates.ContainsKey(hwnd))
-                _originalTopmostStates[hwnd] = window.GetIsAlwaysOnTop();
-
-            // 设置窗口置顶
-            window.SetIsAlwaysOnTop(true);
-
-            window.SetIsShownInSwitchers(false);
-        }
 
         public static void Disable(Window window)
         {
@@ -104,6 +57,47 @@ namespace BetterLyrics.WinUI3.Helper
             window.SetIsShownInSwitchers(true);
         }
 
+        public static void Enable(Window window)
+        {
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            // 记录原始窗口位置和大小
+            var windowManager = WindowManager.Get(window);
+            if (!_originalWindowBounds.ContainsKey(hwnd))
+            {
+                _originalWindowBounds[hwnd] = (
+                    windowManager.AppWindow.Position.X,
+                    windowManager.AppWindow.Position.Y,
+                    windowManager.Width,
+                    windowManager.Height
+                );
+            }
+
+            // 从存储区获取目标宽高和位置
+            int targetWidth = _settingsService.DesktopWindowWidth;
+            int targetHeight = _settingsService.DesktopWindowHeight;
+            int targetX = _settingsService.DesktopWindowLeft;
+            int targetY = _settingsService.DesktopWindowTop;
+
+            // 设置窗口大小和位置
+            windowManager.AppWindow.MoveAndResize(
+                new Windows.Graphics.RectInt32(targetX, targetY, targetWidth, targetHeight)
+            );
+
+            // 记忆原样式
+            if (!_originalWindowStyles.ContainsKey(hwnd))
+                _originalWindowStyles[hwnd] = window.GetWindowStyle();
+
+            // 记忆原TopMost状态
+            if (!_originalTopmostStates.ContainsKey(hwnd))
+                _originalTopmostStates[hwnd] = window.GetIsAlwaysOnTop();
+
+            // 设置窗口置顶
+            window.SetIsAlwaysOnTop(true);
+
+            window.SetIsShownInSwitchers(false);
+        }
+
         public static void Lock(Window window)
         {
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
@@ -115,23 +109,6 @@ namespace BetterLyrics.WinUI3.Helper
             SetClickThrough(window, true);
         }
 
-        public static void Unlock(Window window)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
-            // 恢复样式（但不移出记忆的样式，只有在 Disable 时才移出）
-            if (_originalWindowStyles.TryGetValue(hwnd, out var style))
-            {
-                window.SetWindowStyle(style);
-            }
-            window.ExtendsContentIntoTitleBar = true;
-
-            SetClickThrough(window, false);
-        }
-
-        /// <summary>
-        /// 切换点击穿透状态
-        /// </summary>
         public static void SetClickThrough(Window window, bool enable)
         {
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
@@ -148,18 +125,18 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        #region Win32
+        public static void Unlock(Window window)
+        {
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
 
-        private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_TRANSPARENT = 0x00000020;
-        private const int WS_EX_LAYERED = 0x00080000;
+            // 恢复样式（但不移出记忆的样式，只有在 Disable 时才移出）
+            if (_originalWindowStyles.TryGetValue(hwnd, out var style))
+            {
+                window.SetWindowStyle(style);
+            }
+            window.ExtendsContentIntoTitleBar = true;
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        #endregion
+            SetClickThrough(window, false);
+        }
     }
 }

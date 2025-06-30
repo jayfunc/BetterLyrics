@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converter
@@ -13,10 +9,9 @@ namespace BetterLyrics.WinUI3.Converter
         {
             if (value is Microsoft.UI.Xaml.CornerRadius cornerRadius)
             {
-                // Convert CornerRadius to an integer value, e.g., using the top-left radius
                 return (double)cornerRadius.TopLeft;
             }
-            return .0; // or handle the case where value is not a CornerRadius
+            return .0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

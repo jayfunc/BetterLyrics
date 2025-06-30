@@ -19,8 +19,12 @@
     <PRIResource Remove="ViewModels\Lyrics\**" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Assets\Fonts\FluentSystemIcons-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Controls\DependenciesSettingsExpander.xaml" />
     <None Remove="Controls\SystemTray.xaml" />
+    <None Remove="Views\SettingsWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo.ico" />
@@ -41,6 +45,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
     <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
+    <PackageReference Include="ksemenenko.ColorThief" Version="1.1.1.4" />
     <PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
@@ -55,7 +60,7 @@
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
     <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
     <PackageReference Include="WinUIEx" Version="2.6.0" />
-    <PackageReference Include="z440.atl.core" Version="6.26.0" />
+    <PackageReference Include="z440.atl.core" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Assets\AI - 甜度爆表.mp3">
@@ -75,6 +80,11 @@
   <!--Disable Trimming for Specific Packages-->
   <ItemGroup>
     <TrimmerRootAssembly Include="TagLibSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\SystemTray.xaml">
