@@ -217,6 +217,20 @@
 
         </Grid>
 
+        <!--  No music playing placeholder  -->
+        <TextBlock
+            x:Name="MainPageNoMusicPlayingTextBlock"
+            x:Uid="MainPageNoMusicPlaying"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Style="{StaticResource TitleTextBlockStyle}">
+            <TextBlock.OpacityTransition>
+                <ScalarTransition />
+            </TextBlock.OpacityTransition>
+        </TextBlock>
+
         <!--  Bottom-right command area  -->
         <Grid
             x:Name="BottomCommandGrid"
@@ -234,20 +248,26 @@
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
-                <!--<Button Style="{StaticResource GhostButtonStyle}">
+                <Button Style="{StaticResource GhostButtonStyle}" Visibility="Collapsed">
                     <Grid>
-                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xF83E;" />
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontWeight="Bold"
+                            Glyph="&#xF83E;" />
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="11"
+                            FontWeight="Bold"
                             Text="0.1" />
                     </Grid>
                 </Button>
-                <Button Style="{StaticResource GhostButtonStyle}">
+
+                <Button Style="{StaticResource GhostButtonStyle}" Visibility="Collapsed">
                     <Grid>
                         <FontIcon
-                            FontFamily="{StaticResource FluentIcons}"
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontWeight="Bold"
                             Glyph="&#xF83E;"
                             RenderTransformOrigin="0.5,0.5">
                             <FontIcon.RenderTransform>
@@ -258,14 +278,16 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="11"
+                            FontWeight="Bold"
                             Text="0.1" />
                     </Grid>
-                </Button>-->
+                </Button>
 
                 <Button
                     x:Name="DisplayTypeSwitchButton"
                     x:Uid="MainPageDisplayTypeSwitcher"
-                    Content="{ui:FontIcon FontFamily={StaticResource FluentIcons},
+                    Content="{ui:FontIcon FontWeight=Bold,
+                                          FontFamily={StaticResource IconFontFamily},
                                           Glyph=&#xF246;}"
                     Style="{StaticResource GhostButtonStyle}">
                     <Button.OpacityTransition>
@@ -290,22 +312,23 @@
 
                 <Button
                     x:Name="MusicInfoButton"
-                    Content="{ui:FontIcon FontFamily={StaticResource FluentIcons},
+                    Content="{ui:FontIcon FontWeight=Bold,
+                                          FontFamily={StaticResource IconFontFamily},
                                           Glyph=&#xE946;}"
                     Style="{StaticResource GhostButtonStyle}">
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel Spacing="16">
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xED35;" />
+                                    <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xED35;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.SourceAppUserModelId, Mode=OneWay}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC4F;" />
+                                    <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xEC4F;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.Title, Mode=OneWay}" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE77B;" />
+                                    <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE77B;" />
                                     <TextBlock Text="{x:Bind ViewModel.SongInfo.Artist, Mode=OneWay}" />
                                 </StackPanel>
                             </StackPanel>
@@ -316,7 +339,8 @@
                 <Button
                     x:Name="SettingsButton"
                     Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
-                    Content="{ui:FontIcon FontFamily={StaticResource FluentIcons},
+                    Content="{ui:FontIcon FontWeight=Bold,
+                                          FontFamily={StaticResource IconFontFamily},
                                           Glyph=&#xE713;}"
                     Style="{StaticResource GhostButtonStyle}" />
 

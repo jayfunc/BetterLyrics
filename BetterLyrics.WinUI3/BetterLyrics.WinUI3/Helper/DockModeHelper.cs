@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.UI.Xaml;
+using Vanara.PInvoke;
 using WinRT.Interop;
 using WinUIEx;
-using static BetterLyrics.WinUI3.Helper.Win32Helper;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -31,14 +31,14 @@ namespace BetterLyrics.WinUI3.Helper
 
             if (_originalPositions.TryGetValue(hwnd, out var rect))
             {
-                SetWindowPos(
+                User32.SetWindowPos(
                     hwnd,
                     IntPtr.Zero,
                     rect.Left,
                     rect.Top,
                     rect.Right - rect.Left,
                     rect.Bottom - rect.Top,
-                    SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
+                    User32.SetWindowPosFlags.SWP_SHOWWINDOW
                 );
                 _originalPositions.Remove(hwnd);
             }
@@ -62,7 +62,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             if (!_originalPositions.ContainsKey(hwnd))
             {
-                if (GetWindowRect(hwnd, out var rect))
+                if (User32.GetWindowRect(hwnd, out var rect))
                 {
                     _originalPositions[hwnd] = rect;
                 }
@@ -70,16 +70,16 @@ namespace BetterLyrics.WinUI3.Helper
 
             RegisterAppBar(hwnd, appBarHeight);
 
-            int screenWidth = GetSystemMetrics(SM_CXSCREEN);
-            int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-            SetWindowPos(
+            int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
+            int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
+            User32.SetWindowPos(
                 hwnd,
                 IntPtr.Zero,
                 0,
                 0,
                 screenWidth,
                 appBarHeight,
-                SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
+                User32.SetWindowPosFlags.SWP_SHOWWINDOW
             );
         }
 
@@ -87,22 +87,22 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (_registered.Contains(hwnd)) return;
 
-            APPBARDATA abd = new()
+            Shell32.APPBARDATA abd = new()
             {
-                cbSize = Marshal.SizeOf<APPBARDATA>(),
+                cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
                 hWnd = hwnd,
-                uEdge = ABE_TOP,
+                uEdge = Shell32.ABE.ABE_TOP,
                 rc = new RECT
                 {
                     Left = 0,
                     Top = 0,
-                    Right = GetSystemMetrics(SM_CXSCREEN),
+                    Right = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
                     Bottom = height,
                 },
             };
 
-            SHAppBarMessage(ABM_NEW, ref abd);
-            SHAppBarMessage(ABM_SETPOS, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_NEW, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
             _registered.Add(hwnd);
         }
@@ -112,9 +112,13 @@ namespace BetterLyrics.WinUI3.Helper
             if (!_registered.Contains(hwnd))
                 return;
 
-            APPBARDATA abd = new() { cbSize = Marshal.SizeOf<APPBARDATA>(), hWnd = hwnd };
+            Shell32.APPBARDATA abd = new()
+            {
+                cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+                hWnd = hwnd
+            };
 
-            SHAppBarMessage(ABM_REMOVE, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
             _registered.Remove(hwnd);
         }
 
@@ -123,31 +127,31 @@ namespace BetterLyrics.WinUI3.Helper
             if (!_registered.Contains(hwnd))
                 return;
 
-            APPBARDATA abd = new()
+            Shell32.APPBARDATA abd = new()
             {
-                cbSize = Marshal.SizeOf<APPBARDATA>(),
+                cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
                 hWnd = hwnd,
-                uEdge = ABE_TOP,
+                uEdge = Shell32.ABE.ABE_TOP,
                 rc = new RECT
                 {
                     Left = 0,
                     Top = 0,
-                    Right = GetSystemMetrics(SM_CXSCREEN),
+                    Right = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
                     Bottom = newHeight,
                 },
             };
 
-            SHAppBarMessage(ABM_SETPOS, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
             // 同步窗口实际高度
-            SetWindowPos(
+            User32.SetWindowPos(
                 hwnd,
                 IntPtr.Zero,
                 0,
                 0,
-                GetSystemMetrics(SM_CXSCREEN),
+                User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
                 newHeight,
-                SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_SHOWWINDOW
+                User32.SetWindowPosFlags.SWP_SHOWWINDOW
             );
         }
     }

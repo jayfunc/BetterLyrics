@@ -247,7 +247,7 @@ namespace BetterLyrics.WinUI3.Services
             }
 
             string? rawLyricFile = null;
-            foreach (var line in File.ReadLines(AppInfo.AmllTtmlDbIndexPath))
+            await foreach (var line in File.ReadLinesAsync(AppInfo.AmllTtmlDbIndexPath))
             {
                 if (string.IsNullOrWhiteSpace(line))
                     continue;

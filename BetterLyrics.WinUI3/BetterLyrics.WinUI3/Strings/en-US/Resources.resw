@@ -313,7 +313,7 @@
     <value>Play test music</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>Play using system player</value>
+    <value>Play "Cut To The Feeling" on "soundcloud.com"</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>Cache</value>
@@ -517,7 +517,7 @@
     <value>Exit</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>Unlock the window</value>
+    <value>Unlock the window (Restart needed)</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>Lock</value>

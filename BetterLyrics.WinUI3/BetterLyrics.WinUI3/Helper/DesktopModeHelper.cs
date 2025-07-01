@@ -1,12 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Vanara.PInvoke;
 using WinRT.Interop;
 using WinUIEx;
-using static BetterLyrics.WinUI3.Helper.Win32Helper;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -100,10 +101,10 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void Lock(Window window)
         {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
+            window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
+            
             // …Ë÷√Œﬁ±ﬂøÚ°¢Õ∏√˜
-            window.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
+            window.ToggleWindowStyle(true, WindowStyle.Popup | WindowStyle.Visible);
             window.ExtendsContentIntoTitleBar = false;
 
             SetClickThrough(window, true);
@@ -112,15 +113,15 @@ namespace BetterLyrics.WinUI3.Helper
         public static void SetClickThrough(Window window, bool enable)
         {
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
-            int exStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
+            int exStyle = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE);
             if (enable)
             {
-                SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_TRANSPARENT | WS_EX_LAYERED);
+                User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, exStyle | (int)User32.WindowStylesEx.WS_EX_TRANSPARENT | (int)User32.WindowStylesEx.WS_EX_LAYERED);
                 _clickThroughStates[hwnd] = true;
             }
             else
             {
-                SetWindowLong(hwnd, GWL_EXSTYLE, exStyle & ~WS_EX_TRANSPARENT);
+                User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, exStyle & ~(int)User32.WindowStylesEx.WS_EX_TRANSPARENT);
                 _clickThroughStates[hwnd] = false;
             }
         }
@@ -137,6 +138,9 @@ namespace BetterLyrics.WinUI3.Helper
             window.ExtendsContentIntoTitleBar = true;
 
             SetClickThrough(window, false);
+
+            // To recover the system backdrop, we need to reopen the window
+            WindowHelper.RestartApp(AppInfo.UnlockWindowTag);
         }
     }
 }

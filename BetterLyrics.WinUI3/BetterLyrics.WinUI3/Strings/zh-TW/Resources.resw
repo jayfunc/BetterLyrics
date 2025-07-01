@@ -313,7 +313,7 @@
     <value>播放測試音樂</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>使用系統播放器播放</value>
+    <value>在 “soundcloud.com” 上播放 “Cut to the Feeling”</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>快取</value>
@@ -517,7 +517,7 @@
     <value>退出程序</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>解鎖窗口</value>
+    <value>解鎖窗口（需要重新啟動）</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>鎖定</value>

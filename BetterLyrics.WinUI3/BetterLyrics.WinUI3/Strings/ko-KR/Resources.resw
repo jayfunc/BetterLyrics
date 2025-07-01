@@ -313,7 +313,7 @@
     <value>테스트 음악을 재생하십시오</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>시스템 플레이어를 사용하여 재생하십시오</value>
+    <value>"soundcloud.com"에서 "Fut to the Feeling"을 재생하십시오.</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>은닉처</value>
@@ -517,7 +517,7 @@
     <value>프로그램을 종료하십시오</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>창을 잠금 해제하십시오</value>
+    <value>창 잠금 해제 (다시 시작)</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>잠금</value>

@@ -313,7 +313,7 @@
     <value>テスト音楽を再生します</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>システムプレーヤーを使用して再生します</value>
+    <value>「SoundCloud.com」で「Cut to the Feeling」を再生する</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>キャッシュ</value>
@@ -517,7 +517,7 @@
     <value>プログラムを終了します</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>ウィンドウのロックを解除します</value>
+    <value>ウィンドウのロックを解除する（再起動が必要）</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>ロック</value>

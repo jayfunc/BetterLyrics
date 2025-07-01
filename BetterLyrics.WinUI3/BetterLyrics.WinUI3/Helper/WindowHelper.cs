@@ -53,8 +53,7 @@ namespace BetterLyrics.WinUI3.Helper
             if (window != null)
             {
                 var castedWindow = (Window)window;
-                castedWindow.Show();
-                castedWindow.AppWindow.MoveInZOrderAtTop();
+                castedWindow.Restore();
             }
             else
             {

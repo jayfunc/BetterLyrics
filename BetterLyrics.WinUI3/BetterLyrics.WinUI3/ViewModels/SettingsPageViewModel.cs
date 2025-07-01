@@ -26,9 +26,6 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class SettingsPageViewModel : ObservableRecipient
     {
         private readonly ILibWatcherService _libWatcherService;
-
-        private readonly MediaPlayer _mediaPlayer = new();
-
         private readonly ISettingsService _settingsService;
 
         public SettingsPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
@@ -48,6 +45,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
+
+            Task.Run(async () =>
+            {
+                BuildDate = (await AppInfo.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
+            });
         }
 
         [ObservableProperty]
@@ -90,6 +92,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial object NavViewSelectedItemTag { get; set; }
 
         public string Version { get; set; } = Helper.AppInfo.AppVersion;
+
+        public string BuildDate { get; set; }
 
         public void OnLyricsSearchProvidersReordered()
         {
@@ -227,9 +231,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void PlayTestingMusicTask()
         {
-            AddFolderAsync(Helper.AppInfo.AssetsFolder);
-            _mediaPlayer.SetUriSource(new Uri(Helper.AppInfo.TestMusicPath));
-            _mediaPlayer.Play();
+            WindowHelper.OpenOrShowWindow<LyricsWindow>();
         }
 
         [RelayCommand]
