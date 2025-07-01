@@ -32,54 +32,14 @@ Your smooth dynamic lyrics display tool built with WinUI 3
   - [.eslrc](https://github.com/ESLyric/release) files
   - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
 
+(For lyrics downloading, you can use [LDDC](https://github.com/chenmozhijin/LDDC))
+
 - From online lyrics providers
   - QQ Music
-  - Netease Cloud Music
-  - Kugou Music
+  - 网易云音乐 NetEase Cloud Music
+  - 酷狗音乐 Kugou Music
   - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
   - [LRCLIB](https://lrclib.net/)
-
-## Customize in your way
-
-We provide more than one setting item to better align with your preference
-
-- Theme
-  - Light
-  - Dark
-  - Follow system
-
-- Backdrop
-  - None
-  - Mica 
-  - Acrylic 
-  - Transparent
-
-- Album art as background
-  - Dynamic
-  - Blur amount
-  - Opacity
-
-- Album art as cover
-  - Corner radius
-
-- Lyrics
-  - Alignment
-  - Font size
-  - Font color **(from album art accent color)** 
-  - Line spacing
-  - Opacity
-  - Blur amount
-  - Dynamic **glow** effect
-    - Line by line
-    - Word by word
-
-- Language
-  - English
-  - Simplified Chinese
-  - Traditional Chinese
-  - Japanese
-  - Korean
-
 
 ## Screenshots
 
@@ -107,7 +67,7 @@ Watch our introduction video (uploaded on 31 May 2025) on Bilibili [here](https:
 
 ## Try it now
 
-### Stable version
+- Stable version
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
@@ -119,21 +79,13 @@ Or alternatively get it from Google Drive (see [release](https://github.com/jayf
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
 
-### Latest dev version
+- Latest dev version
 
 You can `git clone` this project and build it yourself.
 
-## Setup your app
+## Known unsupported music player
 
-This project relies on listening messages from [SMTC](https://learn.microsoft.com/en-ca/windows/uwp/audio-video-camera/integrate-with-systemmediatransportcontrols), so most of the music players will work.
-
-### About lyrics
-
-For a better experience, you can use [LDDC](https://github.com/chenmozhijin/LDDC) to download lyrics.
-
-## Future work
-
-To be added later.
+- 网易云音乐 NetEase Cloud Music
 
 ## Many thanks to
 
