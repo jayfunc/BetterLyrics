@@ -139,13 +139,13 @@
     <value>添加文件夹</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>主题</value>
+    <value>歌词窗口主题</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>语言</value>
   </data>
-  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>跟随系统</value>
+  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>适应歌词背景（彩色）</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>浅色</value>
@@ -196,7 +196,7 @@
     <value>透明</value>
   </data>
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>背景材质</value>
+    <value>歌词背景材质</value>
   </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>默认</value>
@@ -210,14 +210,14 @@
   <data name="SettingsPagePathExistedInfo" xml:space="preserve">
     <value>已添加过该文件夹，请勿重复添加</value>
   </data>
-  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
-    <value>叠加专辑图片背景</value>
+  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <value>歌词背景</value>
   </data>
-  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
-    <value>动态专辑图片背景</value>
+  <data name="SettingsPageDynamicLyricsBackground.Header" xml:space="preserve">
+    <value>动态歌词背景</value>
   </data>
-  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
-    <value>专辑图片背景不透明度</value>
+  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
+    <value>歌词背景不透明度</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>设置 - BetterLyrics</value>
@@ -237,8 +237,8 @@
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>靠右</value>
   </data>
-  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
-    <value>专辑图片背景模糊度</value>
+  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
+    <value>歌词背景模糊度</value>
   </data>
   <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
     <value>模糊度</value>
@@ -251,9 +251,6 @@
   </data>
   <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
     <value>启用模糊（&gt; 0）时将显著提升 GPU 占用率</value>
-  </data>
-  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
-    <value>启用该功能将略微提升 GPU 占用率</value>
   </data>
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>上下边缘不透明度</value>
@@ -273,8 +270,8 @@
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>沉浸模式</value>
   </data>
-  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
-    <value>专辑背景</value>
+  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
+    <value>歌词背景</value>
   </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>关于</value>
@@ -282,7 +279,7 @@
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
     <value>歌词库</value>
   </data>
-  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>应用外观</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
@@ -316,7 +313,7 @@
     <value>播放测试音乐</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>使用系统播放器播放</value>
+    <value>在 “soundcloud.com” 上播放 “Cut to the Feeling”</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>缓存</value>
@@ -327,11 +324,8 @@
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>字体颜色</value>
   </data>
-  <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
-    <value>默认</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
-    <value>专辑强调色</value>
+  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>适应歌词背景（灰色）</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>专辑封面样式</value>
@@ -384,19 +378,19 @@
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>退出画中画模式</value>
   </data>
-  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+  <data name="LyricsNotFound" xml:space="preserve">
     <value>未找到歌词</value>
   </data>
-  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>歌词动效</value>
   </data>
-  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>歌词样式</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>该文件夹已包含在已有文件夹中，无需再次添加</value>
   </data>
-  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>应用行为</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
@@ -406,10 +400,10 @@
     <value>启动标准模式</value>
   </data>
   <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>启动停靠模式</value>
+    <value>启动桌面模式</value>
   </data>
-  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
-    <value>未找到歌词</value>
+  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
+    <value>启动停靠模式</value>
   </data>
   <data name="SystemTrayPageTitle" xml:space="preserve">
     <value>系统托盘 - BetterLyrics</value>
@@ -468,7 +462,7 @@
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>设置</value>
   </data>
-  <data name="MainPageLyricsLoading.Text" xml:space="preserve">
+  <data name="LyricsLoading" xml:space="preserve">
     <value>加载歌词中...</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
@@ -523,12 +517,27 @@
     <value>退出程序</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>解锁窗口</value>
+    <value>解锁窗口（需要重新启动）</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>锁定</value>
   </data>
   <data name="HostWindowLockToolTip.Content" xml:space="preserve">
     <value>锁定后解锁，请转到系统托盘解锁</value>
+  </data>
+  <data name="SettingsPageFan.Header" xml:space="preserve">
+    <value>扇形歌词</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+    <value>歌词样式与动效</value>
+  </data>
+  <data name="SettingsPageApp.Content" xml:space="preserve">
+    <value>应用外观与行为</value>
+  </data>
+  <data name="SettingsPageAutoLock.Header" xml:space="preserve">
+    <value>启动桌面模式时随即锁定窗口</value>
   </data>
 </root>

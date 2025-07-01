@@ -1,54 +1,60 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame
-    /// </summary>
     public sealed partial class LyricsPage : Page
     {
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LyricsPage"/> class.
-        /// </summary>
         public LyricsPage()
         {
             this.InitializeComponent();
 
             DataContext = Ioc.Default.GetService<LyricsPageViewModel>();
+
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsDisplayType>>(
+                this,
+                async (r, m) =>
+                {
+                    if (m.Sender is LyricsPageViewModel)
+                    {
+                        if (m.PropertyName == nameof(LyricsPageViewModel.DisplayType))
+                        {
+                            switch (m.NewValue)
+                            {
+                                case LyricsDisplayType.AlbumArtOnly:
+                                    await SwitchToAlbumArtOnlyDisplayTypeAsync();
+                                    break;
+                                case LyricsDisplayType.LyricsOnly:
+                                    await SwitchToLyricsOnlyDisplayTypeAsync();
+                                    break;
+                                case LyricsDisplayType.SplitView:
+                                    await SwitchToSplitViewDisplayTypeAsync();
+                                    break;
+                                case LyricsDisplayType.PlaceholderOnly:
+                                    await SwitchToPlaceholderOnlyDisplayTypeAsync();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            );
         }
 
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the ViewModel
-        /// </summary>
         public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
 
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The BottomCommandGrid_PointerEntered
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="Microsoft.UI.Xaml.Input.PointerRoutedEventArgs"/></param>
         private void BottomCommandGrid_PointerEntered(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
@@ -58,11 +64,6 @@ namespace BetterLyrics.WinUI3.Views
                 BottomCommandGrid.Opacity = .5;
         }
 
-        /// <summary>
-        /// The BottomCommandGrid_PointerExited
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="Microsoft.UI.Xaml.Input.PointerRoutedEventArgs"/></param>
         private void BottomCommandGrid_PointerExited(
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e
@@ -72,11 +73,6 @@ namespace BetterLyrics.WinUI3.Views
                 BottomCommandGrid.Opacity = 0;
         }
 
-        /// <summary>
-        /// The CoverArea_SizeChanged
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="SizeChangedEventArgs"/></param>
         private void CoverArea_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             CoverImageGrid.Width = CoverImageGrid.Height = Math.Min(
@@ -85,36 +81,93 @@ namespace BetterLyrics.WinUI3.Views
             );
         }
 
-        /// <summary>
-        /// The CoverImageGrid_SizeChanged
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="SizeChangedEventArgs"/></param>
         private void CoverImageGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.CoverImageGridActualHeight = e.NewSize.Height;
         }
 
-        /// <summary>
-        /// The LyricsPlaceholderGrid_SizeChanged
-        /// </summary>
-        /// <param name="sender">The sender<see cref="object"/></param>
-        /// <param name="e">The e<see cref="SizeChangedEventArgs"/></param>
         private void LyricsPlaceholderGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.MaxLyricsWidth = e.NewSize.Width;
         }
 
-        /// <summary>
-        /// The WelcomeTeachingTip_Closed
-        /// </summary>
-        /// <param name="sender">The sender<see cref="TeachingTip"/></param>
-        /// <param name="args">The args<see cref="TeachingTipClosedEventArgs"/></param>
         private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
         {
             ViewModel.IsFirstRun = false;
         }
 
-        #endregion
+        private async void LyricsOnlyRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.PreferredDisplayType = ViewModel.DisplayType = LyricsDisplayType.LyricsOnly;
+            await SwitchToLyricsOnlyDisplayTypeAsync();
+        }
+
+        private async void AlbumArtOnlyRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.PreferredDisplayType = ViewModel.DisplayType = LyricsDisplayType.AlbumArtOnly;
+            await SwitchToAlbumArtOnlyDisplayTypeAsync();
+        }
+
+        private async void SplitViewRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.PreferredDisplayType = ViewModel.DisplayType = LyricsDisplayType.SplitView;
+            await SwitchToSplitViewDisplayTypeAsync();
+        }
+
+        private async Task SwitchToLyricsOnlyDisplayTypeAsync()
+        {
+            await BeforeSwitchDisplayTypeAsync();
+
+            Grid.SetColumn(LyricsPlaceholderGrid, 0);
+            Grid.SetColumnSpan(LyricsPlaceholderGrid, 3);
+
+            LyricsPlaceholderGrid.Opacity = 1;
+            LyricsGrid.Opacity = 1;
+        }
+
+
+        private async Task SwitchToAlbumArtOnlyDisplayTypeAsync()
+        {
+            await BeforeSwitchDisplayTypeAsync();
+
+            Grid.SetColumn(SongInfoInnerGrid, 0);
+            Grid.SetColumnSpan(SongInfoInnerGrid, 3);
+
+            SongInfoInnerGrid.Opacity = 1;
+            LyricsGrid.Opacity = 1;
+        }
+
+
+        private async Task BeforeSwitchDisplayTypeAsync()
+        {
+            SongInfoInnerGrid.Opacity = 0;
+            LyricsPlaceholderGrid.Opacity = 0;
+            //LyricsGrid.Opacity = 0;
+            MainPageNoMusicPlayingTextBlock.Opacity = 0;
+
+            await Task.Delay(300);
+        }
+
+        private async Task SwitchToSplitViewDisplayTypeAsync()
+        {
+            await BeforeSwitchDisplayTypeAsync();
+
+            Grid.SetColumn(SongInfoInnerGrid, 0);
+            Grid.SetColumnSpan(SongInfoInnerGrid, 1);
+
+            Grid.SetColumn(LyricsPlaceholderGrid, 2);
+            Grid.SetColumnSpan(LyricsPlaceholderGrid, 1);
+
+            SongInfoInnerGrid.Opacity = 1;
+            LyricsPlaceholderGrid.Opacity = 1;
+            LyricsGrid.Opacity = 1;
+        }
+
+        private async Task SwitchToPlaceholderOnlyDisplayTypeAsync()
+        {
+            await BeforeSwitchDisplayTypeAsync();
+
+            MainPageNoMusicPlayingTextBlock.Opacity = 1;
+        }
     }
 }

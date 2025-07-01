@@ -139,13 +139,13 @@
     <value>폴더를 추가하십시오</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>주제</value>
+    <value>가사 창 테마</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>언어</value>
   </data>
-  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>시스템을 따르십시오</value>
+  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>가사 배경 (색상)에 적응</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>빛</value>
@@ -196,7 +196,7 @@
     <value>투명한</value>
   </data>
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>배경</value>
+    <value>가사 배경 자료</value>
   </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>기본</value>
@@ -210,14 +210,14 @@
   <data name="SettingsPagePathExistedInfo" xml:space="preserve">
     <value>폴더가 추가되었습니다. 다시 추가하지 마십시오.</value>
   </data>
-  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
-    <value>오버레이 앨범 아트 배경</value>
+  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <value>가사 배경</value>
   </data>
-  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
-    <value>동적 앨범 아트 배경</value>
+  <data name="SettingsPageDynamicLyricsBackground.Header" xml:space="preserve">
+    <value>역동적 인 가사 배경</value>
   </data>
-  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
-    <value>앨범 아트 배경 불투명도</value>
+  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
+    <value>가사 배경 불투명도</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>설정 - BetterLyrics</value>
@@ -237,8 +237,8 @@
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>오른쪽</value>
   </data>
-  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
-    <value>앨범 아트 배경 흐림 금액</value>
+  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
+    <value>가사 배경 블러</value>
   </data>
   <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
     <value>흐림 금액</value>
@@ -251,9 +251,6 @@
   </data>
   <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
     <value>Blur가 활성화 될 때 상당히 높은 GPU 사용량 (&gt; 0)</value>
-  </data>
-  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
-    <value>이 기능을 활성화하면 GPU 사용률이 약간 증가합니다</value>
   </data>
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>상단 및 하단 가장자리 불투명도</value>
@@ -273,8 +270,8 @@
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>몰입 형 모드</value>
   </data>
-  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
-    <value>앨범 배경</value>
+  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
+    <value>가사 배경</value>
   </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>에 대한</value>
@@ -282,7 +279,7 @@
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
     <value>가사 도서관</value>
   </data>
-  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>앱 모양</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
@@ -316,7 +313,7 @@
     <value>테스트 음악을 재생하십시오</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>시스템 플레이어를 사용하여 재생하십시오</value>
+    <value>"soundcloud.com"에서 "Fut to the Feeling"을 재생하십시오.</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>은닉처</value>
@@ -327,11 +324,8 @@
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>글꼴 색상</value>
   </data>
-  <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
-    <value>기본</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
-    <value>앨범 아트 악센트 색상</value>
+  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>가사 배경 (회색)에 적응</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>앨범 아트 스타일</value>
@@ -384,19 +378,19 @@
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>Picture-in-Picture 모드 종료</value>
   </data>
-  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+  <data name="LyricsNotFound" xml:space="preserve">
     <value>가사를 찾을 수 없습니다</value>
   </data>
-  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>가사 효과</value>
   </data>
-  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>가사 스타일</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>이 폴더는 이미 기존 폴더에 포함되어 있으며 다시 추가 할 필요가 없습니다.</value>
   </data>
-  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>앱 동작</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
@@ -406,10 +400,10 @@
     <value>표준 모드를 ​​활성화합니다</value>
   </data>
   <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>도크 모드를 활성화하십시오</value>
+    <value>데스크탑 모드를 시작하십시오</value>
   </data>
-  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
-    <value>가사를 찾을 수 없습니다</value>
+  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
+    <value>도크 모드를 활성화하십시오</value>
   </data>
   <data name="SystemTrayPageTitle" xml:space="preserve">
     <value>시스템 트레이 - BetterLyrics</value>
@@ -468,7 +462,7 @@
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>설정</value>
   </data>
-  <data name="MainPageLyricsLoading.Text" xml:space="preserve">
+  <data name="LyricsLoading" xml:space="preserve">
     <value>가사로드 ...</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
@@ -523,12 +517,27 @@
     <value>프로그램을 종료하십시오</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>창을 잠금 해제하십시오</value>
+    <value>창 잠금 해제 (다시 시작)</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>잠금</value>
   </data>
   <data name="HostWindowLockToolTip.Content" xml:space="preserve">
     <value>잠금 잠금을 해제하려면 시스템 트레이로 이동하여 잠금을 해제하십시오.</value>
+  </data>
+  <data name="SettingsPageFan.Header" xml:space="preserve">
+    <value>팬 가사</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <value>사용자 정의하십시오</value>
+  </data>
+  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+    <value>가사 스타일과 효과</value>
+  </data>
+  <data name="SettingsPageApp.Content" xml:space="preserve">
+    <value>앱 외관과 행동</value>
+  </data>
+  <data name="SettingsPageAutoLock.Header" xml:space="preserve">
+    <value>데스크탑 모드를 활성화 할 때 자동 잠금</value>
   </data>
 </root>

@@ -19,8 +19,8 @@
     <PRIResource Remove="ViewModels\Lyrics\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Controls\DependenciesSettingsExpander.xaml" />
     <None Remove="Controls\SystemTray.xaml" />
+    <None Remove="Views\SettingsWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo.ico" />
@@ -50,17 +50,16 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.10" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.6" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.6" />
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
     <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
+    <PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.1.6" />
+    <PackageReference Include="Vanara.PInvoke.Shell32" Version="4.1.6" />
+    <PackageReference Include="Vanara.PInvoke.User32" Version="4.1.6" />
     <PackageReference Include="WinUIEx" Version="2.6.0" />
-    <PackageReference Include="z440.atl.core" Version="6.26.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Update="Assets\AI - 甜度爆表.mp3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <PackageReference Include="z440.atl.core" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Rendering\InAppLyricsRenderer.xaml">
@@ -77,12 +76,12 @@
     <TrimmerRootAssembly Include="TagLibSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\SystemTray.xaml">
+    <Page Update="Views\SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\DependenciesSettingsExpander.xaml">
+    <Page Update="Controls\SystemTray.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

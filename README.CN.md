@@ -1,188 +1,127 @@
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.md">_**Click here to see the English version**_</a>
 
 <div align="center">
-  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
+<img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
 </div>
 
 <h2 align="center">
 BetterLyrics
-</h2>
+</div>
 
 <h3 align="center">
-基于 WinUI 3 打造的流畅动态本地歌词显示工具
-</h3>
+使用 WinUI 3 构建的流畅动态歌词显示工具
+</div>
 
 ---
 
-## 亮点
+## 亮点功能
 
-- 支持将模糊专辑封面设为背景  
-- 歌词淡入淡出、缩放等动画流畅自然  
-- 切换歌曲时界面无缝过渡  
-- 支持每个字符的渐变卡拉OK（发光）效果  
-- 沉浸式桌面歌词（Dock 模式）
+- 动态模糊专辑封面作为背景
+- 流畅的歌词淡入/淡出、放大/缩小效果
+- 流畅的用户界面随歌曲切换
+- 每个字符均支持渐变卡拉 OK（带光晕）效果
+- 沉浸式桌面歌词（停靠模式）
 
-> 项目仍在开发中，`dev` 分支可能存在 bug。
+> 该项目目前仍在开发中，最新的开发分支中可能存在错误和意外行为。
 
----
+## 支持的歌词来源
 
-## 支持的歌词源
+- 来自您的本地存储
+  - 音乐文件（内嵌歌词）
+  - [.lrc](https://en.wikipedia.org/wiki/LRC_(file_format)) 文件（包含核心格式和增强格式）
+  - [.eslrc](https://github.com/ESLyric/release) 文件
+  - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) 文件
 
-- 本地歌词：
-  - 音乐文件内嵌歌词（通过 [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet) 读取和解析）  
-  - `.lrc` 文件
+（歌词下载，您可以使用 [LDDC](https://github.com/chenmozhijin/LDDC))
 
-- 在线歌词源：
-  - [LRCLIB](https://lrclib.net/)  
-  - QQ 音乐（通过 [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) 获取和解码）
+- 来自在线歌词提供商
+  - QQ 音乐
+  - 网易云音乐
+  - 酷狗音乐
+  - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
+  - [LRCLIB](https://lrclib.net/)
 
----
+## 截图
 
-## 多种个性化设置选项
+![alt text](Screenshots/mode.png)
 
-提供了丰富的自定义项：
+![alt text](Screenshots/glow.png)
 
-- 主题模式（浅色、深色、跟随系统）  
-- 背景样式（无、Mica 云母、Acrylic 亚克力、透明）  
-- 专辑封面背景（动态显示、模糊程度、透明度）  
-- 歌词样式（对齐方式、字体大小、颜色 **（从专辑封面中提取主题色）**、行间距、透明度、模糊强度、动态**发光**特效）  
-- 语言（英文、简体中文、繁体中文）
+![alt text](Screenshots/glow.gif)
 
----
+![alt text](Screenshots/dock.png)
 
-## 软件截图
+![alt text](Screenshots/immersive-dock.gif)
 
-![模式](Screenshots/mode.png)  
-![发光效果](Screenshots/glow.png)  
-![发光动画](Screenshots/glow.gif)  
-![Dock 模式](Screenshots/dock.png)  
-![沉浸式 Dock](Screenshots/immersive-dock.gif)  
-![歌词 Dock 动画](Screenshots/dock.gif)  
-![画中画](Screenshots/pip.png)  
-![设置界面](Screenshots/settings.png)  
-![全屏歌词](Screenshots/fs.png)
+![alt text](Screenshots/dock.gif)
 
----
+![alt text](Screenshots/pip.png)
 
-## 演示视频
+![alt text](Screenshots/settings.png)
 
-观看我们的介绍视频「BetterLyrics 阶段性开发成果展示」（上传于 2025 年 5 月 31 日）：  
-[点此观看 B 站视频](https://b23.tv/QjKkYmL)
+![alt text](Screenshots/fs.png)
 
----
+## 演示
+
+在 Bilibili 上观看我们的介绍视频（上传于 2025 年 5 月 31 日） [此处](https://b23.tv/QjKkYmL)。
 
 ## 立即体验
 
-### 稳定版本
+- 稳定版本
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
- <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-> **推荐方式**，**永久免费试用或购买**（免费与付费功能上无差别，若喜欢可购买支持作者）
+> **最简单**的获取方式。 **无限**免费试用或购买（免费版和付费版**没有区别**，如果您喜欢，可以购买来支持我）
 
-也可从 Google Drive 下载（详见 [release 页面](https://github.com/jayfunc/BetterLyrics/releases/latest)）
+或者您也可以从 Google Drive 获取（链接见 [release](https://github.com/jayfunc/BetterLyrics/releases/latest) 页面）
 
-> 注意：这是一个 `.zip` 压缩包，请参考[安装指南](How2Install/How2Install.md)进行安装。
+> 请注意，您正在下载“.zip”文件，有关安装指南，请参考[此文档](How2Install/How2Install.md)。
 
-### 最新开发版本
+- 最新开发版本
 
-可通过 `git clone` 克隆本仓库后自行构建运行。
+您可以使用 `git clone` 命令克隆此项目并自行构建。
 
----
+## 已知不支持的音乐播放器
 
-## 播放器适配说明
+- 网易云音乐
 
-本项目通过监听 [SMTC](https://learn.microsoft.com/en-ca/windows/uwp/audio-video-camera/integrate-with-systemmediatransportcontrols) 获取当前播放歌曲信息。  
-理论上，**只要你的播放器支持 SMTC 控件**，加载本地音乐或歌词后即可使用。
+## 非常感谢
 
-兼容性良好的播放器包括但不限于：
-
-- Spotify  
-- Groove 音乐  
-- Apple Music  
-- Windows 媒体播放器  
-- VLC  
-- QQ 音乐  
-- 酷狗音乐  
-- 酷我音乐  
-
->（注：未测试全部播放器，如有异常欢迎反馈 issue）
-
----
-
-## 后续工作
-
-敬请期待。
-
----
-
-## 特别感谢
-
+- [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
+  - 提供 QQ、网易、酷狗等平台歌词的获取、解密和解析功能
 - [LRCLIB](https://lrclib.net/)
-  - 在线歌词 API 提供源
+  - LRCLIB 歌词 API 提供程序
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
-  - 本地音频元信息读取  
+  - 用于提取音乐文件中的图片
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
-  - 简化 Win32 窗口操作  
+  - 提供访问 Win32 窗口 API 的便捷方法
 - [TagLib#](https://github.com/mono/taglib-sharp)
-  - 曾用作元信息解析库  
-- [Stackoverflow - WPF 动画 Margin 属性](https://stackoverflow.com/a/21542882/11048731)  
-- [DevWinUI](https://github.com/ghost1372/DevWinUI)  
-- [Bilibili -【WinUI3】SystemBackdropController 教程](https://www.bilibili.com/video/BV1PY4FevEkS)  
-- [博客园 - .NET App 与 SMTC 交互](https://www.cnblogs.com/TwilightLemon/p/18279496)  
-- [Win2D 游戏循环教程](https://www.cnblogs.com/walterlv/p/10236395.html)  
-- [Win2D Iris Blur 示例](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)  
-- [CommunityToolkit - 教程合集](https://mvvm.coldwind.top/)
+  - 用于读取原版歌词内容
+- [Stackoverflow - 如何在 WPF 中为 Margin 属性设置动画](https://stackoverflow.com/a/21542882/11048731)
+- [DevWinUI](https://github.com/ghost1372/DevWinUI)
+- [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
+- [cnblogs - .NET App 与 Windows 系统媒体控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
+- [Win2D中的游戏循环：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
+- [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
+- [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
 
----
+## 灵感来自
 
-## 灵感来源
-
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)  
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)  
-- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)  
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
+- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
-
----
-
-## 使用的第三方库
-
-```xml
-<PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.230830" />
-<PackageReference Include="CommunityToolkit.Labs.WinUI.OpacityMaskView" Version="0.1.250513-build.2126" />
-<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
-<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
-<PackageReference Include="Lyricify.Lyrics.Helper" Version="0.1.4" />
-<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
-<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
-<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
-<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
-<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
-<PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
-<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
-<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-<PackageReference Include="System.Drawing.Common" Version="9.0.6" />
-<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.6" />
-<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-<PackageReference Include="WinUIEx" Version="2.5.1" />
-<PackageReference Include="z440.atl.core" Version="6.25.0" />
-```
 
 ## Star 历史
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+[![星盘历史Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
-## 欢迎提出反馈或建议
+## 欢迎提出任何问题和 PR
 
-感谢。
+如果您发现错误，请提交至 issues；如果您有任何想法，请随时在此处分享。
 
-
+或者，您也可以加入群聊，分享您的宝贵反馈：
+- QQ[「BetterLyrics」反馈交流群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
+- Discord [「BetterLyrics」反馈交流群](https://discord.gg/rbnF556r)

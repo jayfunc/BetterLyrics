@@ -139,13 +139,13 @@
     <value>Add a folder</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>Theme</value>
+    <value>Lyrics window theme</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>Follow system</value>
+  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>Adaptive to lyrics background (Colored)</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>Light</value>
@@ -196,7 +196,7 @@
     <value>Transparent</value>
   </data>
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>Backdrop</value>
+    <value>Lyrics backdrop</value>
   </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>Default</value>
@@ -210,14 +210,14 @@
   <data name="SettingsPagePathExistedInfo" xml:space="preserve">
     <value>The folder has been added. Please do not add it again.</value>
   </data>
-  <data name="SettingsPageCoverOverlay.Header" xml:space="preserve">
-    <value>Overlay album art background</value>
+  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <value>Lyrics background</value>
   </data>
-  <data name="SettingsPageDynamicCoverOverlay.Header" xml:space="preserve">
-    <value>Dynamic album art background</value>
+  <data name="SettingsPageDynamicLyricsBackground.Header" xml:space="preserve">
+    <value>Dynamic lyrics background</value>
   </data>
-  <data name="SettingsPageCoverOverlayOpacity.Header" xml:space="preserve">
-    <value>Album art background opacity</value>
+  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
+    <value>Lyrics background opacity</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Settings - BetterLyrics</value>
@@ -237,8 +237,8 @@
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>Right</value>
   </data>
-  <data name="SettingsPageCoverOverlayBlurAmount.Header" xml:space="preserve">
-    <value>Album art background blur amount</value>
+  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
+    <value>Lyrics background blur amount</value>
   </data>
   <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
     <value>Blur amount</value>
@@ -251,9 +251,6 @@
   </data>
   <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
     <value>Significantly higher GPU usage when blur is enabled (&gt; 0)</value>
-  </data>
-  <data name="SettingsPageCoverOverlayGPUUsage.Text" xml:space="preserve">
-    <value>Enabling this feature will slightly increase GPU utilization</value>
   </data>
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>Top and bottom edge opacity</value>
@@ -273,8 +270,8 @@
   <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Immersive mode</value>
   </data>
-  <data name="SettingsPageAlbumOverlay.Content" xml:space="preserve">
-    <value>Album background</value>
+  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
+    <value>Lyrics background</value>
   </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>About</value>
@@ -282,7 +279,7 @@
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
     <value>Lyrics library</value>
   </data>
-  <data name="SettingsPageAppAppearance.Content" xml:space="preserve">
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>App appearance</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
@@ -316,7 +313,7 @@
     <value>Play test music</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>Play using system player</value>
+    <value>Play "Cut To The Feeling" on "soundcloud.com"</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>Cache</value>
@@ -327,11 +324,8 @@
   <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
     <value>Font color</value>
   </data>
-  <data name="SettingsPageLyricsFontColorDefault.Content" xml:space="preserve">
-    <value>Default</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorDominant.Content" xml:space="preserve">
-    <value>Album art accent color</value>
+  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>Adaptive to lyrics background (Grayed)</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>Album art style</value>
@@ -384,19 +378,19 @@
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>Exit picture-in-picture mode</value>
   </data>
-  <data name="MainPageLyricsNotFound.Text" xml:space="preserve">
+  <data name="LyricsNotFound" xml:space="preserve">
     <value>Lyrics not found</value>
   </data>
-  <data name="SettingsPageLyricsEffect.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>Lyrics effect</value>
   </data>
-  <data name="SettingsPageLyricsStyle.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>Lyrics style</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>This folder is already included in the existing folder and does not need to be added again</value>
   </data>
-  <data name="SettingsPageAppBehavior.Content" xml:space="preserve">
+  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>App behavior</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
@@ -406,10 +400,10 @@
     <value>Activate standard mode</value>
   </data>
   <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>Activate dock mode</value>
+    <value>Activate desktop mode</value>
   </data>
-  <data name="DesktopLyricsRendererPageLyricsNotFound.Text" xml:space="preserve">
-    <value>Lyrics not found</value>
+  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
+    <value>Activate dock mode</value>
   </data>
   <data name="SystemTrayPageTitle" xml:space="preserve">
     <value>System tray - BetterLyrics</value>
@@ -468,7 +462,7 @@
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="MainPageLyricsLoading.Text" xml:space="preserve">
+  <data name="LyricsLoading" xml:space="preserve">
     <value>Loading lyrics...</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
@@ -523,12 +517,27 @@
     <value>Exit</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>Unlock the window</value>
+    <value>Unlock the window (Restart needed)</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>Lock</value>
   </data>
   <data name="HostWindowLockToolTip.Content" xml:space="preserve">
     <value>To unlock after locking, go to the system tray to unlock</value>
+  </data>
+  <data name="SettingsPageFan.Header" xml:space="preserve">
+    <value>Fan lyrics</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+    <value>Lyrics style and effect</value>
+  </data>
+  <data name="SettingsPageApp.Content" xml:space="preserve">
+    <value>App appearance and behavior</value>
+  </data>
+  <data name="SettingsPageAutoLock.Header" xml:space="preserve">
+    <value>Auto-lock when activating desktop mode</value>
   </data>
 </root>

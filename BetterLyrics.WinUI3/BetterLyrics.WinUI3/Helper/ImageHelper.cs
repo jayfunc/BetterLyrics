@@ -1,11 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Text;
-using Microsoft.UI;
-using Microsoft.UI.Text;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,43 +7,20 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
+using Microsoft.UI;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Graphics.Imaging;
-using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    /// <summary>
-    /// Defines the <see cref="ImageHelper" />
-    /// </summary>
     public class ImageHelper
     {
-        #region Constants
-
-        /// <summary>
-        /// Defines the AccentColorCount
-        /// </summary>
         public const int AccentColorCount = 3;
 
-        #endregion
-
-        #region Fields
-
-        /// <summary>
-        /// Defines the _colorThief
-        /// </summary>
-        private static readonly ColorThief _colorThief = new();
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The ByteArrayToStream
-        /// </summary>
-        /// <param name="bytes">The bytes<see cref="byte[]"/></param>
-        /// <returns>The <see cref="Task{InMemoryRandomAccessStream}"/></returns>
         public static async Task<InMemoryRandomAccessStream> ByteArrayToStream(byte[] bytes)
         {
             var stream = new InMemoryRandomAccessStream();
@@ -59,18 +30,7 @@ namespace BetterLyrics.WinUI3.Helper
             return stream;
         }
 
-        /// <summary>
-        /// The CreateTextPlaceholderBytesAsync
-        /// </summary>
-        /// <param name="text">The text<see cref="string"/></param>
-        /// <param name="width">The width<see cref="int"/></param>
-        /// <param name="height">The height<see cref="int"/></param>
-        /// <returns>The <see cref="Task{byte[]}"/></returns>
-        public static async Task<byte[]> CreateTextPlaceholderBytesAsync(
-            string text,
-            int width,
-            int height
-        )
+        public static async Task<byte[]> CreateTextPlaceholderBytesAsync(string text, int width, int height)
         {
             var device = CanvasDevice.GetSharedDevice();
             var renderTarget = new CanvasRenderTarget(device, width, height, 96);
@@ -142,25 +102,42 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        /// <summary>
-        /// The GetAccentColorsFromByte
-        /// </summary>
-        /// <param name="bytes">The bytes<see cref="byte[]"/></param>
-        /// <returns>The <see cref="Task{List{Color}}"/></returns>
-        public static async Task<List<Color>> GetAccentColorsFromByte(byte[] bytes) =>
-            [
-                .. (
-                    await _colorThief.GetPalette(await GetDecoderFromByte(bytes), AccentColorCount)
-                ).Select(color =>
-                    Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B)
-                ),
-            ];
+        public static List<Windows.UI.Color> GetAccentColorsFromByte(byte[] bytes)
+        {
+            // 使用 ImageSharp 读取图片
+            using var image = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(bytes);
 
-        /// <summary>
-        /// The GetBitmapImageFromBytesAsync
-        /// </summary>
-        /// <param name="imageBytes">The imageBytes<see cref="byte[]"/></param>
-        /// <returns>The <see cref="Task{BitmapImage}"/></returns>
+            // 简单聚类法：统计所有像素出现频率，取出现最多的前 AccentColorCount 个颜色
+            var colorCount = new Dictionary<SixLabors.ImageSharp.PixelFormats.Rgba32, int>();
+
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    var color = image[x, y];
+                    // 可选：忽略透明像素
+                    if (color.A < 32) continue;
+                    if (colorCount.ContainsKey(color))
+                        colorCount[color]++;
+                    else
+                        colorCount[color] = 1;
+                }
+            }
+
+            // 按出现次数排序，取前 AccentColorCount 个
+            var topColors = colorCount
+                .OrderByDescending(kv => kv.Value)
+                .Take(AccentColorCount)
+                .Select(kv => kv.Key)
+                .ToList();
+
+            // 转换为 Windows.UI.Color
+            return topColors
+                .Select(c => Windows.UI.Color.FromArgb(c.A, c.R, c.G, c.B))
+                .ToList();
+        }
+
+
         public static async Task<BitmapImage> GetBitmapImageFromBytesAsync(byte[] imageBytes)
         {
             var stream = new InMemoryRandomAccessStream();
@@ -173,22 +150,10 @@ namespace BetterLyrics.WinUI3.Helper
             return bitmapImage;
         }
 
-        /// <summary>
-        /// The GetDecoderFromByte
-        /// </summary>
-        /// <param name="bytes">The bytes<see cref="byte[]"/></param>
-        /// <returns>The <see cref="Task{BitmapDecoder}"/></returns>
         public static async Task<BitmapDecoder> GetDecoderFromByte(byte[] bytes) =>
             await BitmapDecoder.CreateAsync(await ByteArrayToStream(bytes));
 
-        /// <summary>
-        /// The GetStreamFromBytesAsync
-        /// </summary>
-        /// <param name="imageBytes">The imageBytes<see cref="byte[]"/></param>
-        /// <returns>The <see cref="Task{InMemoryRandomAccessStream}"/></returns>
-        public static async Task<InMemoryRandomAccessStream> GetStreamFromBytesAsync(
-            byte[] imageBytes
-        )
+        public static async Task<InMemoryRandomAccessStream> GetStreamFromBytesAsync(byte[] imageBytes)
         {
             if (imageBytes == null || imageBytes.Length == 0)
                 return null;
@@ -199,11 +164,6 @@ namespace BetterLyrics.WinUI3.Helper
             return stream;
         }
 
-        /// <summary>
-        /// The ToByteArrayAsync
-        /// </summary>
-        /// <param name="streamRef">The streamRef<see cref="IRandomAccessStreamReference"/></param>
-        /// <returns>The <see cref="Task{byte[]}"/></returns>
         public static async Task<byte[]> ToByteArrayAsync(IRandomAccessStreamReference streamRef)
         {
             using IRandomAccessStream stream = await streamRef.OpenReadAsync();
@@ -211,7 +171,5 @@ namespace BetterLyrics.WinUI3.Helper
             await stream.AsStreamForRead().CopyToAsync(memoryStream);
             return memoryStream.ToArray();
         }
-
-        #endregion
     }
 }

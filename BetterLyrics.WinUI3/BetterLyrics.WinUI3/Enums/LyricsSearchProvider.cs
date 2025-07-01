@@ -4,62 +4,21 @@ using BetterLyrics.WinUI3.Helper;
 
 namespace BetterLyrics.WinUI3.Enums
 {
-    #region Enums
-
-    /// <summary>
-    /// Defines the LyricsSearchProvider
-    /// </summary>
     public enum LyricsSearchProvider
     {
         QQ,
         Kugou,
         Netease,
         LrcLib,
-
         AmllTtmlDb,
-
-        /// <summary>
-        /// Defines the LocalMusicFile
-        /// </summary>
         LocalMusicFile,
-
-        /// <summary>
-        /// Defines the LocalLrcFile
-        /// </summary>
         LocalLrcFile,
-
-        /// <summary>
-        /// Defines the LocalEslrcFile
-        /// </summary>
         LocalEslrcFile,
-
-        /// <summary>
-        /// Defines the LocalTtmlFile
-        /// </summary>
         LocalTtmlFile,
     }
 
     public static class LyricsSearchProviderExtensions
     {
-        /// <summary>
-        /// The IsLocal
-        /// </summary>
-        /// <param name="provider">The provider<see cref="LyricsSearchProvider"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        public static bool IsLocal(this LyricsSearchProvider provider)
-        {
-            return provider
-                is LyricsSearchProvider.LocalMusicFile
-                    or LyricsSearchProvider.LocalLrcFile
-                    or LyricsSearchProvider.LocalEslrcFile
-                    or LyricsSearchProvider.LocalTtmlFile;
-        }
-
-        public static bool IsRemote(this LyricsSearchProvider provider)
-        {
-            return !provider.IsLocal();
-        }
-
         public static string GetCacheDirectory(this LyricsSearchProvider provider)
         {
             return provider switch
@@ -88,7 +47,19 @@ namespace BetterLyrics.WinUI3.Enums
                 _ => LyricsFormat.NotSpecified,
             };
         }
-    }
 
-    #endregion
+        public static bool IsLocal(this LyricsSearchProvider provider)
+        {
+            return provider
+                is LyricsSearchProvider.LocalMusicFile
+                    or LyricsSearchProvider.LocalLrcFile
+                    or LyricsSearchProvider.LocalEslrcFile
+                    or LyricsSearchProvider.LocalTtmlFile;
+        }
+
+        public static bool IsRemote(this LyricsSearchProvider provider)
+        {
+            return !provider.IsLocal();
+        }
+    }
 }

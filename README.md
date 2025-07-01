@@ -9,7 +9,7 @@ BetterLyrics
 </div>
 
 <h3 align="center">
-Your smooth dynamic local lyrics display built with WinUI 3
+Your smooth dynamic lyrics display tool built with WinUI 3
 </div>
 
 ---
@@ -32,51 +32,14 @@ Your smooth dynamic local lyrics display built with WinUI 3
   - [.eslrc](https://github.com/ESLyric/release) files
   - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
 
+(For lyrics downloading, you can use [LDDC](https://github.com/chenmozhijin/LDDC))
+
 - From online lyrics providers
+  - QQ Music
+  - 网易云音乐 NetEase Cloud Music
+  - 酷狗音乐 Kugou Music
+  - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
   - [LRCLIB](https://lrclib.net/)
-
-## Customize in your way
-
-We provide more than one setting item to better align with your preference
-
-- Theme
-  - Light
-  - Dark
-  - Follow system
-
-- Backdrop
-  - None
-  - Mica 
-  - Acrylic 
-  - Transparent
-
-- Album art as background
-  - Dynamic
-  - Blur amount
-  - Opacity
-
-- Album art as cover
-  - Corner radius
-
-- Lyrics
-  - Alignment
-  - Font size
-  - Font color **(from album art accent color)** 
-  - Line spacing
-  - Opacity
-  - Blur amount
-  - Dynamic **glow** effect
-    - Whole lyrics
-    - Line by line
-    - Word by word
-
-- Language
-  - English
-  - Simplified Chinese
-  - Traditional Chinese
-  - Japanese
-  - Korean
-
 
 ## Screenshots
 
@@ -104,7 +67,7 @@ Watch our introduction video (uploaded on 31 May 2025) on Bilibili [here](https:
 
 ## Try it now
 
-### Stable version
+- Stable version
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
@@ -116,26 +79,20 @@ Or alternatively get it from Google Drive (see [release](https://github.com/jayf
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
 
-### Latest dev version
+- Latest dev version
 
 You can `git clone` this project and build it yourself.
 
-## Setup your app
+## Known unsupported music player
 
-This project relies on listening messages from [SMTC](https://learn.microsoft.com/en-ca/windows/uwp/audio-video-camera/integrate-with-systemmediatransportcontrols), so most of the music players will work.
-
-### About lyrics
-
-For a better experience, you can use [LDDC](https://github.com/chenmozhijin/LDDC) to download lyrics.
-
-## Future work
-
-To be added later.
+- 网易云音乐 NetEase Cloud Music
 
 ## Many thanks to
 
+- [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
+  - Provide lyrics fetch, decryption, and parse for QQ, Netease, Kugou sources
 - [LRCLIB](https://lrclib.net/)
-  - Online lyrics API provider
+  - LRCLIB lyrics API provider
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
   - Used for extracting pictures in music files
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
@@ -157,29 +114,6 @@ To be added later.
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
 
-## Third-party libraries that this project uses
-
-```
-    <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
-    <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
-    <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
-    <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
-    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
-    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.6" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.6" />
-    <PackageReference Include="TagLibSharp" Version="2.3.0" />
-    <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-    <PackageReference Include="WinUIEx" Version="2.5.1" />
-    <PackageReference Include="z440.atl.core" Version="6.26.0" />S
-```
-
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
@@ -187,3 +121,7 @@ To be added later.
 ## Any issues and PRs are welcomed
 
 If you find a bug please file it in issues or if you have any ideas feel free to share it here.
+
+Or alternatively join group chat to share your valuable feedback:
+- [「BetterLyrics」反馈交流群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) on QQ
+- [「BetterLyrics」Feedback Chat Group](https://discord.gg/rbnF556r) on Discord
