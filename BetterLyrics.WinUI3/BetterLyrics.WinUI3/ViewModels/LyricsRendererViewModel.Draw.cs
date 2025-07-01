@@ -39,19 +39,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
 
-            // Masked blurred lyrics layer
-            using var maskedBlurredLyrics = new CanvasCommandList(control);
-            using (var maskedBlurredLyricsDs = maskedBlurredLyrics.CreateDrawingSession())
-            {
-                maskedBlurredLyricsDs.DrawImage(
-                    new OpacityEffect
-                    {
-                        Source = blurredLyrics,
-                        Opacity = _lyricsOpacityTransition.Value
-                    }
-                );
-            }
-
             using var combined = new CanvasCommandList(control);
             using var combinedDs = combined.CreateDrawingSession();
 
@@ -62,11 +49,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 DrawImmersiveBackground(control, combinedDs);
             }
 
-            combinedDs.DrawImage(maskedBlurredLyrics);
+            combinedDs.DrawImage(blurredLyrics);
 
             if (_isDesktopMode)
             {
-                ds.DrawImage(maskedBlurredLyrics);
+                ds.DrawImage(blurredLyrics);
             }
             else
             {
@@ -94,7 +81,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                             + $"Cur playing {currentPlayingLineIndex}, char start idx {charStartIndex}, length {charLength}, prog {charProgress}\n"
                             + $"Visible lines [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n"
                             + $"Cur time {TotalTime}\n" +
-                            $"Lang size: {_multiLangLyrics.Count}",
+                            $"Lang size: {_multiLangLyrics.Count}\n" +
+                            $"{_lyricsOpacityTransition.Value}",
                         new Vector2(10, 10),
                         ThemeTypeSent == Microsoft.UI.Xaml.ElementTheme.Light ? Colors.Black : Colors.White
                     );
@@ -141,30 +129,23 @@ namespace BetterLyrics.WinUI3.ViewModels
             var overlappedCovers = new CanvasCommandList(control.Device);
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
 
-            if (_albumArtBgTransition.IsTransitioning)
+            if (_lastAlbumArtBitmap != null)
             {
-                if (_lastAlbumArtBitmap != null)
-                {
-                    DrawImgae(
-                        control,
-                        overlappedCoversDs,
-                        _lastAlbumArtBitmap,
-                        1 - _albumArtBgTransition.Value
-                    );
-                }
-                if (_albumArtBitmap != null)
-                {
-                    DrawImgae(
-                        control,
-                        overlappedCoversDs,
-                        _albumArtBitmap,
-                        _albumArtBgTransition.Value
-                    );
-                }
+                DrawImgae(
+                    control,
+                    overlappedCoversDs,
+                    _lastAlbumArtBitmap,
+                    1 - _albumArtBgTransition.Value
+                );
             }
-            else if (_albumArtBitmap != null)
+            if (_albumArtBitmap != null)
             {
-                DrawImgae(control, overlappedCoversDs, _albumArtBitmap, 1f);
+                DrawImgae(
+                    control,
+                    overlappedCoversDs,
+                    _albumArtBitmap,
+                    _albumArtBgTransition.Value
+                );
             }
 
             using var coverOverlayEffect = new OpacityEffect
@@ -266,7 +247,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 ds.DrawImage(
                     new GaussianBlurEffect
                     {
-                        Source = new OpacityEffect { Source = lyrics, Opacity = line.OpacityTransition.Value },
+                        Source = new OpacityEffect { Source = lyrics, Opacity = line.OpacityTransition.Value * _lyricsOpacityTransition.Value },
                         BlurAmount = line.BlurAmountTransition.Value,
                         Optimization = EffectOptimization.Quality,
                         BorderMode = EffectBorderMode.Soft,
@@ -401,7 +382,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                                     AlphaMask = mask,
                                 },
                             },
-                            Opacity = line.HighlightOpacityTransition.Value,
+                            Opacity = line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value,
                         }
                     );
                 }
@@ -409,27 +390,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
             }
-        }
-
-        private void DrawGradientOpacityMask(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds
-        )
-        {
-            byte verticalEdgeAlpha = (byte)(255 * LyricsVerticalEdgeOpacity / 100f);
-            using var maskBrush = new CanvasLinearGradientBrush(
-                control,
-                [
-                    new() { Position = 0, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
-                    new() { Position = 0.5f, Color = Color.FromArgb(255, 0, 0, 0) },
-                    new() { Position = 1, Color = Color.FromArgb(verticalEdgeAlpha, 0, 0, 0) },
-                ]
-            )
-            {
-                StartPoint = new Vector2(0, 0),
-                EndPoint = new Vector2(0, (float)control.Size.Height),
-            };
-            ds.FillRectangle(new Rect(0, 0, control.Size.Width, control.Size.Height), maskBrush);
         }
 
         private void DrawImmersiveBackground(

@@ -5,28 +5,29 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
-using static BetterLyrics.WinUI3.Helper.Win32Helper;
+using Vanara.PInvoke;
+using Windows.System;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public class ForegroundWindowWatcherHelper
     {
-        private readonly WinEventDelegate _winEventDelegate;
-        private readonly List<IntPtr> _hooks = new();
-        private IntPtr _currentForeground = IntPtr.Zero;
+        private readonly User32.WinEventProc _winEventDelegate;
+        private readonly List<User32.HWINEVENTHOOK> _hooks = new();
+        private HWND _currentForeground = HWND.NULL;
         private readonly IntPtr _selfHwnd;
         private readonly DispatcherTimer _pollingTimer;
         private DateTime _lastEventTime = DateTime.MinValue;
         private const int ThrottleIntervalMs = 1000;
 
-        public delegate void WindowChangedHandler(IntPtr hwnd);
+        public delegate void WindowChangedHandler(HWND hwnd);
         private readonly WindowChangedHandler _onWindowChanged;
 
         public ForegroundWindowWatcherHelper(IntPtr selfHwnd, WindowChangedHandler onWindowChanged)
         {
             _selfHwnd = selfHwnd;
             _onWindowChanged = onWindowChanged;
-            _winEventDelegate = new WinEventDelegate(WinEventProc);
+            _winEventDelegate = new User32.WinEventProc(WinEventProc);
 
             _pollingTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
             _pollingTimer.Tick += (_, _) =>
@@ -40,27 +41,27 @@ namespace BetterLyrics.WinUI3.Helper
         {
             // Hook: foreground changes and minimize end
             _hooks.Add(
-                SetWinEventHook(
-                    EVENT_SYSTEM_FOREGROUND,
-                    EVENT_SYSTEM_MINIMIZEEND,
-                    IntPtr.Zero,
+                User32.SetWinEventHook(
+                    User32.EventConstants.EVENT_SYSTEM_FOREGROUND,
+                    User32.EventConstants.EVENT_SYSTEM_MINIMIZEEND,
+                    HINSTANCE.NULL,
                     _winEventDelegate,
                     0,
                     0,
-                    WINEVENT_OUTOFCONTEXT
+                    User32.WINEVENT.WINEVENT_OUTOFCONTEXT
                 )
             );
 
             // Hook: window move/resize (location change)
             _hooks.Add(
-                SetWinEventHook(
-                    EVENT_OBJECT_LOCATIONCHANGE,
-                    EVENT_OBJECT_LOCATIONCHANGE,
-                    IntPtr.Zero,
+                User32.SetWinEventHook(
+                    User32.EventConstants.EVENT_OBJECT_LOCATIONCHANGE,
+                    User32.EventConstants.EVENT_OBJECT_LOCATIONCHANGE,
+                    HINSTANCE.NULL,
                     _winEventDelegate,
                     0,
                     0,
-                    WINEVENT_OUTOFCONTEXT
+                    User32.WINEVENT.WINEVENT_OUTOFCONTEXT
                 )
             );
 
@@ -70,16 +71,16 @@ namespace BetterLyrics.WinUI3.Helper
         public void Stop()
         {
             foreach (var hook in _hooks)
-                UnhookWinEvent(hook);
+                User32.UnhookWinEvent(hook);
 
             _hooks.Clear();
             _pollingTimer.Stop();
         }
 
         private void WinEventProc(
-            IntPtr hWinEventHook,
+            User32.HWINEVENTHOOK hWinEventHook,
             uint eventType,
-            IntPtr hwnd,
+            HWND hwnd,
             int idObject,
             int idChild,
             uint dwEventThread,
@@ -95,12 +96,12 @@ namespace BetterLyrics.WinUI3.Helper
 
             _lastEventTime = now;
 
-            if (eventType == EVENT_SYSTEM_FOREGROUND)
+            if (eventType == User32.EventConstants.EVENT_SYSTEM_FOREGROUND)
             {
                 _currentForeground = hwnd;
                 _onWindowChanged?.Invoke(hwnd);
             }
-            else if ((eventType == EVENT_OBJECT_LOCATIONCHANGE || eventType == EVENT_SYSTEM_MINIMIZEEND) && hwnd == _currentForeground)
+            else if ((eventType == User32.EventConstants.EVENT_OBJECT_LOCATIONCHANGE || eventType == User32.EventConstants.EVENT_SYSTEM_MINIMIZEEND) && hwnd == _currentForeground)
             {
                 _onWindowChanged?.Invoke(hwnd);
             }

@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Views
 
         public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
 
-        public void AutoSelectLyricsMode(AutoStartWindowType? type = null)
+        public void AutoSelectLyricsMode(AutoStartWindowType? type = null, bool? autoLook = null)
         {
             type ??= _settingsService.AutoStartWindowType;
             switch (type!)
@@ -42,7 +42,7 @@ namespace BetterLyrics.WinUI3.Views
                 case AutoStartWindowType.DesktopMode:
                     DesktopFlyoutItem.IsChecked = true;
                     ViewModel.ToggleDesktopModeCommand.Execute(null);
-                    if (_settingsService.AutoLockOnDesktopMode)
+                    if (autoLook == null && _settingsService.AutoLockOnDesktopMode)
                     {
                         ViewModel.LockWindowCommand.Execute(null);
                     }

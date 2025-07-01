@@ -143,6 +143,7 @@ namespace BetterLyrics.WinUI3.Views
             SongInfoInnerGrid.Opacity = 0;
             LyricsPlaceholderGrid.Opacity = 0;
             //LyricsGrid.Opacity = 0;
+            MainPageNoMusicPlayingTextBlock.Opacity = 0;
 
             await Task.Delay(300);
         }
@@ -165,6 +166,8 @@ namespace BetterLyrics.WinUI3.Views
         private async Task SwitchToPlaceholderOnlyDisplayTypeAsync()
         {
             await BeforeSwitchDisplayTypeAsync();
+
+            MainPageNoMusicPlayingTextBlock.Opacity = 1;
         }
     }
 }

@@ -2,9 +2,13 @@
 
 namespace BetterLyrics.WinUI3.Helper
 {
+    using System;
     using System.IO;
+    using System.Reflection;
+    using System.Threading.Tasks;
     using Windows.ApplicationModel;
     using Windows.Storage;
+    using Windows.Storage.FileProperties;
 
     public static class AppInfo
     {
@@ -23,7 +27,7 @@ namespace BetterLyrics.WinUI3.Helper
         public const string GithubUrl = "https://github.com/jayfunc/BetterLyrics";
 
 
-        public const string DoNotAutoSelectLyricsModeTag = "DoNotAutoSelectLyricsMode";
+        public const string UnlockWindowTag = "UnlockWindow";
 
         public static string AmllTtmlDbIndexPath => Path.Combine(CacheFolder, "amll-ttml-db-index.json");
         public static string AmllTtmlDbLyricsCacheDirectory => Path.Combine(CacheFolder, "amll-ttml-db-lyrics");
@@ -36,9 +40,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string LrcLibLyricsCacheDirectory => Path.Combine(CacheFolder, "lrclib-lyrics");
         public static string NeteaseLyricsCacheDirectory => Path.Combine(CacheFolder, "netease-lyrics");
         public static string QQLyricsCacheDirectory => Path.Combine(CacheFolder, "qq-lyrics");
-        public static string TestMusicPath => Path.Combine(AssetsFolder, TestMusicFileName);
         private static string LocalFolder => ApplicationData.Current.LocalFolder.Path;
-        private static string TestMusicFileName => "AI - 甜度爆表.mp3";
 
         public static void EnsureDirectories()
         {
@@ -49,6 +51,20 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(KugouLyricsCacheDirectory);
             Directory.CreateDirectory(NeteaseLyricsCacheDirectory);
             Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
+        }
+
+        public static async Task<DateTime> GetBuildDate()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var filePath = assembly.Location;
+            if (!File.Exists(filePath))
+                return DateTime.MinValue;
+
+            StorageFile file = await StorageFile.GetFileFromPathAsync(filePath);
+            // 获取文件基本属性
+            BasicProperties props = await file.GetBasicPropertiesAsync();
+            // 返回修改日期
+            return props.DateModified.DateTime;
         }
     }
 }

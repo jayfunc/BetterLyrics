@@ -76,12 +76,6 @@ namespace BetterLyrics.WinUI3.Services
                                 SourceAppUserModelId = _currentSession?.SourceAppUserModelId,
                             };
 
-                            if (SongInfo.SourceAppUserModelId?.Contains(Package.Current.Id.FamilyName) ?? false)
-                            {
-                                SongInfo.Title = "甜度爆表";
-                                SongInfo.Artist = "AI";
-                            }
-
                             if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
                             {
                                 SongInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(
@@ -114,7 +108,7 @@ namespace BetterLyrics.WinUI3.Services
                         }
                     );
                 },
-                TimeSpan.FromMilliseconds(300)
+                TimeSpan.FromMilliseconds(1000)
             );
         }
 

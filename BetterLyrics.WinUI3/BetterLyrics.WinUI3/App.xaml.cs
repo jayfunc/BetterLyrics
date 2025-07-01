@@ -50,7 +50,7 @@ namespace BetterLyrics.WinUI3
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
 
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             WindowHelper.OpenOrShowWindow<LyricsWindow>();
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
@@ -59,15 +59,13 @@ namespace BetterLyrics.WinUI3
             if (commandLineArguments.Length > 1)
             {
                 commandLineArguments = commandLineArguments.Skip(1).ToArray();
-                if (commandLineArguments.First() != AppInfo.DoNotAutoSelectLyricsModeTag)
+                if (commandLineArguments.First() == AppInfo.UnlockWindowTag)
                 {
-                    lyricsWindow.AutoSelectLyricsMode(AutoStartWindowType.StandardMode);
+                    lyricsWindow.AutoSelectLyricsMode(AutoStartWindowType.DesktopMode, false);
+                    return;
                 }
             }
-            else
-            {
-                lyricsWindow.AutoSelectLyricsMode();
-            }
+            lyricsWindow.AutoSelectLyricsMode();
         }
         private static void ConfigureServices()
         {
@@ -109,7 +107,7 @@ namespace BetterLyrics.WinUI3
 
         private void CurrentDomain_FirstChanceException(object? sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
         {
-            _logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
+            //_logger.LogError(e.Exception, "CurrentDomain_FirstChanceException");
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)

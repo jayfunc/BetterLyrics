@@ -7,7 +7,6 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
-using ColorThiefDotNet;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
@@ -21,8 +20,6 @@ namespace BetterLyrics.WinUI3.Helper
     public class ImageHelper
     {
         public const int AccentColorCount = 3;
-
-        private static readonly ColorThief _colorThief = new();
 
         public static async Task<InMemoryRandomAccessStream> ByteArrayToStream(byte[] bytes)
         {
@@ -107,9 +104,36 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static List<Windows.UI.Color> GetAccentColorsFromByte(byte[] bytes)
         {
-            var palette = _colorThief.GetPalette(new System.Drawing.Bitmap(new MemoryStream(bytes)), AccentColorCount);
-            return palette
-                .Select(color => Windows.UI.Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B))
+            // 使用 ImageSharp 读取图片
+            using var image = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(bytes);
+
+            // 简单聚类法：统计所有像素出现频率，取出现最多的前 AccentColorCount 个颜色
+            var colorCount = new Dictionary<SixLabors.ImageSharp.PixelFormats.Rgba32, int>();
+
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    var color = image[x, y];
+                    // 可选：忽略透明像素
+                    if (color.A < 32) continue;
+                    if (colorCount.ContainsKey(color))
+                        colorCount[color]++;
+                    else
+                        colorCount[color] = 1;
+                }
+            }
+
+            // 按出现次数排序，取前 AccentColorCount 个
+            var topColors = colorCount
+                .OrderByDescending(kv => kv.Value)
+                .Take(AccentColorCount)
+                .Select(kv => kv.Key)
+                .ToList();
+
+            // 转换为 Windows.UI.Color
+            return topColors
+                .Select(c => Windows.UI.Color.FromArgb(c.A, c.R, c.G, c.B))
                 .ToList();
         }
 

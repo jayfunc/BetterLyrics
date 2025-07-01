@@ -279,28 +279,33 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             TotalTime = TimeSpan.Zero;
 
-            _lastAlbumArtBitmap = _albumArtBitmap;
+            SoftwareBitmap? newalbumArtBitmap;
+            Color? newAlbumArtAccentColor;
 
             if (newValue?.AlbumArt is byte[] bytes)
             {
                 var decoder = await ImageHelper.GetDecoderFromByte(bytes);
-                _albumArtBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-                _albumArtAccentColor = (ImageHelper.GetAccentColorsFromByte(bytes)).SafeGet(0);
+                newalbumArtBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                newAlbumArtAccentColor = (ImageHelper.GetAccentColorsFromByte(bytes)).SafeGet(0);
             }
             else
             {
-                _albumArtBitmap = null;
-                _albumArtAccentColor = null;
+                newalbumArtBitmap = null;
+                newAlbumArtAccentColor = null;
             }
 
+            _lastAlbumArtBitmap = _albumArtBitmap;
+            _albumArtBitmap = newalbumArtBitmap;
+
+            _albumArtBgTransition.Reset(0f);
+            _albumArtBgTransition.StartTransition(1f);
+
+            _albumArtAccentColor = newAlbumArtAccentColor;
             _lyricsWindowBgColor = _albumArtAccentColor ?? Colors.Gray;
 
             if (!_isDesktopMode && !_isDockMode) _adaptiveFontColor = Helper.ColorHelper.GetForegroundColor(_lyricsWindowBgColor);
 
             UpdateFontColor();
-
-            _albumArtBgTransition.Reset(0f);
-            _albumArtBgTransition.StartTransition(1f);
 
             await RefreshLyricsAsync();
         }

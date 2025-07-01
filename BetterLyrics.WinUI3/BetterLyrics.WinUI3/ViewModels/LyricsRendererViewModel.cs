@@ -53,12 +53,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ValueTransition<float> _maxLyricsWidthTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            interpolator: (from, to, progress) => to
+            easingType: EasingType.SmoothStep
         );
 
         private readonly ValueTransition<float> _lyricsOpacityTransition = new(
             initialValue: 0f,
-            durationSeconds: 1f
+            durationSeconds: 0.3f
         );
 
         private protected readonly IMusicSearchService _musicSearchService;
@@ -300,8 +300,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void PlaybackService_PositionChanged(object? sender, PositionChangedEventArgs e)
         {
-            if (Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds) > 100)
-                TotalTime = e.Position;
+            TotalTime = e.Position;
         }
 
         private void PlaybackService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)

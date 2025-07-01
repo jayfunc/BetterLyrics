@@ -110,10 +110,9 @@ namespace BetterLyrics.WinUI3
                 {
                     if (IsDockMode)
                     {
+                        var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
                         DockModeHelper.UpdateAppBarHeight(
-                            WindowNative.GetWindowHandle(
-                                WindowHelper.GetWindowByWindowType<LyricsWindow>()
-                            ),
+                            WindowNative.GetWindowHandle(window),
                             message.NewValue * 3
                         );
                     }
@@ -167,16 +166,11 @@ namespace BetterLyrics.WinUI3
             {
                 StartWatchWindowColorChange(WindowColorSampleMode.WindowEdge);
                 DesktopModeHelper.Enable(window);
-                window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(
-                    BackdropType.Transparent
-                );
             }
             else
             {
                 DesktopModeHelper.Disable(window);
                 StopWatchWindowColorChange();
-                // To recover the system backdrop, we need to reopen the window
-                WindowHelper.RestartApp(AppInfo.DoNotAutoSelectLyricsModeTag);
             }
         }
 
