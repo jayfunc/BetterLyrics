@@ -228,13 +228,25 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>조정</value>
   </data>
+  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
+    <value>조정</value>
+  </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>센터</value>
+  </data>
+  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
     <value>센터</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>왼쪽</value>
   </data>
+  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
+  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>오른쪽</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
@@ -328,7 +340,7 @@
     <value>가사 배경 (회색)에 적응</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
-    <value>앨범 아트 스타일</value>
+    <value>앨범 영역 스타일</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>코너 반경</value>
@@ -539,5 +551,23 @@
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>데스크탑 모드를 활성화 할 때 자동 잠금</value>
+  </data>
+  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>앨범 아트</value>
+  </data>
+  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>노래 제목 및 아티스트</value>
+  </data>
+  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+    <value>애니메이션 유형 완화</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>미디어 소스</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <value>미디어 소스</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
+    <value>지정된 미디어 소스의 가사 디스플레이 활성화 또는 비활성화</value>
   </data>
 </root>

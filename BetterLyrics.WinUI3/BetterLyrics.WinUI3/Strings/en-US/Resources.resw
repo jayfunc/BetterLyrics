@@ -228,13 +228,25 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>Alignment</value>
   </data>
+  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
     <value>Center</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>Left</value>
   </data>
+  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+    <value>Left</value>
+  </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>Right</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
@@ -328,7 +340,7 @@
     <value>Adaptive to lyrics background (Grayed)</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
-    <value>Album art style</value>
+    <value>Album art area style</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>Corner radius</value>
@@ -539,5 +551,23 @@
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>Auto-lock when activating desktop mode</value>
+  </data>
+  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>Album art</value>
+  </data>
+  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>Song title &amp; artist</value>
+  </data>
+  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+    <value>Easing animation type</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>Media sources</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <value>Media source</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
+    <value>Enable or disable lyrics display for a specified media source</value>
   </data>
 </root>

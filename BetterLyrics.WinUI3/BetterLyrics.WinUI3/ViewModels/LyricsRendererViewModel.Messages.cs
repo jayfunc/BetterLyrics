@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using BetterInAppLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.UI;
-using Microsoft.UI.Xaml;
-using Windows.Graphics.Imaging;
+using System.Collections.ObjectModel;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -17,20 +10,17 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class LyricsRendererViewModel
         : IRecipient<PropertyChangedMessage<int>>,
             IRecipient<PropertyChangedMessage<float>>,
-            IRecipient<PropertyChangedMessage<double>>,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<Color>>,
             IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
             IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
-            IRecipient<PropertyChangedMessage<LyricsAlignmentType>>,
+            IRecipient<PropertyChangedMessage<TextAlignmentType>>,
             IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
             IRecipient<PropertyChangedMessage<LineRenderingType>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>>>
     {
-        public async void Receive(
-            PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message
-        )
+        public async void Receive(PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message)
         {
             if (message.Sender is SettingsPageViewModel)
             {
@@ -42,9 +32,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public async void Receive(
-            PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>> message
-        )
+        public async void Receive(PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>> message)
         {
             if (message.Sender is SettingsPageViewModel)
             {
@@ -62,33 +50,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (message.Sender is SettingsPageViewModel)
             {
-                if (
-                    message.PropertyName
-                    == nameof(SettingsPageViewModel.IsDynamicCoverOverlayEnabled)
-                )
+                if (message.PropertyName == nameof(SettingsPageViewModel.IsDynamicCoverOverlayEnabled))
                 {
                     IsDynamicCoverOverlayEnabled = message.NewValue;
                 }
-                else if (
-                    message.PropertyName == nameof(SettingsPageViewModel.IsDebugOverlayEnabled)
-                )
+                else if (message.PropertyName == nameof(SettingsPageViewModel.IsDebugOverlayEnabled))
                 {
                     _isDebugOverlayEnabled = message.NewValue;
                 }
-            }
-            else if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled)
-                )
+                else if (message.PropertyName == nameof(SettingsPageViewModel.IsLyricsGlowEffectEnabled))
                 {
                     IsLyricsGlowEffectEnabled = message.NewValue;
                 }
-                else if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.IsFanLyricsEnabled)
-                )
+                else if (message.PropertyName == nameof(SettingsPageViewModel.IsFanLyricsEnabled))
                 {
                     _isFanLyricsEnabled = message.NewValue;
                 }
@@ -118,9 +92,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                     UpdateFontColor();
                 }
             }
-            else if (message.Sender is LyricsSettingsControlViewModel)
+            else if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsCustomFontColor))
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsCustomFontColor))
                 {
                     _customFontColor = message.NewValue;
                     UpdateFontColor();
@@ -128,25 +102,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void Receive(PropertyChangedMessage<double> message)
-        {
-            if (message.Sender is LyricsPageViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsPageViewModel.MaxLyricsWidth))
-                {
-                    _maxLyricsWidthTransition.StartTransition((float)message.NewValue);
-                }
-            }
-        }
-
         public void Receive(PropertyChangedMessage<float> message)
         {
-            if (message.Sender is LyricsSettingsControlViewModel)
+            if (message.Sender is SettingsPageViewModel)
             {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsLineSpacingFactor)
-                )
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsLineSpacingFactor))
                 {
                     LyricsLineSpacingFactor = message.NewValue;
                 }
@@ -159,37 +119,25 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.CoverImageRadius))
                 {
-                    CoverImageRadius = message.NewValue;
+                    _albumArtCornerRadius = message.NewValue;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.CoverOverlayOpacity))
                 {
                     CoverOverlayOpacity = message.NewValue;
                 }
-                else if (
-                    message.PropertyName == nameof(SettingsPageViewModel.CoverOverlayBlurAmount)
-                )
+                else if (message.PropertyName == nameof(SettingsPageViewModel.CoverOverlayBlurAmount))
                 {
                     CoverOverlayBlurAmount = message.NewValue;
                 }
-            }
-            else if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsVerticalEdgeOpacity)
-                )
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsVerticalEdgeOpacity))
                 {
                     LyricsVerticalEdgeOpacity = message.NewValue;
                 }
-                else if (
-                    message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsBlurAmount)
-                )
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsBlurAmount))
                 {
                     LyricsBlurAmount = message.NewValue;
                 }
-                else if (
-                    message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize)
-                )
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
                 {
                     LyricsFontSize = message.NewValue;
                 }
@@ -198,45 +146,41 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<LineRenderingType> message)
         {
-            if (message.Sender is LyricsSettingsControlViewModel)
+            if (message.Sender is SettingsPageViewModel)
             {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsGlowEffectScope)
-                )
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsGlowEffectScope))
                 {
                     LyricsGlowEffectScope = message.NewValue;
                 }
             }
         }
 
-        public void Receive(PropertyChangedMessage<LyricsAlignmentType> message)
+        public void Receive(PropertyChangedMessage<TextAlignmentType> message)
         {
-            if (message.Sender is LyricsSettingsControlViewModel)
+            if (message.Sender is SettingsPageViewModel)
             {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsAlignmentType)
-                )
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsAlignmentType))
                 {
                     LyricsAlignmentType = message.NewValue;
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.SongInfoAlignmentType))
+                {
+                    _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment =
+                        message.NewValue.ToCanvasHorizontalAlignment();
                 }
             }
         }
 
         public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
         {
-            DisplayType = message.NewValue;
+            _displayTypeReceived = message.NewValue;
         }
 
         public void Receive(PropertyChangedMessage<LyricsFontColorType> message)
         {
-            if (message.Sender is LyricsSettingsControlViewModel)
+            if (message.Sender is SettingsPageViewModel)
             {
-                if (
-                    message.PropertyName
-                    == nameof(LyricsSettingsControlViewModel.LyricsFontColorType)
-                )
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontColorType))
                 {
                     LyricsFontColorType = message.NewValue;
                 }
@@ -245,9 +189,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<LyricsFontWeight> message)
         {
-            if (message.Sender is LyricsSettingsControlViewModel)
+            if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontWeight))
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontWeight))
                 {
                     LyricsFontWeight = message.NewValue;
                 }
@@ -266,48 +210,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
         {
-            _textFormat.FontWeight = value.ToFontWeight();
+            _lyricsTextFormat.FontWeight = value.ToFontWeight();
             _isRelayoutNeeded = true;
         }
 
         partial void OnLyricsLineSpacingFactorChanged(float value)
         {
             _isRelayoutNeeded = true;
-        }
-
-        async partial void OnSongInfoChanged(SongInfo? oldValue, SongInfo? newValue)
-        {
-            TotalTime = TimeSpan.Zero;
-
-            SoftwareBitmap? newalbumArtBitmap;
-            Color? newAlbumArtAccentColor;
-
-            if (newValue?.AlbumArt is byte[] bytes)
-            {
-                var decoder = await ImageHelper.GetDecoderFromByte(bytes);
-                newalbumArtBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
-                newAlbumArtAccentColor = (ImageHelper.GetAccentColorsFromByte(bytes)).SafeGet(0);
-            }
-            else
-            {
-                newalbumArtBitmap = null;
-                newAlbumArtAccentColor = null;
-            }
-
-            _lastAlbumArtBitmap = _albumArtBitmap;
-            _albumArtBitmap = newalbumArtBitmap;
-
-            _albumArtBgTransition.Reset(0f);
-            _albumArtBgTransition.StartTransition(1f);
-
-            _albumArtAccentColor = newAlbumArtAccentColor;
-            _lyricsWindowBgColor = _albumArtAccentColor ?? Colors.Gray;
-
-            if (!_isDesktopMode && !_isDockMode) _adaptiveFontColor = Helper.ColorHelper.GetForegroundColor(_lyricsWindowBgColor);
-
-            UpdateFontColor();
-
-            await RefreshLyricsAsync();
         }
     }
 }

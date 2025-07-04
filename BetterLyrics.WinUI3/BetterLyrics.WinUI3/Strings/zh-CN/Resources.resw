@@ -228,13 +228,25 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>对齐方式</value>
   </data>
+  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
+    <value>对齐方式</value>
+  </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
     <value>居中</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>靠左</value>
   </data>
+  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+    <value>靠左</value>
+  </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>靠右</value>
+  </data>
+  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>靠右</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
@@ -328,7 +340,7 @@
     <value>适应歌词背景（灰色）</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
-    <value>专辑封面样式</value>
+    <value>专辑区域样式</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>圆角半径</value>
@@ -539,5 +551,23 @@
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>启动桌面模式时随即锁定窗口</value>
+  </data>
+  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>专辑</value>
+  </data>
+  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>歌曲标题和艺术家</value>
+  </data>
+  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+    <value>缓动动画类型</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>媒体来源</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <value>媒体来源</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
+    <value>为指定媒体源启用或禁用歌词显示</value>
   </data>
 </root>

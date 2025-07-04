@@ -81,5 +81,10 @@ namespace BetterLyrics.WinUI3.Helper
         {
             return Color.FromArgb(color.A, color.R, color.G, color.B);
         }
+
+        public static Color WithAlpha(this Color color, byte alpha)
+        {
+            return Color.FromArgb(alpha, color.R, color.G, color.B);
+        }
     }
 }

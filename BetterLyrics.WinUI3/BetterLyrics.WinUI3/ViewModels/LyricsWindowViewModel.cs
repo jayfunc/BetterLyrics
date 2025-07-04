@@ -1,7 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using System.Threading.Tasks;
-using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Messages;
@@ -104,9 +103,9 @@ namespace BetterLyrics.WinUI3
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender is LyricsSettingsControlViewModel)
+            if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize))
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
                 {
                     if (IsDockMode)
                     {

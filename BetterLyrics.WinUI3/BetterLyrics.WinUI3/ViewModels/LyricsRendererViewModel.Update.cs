@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
+﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using System;
+using System.Numerics;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -15,6 +16,13 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
+            bool isCanvasWidthChanged = _canvasWidth != control.Size.Width;
+            bool isDisplayTypeChanged = _displayType != _displayTypeReceived;
+
+            _canvasWidth = (float)control.Size.Width;
+            _canvasHeight = (float)control.Size.Height;
+            _displayType = _displayTypeReceived;
+
             if (_isPlaying)
             {
                 TotalTime += args.Timing.ElapsedTime;
@@ -22,15 +30,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             ElapsedTime = args.Timing.ElapsedTime;
 
-            if (_immersiveBgTransition.IsTransitioning)
-            {
-                _immersiveBgTransition.Update(ElapsedTime);
-            }
-
-            if (_albumArtBgTransition.IsTransitioning)
-            {
-                _albumArtBgTransition.Update(ElapsedTime);
-            }
+            _immersiveBgTransition.Update(ElapsedTime);
+            _albumArtBgTransition.Update(ElapsedTime);
+            _songInfoOpacityTransition.Update(ElapsedTime);
 
             if (IsDynamicCoverOverlayEnabled)
             {
@@ -38,41 +40,53 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _rotateAngle %= MathF.PI * 2;
             }
 
-            if (_maxLyricsWidthTransition.IsTransitioning)
+            _albumArtSize = MathF.Min(
+                (_canvasHeight - _topMargin - _bottomMargin) * 8.5f / 16,
+                (_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2);
+            _albumArtSize = MathF.Max(0, _albumArtSize);
+
+            if (isDisplayTypeChanged || isCanvasWidthChanged)
             {
-                _maxLyricsWidthTransition.Update(ElapsedTime);
+                bool jumpTo = !isDisplayTypeChanged && isCanvasWidthChanged;
+                switch (_displayType)
+                {
+                    case LyricsDisplayType.AlbumArtOnly:
+                        _lyricsOpacityTransition.StartTransition(0f, jumpTo);
+                        _albumArtOpacityTransition.StartTransition(1f, jumpTo);
+                        _albumArtXTransition.StartTransition(_canvasWidth / 2 - _albumArtSize / 2, jumpTo);
+                        break;
+                    case LyricsDisplayType.LyricsOnly:
+                        _lyricsOpacityTransition.StartTransition(1f, jumpTo);
+                        _albumArtOpacityTransition.StartTransition(0f, jumpTo);
+                        _lyricsXTransition.StartTransition(_leftMargin, jumpTo);
+                        _isRelayoutNeeded = true;
+                        break;
+                    case LyricsDisplayType.SplitView:
+                        _lyricsOpacityTransition.StartTransition(1f, jumpTo);
+                        _albumArtOpacityTransition.StartTransition(1f, jumpTo);
+                        _lyricsXTransition.StartTransition((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2 + _leftMargin + _middleMargin, jumpTo);
+                        _albumArtXTransition.StartTransition(_leftMargin + ((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2 - _albumArtSize) / 2, jumpTo);
+                        _isRelayoutNeeded = true;
+                        break;
+                    case LyricsDisplayType.PlaceholderOnly:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            _lyricsXTransition.Update(ElapsedTime);
+            _albumArtXTransition.Update(ElapsedTime);
+            _lyricsOpacityTransition.Update(ElapsedTime);
+            _albumArtOpacityTransition.Update(ElapsedTime);
+
+            if (_lyricsXTransition.IsTransitioning)
+            {
                 _isRelayoutNeeded = true;
             }
 
-            switch (DisplayType)
-            {
-                case Enums.LyricsDisplayType.AlbumArtOnly:
-                    _lyricsOpacityTransition.StartTransition(0f);
-                    break;
-                case Enums.LyricsDisplayType.LyricsOnly:
-                case Enums.LyricsDisplayType.SplitView:
-                    _lyricsOpacityTransition.StartTransition(1f);
-                    break;
-                case Enums.LyricsDisplayType.PlaceholderOnly:
-                    break;
-                default:
-                    break;
-            }
-
-            if (_lyricsOpacityTransition.IsTransitioning)
-            {
-                _lyricsOpacityTransition.Update(ElapsedTime);
-            }
-
-            // 神光角度目标值（左右±15度摆动，周期约4秒）
-            double t = DateTimeOffset.Now.ToUnixTimeMilliseconds() / 1000.0;
-            float targetAngle = (float)(-Math.PI / 2 + Math.Sin(t * Math.PI / 2) * (Math.PI / 12)); // -90°为正上，±15°摆动
-            _shenGuangAngleTransition.StartTransition(targetAngle);
-
-            if (_shenGuangAngleTransition.IsTransitioning)
-            {
-                _shenGuangAngleTransition.Update(ElapsedTime);
-            }
+            _maxLyricsWidth = _canvasWidth - _lyricsXTransition.Value - _rightMargin;
+            _maxLyricsWidth = Math.Max(_maxLyricsWidth, 0);
 
             if (_isRelayoutNeeded)
             {
@@ -93,9 +107,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (control == null)
                 return;
 
-            _textFormat.FontSize = LyricsFontSize;
+            _lyricsTextFormat.FontSize = LyricsFontSize;
 
-            float y = _topMargin;
+            float y = 0;
 
             // Init Positions
             for (int i = 0; i < _multiLangLyrics.SafeGet(_langIndex)?.Count; i++)
@@ -117,9 +131,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                 line.CanvasTextLayout = new CanvasTextLayout(
                     control,
                     line.Text,
-                    _textFormat,
-                    (float)_maxLyricsWidthTransition.Value,
-                    (float)control.Size.Height
+                    _lyricsTextFormat,
+                    _maxLyricsWidth,
+                    _canvasHeight
                 );
 
                 line.Position = new Vector2(0, y);
@@ -167,13 +181,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else if (!withAnimation)
             {
-                _canvasYScrollTransition.JumpTo(targetYScrollOffset);
+                _canvasYScrollTransition.StartTransition(targetYScrollOffset, true);
             }
 
-            if (_canvasYScrollTransition.IsTransitioning)
-            {
-                _canvasYScrollTransition.Update(ElapsedTime);
-            }
+            _canvasYScrollTransition.Update(ElapsedTime);
 
             _startVisibleLineIndex = _endVisibleLineIndex = -1;
 
@@ -191,7 +202,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 if (
                     _canvasYScrollTransition.Value
-                        + (float)(control.Size.Height / 2)
+                        + _canvasHeight / 2
                         + line.Position.Y
                         + textLayout.LayoutBounds.Height
                     >= 0
@@ -204,7 +215,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 if (
                     _canvasYScrollTransition.Value
-                        + (float)(control.Size.Height / 2)
+                        + _canvasHeight / 2
                         + line.Position.Y
                         + textLayout.LayoutBounds.Height
                     >= control.Size.Height
@@ -225,8 +236,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private protected void UpdateFontColor()
         {
-            ThemeTypeSent =
-                Helper.ColorHelper.GetElementThemeFromBackgroundColor(_lyricsWindowBgColor);
+            ThemeTypeSent = Helper.ColorHelper.GetElementThemeFromBackgroundColor(_lyricsWindowBgColor);
 
             Color fallbackFg = Colors.Transparent;
             switch (ThemeTypeSent)
@@ -261,13 +271,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             var currentPlayingLineIndex = GetCurrentPlayingLineIndex();
 
-            int halfVisibleLineCount =
-                Math.Max(1, Math.Max(
-                    currentPlayingLineIndex - _startVisibleLineIndex,
-                    _endVisibleLineIndex - currentPlayingLineIndex
-                ));
+            var currentPlayingLine = _multiLangLyrics
+                .SafeGet(_langIndex)
+                ?.SafeGet(currentPlayingLineIndex);
 
-            if (halfVisibleLineCount < 1)
+            if (currentPlayingLine == null)
             {
                 return;
             }
@@ -281,61 +289,45 @@ namespace BetterLyrics.WinUI3.ViewModels
                     continue;
                 }
 
-                int distanceFromPlayingLine = Math.Abs(i - currentPlayingLineIndex);
-                if (distanceFromPlayingLine > halfVisibleLineCount)
-                {
-                    continue;
-                }
+                float distanceFromPlayingLine = Math.Abs(line.Position.Y - currentPlayingLine.Position.Y);
 
-                float distanceFactor = distanceFromPlayingLine / (float)halfVisibleLineCount;
+                float distanceFactor = Math.Clamp(distanceFromPlayingLine / (_canvasHeight / 2), 0, 1);
 
-                line.AngleTransition.StartTransition(
-                    _isFanLyricsEnabled
-                        ? (float)Math.PI
-                            * (30f / 180f)
-                            * distanceFactor
-                            * (i - currentPlayingLineIndex > 0 ? 1 : -1)
-                        : 0
-                );
-                line.BlurAmountTransition.StartTransition(LyricsBlurAmount * distanceFactor);
-                line.ScaleTransition.StartTransition(
+                if (!line.AngleTransition.IsTransitioning)
+                    line.AngleTransition.StartTransition(
+                        _isFanLyricsEnabled
+                            ? (float)Math.PI
+                                * (30f / 180f)
+                                * distanceFactor
+                                * (i - currentPlayingLineIndex > 0 ? 1 : -1)
+                            : 0
+                    );
+
+                if (!line.BlurAmountTransition.IsTransitioning)
+                    line.BlurAmountTransition.StartTransition(LyricsBlurAmount * distanceFactor);
+
+                if (!line.ScaleTransition.IsTransitioning)
+                    line.ScaleTransition.StartTransition(
                     _highlightedScale - distanceFactor * (_highlightedScale - _defaultScale)
                 );
-                line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - LyricsVerticalEdgeOpacity / 100f));
+
+                if (!line.OpacityTransition.IsTransitioning)
+                    line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - LyricsVerticalEdgeOpacity / 100f));
 
                 // Only calculate highlight opacity for the current line and the two lines around it
                 // to avoid unnecessary calculations
-                if (distanceFromPlayingLine <= 1)
+                if (!line.HighlightOpacityTransition.IsTransitioning)
                 {
                     line.HighlightOpacityTransition.StartTransition(
-                        distanceFromPlayingLine == 0 ? 1 : 0
+                        distanceFromPlayingLine == 0 ? 1f : 0f
                     );
                 }
 
-                if (line.AngleTransition.IsTransitioning)
-                {
-                    line.AngleTransition.Update(ElapsedTime);
-                }
-                if (line.ScaleTransition.IsTransitioning)
-                {
-                    line.ScaleTransition.Update(ElapsedTime);
-                }
-                if (line.BlurAmountTransition.IsTransitioning)
-                {
-                    line.BlurAmountTransition.Update(ElapsedTime);
-                }
-                if (line.OpacityTransition.IsTransitioning)
-                {
-                    line.OpacityTransition.Update(ElapsedTime);
-                }
-                // Only update highlight opacity for the current line and the two lines around it
-                if (distanceFromPlayingLine <= 1)
-                {
-                    if (line.HighlightOpacityTransition.IsTransitioning)
-                    {
-                        line.HighlightOpacityTransition.Update(ElapsedTime);
-                    }
-                }
+                line.AngleTransition.Update(ElapsedTime);
+                line.ScaleTransition.Update(ElapsedTime);
+                line.BlurAmountTransition.Update(ElapsedTime);
+                line.OpacityTransition.Update(ElapsedTime);
+                line.HighlightOpacityTransition.Update(ElapsedTime);
             }
         }
     }
