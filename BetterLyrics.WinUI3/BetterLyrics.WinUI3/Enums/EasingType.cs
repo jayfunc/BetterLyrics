@@ -4,12 +4,17 @@ namespace BetterLyrics.WinUI3.Enums
 {
     public enum EasingType
     {
-        EaseInOutQuad,
-        EaseInQuad,
-        EaseOutQuad,
-        EaseInOutExpo,
         Linear,
         SmoothStep,
-        SmootherStep,
+        EaseInOutSine,
+        EaseInOutQuad,
+        EaseInOutCubic,
+        EaseInOutQuart,
+        EaseInOutQuint,
+        EaseInOutExpo,
+        EaseInOutCirc,
+        EaseInOutBack,
+        EaseInOutElastic,
+        EaseInOutBounce,
     }
 }

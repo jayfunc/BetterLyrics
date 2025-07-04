@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
@@ -9,8 +11,11 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Windows.Graphics.Imaging;
 using Windows.UI;
@@ -19,103 +24,92 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsRendererViewModel : BaseViewModel
     {
-        private readonly ValueTransition<float> _albumArtBgTransition = new(
-            initialValue: 0f,
-            durationSeconds: 1.0f
-        );
+        private SoftwareBitmap? _lastAlbumArtSwBitmap = null;
+        private SoftwareBitmap? _albumArtSwBitmap = null;
 
-        private readonly ValueTransition<float> _canvasYScrollTransition = new(
-            initialValue: 0f,
-            durationSeconds: 0.8f,
-            easingType: EasingType.SmootherStep
-        );
+        private float _albumArtSize = 0f;
+        private int _albumArtCornerRadius = 0;
 
-        private readonly float _coverRotateSpeed = 0.003f;
+        private float _albumArtY = 0f;
+
+        private string? _lastSongTitle;
+        private string? _songTitle;
+
+        private string? _lastSongArtist;
+        private string? _songArtist;
+
+        private float _canvasWidth = 0f;
+        private float _canvasHeight = 0f;
 
         private readonly float _defaultOpacity = 0.3f;
-
-        private readonly float _defaultScale = 0.75f;
-
         private readonly float _highlightedOpacity = 1.0f;
 
+        private readonly float _defaultScale = 0.75f;
         private readonly float _highlightedScale = 1.0f;
 
-        private readonly ValueTransition<Color> _immersiveBgTransition = new(
-            initialValue: Colors.Transparent,
-            durationSeconds: 0.3f,
-            interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
-        );
-
-        private readonly ILibWatcherService _libWatcherService;
+        private readonly float _coverRotateSpeed = 0.003f;
+        private float _rotateAngle = 0f;
 
         private readonly float _lyricsGlowEffectAmount = 8f;
 
-        private readonly ValueTransition<float> _maxLyricsWidthTransition = new(
-            initialValue: 0f,
-            durationSeconds: 0.3f,
-            easingType: EasingType.SmoothStep
-        );
+        private float _maxLyricsWidth = 0f;
 
-        private readonly ValueTransition<float> _lyricsOpacityTransition = new(
-            initialValue: 0f,
-            durationSeconds: 0.3f
-        );
+        private readonly IMusicSearchService _musicSearchService;
+        private readonly ILibWatcherService _libWatcherService;
+        private readonly IPlaybackService _playbackService;
 
-        private protected readonly IMusicSearchService _musicSearchService;
-
-        private protected readonly IPlaybackService _playbackService;
-
+        private readonly float _leftMargin = 36f;
+        private readonly float _middleMargin = 36f;
         private readonly float _rightMargin = 36f;
+        private readonly float _topMargin = 36f;
+        private readonly float _bottomMargin = 36f;
 
-        private readonly ValueTransition<float> _shenGuangAngleTransition = new(0f, 0.2f);
-
-        private readonly float _topMargin = 0f;
-
+        private Color _fontColor;
         private Color? _adaptiveFontColor = null;
-
-        private Color? _albumArtAccentColor = null;
-
-        private SoftwareBitmap? _albumArtBitmap = null;
-
         private Color? _customFontColor;
-
+        private Color _lightFontColor = Colors.White;
         private Color _darkFontColor = Colors.Black;
+        private Color? _albumArtAccentColor = null;
+        private Color _lyricsWindowBgColor = Colors.Transparent;
 
+        private int _startVisibleLineIndex = -1;
         private int _endVisibleLineIndex = -1;
 
-        private protected Color _fontColor;
-
         private bool _isDebugOverlayEnabled = false;
-
         private bool _isDesktopMode = false;
-
         private bool _isDockMode = false;
-
         private bool _isFanLyricsEnabled = false;
 
         private bool _isPlaying = true;
 
-        private protected bool _isRelayoutNeeded = true;
+        private bool _isRelayoutNeeded = true;
 
         private int _langIndex = 0;
 
-        private SoftwareBitmap? _lastAlbumArtBitmap = null;
-
-        private Color _lightFontColor = Colors.White;
-
-        private Color _lyricsWindowBgColor = Colors.Transparent;
-
         private List<List<LyricsLine>> _multiLangLyrics = [];
 
-        private float _rotateAngle = 0f;
-
-        private int _startVisibleLineIndex = -1;
-
-        private protected CanvasTextFormat _textFormat = new()
+        private CanvasTextFormat _lyricsTextFormat = new()
         {
             HorizontalAlignment = CanvasHorizontalAlignment.Left,
             VerticalAlignment = CanvasVerticalAlignment.Top,
         };
+        private CanvasTextFormat _titleTextFormat = new()
+        {
+            FontSize = 18,
+            FontWeight = FontWeights.Bold,
+            HorizontalAlignment = CanvasHorizontalAlignment.Left,
+            WordWrapping = CanvasWordWrapping.Wrap,
+        };
+        private CanvasTextFormat _artistTextFormat = new()
+        {
+            FontSize = 16,
+            FontWeight = FontWeights.Bold,
+            HorizontalAlignment = CanvasHorizontalAlignment.Left,
+            WordWrapping = CanvasWordWrapping.Wrap,
+        };
+
+        private Task? _refreshLyricsTask;
+        private CancellationTokenSource? _refreshLyricsCts;
 
         public LyricsRendererViewModel(
             ISettingsService settingsService, IPlaybackService playbackService,
@@ -125,7 +119,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService = playbackService;
             _libWatcherService = libWatcherService;
 
-            CoverImageRadius = _settingsService.CoverImageRadius;
+            _albumArtCornerRadius = _settingsService.CoverImageRadius;
             IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
@@ -141,6 +135,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
             _customFontColor = _settingsService.LyricsCustomFontColor;
 
+            _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.LyricsAlignmentType.ToCanvasHorizontalAlignment();
+
             _libWatcherService.MusicLibraryFilesChanged +=
                 LibWatcherService_MusicLibraryFilesChanged;
 
@@ -148,20 +144,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
             _playbackService.PositionChanged += PlaybackService_PositionChanged;
 
-            _isPlaying = _playbackService.IsPlaying;
-            SongInfo = _playbackService.SongInfo;
-            TotalTime = _playbackService.Position;
-
             UpdateFontColor();
         }
-
-        public int CoverImageRadius { get; set; }
 
         public int CoverOverlayBlurAmount { get; set; }
 
         public int CoverOverlayOpacity { get; set; }
 
-        public LyricsDisplayType DisplayType { get; set; }
+        private LyricsDisplayType _displayTypeReceived = LyricsDisplayType.PlaceholderOnly;
+        private LyricsDisplayType _displayType = LyricsDisplayType.PlaceholderOnly;
 
         public TimeSpan ElapsedTime { get; set; } = TimeSpan.Zero;
 
@@ -169,7 +160,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public bool IsLyricsGlowEffectEnabled { get; set; }
 
-        public LyricsAlignmentType LyricsAlignmentType { get; set; }
+        public TextAlignmentType LyricsAlignmentType { get; set; }
 
         public int LyricsBlurAmount { get; set; }
 
@@ -303,36 +294,88 @@ namespace BetterLyrics.WinUI3.ViewModels
             TotalTime = e.Position;
         }
 
-        private void PlaybackService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
+        private async void PlaybackService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
         {
             SongInfo = e.SongInfo;
+            if (SongInfo?.Title != _songTitle || SongInfo?.Artist != _songArtist)
+            {
+                _lastSongTitle = _songTitle;
+                _songTitle = SongInfo?.Title;
+
+                _lastSongArtist = _songArtist;
+                _songArtist = SongInfo?.Artist;
+
+                _songInfoOpacityTransition.Reset(0f);
+                _songInfoOpacityTransition.StartTransition(1f);
+
+                await RefreshLyricsAsync();
+
+                TotalTime = TimeSpan.Zero;
+            }
+
+            if (SongInfo?.AlbumArtSwBitmap != _albumArtSwBitmap)
+            {
+                _lastAlbumArtSwBitmap = _albumArtSwBitmap;
+                _albumArtSwBitmap = SongInfo?.AlbumArtSwBitmap;
+
+                _albumArtAccentColor = SongInfo?.AlbumArtAccentColor;
+                _lyricsWindowBgColor = _albumArtAccentColor ?? Colors.Gray;
+
+                _albumArtBgTransition.Reset(0f);
+                _albumArtBgTransition.StartTransition(1f);
+
+                if (!_isDesktopMode && !_isDockMode) _adaptiveFontColor = Helper.ColorHelper.GetForegroundColor(_lyricsWindowBgColor);
+                UpdateFontColor();
+            }
         }
 
         private async Task RefreshLyricsAsync()
         {
-            SetLyricsLoadingPlaceholder();
-
-            string? lyricsRaw = null;
-            LyricsFormat? lyricsFormat = null;
-
-            if (SongInfo != null)
+            // 取消上一次
+            _refreshLyricsCts?.Cancel();
+            if (_refreshLyricsTask != null)
             {
-                (lyricsRaw, lyricsFormat) = await _musicSearchService.SearchLyricsAsync(
-                    SongInfo.Title,
-                    SongInfo.Artist,
-                    SongInfo.Album ?? "",
-                    SongInfo.DurationMs ?? 0
-                );
+                await _refreshLyricsTask;
             }
 
-            _multiLangLyrics = new LyricsParser().Parse(
-                lyricsRaw,
-                lyricsFormat,
-                SongInfo?.Title,
-                SongInfo?.Artist,
-                (int)(SongInfo?.DurationMs ?? 0)
-            );
-            _isRelayoutNeeded = true;
+            var cts = new CancellationTokenSource();
+            _refreshLyricsCts = cts;
+            var token = cts.Token;
+
+            _refreshLyricsTask = RefreshLyricsCoreAsync(token);
+            await _refreshLyricsTask;
+        }
+
+        private async Task RefreshLyricsCoreAsync(CancellationToken token)
+        {
+            try
+            {
+                SetLyricsLoadingPlaceholder();
+
+                string? lyricsRaw = null;
+                LyricsFormat? lyricsFormat = null;
+
+                if (SongInfo != null)
+                {
+                    (lyricsRaw, lyricsFormat) = await _musicSearchService.SearchLyricsAsync(
+                        SongInfo.Title,
+                        SongInfo.Artist,
+                        SongInfo.Album ?? "",
+                        SongInfo.DurationMs ?? 0
+                    );
+                    token.ThrowIfCancellationRequested();
+                }
+
+                _multiLangLyrics = new LyricsParser().Parse(
+                    lyricsRaw,
+                    lyricsFormat,
+                    SongInfo?.Title,
+                    SongInfo?.Artist,
+                    (int)(SongInfo?.DurationMs ?? 0)
+                );
+                _isRelayoutNeeded = true;
+            }
+            catch (Exception) { }
         }
 
         private void SetLyricsLoadingPlaceholder()
@@ -344,7 +387,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         StartMs = 0,
                         EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                        Text = App.ResourceLoader!.GetString("LyricsLoading"),
+                        Text = "● ● ●",
                         CharTimings = [],
                     },
                 ]

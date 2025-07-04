@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -19,19 +20,20 @@ using Microsoft.UI.Xaml;
 using Windows.Globalization;
 using Windows.Media.Playback;
 using Windows.System;
+using Windows.UI;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class SettingsPageViewModel : ObservableRecipient
+    public partial class SettingsPageViewModel : BaseViewModel
     {
         private readonly ILibWatcherService _libWatcherService;
-        private readonly ISettingsService _settingsService;
+        private readonly IPlaybackService _playbackService;
 
-        public SettingsPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
+        public SettingsPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, IPlaybackService playbackService) : base(settingsService)
         {
-            _settingsService = settingsService;
             _libWatcherService = libWatcherService;
+            _playbackService = playbackService;
 
             LocalLyricsFolders = [.. _settingsService.LocalLyricsFolders];
             LyricsSearchProvidersInfo = [.. _settingsService.LyricsSearchProvidersInfo];
@@ -46,10 +48,31 @@ namespace BetterLyrics.WinUI3.ViewModels
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
 
+            LyricsAlignmentType = _settingsService.LyricsAlignmentType;
+            SongInfoAlignmentType = _settingsService.SongInfoAlignmentType;
+            LyricsFontWeight = _settingsService.LyricsFontWeight;
+            LyricsBlurAmount = _settingsService.LyricsBlurAmount;
+            LyricsVerticalEdgeOpacity = _settingsService.LyricsVerticalEdgeOpacity;
+            LyricsLineSpacingFactor = _settingsService.LyricsLineSpacingFactor;
+            LyricsFontSize = _settingsService.LyricsFontSize;
+            IsLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
+            LyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
+            IsFanLyricsEnabled = _settingsService.IsFanLyricsEnabled;
+            LyricsFontColorType = _settingsService.LyricsFontColorType;
+            LyricsCustomFontColor = _settingsService.LyricsCustomFontColor;
+
+            MediaSourceProvidersInfo = [.. _settingsService.MediaSourceProvidersInfo];
+            _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
+
             Task.Run(async () =>
             {
                 BuildDate = (await AppInfo.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
             });
+        }
+
+        private void PlaybackService_SessionIdsChanged(object? sender, Events.MediaSourceProvidersInfoEventArgs e)
+        {
+            MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
 
         [ObservableProperty]
@@ -89,11 +112,62 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial ObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
 
         [ObservableProperty]
+        public partial ObservableCollection<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsFanLyricsEnabled { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsLyricsGlowEffectEnabled { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial TextAlignmentType LyricsAlignmentType { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial TextAlignmentType SongInfoAlignmentType { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsBlurAmount { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial Color LyricsCustomFontColor { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsFontColorType LyricsFontColorType { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsFontSize { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsFontWeight LyricsFontWeight { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LineRenderingType LyricsGlowEffectScope { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial float LyricsLineSpacingFactor { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsVerticalEdgeOpacity { get; set; }
+
+        [ObservableProperty]
         public partial object NavViewSelectedItemTag { get; set; }
 
         public string Version { get; set; } = Helper.AppInfo.AppVersion;
 
-        public string BuildDate { get; set; }
+        public string BuildDate { get; set; } = string.Empty;
 
         public void OnLyricsSearchProvidersReordered()
         {
@@ -131,6 +205,15 @@ namespace BetterLyrics.WinUI3.ViewModels
                 LyricsSearchProvidersInfo,
                 LyricsSearchProvidersInfo,
                 nameof(LyricsSearchProvidersInfo)
+            );
+        }
+
+        public void ToggleMediaSourceProvider(MediaSourceProviderInfo providerInfo)
+        {
+            Broadcast(
+                MediaSourceProvidersInfo,
+                MediaSourceProvidersInfo,
+                nameof(MediaSourceProvidersInfo)
             );
         }
 
@@ -314,6 +397,66 @@ namespace BetterLyrics.WinUI3.ViewModels
                     break;
             }
             _settingsService.Language = Language;
+        }
+
+        partial void OnIsFanLyricsEnabledChanged(bool value)
+        {
+            _settingsService.IsFanLyricsEnabled = value;
+        }
+
+        partial void OnIsLyricsGlowEffectEnabledChanged(bool value)
+        {
+            _settingsService.IsLyricsGlowEffectEnabled = value;
+        }
+
+        partial void OnLyricsAlignmentTypeChanged(TextAlignmentType value)
+        {
+            _settingsService.LyricsAlignmentType = value;
+        }
+
+        partial void OnSongInfoAlignmentTypeChanged(TextAlignmentType value)
+        {
+            _settingsService.SongInfoAlignmentType = value;
+        }
+
+        partial void OnLyricsBlurAmountChanged(int value)
+        {
+            _settingsService.LyricsBlurAmount = value;
+        }
+
+        partial void OnLyricsCustomFontColorChanged(Color value)
+        {
+            _settingsService.LyricsCustomFontColor = value;
+        }
+
+        partial void OnLyricsFontColorTypeChanged(LyricsFontColorType value)
+        {
+            _settingsService.LyricsFontColorType = value;
+        }
+
+        partial void OnLyricsFontSizeChanged(int value)
+        {
+            _settingsService.LyricsFontSize = value;
+        }
+
+        partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
+        {
+            _settingsService.LyricsFontWeight = value;
+        }
+
+        partial void OnLyricsGlowEffectScopeChanged(LineRenderingType value)
+        {
+            _settingsService.LyricsGlowEffectScope = value;
+        }
+
+        partial void OnLyricsLineSpacingFactorChanged(float value)
+        {
+            _settingsService.LyricsLineSpacingFactor = value;
+        }
+
+        partial void OnLyricsVerticalEdgeOpacityChanged(int value)
+        {
+            _settingsService.LyricsVerticalEdgeOpacity = value;
         }
     }
 }

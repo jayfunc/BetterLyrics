@@ -37,7 +37,8 @@ namespace BetterLyrics.WinUI3.Services
 
         // Lyrics style and effetc
 
-        LyricsAlignmentType LyricsAlignmentType { get; set; }
+        TextAlignmentType LyricsAlignmentType { get; set; }
+        TextAlignmentType SongInfoAlignmentType { get; set; }
 
         int LyricsBlurAmount { get; set; }
 
@@ -55,7 +56,8 @@ namespace BetterLyrics.WinUI3.Services
 
         List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
 
-        int LyricsVerticalEdgeOpacity { get; set; }
+        List<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
 
+        int LyricsVerticalEdgeOpacity { get; set; }
     }
 }

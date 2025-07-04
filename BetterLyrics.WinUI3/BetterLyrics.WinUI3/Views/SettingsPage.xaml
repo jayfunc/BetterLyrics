@@ -34,6 +34,11 @@
                                        Glyph=&#xE93C;}"
                     Tag="AlbumArtStyle" />
                 <NavigationViewItem
+                    x:Uid="SettingsPageMediaLib"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xEA69;}"
+                    Tag="MediaLib" />
+                <NavigationViewItem
                     x:Uid="SettingsPageLyricsLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE8F1;}"
@@ -68,111 +73,6 @@
                                 <PopupThemeTransition />
                             </TransitionCollection>
                         </controls:SwitchPresenter.ContentTransitions>
-
-                        <!--  Lyrics lib  -->
-
-                        <controls:Case Value="LyricsLib">
-                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                                <controls:SettingsExpander
-                                    x:Uid="SettingsPageMusicLib"
-                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xE8B7;}"
-                                    IsExpanded="True"
-                                    ItemsSource="{x:Bind ViewModel.LocalLyricsFolders, Mode=OneWay}">
-                                    <controls:SettingsExpander.ItemTemplate>
-                                        <DataTemplate>
-                                            <controls:SettingsCard>
-                                                <controls:SettingsCard.Header>
-                                                    <HyperlinkButton Content="{Binding Path, Mode=OneWay}" NavigateUri="{Binding Path, Mode=OneWay}" />
-                                                </controls:SettingsCard.Header>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <HyperlinkButton
-                                                        x:Uid="SettingsPageRemovePath"
-                                                        Click="SettingsPageRemovePathButton_Click"
-                                                        Tag="{Binding}" />
-                                                    <ToggleSwitch
-                                                        DataContext="{Binding}"
-                                                        IsOn="{Binding IsEnabled, Mode=TwoWay}"
-                                                        Toggled="LocalLyricsFolderToggleSwitch_Toggled" />
-                                                </StackPanel>
-                                            </controls:SettingsCard>
-                                        </DataTemplate>
-                                    </controls:SettingsExpander.ItemTemplate>
-                                    <controls:SettingsExpander.ItemsHeader>
-                                        <InfoBar
-                                            x:Uid="SettingsPageRemoveInfo"
-                                            BorderThickness="0"
-                                            CornerRadius="0"
-                                            IsClosable="False"
-                                            IsOpen="True"
-                                            Severity="Success">
-
-                                            <interactivity:Interaction.Behaviors>
-
-                                                <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
-                                                    ComparisonCondition="Equal"
-                                                    Value="0">
-                                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                                                </interactivity:DataTriggerBehavior>
-                                                <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
-                                                    ComparisonCondition="NotEqual"
-                                                    Value="0">
-                                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                                                </interactivity:DataTriggerBehavior>
-
-                                            </interactivity:Interaction.Behaviors>
-
-                                        </InfoBar>
-                                    </controls:SettingsExpander.ItemsHeader>
-                                    <controls:SettingsExpander.ItemsFooter>
-                                        <controls:SettingsCard x:Uid="SettingsPageAddFolder" Style="{StaticResource DefaultSettingsExpanderItemStyle}">
-                                            <Button
-                                                x:Uid="SettingsPageAddFolderButton"
-                                                Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
-                                                CommandParameter="{Binding ElementName=RootGrid}" />
-                                        </controls:SettingsCard>
-                                    </controls:SettingsExpander.ItemsFooter>
-                                </controls:SettingsExpander>
-
-                                <controls:SettingsCard
-                                    x:Name="LyricsSearchProvidersSettingsExpander"
-                                    x:Uid="SettingsPageLyricsSearchProvidersConfig"
-                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xF6FA;}" />
-
-                                <ListView
-                                    x:Name="LyricsSearchProvidersListView"
-                                    Margin="0,-4,0,0"
-                                    AllowDrop="True"
-                                    CanDragItems="True"
-                                    CanReorderItems="True"
-                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
-                                    ItemsSource="{x:Bind ViewModel.LyricsSearchProvidersInfo, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <ListView.OpacityTransition>
-                                        <ScalarTransition />
-                                    </ListView.OpacityTransition>
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            <Setter Property="Margin" Value="0" />
-                                            <Setter Property="Padding" Value="0" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
-                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
-                                            </controls:SettingsCard>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-
-
-                            </StackPanel>
-                        </controls:Case>
 
                         <!--  App appearance and behavior  -->
 
@@ -273,10 +173,13 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <!--  Album art style  -->
+                        <!--  Album art area style  -->
 
                         <controls:Case Value="AlbumArtStyle">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
                                 <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE71A;}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
@@ -296,6 +199,149 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
+                                <TextBlock x:Uid="SettingsPageSongInfo" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <controls:SettingsCard x:Uid="SettingsPageSongInfoAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageSongInfoLeft" />
+                                        <ComboBoxItem x:Uid="SettingsPageSongInfoCenter" />
+                                        <ComboBoxItem x:Uid="SettingsPageSongInfoRight" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                            </StackPanel>
+                        </controls:Case>
+
+                        <!--  Media source lib  -->
+                        <controls:Case Value="MediaLib">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <controls:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED35;}" />
+                                <ListView
+                                    x:Name="MediaSourceProvidersListView"
+                                    Margin="0,-4,0,0"
+                                    ItemsSource="{x:Bind ViewModel.MediaSourceProvidersInfo, Mode=OneWay}"
+                                    SelectionMode="None">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:MediaSourceProviderInfo">
+                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Mode=OneWay}">
+                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="MediaSourceProviderToggleSwitch_Toggled" />
+                                            </controls:SettingsCard>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </controls:Case>
+
+                        <!--  Lyrics lib  -->
+                        <controls:Case Value="LyricsLib">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageMusicLib"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xE8B7;}"
+                                    IsExpanded="True"
+                                    ItemsSource="{x:Bind ViewModel.LocalLyricsFolders, Mode=OneWay}">
+                                    <controls:SettingsExpander.ItemTemplate>
+                                        <DataTemplate>
+                                            <controls:SettingsCard>
+                                                <controls:SettingsCard.Header>
+                                                    <HyperlinkButton
+                                                        Click="LocalFolderHyperlinkButton_Click"
+                                                        Content="{Binding Path, Mode=OneWay}"
+                                                        Tag="{Binding Path, Mode=OneWay}" />
+                                                </controls:SettingsCard.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <HyperlinkButton
+                                                        x:Uid="SettingsPageRemovePath"
+                                                        Click="SettingsPageRemovePathButton_Click"
+                                                        Tag="{Binding}" />
+                                                    <ToggleSwitch
+                                                        DataContext="{Binding}"
+                                                        IsOn="{Binding IsEnabled, Mode=TwoWay}"
+                                                        Toggled="LocalLyricsFolderToggleSwitch_Toggled" />
+                                                </StackPanel>
+                                            </controls:SettingsCard>
+                                        </DataTemplate>
+                                    </controls:SettingsExpander.ItemTemplate>
+                                    <controls:SettingsExpander.ItemsHeader>
+                                        <InfoBar
+                                            x:Uid="SettingsPageRemoveInfo"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
+                                            IsClosable="False"
+                                            IsOpen="True"
+                                            Severity="Success">
+
+                                            <interactivity:Interaction.Behaviors>
+
+                                                <interactivity:DataTriggerBehavior
+                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
+                                                    ComparisonCondition="Equal"
+                                                    Value="0">
+                                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                                </interactivity:DataTriggerBehavior>
+                                                <interactivity:DataTriggerBehavior
+                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
+                                                    ComparisonCondition="NotEqual"
+                                                    Value="0">
+                                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                                </interactivity:DataTriggerBehavior>
+
+                                            </interactivity:Interaction.Behaviors>
+
+                                        </InfoBar>
+                                    </controls:SettingsExpander.ItemsHeader>
+                                    <controls:SettingsExpander.ItemsFooter>
+                                        <controls:SettingsCard x:Uid="SettingsPageAddFolder" Style="{StaticResource DefaultSettingsExpanderItemStyle}">
+                                            <Button
+                                                x:Uid="SettingsPageAddFolderButton"
+                                                Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
+                                                CommandParameter="{Binding ElementName=RootGrid}" />
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.ItemsFooter>
+                                </controls:SettingsExpander>
+
+                                <controls:SettingsCard
+                                    x:Name="LyricsSearchProvidersSettingsExpander"
+                                    x:Uid="SettingsPageLyricsSearchProvidersConfig"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xF6FA;}" />
+
+                                <ListView
+                                    x:Name="LyricsSearchProvidersListView"
+                                    Margin="0,-4,0,0"
+                                    AllowDrop="True"
+                                    CanDragItems="True"
+                                    CanReorderItems="True"
+                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                                    ItemsSource="{x:Bind ViewModel.LyricsSearchProvidersInfo, Mode=OneWay}"
+                                    SelectionMode="None">
+                                    <ListView.OpacityTransition>
+                                        <ScalarTransition />
+                                    </ListView.OpacityTransition>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
+                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
+                                            </controls:SettingsCard>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
                             </StackPanel>
                         </controls:Case>
 
@@ -309,7 +355,7 @@
                                 <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                                 <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
-                                    <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                         <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
@@ -317,7 +363,7 @@
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8DD;}">
-                                    <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsFontWeight, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsFontWeight, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                         <ComboBoxItem x:Uid="SettingsPageLyricsThin" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsExtraLight" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsLight" />
@@ -333,7 +379,7 @@
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageLyricsFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D3;}">
-                                    <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
@@ -349,16 +395,16 @@
                                     IsColorSliderVisible="True"
                                     IsHexInputVisible="True"
                                     IsMoreButtonVisible="True"
-                                    Color="{x:Bind LyricsSettingsControlViewModel.LyricsCustomFontColor, Mode=TwoWay}">
+                                    Color="{x:Bind ViewModel.LyricsCustomFontColor, Mode=TwoWay}">
                                     <interactivity:Interaction.Behaviors>
                                         <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind LyricsSettingsControlViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                                            Binding="{x:Bind ViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                                             ComparisonCondition="Equal"
                                             Value="2">
                                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                                         </interactivity:DataTriggerBehavior>
                                         <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind LyricsSettingsControlViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                                            Binding="{x:Bind ViewModel.LyricsFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
                                             ComparisonCondition="NotEqual"
                                             Value="2">
                                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
@@ -381,7 +427,7 @@
                                             StepFrequency="2"
                                             TickFrequency="2"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsFontSize, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.LyricsFontSize, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
@@ -401,7 +447,7 @@
                                             StepFrequency="0.1"
                                             TickFrequency="0.1"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsLineSpacingFactor, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.LyricsLineSpacingFactor, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
@@ -428,7 +474,7 @@
                                             StepFrequency="1"
                                             TickFrequency="1"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsVerticalEdgeOpacity, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.LyricsVerticalEdgeOpacity, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
@@ -447,7 +493,7 @@
                                             StepFrequency="1"
                                             TickFrequency="1"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind LyricsSettingsControlViewModel.LyricsBlurAmount, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.LyricsBlurAmount, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
@@ -455,11 +501,11 @@
                                     x:Uid="SettingsPageLyricsGlowEffect"
                                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                              Glyph=&#xE9A9;}"
-                                    IsExpanded="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
-                                    <ToggleSwitch IsOn="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
+                                    IsExpanded="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
                                     <controls:SettingsExpander.Items>
-                                        <controls:SettingsCard x:Uid="SettingsPageLyricsGlowEffectScope" IsEnabled="{x:Bind LyricsSettingsControlViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
-                                            <ComboBox SelectedIndex="{x:Bind LyricsSettingsControlViewModel.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <controls:SettingsCard x:Uid="SettingsPageLyricsGlowEffectScope" IsEnabled="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentLine" />
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentChar" />
                                             </ComboBox>
@@ -468,7 +514,7 @@
                                 </controls:SettingsExpander>
 
                                 <controls:SettingsCard x:Uid="SettingsPageFan" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEBC5;}">
-                                    <ToggleSwitch IsOn="{x:Bind LyricsSettingsControlViewModel.IsFanLyricsEnabled, Mode=TwoWay}" />
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsFanLyricsEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
                             </StackPanel>

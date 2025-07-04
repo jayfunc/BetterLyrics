@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private const string AutoStartWindowTypeKey = "AutoStartWindowType";
 
-        private const string CoverImageRadiusKey = "CoverImageRadius";
+        private const string CoverImageRadiusKey = "AlbumArtCornerRadius";
         private const string CoverOverlayBlurAmountKey = "CoverOverlayBlurAmount";
         private const string CoverOverlayOpacityKey = "CoverOverlayOpacity";
         private const string IsCoverOverlayEnabledKey = "IsCoverOverlayEnabled";
@@ -41,7 +41,8 @@ namespace BetterLyrics.WinUI3.Services
         private const string LanguageKey = "Language";
 
         private const string LocalLyricsFoldersKey = "LocalLyricsFolders";
-        private const string LyricsAlignmentTypeKey = "LyricsAlignmentType";
+        private const string LyricsAlignmentTypeKey = "TextAlignmentType";
+        private const string SongInfoAlignmentTypeKey = "SongInfoAlignmentType";
         private const string LyricsBlurAmountKey = "LyricsBlurAmount";
         private const string LyricsFontColorTypeKey = "LyricsFontColorType";
         private const string LyricsFontSizeKey = "LyricsFontSize";
@@ -50,6 +51,8 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsLineSpacingFactorKey = "LyricsLineSpacingFactor";
         private const string LyricsSearchProvidersInfoKey = "LyricsSearchProvidersInfo";
         private const string LyricsVerticalEdgeOpacityKey = "LyricsVerticalEdgeOpacity";
+
+        private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -69,6 +72,7 @@ namespace BetterLyrics.WinUI3.Services
                     SourceGenerationContext.Default.ListLyricsSearchProviderInfo
                 )
             );
+            SetDefault(MediaSourceProvidersInfoKey, "[]");
             if (LyricsSearchProvidersInfo.Count != Enum.GetValues<LyricsSearchProvider>().Length)
             {
                 LyricsSearchProvidersInfo = Enum.GetValues<LyricsSearchProvider>()
@@ -97,7 +101,8 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(CoverOverlayBlurAmountKey, 200);
             SetDefault(CoverImageRadiusKey, 24); // 24 %
             // Lyrics
-            SetDefault(LyricsAlignmentTypeKey, (int)LyricsAlignmentType.Center);
+            SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Center);
+            SetDefault(SongInfoAlignmentTypeKey, (int)TextAlignmentType.Left);
             SetDefault(LyricsFontWeightKey, (int)LyricsFontWeight.Bold);
             SetDefault(LyricsBlurAmountKey, 5);
             SetDefault(LyricsFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
@@ -210,10 +215,16 @@ namespace BetterLyrics.WinUI3.Services
                 );
         }
 
-        public LyricsAlignmentType LyricsAlignmentType
+        public TextAlignmentType LyricsAlignmentType
         {
-            get => (LyricsAlignmentType)GetValue<int>(LyricsAlignmentTypeKey);
+            get => (TextAlignmentType)GetValue<int>(LyricsAlignmentTypeKey);
             set => SetValue(LyricsAlignmentTypeKey, (int)value);
+        }
+
+        public TextAlignmentType SongInfoAlignmentType
+        {
+            get => (TextAlignmentType)GetValue<int>(SongInfoAlignmentTypeKey);
+            set => SetValue(SongInfoAlignmentTypeKey, (int)value);
         }
 
         public int LyricsBlurAmount
@@ -271,6 +282,23 @@ namespace BetterLyrics.WinUI3.Services
                     System.Text.Json.JsonSerializer.Serialize(
                         value,
                         SourceGenerationContext.Default.ListLyricsSearchProviderInfo
+                    )
+                );
+        }
+
+        public List<MediaSourceProviderInfo> MediaSourceProvidersInfo
+        {
+            get =>
+                System.Text.Json.JsonSerializer.Deserialize(
+                    GetValue<string>(MediaSourceProvidersInfoKey) ?? "[]",
+                    SourceGenerationContext.Default.ListMediaSourceProviderInfo
+                )!;
+            set =>
+                SetValue(
+                    MediaSourceProvidersInfoKey,
+                    System.Text.Json.JsonSerializer.Serialize(
+                        value,
+                        SourceGenerationContext.Default.ListMediaSourceProviderInfo
                     )
                 );
         }

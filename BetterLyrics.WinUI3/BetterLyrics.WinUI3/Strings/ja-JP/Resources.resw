@@ -228,13 +228,25 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>アライメント</value>
   </data>
+  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
+    <value>アライメント</value>
+  </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>中心</value>
+  </data>
+  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
     <value>中心</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>左</value>
   </data>
+  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+    <value>左</value>
+  </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>右</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
@@ -328,7 +340,7 @@
     <value>歌詞の背景に適応する（灰色）</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
-    <value>アルバムアートスタイル</value>
+    <value>アルバムエリアスタイル</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>コーナー半径</value>
@@ -539,5 +551,23 @@
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>デスクトップモードをアクティブにするときの自動ロック</value>
+  </data>
+  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>アルバムアート</value>
+  </data>
+  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>曲のタイトル＆アーティスト</value>
+  </data>
+  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+    <value>アニメーションタイプを緩和します</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>メディアソース</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <value>メディアソース</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
+    <value>指定されたメディアソースの歌詞ディスプレイを有効または無効にする</value>
   </data>
 </root>

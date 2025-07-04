@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
@@ -94,7 +93,6 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<LyricsPageViewModel>()
                     .AddSingleton<LyricsRendererViewModel>()
-                    .AddSingleton<LyricsSettingsControlViewModel>()
                     .BuildServiceProvider()
             );
         }
@@ -107,7 +105,7 @@ namespace BetterLyrics.WinUI3
 
         private void CurrentDomain_FirstChanceException(object? sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
         {
-            //_logger.LogError(e.Exception, "CurrentDomain_FirstChanceException");
+            _logger.LogError(e.Exception, "CurrentDomain_FirstChanceException");
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
@@ -117,7 +115,7 @@ namespace BetterLyrics.WinUI3
 
         private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
-            //_logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
+            _logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
         }
     }
 }

@@ -22,6 +22,8 @@
 
         <local:LyricsPage />
 
+        <!--  Top command  -->
+
         <Grid
             x:Name="TopCommandGrid"
             Height="{x:Bind ViewModel.TitleBarHeight, Mode=OneWay}"

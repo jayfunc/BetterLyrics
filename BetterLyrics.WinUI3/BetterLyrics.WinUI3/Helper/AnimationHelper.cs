@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using System;
+using System.Diagnostics;
 using BetterLyrics.WinUI3.Enums;
 
 namespace BetterLyrics.WinUI3.Helper
@@ -17,12 +18,14 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private T _currentValue;
         private float _durationSeconds;
-        private readonly EasingType? _easingType;
+        private EasingType? _easingType;
         private Func<T, T, float, T> _interpolator;
         private bool _isTransitioning;
         private float _progress;
         private T _startValue;
         private T _targetValue;
+
+        public float DurationSeconds => _durationSeconds;
 
         public bool IsTransitioning => _isTransitioning;
         public T Value => _currentValue;
@@ -44,16 +47,16 @@ namespace BetterLyrics.WinUI3.Helper
             else if (easingType.HasValue)
             {
                 _easingType = easingType;
-                _interpolator = GetInterpolatorByEasingType(easingType.Value);
+                _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
             else
             {
-                _interpolator = GetInterpolatorByEasingType(EasingType.Linear);
-                _easingType = EasingType.Linear;
+                _easingType = EasingType.SmoothStep;
+                _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
         }
 
-        public void JumpTo(T value)
+        private void JumpTo(T value)
         {
             _currentValue = value;
             _startValue = value;
@@ -71,8 +74,14 @@ namespace BetterLyrics.WinUI3.Helper
             _isTransitioning = false;
         }
 
-        public void StartTransition(T targetValue)
+        public void StartTransition(T targetValue, bool jumpTo = false)
         {
+            if (jumpTo)
+            {
+                JumpTo(targetValue);
+                return;
+            }
+
             if (!targetValue.Equals(_currentValue))
             {
                 _startValue = _currentValue;
@@ -80,6 +89,12 @@ namespace BetterLyrics.WinUI3.Helper
                 _progress = 0f;
                 _isTransitioning = true;
             }
+        }
+
+        public static bool Equals(double x, double y, double tolerance)
+        {
+            var diff = Math.Abs(x - y);
+            return diff <= tolerance || diff <= Math.Max(Math.Abs(x), Math.Abs(y)) * tolerance;
         }
 
         public void Update(TimeSpan elapsedTime)
@@ -110,26 +125,41 @@ namespace BetterLyrics.WinUI3.Helper
                     float t = progress;
                     switch (type)
                     {
-                        case EasingType.EaseInOutExpo:
-                            t = EasingHelper.EaseInOutExpo(t);
+                        case EasingType.EaseInOutSine:
+                            t = EasingHelper.EaseInOutSine(t);
                             break;
                         case EasingType.EaseInOutQuad:
                             t = EasingHelper.EaseInOutQuad(t);
                             break;
-                        case EasingType.EaseInQuad:
-                            t = EasingHelper.EaseInQuad(t);
+                        case EasingType.EaseInOutCubic:
+                            t = EasingHelper.EaseInOutCubic(t);
                             break;
-                        case EasingType.EaseOutQuad:
-                            t = EasingHelper.EaseOutQuad(t);
+                        case EasingType.EaseInOutQuart:
+                            t = EasingHelper.EaseInOutQuart(t);
                             break;
-                        case EasingType.Linear:
-                            t = EasingHelper.Linear(t);
+                        case EasingType.EaseInOutQuint:
+                            t = EasingHelper.EaseInOutQuint(t);
+                            break;
+                        case EasingType.EaseInOutExpo:
+                            t = EasingHelper.EaseInOutExpo(t);
+                            break;
+                        case EasingType.EaseInOutCirc:
+                            t = EasingHelper.EaseInOutCirc(t);
+                            break;
+                        case EasingType.EaseInOutBack:
+                            t = EasingHelper.EaseInOutBack(t);
+                            break;
+                        case EasingType.EaseInOutElastic:
+                            t = EasingHelper.EaseInOutElastic(t);
+                            break;
+                        case EasingType.EaseInOutBounce:
+                            t = EasingHelper.EaseInOutBounce(t);
                             break;
                         case EasingType.SmoothStep:
                             t = EasingHelper.SmoothStep(t);
                             break;
-                        case EasingType.SmootherStep:
-                            t = EasingHelper.SmootherStep(t);
+                        case EasingType.Linear:
+                            t = EasingHelper.Linear(t);
                             break;
                         default:
                             break;
@@ -138,6 +168,12 @@ namespace BetterLyrics.WinUI3.Helper
                 };
             }
             throw new NotSupportedException($"Easing type {type} is not supported for type {typeof(T)}.");
+        }
+
+        public void SetEasingType(EasingType easingType)
+        {
+            _easingType = easingType;
+            _interpolator = GetInterpolatorByEasingType(easingType);
         }
     }
 }
