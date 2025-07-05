@@ -228,25 +228,13 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>アライメント</value>
   </data>
-  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
-    <value>アライメント</value>
-  </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>中心</value>
-  </data>
-  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
     <value>中心</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>左</value>
   </data>
-  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
-    <value>左</value>
-  </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>右</value>
-  </data>
-  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>右</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
@@ -552,6 +540,18 @@
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>デスクトップモードをアクティブにするときの自動ロック</value>
   </data>
+  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
+    <value>アライメント</value>
+  </data>
+  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
+    <value>中心</value>
+  </data>
+  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
+    <value>右</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>アルバムアート</value>
   </data>
@@ -569,5 +569,14 @@
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>指定されたメディアソースの歌詞ディスプレイを有効または無効にする</value>
+  </data>
+  <data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>ログレコード</value>
+  </data>
+  <data name="SettingsPageTranslation.Content" xml:space="preserve">
+    <value>歌詞翻訳</value>
+  </data>
+  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <value>歌詞タイムラインオフセット（ミリ秒）</value>
   </data>
 </root>

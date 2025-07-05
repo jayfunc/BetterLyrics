@@ -9,7 +9,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.UI.Xaml;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -33,6 +35,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
         {
             SongInfo = e.SongInfo;
+            PositionOffset = 0; // Reset position offset when song changes
             TrySwitchToPreferredDisplayType(e.SongInfo);
         }
 
@@ -44,10 +47,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsFirstRun { get; set; }
 
         [ObservableProperty]
-        public partial bool IsNotDockMode { get; set; } = true;
+        public partial bool IsWelcomeTeachingTipOpen { get; set; }
 
         [ObservableProperty]
-        public partial bool IsWelcomeTeachingTipOpen { get; set; }
+        public partial Visibility BottomCommandGridVisibility { get; set; } = Visibility.Visible;
 
         [ObservableProperty]
         public partial int LyricsFontSize { get; set; }
@@ -58,13 +61,20 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; } = null;
 
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int PositionOffset { get; set; } = 0;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsTranslationEnabled { get; set; } = false;
+
         public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is LyricsWindowViewModel)
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
-                    IsNotDockMode = !message.NewValue;
                     SetNonStandardModePreferredDisplayType(message.NewValue);
                     TrySwitchToPreferredDisplayType(SongInfo);
                 }

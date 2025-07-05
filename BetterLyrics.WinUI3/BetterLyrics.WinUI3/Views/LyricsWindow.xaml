@@ -15,38 +15,62 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid
-        x:Name="RootGrid"
-        PointerMoved="RootGrid_PointerMoved"
-        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
+    <Grid x:Name="RootGrid" RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
 
         <local:LyricsPage />
 
         <!--  Top command  -->
-
         <Grid
             x:Name="TopCommandGrid"
-            Height="{x:Bind ViewModel.TitleBarHeight, Mode=OneWay}"
             VerticalAlignment="Top"
             Background="Transparent"
             Opacity="0">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                    <interactivity:ChangePropertyAction
+                        PropertyName="Opacity"
+                        TargetObject="{x:Bind TopCommandGrid}"
+                        Value="1" />
+                </interactivity:EventTriggerBehavior>
+                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                    <interactivity:ChangePropertyAction
+                        PropertyName="Opacity"
+                        TargetObject="{x:Bind TopCommandGrid}"
+                        Value="0" />
+                </interactivity:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
 
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel
+                x:Name="TopLeftCommandStackPanel"
+                Margin="12"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal"
+                Spacing="6">
+                <StackPanel.OpacityTransition>
+                    <ScalarTransition />
+                </StackPanel.OpacityTransition>
+            </StackPanel>
 
+            <StackPanel
+                x:Name="TopRightCommandStackPanel"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <StackPanel.OpacityTransition>
+                    <ScalarTransition />
+                </StackPanel.OpacityTransition>
+
+                <!--  Look  -->
                 <Button
                     x:Name="ClickThroughButton"
                     Command="{x:Bind ViewModel.LockWindowCommand}"
                     Style="{StaticResource TitleBarButtonStyle}">
-                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            FontWeight="Bold"
-                            Glyph="&#xE72E;" />
-                    </Grid>
+                    <FontIcon
+                        FontFamily="{StaticResource IconFontFamily}"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xE72E;" />
                     <ToolTipService.ToolTip>
                         <ToolTip x:Name="LockToolTip" x:Uid="HostWindowLockToolTip" />
                     </ToolTipService.ToolTip>
@@ -65,27 +89,12 @@
                         </interactivity:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
                 </Button>
-
+                <!--  More  -->
                 <Button x:Name="MoreButton" Style="{StaticResource TitleBarButtonStyle}">
-                    <Grid>
-                        <FontIcon
-                            Margin="0,0,0,8"
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            FontWeight="ExtraBold"
-                            Glyph="&#xEF2D;" />
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            FontWeight="ExtraBold"
-                            Glyph="&#xEF2D;" />
-                        <FontIcon
-                            Margin="0,8,0,0"
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            FontWeight="ExtraBold"
-                            Glyph="&#xEF2D;" />
-                    </Grid>
+                    <FontIcon
+                        FontFamily="{StaticResource IconFontFamily}"
+                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                        Glyph="&#xE712;" />
                     <Button.Flyout>
                         <MenuFlyout>
                             <ToggleMenuFlyoutItem
@@ -126,7 +135,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xEF2D;" />
+                        Glyph="&#xE629;" />
                 </Button>
                 <!--  Window Maximise  -->
                 <Button
@@ -136,7 +145,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xEF2E;" />
+                        Glyph="&#xF16B;" />
                 </Button>
                 <!--  Window Restore  -->
                 <Button
@@ -147,7 +156,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xEF2F;" />
+                        Glyph="&#xF5ED;" />
                 </Button>
                 <!--  Window Close  -->
                 <Button
@@ -157,7 +166,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xEF2C;" />
+                        Glyph="&#xE624;" />
                 </Button>
             </StackPanel>
 

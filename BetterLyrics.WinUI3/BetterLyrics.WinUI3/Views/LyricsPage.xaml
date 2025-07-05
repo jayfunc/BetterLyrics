@@ -34,26 +34,106 @@
             </Grid.OpacityTransition>
         </Grid>
 
-        <!--  Bottom-right command area  -->
+        <!--  Bottom command area  -->
         <Grid
             x:Name="BottomCommandGrid"
-            Margin="0,0,4,4"
+            Padding="12"
             VerticalAlignment="Bottom"
-            Opacity="0"
-            PointerEntered="BottomCommandGrid_PointerEntered"
-            PointerExited="BottomCommandGrid_PointerExited"
-            Visibility="{x:Bind ViewModel.IsNotDockMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            Background="Transparent"
+            Opacity="0">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                    <interactivity:ChangePropertyAction
+                        PropertyName="Opacity"
+                        TargetObject="{x:Bind BottomCommandGrid}"
+                        Value="1" />
+                </interactivity:EventTriggerBehavior>
+                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                    <interactivity:ChangePropertyAction
+                        PropertyName="Opacity"
+                        TargetObject="{x:Bind BottomCommandGrid}"
+                        Value="0" />
+                </interactivity:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
 
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                <TextBlock Margin="12,0,0,0" Text="{x:Bind ViewModel.SongInfo.SourceAppUserModelId, Mode=OneWay}" />
+            <StackPanel
+                x:Name="BottomLeftCommandStackPanel"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal"
+                Spacing="6">
+                <StackPanel.OpacityTransition>
+                    <ScalarTransition />
+                </StackPanel.OpacityTransition>
             </StackPanel>
 
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+            <StackPanel
+                x:Name="BottomCenterCommandStackPanel"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="6">
+                <StackPanel.OpacityTransition>
+                    <ScalarTransition />
+                </StackPanel.OpacityTransition>
+            </StackPanel>
 
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel
+                x:Name="BottomRightCommandStackPanel"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal"
+                Spacing="6">
+                <StackPanel.OpacityTransition>
+                    <ScalarTransition />
+                </StackPanel.OpacityTransition>
+
+                <!--  Position offset  -->
+                <Button Style="{StaticResource GhostButtonStyle}">
+                    <FontIcon
+                        FontFamily="{StaticResource IconFontFamily}"
+                        Glyph="&#xECE7;"
+                        RenderTransformOrigin="0.5,0.5">
+                        <FontIcon.RenderTransform>
+                            <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
+                        </FontIcon.RenderTransform>
+                    </FontIcon>
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <Slider
+                                    x:Uid="MainPagePositionOffsetSlider"
+                                    Maximum="2000"
+                                    Minimum="-2000"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="100"
+                                    TickFrequency="100"
+                                    TickPlacement="Outside"
+                                    Value="{x:Bind ViewModel.PositionOffset, Mode=TwoWay}" />
+                                <RelativePanel>
+                                    <TextBlock
+                                        RelativePanel.AlignLeftWithPanel="True"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                                        Text="{x:Bind ViewModel.PositionOffset, Mode=OneWay}" />
+                                    <Button
+                                        Click="PositionOffsetResetButton_Click"
+                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                              Glyph=&#xE777;}"
+                                        RelativePanel.AlignRightWithPanel="True"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True" />
+                                </RelativePanel>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+
+                <!--  Translation  -->
+                <ToggleButton
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          Glyph=&#xE8C1;}"
+                    IsChecked="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}"
+                    Style="{StaticResource GhostToggleButtonStyle}" />
+
                 <!--  Display type  -->
                 <Button
                     x:Name="DisplayTypeSwitchButton"
@@ -85,9 +165,8 @@
                 <Button
                     x:Name="SettingsButton"
                     Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
-                    Content="{ui:FontIcon FontWeight=Bold,
-                                          FontFamily={StaticResource IconFontFamily},
-                                          Glyph=&#xF8B0;}"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          Glyph=&#xE713;}"
                     Style="{StaticResource GhostButtonStyle}" />
 
             </StackPanel>

@@ -50,6 +50,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void UnlockWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
             DesktopModeHelper.Unlock(window);
             IsLyricsWindowLocked = false;
         }

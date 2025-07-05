@@ -99,6 +99,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
+        public partial bool IsLogEnabled { get; set; } = false;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         public partial bool IsDynamicCoverOverlayEnabled { get; set; }
 
         [ObservableProperty]
@@ -326,11 +330,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task SelectAndAddFolderAsync(UIElement sender)
         {
-            var picker = new Windows.Storage.Pickers.FolderPicker();
+            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
+            if (window == null) return;
 
+            var picker = new Windows.Storage.Pickers.FolderPicker();
             picker.FileTypeFilter.Add("*");
 
-            var hwnd = WindowNative.GetWindowHandle(WindowHelper.GetWindowByWindowType<SettingsWindow>());
+            var hwnd = WindowNative.GetWindowHandle(window);
             InitializeWithWindow.Initialize(picker, hwnd);
 
             var folder = await picker.PickSingleFolderAsync();

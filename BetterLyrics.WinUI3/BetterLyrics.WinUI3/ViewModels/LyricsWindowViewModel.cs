@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Windows.UI;
 using WinRT.Interop;
@@ -110,6 +111,8 @@ namespace BetterLyrics.WinUI3
                     if (IsDockMode)
                     {
                         var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+                        if (window == null) return;
+
                         DockModeHelper.UpdateAppBarHeight(
                             WindowNative.GetWindowHandle(window),
                             message.NewValue * 3
@@ -121,9 +124,10 @@ namespace BetterLyrics.WinUI3
 
         public void StartWatchWindowColorChange(WindowColorSampleMode mode)
         {
-            var hwnd = WindowNative.GetWindowHandle(
-                WindowHelper.GetWindowByWindowType<LyricsWindow>()
-            );
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            var hwnd = WindowNative.GetWindowHandle(window);
             _watcherHelper = new ForegroundWindowWatcherHelper(
                 hwnd,
                 onWindowChanged =>
@@ -158,6 +162,8 @@ namespace BetterLyrics.WinUI3
         private void ToggleDesktopMode()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
             StopWatchWindowColorChange();
 
             IsDesktopMode = !IsDesktopMode;

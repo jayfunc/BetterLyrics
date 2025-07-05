@@ -228,25 +228,13 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>对齐方式</value>
   </data>
-  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
-    <value>对齐方式</value>
-  </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>居中</value>
-  </data>
-  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
     <value>居中</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>靠左</value>
   </data>
-  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
-    <value>靠左</value>
-  </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>靠右</value>
-  </data>
-  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>靠右</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
@@ -552,6 +540,18 @@
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>启动桌面模式时随即锁定窗口</value>
   </data>
+  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
+    <value>对齐方式</value>
+  </data>
+  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+    <value>靠左</value>
+  </data>
+  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
+    <value>靠右</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>专辑</value>
   </data>
@@ -569,5 +569,14 @@
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>为指定媒体源启用或禁用歌词显示</value>
+  </data>
+  <data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>日志记录</value>
+  </data>
+  <data name="SettingsPageTranslation.Content" xml:space="preserve">
+    <value>歌词翻译</value>
+  </data>
+  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <value>歌词时间轴偏移（毫秒）</value>
   </data>
 </root>

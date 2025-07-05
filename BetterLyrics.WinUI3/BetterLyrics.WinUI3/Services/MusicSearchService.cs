@@ -3,15 +3,18 @@
 using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using iTunesSearch.Library;
 using Lyricify.Lyrics.Providers.Web.Kugou;
 using Lyricify.Lyrics.Searchers;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services
@@ -27,10 +30,13 @@ namespace BetterLyrics.WinUI3.Services
         private readonly iTunesSearchManager _iTunesSearchManager;
 
         private readonly ISettingsService _settingsService;
+        private readonly ILogger _logger;
 
         public MusicSearchService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
+            _logger = Ioc.Default.GetRequiredService<ILogger<MusicSearchService>>();
+
             _lrcLibHttpClient = new();
             _lrcLibHttpClient.DefaultRequestHeaders.Add(
                 "User-Agent",
@@ -102,21 +108,21 @@ namespace BetterLyrics.WinUI3.Services
                 }
             }
 
-            //var resultItems = await _iTunesSearchManager.GetAlbumsAsync(album, 1, countryCode: GuessCountryCode(album, artist));
-            //var url = resultItems.Albums.Where(al => Normalize(al.ArtistName).Contains(Normalize(artist)))
-            //    .FirstOrDefault()?.ArtworkUrl100.Replace("100x100bb.jpg", "100000x100000-999.jpg");
-            //if (url != null)
-            //{
-            //    return await _iTunesHttpClinet.GetByteArrayAsync(url);
-            //}
+            var resultItems = await _iTunesSearchManager.GetAlbumsAsync(album, 1, countryCode: GuessCountryCode(album, artist));
+            var url = resultItems.Albums.Where(al => Normalize(al.ArtistName).Contains(Normalize(artist)))
+                .FirstOrDefault()?.ArtworkUrl100.Replace("100x100bb.jpg", "100000x100000-999.jpg");
+            if (url != null)
+            {
+                return await _iTunesHttpClinet.GetByteArrayAsync(url);
+            }
 
             return await ImageHelper.CreateTextPlaceholderBytesAsync($"{artist} - {title}", 400, 400);
         }
 
-        public async Task<(string?, LyricsFormat?)> SearchLyricsAsync(
-            string title, string artist, string album = "", double durationMs = 0.0
-        )
+        public async Task<string?> SearchLyricsAsync(string title, string artist, string album, double durationMs, CancellationToken token)
         {
+            _logger.LogInformation("Searching lyrics for: {Title} - {Artist} (Album: {Album}, Duration: {DurationMs}ms)", title, artist, album, durationMs);
+
             foreach (var provider in _settingsService.LyricsSearchProvidersInfo)
             {
                 if (!provider.IsEnabled)
@@ -133,7 +139,7 @@ namespace BetterLyrics.WinUI3.Services
                     cachedLyrics = ReadCache(title, artist, lyricsFormat, provider.Provider.GetCacheDirectory());
                     if (!string.IsNullOrWhiteSpace(cachedLyrics))
                     {
-                        return (cachedLyrics, lyricsFormat);
+                        return cachedLyrics;
                     }
                 }
 
@@ -174,6 +180,8 @@ namespace BetterLyrics.WinUI3.Services
                     }
                 }
 
+                token.ThrowIfCancellationRequested();
+
                 if (!string.IsNullOrWhiteSpace(searchedLyrics))
                 {
                     if (provider.Provider.IsRemote())
@@ -181,11 +189,11 @@ namespace BetterLyrics.WinUI3.Services
                         WriteCache(title, artist, searchedLyrics, lyricsFormat, provider.Provider.GetCacheDirectory());
                     }
 
-                    return (searchedLyrics, lyricsFormat == LyricsFormat.NotSpecified ? searchedLyrics.DetectFormat() : lyricsFormat);
+                    return searchedLyrics;
                 }
             }
 
-            return (null, null);
+            return null;
         }
 
         private static bool MusicMatch(string fileName, string title, string artist)
@@ -394,7 +402,7 @@ namespace BetterLyrics.WinUI3.Services
                     Album = album,
                     Artists = [artist],
                     Title = title,
-                } //, Lyricify.Lyrics.Searchers.Helpers.CompareHelper.MatchType.Perfect
+                }
             );
 
             if (result is QQMusicSearchResult qqResult)
@@ -405,12 +413,12 @@ namespace BetterLyrics.WinUI3.Services
             }
             else if (result is NeteaseSearchResult neteaseResult)
             {
-                var response = await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyricNew(neteaseResult.Id);
+                var response = await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyric(neteaseResult.Id);
                 return response?.Lrc.Lyric;
             }
             else if (result is KugouSearchResult kugouResult)
             {
-                var response = await Lyricify.Lyrics.Helpers.ProviderHelper.KugouApi.GetSearchLyrics(kugouResult.Hash);
+                var response = await Lyricify.Lyrics.Helpers.ProviderHelper.KugouApi.GetSearchLyrics(hash: kugouResult.Hash);
                 if (response?.Candidates.FirstOrDefault() is SearchLyricsResponse.Candidate candidate)
                 {
                     return Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyrics(

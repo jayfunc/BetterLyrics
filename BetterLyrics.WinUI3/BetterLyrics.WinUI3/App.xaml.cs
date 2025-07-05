@@ -23,6 +23,7 @@ namespace BetterLyrics.WinUI3
     {
 
         private readonly ILogger<App> _logger;
+        private readonly ISettingsService _settingsService;
 
         public static new App Current => (App)Application.Current;
         public static DispatcherQueue? DispatcherQueue { get; private set; }
@@ -41,7 +42,8 @@ namespace BetterLyrics.WinUI3
             AppInfo.EnsureDirectories();
             ConfigureServices();
 
-            _logger = Ioc.Default.GetService<ILogger<App>>()!;
+            _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
+            _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
             UnhandledException += App_UnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -53,6 +55,7 @@ namespace BetterLyrics.WinUI3
         {
             WindowHelper.OpenOrShowWindow<LyricsWindow>();
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (lyricsWindow == null) return;
 
             string[] commandLineArguments = Environment.GetCommandLineArgs();
             if (commandLineArguments.Length > 1)
@@ -66,10 +69,11 @@ namespace BetterLyrics.WinUI3
             }
             lyricsWindow.AutoSelectLyricsMode();
         }
+
         private static void ConfigureServices()
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Is(Serilog.Events.LogEventLevel.Verbose)
                 .WriteTo.File(AppInfo.LogFilePattern, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 

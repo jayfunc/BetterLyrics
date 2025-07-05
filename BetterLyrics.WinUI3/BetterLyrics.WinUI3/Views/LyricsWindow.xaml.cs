@@ -3,10 +3,14 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Views
 {
@@ -34,6 +38,12 @@ namespace BetterLyrics.WinUI3.Views
             switch (type!)
             {
                 case AutoStartWindowType.StandardMode:
+                    AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
+                        _settingsService.StandardWindowLeft,
+                        _settingsService.StandardWindowTop,
+                        _settingsService.StandardWindowWidth,
+                        _settingsService.StandardWindowHeight
+                    ));
                     break;
                 case AutoStartWindowType.DockMode:
                     DockFlyoutItem.IsChecked = true;
@@ -62,24 +72,32 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (args.DidPresenterChange)
                 UpdateTitleBarWindowButtonsVisibility();
-            if (ViewModel.IsDesktopMode && (args.DidPositionChange || args.DidSizeChange))
-                OnPosOrSizeChanged();
-        }
 
-        private void OnPosOrSizeChanged()
-        {
-            var rect = AppWindow.Position;
-            var size = AppWindow.Size;
+            if (args.DidPositionChange || args.DidSizeChange)
+            {
+                var rect = AppWindow.Position;
+                var size = AppWindow.Size;
 
-            _settingsService.DesktopWindowLeft = rect.X;
-            _settingsService.DesktopWindowTop = rect.Y;
-            _settingsService.DesktopWindowWidth = size.Width;
-            _settingsService.DesktopWindowHeight = size.Height;
-        }
+                if (ViewModel.IsDesktopMode)
+                {
+                    _settingsService.DesktopWindowLeft = rect.X;
+                    _settingsService.DesktopWindowTop = rect.Y;
+                    _settingsService.DesktopWindowWidth = size.Width;
+                    _settingsService.DesktopWindowHeight = size.Height;
+                }
+                else if (ViewModel.IsDockMode)
+                {
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHelper.ExitAllWindows();
+                }
+                else
+                {
+                    _settingsService.StandardWindowLeft = rect.X;
+                    _settingsService.StandardWindowTop = rect.Y;
+                    _settingsService.StandardWindowWidth = size.Width;
+                    _settingsService.StandardWindowHeight = size.Height;
+                }
+
+            }
         }
 
         private void FullScreenFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -101,14 +119,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void MaximiseButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AppWindow.Presenter is OverlappedPresenter presenter)
-            {
-                presenter.Maximize();
-            }
-        }
-
         private void MiniFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             if (MiniFlyoutItem.IsChecked)
@@ -118,6 +128,112 @@ namespace BetterLyrics.WinUI3.Views
             else
             {
                 AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+            }
+        }
+
+        private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+        }
+
+        private void UpdateTitleBarWindowButtonsVisibility()
+        {
+            switch (AppWindow.Presenter.Kind)
+            {
+                case AppWindowPresenterKind.Default:
+                    break;
+                case AppWindowPresenterKind.CompactOverlay:
+                    MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
+                    AOTFlyoutItem.Visibility = DesktopFlyoutItem.Visibility = FullScreenFlyoutItem.Visibility = DockFlyoutItem.Visibility =
+                    ClickThroughButton.Visibility = Visibility.Collapsed;
+
+                    break;
+                case AppWindowPresenterKind.FullScreen:
+                    MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
+                    AOTFlyoutItem.Visibility =
+                    ClickThroughButton.Visibility =
+                    DesktopFlyoutItem.Visibility =
+                    MiniFlyoutItem.Visibility =
+                    DockFlyoutItem.Visibility =
+                        Visibility.Collapsed;
+                    FullScreenFlyoutItem.IsChecked = true;
+
+                    break;
+                case AppWindowPresenterKind.Overlapped:
+                    DockFlyoutItem.Visibility = Visibility.Visible;
+                    var overlappedPresenter = (OverlappedPresenter)AppWindow.Presenter;
+                    if (DockFlyoutItem.IsChecked)
+                    {
+                        overlappedPresenter.IsMinimizable =
+                        overlappedPresenter.IsMaximizable = false;
+
+                        MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
+                        AOTFlyoutItem.Visibility =
+                        DesktopFlyoutItem.Visibility =
+                        ClickThroughButton.Visibility =
+                        FullScreenFlyoutItem.Visibility =
+                        MiniFlyoutItem.Visibility =
+                            Visibility.Collapsed;
+
+                    }
+                    else if (DesktopFlyoutItem.IsChecked)
+                    {
+                        overlappedPresenter.IsMinimizable =
+                        overlappedPresenter.IsMaximizable = false;
+
+                        MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
+                        DockFlyoutItem.Visibility =
+                        AOTFlyoutItem.Visibility =
+                        FullScreenFlyoutItem.Visibility =
+                        MiniFlyoutItem.Visibility =
+                            Visibility.Collapsed;
+
+                        ClickThroughButton.Visibility = Visibility.Visible;
+
+                    }
+                    else
+                    {
+                        overlappedPresenter.IsMinimizable =
+                        overlappedPresenter.IsMaximizable = true;
+
+                        MinimiseButton.Visibility =
+                        AOTFlyoutItem.Visibility =
+                        DesktopFlyoutItem.Visibility =
+                        DockFlyoutItem.Visibility =
+                        MiniFlyoutItem.Visibility =
+                        FullScreenFlyoutItem.Visibility =
+                            Visibility.Visible;
+                        FullScreenFlyoutItem.IsChecked = false;
+                        ClickThroughButton.Visibility = Visibility.Collapsed;
+                        AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
+
+                        if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
+                        {
+                            MaximiseButton.Visibility = Visibility.Collapsed;
+                            RestoreButton.Visibility = Visibility.Visible;
+                        }
+                        else if (overlappedPresenter.State == OverlappedPresenterState.Restored)
+                        {
+                            MaximiseButton.Visibility = Visibility.Visible;
+                            RestoreButton.Visibility = Visibility.Collapsed;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.ExitAllWindows();
+        }
+
+        private void MaximiseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.Maximize();
             }
         }
 
@@ -134,120 +250,6 @@ namespace BetterLyrics.WinUI3.Views
             if (AppWindow.Presenter is OverlappedPresenter presenter)
             {
                 presenter.Restore();
-            }
-        }
-
-        private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
-        {
-            var point = e.GetCurrentPoint(RootGrid);
-            double y = point.Position.Y;
-
-            if (y >= 0 && y <= TopCommandGrid.ActualHeight + 5)
-            {
-                if (TopCommandGrid.Opacity == 0)
-                {
-                    TopCommandGrid.Opacity = .5;
-                }
-            }
-            else
-            {
-                if (TopCommandGrid.Opacity == .5)
-                {
-                    TopCommandGrid.Opacity = 0;
-                }
-            }
-        }
-
-        private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHelper.OpenOrShowWindow<SettingsWindow>();
-        }
-
-        private void UpdateTitleBarWindowButtonsVisibility()
-        {
-            switch (AppWindow.Presenter.Kind)
-            {
-                case AppWindowPresenterKind.Default:
-                    break;
-                case AppWindowPresenterKind.CompactOverlay:
-                    MinimiseButton.Visibility =
-                        MaximiseButton.Visibility =
-                        RestoreButton.Visibility =
-                        AOTFlyoutItem.Visibility =
-                        DesktopFlyoutItem.Visibility =
-                        ClickThroughButton.Visibility =
-                        FullScreenFlyoutItem.Visibility =
-                        DockFlyoutItem.Visibility =
-                            Visibility.Collapsed;
-                    break;
-                case AppWindowPresenterKind.FullScreen:
-                    MinimiseButton.Visibility =
-                        MaximiseButton.Visibility =
-                        RestoreButton.Visibility =
-                        AOTFlyoutItem.Visibility =
-                        ClickThroughButton.Visibility =
-                        DesktopFlyoutItem.Visibility =
-                        MiniFlyoutItem.Visibility =
-                        DockFlyoutItem.Visibility =
-                            Visibility.Collapsed;
-                    FullScreenFlyoutItem.IsChecked = true;
-                    break;
-                case AppWindowPresenterKind.Overlapped:
-                    DockFlyoutItem.Visibility = Visibility.Visible;
-                    var overlappedPresenter = (OverlappedPresenter)AppWindow.Presenter;
-                    if (DockFlyoutItem.IsChecked)
-                    {
-                        MinimiseButton.Visibility =
-                            MaximiseButton.Visibility =
-                            RestoreButton.Visibility =
-                            AOTFlyoutItem.Visibility =
-                            DesktopFlyoutItem.Visibility =
-                            ClickThroughButton.Visibility =
-                            FullScreenFlyoutItem.Visibility =
-                            MiniFlyoutItem.Visibility =
-                                Visibility.Collapsed;
-                    }
-                    else if (DesktopFlyoutItem.IsChecked)
-                    {
-                        MinimiseButton.Visibility =
-                            MaximiseButton.Visibility =
-                            RestoreButton.Visibility =
-                            DockFlyoutItem.Visibility =
-                            AOTFlyoutItem.Visibility =
-                            FullScreenFlyoutItem.Visibility =
-                            MiniFlyoutItem.Visibility =
-                                Visibility.Collapsed;
-
-                        ClickThroughButton.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        MinimiseButton.Visibility =
-                            AOTFlyoutItem.Visibility =
-                            DesktopFlyoutItem.Visibility =
-                            DockFlyoutItem.Visibility =
-                            MiniFlyoutItem.Visibility =
-                            FullScreenFlyoutItem.Visibility =
-                                Visibility.Visible;
-                        FullScreenFlyoutItem.IsChecked = false;
-                        ClickThroughButton.Visibility = Visibility.Collapsed;
-                        AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
-
-                        if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
-                        {
-                            MaximiseButton.Visibility = Visibility.Collapsed;
-                            RestoreButton.Visibility = Visibility.Visible;
-                        }
-                        else if (overlappedPresenter.State == OverlappedPresenterState.Restored)
-                        {
-                            MaximiseButton.Visibility = Visibility.Visible;
-                            RestoreButton.Visibility = Visibility.Collapsed;
-                        }
-                    }
-                    TopCommandGrid.Opacity = 0;
-                    break;
-                default:
-                    break;
             }
         }
     }
