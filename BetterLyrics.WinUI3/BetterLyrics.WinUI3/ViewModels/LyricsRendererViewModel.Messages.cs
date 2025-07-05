@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using System;
 using System.Collections.ObjectModel;
 using Windows.UI;
 
@@ -20,26 +21,26 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>>>
     {
-        public async void Receive(PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message)
+        public void Receive(PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message)
         {
             if (message.Sender is SettingsPageViewModel)
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LocalLyricsFolders))
                 {
                     // Music lib changed, re-fetch lyrics
-                    await RefreshLyricsAsync();
+                    RefreshLyricsAsync();
                 }
             }
         }
 
-        public async void Receive(PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>> message)
+        public void Receive(PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>> message)
         {
             if (message.Sender is SettingsPageViewModel)
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsSearchProvidersInfo))
                 {
                     // Lyrics search providers info changed, re-fetch lyrics
-                    await RefreshLyricsAsync();
+                    RefreshLyricsAsync();
                 }
             }
         }
@@ -76,6 +77,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
                     _isDesktopMode = message.NewValue;
+                }
+            }
+            else if (message.Sender is LyricsPageViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsPageViewModel.IsTranslationEnabled))
+                {
+                    _isTranslationEnabled = message.NewValue;
+                    UpdateTranslationsAsync();
                 }
             }
         }
@@ -140,6 +149,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
                 {
                     LyricsFontSize = message.NewValue;
+                }
+            }
+            else if (message.Sender is LyricsPageViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsPageViewModel.PositionOffset))
+                {
+                    _positionOffset = TimeSpan.FromMilliseconds(message.NewValue);
                 }
             }
         }

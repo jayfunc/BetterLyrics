@@ -16,13 +16,33 @@ namespace BetterLyrics.WinUI3.Enums
     {
         public static LyricsFormat? DetectFormat(this string content)
         {
+            if (string.IsNullOrWhiteSpace(content))
+                return null;
+
+            // TTML
             if (content.StartsWith("<?xml") && System.Text.RegularExpressions.Regex.IsMatch(content, @"<tt(:\w+)?\b"))
             {
                 return LyricsFormat.Ttml;
             }
-            // 检测标准LRC和增强型LRC
-            else if (System.Text.RegularExpressions.Regex.IsMatch(content, @"\[\d{1,2}:\d{2}")
-                || System.Text.RegularExpressions.Regex.IsMatch(content, @"<\d{1,2}:\d{2}\.\d{2,3}>"))
+            // KRC: 检测主内容格式 [start,duration]<offset,duration,0>字...
+            else if (System.Text.RegularExpressions.Regex.IsMatch(
+                         content,
+                         @"^\[\d+,\d+\](<\d+,\d+,0>.+)+",
+                         System.Text.RegularExpressions.RegexOptions.Multiline))
+            {
+                return LyricsFormat.Krc;
+            }
+            // QRC: 检测主内容格式 [start,duration]字(offset,duration)
+            else if (System.Text.RegularExpressions.Regex.IsMatch(
+                         content,
+                         @"^\[\d+,\d+\].*?\(\d+,\d+\)",
+                         System.Text.RegularExpressions.RegexOptions.Multiline))
+            {
+                return LyricsFormat.Qrc;
+            }
+            // 标准LRC和增强型LRC
+            else if (System.Text.RegularExpressions.Regex.IsMatch(content, @"\[\d{1,2}:\d{2}") ||
+                     System.Text.RegularExpressions.Regex.IsMatch(content, @"<\d{1,2}:\d{2}\.\d{2,3}>"))
             {
                 return LyricsFormat.Lrc;
             }

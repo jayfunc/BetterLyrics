@@ -29,6 +29,12 @@ namespace BetterLyrics.WinUI3.Services
         int DesktopWindowTop { get; set; }
         int DesktopWindowWidth { get; set; }
         int DesktopWindowHeight { get; set; }
+
+        int StandardWindowWidth { get; set; }
+        int StandardWindowHeight { get; set; }
+        int StandardWindowLeft { get; set; }
+        int StandardWindowTop { get; set; }
+
         bool AutoLockOnDesktopMode { get; set; }
 
         // Lyrics lib

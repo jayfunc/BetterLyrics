@@ -54,6 +54,11 @@
                                        Glyph=&#xEDC6;}"
                     Tag="Lyrics" />
                 <NavigationViewItem
+                    x:Uid="SettingsPageTranslation"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE7F0;}"
+                    Tag="Translation" />
+                <NavigationViewItem
                     x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE946;}"
@@ -75,7 +80,6 @@
                         </controls:SwitchPresenter.ContentTransitions>
 
                         <!--  App appearance and behavior  -->
-
                         <controls:Case Value="App">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -125,7 +129,6 @@
                         </controls:Case>
 
                         <!--  Lyrics background  -->
-
                         <controls:Case Value="Background">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -174,7 +177,6 @@
                         </controls:Case>
 
                         <!--  Album art area style  -->
-
                         <controls:Case Value="AlbumArtStyle">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -346,7 +348,6 @@
                         </controls:Case>
 
                         <!--  Lyrics style and effect  -->
-
                         <controls:Case Value="Lyrics">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -520,8 +521,19 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <!--  About  -->
+                        <!--  Lyrics translation  -->
+                        <controls:Case Value="Translation">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <controls:SettingsExpander>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox Text="http://127.0.0.1:5000" />
+                                        <Button Content="Verify" />
+                                    </StackPanel>
+                                </controls:SettingsExpander>
+                            </StackPanel>
+                        </controls:Case>
 
+                        <!--  About  -->
                         <controls:Case Value="About">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                                 <controls:SettingsCard Header="BetterLyrics" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
@@ -548,6 +560,7 @@
                             </StackPanel>
                         </controls:Case>
 
+                        <!--  Dev  -->
                         <controls:Case Value="Dev">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                                 <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">

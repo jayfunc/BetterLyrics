@@ -4,27 +4,27 @@ using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
-using static Lyricify.Lyrics.Providers.Web.Musixmatch.GetTokenResponse;
 
 namespace BetterLyrics.WinUI3.Services
 {
     public partial class PlaybackService : BaseViewModel, IPlaybackService, IRecipient<PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>>>
     {
         private readonly IMusicSearchService _musicSearchService;
+        private readonly ILogger<PlaybackService> _logger;
 
         private readonly MediaManager _mediaManager = new();
 
@@ -40,6 +40,8 @@ namespace BetterLyrics.WinUI3.Services
         public PlaybackService(ISettingsService settingsService, IMusicSearchService musicSearchService) : base(settingsService)
         {
             _musicSearchService = musicSearchService;
+            _logger = Ioc.Default.GetRequiredService<ILogger<PlaybackService>>();
+
             _mediaSourceProvidersInfo = _settingsService.MediaSourceProvidersInfo;
             InitMediaManager();
         }
@@ -91,6 +93,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)
         {
+            RecordMediaSourceProviderInfo(mediaSession);
             if (!IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId) || mediaSession != _mediaManager.GetFocusedSession()) return;
 
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
@@ -107,6 +110,10 @@ namespace BetterLyrics.WinUI3.Services
 
         private async void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
         {
+            _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
+                mediaProperties.Title, mediaProperties.Artist, mediaProperties.AlbumTitle);
+
+            RecordMediaSourceProviderInfo(mediaSession);
             string id = mediaSession.ControlSession.SourceAppUserModelId;
             if (!IsMediaSourceEnabled(id) || mediaSession != _mediaManager.GetFocusedSession()) return;
 
@@ -177,7 +184,14 @@ namespace BetterLyrics.WinUI3.Services
 
         private void MediaManager_OnAnySessionOpened(MediaManager.MediaSession mediaSession)
         {
-            string id = mediaSession.ControlSession.SourceAppUserModelId;
+            RecordMediaSourceProviderInfo(mediaSession);
+        }
+
+        private void RecordMediaSourceProviderInfo(MediaManager.MediaSession mediaSession)
+        {
+            var id = mediaSession?.ControlSession?.SourceAppUserModelId;
+            if (string.IsNullOrEmpty(id)) return;
+
             var found = _mediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
             if (found == null)
             {

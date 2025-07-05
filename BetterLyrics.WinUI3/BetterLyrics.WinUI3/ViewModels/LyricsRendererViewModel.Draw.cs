@@ -77,7 +77,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         $"[DEBUG]\n" +
                             $"Cur playing {currentPlayingLineIndex}, char start idx {charStartIndex}, length {charLength}, prog {charProgress}\n" +
                             $"Visible lines [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n" +
-                            $"Cur time {TotalTime}\n" +
+                            $"Cur time {_totalTime + _positionOffset}\n" +
                             $"Lang size {_multiLangLyrics.Count}\n" +
                             $"Song duration {TimeSpan.FromMilliseconds(SongInfo?.DurationMs ?? 0)}",
                         new Vector2(10, 10),
@@ -131,8 +131,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             float scaleFactor = _albumArtSize / Math.Min(imageWidth, imageHeight);
             if (scaleFactor < 0.1f) return;
-
-            _albumArtY = 36 + (_canvasHeight - 36 * 2) * 3 / 16;
 
             float cornerRadius = _albumArtCornerRadius / 100f * _albumArtSize / 2;
 
@@ -233,8 +231,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void DrawSingleTitleAndArtist(ICanvasAnimatedControl control, CanvasDrawingSession ds, string? title, string? artist, float opacity)
         {
-            float titleY = _albumArtY + _albumArtSize + 12;
-
             CanvasTextLayout titleLayout = new(
                 control, title ?? string.Empty,
                 _titleTextFormat, _albumArtSize, _canvasHeight
@@ -245,11 +241,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
             ds.DrawTextLayout(
                 titleLayout,
-                new Vector2(_albumArtXTransition.Value, titleY),
+                new Vector2(_albumArtXTransition.Value, _titleY),
                 _fontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 255 * opacity)));
             ds.DrawTextLayout(
                 artistLayout,
-                new Vector2(_albumArtXTransition.Value, titleY + (float)titleLayout.LayoutBounds.Height),
+                new Vector2(_albumArtXTransition.Value, _titleY + (float)titleLayout.LayoutBounds.Height),
                 _fontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
         }
 
@@ -420,12 +416,19 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else
                 {
+                    float height = 0f;
+                    var regions = textLayout.GetCharacterRegions(0, string.Join("", line.CharTimings.Select(x => x.Text)).Length);
+                    if (regions.Length > 0)
+                    {
+                        height = (float)regions[^1].LayoutBounds.Bottom - (float)regions[0].LayoutBounds.Top;
+                    }
+
                     maskDs.FillRectangle(
                         new Rect(
                             textLayout.LayoutBounds.X,
                             position.Y,
                             textLayout.LayoutBounds.Width,
-                            textLayout.LayoutBounds.Height
+                            height
                         ),
                         Colors.White
                     );

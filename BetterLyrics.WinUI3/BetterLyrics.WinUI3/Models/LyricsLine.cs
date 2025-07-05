@@ -24,11 +24,10 @@ namespace BetterLyrics.WinUI3.Models
         public List<CharTiming> CharTimings { get; set; } = [];
 
         public int DurationMs => EndMs - StartMs;
-
         public int EndMs { get; set; }
-
         public int StartMs { get; set; }
 
-        public string Text { get; set; } = "";
+        public string DisplayedText { get; set; } = "";
+        public string OriginalText { get; set; } = "";
     }
 }

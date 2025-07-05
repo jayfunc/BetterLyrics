@@ -32,6 +32,12 @@ namespace BetterLyrics.WinUI3.Services
         private const string DesktopWindowTopKey = "DesktopWindowTop";
         private const string DesktopWindowWidthKey = "DesktopWindowWidth";
         private const string DesktopWindowHeightKey = "DesktopWindowHeight";
+
+        private const string StandardWindowLeftKey = "StandardWindowLeft";
+        private const string StandardWindowTopKey = "StandardWindowTop";
+        private const string StandardWindowWidthKey = "StandardWindowWidth";
+        private const string StandardWindowHeightKey = "StandardWindowHeight";
+
         private const string AutoLockOnDesktopModeKey = "AutoLockOnDesktopMode";
 
         private const string IsDynamicCoverOverlayEnabledKey = "IsDynamicCoverOverlayEnabled";
@@ -87,10 +93,17 @@ namespace BetterLyrics.WinUI3.Services
             }
             // App appearance
             SetDefault(LanguageKey, (int)Language.FollowSystem);
-            SetDefault(DesktopWindowHeightKey, 400);
-            SetDefault(DesktopWindowLeftKey, 0);
-            SetDefault(DesktopWindowTopKey, 0);
-            SetDefault(DesktopWindowWidthKey, 600);
+
+            SetDefault(DesktopWindowHeightKey, 500);
+            SetDefault(DesktopWindowLeftKey, 200);
+            SetDefault(DesktopWindowTopKey, 200);
+            SetDefault(DesktopWindowWidthKey, 800);
+
+            SetDefault(StandardWindowHeightKey, 800);
+            SetDefault(StandardWindowLeftKey, 200);
+            SetDefault(StandardWindowTopKey, 200);
+            SetDefault(StandardWindowWidthKey, 1000);
+
             SetDefault(AutoLockOnDesktopModeKey, false);
             // App behavior
             SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.StandardMode);
@@ -144,6 +157,31 @@ namespace BetterLyrics.WinUI3.Services
             get => GetValue<int>(DesktopWindowHeightKey);
             set => SetValue(DesktopWindowHeightKey, value);
         }
+
+        public int StandardWindowLeft
+        {
+            get => GetValue<int>(StandardWindowLeftKey);
+            set => SetValue(StandardWindowLeftKey, value);
+        }
+
+        public int StandardWindowTop
+        {
+            get => GetValue<int>(StandardWindowTopKey);
+            set => SetValue(StandardWindowTopKey, value);
+        }
+
+        public int StandardWindowWidth
+        {
+            get => GetValue<int>(StandardWindowWidthKey);
+            set => SetValue(StandardWindowWidthKey, value);
+        }
+
+        public int StandardWindowHeight
+        {
+            get => GetValue<int>(StandardWindowHeightKey);
+            set => SetValue(StandardWindowHeightKey, value);
+        }
+
         public bool AutoLockOnDesktopMode
         {
             get => GetValue<bool>(AutoLockOnDesktopModeKey);

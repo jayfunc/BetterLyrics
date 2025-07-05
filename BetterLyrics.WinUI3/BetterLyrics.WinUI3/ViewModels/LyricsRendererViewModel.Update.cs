@@ -21,11 +21,14 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _canvasWidth = (float)control.Size.Width;
             _canvasHeight = (float)control.Size.Height;
+
+            _albumArtY = 36 + (_canvasHeight - 36 * 2) * 3 / 16f;
+
             _displayType = _displayTypeReceived;
 
             if (_isPlaying)
             {
-                TotalTime += args.Timing.ElapsedTime;
+                _totalTime += args.Timing.ElapsedTime;
             }
 
             ElapsedTime = args.Timing.ElapsedTime;
@@ -44,6 +47,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 (_canvasHeight - _topMargin - _bottomMargin) * 8.5f / 16,
                 (_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2);
             _albumArtSize = MathF.Max(0, _albumArtSize);
+
+            _titleY = _albumArtY + _albumArtSize * 1.05f;
 
             if (isDisplayTypeChanged || isCanvasWidthChanged)
             {
@@ -130,7 +135,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 // Calculate layout bounds
                 line.CanvasTextLayout = new CanvasTextLayout(
                     control,
-                    line.Text,
+                    line.DisplayedText,
                     _lyricsTextFormat,
                     _maxLyricsWidth,
                     _canvasHeight

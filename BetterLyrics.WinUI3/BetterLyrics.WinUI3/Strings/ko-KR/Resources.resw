@@ -228,25 +228,13 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>조정</value>
   </data>
-  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
-    <value>조정</value>
-  </data>
   <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>센터</value>
-  </data>
-  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
     <value>센터</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>왼쪽</value>
   </data>
-  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
-    <value>왼쪽</value>
-  </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>오른쪽</value>
-  </data>
-  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>오른쪽</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
@@ -552,6 +540,18 @@
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>데스크탑 모드를 활성화 할 때 자동 잠금</value>
   </data>
+  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
+    <value>조정</value>
+  </data>
+  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
+    <value>센터</value>
+  </data>
+  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>앨범 아트</value>
   </data>
@@ -569,5 +569,14 @@
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>지정된 미디어 소스의 가사 디스플레이 활성화 또는 비활성화</value>
+  </data>
+  <data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>로그 레코드</value>
+  </data>
+  <data name="SettingsPageTranslation.Content" xml:space="preserve">
+    <value>가사 번역</value>
+  </data>
+  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <value>가사 타임 라인 오프셋 (밀리초)</value>
   </data>
 </root>
