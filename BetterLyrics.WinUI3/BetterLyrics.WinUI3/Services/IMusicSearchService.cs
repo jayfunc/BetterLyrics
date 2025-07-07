@@ -9,7 +9,7 @@ namespace BetterLyrics.WinUI3.Services
 {
     public interface IMusicSearchService
     {
-        Task <byte[]> SearchAlbumArtAsync(string title, string artist, string album);
+        Task <byte[]?> SearchAlbumArtAsync(string title, string artist, string album);
 
         Task<string?> SearchLyricsAsync(
             string title,

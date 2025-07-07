@@ -139,12 +139,15 @@
     <value>フォルダーを追加します</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>歌詞ウィンドウのテーマ</value>
+    <value>歌詞の背景テーマ</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>言語</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>歌詞の背景に適応する（色付き）</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>歌詞の背景に適応する（色付き）</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
@@ -301,7 +304,7 @@
     <value>BetterLyrics へようこそ</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>今すぐ歌詞データベースをセットアップしましょう</value>
+    <value>マウスをアプリの上または下部の領域にホバリングして、より多くの機能オプションを表示します</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>今は音楽が再生されていません</value>
@@ -321,10 +324,16 @@
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>ログファイル、ネットワーク歌詞キャッシュを含む</value>
   </data>
-  <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
-    <value>フォントカラー</value>
+  <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
+    <value>フォントカラー（非電流再生エリア）</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
+    <value>フォントカラー（現在の再生エリア）</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>歌詞の背景に適応する（灰色）</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
     <value>歌詞の背景に適応する（灰色）</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
@@ -531,6 +540,9 @@
   <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
     <value>カスタマイズ</value>
   </data>
+  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
+    <value>カスタマイズ</value>
+  </data>
   <data name="SettingsPageLyrics.Content" xml:space="preserve">
     <value>歌詞のスタイルと効果</value>
   </data>
@@ -578,5 +590,68 @@
   </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
     <value>歌詞タイムラインオフセット（ミリ秒）</value>
+  </data>
+  <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
+    <value>翻訳サービスを構成します</value>
+  </data>
+  <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
+    <value>サーバーアドレス</value>
+  </data>
+  <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
+    <value>テストサーバー</value>
+  </data>
+  <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
+    <value>ターゲット言語</value>
+  </data>
+  <data name="SettingsPageTranslationInfo.Header" xml:space="preserve">
+    <value>LibreTranslate を搭載した翻訳サービス</value>
+  </data>
+  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
+    <value>https://github.com/LibreTranslate/LibreTranslate にアクセスしてください。</value>
+  </data>
+  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+    <value>サーバーテストが成功しました</value>
+  </data>
+  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+    <value>サーバーテストに失敗しました</value>
+  </data>
+  <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
+    <value>歌詞ストローク幅（デスクトップモードのみ）</value>
+  </data>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>システムをフォローします</value>
+  </data>
+  <data name="SettingsPageAutoStart.Header" xml:space="preserve">
+    <value>自動起動</value>
+  </data>
+  <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
+    <value>歌詞ストロークカラー（デスクトップモードのみ）</value>
+  </data>
+  <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
+    <value>常にフルスクリーンアプリケーションを常に把握してください</value>
+  </data>
+  <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
+    <value>このアプリは、ドッキングまたはデスクトップモードが有効になっているときにフルスクリーンアプリの上に表示されます</value>
+  </data>
+  <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
+    <value>もっと</value>
+  </data>
+  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
+    <value>歌詞タイムラインオフセット</value>
+  </data>
+  <data name="LyricsPageTranslationButtonToolTip.Content" xml:space="preserve">
+    <value>翻訳する</value>
+  </data>
+  <data name="LyricsPageDisplayTypeButtonToolTip.Content" xml:space="preserve">
+    <value>表示タイプ</value>
+  </data>
+  <data name="LyricsPageSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="TranslateServerNotSet" xml:space="preserve">
+    <value>翻訳サーバーは設定されていません。最初に設定で構成してください</value>
+  </data>
+  <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
+    <value>曲を切り替えると、0 に自動的にリセットされます</value>
   </data>
 </root>

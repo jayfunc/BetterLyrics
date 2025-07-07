@@ -252,5 +252,20 @@ namespace BetterLyrics.WinUI3.Views
                 presenter.Restore();
             }
         }
+
+        private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            TopCommandGrid.Opacity = 1;
+        }
+
+        private void TopCommandGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            TopCommandGrid.Opacity = 0;
+        }
+
+        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
+        {
+            App.Current.LyricsWindowNotificationPanel = TipContainerCenter;
+        }
     }
 }

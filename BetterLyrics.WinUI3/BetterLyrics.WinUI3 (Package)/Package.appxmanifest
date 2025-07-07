@@ -5,52 +5,62 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:uap18="http://schemas.microsoft.com/appx/manifest/uap/windows10/18"
   IgnorableNamespaces="uap rescap uap18">
 
-  <Identity
-    Name="37412.BetterLyrics"
-    Publisher="CN=E1428B0E-DC1D-4EA4-ACB1-4556569D5BA9"
-    Version="1.0.8.0" />
+	<Identity
+	  Name="37412.BetterLyrics"
+	  Publisher="CN=E1428B0E-DC1D-4EA4-ACB1-4556569D5BA9"
+	  Version="1.0.9.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ca4a4830-fc19-40d9-b823-53e2bff3d816" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+	<mp:PhoneIdentity PhoneProductId="ca4a4830-fc19-40d9-b823-53e2bff3d816" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
-  <Properties>
-    <DisplayName>BetterLyrics</DisplayName>
-    <PublisherDisplayName>founchoo</PublisherDisplayName>
-    <Logo>Images\StoreLogo.png</Logo>
-  </Properties>
+	<Properties>
+		<DisplayName>BetterLyrics</DisplayName>
+		<PublisherDisplayName>founchoo</PublisherDisplayName>
+		<Logo>Images\StoreLogo.png</Logo>
+	</Properties>
 
-  <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
-  </Dependencies>
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+		<TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+	</Dependencies>
 
-  <Resources>
-	  <Resource Language="en-US"/>
-	  <Resource Language="zh-CN"/>
-	  <Resource Language="zh-TW"/>
-	  <Resource Language="ja-JP"/>
-	  <Resource Language="ko-KR"/>
-  </Resources>
+	<Resources>
+		<Resource Language="en-US"/>
+		<Resource Language="zh-CN"/>
+		<Resource Language="zh-TW"/>
+		<Resource Language="ja-JP"/>
+		<Resource Language="ko-KR"/>
+	</Resources>
 
-  <Applications>
-    <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="$targetentrypoint$">
-      <uap:VisualElements
-        DisplayName="BetterLyrics"
-        Description="BetterLyrics.WinUI3 (Package)"
-        BackgroundColor="transparent"
-        Square150x150Logo="Images\Square150x150Logo.png"
-        Square44x44Logo="Images\Square44x44Logo.png">
-        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
-        <uap:SplashScreen Image="Images\SplashScreen.png" />
-      </uap:VisualElements>
-    </Application>
-  </Applications>
+	<Applications>
+		<Application Id="App"
+		  Executable="$targetnametoken$.exe"
+		  EntryPoint="$targetentrypoint$">
+			<uap:VisualElements
+			  DisplayName="BetterLyrics"
+			  Description="BetterLyrics.WinUI3 (Package)"
+			  BackgroundColor="transparent"
+			  Square150x150Logo="Images\Square150x150Logo.png"
+			  Square44x44Logo="Images\Square44x44Logo.png">
+				<uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
+				<uap:SplashScreen Image="Images\SplashScreen.png" />
+			</uap:VisualElements>
+			<Extensions>
+				<uap5:Extension
+				  Category="windows.startupTask">
+					<uap5:StartupTask
+					  TaskId="AutoStartup"
+					  Enabled="false"
+					  DisplayName="BetterLyrics" />
+				</uap5:Extension>
+			</Extensions>
+		</Application>
+	</Applications>
 
-  <Capabilities>
-    <rescap:Capability Name="runFullTrust" />
-  </Capabilities>
+	<Capabilities>
+		<rescap:Capability Name="runFullTrust" />
+	</Capabilities>
 </Package>

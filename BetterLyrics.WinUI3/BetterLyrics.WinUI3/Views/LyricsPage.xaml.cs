@@ -45,5 +45,15 @@ namespace BetterLyrics.WinUI3.Views
         {
             ViewModel.PositionOffset = 0;
         }
+
+        private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            BottomCommandGrid.Opacity = 1;
+        }
+
+        private void BottomCommandGrid_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            BottomCommandGrid.Opacity = 0;
+        }
     }
 }

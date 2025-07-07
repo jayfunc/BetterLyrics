@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using Windows.Graphics.Imaging;
 using Windows.Media.Control;
@@ -65,7 +66,7 @@ namespace BetterLyrics.WinUI3.Services
             MediaManager_OnFocusedSessionChanged(_mediaManager.GetFocusedSession());
         }
 
-        private async void MediaManager_OnFocusedSessionChanged(MediaManager.MediaSession mediaSession)
+        private void MediaManager_OnFocusedSessionChanged(MediaManager.MediaSession mediaSession)
         {
             if (mediaSession == null || !IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId))
             {
@@ -73,8 +74,20 @@ namespace BetterLyrics.WinUI3.Services
             }
             else
             {
-                MediaManager_OnAnyMediaPropertyChanged(mediaSession, await mediaSession.ControlSession.TryGetMediaPropertiesAsync());
-                MediaManager_OnAnyPlaybackStateChanged(mediaSession, mediaSession.ControlSession.GetPlaybackInfo());
+                _dispatcherQueue.TryEnqueue(async () =>
+                {
+                    try
+                    {
+                        var props = await mediaSession.ControlSession.TryGetMediaPropertiesAsync();
+                        MediaManager_OnAnyMediaPropertyChanged(mediaSession, props);
+                        MediaManager_OnAnyPlaybackStateChanged(mediaSession, mediaSession.ControlSession.GetPlaybackInfo());
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "TryGetMediaPropertiesAsync failed");
+                        SendNullMessages();
+                    }
+                });
             }
         }
 
@@ -137,37 +150,49 @@ namespace BetterLyrics.WinUI3.Services
                     SourceAppUserModelId = id,
                 };
 
-                byte[] bytes;
+                byte[]? bytes;
 
-                if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
-                {
-                    bytes = await ImageHelper.ToByteArrayAsync(
-                        streamReference
-                    );
-                    token.ThrowIfCancellationRequested();
-                }
-                else
-                {
-                    bytes = await _musicSearchService.SearchAlbumArtAsync(
-                        songInfo.Title,
-                        songInfo.Artist,
-                        songInfo.Album
-                    );
-                    token.ThrowIfCancellationRequested();
-                }
-
-                var decoder = await ImageHelper.GetDecoderFromByte(bytes);
+                bytes = await _musicSearchService.SearchAlbumArtAsync(
+                    songInfo.Title,
+                    songInfo.Artist,
+                    songInfo.Album
+                );
                 token.ThrowIfCancellationRequested();
+
+                if (bytes == null)
+                {
+                    if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
+                    {
+                        bytes = await ImageHelper.ToByteArrayAsync(streamReference);
+                        token.ThrowIfCancellationRequested();
+                    }
+                    else
+                    {
+                        bytes = await ImageHelper.CreateTextPlaceholderBytesAsync($"{songInfo.Artist} - {songInfo.Title}", 400, 400);
+                        token.ThrowIfCancellationRequested();
+                    }
+                }
+
+                using var stream = new InMemoryRandomAccessStream();
+                await stream.WriteAsync(bytes.AsBuffer());
+                token.ThrowIfCancellationRequested();
+
+                var decoder = await BitmapDecoder.CreateAsync(stream);
+                token.ThrowIfCancellationRequested();
+
+                songInfo.AlbumArtSwBitmap?.Dispose();
                 songInfo.AlbumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
                 token.ThrowIfCancellationRequested();
+
                 songInfo.AlbumArtAccentColor = ImageHelper.GetAccentColorsFromByte(bytes).FirstOrDefault();
+
                 if (!token.IsCancellationRequested)
                 {
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-                        () =>
-                        {
-                            SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(songInfo));
-                        });
+                    () =>
+                    {
+                        SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(songInfo));
+                    });
                 }
             }
             catch (OperationCanceledException) { }

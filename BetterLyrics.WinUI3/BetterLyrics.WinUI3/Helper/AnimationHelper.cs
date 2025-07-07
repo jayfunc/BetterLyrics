@@ -29,6 +29,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public bool IsTransitioning => _isTransitioning;
         public T Value => _currentValue;
+        public T TargetValue => _targetValue;
 
         public ValueTransition(T initialValue, float durationSeconds, Func<T, T, float, T>? interpolator = null, EasingType? easingType = null)
         {

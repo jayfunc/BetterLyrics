@@ -8,7 +8,6 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Fluent.LibreTranslate;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
@@ -29,11 +28,15 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsRendererViewModel : BaseViewModel
     {
+        private TimeSpan _elapsedTime = TimeSpan.Zero;
         private TimeSpan _totalTime = TimeSpan.Zero;
         private TimeSpan _positionOffset = TimeSpan.Zero;
 
         private SoftwareBitmap? _lastAlbumArtSwBitmap = null;
         private SoftwareBitmap? _albumArtSwBitmap = null;
+
+        private CanvasBitmap? _lastAlbumArtCanvasBitmap = null;
+        private CanvasBitmap? _albumArtCanvasBitmap = null;
 
         private float _albumArtSize = 0f;
         private int _albumArtCornerRadius = 0;
@@ -67,6 +70,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly IMusicSearchService _musicSearchService;
         private readonly ILibWatcherService _libWatcherService;
         private readonly IPlaybackService _playbackService;
+        private readonly ILibreTranslateService _libreTranslateService;
         private readonly ILogger _logger;
 
         private readonly float _leftMargin = 36f;
@@ -75,13 +79,32 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly float _topMargin = 36f;
         private readonly float _bottomMargin = 36f;
 
-        private Color _fontColor;
-        private Color? _adaptiveFontColor = null;
-        private Color? _customFontColor;
-        private Color _lightFontColor = Colors.White;
-        private Color _darkFontColor = Colors.Black;
+        private Color _adaptiveGrayedFontColor = Colors.Transparent;
+        private Color? _adaptiveColoredFontColor = null;
+
         private Color? _albumArtAccentColor = null;
-        private Color _lyricsWindowBgColor = Colors.Transparent;
+        private Color _environmentalColor = Colors.Transparent;
+
+        private Color _lightColor = Colors.White;
+        private Color _darkColor = Colors.Black;
+
+        private Color _bgFontColor;
+        private Color _fgFontColor;
+        private Color _strokeFontColor;
+
+        private Color? _customBgFontColor;
+        private Color? _customFgFontColor;
+        private Color? _customStrokeFontColor;
+
+        private LyricsFontColorType _lyricsBgFontColorType;
+        private LyricsFontColorType _lyricsFgFontColorType;
+        private LyricsFontColorType _lyricsStrokeFontColorType;
+
+        private ElementTheme _lyricsBgTheme;
+
+        private int _lyricsFontStrokeWidth;
+
+        private int _playingLineIndex = -1;
 
         private int _startVisibleLineIndex = -1;
         private int _endVisibleLineIndex = -1;
@@ -93,13 +116,14 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private bool _isPlaying = true;
 
-        private bool _isRelayoutNeeded = true;
+        private bool _isLayoutChanged = true;
 
         private int _langIndex = 0;
 
         private List<List<LyricsLine>> _multiLangLyrics = [];
         private List<string> _translations = [];
         private bool _isTranslationEnabled = false;
+        private int _targetLanguageIndex = 6;
 
         private CanvasTextFormat _lyricsTextFormat = new()
         {
@@ -131,13 +155,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         private Task? _showTranslationsTask;
         private CancellationTokenSource? _showTranslationsCts;
 
-        public LyricsRendererViewModel(
-            ISettingsService settingsService, IPlaybackService playbackService,
-            IMusicSearchService musicSearchService, ILibWatcherService libWatcherService) : base(settingsService)
+        public LyricsRendererViewModel(ISettingsService settingsService, IPlaybackService playbackService, IMusicSearchService musicSearchService, ILibWatcherService libWatcherService, ILibreTranslateService libreTranslateService) : base(settingsService)
         {
             _musicSearchService = musicSearchService;
             _playbackService = playbackService;
             _libWatcherService = libWatcherService;
+            _libreTranslateService = libreTranslateService;
+
             _logger = Ioc.Default.GetRequiredService<ILogger<LyricsRendererViewModel>>();
 
             _albumArtCornerRadius = _settingsService.CoverImageRadius;
@@ -145,7 +169,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
 
-            LyricsFontColorType = _settingsService.LyricsFontColorType;
+            _lyricsBgFontColorType = _settingsService.LyricsBgFontColorType;
+            _lyricsFgFontColorType = _settingsService.LyricsFgFontColorType;
+
             LyricsFontWeight = _settingsService.LyricsFontWeight;
             LyricsAlignmentType = _settingsService.LyricsAlignmentType;
             LyricsVerticalEdgeOpacity = _settingsService.LyricsVerticalEdgeOpacity;
@@ -154,8 +180,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsBlurAmount = _settingsService.LyricsBlurAmount;
             IsLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
             LyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
-            _customFontColor = _settingsService.LyricsCustomFontColor;
+
+            _customBgFontColor = _settingsService.LyricsCustomBgFontColor;
+            _customFgFontColor = _settingsService.LyricsCustomFgFontColor;
+
+            _lyricsBgTheme = _settingsService.LyricsBackgroundTheme;
+
             _isFanLyricsEnabled = _settingsService.IsFanLyricsEnabled;
+
+            _lyricsFontStrokeWidth = _settingsService.LyricsFontStrokeWidth;
+
+            _isTranslationEnabled = _settingsService.IsTranslationEnabled;
+            _targetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
 
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
 
@@ -169,14 +205,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             UpdateFontColor();
         }
 
+        [ObservableProperty]
+        public partial bool IsTranslating { get; set; } = false;
+
         public int CoverOverlayBlurAmount { get; set; }
 
         public int CoverOverlayOpacity { get; set; }
 
         private LyricsDisplayType _displayTypeReceived = LyricsDisplayType.PlaceholderOnly;
         private LyricsDisplayType _displayType = LyricsDisplayType.PlaceholderOnly;
-
-        public TimeSpan ElapsedTime { get; set; } = TimeSpan.Zero;
 
         public bool IsDynamicCoverOverlayEnabled { get; set; }
 
@@ -185,9 +222,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public TextAlignmentType LyricsAlignmentType { get; set; }
 
         public int LyricsBlurAmount { get; set; }
-
-        [ObservableProperty]
-        public partial LyricsFontColorType LyricsFontColorType { get; set; }
 
         [ObservableProperty]
         public partial int LyricsFontSize { get; set; }
@@ -301,6 +335,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void LibWatcherService_MusicLibraryFilesChanged(object? sender, LibChangedEventArgs e)
         {
+            _logger.LogInformation("Music library files changed: {ChangeType} {FilePath}, refreshing lyrics...", e.ChangeType, e.FilePath);
             RefreshLyricsAsync();
         }
 
@@ -324,15 +359,16 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (SongInfo?.AlbumArtSwBitmap != _albumArtSwBitmap)
             {
                 _lastAlbumArtSwBitmap = _albumArtSwBitmap;
+                _lastAlbumArtCanvasBitmap = null;
+
                 _albumArtSwBitmap = SongInfo?.AlbumArtSwBitmap;
+                _albumArtCanvasBitmap = null;
 
                 _albumArtAccentColor = SongInfo?.AlbumArtAccentColor;
-                _lyricsWindowBgColor = _albumArtAccentColor ?? Colors.Gray;
 
                 _albumArtBgTransition.Reset(0f);
                 _albumArtBgTransition.StartTransition(1f);
 
-                if (!_isDesktopMode && !_isDockMode) _adaptiveFontColor = Helper.ColorHelper.GetForegroundColor(_lyricsWindowBgColor);
                 UpdateFontColor();
             }
 
@@ -347,6 +383,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _songInfoOpacityTransition.Reset(0f);
                 _songInfoOpacityTransition.StartTransition(1f);
 
+                _logger.LogInformation("Song info changed: Title={Title}, Artist={Artist}, refreshing lyrics...", _songTitle, _songArtist);
                 await RefreshLyricsAsync();
 
                 _totalTime = TimeSpan.Zero;
@@ -372,6 +409,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private async Task UpdateTranslationsAsync()
         {
+            IsTranslating = true;
             if (_isTranslationEnabled)
             {
                 await ShowWithTranslationsAsync();
@@ -380,6 +418,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 ShowOriginalsOnly();
             }
+            IsTranslating = false;
         }
 
         private async Task ShowWithTranslationsAsync()
@@ -400,11 +439,23 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private async Task ShowTranslationsCoreAsync(CancellationToken token)
         {
+            _logger.LogInformation("Showing translations for lyrics...");
             try
             {
+                if (string.IsNullOrEmpty(_settingsService.LibreTranslateServer))
+                {
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        App.Current.LyricsWindowNotificationPanel?.Notify(
+                            App.ResourceLoader!.GetString("TranslateServerNotSet"),
+                            Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning
+                        );
+                    });
+                    ShowOriginalsOnly();
+                    return;
+                }
                 var text = string.Join("\n", _multiLangLyrics.FirstOrDefault()?.Select(x => x.OriginalText) ?? []);
-                GlobalLibreTranslateSettings.Server = new LibreTranslateServer("http://localhost:5000");
-                var translated = await text.TranslateAsync(LanguageCode.Chinese);
+                var translated = await _libreTranslateService.TranslateAsync(text, token);
                 token.ThrowIfCancellationRequested();
 
                 _translations = translated.Split('\n').ToList();
@@ -424,25 +475,27 @@ namespace BetterLyrics.WinUI3.ViewModels
                     break;
                 }
 
-                if (totallySame) return; // No need to show translations
-
                 foreach (var langLyrics in _multiLangLyrics)
                 {
                     int i = 0;
                     foreach (var line in langLyrics)
                     {
-                        line.DisplayedText = $"{line.OriginalText}\n{_translations[i]}";
+                        line.DisplayedText = totallySame ? line.OriginalText : $"{line.OriginalText}\n{_translations[i]}";
                         i++;
                     }
                     break;
                 }
-                _isRelayoutNeeded = true;
+                _isLayoutChanged = true;
             }
-            catch (Exception) { }
+            catch (Exception)
+            {
+                IsTranslating = false;
+            }
         }
 
         private void ShowOriginalsOnly()
         {
+            _logger.LogInformation("Showing original lyrics only, translations disabled.");
             foreach (var langLyrics in _multiLangLyrics)
             {
                 foreach (var line in langLyrics)
@@ -450,7 +503,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     line.DisplayedText = line.OriginalText;
                 }
             }
-            _isRelayoutNeeded = true;
+            _isLayoutChanged = true;
         }
 
         private async Task RefreshLyricsCoreAsync(CancellationToken token)
@@ -485,8 +538,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                         (int?)SongInfo?.DurationMs ?? (int)TimeSpan.FromMinutes(99).TotalMilliseconds
                     );
                 _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _multiLangLyrics.Count);
-                ShowOriginalsOnly();
                 await UpdateTranslationsAsync();
+                token.ThrowIfCancellationRequested();
             }
             catch (Exception) { }
         }
@@ -506,7 +559,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     },
                 ]
             );
-            _isRelayoutNeeded = true;
+            _isLayoutChanged = true;
         }
     }
 }

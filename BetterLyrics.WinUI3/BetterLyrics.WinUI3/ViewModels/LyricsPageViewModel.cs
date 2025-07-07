@@ -24,6 +24,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
         {
             LyricsFontSize = _settingsService.LyricsFontSize;
+            IsTranslationEnabled = _settingsService.IsTranslationEnabled;
+            PreferredDisplayType = _settingsService.PreferredDisplayType;
 
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
@@ -56,7 +58,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial int LyricsFontSize { get; set; }
 
         [ObservableProperty]
-        public partial LyricsDisplayType? PreferredDisplayType { get; set; } = LyricsDisplayType.SplitView;
+        public partial LyricsDisplayType PreferredDisplayType { get; set; }
 
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; } = null;
@@ -68,6 +70,16 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsTranslationEnabled { get; set; } = false;
+
+        partial void OnIsTranslationEnabledChanged(bool value)
+        {
+            _settingsService.IsTranslationEnabled = value;
+        }
+
+        partial void OnPreferredDisplayTypeChanged(LyricsDisplayType value)
+        {
+            _settingsService.PreferredDisplayType = value;
+        }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -112,7 +124,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToNonStandardMode;
+                PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToNonStandardMode ?? LyricsDisplayType.SplitView;
             }
         }
 

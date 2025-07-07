@@ -34,10 +34,9 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             // 恢复窗口位置和大小
-            var windowManager = WindowManager.Get(window);
             if (_originalWindowBounds.TryGetValue(hwnd, out var bounds))
             {
-                windowManager.AppWindow.MoveAndResize(
+                window.AppWindow.MoveAndResize(
                     new Windows.Graphics.RectInt32(
                         (int)bounds.X,
                         (int)bounds.Y,
@@ -63,14 +62,13 @@ namespace BetterLyrics.WinUI3.Helper
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
 
             // 记录原始窗口位置和大小
-            var windowManager = WindowManager.Get(window);
             if (!_originalWindowBounds.ContainsKey(hwnd))
             {
                 _originalWindowBounds[hwnd] = (
-                    windowManager.AppWindow.Position.X,
-                    windowManager.AppWindow.Position.Y,
-                    windowManager.Width,
-                    windowManager.Height
+                    window.AppWindow.Position.X,
+                    window.AppWindow.Position.Y,
+                    window.AppWindow.Size.Width,
+                    window.AppWindow.Size.Height
                 );
             }
 
@@ -81,7 +79,7 @@ namespace BetterLyrics.WinUI3.Helper
             int targetY = _settingsService.DesktopWindowTop;
 
             // 设置窗口大小和位置
-            windowManager.AppWindow.MoveAndResize(
+            window.AppWindow.MoveAndResize(
                 new Windows.Graphics.RectInt32(targetX, targetY, targetWidth, targetHeight)
             );
 
@@ -102,7 +100,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static void Lock(Window window)
         {
             window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
-            
+
             // 设置无边框、透明
             window.ToggleWindowStyle(true, WindowStyle.Popup | WindowStyle.Visible);
             window.ExtendsContentIntoTitleBar = false;

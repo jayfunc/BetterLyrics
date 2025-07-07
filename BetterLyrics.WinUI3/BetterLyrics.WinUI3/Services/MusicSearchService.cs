@@ -22,12 +22,8 @@ namespace BetterLyrics.WinUI3.Services
     public class MusicSearchService : IMusicSearchService
     {
         private readonly HttpClient _amllTtmlDbHttpClient;
-
         private readonly HttpClient _lrcLibHttpClient;
-
         private readonly HttpClient _iTunesHttpClinet;
-
-        private readonly iTunesSearchManager _iTunesSearchManager;
 
         private readonly ISettingsService _settingsService;
         private readonly ILogger _logger;
@@ -44,12 +40,11 @@ namespace BetterLyrics.WinUI3.Services
             );
             _amllTtmlDbHttpClient = new();
             _iTunesHttpClinet = new();
-            _iTunesSearchManager = new();
         }
 
         public async Task<bool> DownloadAmllTtmlDbIndexAsync()
         {
-            const string url = "https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/metadata/raw-lyrics-index.jsonl";
+            const string url = "https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/metadata/raw-img-index.jsonl";
             try
             {
                 using var response = await _amllTtmlDbHttpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
@@ -87,7 +82,7 @@ namespace BetterLyrics.WinUI3.Services
             return "us";
         }
 
-        public async Task<byte[]> SearchAlbumArtAsync(string title, string artist, string album)
+        public async Task<byte[]?> SearchAlbumArtAsync(string title, string artist, string album)
         {
             foreach (var folder in _settingsService.LocalLyricsFolders)
             {
@@ -108,20 +103,62 @@ namespace BetterLyrics.WinUI3.Services
                 }
             }
 
-            var resultItems = await _iTunesSearchManager.GetAlbumsAsync(album, 1, countryCode: GuessCountryCode(album, artist));
-            var url = resultItems.Albums.Where(al => Normalize(al.ArtistName).Contains(Normalize(artist)))
-                .FirstOrDefault()?.ArtworkUrl100.Replace("100x100bb.jpg", "100000x100000-999.jpg");
-            if (url != null)
-            {
-                return await _iTunesHttpClinet.GetByteArrayAsync(url);
-            }
+            return await SearchiTunesAlbumArtAsync(artist, album);
+        }
 
-            return await ImageHelper.CreateTextPlaceholderBytesAsync($"{artist} - {title}", 400, 400);
+        private async Task<byte[]?> SearchiTunesAlbumArtAsync(string artist, string album)
+        {
+            // Source: https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce
+            try
+            {
+                string format = ".jpg";
+                var cachedAlbumArt = ReadAlbumArtCache(artist, album, format, AppInfo.iTunesAlbumArtCacheDirectory);
+
+                if (cachedAlbumArt != null)
+                {
+                    return cachedAlbumArt;
+                }
+
+                // Build the iTunes API URL
+                string url = $"https://itunes.apple.com/search?term=" + artist + "+" + album + "&country=" + GuessCountryCode(album, artist) + "&entity=album";
+                url.Replace(" ", "-");
+                // Make a request to the API
+
+                HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                // Parse the JSON response
+                var data = JsonSerializer.Deserialize(responseBody, Serialization.SourceGenerationContext.Default.JsonElement);
+
+                if (data.TryGetProperty("results", out var results) && results.ValueKind == JsonValueKind.Array && results.GetArrayLength() > 0)
+                {
+                    // Get the first result
+                    var result = results[0];
+                    if (result.TryGetProperty("artworkUrl100", out var artworkUrlProp))
+                    {
+                        string artworkUrl = artworkUrlProp.GetString()?.Replace("100x100bb.jpg", "1200x1200bb.jpg") ?? string.Empty;
+                        var fetched = await _iTunesHttpClinet.GetByteArrayAsync(artworkUrl);
+
+                        if (fetched != null && fetched.Length > 0)
+                        {
+                            // Write to cache
+                            WriteAlbumArtCache(artist, album, fetched, format, AppInfo.iTunesAlbumArtCacheDirectory);
+                            return fetched;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error searching iTunes album art for {Artist} - {Album}", artist, album);
+            }
+            return null;
         }
 
         public async Task<string?> SearchLyricsAsync(string title, string artist, string album, double durationMs, CancellationToken token)
         {
-            _logger.LogInformation("Searching lyrics for: {Title} - {Artist} (Album: {Album}, Duration: {DurationMs}ms)", title, artist, album, durationMs);
+            _logger.LogInformation("Searching img for: {Title} - {Artist} (Album: {Album}, Duration: {DurationMs}ms)", title, artist, album, durationMs);
 
             foreach (var provider in _settingsService.LyricsSearchProvidersInfo)
             {
@@ -136,7 +173,7 @@ namespace BetterLyrics.WinUI3.Services
                 // Check cache first
                 if (provider.Provider.IsRemote())
                 {
-                    cachedLyrics = ReadCache(title, artist, lyricsFormat, provider.Provider.GetCacheDirectory());
+                    cachedLyrics = ReadLyricsCache(title, artist, lyricsFormat, provider.Provider.GetCacheDirectory());
                     if (!string.IsNullOrWhiteSpace(cachedLyrics))
                     {
                         return cachedLyrics;
@@ -186,7 +223,7 @@ namespace BetterLyrics.WinUI3.Services
                 {
                     if (provider.Provider.IsRemote())
                     {
-                        WriteCache(title, artist, searchedLyrics, lyricsFormat, provider.Provider.GetCacheDirectory());
+                        WriteLyricsCache(title, artist, searchedLyrics, lyricsFormat, provider.Provider.GetCacheDirectory());
                     }
 
                     return searchedLyrics;
@@ -274,7 +311,7 @@ namespace BetterLyrics.WinUI3.Services
             return null;
         }
 
-        private string? ReadCache(string title, string artist, LyricsFormat format, string cacheFolderPath)
+        private string? ReadLyricsCache(string title, string artist, LyricsFormat format, string cacheFolderPath)
         {
             var safeArtist = SanitizeFileName(artist);
             var safeTitle = SanitizeFileName(title);
@@ -282,6 +319,18 @@ namespace BetterLyrics.WinUI3.Services
             if (File.Exists(cacheFilePath))
             {
                 return File.ReadAllText(cacheFilePath);
+            }
+            return null;
+        }
+
+        private byte[]? ReadAlbumArtCache(string album, string artist, string format, string cacheFolderPath)
+        {
+            var safeArtist = SanitizeFileName(artist);
+            var safeAlbum = SanitizeFileName(album);
+            var cacheFilePath = Path.Combine(cacheFolderPath, $"{safeArtist} - {safeAlbum}{format}");
+            if (File.Exists(cacheFilePath))
+            {
+                return File.ReadAllBytes(cacheFilePath);
             }
             return null;
         }
@@ -339,7 +388,7 @@ namespace BetterLyrics.WinUI3.Services
                 return null;
 
             // 下载歌词内容
-            var url = $"https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/raw-lyrics/{rawLyricFile}";
+            var url = $"https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/raw-img/{rawLyricFile}";
             try
             {
                 var response = await _amllTtmlDbHttpClient.GetAsync(url);
@@ -431,7 +480,7 @@ namespace BetterLyrics.WinUI3.Services
             return null;
         }
 
-        private void WriteCache(
+        private void WriteLyricsCache(
             string title,
             string artist,
             string lyrics,
@@ -446,6 +495,23 @@ namespace BetterLyrics.WinUI3.Services
                 $"{safeArtist} - {safeTitle}{format.ToFileExtension()}"
             );
             File.WriteAllText(cacheFilePath, lyrics);
+        }
+
+        private void WriteAlbumArtCache(
+            string album,
+            string artist,
+            byte[] img,
+            string format,
+            string cacheFolderPath
+        )
+        {
+            var safeArtist = SanitizeFileName(artist);
+            var safeAlbum = SanitizeFileName(album);
+            var cacheFilePath = Path.Combine(
+                cacheFolderPath,
+                $"{safeArtist} - {safeAlbum}{format}"
+            );
+            File.WriteAllBytes(cacheFilePath, img);
         }
     }
 }

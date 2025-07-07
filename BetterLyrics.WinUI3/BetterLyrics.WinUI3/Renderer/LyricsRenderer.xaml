@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Renderer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -14,5 +15,15 @@
             x:Name="LyricsCanvas"
             Draw="LyricsCanvas_Draw"
             Update="LyricsCanvas_Update" />
+        <Grid
+            Margin="36"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Visibility="{x:Bind ViewModel.IsTranslating, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <FontIcon
+                x:Name="RotatingIcon"
+                FontFamily="{StaticResource IconFontFamily}"
+                Glyph="&#xE8C1;" />
+        </Grid>
     </Grid>
 </UserControl>

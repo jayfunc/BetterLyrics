@@ -37,6 +37,8 @@ namespace BetterLyrics.WinUI3.Services
 
         bool AutoLockOnDesktopMode { get; set; }
 
+        string LibreTranslateServer { get; set; }
+        int SelectedTargetLanguageIndex { get; set; }
         // Lyrics lib
 
         List<LocalLyricsFolder> LocalLyricsFolders { get; set; }
@@ -48,11 +50,19 @@ namespace BetterLyrics.WinUI3.Services
 
         int LyricsBlurAmount { get; set; }
 
-        Color LyricsCustomFontColor { get; set; }
+        Color LyricsCustomBgFontColor { get; set; }
+        Color LyricsCustomFgFontColor { get; set; }
+        Color LyricsCustomStrokeFontColor { get; set; }
 
-        LyricsFontColorType LyricsFontColorType { get; set; }
+        LyricsFontColorType LyricsBgFontColorType { get; set; }
+        LyricsFontColorType LyricsFgFontColorType { get; set; }
+        LyricsFontColorType LyricsStrokeFontColorType { get; set; }
 
         int LyricsFontSize { get; set; }
+
+        ElementTheme LyricsBackgroundTheme { get; set; }
+
+        int LyricsFontStrokeWidth { get; set; }
 
         LyricsFontWeight LyricsFontWeight { get; set; }
 
@@ -65,5 +75,11 @@ namespace BetterLyrics.WinUI3.Services
         List<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
 
         int LyricsVerticalEdgeOpacity { get; set; }
+
+        bool IgnoreFullscreenWindow { get; set; }
+
+        bool IsTranslationEnabled { get; set; }
+
+        LyricsDisplayType PreferredDisplayType { get; set; }
     }
 }

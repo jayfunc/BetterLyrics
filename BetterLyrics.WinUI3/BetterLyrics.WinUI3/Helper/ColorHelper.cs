@@ -86,5 +86,17 @@ namespace BetterLyrics.WinUI3.Helper
         {
             return Color.FromArgb(alpha, color.R, color.G, color.B);
         }
+
+        public static Color WithBrightness(this Color color, double brightness)
+        {
+            // 确保亮度因子在合理范围内
+            brightness = Math.Max(0, Math.Min(1, brightness));
+
+            var hsl = CommunityToolkit.WinUI.Helpers.ColorHelper.ToHsl(color);
+            double h = hsl.H;
+            double s = hsl.S;
+
+            return CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(h, s, brightness);
+        }
     }
 }
