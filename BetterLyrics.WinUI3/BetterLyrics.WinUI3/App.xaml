@@ -53,7 +53,7 @@
 
             <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
-            <!--  Style (inc. the correct spacing) of a section header  -->
+            <!--  Style  -->
             <Style
                 x:Key="SettingsSectionHeaderTextBlockStyle"
                 BasedOn="{StaticResource BodyStrongTextBlockStyle}"

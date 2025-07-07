@@ -139,12 +139,15 @@
     <value>添加文件夹</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>歌词窗口主题</value>
+    <value>歌词背景主题</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>语言</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>适应歌词背景（彩色）</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>适应歌词背景（彩色）</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
@@ -301,7 +304,7 @@
     <value>欢迎使用 BetterLyrics</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>现在就来初始化歌词数据库吧</value>
+    <value>将鼠标悬停在应用程序的顶部或底部区域以显示更多功能选项</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>当前没有正在播放的音乐</value>
@@ -321,10 +324,16 @@
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>包括日志文件，网络歌词缓存</value>
   </data>
-  <data name="SettingsPageLyricsFontColor.Header" xml:space="preserve">
-    <value>字体颜色</value>
+  <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
+    <value>字体颜色（非当前播放区域）</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
+    <value>字体颜色（当前播放区域）</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>适应歌词背景（灰色）</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
     <value>适应歌词背景（灰色）</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
@@ -531,6 +540,9 @@
   <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
     <value>自定义</value>
   </data>
+  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
+    <value>自定义</value>
+  </data>
   <data name="SettingsPageLyrics.Content" xml:space="preserve">
     <value>歌词样式与动效</value>
   </data>
@@ -578,5 +590,68 @@
   </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
     <value>歌词时间轴偏移（毫秒）</value>
+  </data>
+  <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
+    <value>配置翻译服务</value>
+  </data>
+  <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
+    <value>服务器地址</value>
+  </data>
+  <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
+    <value>测试服务器</value>
+  </data>
+  <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
+    <value>目标语言</value>
+  </data>
+  <data name="SettingsPageTranslationInfo.Header" xml:space="preserve">
+    <value>翻译服务由 LibreTranslate 驱动</value>
+  </data>
+  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
+    <value>访问 https://github.com/LibreTranslate/LibreTranslate 获取安装教程及更多信息（本软件与该翻译服务无任何联系）</value>
+  </data>
+  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+    <value>服务器测试成功</value>
+  </data>
+  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+    <value>服务器测试失败</value>
+  </data>
+  <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
+    <value>歌词描边宽度（仅桌面模式）</value>
+  </data>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="SettingsPageAutoStart.Header" xml:space="preserve">
+    <value>自动启动</value>
+  </data>
+  <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
+    <value>歌词描边颜色（仅桌面模式）</value>
+  </data>
+  <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
+    <value>始终显示在全屏应用上方</value>
+  </data>
+  <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
+    <value>当启用停靠模式或桌面模式时强制将本应用显示在全屏应用的上方</value>
+  </data>
+  <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
+    <value>歌词时间偏移</value>
+  </data>
+  <data name="LyricsPageTranslationButtonToolTip.Content" xml:space="preserve">
+    <value>翻译</value>
+  </data>
+  <data name="LyricsPageDisplayTypeButtonToolTip.Content" xml:space="preserve">
+    <value>显示类型</value>
+  </data>
+  <data name="LyricsPageSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="TranslateServerNotSet" xml:space="preserve">
+    <value>未设置翻译服务器，请先在设置中进行配置</value>
+  </data>
+  <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
+    <value>切换歌曲时将自动重置为 0</value>
   </data>
 </root>

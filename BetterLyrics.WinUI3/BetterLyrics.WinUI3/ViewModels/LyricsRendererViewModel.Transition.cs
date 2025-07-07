@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private readonly ValueTransition<Color> _immersiveBgTransition = new(
             initialValue: Colors.Transparent,
-            durationSeconds: 1f,
+            durationSeconds: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
 
@@ -29,7 +29,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private readonly ValueTransition<float> _lyricsOpacityTransition = new(
             initialValue: 0f,
-            durationSeconds: 1f
+            durationSeconds: 0.3f
         );
 
         private readonly ValueTransition<float> _albumArtBgTransition = new(
@@ -48,6 +48,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         );
 
         private readonly ValueTransition<float> _songInfoOpacityTransition = new(
+            initialValue: 0f,
+            durationSeconds: 1f
+        );
+
+        private readonly ValueTransition<float> _lyricsBgBrightnessTransition = new(
             initialValue: 0f,
             durationSeconds: 1f
         );

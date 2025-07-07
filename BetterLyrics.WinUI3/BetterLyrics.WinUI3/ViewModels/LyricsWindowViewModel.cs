@@ -3,7 +3,6 @@
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
@@ -13,6 +12,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Windows.UI;
 using WinRT.Interop;
@@ -27,23 +27,9 @@ namespace BetterLyrics.WinUI3
     {
         private ForegroundWindowWatcherHelper? _watcherHelper = null;
 
-        public LyricsWindowViewModel(ISettingsService settingsService)
-            : base(settingsService)
+        public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
-            WeakReferenceMessenger.Default.Register<ShowNotificatonMessage>(
-                this,
-                async (r, m) =>
-                {
-                    Notification = m.Value;
-                    if (!Notification.IsForeverDismissable)
-                    {
-                        Notification.Visibility = Notification.IsForeverDismissable ? Visibility.Visible : Visibility.Collapsed;
-                        ShowInfoBar = true;
-                        await Task.Delay(AnimationHelper.StackedNotificationsShowingDuration);
-                        ShowInfoBar = false;
-                    }
-                }
-            );
+            _ignoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
         }
 
         [ObservableProperty]
@@ -77,6 +63,8 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         public partial double TitleBarHeight { get; set; } = 36;
 
+        private bool _ignoreFullscreenWindow = false;
+
         public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is SystemTrayViewModel)
@@ -87,6 +75,13 @@ namespace BetterLyrics.WinUI3
                     {
                         IsLyricsWindowLocked = message.NewValue;
                     }
+                }
+            }
+            else if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.IgnoreFullscreenWindow))
+                {
+                    _ignoreFullscreenWindow = message.NewValue;
                 }
             }
         }
@@ -113,10 +108,7 @@ namespace BetterLyrics.WinUI3
                         var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
                         if (window == null) return;
 
-                        DockModeHelper.UpdateAppBarHeight(
-                            WindowNative.GetWindowHandle(window),
-                            message.NewValue * 3
-                        );
+                        DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), message.NewValue * 4);
                     }
                 }
             }
@@ -132,6 +124,10 @@ namespace BetterLyrics.WinUI3
                 hwnd,
                 onWindowChanged =>
                 {
+                    if (_ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
+                    {
+                        presenter.IsAlwaysOnTop = true;
+                    }
                     UpdateAccentColor(hwnd, mode);
                 }
             );
@@ -148,6 +144,8 @@ namespace BetterLyrics.WinUI3
         private void LockWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
             DesktopModeHelper.Lock(window);
             IsLyricsWindowLocked = true;
         }
@@ -175,7 +173,6 @@ namespace BetterLyrics.WinUI3
             else
             {
                 DesktopModeHelper.Disable(window);
-                StopWatchWindowColorChange();
             }
         }
 
@@ -183,17 +180,18 @@ namespace BetterLyrics.WinUI3
         private void ToggleDockMode()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
             StopWatchWindowColorChange();
 
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
                 StartWatchWindowColorChange(WindowColorSampleMode.BelowWindow);
-                DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 3);
+                DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 4);
             }
             else
             {
-                StartWatchWindowColorChange(WindowColorSampleMode.WindowEdge);
                 DockModeHelper.Disable(window);
             }
         }

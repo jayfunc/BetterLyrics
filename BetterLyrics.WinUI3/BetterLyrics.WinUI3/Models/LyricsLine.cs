@@ -9,7 +9,7 @@ namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsLine
     {
-        private const float _animationDuration = 0.5f;
+        private const float _animationDuration = 0.3f;
         public ValueTransition<float> AngleTransition { get; set; } = new(initialValue: 0f, durationSeconds: _animationDuration);
         public ValueTransition<float> BlurAmountTransition { get; set; } = new(initialValue: 0f, durationSeconds: _animationDuration);
         public ValueTransition<float> HighlightOpacityTransition { get; set; } = new(initialValue: 0f, durationSeconds: _animationDuration);

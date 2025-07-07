@@ -12,6 +12,8 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class SettingsPage : Page
     {
+        private bool _isUserToggle;
+
         public SettingsPage()
         {
             this.InitializeComponent();
@@ -86,6 +88,22 @@ namespace BetterLyrics.WinUI3.Views
                     await Launcher.LaunchUriAsync(uri);
                 }
             }
+        }
+
+        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
+        {
+            App.Current.SettingsWindowNotificationPanel = TipContainerCenter;
+        }
+
+        private async void AutoStartupToggleSwitch_Loaded(object sender, RoutedEventArgs e)
+        {
+            AutoStartupToggleSwitch.IsOn = await ViewModel.DetectIsAutoStartupEnabledAsync();
+            AutoStartupToggleSwitch.Toggled += AutoStartupToggleSwitch_Toggled;
+        }
+
+        private void AutoStartupToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ToggleAutoStartupAsync(AutoStartupToggleSwitch.IsOn);
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
@@ -16,6 +12,11 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
+using ShadowViewer.Controls;
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3
 {
@@ -23,12 +24,14 @@ namespace BetterLyrics.WinUI3
     {
 
         private readonly ILogger<App> _logger;
-        private readonly ISettingsService _settingsService;
 
         public static new App Current => (App)Application.Current;
         public static DispatcherQueue? DispatcherQueue { get; private set; }
         public static DispatcherQueueTimer? DispatcherQueueTimer { get; private set; }
         public static ResourceLoader? ResourceLoader { get; private set; }
+
+        public NotificationPanel? LyricsWindowNotificationPanel { get; set; }
+        public NotificationPanel? SettingsWindowNotificationPanel { get; set; }
 
         public App()
         {
@@ -43,7 +46,6 @@ namespace BetterLyrics.WinUI3
             ConfigureServices();
 
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
-            _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
             UnhandledException += App_UnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -90,6 +92,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IPlaybackService, PlaybackService>()
                     .AddSingleton<IMusicSearchService, MusicSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
+                    .AddSingleton<ILibreTranslateService, LibreTranslateService>()
                     // ViewModels
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()

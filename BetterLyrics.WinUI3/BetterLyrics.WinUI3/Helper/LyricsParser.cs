@@ -2,7 +2,6 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using Fluent.LibreTranslate;
 using Lyricify.Lyrics.Models;
 using System;
 using System.Collections.Generic;

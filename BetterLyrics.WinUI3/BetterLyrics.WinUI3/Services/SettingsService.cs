@@ -1,8 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
@@ -10,6 +7,9 @@ using BetterLyrics.WinUI3.Serialization;
 using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI;
 
@@ -17,7 +17,9 @@ namespace BetterLyrics.WinUI3.Services
 {
     public class SettingsService : ISettingsService
     {
-        public const string LyricsCustomFontColorKey = "LyricsCustomFontColor";
+        public const string LyricsCustomBgFontColorKey = "LyricsCustomBgFontColor";
+        public const string LyricsCustomFgFontColorKey = "LyricsCustomFgFontColor";
+        public const string LyricsCustomStrokeFontColorKey = "LyricsCustomStrokeFontColor";
 
         // App behavior
 
@@ -50,7 +52,13 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsAlignmentTypeKey = "TextAlignmentType";
         private const string SongInfoAlignmentTypeKey = "SongInfoAlignmentType";
         private const string LyricsBlurAmountKey = "LyricsBlurAmount";
-        private const string LyricsFontColorTypeKey = "LyricsFontColorType";
+
+        private const string LyricsBgFontColorTypeKey = "_lyricsBgFontColorType";
+        private const string LyricsFgFontColorTypeKey = "LyricsFgFontColorType";
+        private const string LyricsStrokeFontColorTypeKey = "LyricsStrokeFontColorType";
+
+        private const string LyricsFontStrokeWidthKey = "LyricsFontStrokeWidth";
+
         private const string LyricsFontSizeKey = "LyricsFontSize";
         private const string LyricsFontWeightKey = "LyricsFontWeightKey";
         private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
@@ -59,6 +67,16 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsVerticalEdgeOpacityKey = "LyricsVerticalEdgeOpacity";
 
         private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
+
+        private const string IsTranslationEnabledKey = "IsTranslationEnabled";
+        private const string LibreTranslateServerKey = "LibreTranslateServer";
+        private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
+
+        private const string LyricsBackgroundThemeKey = "LyricsBackgroundTheme";
+
+        private const string IgnoreFullscreenWindowKey = "IgnoreFullscreenWindow";
+
+        private const string PreferredDisplayTypeKey = "PreferredDisplayTypeKey";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -94,15 +112,15 @@ namespace BetterLyrics.WinUI3.Services
             // App appearance
             SetDefault(LanguageKey, (int)Language.FollowSystem);
 
-            SetDefault(DesktopWindowHeightKey, 500);
+            SetDefault(DesktopWindowHeightKey, 600);
             SetDefault(DesktopWindowLeftKey, 200);
             SetDefault(DesktopWindowTopKey, 200);
-            SetDefault(DesktopWindowWidthKey, 800);
+            SetDefault(DesktopWindowWidthKey, 1200);
 
             SetDefault(StandardWindowHeightKey, 800);
             SetDefault(StandardWindowLeftKey, 200);
             SetDefault(StandardWindowTopKey, 200);
-            SetDefault(StandardWindowWidthKey, 1000);
+            SetDefault(StandardWindowWidthKey, 1600);
 
             SetDefault(AutoLockOnDesktopModeKey, false);
             // App behavior
@@ -110,22 +128,53 @@ namespace BetterLyrics.WinUI3.Services
             // Album art
             SetDefault(IsCoverOverlayEnabledKey, true);
             SetDefault(IsDynamicCoverOverlayEnabledKey, true);
-            SetDefault(CoverOverlayOpacityKey, 75); // 100 % = 1.0
+            SetDefault(CoverOverlayOpacityKey, 100); // 100 % = 1.0
             SetDefault(CoverOverlayBlurAmountKey, 200);
-            SetDefault(CoverImageRadiusKey, 24); // 24 %
+            SetDefault(CoverImageRadiusKey, 12); // 12 %
             // Lyrics
             SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Center);
             SetDefault(SongInfoAlignmentTypeKey, (int)TextAlignmentType.Left);
             SetDefault(LyricsFontWeightKey, (int)LyricsFontWeight.Bold);
             SetDefault(LyricsBlurAmountKey, 5);
-            SetDefault(LyricsFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
-            SetDefault(LyricsCustomFontColorKey, Colors.White.ToInt());
+
+            SetDefault(LyricsBackgroundThemeKey, (int)ElementTheme.Default);
+
+            SetDefault(LyricsBgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
+            SetDefault(LyricsFgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
+            SetDefault(LyricsStrokeFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
+            
+            SetDefault(LyricsCustomBgFontColorKey, Colors.White.ToInt());
+            SetDefault(LyricsCustomFgFontColorKey, Colors.White.ToInt());
+            SetDefault(LyricsCustomStrokeFontColorKey, Colors.White.ToInt());
+
             SetDefault(LyricsFontSizeKey, 28);
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
             SetDefault(LyricsVerticalEdgeOpacityKey, 0);
             SetDefault(IsLyricsGlowEffectEnabledKey, true);
             SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.CurrentCharOnly);
             SetDefault(IsFanLyricsEnabledKey, false);
+
+            SetDefault(LibreTranslateServerKey, "");
+            SetDefault(IsTranslationEnabledKey, false);
+            SetDefault(SelectedTargetLanguageIndexKey, 6);
+
+            SetDefault(LyricsFontStrokeWidthKey, 3);
+
+            SetDefault(IgnoreFullscreenWindowKey, false);
+
+            SetDefault(PreferredDisplayTypeKey, (int)LyricsDisplayType.SplitView);
+        }
+
+        public LyricsDisplayType PreferredDisplayType
+        {
+            get => (LyricsDisplayType)GetValue<int>(PreferredDisplayTypeKey);
+            set => SetValue(PreferredDisplayTypeKey, (int)value);
+        }
+
+        public ElementTheme LyricsBackgroundTheme
+        {
+            get => (ElementTheme)GetValue<int>(LyricsBackgroundThemeKey);
+            set => SetValue(LyricsBackgroundThemeKey, (int)value);
         }
 
         public AutoStartWindowType AutoStartWindowType
@@ -271,16 +320,46 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(LyricsBlurAmountKey, value);
         }
 
-        public Color LyricsCustomFontColor
+        public Color LyricsCustomBgFontColor
         {
-            get => GetValue<int>(LyricsCustomFontColorKey)!.ToColor();
-            set => SetValue(LyricsCustomFontColorKey, value.ToInt());
+            get => GetValue<int>(LyricsCustomBgFontColorKey)!.ToColor();
+            set => SetValue(LyricsCustomBgFontColorKey, value.ToInt());
         }
 
-        public LyricsFontColorType LyricsFontColorType
+        public Color LyricsCustomFgFontColor
         {
-            get => (LyricsFontColorType)GetValue<int>(LyricsFontColorTypeKey);
-            set => SetValue(LyricsFontColorTypeKey, (int)value);
+            get => GetValue<int>(LyricsCustomFgFontColorKey)!.ToColor();
+            set => SetValue(LyricsCustomFgFontColorKey, value.ToInt());
+        }
+
+        public Color LyricsCustomStrokeFontColor
+        {
+            get => GetValue<int>(LyricsCustomStrokeFontColorKey)!.ToColor();
+            set => SetValue(LyricsCustomStrokeFontColorKey, value.ToInt());
+        }
+
+        public LyricsFontColorType LyricsBgFontColorType
+        {
+            get => (LyricsFontColorType)GetValue<int>(LyricsBgFontColorTypeKey);
+            set => SetValue(LyricsBgFontColorTypeKey, (int)value);
+        }
+
+        public LyricsFontColorType LyricsFgFontColorType
+        {
+            get => (LyricsFontColorType)GetValue<int>(LyricsFgFontColorTypeKey);
+            set => SetValue(LyricsFgFontColorTypeKey, (int)value);
+        }
+
+        public LyricsFontColorType LyricsStrokeFontColorType
+        {
+            get => (LyricsFontColorType)GetValue<int>(LyricsStrokeFontColorTypeKey);
+            set => SetValue(LyricsStrokeFontColorTypeKey, (int)value);
+        }
+
+        public int LyricsFontStrokeWidth
+        {
+            get => GetValue<int>(LyricsFontStrokeWidthKey);
+            set => SetValue(LyricsFontStrokeWidthKey, value);
         }
 
         public int LyricsFontSize
@@ -345,6 +424,30 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<int>(LyricsVerticalEdgeOpacityKey);
             set => SetValue(LyricsVerticalEdgeOpacityKey, value);
+        }
+
+        public string LibreTranslateServer
+        {
+            get => GetValue<string>(LibreTranslateServerKey)!;
+            set => SetValue(LibreTranslateServerKey, value);
+        }
+
+        public bool IsTranslationEnabled
+        {
+            get => GetValue<bool>(IsTranslationEnabledKey);
+            set => SetValue(IsTranslationEnabledKey, value);
+        }
+
+        public int SelectedTargetLanguageIndex
+        {
+            get => GetValue<int>(SelectedTargetLanguageIndexKey);
+            set => SetValue(SelectedTargetLanguageIndexKey, value);
+        }
+
+        public bool IgnoreFullscreenWindow
+        {
+            get => GetValue<bool>(IgnoreFullscreenWindowKey);
+            set => SetValue(IgnoreFullscreenWindowKey, value);
         }
 
         private T? GetValue<T>(string key)

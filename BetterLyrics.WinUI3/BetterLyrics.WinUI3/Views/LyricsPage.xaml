@@ -40,24 +40,12 @@
             Padding="12"
             VerticalAlignment="Bottom"
             Background="Transparent"
-            Opacity="0">
+            Opacity="0"
+            PointerEntered="BottomCommandGrid_PointerEntered"
+            PointerExited="BottomCommandGrid_PointerExited">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
-            <interactivity:Interaction.Behaviors>
-                <interactivity:EventTriggerBehavior EventName="PointerEntered">
-                    <interactivity:ChangePropertyAction
-                        PropertyName="Opacity"
-                        TargetObject="{x:Bind BottomCommandGrid}"
-                        Value="1" />
-                </interactivity:EventTriggerBehavior>
-                <interactivity:EventTriggerBehavior EventName="PointerExited">
-                    <interactivity:ChangePropertyAction
-                        PropertyName="Opacity"
-                        TargetObject="{x:Bind BottomCommandGrid}"
-                        Value="0" />
-                </interactivity:EventTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
 
             <StackPanel
                 x:Name="BottomLeftCommandStackPanel"
@@ -98,6 +86,9 @@
                             <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
                         </FontIcon.RenderTransform>
                     </FontIcon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Name="TimelineOffsetToolTip" x:Uid="LyricsPageTimelineOffsetButtonToolTip" />
+                    </ToolTipService.ToolTip>
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel>
@@ -120,8 +111,10 @@
                                         Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                               Glyph=&#xE777;}"
                                         RelativePanel.AlignRightWithPanel="True"
-                                        RelativePanel.AlignVerticalCenterWithPanel="True" />
+                                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                                        Style="{StaticResource GhostButtonStyle}" />
                                 </RelativePanel>
+                                <TextBlock Opacity="0.5" x:Uid="LyricsPagePositionOffsetHint"/>
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
@@ -132,7 +125,11 @@
                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                           Glyph=&#xE8C1;}"
                     IsChecked="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}"
-                    Style="{StaticResource GhostToggleButtonStyle}" />
+                    Style="{StaticResource GhostToggleButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Name="TranslationToolTip" x:Uid="LyricsPageTranslationButtonToolTip" />
+                    </ToolTipService.ToolTip>
+                </ToggleButton>
 
                 <!--  Display type  -->
                 <Button
@@ -141,9 +138,9 @@
                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                           Glyph=&#xF246;}"
                     Style="{StaticResource GhostButtonStyle}">
-                    <Button.OpacityTransition>
-                        <ScalarTransition />
-                    </Button.OpacityTransition>
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Name="PresentationTypeToolTip" x:Uid="LyricsPageDisplayTypeButtonToolTip" />
+                    </ToolTipService.ToolTip>
                     <Button.Flyout>
                         <Flyout>
                             <Flyout.FlyoutPresenterStyle>
@@ -167,7 +164,11 @@
                     Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                           Glyph=&#xE713;}"
-                    Style="{StaticResource GhostButtonStyle}" />
+                    Style="{StaticResource GhostButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip x:Name="SettingsToolTip" x:Uid="LyricsPageSettingsButtonToolTip" />
+                    </ToolTipService.ToolTip>
+                </Button>
 
             </StackPanel>
 
@@ -178,7 +179,7 @@
             x:Uid="MainPageWelcomeTeachingTip"
             Closed="WelcomeTeachingTip_Closed"
             IsOpen="{x:Bind ViewModel.IsWelcomeTeachingTipOpen, Mode=OneWay}"
-            Target="{x:Bind SettingsButton}" />
+            Target="{x:Bind RootGrid}" />
 
         <uc:SystemTray />
 
