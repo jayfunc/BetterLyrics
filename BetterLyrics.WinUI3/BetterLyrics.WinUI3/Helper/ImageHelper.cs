@@ -171,5 +171,22 @@ namespace BetterLyrics.WinUI3.Helper
             await stream.AsStreamForRead().CopyToAsync(memoryStream);
             return memoryStream.ToArray();
         }
+
+        public static float GetAverageLuminance(CanvasBitmap bitmap)
+        {
+            var pixels = bitmap.GetPixelBytes();
+            double sum = 0;
+            for (int i = 0; i < pixels.Length; i += 4)
+            {
+                // BGRA
+                byte b = pixels[i];
+                byte g = pixels[i + 1];
+                byte r = pixels[i + 2];
+                // 忽略A
+                double y = 0.299 * r + 0.587 * g + 0.114 * b;
+                sum += y / 255.0;
+            }
+            return (float)(sum / (pixels.Length / 4));
+        }
     }
 }

@@ -1,208 +1,257 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using CommunityToolkit.WinUI;
+using BetterLyrics.WinUI3.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
-using Windows.ApplicationModel;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using Windows.Graphics.Imaging;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
+using WindowsMediaController;
 
 namespace BetterLyrics.WinUI3.Services
 {
-    public partial class PlaybackService : IPlaybackService
+    public partial class PlaybackService : BaseViewModel, IPlaybackService, IRecipient<PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>>>
     {
-        private readonly DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-
         private readonly IMusicSearchService _musicSearchService;
+        private readonly ILogger<PlaybackService> _logger;
 
-        private GlobalSystemMediaTransportControlsSession? _currentSession = null;
+        private readonly MediaManager _mediaManager = new();
 
-        private GlobalSystemMediaTransportControlsSessionManager? _sessionManager = null;
+        private CancellationTokenSource? _mediaPropsCts;
 
-        public PlaybackService(ISettingsService settingsService, IMusicSearchService musicSearchService)
-        {
-            _musicSearchService = musicSearchService;
-            InitMediaManager().ConfigureAwait(true);
-        }
+        private List<MediaSourceProviderInfo> _mediaSourceProvidersInfo;
 
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
-
         public event EventHandler<PositionChangedEventArgs>? PositionChanged;
-
         public event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
+        public event EventHandler<MediaSourceProvidersInfoEventArgs>? MediaSourceProvidersInfoChanged;
 
-        public bool IsPlaying { get; private set; }
-
-        public TimeSpan Position { get; private set; }
-
-        public SongInfo? SongInfo { get; private set; }
-
-        private void CurrentSession_MediaPropertiesChanged(GlobalSystemMediaTransportControlsSession? sender, MediaPropertiesChangedEventArgs? args)
+        public PlaybackService(ISettingsService settingsService, IMusicSearchService musicSearchService) : base(settingsService)
         {
-            App.DispatcherQueueTimer!.Debounce(
-                async () =>
-                {
-                    GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps = null;
-                    if (sender == null)
-                    {
-                        SongInfo = null;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            mediaProps = await sender.TryGetMediaPropertiesAsync();
-                        }
-                        catch (Exception) { }
+            _musicSearchService = musicSearchService;
+            _logger = Ioc.Default.GetRequiredService<ILogger<PlaybackService>>();
 
-                        if (mediaProps == null)
-                        {
-                            SongInfo = null;
-                        }
-                        else
-                        {
-                            SongInfo = new SongInfo
-                            {
-                                Title = mediaProps.Title,
-                                Artist = mediaProps.Artist,
-                                Album = mediaProps?.AlbumTitle ?? string.Empty,
-                                DurationMs = _currentSession
-                                    ?.GetTimelineProperties()
-                                    .EndTime.TotalMilliseconds,
-                                SourceAppUserModelId = _currentSession?.SourceAppUserModelId,
-                            };
-
-                            if (mediaProps?.Thumbnail is IRandomAccessStreamReference streamReference)
-                            {
-                                SongInfo.AlbumArt = await ImageHelper.ToByteArrayAsync(
-                                    streamReference
-                                );
-                            }
-                            else
-                            {
-                                SongInfo.AlbumArt = _musicSearchService.SearchAlbumArtAsync(
-                                    SongInfo.Title,
-                                    SongInfo.Artist
-                                );
-
-                                if (SongInfo.AlbumArt == null)
-                                {
-                                    SongInfo.AlbumArt =
-                                        await ImageHelper.CreateTextPlaceholderBytesAsync(
-                                            $"{SongInfo.Artist} - {SongInfo.Title}",
-                                            400,
-                                            400
-                                        );
-                                }
-                            }
-                        }
-                    }
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-                        () =>
-                        {
-                            SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(SongInfo));
-                        }
-                    );
-                },
-                TimeSpan.FromMilliseconds(1000)
-            );
+            _mediaSourceProvidersInfo = _settingsService.MediaSourceProvidersInfo;
+            InitMediaManager();
         }
 
-        private void CurrentSession_PlaybackInfoChanged(GlobalSystemMediaTransportControlsSession? sender, PlaybackInfoChangedEventArgs? args)
+        private bool IsMediaSourceEnabled(string id)
         {
-            if (sender == null)
+            return _mediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id)?.IsEnabled ?? true;
+        }
+
+        private void InitMediaManager()
+        {
+            _mediaManager.Start();
+
+            _mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;
+            _mediaManager.OnAnySessionClosed += MediaManager_OnAnySessionClosed;
+            _mediaManager.OnFocusedSessionChanged += MediaManager_OnFocusedSessionChanged;
+            _mediaManager.OnAnyMediaPropertyChanged += MediaManager_OnAnyMediaPropertyChanged;
+            _mediaManager.OnAnyPlaybackStateChanged += MediaManager_OnAnyPlaybackStateChanged;
+            _mediaManager.OnAnyTimelinePropertyChanged += MediaManager_OnAnyTimelinePropertyChanged;
+
+            MediaManager_OnFocusedSessionChanged(_mediaManager.GetFocusedSession());
+        }
+
+        private void MediaManager_OnFocusedSessionChanged(MediaManager.MediaSession mediaSession)
+        {
+            if (mediaSession == null || !IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId))
             {
-                IsPlaying = false;
+                SendNullMessages();
             }
             else
             {
-                var playbackState = sender.GetPlaybackInfo().PlaybackStatus;
-                // _logger.LogDebug(playbackState.ToString());
-
-                switch (playbackState)
+                _dispatcherQueue.TryEnqueue(async () =>
                 {
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Closed:
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Opened:
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Changing:
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Stopped:
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused:
-                        IsPlaying = false;
-                        break;
-                    case GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing:
-                        IsPlaying = true;
-                        break;
-                    default:
-                        break;
-                }
+                    try
+                    {
+                        var props = await mediaSession.ControlSession.TryGetMediaPropertiesAsync();
+                        MediaManager_OnAnyMediaPropertyChanged(mediaSession, props);
+                        MediaManager_OnAnyPlaybackStateChanged(mediaSession, mediaSession.ControlSession.GetPlaybackInfo());
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "TryGetMediaPropertiesAsync failed");
+                        SendNullMessages();
+                    }
+                });
             }
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-                () =>
-                {
-                    IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(IsPlaying));
-                }
-            );
         }
 
-        private void CurrentSession_TimelinePropertiesChanged(GlobalSystemMediaTransportControlsSession? sender, TimelinePropertiesChangedEventArgs? args)
+        private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties timelineProperties)
         {
-            if (sender == null)
-            {
-                Position = TimeSpan.Zero;
-            }
-            else
-            {
-                Position = sender.GetTimelineProperties().Position;
-            }
+            if (!IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId) || mediaSession != _mediaManager.GetFocusedSession()) return;
+
             _dispatcherQueue.TryEnqueue(
                 DispatcherQueuePriority.High,
                 () =>
                 {
-                    PositionChanged?.Invoke(this, new PositionChangedEventArgs(Position));
+                    PositionChanged?.Invoke(this, new PositionChangedEventArgs(timelineProperties.Position));
                 }
             );
         }
 
-        private async Task InitMediaManager()
+        private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)
         {
-            _sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-            _sessionManager.CurrentSessionChanged += SessionManager_CurrentSessionChanged;
+            RecordMediaSourceProviderInfo(mediaSession);
+            if (!IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId) || mediaSession != _mediaManager.GetFocusedSession()) return;
 
-            SessionManager_CurrentSessionChanged(_sessionManager, null);
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
+                () =>
+                {
+                    IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(playbackInfo.PlaybackStatus switch
+                    {
+                        GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => true,
+                        _ => false,
+                    }));
+                }
+            );
         }
 
-        private void SessionManager_CurrentSessionChanged(
-            GlobalSystemMediaTransportControlsSessionManager sender,
-            CurrentSessionChangedEventArgs? args
-        )
+        private async void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
         {
-            // _logger.LogDebug("SessionManager_CurrentSessionChanged");
-            // Unregister events associated with the previous session
-            if (_currentSession != null)
+            _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
+                mediaProperties.Title, mediaProperties.Artist, mediaProperties.AlbumTitle);
+
+            RecordMediaSourceProviderInfo(mediaSession);
+            string id = mediaSession.ControlSession.SourceAppUserModelId;
+            if (!IsMediaSourceEnabled(id) || mediaSession != _mediaManager.GetFocusedSession()) return;
+
+            _mediaPropsCts?.Cancel();
+            var cts = new CancellationTokenSource();
+            _mediaPropsCts = cts;
+            var token = cts.Token;
+
+            try
             {
-                _currentSession.MediaPropertiesChanged -= CurrentSession_MediaPropertiesChanged;
-                _currentSession.PlaybackInfoChanged -= CurrentSession_PlaybackInfoChanged;
-                _currentSession.TimelinePropertiesChanged -=
-                    CurrentSession_TimelinePropertiesChanged;
+                SongInfo? songInfo;
+
+                token.ThrowIfCancellationRequested();
+
+                songInfo = new SongInfo
+                {
+                    Title = mediaProperties.Title,
+                    Artist = mediaProperties.Artist,
+                    Album = mediaProperties.AlbumTitle,
+                    DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
+                    SourceAppUserModelId = id,
+                };
+
+                byte[]? bytes;
+
+                bytes = await _musicSearchService.SearchAlbumArtAsync(
+                    songInfo.Title,
+                    songInfo.Artist,
+                    songInfo.Album
+                );
+                token.ThrowIfCancellationRequested();
+
+                if (bytes == null)
+                {
+                    if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
+                    {
+                        bytes = await ImageHelper.ToByteArrayAsync(streamReference);
+                        token.ThrowIfCancellationRequested();
+                    }
+                    else
+                    {
+                        bytes = await ImageHelper.CreateTextPlaceholderBytesAsync($"{songInfo.Artist} - {songInfo.Title}", 400, 400);
+                        token.ThrowIfCancellationRequested();
+                    }
+                }
+
+                using var stream = new InMemoryRandomAccessStream();
+                await stream.WriteAsync(bytes.AsBuffer());
+                token.ThrowIfCancellationRequested();
+
+                var decoder = await BitmapDecoder.CreateAsync(stream);
+                token.ThrowIfCancellationRequested();
+
+                songInfo.AlbumArtSwBitmap?.Dispose();
+                songInfo.AlbumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
+                token.ThrowIfCancellationRequested();
+
+                songInfo.AlbumArtAccentColor = ImageHelper.GetAccentColorsFromByte(bytes).FirstOrDefault();
+
+                if (!token.IsCancellationRequested)
+                {
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
+                    () =>
+                    {
+                        SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(songInfo));
+                    });
+                }
             }
+            catch (OperationCanceledException) { }
+            catch (Exception) { }
+        }
 
-            // Record and register events for current session
-            _currentSession = sender.GetCurrentSession();
-
-            if (_currentSession != null)
+        private void MediaManager_OnAnySessionClosed(MediaManager.MediaSession mediaSession)
+        {
+            if (_mediaManager.CurrentMediaSessions.Count == 0)
             {
-                _currentSession.MediaPropertiesChanged += CurrentSession_MediaPropertiesChanged;
-                _currentSession.PlaybackInfoChanged += CurrentSession_PlaybackInfoChanged;
-                _currentSession.TimelinePropertiesChanged +=
-                    CurrentSession_TimelinePropertiesChanged;
+                SendNullMessages();
             }
+        }
 
-            CurrentSession_MediaPropertiesChanged(_currentSession, null);
-            CurrentSession_PlaybackInfoChanged(_currentSession, null);
-            CurrentSession_TimelinePropertiesChanged(_currentSession, null);
+        private void MediaManager_OnAnySessionOpened(MediaManager.MediaSession mediaSession)
+        {
+            RecordMediaSourceProviderInfo(mediaSession);
+        }
+
+        private void RecordMediaSourceProviderInfo(MediaManager.MediaSession mediaSession)
+        {
+            var id = mediaSession?.ControlSession?.SourceAppUserModelId;
+            if (string.IsNullOrEmpty(id)) return;
+
+            var found = _mediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
+            if (found == null)
+            {
+                _mediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id, true));
+                _settingsService.MediaSourceProvidersInfo = _mediaSourceProvidersInfo;
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
+                () =>
+                {
+                    MediaSourceProvidersInfoChanged?.Invoke(this, new MediaSourceProvidersInfoEventArgs(_mediaSourceProvidersInfo));
+                });
+            }
+        }
+
+        private void SendNullMessages()
+        {
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
+            () =>
+            {
+                SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(null));
+                IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(false));
+                PositionChanged?.Invoke(this, new PositionChangedEventArgs(TimeSpan.Zero));
+            });
+        }
+
+        public void Receive(PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>> message)
+        {
+            if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.MediaSourceProvidersInfo))
+                {
+                    _mediaSourceProvidersInfo = [.. message.NewValue];
+                    _settingsService.MediaSourceProvidersInfo = _mediaSourceProvidersInfo;
+                    MediaManager_OnFocusedSessionChanged(_mediaManager.GetFocusedSession());
+                }
+            }
         }
     }
 }

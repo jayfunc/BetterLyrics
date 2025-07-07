@@ -14,10 +14,6 @@ namespace BetterLyrics.WinUI3.Services
 
         event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
 
-        bool IsPlaying { get; }
-
-        TimeSpan Position { get; }
-
-        SongInfo? SongInfo { get; }
+        event EventHandler<MediaSourceProvidersInfoEventArgs>? MediaSourceProvidersInfoChanged;
     }
 }

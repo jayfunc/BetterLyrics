@@ -16,7 +16,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private List<List<LyricsLine>> _multiLangLyricsLines = [];
 
-        public List<List<LyricsLine>> Parse(string? raw, LyricsFormat? lyricsFormat = null, string? title = null, string? artist = null, int durationMs = 0)
+        public List<List<LyricsLine>> Parse(string? raw, int durationMs)
         {
             _multiLangLyricsLines = [];
             if (raw == null)
@@ -27,7 +27,7 @@ namespace BetterLyrics.WinUI3.Helper
                         {
                             StartMs = 0,
                             EndMs = durationMs,
-                            Text = App.ResourceLoader!.GetString("LyricsNotFound"),
+                            OriginalText = App.ResourceLoader!.GetString("LyricsNotFound"),
                             CharTimings = [],
                         },
                     ]
@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                switch (lyricsFormat)
+                switch (raw.DetectFormat())
                 {
                     case LyricsFormat.Lrc:
                     case LyricsFormat.Eslrc:
@@ -136,7 +136,7 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         StartMs = start,
                         EndMs = 0, // 稍后统一修正
-                        Text = text,
+                        OriginalText = text,
                         CharTimings = [],
                     };
                     if (syllables != null && syllables.Count > 0)
@@ -217,7 +217,7 @@ namespace BetterLyrics.WinUI3.Helper
                         {
                             StartMs = pStartMs,
                             EndMs = 0,
-                            Text = text,
+                            OriginalText = text,
                             CharTimings = charTimings,
                         }
                     );
@@ -306,7 +306,7 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         StartMs = lineRead.StartTime ?? 0,
                         EndMs = 0,
-                        Text = lineRead.Text,
+                        OriginalText = lineRead.Text,
                         CharTimings = [],
                     };
 
@@ -389,7 +389,7 @@ namespace BetterLyrics.WinUI3.Helper
                         {
                             StartMs = 0,
                             EndMs = linesInSingleLang[0].StartMs,
-                            Text = "● ● ●",
+                            OriginalText = "● ● ●",
                             CharTimings = [],
                         }
                     );

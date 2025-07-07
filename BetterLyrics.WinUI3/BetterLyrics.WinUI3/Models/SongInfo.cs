@@ -1,6 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using Windows.Graphics.Imaging;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -9,7 +11,9 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty]
         public partial string? Album { get; set; }
 
-        public byte[]? AlbumArt { get; set; } = null;
+        public SoftwareBitmap? AlbumArtSwBitmap { get; set; } = null;
+
+        public Color? AlbumArtAccentColor { get; set; } = null;
 
         [ObservableProperty]
         public partial string Artist { get; set; }

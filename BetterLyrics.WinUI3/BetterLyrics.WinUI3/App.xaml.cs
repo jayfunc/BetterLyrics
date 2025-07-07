@@ -1,10 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
@@ -17,6 +12,11 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
+using ShadowViewer.Controls;
+using System;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3
 {
@@ -30,6 +30,9 @@ namespace BetterLyrics.WinUI3
         public static DispatcherQueueTimer? DispatcherQueueTimer { get; private set; }
         public static ResourceLoader? ResourceLoader { get; private set; }
 
+        public NotificationPanel? LyricsWindowNotificationPanel { get; set; }
+        public NotificationPanel? SettingsWindowNotificationPanel { get; set; }
+
         public App()
         {
             this.InitializeComponent();
@@ -42,7 +45,7 @@ namespace BetterLyrics.WinUI3
             AppInfo.EnsureDirectories();
             ConfigureServices();
 
-            _logger = Ioc.Default.GetService<ILogger<App>>()!;
+            _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
             UnhandledException += App_UnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -54,6 +57,7 @@ namespace BetterLyrics.WinUI3
         {
             WindowHelper.OpenOrShowWindow<LyricsWindow>();
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (lyricsWindow == null) return;
 
             string[] commandLineArguments = Environment.GetCommandLineArgs();
             if (commandLineArguments.Length > 1)
@@ -67,10 +71,11 @@ namespace BetterLyrics.WinUI3
             }
             lyricsWindow.AutoSelectLyricsMode();
         }
+
         private static void ConfigureServices()
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Is(Serilog.Events.LogEventLevel.Verbose)
                 .WriteTo.File(AppInfo.LogFilePattern, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
@@ -87,6 +92,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IPlaybackService, PlaybackService>()
                     .AddSingleton<IMusicSearchService, MusicSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
+                    .AddSingleton<ILibreTranslateService, LibreTranslateService>()
                     // ViewModels
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
@@ -94,7 +100,6 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<LyricsPageViewModel>()
                     .AddSingleton<LyricsRendererViewModel>()
-                    .AddSingleton<LyricsSettingsControlViewModel>()
                     .BuildServiceProvider()
             );
         }
@@ -107,7 +112,7 @@ namespace BetterLyrics.WinUI3
 
         private void CurrentDomain_FirstChanceException(object? sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
         {
-            //_logger.LogError(e.Exception, "CurrentDomain_FirstChanceException");
+            _logger.LogError(e.Exception, "CurrentDomain_FirstChanceException");
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)
@@ -117,7 +122,7 @@ namespace BetterLyrics.WinUI3
 
         private void TaskScheduler_UnobservedTaskException(object? sender, UnobservedTaskExceptionEventArgs e)
         {
-            //_logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
+            _logger.LogError(e.Exception, "TaskScheduler_UnobservedTaskException");
         }
     }
 }

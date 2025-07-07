@@ -1,9 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using BetterInAppLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
@@ -14,8 +10,8 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media.Imaging;
-using WinUIEx.Messaging;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -28,68 +24,61 @@ namespace BetterLyrics.WinUI3.ViewModels
         public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
         {
             LyricsFontSize = _settingsService.LyricsFontSize;
-            CoverImageRadius = _settingsService.CoverImageRadius;
+            IsTranslationEnabled = _settingsService.IsTranslationEnabled;
+            PreferredDisplayType = _settingsService.PreferredDisplayType;
 
             _playbackService = playbackService;
-            _playbackService.SongInfoChanged += async (_, args) =>
-                await UpdateSongInfoUI(args.SongInfo).ConfigureAwait(true);
+            _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
+
 
             IsFirstRun = _settingsService.IsFirstRun;
+        }
 
-            UpdateSongInfoUI(_playbackService.SongInfo).ConfigureAwait(true);
+        private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
+        {
+            SongInfo = e.SongInfo;
+            PositionOffset = 0; // Reset position offset when song changes
+            TrySwitchToPreferredDisplayType(e.SongInfo);
         }
 
         [ObservableProperty]
-        public partial bool AboutToUpdateUI { get; set; }
-
-        [ObservableProperty]
-        public partial BitmapImage? CoverImage { get; set; }
-
-        [ObservableProperty]
-        public partial double CoverImageGridActualHeight { get; set; }
-
-        [ObservableProperty]
-        public partial CornerRadius CoverImageGridCornerRadius { get; set; }
-
-        [ObservableProperty]
-        public partial int CoverImageRadius { get; set; }
-
-        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial LyricsDisplayType DisplayType { get; set; }
+        public partial LyricsDisplayType DisplayType { get; set; } = LyricsDisplayType.PlaceholderOnly;
 
         [ObservableProperty]
         public partial bool IsFirstRun { get; set; }
 
         [ObservableProperty]
-        public partial bool IsNotDockMode { get; set; } = true;
+        public partial bool IsWelcomeTeachingTipOpen { get; set; }
 
         [ObservableProperty]
-        public partial bool IsWelcomeTeachingTipOpen { get; set; }
+        public partial Visibility BottomCommandGridVisibility { get; set; } = Visibility.Visible;
 
         [ObservableProperty]
         public partial int LyricsFontSize { get; set; }
 
         [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial double MaxLyricsWidth { get; set; } = 0.0;
-
-        [ObservableProperty]
-        public partial LyricsDisplayType? PreferredDisplayType { get; set; } = LyricsDisplayType.SplitView;
+        public partial LyricsDisplayType PreferredDisplayType { get; set; }
 
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; } = null;
 
-        public void OpenMatchedFileFolderInFileExplorer(string path)
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int PositionOffset { get; set; } = 0;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsTranslationEnabled { get; set; } = false;
+
+        partial void OnIsTranslationEnabledChanged(bool value)
         {
-            Process.Start(
-                new ProcessStartInfo
-                {
-                    FileName = "explorer.exe",
-                    Arguments = $"/select,\"{path}\"",
-                    UseShellExecute = true,
-                }
-            );
+            _settingsService.IsTranslationEnabled = value;
+        }
+
+        partial void OnPreferredDisplayTypeChanged(LyricsDisplayType value)
+        {
+            _settingsService.PreferredDisplayType = value;
         }
 
         public void Receive(PropertyChangedMessage<bool> message)
@@ -98,7 +87,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
-                    IsNotDockMode = !message.NewValue;
                     SetNonStandardModePreferredDisplayType(message.NewValue);
                     TrySwitchToPreferredDisplayType(SongInfo);
                 }
@@ -114,35 +102,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.CoverImageRadius))
-                {
-                    CoverImageRadius = message.NewValue;
-                }
-            }
-            if (message.Sender is LyricsSettingsControlViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsSettingsControlViewModel.LyricsFontSize))
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
                 {
                     LyricsFontSize = message.NewValue;
                 }
             }
-        }
-
-        public async Task UpdateSongInfoUI(SongInfo? songInfo)
-        {
-            AboutToUpdateUI = true;
-            await Task.Delay(AnimationHelper.StoryboardDefaultDuration);
-
-            SongInfo = songInfo;
-
-            CoverImage =
-                (songInfo?.AlbumArt == null)
-                    ? null
-                    : await ImageHelper.GetBitmapImageFromBytesAsync(songInfo.AlbumArt);
-
-            TrySwitchToPreferredDisplayType(songInfo);
-
-            AboutToUpdateUI = false;
         }
 
         [RelayCommand]
@@ -160,7 +124,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToNonStandardMode;
+                PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToNonStandardMode ?? LyricsDisplayType.SplitView;
             }
         }
 
@@ -183,24 +147,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             DisplayType = displayType;
 
-        }
-
-        partial void OnCoverImageGridActualHeightChanged(double value)
-        {
-            if (double.IsNaN(value))
-                return;
-
-            CoverImageGridCornerRadius = new CornerRadius(CoverImageRadius / 100f * value / 2);
-        }
-
-        partial void OnCoverImageRadiusChanged(int value)
-        {
-            if (double.IsNaN(CoverImageGridActualHeight))
-                return;
-
-            CoverImageGridCornerRadius = new CornerRadius(
-                value / 100f * CoverImageGridActualHeight / 2
-            );
         }
 
         partial void OnIsFirstRunChanged(bool value)

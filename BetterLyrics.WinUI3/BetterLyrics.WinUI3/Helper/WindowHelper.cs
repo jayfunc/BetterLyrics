@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.Helper
             App.Current.Exit();
         }
 
-        public static T GetWindowByWindowType<T>()
+        public static T? GetWindowByWindowType<T>()
         {
             foreach (var window in _activeWindows)
             {
@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.Helper
                     return castedWindow;
                 }
             }
-            throw new InvalidOperationException($"No window of type {typeof(T).Name} found.");
+            return default;
         }
         public static void OpenOrShowWindow<T>()
         {
