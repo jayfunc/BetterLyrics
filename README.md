@@ -21,6 +21,7 @@ Your smooth dynamic lyrics display tool built with WinUI 3
 - Smooth user interface change from song to song
 - Gradient Karaoke (with glow) effect on every single character
 - Immersive desktop lyrics (dock mode)
+- Local translation (supporting 30 languages)
 
 > This project is still under development now, bugs and unexpected behaviors may be existed in the latest dev branch.
 
