@@ -625,6 +625,42 @@
                         <!--  Lyrics translation  -->
                         <controls:Case Value="Translation">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <controls:SettingsCard x:Uid="SettingsPageTargetLanguage" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF2B7;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
+                                        <ComboBoxItem Content="العربية" Tag="ar" />
+                                        <ComboBoxItem Content="Azərbaycan dili" Tag="az" />
+                                        <ComboBoxItem Content="中文" Tag="zh" />
+                                        <ComboBoxItem Content="Čeština" Tag="cs" />
+                                        <ComboBoxItem Content="Dansk" Tag="da" />
+                                        <ComboBoxItem Content="Nederlands" Tag="nl" />
+                                        <ComboBoxItem Content="English" Tag="en" />
+                                        <ComboBoxItem Content="Esperanto" Tag="eo" />
+                                        <ComboBoxItem Content="Suomi" Tag="fi" />
+                                        <ComboBoxItem Content="Français" Tag="fr" />
+                                        <ComboBoxItem Content="Deutsch" Tag="de" />
+                                        <ComboBoxItem Content="Ελληνικά" Tag="el" />
+                                        <ComboBoxItem Content="עברית" Tag="he" />
+                                        <ComboBoxItem Content="हिन्दी" Tag="hi" />
+                                        <ComboBoxItem Content="Magyar" Tag="hu" />
+                                        <ComboBoxItem Content="Bahasa Indonesia" Tag="id" />
+                                        <ComboBoxItem Content="Gaeilge" Tag="ga" />
+                                        <ComboBoxItem Content="Italiano" Tag="it" />
+                                        <ComboBoxItem Content="日本語" Tag="ja" />
+                                        <ComboBoxItem Content="한국어" Tag="ko" />
+                                        <ComboBoxItem Content="فارسی" Tag="fa" />
+                                        <ComboBoxItem Content="Polski" Tag="pl" />
+                                        <ComboBoxItem Content="Português" Tag="pt" />
+                                        <ComboBoxItem Content="Русский" Tag="ru" />
+                                        <ComboBoxItem Content="Slovenčina" Tag="sk" />
+                                        <ComboBoxItem Content="Español" Tag="es" />
+                                        <ComboBoxItem Content="Svenska" Tag="sv" />
+                                        <ComboBoxItem Content="Türkçe" Tag="tr" />
+                                        <ComboBoxItem Content="Українська" Tag="uk" />
+                                        <ComboBoxItem Content="Tiếng Việt" Tag="vi" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
                                 <controls:SettingsExpander
                                     x:Uid="SettingsPageTranslationConfig"
                                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -643,40 +679,6 @@
                                                     Command="{x:Bind ViewModel.LibreTranslateServerTestCommand}"
                                                     IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
                                             </StackPanel>
-                                        </controls:SettingsCard>
-                                        <controls:SettingsCard x:Uid="SettingsPageTargetLanguage">
-                                            <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
-                                                <ComboBoxItem Content="العربية" Tag="ar" />
-                                                <ComboBoxItem Content="Azərbaycan dili" Tag="az" />
-                                                <ComboBoxItem Content="中文" Tag="zh" />
-                                                <ComboBoxItem Content="Čeština" Tag="cs" />
-                                                <ComboBoxItem Content="Dansk" Tag="da" />
-                                                <ComboBoxItem Content="Nederlands" Tag="nl" />
-                                                <ComboBoxItem Content="English" Tag="en" />
-                                                <ComboBoxItem Content="Esperanto" Tag="eo" />
-                                                <ComboBoxItem Content="Suomi" Tag="fi" />
-                                                <ComboBoxItem Content="Français" Tag="fr" />
-                                                <ComboBoxItem Content="Deutsch" Tag="de" />
-                                                <ComboBoxItem Content="Ελληνικά" Tag="el" />
-                                                <ComboBoxItem Content="עברית" Tag="he" />
-                                                <ComboBoxItem Content="हिन्दी" Tag="hi" />
-                                                <ComboBoxItem Content="Magyar" Tag="hu" />
-                                                <ComboBoxItem Content="Bahasa Indonesia" Tag="id" />
-                                                <ComboBoxItem Content="Gaeilge" Tag="ga" />
-                                                <ComboBoxItem Content="Italiano" Tag="it" />
-                                                <ComboBoxItem Content="日本語" Tag="ja" />
-                                                <ComboBoxItem Content="한국어" Tag="ko" />
-                                                <ComboBoxItem Content="فارسی" Tag="fa" />
-                                                <ComboBoxItem Content="Polski" Tag="pl" />
-                                                <ComboBoxItem Content="Português" Tag="pt" />
-                                                <ComboBoxItem Content="Русский" Tag="ru" />
-                                                <ComboBoxItem Content="Slovenčina" Tag="sk" />
-                                                <ComboBoxItem Content="Español" Tag="es" />
-                                                <ComboBoxItem Content="Svenska" Tag="sv" />
-                                                <ComboBoxItem Content="Türkçe" Tag="tr" />
-                                                <ComboBoxItem Content="Українська" Tag="uk" />
-                                                <ComboBoxItem Content="Tiếng Việt" Tag="vi" />
-                                            </ComboBox>
                                         </controls:SettingsCard>
                                         <controls:SettingsCard x:Uid="SettingsPageTranslationInfo">
                                             <controls:SettingsCard.Description>

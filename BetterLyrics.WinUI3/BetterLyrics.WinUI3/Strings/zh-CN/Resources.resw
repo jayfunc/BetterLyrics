@@ -654,4 +654,7 @@
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
     <value>切换歌曲时将自动重置为 0</value>
   </data>
+  <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
+    <value>将优先读取歌词内翻译，若无匹配则向 LibreTranslate 服务器请求机器翻译</value>
+  </data>
 </root>
