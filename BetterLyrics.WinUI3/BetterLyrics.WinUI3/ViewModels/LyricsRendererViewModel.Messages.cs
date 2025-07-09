@@ -22,7 +22,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<LineRenderingType>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
-            IRecipient<PropertyChangedMessage<ObservableCollection<AlbumArtSearchProviderInfo>>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>>>
     {
         public void Receive(PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message)
