@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using System.Diagnostics;
 using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -148,6 +149,7 @@ namespace BetterLyrics.WinUI3
 
             DesktopModeHelper.Lock(window);
             IsLyricsWindowLocked = true;
+            StartWatchWindowColorChange(WindowColorSampleMode.WindowEdge);
         }
 
         private void StopWatchWindowColorChange()
@@ -167,7 +169,6 @@ namespace BetterLyrics.WinUI3
             IsDesktopMode = !IsDesktopMode;
             if (IsDesktopMode)
             {
-                StartWatchWindowColorChange(WindowColorSampleMode.WindowEdge);
                 DesktopModeHelper.Enable(window);
             }
             else
@@ -187,8 +188,8 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
-                StartWatchWindowColorChange(WindowColorSampleMode.BelowWindow);
                 DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 4);
+                StartWatchWindowColorChange(WindowColorSampleMode.BelowWindow);
             }
             else
             {

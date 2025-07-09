@@ -79,10 +79,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
                     _isDockMode = message.NewValue;
+                    UpdateFontColor();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
                     _isDesktopMode = message.NewValue;
+                    UpdateFontColor();
                 }
             }
             else if (message.Sender is LyricsPageViewModel)

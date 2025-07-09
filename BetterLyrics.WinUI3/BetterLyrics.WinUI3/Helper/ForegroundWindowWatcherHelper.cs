@@ -16,9 +16,6 @@ namespace BetterLyrics.WinUI3.Helper
         private readonly List<User32.HWINEVENTHOOK> _hooks = new();
         private HWND _currentForeground = HWND.NULL;
         private readonly IntPtr _selfHwnd;
-        private readonly DispatcherTimer _pollingTimer;
-        private DateTime _lastEventTime = DateTime.MinValue;
-        private const int ThrottleIntervalMs = 1000;
 
         public delegate void WindowChangedHandler(HWND hwnd);
         private readonly WindowChangedHandler _onWindowChanged;
@@ -28,13 +25,6 @@ namespace BetterLyrics.WinUI3.Helper
             _selfHwnd = selfHwnd;
             _onWindowChanged = onWindowChanged;
             _winEventDelegate = new User32.WinEventProc(WinEventProc);
-
-            _pollingTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(200) };
-            _pollingTimer.Tick += (_, _) =>
-            {
-                if (_currentForeground != IntPtr.Zero && _currentForeground != _selfHwnd)
-                    _onWindowChanged?.Invoke(_currentForeground);
-            };
         }
 
         public void Start()
@@ -64,8 +54,6 @@ namespace BetterLyrics.WinUI3.Helper
                     User32.WINEVENT.WINEVENT_OUTOFCONTEXT
                 )
             );
-
-            _pollingTimer.Start();
         }
 
         public void Stop()
@@ -74,7 +62,6 @@ namespace BetterLyrics.WinUI3.Helper
                 User32.UnhookWinEvent(hook);
 
             _hooks.Clear();
-            _pollingTimer.Stop();
         }
 
         private void WinEventProc(
@@ -87,14 +74,8 @@ namespace BetterLyrics.WinUI3.Helper
             uint dwmsEventTime
         )
         {
-            if (hwnd == IntPtr.Zero || hwnd == _selfHwnd)
+            if (hwnd == IntPtr.Zero)
                 return;
-
-            var now = DateTime.Now;
-            if ((now - _lastEventTime).TotalMilliseconds < ThrottleIntervalMs)
-                return;
-
-            _lastEventTime = now;
 
             if (eventType == User32.EventConstants.EVENT_SYSTEM_FOREGROUND)
             {
