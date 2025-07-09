@@ -64,6 +64,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
         private const string LyricsLineSpacingFactorKey = "LyricsLineSpacingFactor";
         private const string LyricsSearchProvidersInfoKey = "LyricsSearchProvidersInfo";
+        private const string AlbumArtSearchProvidersInfoKey = "AlbumArtSearchProvidersInfo";
         private const string LyricsVerticalEdgeOpacityKey = "LyricsVerticalEdgeOpacity";
 
         private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
@@ -96,7 +97,6 @@ namespace BetterLyrics.WinUI3.Services
                     SourceGenerationContext.Default.ListLyricsSearchProviderInfo
                 )
             );
-            SetDefault(MediaSourceProvidersInfoKey, "[]");
             if (LyricsSearchProvidersInfo.Count != Enum.GetValues<LyricsSearchProvider>().Length)
             {
                 LyricsSearchProvidersInfo = Enum.GetValues<LyricsSearchProvider>()
@@ -109,6 +109,31 @@ namespace BetterLyrics.WinUI3.Services
                     ))
                     .ToList();
             }
+
+            SetDefault(
+                AlbumArtSearchProvidersInfoKey,
+                System.Text.Json.JsonSerializer.Serialize(
+                    Enum.GetValues<AlbumArtSearchProvider>()
+                        .Select(p => new AlbumArtSearchProviderInfo(p, true))
+                        .ToList(),
+                    SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
+                )
+            );
+            if (AlbumArtSearchProvidersInfo.Count != Enum.GetValues<AlbumArtSearchProvider>().Length)
+            {
+                AlbumArtSearchProvidersInfo = Enum.GetValues<AlbumArtSearchProvider>()
+                    .Select(p => new AlbumArtSearchProviderInfo(
+                        p,
+                        AlbumArtSearchProvidersInfo
+                            .Where(x => x.Provider == p)
+                            .FirstOrDefault()
+                            ?.IsEnabled ?? true
+                    ))
+                    .ToList();
+            }
+
+            SetDefault(MediaSourceProvidersInfoKey, "[]");
+
             // App appearance
             SetDefault(LanguageKey, (int)Language.FollowSystem);
 
@@ -142,7 +167,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsBgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
             SetDefault(LyricsFgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
             SetDefault(LyricsStrokeFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
-            
+
             SetDefault(LyricsCustomBgFontColorKey, Colors.White.ToInt());
             SetDefault(LyricsCustomFgFontColorKey, Colors.White.ToInt());
             SetDefault(LyricsCustomStrokeFontColorKey, Colors.White.ToInt());
@@ -399,6 +424,23 @@ namespace BetterLyrics.WinUI3.Services
                     System.Text.Json.JsonSerializer.Serialize(
                         value,
                         SourceGenerationContext.Default.ListLyricsSearchProviderInfo
+                    )
+                );
+        }
+
+        public List<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo
+        {
+            get =>
+                System.Text.Json.JsonSerializer.Deserialize(
+                    GetValue<string>(AlbumArtSearchProvidersInfoKey) ?? "[]",
+                    SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
+                )!;
+            set =>
+                SetValue(
+                    AlbumArtSearchProvidersInfoKey,
+                    System.Text.Json.JsonSerializer.Serialize(
+                        value,
+                        SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
                     )
                 );
         }

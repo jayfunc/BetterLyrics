@@ -5,21 +5,20 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public partial class MediaSourceProviderInfo : ObservableObject
+    public partial class AlbumArtSearchProviderInfo : ObservableObject
     {
         [ObservableProperty]
         public partial bool IsEnabled { get; set; }
 
         [ObservableProperty]
-        public partial string Provider { get; set; }
+        public partial AlbumArtSearchProvider Provider { get; set; }
 
-        public MediaSourceProviderInfo() { }
+        public AlbumArtSearchProviderInfo() { }
 
-        public MediaSourceProviderInfo(string provider, bool isEnabled)
+        public AlbumArtSearchProviderInfo(AlbumArtSearchProvider provider, bool isEnabled)
         {
             Provider = provider;
             IsEnabled = isEnabled;
         }
-
     }
 }
