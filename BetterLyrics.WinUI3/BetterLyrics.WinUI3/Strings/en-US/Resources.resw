@@ -654,4 +654,7 @@
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
     <value>Will automatically reset to 0 when switching songs</value>
   </data>
+  <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
+    <value>The translation in the lyrics will be read first. If there is no match, the machine translation will be requested from the LibreTranslate server</value>
+  </data>
 </root>

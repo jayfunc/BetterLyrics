@@ -654,4 +654,7 @@
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
     <value>노래를 전환 할 때 자동으로 0 으로 재설정됩니다</value>
   </data>
+  <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
+    <value>가사의 번역은 먼저 읽습니다. 일치하지 않으면 LibreTranslate 서버에서 기계 번역이 요청됩니다.</value>
+  </data>
 </root>

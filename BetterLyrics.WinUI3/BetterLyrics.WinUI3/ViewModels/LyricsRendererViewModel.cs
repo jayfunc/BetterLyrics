@@ -544,6 +544,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                         (int?)SongInfo?.DurationMs ?? (int)TimeSpan.FromMinutes(99).TotalMilliseconds
                     );
                 _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _multiLangLyrics.Count);
+
+                // This ensures that original lyrics are always shown while waiting for translations
+                ShowOriginalsOnly();
                 await UpdateTranslationsAsync();
                 token.ThrowIfCancellationRequested();
             }
