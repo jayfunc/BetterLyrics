@@ -9,6 +9,6 @@ namespace BetterLyrics.WinUI3.Services
 {
     public interface ILibreTranslateService
     {
-        Task<string> TranslateAsync(string text, CancellationToken? token);
+        Task<string> TranslateAsync(string text, string targetLangCode, CancellationToken? token);
     }
 }

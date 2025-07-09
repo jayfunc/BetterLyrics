@@ -19,8 +19,11 @@ namespace BetterLyrics.WinUI3.Enums
             if (string.IsNullOrWhiteSpace(content))
                 return null;
 
-            // TTML
-            if (content.StartsWith("<?xml") && System.Text.RegularExpressions.Regex.IsMatch(content, @"<tt(:\w+)?\b"))
+            // TTML: 检查 <tt ... xmlns="http://www.w3.org/ns/ttml"
+            if (System.Text.RegularExpressions.Regex.IsMatch(
+                    content,
+                    @"<tt\b[^>]*\bxmlns\s*=\s*[""']http://www\.w3\.org/ns/ttml[""']",
+                    System.Text.RegularExpressions.RegexOptions.IgnoreCase))
             {
                 return LyricsFormat.Ttml;
             }

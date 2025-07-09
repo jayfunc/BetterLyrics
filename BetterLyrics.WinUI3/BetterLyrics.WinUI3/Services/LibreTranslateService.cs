@@ -24,22 +24,14 @@ namespace BetterLyrics.WinUI3.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> TranslateAsync(string text, CancellationToken? token)
+        public async Task<string> TranslateAsync(string text, string targetLangCode, CancellationToken? token)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
                 throw new ArgumentException("Text and target language must be provided.");
             }
 
-            string targetLangCode = AppInfo.GetAllTranslationLanguagesInfo()[_settingsService.SelectedTargetLanguageIndex].Code;
-
-            string originalLangCode = await DetectLanguageCode(text);
-            token?.ThrowIfCancellationRequested();
-
-            if (string.IsNullOrWhiteSpace(originalLangCode) || originalLangCode == targetLangCode)
-            {
-                return text; // No translation needed
-            }
+            string? originalLangCode = LanguageDetectionHelper.DetectLanguageCode(text);
 
             var url = $"{_settingsService.LibreTranslateServer}/translate";
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
@@ -56,23 +48,6 @@ namespace BetterLyrics.WinUI3.Services
 
             var result = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.TranslateResponse);
             return result?.TranslatedText ?? string.Empty;
-        }
-
-        private async Task<string> DetectLanguageCode(string text)
-        {
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                throw new ArgumentException("Text must be provided.");
-            }
-            var url = $"{_settingsService.LibreTranslateServer}/detect";
-            var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
-            [
-                new("q", text),
-            ]));
-            response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-            var resultList = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.ListDetectLanguageResult);
-            return resultList?.OrderByDescending(x => x.Confidence).FirstOrDefault()?.Language ?? string.Empty;
         }
     }
 }
