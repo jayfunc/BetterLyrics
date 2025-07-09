@@ -385,7 +385,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 try
                 {
-                    string result = await _libreTranslateService.TranslateAsync("Hello, world!", null);
+                    string targetLangCode = AppInfo.GetAllTranslationLanguagesInfo()[SelectedTargetLanguageIndex].Code;
+                    string result = await _libreTranslateService.TranslateAsync("Hello, world!", targetLangCode, null);
                     _dispatcherQueue.TryEnqueue(() =>
                     {
                         App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageLibreTranslateTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);

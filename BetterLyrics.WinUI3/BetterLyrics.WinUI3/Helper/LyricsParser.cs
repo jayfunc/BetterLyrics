@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services;
 using Lyricify.Lyrics.Models;
 using System;
 using System.Collections.Generic;
@@ -167,7 +168,8 @@ namespace BetterLyrics.WinUI3.Helper
         {
             try
             {
-                List<LyricsLine> singleLangLyricsLine = [];
+                List<LyricsLine> originalLines = [];
+                List<LyricsLine> translationLines = [];
                 var xdoc = XDocument.Parse(raw);
                 var body = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "body");
                 if (body == null) return;
@@ -176,53 +178,90 @@ namespace BetterLyrics.WinUI3.Helper
                 {
                     // 句级时间
                     string? pBegin = p.Attribute("begin")?.Value;
-                    string? pEnd = p.Attribute("end")?.Value;
                     int pStartMs = ParseTtmlTime(pBegin);
-                    int pEndMs = ParseTtmlTime(pEnd);
 
-                    // 处理分词分时
-                    var spans = p.Elements().Where(s => s.Name.LocalName == "span").ToList();
+                    // 只获取一级span，且排除ttm:role="x-bg"的span
+                    var spans = p.Elements()
+                        .Where(s => s.Name.LocalName == "span" &&
+                                    s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value != "x-bg")
+                        .ToList();
 
-                    string text = string.Concat(spans.Select(s => s.Value));
-                    var charTimings = new List<CharTiming>();
+                    // 原文和翻译分离
+                    var originalTextSpans = spans
+                        .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value != "x-translation")
+                        .ToList();
+                    var translationTextSpans = spans
+                        .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value == "x-translation")
+                        .ToList();
 
-                    int startIndex = 0;
-
-                    for (int i = 0; i < spans.Count; i++)
+                    // 原文（非 CJK 语言添加空格）
+                    string originalText = string.Concat(originalTextSpans.Select(s => s.Value));
+                    if (!LanguageDetectionHelper.IsCJK(originalText))
                     {
-                        var span = spans[i];
-                        string? sBegin = span.Attribute("begin")?.Value;
-                        string? sEnd = span.Attribute("end")?.Value;
-                        int sStartMs = ParseTtmlTime(sBegin);
-                        int sEndMs = ParseTtmlTime(sEnd);
-
-                        if (sStartMs == 0 && sEndMs == 0)
-                            continue;
-
-                        if (sEndMs == 0)
-                            sEndMs =
-                                (i + 1 < spans.Count)
-                                    ? ParseTtmlTime(spans[i + 1].Attribute("begin")?.Value)
-                                    : pEndMs;
-
-                        charTimings.Add(new CharTiming { StartMs = sStartMs, EndMs = 0, StartIndex = startIndex, Text = span.Value });
-                        startIndex += span.Value.Length;
+                        foreach (var span in originalTextSpans)
+                        {
+                            span.Value += " ";
+                        }
+                        originalText = string.Concat(originalTextSpans.Select(s => s.Value));
                     }
 
-                    if (spans.Count == 0)
-                        text = p.Value;
+                    var originalCharTimings = new List<CharTiming>();
+                    int originalStartIndex = 0;
+                    foreach (var span in originalTextSpans)
+                    {
+                        string? sBegin = span.Attribute("begin")?.Value;
+                        int sStartMs = ParseTtmlTime(sBegin);
+                        originalCharTimings.Add(new CharTiming
+                        {
+                            StartMs = sStartMs,
+                            EndMs = 0,
+                            StartIndex = originalStartIndex,
+                            Text = span.Value
+                        });
+                        originalStartIndex += span.Value.Length;
+                    }
+                    if (originalTextSpans.Count == 0)
+                        originalText = p.Value;
 
-                    singleLangLyricsLine.Add(
-                        new LyricsLine
+                    originalLines.Add(new LyricsLine
+                    {
+                        StartMs = pStartMs,
+                        EndMs = 0,
+                        OriginalText = originalText,
+                        CharTimings = originalCharTimings,
+                    });
+
+                    // 翻译
+                    string translationText = string.Concat(translationTextSpans.Select(s => s.Value));
+                    var translationCharTimings = new List<CharTiming>();
+                    int translationStartIndex = 0;
+                    foreach (var span in translationTextSpans)
+                    {
+                        string? sBegin = span.Attribute("begin")?.Value;
+                        int sStartMs = ParseTtmlTime(sBegin);
+                        translationCharTimings.Add(new CharTiming
+                        {
+                            StartMs = sStartMs,
+                            EndMs = 0,
+                            StartIndex = translationStartIndex,
+                            Text = span.Value
+                        });
+                        translationStartIndex += span.Value.Length;
+                    }
+                    if (translationTextSpans.Count > 0)
+                    {
+                        translationLines.Add(new LyricsLine
                         {
                             StartMs = pStartMs,
                             EndMs = 0,
-                            OriginalText = text,
-                            CharTimings = charTimings,
-                        }
-                    );
+                            OriginalText = translationText,
+                            CharTimings = translationCharTimings,
+                        });
+                    }
                 }
-                _multiLangLyricsLines.Add(singleLangLyricsLine);
+                _multiLangLyricsLines.Add(originalLines);
+                if (translationLines.Count > 0)
+                    _multiLangLyricsLines.Add(translationLines);
             }
             catch
             {

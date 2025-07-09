@@ -6,11 +6,16 @@
 
 <h2 align="center">
 BetterLyrics
-</div>
+</h2>
 
 <h3 align="center">
 Your smooth dynamic lyrics display tool built with WinUI 3
-</div>
+</h3>
+
+---
+
+- [「BetterLyrics」反馈交流群（简体中文）](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) on QQ
+- [「BetterLyrics」Feedback Chat Group (Traditional Chinese / English)](https://discord.gg/5yAQPnyCKv) on Discord
 
 ---
 
@@ -122,7 +127,3 @@ You can `git clone` this project and build it yourself.
 ## Any issues and PRs are welcomed
 
 If you find a bug please file it in issues or if you have any ideas feel free to share it here.
-
-Or alternatively join group chat to share your valuable feedback:
-- [「BetterLyrics」反馈交流群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) on QQ
-- [「BetterLyrics」Feedback Chat Group](https://discord.gg/rbnF556r) on Discord

@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.Services
 
         public async Task<bool> DownloadAmllTtmlDbIndexAsync()
         {
-            const string url = "https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/metadata/raw-img-index.jsonl";
+            const string url = "https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/metadata/raw-lyrics-index.jsonl";
             try
             {
                 using var response = await _amllTtmlDbHttpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
@@ -388,7 +388,7 @@ namespace BetterLyrics.WinUI3.Services
                 return null;
 
             // 下载歌词内容
-            var url = $"https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/raw-img/{rawLyricFile}";
+            var url = $"https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/raw-lyrics/{rawLyricFile}";
             try
             {
                 var response = await _amllTtmlDbHttpClient.GetAsync(url);
