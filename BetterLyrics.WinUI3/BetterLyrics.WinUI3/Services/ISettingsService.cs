@@ -71,7 +71,7 @@ namespace BetterLyrics.WinUI3.Services
         float LyricsLineSpacingFactor { get; set; }
 
         List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
-
+        List<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; }
         List<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
 
         int LyricsVerticalEdgeOpacity { get; set; }
