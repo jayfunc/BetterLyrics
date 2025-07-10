@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>Local music libraries</value>
+    <value>Local media library</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Add folders storing music or lyrics</value>
@@ -292,7 +292,7 @@
     <value>Glow effect scope</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>Configure lyrics search providers</value>
+    <value>Configure lyrics source</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
     <value>Drag to sort, the lyrics search order will be in the following order</value>
@@ -573,11 +573,11 @@
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>Easing animation type</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>Media sources</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>Playback sources</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>Media source</value>
+    <value>Playback sources</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>Enable or disable lyrics display for a specified media source</value>
@@ -656,5 +656,23 @@
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>The translation in the lyrics will be read first. If there is no match, the machine translation will be requested from the LibreTranslate server</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
+    <value>Configure album cover source</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
+    <value>Drag to sort, the album art search order will be in the following order</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>Album art source</value>
+  </data>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>Local music files</value>
+  </data>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>Music player</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>Media library</value>
   </data>
 </root>

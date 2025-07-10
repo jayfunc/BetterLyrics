@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>本地音乐媒体库</value>
+    <value>本地媒体库</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>添加存放音乐或歌词的文件夹</value>
@@ -280,7 +280,7 @@
     <value>关于</value>
   </data>
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>歌词库</value>
+    <value>歌词源</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>应用外观</value>
@@ -292,7 +292,7 @@
     <value>辉光效果作用范围</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>配置歌词搜索服务</value>
+    <value>配置歌词源</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
     <value>拖动排序，歌词搜索顺序将按以下顺序</value>
@@ -573,11 +573,11 @@
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>缓动动画类型</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>媒体来源</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>播放源</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>媒体来源</value>
+    <value>播放源</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>为指定媒体源启用或禁用歌词显示</value>
@@ -656,5 +656,23 @@
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>将优先读取歌词内翻译，若无匹配则向 LibreTranslate 服务器请求机器翻译</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
+    <value>配置专辑封面源</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
+    <value>拖动排序，专辑封面搜索顺序将按以下顺序</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>专辑封面源</value>
+  </data>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>本地音乐文件</value>
+  </data>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>音乐播放器</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>媒体库</value>
   </data>
 </root>

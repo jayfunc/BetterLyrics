@@ -11,10 +11,6 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty]
         public partial string? Album { get; set; }
 
-        public SoftwareBitmap? AlbumArtSwBitmap { get; set; } = null;
-
-        public Color? AlbumArtAccentColor { get; set; } = null;
-
         [ObservableProperty]
         public partial string Artist { get; set; }
 

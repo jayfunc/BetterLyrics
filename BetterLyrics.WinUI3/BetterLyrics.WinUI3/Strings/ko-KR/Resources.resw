@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>로컬 음악 도서관</value>
+    <value>로컬 미디어 라이브러리</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>음악이나 가사를 저장하는 폴더 추가</value>
@@ -280,7 +280,7 @@
     <value>에 대한</value>
   </data>
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>가사 도서관</value>
+    <value>가사</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>앱 모양</value>
@@ -292,7 +292,7 @@
     <value>글로우 효과 범위</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>가사 검색 제공 업체를 구성하십시오</value>
+    <value>가사 소스를 구성하십시오</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
     <value>정렬하기 위해 드래그하면 가사 검색 순서는 다음 순서로됩니다.</value>
@@ -573,11 +573,11 @@
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>애니메이션 유형 완화</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>미디어 소스</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>재생 소스</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>미디어 소스</value>
+    <value>재생 소스</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>지정된 미디어 소스의 가사 디스플레이 활성화 또는 비활성화</value>
@@ -656,5 +656,23 @@
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>가사의 번역은 먼저 읽습니다. 일치하지 않으면 LibreTranslate 서버에서 기계 번역이 요청됩니다.</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
+    <value>앨범 표지 소스를 구성합니다</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
+    <value>분류하기 위해 드래그하면 앨범 아트 검색 순서는 다음 순서로됩니다.</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>앨범 아트 소스</value>
+  </data>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>로컬 음악 파일</value>
+  </data>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>음악 플레이어</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>미디어 라이브러리</value>
   </data>
 </root>

@@ -32,7 +32,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     // Music lib changed, re-fetch lyrics
                     _logger.LogInformation("Local lyrics folders changed, refreshing lyrics.");
-                    RefreshLyricsAsync();
+                    _ = _refreshLyricsRunner.RunAsync(async tokne =>
+                    {
+                        await RefreshLyricsAsync(tokne);
+                    });
                 }
             }
         }
@@ -45,7 +48,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     // Lyrics search providers info changed, re-fetch lyrics
                     _logger.LogInformation("Lyrics search providers info changed, refreshing lyrics.");
-                    RefreshLyricsAsync();
+                    _ = _refreshLyricsRunner.RunAsync(async token =>
+                    {
+                        await RefreshLyricsAsync(token);
+                    });
                 }
             }
         }
@@ -93,7 +99,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _isTranslationEnabled = message.NewValue;
                     _logger.LogInformation("Translation enabled state changed: {IsEnabled}", _isTranslationEnabled);
-                    UpdateTranslationsAsync();
+                    UpdateTranslations();
                 }
             }
         }
@@ -174,7 +180,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _targetLanguageIndex = message.NewValue;
                     _logger.LogInformation("Target language index changed: {Index}", _targetLanguageIndex);
-                    UpdateTranslationsAsync();
+                    UpdateTranslations();
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontStrokeWidth))
                 {

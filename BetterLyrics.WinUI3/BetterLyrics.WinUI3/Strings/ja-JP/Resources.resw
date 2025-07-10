@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>地元の音楽図書館</value>
+    <value>地元のメディア図書館</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>音楽や歌詞を保存するフォルダーを追加します</value>
@@ -280,7 +280,7 @@
     <value>について</value>
   </data>
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>歌詞ライブラリ</value>
+    <value>歌詞</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>アプリの外観</value>
@@ -292,7 +292,7 @@
     <value>グローエフェクトスコープ</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>歌詞検索プロバイダーを構成します</value>
+    <value>歌詞ソースを構成します</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
     <value>ドラッグしてソートすると、歌詞の検索注文は次の順序で行われます</value>
@@ -573,11 +573,11 @@
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>アニメーションタイプを緩和します</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>メディアソース</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>再生ソース</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>メディアソース</value>
+    <value>再生ソース</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>指定されたメディアソースの歌詞ディスプレイを有効または無効にする</value>
@@ -656,5 +656,23 @@
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>歌詞の翻訳は最初に読まれます。一致していない場合、機械の翻訳はLibretranslate Serverから要求されます</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
+    <value>アルバムカバーソースを構成します</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
+    <value>ドラッグしてソートすると、アルバムアートサーチオーダーは次の順序で行われます</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>アルバムアートソース</value>
+  </data>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>ローカル音楽ファイル</value>
+  </data>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>音楽プレーヤー</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>メディアライブラリ</value>
   </data>
 </root>

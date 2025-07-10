@@ -37,6 +37,9 @@ namespace BetterLyrics.WinUI3
         {
             this.InitializeComponent();
 
+            var test = LanguageDetectionHelper.DetectLanguageCode("一隻烏龜");
+            
+
             DispatcherQueue = DispatcherQueue.GetForCurrentThread();
             DispatcherQueueTimer = DispatcherQueue.CreateTimer();
             ResourceLoader = new ResourceLoader();

@@ -4,7 +4,6 @@ using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using iTunesSearch.Library;
 using Lyricify.Lyrics.Providers.Web.Kugou;
 using Lyricify.Lyrics.Searchers;
 using Microsoft.Extensions.Logging;
@@ -82,7 +81,38 @@ namespace BetterLyrics.WinUI3.Services
             return "us";
         }
 
-        public async Task<byte[]?> SearchAlbumArtAsync(string title, string artist, string album)
+        public async Task<byte[]?> SearchAlbumArtAsync(string title, string artist, string album, byte[]? bytesFromSMTC = null)
+        {
+            byte[]? result = null;
+
+            foreach (var provider in _settingsService.AlbumArtSearchProvidersInfo)
+            {
+                if (!provider.IsEnabled)
+                {
+                    continue;
+                }
+
+                switch (provider.Provider)
+                {
+                    case AlbumArtSearchProvider.Local:
+                        result = SearchLocalAlbumArt(artist, album);
+                        break;
+                    case AlbumArtSearchProvider.SMTC:
+                        result = bytesFromSMTC;
+                        break;
+                    case AlbumArtSearchProvider.iTunes:
+                        result = await SearchiTunesAlbumArtAsync(artist, album);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+        private byte[]? SearchLocalAlbumArt(string artist, string album)
         {
             foreach (var folder in _settingsService.LocalLyricsFolders)
             {
@@ -90,7 +120,7 @@ namespace BetterLyrics.WinUI3.Services
                 {
                     foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
                     {
-                        if (MusicMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        if (MusicMatch(Path.GetFileNameWithoutExtension(file), album, artist))
                         {
                             Track track = new(file);
                             var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
@@ -102,8 +132,7 @@ namespace BetterLyrics.WinUI3.Services
                     }
                 }
             }
-
-            return await SearchiTunesAlbumArtAsync(artist, album);
+            return null;
         }
 
         private async Task<byte[]?> SearchiTunesAlbumArtAsync(string artist, string album)
