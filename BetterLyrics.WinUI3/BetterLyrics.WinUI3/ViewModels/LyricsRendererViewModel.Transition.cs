@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using Microsoft.UI;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ValueTransition<float> _canvasYScrollTransition = new(
             initialValue: 0f,
-            durationSeconds: 0.3f
+            durationSeconds: 0.8f,
+            easingType: EasingType.EaseInOutSine
         );
 
         private readonly ValueTransition<Color> _immersiveBgTransition = new(

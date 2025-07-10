@@ -37,8 +37,18 @@
                 <NavigationViewItem
                     x:Uid="SettingsPageMediaLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xEA69;}"
+                                       Glyph=&#xE8B7;}"
                     Tag="MediaLib" />
+                <NavigationViewItem
+                    x:Uid="SettingsPageAlbumLib"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE7FA;}"
+                    Tag="AlbumArtLib" />
+                <NavigationViewItem
+                    x:Uid="SettingsPagePlaybackLib"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xEA69;}"
+                    Tag="PlaybackLib" />
                 <NavigationViewItem
                     x:Uid="SettingsPageLyricsLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -229,10 +239,48 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <!--  Media source lib  -->
-                        <controls:Case Value="MediaLib">
+                        <controls:Case Value="AlbumArtLib">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                                <controls:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED35;}" />
+                                <controls:SettingsCard
+                                    x:Name="AlbumArtSearchProvidersSettingsExpander"
+                                    x:Uid="SettingsPageAlbumArtSearchProvidersConfig"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xE7FA;}" />
+
+                                <ListView
+                                    x:Name="AlbumArtSearchProvidersListView"
+                                    Margin="0,-4,0,0"
+                                    AllowDrop="True"
+                                    CanDragItems="True"
+                                    CanReorderItems="True"
+                                    DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
+                                    ItemsSource="{x:Bind ViewModel.AlbumArtSearchProvidersInfo, Mode=OneWay}"
+                                    SelectionMode="None">
+                                    <ListView.OpacityTransition>
+                                        <ScalarTransition />
+                                    </ListView.OpacityTransition>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:AlbumArtSearchProviderInfo">
+                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="AlbumArtSearchProviderToggleSwitch_Toggled" />
+                                            </controls:SettingsCard>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </controls:Case>
+
+                        <!--  Playback source  -->
+                        <controls:Case Value="PlaybackLib">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <controls:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA69;}" />
                                 <ListView
                                     x:Name="MediaSourceProvidersListView"
                                     Margin="0,-4,0,0"
@@ -256,8 +304,8 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <!--  Lyrics lib  -->
-                        <controls:Case Value="LyricsLib">
+                        <!--  Media lib  -->
+                        <controls:Case Value="MediaLib">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                                 <controls:SettingsExpander
                                     x:Uid="SettingsPageMusicLib"
@@ -324,12 +372,18 @@
                                         </controls:SettingsCard>
                                     </controls:SettingsExpander.ItemsFooter>
                                 </controls:SettingsExpander>
+                            </StackPanel>
+                        </controls:Case>
+
+                        <!--  Lyrics source  -->
+                        <controls:Case Value="LyricsLib">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                                 <controls:SettingsCard
                                     x:Name="LyricsSearchProvidersSettingsExpander"
                                     x:Uid="SettingsPageLyricsSearchProvidersConfig"
                                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xF6FA;}" />
+                                                             Glyph=&#xE8F1;}" />
 
                                 <ListView
                                     x:Name="LyricsSearchProvidersListView"
@@ -630,7 +684,8 @@
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                         <ComboBoxItem Content="العربية" Tag="ar" />
                                         <ComboBoxItem Content="Azərbaycan dili" Tag="az" />
-                                        <ComboBoxItem Content="中文" Tag="zh" />
+                                        <ComboBoxItem Content="简体中文" Tag="zh-Hans" />
+                                        <ComboBoxItem Content="繁體中文" Tag="zh-Hant" />
                                         <ComboBoxItem Content="Čeština" Tag="cs" />
                                         <ComboBoxItem Content="Dansk" Tag="da" />
                                         <ComboBoxItem Content="Nederlands" Tag="nl" />

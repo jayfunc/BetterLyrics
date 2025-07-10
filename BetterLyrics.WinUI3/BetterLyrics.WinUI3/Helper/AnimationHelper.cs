@@ -52,9 +52,16 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                _easingType = EasingType.SmoothStep;
+                _easingType = EasingType.Linear;
                 _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
+        }
+
+        public void SetDuration(float seconds)
+        {
+            if (seconds <= 0)
+                throw new ArgumentOutOfRangeException(nameof(seconds), "Duration must be positive.");
+            _durationSeconds = seconds;
         }
 
         private void JumpTo(T value)

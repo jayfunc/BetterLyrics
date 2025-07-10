@@ -48,6 +48,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             LocalLyricsFolders = [.. _settingsService.LocalLyricsFolders];
             LyricsSearchProvidersInfo = [.. _settingsService.LyricsSearchProvidersInfo];
+            AlbumArtSearchProvidersInfo = [.. _settingsService.AlbumArtSearchProvidersInfo];
 
             Language = _settingsService.Language;
             CoverImageRadius = _settingsService.CoverImageRadius;
@@ -142,6 +143,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial ObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial ObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; }
 
         [ObservableProperty]
         public partial ObservableCollection<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
@@ -255,6 +260,16 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
         }
 
+        public void OnAlbumArtSearchProvidersReordered()
+        {
+            _settingsService.AlbumArtSearchProvidersInfo = [.. AlbumArtSearchProvidersInfo];
+            Broadcast(
+                AlbumArtSearchProvidersInfo,
+                AlbumArtSearchProvidersInfo,
+                nameof(AlbumArtSearchProvidersInfo)
+            );
+        }
+
         public void OpenMusicFolder(LocalLyricsFolder folder)
         {
             OpenFolderInFileExplorer(folder.Path);
@@ -281,6 +296,16 @@ namespace BetterLyrics.WinUI3.ViewModels
                 LyricsSearchProvidersInfo,
                 LyricsSearchProvidersInfo,
                 nameof(LyricsSearchProvidersInfo)
+            );
+        }
+
+        public void ToggleAlbumArtSearchProvider(AlbumArtSearchProviderInfo providerInfo)
+        {
+            _settingsService.AlbumArtSearchProvidersInfo = [.. AlbumArtSearchProvidersInfo];
+            Broadcast(
+                AlbumArtSearchProvidersInfo,
+                AlbumArtSearchProvidersInfo,
+                nameof(AlbumArtSearchProvidersInfo)
             );
         }
 
@@ -385,7 +410,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 try
                 {
-                    string targetLangCode = AppInfo.GetAllTranslationLanguagesInfo()[SelectedTargetLanguageIndex].Code;
+                    string targetLangCode = AppInfo.TranslationLanguagesInfo[SelectedTargetLanguageIndex].Code;
                     string result = await _libreTranslateService.TranslateAsync("Hello, world!", targetLangCode, null);
                     _dispatcherQueue.TryEnqueue(() =>
                     {

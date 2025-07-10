@@ -1,4 +1,5 @@
 ﻿using LanguageDetection;
+using Lyricify.Lyrics.Helpers.General;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,7 +34,19 @@ namespace BetterLyrics.WinUI3.Services
         {
             if (text == null) return null;
 
-            return ThreeLetterToTwoLetter(_detector.Detect(text));
+            string? code = ThreeLetterToTwoLetter(_detector.Detect(text));
+            if (code != null && code == "zh")
+            {
+                if (ChineseConverter.ConvertToTraditionalChinese(text) == text)
+                {
+                    return "zh-Hant";
+                }
+                else
+                {
+                    return "zh-Hans";
+                }
+            }
+            return code;
         }
 
         public static bool IsCJK(string text)

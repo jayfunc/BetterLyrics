@@ -78,11 +78,12 @@ namespace BetterLyrics.WinUI3.Helper
             return props.DateModified.DateTime;
         }
 
-        public static List<LanguageInfo> GetAllTranslationLanguagesInfo() =>
+        public static List<LanguageInfo> TranslationLanguagesInfo =>
         [
             new LanguageInfo("ar", "العربية"),
             new LanguageInfo("az", "Azərbaycan dili"),
-            new LanguageInfo("zh", "中文"),
+            new LanguageInfo("zh-Hans", "简体中文"),
+            new LanguageInfo("zh-Hant", "繁體中文"),
             new LanguageInfo("cs", "Čeština"),
             new LanguageInfo("da", "Dansk"),
             new LanguageInfo("nl", "Nederlands"),

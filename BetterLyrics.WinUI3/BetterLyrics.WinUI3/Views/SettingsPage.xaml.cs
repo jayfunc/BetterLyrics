@@ -105,5 +105,21 @@ namespace BetterLyrics.WinUI3.Views
         {
             ViewModel.ToggleAutoStartupAsync(AutoStartupToggleSwitch.IsOn);
         }
+
+        private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        {
+            ViewModel.OnAlbumArtSearchProvidersReordered();
+        }
+
+        private void AlbumArtSearchProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                if (toggleSwitch.DataContext is AlbumArtSearchProviderInfo providerInfo)
+                {
+                    ViewModel.ToggleAlbumArtSearchProvider(providerInfo);
+                }
+            }
+        }
     }
 }
