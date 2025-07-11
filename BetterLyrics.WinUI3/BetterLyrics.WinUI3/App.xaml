@@ -65,7 +65,7 @@
             </Style>
             <Style x:Key="TitleBarButtonStyle" TargetType="Button">
                 <Setter Property="VerticalAlignment" Value="Top" />
-                <Setter Property="CornerRadius" Value="0" />
+                <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Padding" Value="16,9,16,11" />
                 <Setter Property="Margin" Value="0" />

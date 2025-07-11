@@ -74,10 +74,11 @@ namespace BetterLyrics.WinUI3.Services
         private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
 
         private const string LyricsBackgroundThemeKey = "LyricsBackgroundTheme";
-
         private const string IgnoreFullscreenWindowKey = "IgnoreFullscreenWindow";
-
         private const string PreferredDisplayTypeKey = "PreferredDisplayTypeKey";
+
+        private const string LyricsScrollEasingTypeKey = "LyricsScrollEasingType";
+        private const string LyricsScrollDurationKey = "LyricsScrollDuration";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -184,10 +185,23 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(SelectedTargetLanguageIndexKey, 6);
 
             SetDefault(LyricsFontStrokeWidthKey, 3);
-
             SetDefault(IgnoreFullscreenWindowKey, false);
-
             SetDefault(PreferredDisplayTypeKey, (int)LyricsDisplayType.SplitView);
+
+            SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutQuad);
+            SetDefault(LyricsScrollDurationKey, 500); // 500ms
+        }
+
+        public EasingType LyricsScrollEasingType
+        {
+            get => (EasingType)GetValue<int>(LyricsScrollEasingTypeKey);
+            set => SetValue(LyricsScrollEasingTypeKey, (int)value);
+        }
+
+        public int LyricsScrollDuration
+        {
+            get => GetValue<int>(LyricsScrollDurationKey);
+            set => SetValue(LyricsScrollDurationKey, value);
         }
 
         public LyricsDisplayType PreferredDisplayType

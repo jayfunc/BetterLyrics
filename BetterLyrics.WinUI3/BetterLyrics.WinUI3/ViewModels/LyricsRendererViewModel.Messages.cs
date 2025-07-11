@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
             IRecipient<PropertyChangedMessage<LineRenderingType>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>,
+            IRecipient<PropertyChangedMessage<EasingType>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>>>
     {
@@ -64,7 +65,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.IsDynamicCoverOverlayEnabled))
                 {
-                    IsDynamicCoverOverlayEnabled = message.NewValue;
+                    _isDynamicCoverOverlayEnabled = message.NewValue;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.IsDebugOverlayEnabled))
                 {
@@ -72,7 +73,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.IsLyricsGlowEffectEnabled))
                 {
-                    IsLyricsGlowEffectEnabled = message.NewValue;
+                    _isLyricsGlowEffectEnabled = message.NewValue;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.IsFanLyricsEnabled))
                 {
@@ -91,6 +92,15 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _isDesktopMode = message.NewValue;
                     UpdateFontColor();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
+                {
+                    _isLyricsWindowLocked = message.NewValue;
+                }
+                else if (message.PropertyName == nameof(LyricsWindowViewModel.IsMouseWithinWindow))
+                {
+                    _isMouseWithinWindow = message.NewValue;
+                    _immersiveBgOpacityTransition.StartTransition(_isDesktopMode ? (_isMouseWithinWindow ? 1f : 0f) : 1f);
                 }
             }
             else if (message.Sender is LyricsPageViewModel)
@@ -141,7 +151,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsLineSpacingFactor))
                 {
-                    LyricsLineSpacingFactor = message.NewValue;
+                    _lyricsLineSpacingFactor = message.NewValue;
+                    _isLayoutChanged = true;
                 }
             }
         }
@@ -156,25 +167,26 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.CoverOverlayOpacity))
                 {
-                    CoverOverlayOpacity = message.NewValue;
+                    _albumArtBgOpacity = message.NewValue;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.CoverOverlayBlurAmount))
                 {
-                    CoverOverlayBlurAmount = message.NewValue;
+                    _albumArtBgBlurAmount = message.NewValue;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsVerticalEdgeOpacity))
                 {
-                    LyricsVerticalEdgeOpacity = message.NewValue;
+                    _lyricsVerticalEdgeOpacity = message.NewValue;
                     _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsBlurAmount))
                 {
-                    LyricsBlurAmount = message.NewValue;
+                    _lyricsBlurAmount = message.NewValue;
                     _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
                 {
-                    LyricsFontSize = message.NewValue;
+                    _lyricsFontSize = message.NewValue;
+                    _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.SelectedTargetLanguageIndex))
                 {
@@ -185,6 +197,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontStrokeWidth))
                 {
                     _lyricsFontStrokeWidth = message.NewValue;
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsScrollDuration))
+                {
+                    _canvasYScrollTransition.SetDuration(message.NewValue / 1000f);
                 }
             }
             else if (message.Sender is LyricsPageViewModel)
@@ -202,7 +218,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsGlowEffectScope))
                 {
-                    LyricsGlowEffectScope = message.NewValue;
+                    _lyricsGlowEffectScope = message.NewValue;
                 }
             }
         }
@@ -213,7 +229,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsAlignmentType))
                 {
-                    LyricsAlignmentType = message.NewValue;
+                    _lyricsAlignmentType = message.NewValue;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.SongInfoAlignmentType))
                 {
@@ -256,7 +272,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontWeight))
                 {
-                    LyricsFontWeight = message.NewValue;
+                    _lyricsTextFormat.FontWeight = message.NewValue.ToFontWeight();
+                    _isLayoutChanged = true;
                 }
             }
         }
@@ -273,20 +290,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        partial void OnLyricsFontSizeChanged(int value)
+        public void Receive(PropertyChangedMessage<EasingType> message)
         {
-            _isLayoutChanged = true;
-        }
-
-        partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
-        {
-            _lyricsTextFormat.FontWeight = value.ToFontWeight();
-            _isLayoutChanged = true;
-        }
-
-        partial void OnLyricsLineSpacingFactorChanged(float value)
-        {
-            _isLayoutChanged = true;
+            if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsScrollEasingType))
+                {
+                    _canvasYScrollTransition.SetEasingType(message.NewValue);
+                }
+            }
         }
     }
 }

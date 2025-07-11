@@ -196,7 +196,7 @@ namespace BetterLyrics.WinUI3.Helper
 
                     // 原文（非 CJK 语言添加空格）
                     string originalText = string.Concat(originalTextSpans.Select(s => s.Value));
-                    if (!LanguageDetectionHelper.IsCJK(originalText))
+                    if (!LanguageHelper.IsCJK(originalText))
                     {
                         foreach (var span in originalTextSpans)
                         {
@@ -269,7 +269,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private int ParseTtmlTime(string? t)
+        private static int ParseTtmlTime(string? t)
         {
             if (string.IsNullOrWhiteSpace(t))
                 return 0;
@@ -420,18 +420,21 @@ namespace BetterLyrics.WinUI3.Helper
                         }
                     }
                 }
-                if (linesInSingleLang.Count > 0 && linesInSingleLang[0].StartMs > 0)
+                if (linesInSingleLang.Count > 0)
                 {
-                    linesInSingleLang.Insert(
-                        0,
-                        new LyricsLine
-                        {
-                            StartMs = 0,
-                            EndMs = linesInSingleLang[0].StartMs,
-                            OriginalText = "● ● ●",
-                            CharTimings = [],
-                        }
-                    );
+                    if (linesInSingleLang[0].StartMs > 0)
+                    {
+                        linesInSingleLang.Insert(
+                            0,
+                            new LyricsLine
+                            {
+                                StartMs = 0,
+                                EndMs = linesInSingleLang[0].StartMs,
+                                OriginalText = "● ● ●",
+                                CharTimings = [],
+                            }
+                        );
+                    }
                 }
             }
         }

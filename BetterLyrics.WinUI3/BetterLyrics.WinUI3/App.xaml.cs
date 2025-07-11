@@ -37,15 +37,12 @@ namespace BetterLyrics.WinUI3
         {
             this.InitializeComponent();
 
-            var test = LanguageDetectionHelper.DetectLanguageCode("一隻烏龜");
-            
-
             DispatcherQueue = DispatcherQueue.GetForCurrentThread();
             DispatcherQueueTimer = DispatcherQueue.CreateTimer();
             ResourceLoader = new ResourceLoader();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            AppInfo.EnsureDirectories();
+            PathHelper.EnsureDirectories();
             ConfigureServices();
 
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
@@ -62,16 +59,6 @@ namespace BetterLyrics.WinUI3
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (lyricsWindow == null) return;
 
-            string[] commandLineArguments = Environment.GetCommandLineArgs();
-            if (commandLineArguments.Length > 1)
-            {
-                commandLineArguments = commandLineArguments.Skip(1).ToArray();
-                if (commandLineArguments.First() == AppInfo.UnlockWindowTag)
-                {
-                    lyricsWindow.AutoSelectLyricsMode(AutoStartWindowType.DesktopMode, false);
-                    return;
-                }
-            }
             lyricsWindow.AutoSelectLyricsMode();
         }
 
@@ -79,7 +66,7 @@ namespace BetterLyrics.WinUI3
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Is(Serilog.Events.LogEventLevel.Verbose)
-                .WriteTo.File(AppInfo.LogFilePattern, rollingInterval: RollingInterval.Day)
+                .WriteTo.File(PathHelper.LogFilePattern, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             // Register services
@@ -93,9 +80,10 @@ namespace BetterLyrics.WinUI3
                     // Services
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IPlaybackService, PlaybackService>()
-                    .AddSingleton<IMusicSearchService, MusicSearchService>()
+                    .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
+                    .AddSingleton<ILyricsSearchService, LyricsSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
-                    .AddSingleton<ILibreTranslateService, LibreTranslateService>()
+                    .AddSingleton<ITranslateService, TranslateService>()
                     // ViewModels
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()

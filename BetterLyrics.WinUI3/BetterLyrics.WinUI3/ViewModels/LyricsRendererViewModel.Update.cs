@@ -43,12 +43,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             _displayType = _displayTypeReceived;
             _playingLineIndex = playingLineIndex;
 
+            _immersiveBgOpacityTransition.Update(_elapsedTime);
             _immersiveBgTransition.Update(_elapsedTime);
             _albumArtBgTransition.Update(_elapsedTime);
             _lyricsBgBrightnessTransition.Update(_elapsedTime);
             _songInfoOpacityTransition.Update(_elapsedTime);
 
-            if (IsDynamicCoverOverlayEnabled)
+            if (_isDynamicCoverOverlayEnabled)
             {
                 _rotateAngle += _coverRotateSpeed;
                 _rotateAngle %= MathF.PI * 2;
@@ -129,7 +130,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (control == null)
                 return;
 
-            _lyricsTextFormat.FontSize = LyricsFontSize;
+            _lyricsTextFormat.FontSize = _lyricsFontSize;
 
             float y = 0;
 
@@ -163,7 +164,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 y +=
                     (float)line.CanvasTextLayout.LayoutBounds.Height
                     / line.CanvasTextLayout.LineCount
-                    * (line.CanvasTextLayout.LineCount + LyricsLineSpacingFactor);
+                    * (line.CanvasTextLayout.LineCount + _lyricsLineSpacingFactor);
             }
         }
 
@@ -384,9 +385,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                             : 0
                     );
 
-                    line.BlurAmountTransition.StartTransition(LyricsBlurAmount * distanceFactor);
+                    line.BlurAmountTransition.StartTransition(_lyricsBlurAmount * distanceFactor);
                     line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
-                    line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - LyricsVerticalEdgeOpacity / 100f));
+                    line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - _lyricsVerticalEdgeOpacity / 100f));
                     line.HighlightOpacityTransition.StartTransition(i == _playingLineIndex ? 1f : 0f);
                 }
 

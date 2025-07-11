@@ -25,7 +25,7 @@ using Windows.System;
 using Windows.UI;
 using Windows.UI.Popups;
 using WinRT.Interop;
-using AppInfo = BetterLyrics.WinUI3.Helper.AppInfo;
+using MetadataHelper = BetterLyrics.WinUI3.Helper.MetadataHelper;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -33,11 +33,11 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ILibWatcherService _libWatcherService;
         private readonly IPlaybackService _playbackService;
-        private readonly ILibreTranslateService _libreTranslateService;
+        private readonly ITranslateService _libreTranslateService;
 
         private readonly string _autoStartupTaskId = "AutoStartup";
 
-        public SettingsPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, IPlaybackService playbackService, ILibreTranslateService libreTranslateService) : base(settingsService)
+        public SettingsPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, IPlaybackService playbackService, ITranslateService libreTranslateService) : base(settingsService)
         {
             _libWatcherService = libWatcherService;
             _playbackService = playbackService;
@@ -80,18 +80,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsCustomStrokeFontColor = _settingsService.LyricsCustomStrokeFontColor;
 
             LyricsFontStrokeWidth = _settingsService.LyricsFontStrokeWidth;
-
             LyricsBackgroundTheme = _settingsService.LyricsBackgroundTheme;
-
             MediaSourceProvidersInfo = [.. _settingsService.MediaSourceProvidersInfo];
-
             IgnoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
+
+            LyricsScrollEasingType = _settingsService.LyricsScrollEasingType;
+            LyricsScrollDuration = _settingsService.LyricsScrollDuration;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
             Task.Run(async () =>
             {
-                BuildDate = (await Helper.AppInfo.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
+                BuildDate = (await Helper.MetadataHelper.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
             });
         }
 
@@ -218,7 +218,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial object NavViewSelectedItemTag { get; set; }
 
-        public string Version { get; set; } = Helper.AppInfo.AppVersion;
+        public string Version { get; set; } = Helper.MetadataHelper.AppVersion;
 
         public string BuildDate { get; set; } = string.Empty;
 
@@ -239,6 +239,24 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IgnoreFullscreenWindow { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial EasingType LyricsScrollEasingType { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsScrollDuration { get; set; }
+
+        partial void OnLyricsScrollEasingTypeChanged(EasingType value)
+        {
+            _settingsService.LyricsScrollEasingType = value;
+        }
+
+        partial void OnLyricsScrollDurationChanged(int value)
+        {
+            _settingsService.LyricsScrollDuration = value;
+        }
 
         partial void OnLyricsBackgroundThemeChanged(ElementTheme value)
         {
@@ -349,13 +367,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Launcher.LaunchUriAsync(new Uri(Helper.AppInfo.GithubUrl));
+            await Launcher.LaunchUriAsync(new Uri(MetadataHelper.GithubUrl));
         }
 
         [RelayCommand]
         private void OpenCacheFolder()
         {
-            OpenFolderInFileExplorer(Helper.AppInfo.CacheFolder);
+            OpenFolderInFileExplorer(PathHelper.CacheFolder);
         }
 
         private void OpenFolderInFileExplorer(string path)
@@ -410,7 +428,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 try
                 {
-                    string targetLangCode = AppInfo.TranslationLanguagesInfo[SelectedTargetLanguageIndex].Code;
+                    string targetLangCode = LanguageHelper.SupportedTargetLanguages[SelectedTargetLanguageIndex].Code;
                     string result = await _libreTranslateService.TranslateAsync("Hello, world!", targetLangCode, null);
                     _dispatcherQueue.TryEnqueue(() =>
                     {

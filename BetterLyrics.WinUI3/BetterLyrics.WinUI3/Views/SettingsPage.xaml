@@ -673,6 +673,47 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsFanLyricsEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageScrollEasing"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xECE7;}"
+                                    IsExpanded="True">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsScrollEasingType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeLinear" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeSmoothStep" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutSine" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutQuad" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutCubic" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutQuart" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutQuint" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutExpo" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutCirc" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutBack" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutElastic" />
+                                        <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutBounce" />
+                                    </ComboBox>
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageScrollDuration">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.LyricsScrollDuration, Mode=OneWay}" />
+                                                <TextBlock
+                                                    Margin="0,0,14,0"
+                                                    VerticalAlignment="Center"
+                                                    Text=" ms" />
+                                                <Slider
+                                                    Maximum="1000"
+                                                    Minimum="100"
+                                                    SnapsTo="Ticks"
+                                                    StepFrequency="100"
+                                                    TickFrequency="100"
+                                                    TickPlacement="Outside"
+                                                    Value="{x:Bind ViewModel.LyricsScrollDuration, Mode=TwoWay}" />
+                                            </StackPanel>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
                             </StackPanel>
                         </controls:Case>
 

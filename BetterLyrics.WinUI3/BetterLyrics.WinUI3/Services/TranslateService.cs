@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
+using Lyricify.Lyrics.Helpers.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,13 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services
 {
-    public class LibreTranslateService : ILibreTranslateService
+    public class TranslateService : ITranslateService
     {
         private readonly ISettingsService _settingsService;
 
         private readonly HttpClient _httpClient;
 
-        public LibreTranslateService(ISettingsService settingsService)
+        public TranslateService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
             _httpClient = new HttpClient();
@@ -31,7 +32,19 @@ namespace BetterLyrics.WinUI3.Services
                 throw new ArgumentException("Text and target language must be provided.");
             }
 
-            string? originalLangCode = LanguageDetectionHelper.DetectLanguageCode(text);
+            string? originalLangCode = LanguageHelper.DetectLanguageCode(text);
+            if (string.IsNullOrWhiteSpace(originalLangCode) || originalLangCode == targetLangCode)
+            {
+                return text; // No translation needed
+            }
+            else if (originalLangCode == "zh-Hant" && targetLangCode == "zh-Hans")
+            {
+                return ChineseConverter.ConvertToSimplifiedChinese(text);
+            }
+            else if (originalLangCode == "zh-Hans" && targetLangCode == "zh-Hant")
+            {
+                return ChineseConverter.ConvertToTraditionalChinese(text);
+            }
 
             var url = $"{_settingsService.LibreTranslateServer}/translate";
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(

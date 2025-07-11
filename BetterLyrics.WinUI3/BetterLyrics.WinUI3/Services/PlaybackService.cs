@@ -27,7 +27,7 @@ namespace BetterLyrics.WinUI3.Services
         IRecipient<PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>>>,
         IRecipient<PropertyChangedMessage<ObservableCollection<AlbumArtSearchProviderInfo>>>
     {
-        private readonly IMusicSearchService _musicSearchService;
+        private readonly IAlbumArtSearchService _albumArtSearchService;
         private readonly ILogger<PlaybackService> _logger;
         private readonly MediaManager _mediaManager = new();
         private readonly LatestOnlyTaskRunner _AlbumArtRefreshRunner = new();
@@ -44,9 +44,9 @@ namespace BetterLyrics.WinUI3.Services
         public event EventHandler<AlbumArtChangedEventArgs>? AlbumArtChangedChanged;
         public event EventHandler<MediaSourceProvidersInfoEventArgs>? MediaSourceProvidersInfoChanged;
 
-        public PlaybackService(ISettingsService settingsService, IMusicSearchService musicSearchService) : base(settingsService)
+        public PlaybackService(ISettingsService settingsService, IAlbumArtSearchService albumArtSearchService) : base(settingsService)
         {
-            _musicSearchService = musicSearchService;
+            _albumArtSearchService = albumArtSearchService;
             _logger = Ioc.Default.GetRequiredService<ILogger<PlaybackService>>();
 
             _mediaSourceProvidersInfo = _settingsService.MediaSourceProvidersInfo;
@@ -222,7 +222,7 @@ namespace BetterLyrics.WinUI3.Services
                 return;
             }
 
-            byte[]? bytes = await _musicSearchService.SearchAlbumArtAsync(
+            byte[]? bytes = await _albumArtSearchService.SearchAsync(
                 _cachedSongInfo.Title,
                 _cachedSongInfo.Artist,
                 _cachedSongInfo?.Album ?? string.Empty,

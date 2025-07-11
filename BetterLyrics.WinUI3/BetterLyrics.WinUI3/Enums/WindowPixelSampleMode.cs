@@ -1,6 +1,6 @@
 ﻿namespace BetterLyrics.WinUI3.Enums
 {
-    public enum WindowColorSampleMode
+    public enum WindowPixelSampleMode
     {
         BelowWindow,
         WindowArea,
