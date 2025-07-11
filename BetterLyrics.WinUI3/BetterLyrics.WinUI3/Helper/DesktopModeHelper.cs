@@ -1,6 +1,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private static readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-        private static readonly Dictionary<IntPtr, bool> _clickThroughStates = [];
         private static readonly Dictionary<IntPtr, bool> _originalTopmostStates = [];
         private static readonly Dictionary<IntPtr, (double X, double Y, double Width, double Height)> _originalWindowBounds = [];
         private static readonly Dictionary<IntPtr, WindowStyle> _originalWindowStyles = [];
@@ -95,17 +95,8 @@ namespace BetterLyrics.WinUI3.Helper
             window.SetIsAlwaysOnTop(true);
 
             window.SetIsShownInSwitchers(false);
-        }
 
-        public static void Lock(Window window)
-        {
-            window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
-
-            // 设置无边框、透明
             window.ToggleWindowStyle(true, WindowStyle.Popup | WindowStyle.Visible);
-            window.ExtendsContentIntoTitleBar = false;
-
-            SetClickThrough(window, true);
         }
 
         public static void SetClickThrough(Window window, bool enable)
@@ -115,30 +106,11 @@ namespace BetterLyrics.WinUI3.Helper
             if (enable)
             {
                 User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, exStyle | (int)User32.WindowStylesEx.WS_EX_TRANSPARENT | (int)User32.WindowStylesEx.WS_EX_LAYERED);
-                _clickThroughStates[hwnd] = true;
             }
             else
             {
                 User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, exStyle & ~(int)User32.WindowStylesEx.WS_EX_TRANSPARENT);
-                _clickThroughStates[hwnd] = false;
             }
-        }
-
-        public static void Unlock(Window window)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
-            // 恢复样式（但不移出记忆的样式，只有在 Disable 时才移出）
-            if (_originalWindowStyles.TryGetValue(hwnd, out var style))
-            {
-                window.SetWindowStyle(style);
-            }
-            window.ExtendsContentIntoTitleBar = true;
-
-            SetClickThrough(window, false);
-
-            // To recover the system backdrop, we need to reopen the window
-            WindowHelper.RestartApp(AppInfo.UnlockWindowTag);
         }
     }
 }

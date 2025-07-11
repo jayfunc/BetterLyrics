@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services
 {
-    public interface ILibreTranslateService
+    public interface ITranslateService
     {
         Task<string> TranslateAsync(string text, string targetLangCode, CancellationToken? token);
     }

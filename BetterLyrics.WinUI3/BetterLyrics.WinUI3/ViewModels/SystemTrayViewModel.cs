@@ -17,7 +17,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
-        public partial string ToolTipText { get; set; } = AppInfo.AppName;
+        public partial string ToolTipText { get; set; } = MetadataHelper.AppName;
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DesktopModeHelper.Unlock(window);
+            DesktopModeHelper.SetClickThrough(window, false);
             IsLyricsWindowLocked = false;
         }
     }

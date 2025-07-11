@@ -526,7 +526,7 @@
     <value>プログラムを終了します</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>ウィンドウのロックを解除する（再起動が必要）</value>
+    <value>ウィンドウのロックを解除します</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>ロック</value>
@@ -674,5 +674,47 @@
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>メディアライブラリ</value>
+  </data>
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>歌詞スクロールアニメーションタイプ</value>
+  </data>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>歌詞スクロールアニメーションの期間</value>
+  </data>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>リニア</value>
+  </data>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>スムーズなステップ</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>サインがゆっくりと出入りします</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>セカンダリスローインとアウト</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>弾力性は内外に遅くなります</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>リバウンドはスローアウトで遅くなります</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>ゆっくりと出入りします</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>丸い、ゆっくりと出入り</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>インデックスは内外に遅くなります</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>5つの遅いインとアウト</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>4つの遅いインとアウト</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>3つの遅いインとアウト</value>
   </data>
 </root>

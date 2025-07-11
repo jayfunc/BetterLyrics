@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<bool>>
     {
-        private ForegroundWindowWatcherHelper? _watcherHelper = null;
+        private ForegroundWindowWatcher? _watcherHelper = null;
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
@@ -50,9 +50,6 @@ namespace BetterLyrics.WinUI3
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
-        public partial Notification Notification { get; set; } = new();
-
-        [ObservableProperty]
         public partial bool ShowInfoBar { get; set; } = false;
 
         [ObservableProperty]
@@ -63,6 +60,10 @@ namespace BetterLyrics.WinUI3
 
         [ObservableProperty]
         public partial double TitleBarHeight { get; set; } = 36;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsMouseWithinWindow { get; set; } = false;
 
         private bool _ignoreFullscreenWindow = false;
 
@@ -115,13 +116,13 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        public void StartWatchWindowColorChange(WindowColorSampleMode mode)
+        public void StartWatchWindowColorChange(WindowPixelSampleMode mode)
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
-            _watcherHelper = new ForegroundWindowWatcherHelper(
+            _watcherHelper = new ForegroundWindowWatcher(
                 hwnd,
                 onWindowChanged =>
                 {
@@ -136,9 +137,9 @@ namespace BetterLyrics.WinUI3
             UpdateAccentColor(hwnd, mode);
         }
 
-        public void UpdateAccentColor(nint hwnd, WindowColorSampleMode mode)
+        public void UpdateAccentColor(nint hwnd, WindowPixelSampleMode mode)
         {
-            ActivatedWindowAccentColor = WindowColorHelper.GetDominantColor(hwnd, mode).ToColor();
+            ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, mode).ToColor();
         }
 
         [RelayCommand]
@@ -147,9 +148,8 @@ namespace BetterLyrics.WinUI3
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DesktopModeHelper.Lock(window);
+            DesktopModeHelper.SetClickThrough(window, true);
             IsLyricsWindowLocked = true;
-            StartWatchWindowColorChange(WindowColorSampleMode.WindowEdge);
         }
 
         private void StopWatchWindowColorChange()
@@ -170,6 +170,7 @@ namespace BetterLyrics.WinUI3
             if (IsDesktopMode)
             {
                 DesktopModeHelper.Enable(window);
+                StartWatchWindowColorChange(WindowPixelSampleMode.WindowEdge);
             }
             else
             {
@@ -189,7 +190,7 @@ namespace BetterLyrics.WinUI3
             if (IsDockMode)
             {
                 DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 4);
-                StartWatchWindowColorChange(WindowColorSampleMode.BelowWindow);
+                StartWatchWindowColorChange(WindowPixelSampleMode.BelowWindow);
             }
             else
             {

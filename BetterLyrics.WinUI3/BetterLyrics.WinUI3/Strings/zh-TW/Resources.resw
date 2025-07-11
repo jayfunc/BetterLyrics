@@ -526,7 +526,7 @@
     <value>退出程序</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>解鎖窗口（需要重新啟動）</value>
+    <value>解鎖窗口</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>鎖定</value>
@@ -674,5 +674,47 @@
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>媒體庫</value>
+  </data>
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>歌詞滾動動畫類型</value>
+  </data>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>歌詞滾動動畫持續時間</value>
+  </data>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>線性</value>
+  </data>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>平滑步進</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>正弦緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>二次緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>彈性緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>回彈緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>彈跳緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>圓形緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>指數緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>五次緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>四次緩入緩出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>三次緩入緩出</value>
   </data>
 </root>

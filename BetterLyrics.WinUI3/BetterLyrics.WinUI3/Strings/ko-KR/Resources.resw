@@ -526,7 +526,7 @@
     <value>프로그램을 종료하십시오</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>창 잠금 해제 (다시 시작)</value>
+    <value>창을 잠금 해제하십시오</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>잠금</value>
@@ -674,5 +674,47 @@
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>미디어 라이브러리</value>
+  </data>
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>가사 스크롤링 애니메이션 유형</value>
+  </data>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>가사 스크롤링 애니메이션 지속 시간</value>
+  </data>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>선의</value>
+  </data>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>부드러운 단계</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>천천히 입력하십시오</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>이차 느린 속도가 느려집니다</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>탄력성이 속도가 느려집니다</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>리바운드는 느리게 느려집니다</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>천천히 안팎으로 튀어 나옵니다</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>둥글고 느리게 안팎으로</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>인덱스 속도가 느려집니다</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>5 번 느리게 안팎으로</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>4 개의 느린 안팎</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>세 번 느리게 안팎으로</value>
   </data>
 </root>

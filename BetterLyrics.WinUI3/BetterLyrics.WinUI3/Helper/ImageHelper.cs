@@ -19,7 +19,7 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class ImageHelper
     {
-        public const int AccentColorCount = 3;
+        private const int _accentColorCount = 1;
 
         public static async Task<InMemoryRandomAccessStream> ByteArrayToStream(byte[] bytes)
         {
@@ -127,7 +127,7 @@ namespace BetterLyrics.WinUI3.Helper
             // 按出现次数排序，取前 AccentColorCount 个
             var topColors = colorCount
                 .OrderByDescending(kv => kv.Value)
-                .Take(AccentColorCount)
+                .Take(_accentColorCount)
                 .Select(kv => kv.Key)
                 .ToList();
 
@@ -138,31 +138,31 @@ namespace BetterLyrics.WinUI3.Helper
         }
 
 
-        public static async Task<BitmapImage> GetBitmapImageFromBytesAsync(byte[] imageBytes)
-        {
-            var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(imageBytes.AsBuffer());
-            stream.Seek(0);
+        //public static async Task<BitmapImage> GetBitmapImageFromBytesAsync(byte[] imageBytes)
+        //{
+        //    var stream = new InMemoryRandomAccessStream();
+        //    await stream.WriteAsync(imageBytes.AsBuffer());
+        //    stream.Seek(0);
 
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(stream);
+        //    var bitmapImage = new BitmapImage();
+        //    await bitmapImage.SetSourceAsync(stream);
 
-            return bitmapImage;
-        }
+        //    return bitmapImage;
+        //}
 
-        public static async Task<BitmapDecoder> GetDecoderFromByte(byte[] bytes) =>
-            await BitmapDecoder.CreateAsync(await ByteArrayToStream(bytes));
+        //public static async Task<BitmapDecoder> GetDecoderFromByte(byte[] bytes) =>
+        //    await BitmapDecoder.CreateAsync(await ByteArrayToStream(bytes));
 
-        public static async Task<InMemoryRandomAccessStream> GetStreamFromBytesAsync(byte[] imageBytes)
-        {
-            if (imageBytes == null || imageBytes.Length == 0)
-                return null;
+        //public static async Task<InMemoryRandomAccessStream> GetStreamFromBytesAsync(byte[] imageBytes)
+        //{
+        //    if (imageBytes == null || imageBytes.Length == 0)
+        //        return null;
 
-            InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(imageBytes.AsBuffer());
+        //    InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
+        //    await stream.WriteAsync(imageBytes.AsBuffer());
 
-            return stream;
-        }
+        //    return stream;
+        //}
 
         public static async Task<byte[]> ToByteArrayAsync(IRandomAccessStreamReference streamRef)
         {
@@ -172,21 +172,21 @@ namespace BetterLyrics.WinUI3.Helper
             return memoryStream.ToArray();
         }
 
-        public static float GetAverageLuminance(CanvasBitmap bitmap)
-        {
-            var pixels = bitmap.GetPixelBytes();
-            double sum = 0;
-            for (int i = 0; i < pixels.Length; i += 4)
-            {
-                // BGRA
-                byte b = pixels[i];
-                byte g = pixels[i + 1];
-                byte r = pixels[i + 2];
-                // 忽略A
-                double y = 0.299 * r + 0.587 * g + 0.114 * b;
-                sum += y / 255.0;
-            }
-            return (float)(sum / (pixels.Length / 4));
-        }
+        //public static float GetAverageLuminance(CanvasBitmap bitmap)
+        //{
+        //    var pixels = bitmap.GetPixelBytes();
+        //    double sum = 0;
+        //    for (int i = 0; i < pixels.Length; i += 4)
+        //    {
+        //        // BGRA
+        //        byte b = pixels[i];
+        //        byte g = pixels[i + 1];
+        //        byte r = pixels[i + 2];
+        //        // 忽略A
+        //        double y = 0.299 * r + 0.587 * g + 0.114 * b;
+        //        sum += y / 255.0;
+        //    }
+        //    return (float)(sum / (pixels.Length / 4));
+        //}
     }
 }

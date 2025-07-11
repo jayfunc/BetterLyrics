@@ -14,14 +14,19 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ValueTransition<float> _canvasYScrollTransition = new(
             initialValue: 0f,
-            durationSeconds: 0.8f,
-            easingType: EasingType.EaseInOutSine
+            durationSeconds: 0.5f,
+            easingType: EasingType.EaseInOutCubic
         );
 
         private readonly ValueTransition<Color> _immersiveBgTransition = new(
             initialValue: Colors.Transparent,
             durationSeconds: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+        );
+
+        private readonly ValueTransition<float> _immersiveBgOpacityTransition = new(
+            initialValue: 1f,
+            durationSeconds: 0.2f
         );
 
         private readonly ValueTransition<float> _lyricsXTransition = new(

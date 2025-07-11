@@ -74,6 +74,9 @@ namespace BetterLyrics.WinUI3.Services
         List<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; }
         List<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
 
+        EasingType LyricsScrollEasingType { get; set; }
+        int LyricsScrollDuration { get; set; }
+
         int LyricsVerticalEdgeOpacity { get; set; }
 
         bool IgnoreFullscreenWindow { get; set; }

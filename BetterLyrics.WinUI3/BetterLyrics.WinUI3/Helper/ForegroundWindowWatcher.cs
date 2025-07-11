@@ -10,7 +10,7 @@ using Windows.System;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class ForegroundWindowWatcherHelper
+    public class ForegroundWindowWatcher
     {
         private readonly User32.WinEventProc _winEventDelegate;
         private readonly List<User32.HWINEVENTHOOK> _hooks = new();
@@ -20,11 +20,17 @@ namespace BetterLyrics.WinUI3.Helper
         public delegate void WindowChangedHandler(HWND hwnd);
         private readonly WindowChangedHandler _onWindowChanged;
 
-        public ForegroundWindowWatcherHelper(IntPtr selfHwnd, WindowChangedHandler onWindowChanged)
+        private readonly DispatcherTimer _timer;
+
+        public ForegroundWindowWatcher(IntPtr selfHwnd, WindowChangedHandler onWindowChanged)
         {
             _selfHwnd = selfHwnd;
             _onWindowChanged = onWindowChanged;
             _winEventDelegate = new User32.WinEventProc(WinEventProc);
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
         }
 
         public void Start()
@@ -54,6 +60,8 @@ namespace BetterLyrics.WinUI3.Helper
                     User32.WINEVENT.WINEVENT_OUTOFCONTEXT
                 )
             );
+
+            _timer.Start();
         }
 
         public void Stop()
@@ -62,6 +70,16 @@ namespace BetterLyrics.WinUI3.Helper
                 User32.UnhookWinEvent(hook);
 
             _hooks.Clear();
+
+            _timer.Stop();
+        }
+
+        private void Timer_Tick(object? sender, object e)
+        {
+            if (_currentForeground != HWND.NULL)
+            {
+                _onWindowChanged?.Invoke(_currentForeground);
+            }
         }
 
         private void WinEventProc(

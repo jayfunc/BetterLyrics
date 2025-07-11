@@ -267,5 +267,15 @@ namespace BetterLyrics.WinUI3.Views
         {
             App.Current.LyricsWindowNotificationPanel = TipContainerCenter;
         }
+
+        private void RootGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            ViewModel.IsMouseWithinWindow = true;
+        }
+
+        private void RootGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            ViewModel.IsMouseWithinWindow = false;
+        }
     }
 }

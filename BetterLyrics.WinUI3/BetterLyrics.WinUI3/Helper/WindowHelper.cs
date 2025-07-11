@@ -1,10 +1,11 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
-using System.Collections.Generic;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel.Core;
 using WinRT.Interop;
 using WinUIEx;
@@ -61,6 +62,7 @@ namespace BetterLyrics.WinUI3.Helper
                 if (typeof(T) == typeof(LyricsWindow))
                 {
                     newWindow = new LyricsWindow();
+                    ((LyricsWindow)newWindow).SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
                 }
                 else if (typeof(T) == typeof(SettingsWindow))
                 {
