@@ -11,8 +11,7 @@ using Microsoft.UI.Xaml;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class BaseWindowViewModel : BaseViewModel
+    public partial class BaseWindowViewModel(ISettingsService settingsService) : BaseViewModel(settingsService)
     {
-        public BaseWindowViewModel(ISettingsService settingsService) : base(settingsService) { }
     }
 }

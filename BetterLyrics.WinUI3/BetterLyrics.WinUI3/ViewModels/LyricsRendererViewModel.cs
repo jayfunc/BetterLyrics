@@ -72,6 +72,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private ElementTheme _lyricsBgTheme;
         private LineRenderingType _lyricsGlowEffectScope;
+        private LineRenderingType _lyricsHighlightScope;
 
         private int _lyricsFontStrokeWidth;
         private int _lyricsFontSize;
@@ -134,10 +135,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int _langIndex = 0;
 
-        private List<List<LyricsLine>> _multiLangLyrics = [];
+        private List<LyricsData> _lyricsDataArr = [];
         private List<string> _translationList = [];
         private bool _isTranslationEnabled = false;
         private int _targetLanguageIndex = 6;
+
+        private int _timelineSyncThreshold;
 
         private CanvasTextFormat _lyricsTextFormat = new()
         {
@@ -184,9 +187,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int GetCurrentPlayingLineIndex()
         {
-            for (int i = 0; i < _multiLangLyrics.SafeGet(_langIndex)?.Count; i++)
+            for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
             {
-                var line = _multiLangLyrics.SafeGet(_langIndex)?[i];
+                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines[i];
                 if (line == null)
                 {
                     continue;
@@ -262,14 +265,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (
                 SongInfo == null
-                || _multiLangLyrics.SafeGet(_langIndex) == null
-                || _multiLangLyrics[_langIndex].Count == 0
+                || _lyricsDataArr.ElementAtOrDefault(_langIndex) == null
+                || _lyricsDataArr[_langIndex].LyricsLines.Count == 0
             )
             {
                 return new Tuple<int, int>(-1, -1);
             }
 
-            return new Tuple<int, int>(0, _multiLangLyrics[_langIndex].Count - 1);
+            return new Tuple<int, int>(0, _lyricsDataArr[_langIndex].LyricsLines.Count - 1);
         }
 
         private void LibWatcherService_MusicLibraryFilesChanged(object? sender, LibChangedEventArgs e)
@@ -288,7 +291,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void PlaybackService_PositionChanged(object? sender, PositionChangedEventArgs e)
         {
-            _totalTime = e.Position;
+            if (Math.Abs(_totalTime.TotalMilliseconds - e.Position.TotalMilliseconds) >= _timelineSyncThreshold)
+            {
+                _totalTime = e.Position;
+            }
         }
 
         private void PlaybackService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
@@ -330,7 +336,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _albumArtBgTransition.Reset(0f);
                 _albumArtBgTransition.StartTransition(1f);
 
-                UpdateFontColor();
+                UpdateColorConfig();
             }
         }
 
@@ -341,93 +347,55 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 _ = _refreshLyricsRunner.RunAsync(async token =>
                 {
-                    await ShowTranslationsAsync(token);
+                    await SetDisplayedAlongWithTranslationsAsync(token);
                     IsTranslating = false;
+                    _isLayoutChanged = true;
                 });
             }
             else
             {
-                ShowOriginalsOnly();
+                _lyricsDataArr[0].SetDisplayedTextInOriginalText();
                 IsTranslating = false;
+                _isLayoutChanged = true;
             }
         }
 
-        private async Task ShowTranslationsAsync(CancellationToken token)
+        private async Task SetDisplayedAlongWithTranslationsAsync(CancellationToken token)
         {
             _logger.LogInformation("Showing translation for lyrics...");
-            string targetLangCode = LanguageHelper.SupportedTargetLanguages[_settingsService.SelectedTargetLanguageIndex].Code;
-            var originalText = string.Join("\n", _multiLangLyrics.FirstOrDefault()?.Select(x => x.OriginalText) ?? []);
+            string targetLangCode = LanguageHelper.GetUserTargetLanguageCode();
+            string originalText = _lyricsDataArr[0].WrappedOriginalText;
             string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
 
             if (originalLangCode == targetLangCode)
             {
                 _logger.LogInformation("Original lyrics already in target language: {TargetLangCode}", targetLangCode);
-                ShowOriginalsOnly();
-                return;
-            }
-
-            // Try get translation from itself first
-            if (_multiLangLyrics.Count > 1)
-            {
-                foreach (var langLyrics in _multiLangLyrics.Skip(1))
-                {
-                    var translationList = langLyrics.Select(x => x.OriginalText).ToList();
-                    var translation = string.Join("\n", translationList);
-                    if (LanguageHelper.DetectLanguageCode(translation) == targetLangCode)
-                    {
-                        _translationList = translationList;
-                        break;
-                    }
-                }
+                _lyricsDataArr[0].SetDisplayedTextInOriginalText();
             }
             else
             {
-                if (string.IsNullOrEmpty(_settingsService.LibreTranslateServer))
+                // Try get translation from itself first
+                int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr);
+                if (found >= 0)
                 {
-                    _dispatcherQueue.TryEnqueue(() =>
-                    {
-                        App.Current.LyricsWindowNotificationPanel?.Notify(
-                            App.ResourceLoader!.GetString("TranslateServerNotSet"),
-                            Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning
-                        );
-                    });
-                    ShowOriginalsOnly();
-                    return;
+                    _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found]);
                 }
-
-                var translated = await _translateService.TranslateAsync(originalText, targetLangCode, token);
-                token.ThrowIfCancellationRequested();
-
-                _translationList = translated.Split('\n').ToList();
-            }
-
-            int i = 0;
-            foreach (var line in _multiLangLyrics.FirstOrDefault() ?? [])
-            {
-                line.DisplayedText = i < _translationList.Count ? $"{line.OriginalText}\n{_translationList[i]}" : line.OriginalText;
-                i++;
-            }
-            _isLayoutChanged = true;
-        }
-
-        private void ShowOriginalsOnly()
-        {
-            _logger.LogInformation("Showing original lyrics only, translation disabled.");
-            foreach (var langLyrics in _multiLangLyrics)
-            {
-                foreach (var line in langLyrics)
+                else
                 {
-                    line.DisplayedText = line.OriginalText;
+                    var translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
+                    token.ThrowIfCancellationRequested();
+
+                    _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
                 }
             }
-            _isLayoutChanged = true;
         }
 
         private async Task RefreshLyricsAsync(CancellationToken token)
         {
             _logger.LogInformation("Refreshing lyrics...");
 
-            SetLyricsLoadingPlaceholder();
+            _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
+            _isLayoutChanged = true;
 
             string? lyricsRaw = null;
 
@@ -448,33 +416,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _logger.LogWarning("SongInfo is null, cannot search lyrics.");
             }
 
-            _multiLangLyrics = new LyricsParser().Parse(
-                    lyricsRaw,
-                    (int?)SongInfo?.DurationMs ?? (int)TimeSpan.FromMinutes(99).TotalMilliseconds
-                );
-            _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _multiLangLyrics.Count);
+            _lyricsDataArr = new LyricsParser().Parse(lyricsRaw, (int?)SongInfo?.DurationMs);
+            _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _lyricsDataArr.Count);
 
             // This ensures that original lyrics are always shown while waiting for translations
-            ShowOriginalsOnly();
-            UpdateTranslations();
-        }
-
-        private void SetLyricsLoadingPlaceholder()
-        {
-            _multiLangLyrics = [];
-            _multiLangLyrics.Add(
-                [
-                    new LyricsLine
-                    {
-                        StartMs = 0,
-                        EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                        OriginalText = "● ● ●",
-                        DisplayedText = "● ● ●",
-                        CharTimings = [],
-                    },
-                ]
-            );
+            _lyricsDataArr[0].SetDisplayedTextInOriginalText();
             _isLayoutChanged = true;
+
+            UpdateTranslations();
         }
     }
 }

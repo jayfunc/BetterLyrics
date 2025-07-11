@@ -67,6 +67,7 @@ namespace BetterLyrics.WinUI3.Services
         LyricsFontWeight LyricsFontWeight { get; set; }
 
         LineRenderingType LyricsGlowEffectScope { get; set; }
+        LineRenderingType LyricsHighlightScope { get; set; }
 
         float LyricsLineSpacingFactor { get; set; }
 
@@ -84,5 +85,7 @@ namespace BetterLyrics.WinUI3.Services
         bool IsTranslationEnabled { get; set; }
 
         LyricsDisplayType PreferredDisplayType { get; set; }
+
+        int TimelineSyncThreshold { get; set; }
     }
 }

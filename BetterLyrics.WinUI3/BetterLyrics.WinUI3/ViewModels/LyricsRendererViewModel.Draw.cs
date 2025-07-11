@@ -67,9 +67,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (_isDebugOverlayEnabled)
             {
-                var currentPlayingLine = _multiLangLyrics
-                    .SafeGet(_langIndex)
-                    ?.SafeGet(_playingLineIndex);
+                var currentPlayingLine = _lyricsDataArr
+                    .ElementAtOrDefault(_langIndex)
+                    ?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
                 if (currentPlayingLine != null)
                 {
@@ -85,7 +85,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                             $"Cur playing {_playingLineIndex}, char start idx {charStartIndex}, length {charLength}, prog {charProgress}\n" +
                             $"Visible lines [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n" +
                             $"Cur time {_totalTime + _positionOffset}\n" +
-                            $"Lang size {_multiLangLyrics.Count}\n" +
+                            $"Lang size {_lyricsDataArr.Count}\n" +
                             $"Song duration {TimeSpan.FromMilliseconds(SongInfo?.DurationMs ?? 0)}",
                         new Vector2(10, 10),
                         ThemeTypeSent == Microsoft.UI.Xaml.ElementTheme.Light ? Colors.Black : Colors.White
@@ -118,13 +118,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             float x = _canvasWidth / 2 - imageWidth * scaleFactor / 2;
             float y = _canvasHeight / 2 - imageHeight * scaleFactor / 2;
 
-            // Source: https://zhuanlan.zhihu.com/p/37178216
-            float bright = _lyricsBgBrightnessTransition.Value / 1f * 2f; // 明度参数，范围在0.0f到2.0f之间
+            // Original source: https://zhuanlan.zhihu.com/p/37178216
+            float gain = _lyricsBgBrightnessTransition.Value;
 
-            float whiteX = Math.Min(2 - bright, 1);
-            float whiteY = 1f;
-            float blackX = Math.Max(1 - bright, 0);
-            float blackY = 0f;
+            float whiteX = 1 - 0.5f * gain;
+            float whiteY = 0.5f + 0.5f * gain;
+            float blackX = 0.5f - 0.5f * gain;
+            float blackY = 0 + 0.5f * gain;
 
             ds.DrawImage(new OpacityEffect
             {
@@ -274,9 +274,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void DrawBlurredLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            var currentPlayingLine = _multiLangLyrics
-                .SafeGet(_langIndex)
-                ?.SafeGet(_playingLineIndex);
+            var currentPlayingLine = _lyricsDataArr
+                .ElementAtOrDefault(_langIndex)
+                ?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
             if (currentPlayingLine == null)
             {
@@ -285,7 +285,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
             {
-                var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
+                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
 
                 if (line == null)
                 {
@@ -486,8 +486,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                                             Source = fgLyrics,
                                             AlphaMask = _lyricsGlowEffectScope switch
                                             {
-                                                LineRenderingType.UntilCurrentChar => mask,
-                                                LineRenderingType.CurrentCharOnly => highlightMask,
+                                                LineRenderingType.CurrentChar => highlightMask,
+                                                LineRenderingType.LineStartToCurrentChar => mask,
+                                                LineRenderingType.CurrentLine => fgLyrics,
                                                 _ => mask,
                                             },
                                         },
@@ -498,7 +499,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                                 Foreground = new AlphaMaskEffect
                                 {
                                     Source = fgLyrics,
-                                    AlphaMask = mask,
+                                    AlphaMask = _lyricsHighlightScope switch
+                                    {
+                                        LineRenderingType.CurrentChar => highlightMask,
+                                        LineRenderingType.LineStartToCurrentChar => mask,
+                                        LineRenderingType.CurrentLine => fgLyrics,
+                                        _ => mask,
+                                    },
                                 },
                             },
                             Opacity = line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value,

@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Helper;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Helpers.General;
 using NTextCat;
 using System;
@@ -12,6 +13,7 @@ namespace BetterLyrics.WinUI3.Services
     {
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
+        private static readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         public static List<Models.LanguageInfo> SupportedTargetLanguages =>
         [
@@ -105,6 +107,11 @@ namespace BetterLyrics.WinUI3.Services
             if (code == "zh-Hant") return "cn";
             // 其他语言直接返回两字母代码
             return code;
+        }
+
+        public static string GetUserTargetLanguageCode()
+        {
+            return SupportedTargetLanguages[_settingsService.SelectedTargetLanguageIndex].Code;
         }
     }
 }

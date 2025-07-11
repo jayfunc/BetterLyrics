@@ -1,7 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System.Diagnostics;
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
@@ -15,8 +13,11 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI;
 using WinRT.Interop;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
@@ -26,7 +27,8 @@ namespace BetterLyrics.WinUI3
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<bool>>
     {
-        private ForegroundWindowWatcher? _watcherHelper = null;
+        private ForegroundWindowWatcher? _windowWatcher = null;
+        private bool _ignoreFullscreenWindow = false;
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
@@ -50,22 +52,14 @@ namespace BetterLyrics.WinUI3
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
-        public partial bool ShowInfoBar { get; set; } = false;
-
-        [ObservableProperty]
         public partial ElementTheme ThemeType { get; set; } = ElementTheme.Default;
 
         [ObservableProperty]
         public partial double TitleBarFontSize { get; set; } = 11;
 
         [ObservableProperty]
-        public partial double TitleBarHeight { get; set; } = 36;
-
-        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsMouseWithinWindow { get; set; } = false;
-
-        private bool _ignoreFullscreenWindow = false;
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -122,7 +116,7 @@ namespace BetterLyrics.WinUI3
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
-            _watcherHelper = new ForegroundWindowWatcher(
+            _windowWatcher = new ForegroundWindowWatcher(
                 hwnd,
                 onWindowChanged =>
                 {
@@ -133,8 +127,14 @@ namespace BetterLyrics.WinUI3
                     UpdateAccentColor(hwnd, mode);
                 }
             );
-            _watcherHelper.Start();
+            _windowWatcher.Start();
             UpdateAccentColor(hwnd, mode);
+        }
+
+        private void StopWatchWindowColorChange()
+        {
+            _windowWatcher?.Stop();
+            _windowWatcher = null;
         }
 
         public void UpdateAccentColor(nint hwnd, WindowPixelSampleMode mode)
@@ -150,12 +150,6 @@ namespace BetterLyrics.WinUI3
 
             DesktopModeHelper.SetClickThrough(window, true);
             IsLyricsWindowLocked = true;
-        }
-
-        private void StopWatchWindowColorChange()
-        {
-            _watcherHelper?.Stop();
-            _watcherHelper = null;
         }
 
         [RelayCommand]

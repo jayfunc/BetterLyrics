@@ -33,6 +33,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _lyricsBlurAmount = _settingsService.LyricsBlurAmount;
             _isLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
             _lyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
+            _lyricsHighlightScope = _settingsService.LyricsHighlightScope;
 
             _customBgFontColor = _settingsService.LyricsCustomBgFontColor;
             _customFgFontColor = _settingsService.LyricsCustomFgFontColor;
@@ -45,6 +46,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             _targetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
 
+            _timelineSyncThreshold = _settingsService.TimelineSyncThreshold;
+
             _canvasYScrollTransition.SetDuration(_settingsService.LyricsScrollDuration / 1000f);
             _canvasYScrollTransition.SetEasingType(_settingsService.LyricsScrollEasingType);
 
@@ -56,7 +59,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService.AlbumArtChangedChanged += PlaybackService_AlbumArtChangedChanged;
             _playbackService.PositionChanged += PlaybackService_PositionChanged;
 
-            UpdateFontColor();
+            UpdateColorConfig();
         }
     }
 }

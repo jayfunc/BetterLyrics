@@ -69,9 +69,9 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static bool IsSwitchableNormalizedMatch(string fileName, string q1, string q2)
         {
-            var normFileName = fileName.Normalize();
-            var normQ1 = q1.Normalize();
-            var normQ2 = q2.Normalize();
+            var normFileName = StringHelper.Normalize(fileName.Normalize());
+            var normQ1 = StringHelper.Normalize(q1);
+            var normQ2 = StringHelper.Normalize(q2);
 
             // 常见两种顺序
             return normFileName == normQ1 + normQ2

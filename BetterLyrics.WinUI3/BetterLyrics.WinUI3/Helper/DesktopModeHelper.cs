@@ -47,13 +47,6 @@ namespace BetterLyrics.WinUI3.Helper
                 _originalWindowBounds.Remove(hwnd);
             }
 
-            // 恢复样式
-            if (_originalWindowStyles.TryGetValue(hwnd, out var style))
-            {
-                window.SetWindowStyle(style);
-                _originalWindowStyles.Remove(hwnd);
-            }
-
             window.SetIsShownInSwitchers(true);
         }
 
@@ -83,10 +76,6 @@ namespace BetterLyrics.WinUI3.Helper
                 new Windows.Graphics.RectInt32(targetX, targetY, targetWidth, targetHeight)
             );
 
-            // 记忆原样式
-            if (!_originalWindowStyles.ContainsKey(hwnd))
-                _originalWindowStyles[hwnd] = window.GetWindowStyle();
-
             // 记忆原TopMost状态
             if (!_originalTopmostStates.ContainsKey(hwnd))
                 _originalTopmostStates[hwnd] = window.GetIsAlwaysOnTop();
@@ -95,8 +84,6 @@ namespace BetterLyrics.WinUI3.Helper
             window.SetIsAlwaysOnTop(true);
 
             window.SetIsShownInSwitchers(false);
-
-            window.ToggleWindowStyle(true, WindowStyle.Popup | WindowStyle.Visible);
         }
 
         public static void SetClickThrough(Window window, bool enable)
@@ -105,11 +92,22 @@ namespace BetterLyrics.WinUI3.Helper
             int exStyle = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE);
             if (enable)
             {
+                // 记忆原样式
+                if (!_originalWindowStyles.ContainsKey(hwnd))
+                    _originalWindowStyles[hwnd] = window.GetWindowStyle();
+
+                window.ToggleWindowStyle(true, WindowStyle.Popup | WindowStyle.Visible);
                 User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, exStyle | (int)User32.WindowStylesEx.WS_EX_TRANSPARENT | (int)User32.WindowStylesEx.WS_EX_LAYERED);
             }
             else
             {
                 User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, exStyle & ~(int)User32.WindowStylesEx.WS_EX_TRANSPARENT);
+                // 恢复样式
+                if (_originalWindowStyles.TryGetValue(hwnd, out var style))
+                {
+                    window.SetWindowStyle(style);
+                    _originalWindowStyles.Remove(hwnd);
+                }
             }
         }
     }

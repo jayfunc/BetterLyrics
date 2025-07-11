@@ -69,6 +69,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsFontSize = _settingsService.LyricsFontSize;
             IsLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
             LyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
+            LyricsHighlightScope = _settingsService.LyricsHighlightScope;
             IsFanLyricsEnabled = _settingsService.IsFanLyricsEnabled;
 
             LyricsBgFontColorType = _settingsService.LyricsBgFontColorType;
@@ -86,6 +87,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             LyricsScrollEasingType = _settingsService.LyricsScrollEasingType;
             LyricsScrollDuration = _settingsService.LyricsScrollDuration;
+            TimelineSyncThreshold = _settingsService.TimelineSyncThreshold;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
@@ -209,6 +211,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
+        public partial LineRenderingType LyricsHighlightScope { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         public partial float LyricsLineSpacingFactor { get; set; }
 
         [ObservableProperty]
@@ -218,7 +224,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial object NavViewSelectedItemTag { get; set; }
 
-        public string Version { get; set; } = Helper.MetadataHelper.AppVersion;
+        public string Version { get; set; } = MetadataHelper.AppVersion;
 
         public string BuildDate { get; set; } = string.Empty;
 
@@ -248,25 +254,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [NotifyPropertyChangedRecipients]
         public partial int LyricsScrollDuration { get; set; }
 
-        partial void OnLyricsScrollEasingTypeChanged(EasingType value)
-        {
-            _settingsService.LyricsScrollEasingType = value;
-        }
-
-        partial void OnLyricsScrollDurationChanged(int value)
-        {
-            _settingsService.LyricsScrollDuration = value;
-        }
-
-        partial void OnLyricsBackgroundThemeChanged(ElementTheme value)
-        {
-            _settingsService.LyricsBackgroundTheme = value;
-        }
-
-        partial void OnLyricsFontStrokeWidthChanged(int value)
-        {
-            _settingsService.LyricsFontStrokeWidth = value;
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int TimelineSyncThreshold { get; set; }
 
         public void OnLyricsSearchProvidersReordered()
         {
@@ -286,11 +276,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 AlbumArtSearchProvidersInfo,
                 nameof(AlbumArtSearchProvidersInfo)
             );
-        }
-
-        public void OpenMusicFolder(LocalLyricsFolder folder)
-        {
-            OpenFolderInFileExplorer(folder.Path);
         }
 
         public void RemoveFolderAsync(LocalLyricsFolder folder)
@@ -371,31 +356,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void OpenCacheFolder()
+        private static async Task OpenCacheFolderAsync()
         {
-            OpenFolderInFileExplorer(PathHelper.CacheFolder);
-        }
-
-        private void OpenFolderInFileExplorer(string path)
-        {
-            Process.Start(
-                new ProcessStartInfo
-                {
-                    FileName = "explorer.exe",
-                    Arguments = path,
-                    UseShellExecute = true,
-                }
-            );
+            await Launcher.LaunchFolderPathAsync(PathHelper.CacheFolder);
         }
 
         [RelayCommand]
-        private void PlayTestingMusicTask()
-        {
-            WindowHelper.OpenOrShowWindow<LyricsWindow>();
-        }
-
-        [RelayCommand]
-        private void RestartApp()
+        private static void RestartApp()
         {
             WindowHelper.RestartApp();
         }
@@ -429,7 +396,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 try
                 {
                     string targetLangCode = LanguageHelper.SupportedTargetLanguages[SelectedTargetLanguageIndex].Code;
-                    string result = await _libreTranslateService.TranslateAsync("Hello, world!", targetLangCode, null);
+                    string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, null);
                     _dispatcherQueue.TryEnqueue(() =>
                     {
                         App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageLibreTranslateTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
@@ -479,51 +446,58 @@ namespace BetterLyrics.WinUI3.ViewModels
             return result;
         }
 
+        partial void OnLyricsScrollEasingTypeChanged(EasingType value)
+        {
+            _settingsService.LyricsScrollEasingType = value;
+        }
+        partial void OnLyricsScrollDurationChanged(int value)
+        {
+            _settingsService.LyricsScrollDuration = value;
+        }
+        partial void OnLyricsBackgroundThemeChanged(ElementTheme value)
+        {
+            _settingsService.LyricsBackgroundTheme = value;
+        }
+        partial void OnLyricsFontStrokeWidthChanged(int value)
+        {
+            _settingsService.LyricsFontStrokeWidth = value;
+        }
         partial void OnIgnoreFullscreenWindowChanged(bool value)
         {
             _settingsService.IgnoreFullscreenWindow = value;
         }
-
         partial void OnSelectedTargetLanguageIndexChanged(int value)
         {
             _settingsService.SelectedTargetLanguageIndex = value;
         }
-
         partial void OnLibreTranslateServerChanged(string value)
         {
             _settingsService.LibreTranslateServer = value;
         }
-
         partial void OnAutoStartWindowTypeChanged(AutoStartWindowType value)
         {
             _settingsService.AutoStartWindowType = value;
         }
-
         partial void OnAutoLockOnDesktopModeChanged(bool value)
         {
             _settingsService.AutoLockOnDesktopMode = value;
         }
-
         partial void OnCoverImageRadiusChanged(int value)
         {
             _settingsService.CoverImageRadius = value;
         }
-
         partial void OnCoverOverlayBlurAmountChanged(int value)
         {
             _settingsService.CoverOverlayBlurAmount = value;
         }
-
         partial void OnCoverOverlayOpacityChanged(int value)
         {
             _settingsService.CoverOverlayOpacity = value;
         }
-
         partial void OnIsDynamicCoverOverlayEnabledChanged(bool value)
         {
             _settingsService.IsDynamicCoverOverlayEnabled = value;
         }
-
         partial void OnLanguageChanged(Enums.Language value)
         {
             switch (value)
@@ -551,85 +525,78 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             _settingsService.Language = Language;
         }
-
         partial void OnIsFanLyricsEnabledChanged(bool value)
         {
             _settingsService.IsFanLyricsEnabled = value;
         }
-
         partial void OnIsLyricsGlowEffectEnabledChanged(bool value)
         {
             _settingsService.IsLyricsGlowEffectEnabled = value;
         }
-
         partial void OnLyricsAlignmentTypeChanged(TextAlignmentType value)
         {
             _settingsService.LyricsAlignmentType = value;
         }
-
         partial void OnSongInfoAlignmentTypeChanged(TextAlignmentType value)
         {
             _settingsService.SongInfoAlignmentType = value;
         }
-
         partial void OnLyricsBlurAmountChanged(int value)
         {
             _settingsService.LyricsBlurAmount = value;
         }
-
         partial void OnLyricsCustomBgFontColorChanged(Color value)
         {
             _settingsService.LyricsCustomBgFontColor = value;
         }
-
         partial void OnLyricsCustomFgFontColorChanged(Color value)
         {
             _settingsService.LyricsCustomFgFontColor = value;
         }
-
         partial void OnLyricsCustomStrokeFontColorChanged(Color value)
         {
             _settingsService.LyricsCustomStrokeFontColor = value;
         }
-
         partial void OnLyricsBgFontColorTypeChanged(LyricsFontColorType value)
         {
             _settingsService.LyricsBgFontColorType = value;
         }
-
         partial void OnLyricsFgFontColorTypeChanged(LyricsFontColorType value)
         {
             _settingsService.LyricsFgFontColorType = value;
         }
-
         partial void OnLyricsStrokeFontColorTypeChanged(LyricsFontColorType value)
         {
             _settingsService.LyricsStrokeFontColorType = value;
         }
-
         partial void OnLyricsFontSizeChanged(int value)
         {
             _settingsService.LyricsFontSize = value;
         }
-
         partial void OnLyricsFontWeightChanged(LyricsFontWeight value)
         {
             _settingsService.LyricsFontWeight = value;
         }
-
         partial void OnLyricsGlowEffectScopeChanged(LineRenderingType value)
         {
             _settingsService.LyricsGlowEffectScope = value;
         }
-
+        partial void OnLyricsHighlightScopeChanged(LineRenderingType value)
+        {
+            _settingsService.LyricsHighlightScope = value;
+        }
         partial void OnLyricsLineSpacingFactorChanged(float value)
         {
             _settingsService.LyricsLineSpacingFactor = value;
         }
-
         partial void OnLyricsVerticalEdgeOpacityChanged(int value)
         {
             _settingsService.LyricsVerticalEdgeOpacity = value;
         }
+        partial void OnTimelineSyncThresholdChanged(int value)
+        {
+            _settingsService.TimelineSyncThreshold = value;
+        }
+
     }
 }
