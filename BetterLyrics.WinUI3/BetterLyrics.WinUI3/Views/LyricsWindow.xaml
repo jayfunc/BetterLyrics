@@ -12,19 +12,20 @@
     xmlns:scontrols="using:ShadowViewer.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
-    <Window.SystemBackdrop>
-        <MicaBackdrop />
-    </Window.SystemBackdrop>
 
-    <Grid x:Name="RootGrid" RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
+    <Grid
+        x:Name="RootGrid"
+        PointerEntered="RootGrid_PointerEntered"
+        PointerExited="RootGrid_PointerExited"
+        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
 
         <local:LyricsPage />
 
         <!--  Top command  -->
         <Grid
             x:Name="TopCommandGrid"
+            Margin="6"
             VerticalAlignment="Top"
-            Background="Transparent"
             Opacity="0"
             PointerEntered="TopCommandGrid_PointerEntered"
             PointerExited="TopCommandGrid_PointerExited">
@@ -113,7 +114,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE654;" />
+                        Glyph="&#xE738;" />
                 </Button>
                 <!--  Window Maximise  -->
                 <Button
@@ -123,7 +124,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE655;" />
+                        Glyph="&#xE71A;" />
                 </Button>
                 <!--  Window Restore  -->
                 <Button
@@ -134,7 +135,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE656;" />
+                        Glyph="&#xE744;" />
                 </Button>
                 <!--  Window Close  -->
                 <Button
@@ -144,7 +145,7 @@
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE653;" />
+                        Glyph="&#xE711;" />
                 </Button>
             </StackPanel>
 

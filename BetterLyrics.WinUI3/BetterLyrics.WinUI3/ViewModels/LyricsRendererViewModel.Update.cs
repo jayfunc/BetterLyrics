@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
+using System.Linq;
 using System.Numerics;
 using Windows.UI;
 
@@ -43,12 +44,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             _displayType = _displayTypeReceived;
             _playingLineIndex = playingLineIndex;
 
+            _immersiveBgOpacityTransition.Update(_elapsedTime);
             _immersiveBgTransition.Update(_elapsedTime);
             _albumArtBgTransition.Update(_elapsedTime);
             _lyricsBgBrightnessTransition.Update(_elapsedTime);
             _songInfoOpacityTransition.Update(_elapsedTime);
 
-            if (IsDynamicCoverOverlayEnabled)
+            if (_isDynamicCoverOverlayEnabled)
             {
                 _rotateAngle += _coverRotateSpeed;
                 _rotateAngle %= MathF.PI * 2;
@@ -129,14 +131,14 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (control == null)
                 return;
 
-            _lyricsTextFormat.FontSize = LyricsFontSize;
+            _lyricsTextFormat.FontSize = _lyricsFontSize;
 
             float y = 0;
 
             // Init Positions
-            for (int i = 0; i < _multiLangLyrics.SafeGet(_langIndex)?.Count; i++)
+            for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
             {
-                var line = _multiLangLyrics[_langIndex].SafeGet(i);
+                var line = _lyricsDataArr[_langIndex].LyricsLines.ElementAtOrDefault(i);
 
                 if (line == null)
                 {
@@ -163,7 +165,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 y +=
                     (float)line.CanvasTextLayout.LayoutBounds.Height
                     / line.CanvasTextLayout.LineCount
-                    * (line.CanvasTextLayout.LineCount + LyricsLineSpacingFactor);
+                    * (line.CanvasTextLayout.LineCount + _lyricsLineSpacingFactor);
             }
         }
 
@@ -177,7 +179,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if ((!_isPlayingLineChanged && forceScroll) || _isPlayingLineChanged)
             {
-                LyricsLine? currentPlayingLine = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(_playingLineIndex);
+                LyricsLine? currentPlayingLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
                 if (currentPlayingLine == null) return;
 
@@ -185,7 +187,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 if (playingTextLayout == null) return;
 
-                float? targetYScrollOffset = (float?)(-currentPlayingLine!.Position.Y + _multiLangLyrics.SafeGet(_langIndex)?[0].Position.Y - playingTextLayout.LayoutBounds.Height / 2);
+                float? targetYScrollOffset = (float?)(-currentPlayingLine!.Position.Y + _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines[0].Position.Y - playingTextLayout.LayoutBounds.Height / 2);
 
                 if (!targetYScrollOffset.HasValue) return;
 
@@ -200,7 +202,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             // Update visible line indices
             for (int i = startLineIndex; i <= endLineIndex; i++)
             {
-                var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
+                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
 
                 if (line == null || line.CanvasTextLayout == null)
                 {
@@ -248,7 +250,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _endVisibleLineIndex = endVisibleLineIndex;
         }
 
-        private void UpdateFontColor()
+        private void UpdateColorConfig()
         {
             if (_isDesktopMode || _isDockMode)
             {
@@ -359,15 +361,15 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void UpdateLinesProps()
         {
-            var currentPlayingLine = _multiLangLyrics
-                .SafeGet(_langIndex)
-                ?.SafeGet(_playingLineIndex);
+            var currentPlayingLine = _lyricsDataArr
+                .ElementAtOrDefault(_langIndex)
+                ?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
             if (currentPlayingLine == null) return;
 
             for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
             {
-                var line = _multiLangLyrics.SafeGet(_langIndex)?.SafeGet(i);
+                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
 
                 if (line == null) continue;
 
@@ -384,9 +386,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                             : 0
                     );
 
-                    line.BlurAmountTransition.StartTransition(LyricsBlurAmount * distanceFactor);
+                    line.BlurAmountTransition.StartTransition(_lyricsBlurAmount * distanceFactor);
                     line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
-                    line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - LyricsVerticalEdgeOpacity / 100f));
+                    line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - _lyricsVerticalEdgeOpacity / 100f));
                     line.HighlightOpacityTransition.StartTransition(i == _playingLineIndex ? 1f : 0f);
                 }
 

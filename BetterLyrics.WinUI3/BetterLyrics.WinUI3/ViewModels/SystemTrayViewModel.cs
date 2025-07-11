@@ -8,16 +8,14 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class SystemTrayViewModel : BaseViewModel, IRecipient<PropertyChangedMessage<bool>>
+    public partial class SystemTrayViewModel(ISettingsService settingsService) : BaseViewModel(settingsService), IRecipient<PropertyChangedMessage<bool>>
     {
-        public SystemTrayViewModel(ISettingsService settingsService) : base(settingsService) { }
-
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
-        public partial string ToolTipText { get; set; } = AppInfo.AppName;
+        public partial string ToolTipText { get; set; } = MetadataHelper.AppName;
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -34,15 +32,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void ExitApp()
+        private static void ExitApp()
         {
             WindowHelper.ExitAllWindows();
         }
 
         [RelayCommand]
-        private void OpenSettings()
+        private static void OpenSettings()
         {
-            // 打开设置窗口
             WindowHelper.OpenOrShowWindow<SettingsWindow>();
         }
 
@@ -52,7 +49,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DesktopModeHelper.Unlock(window);
+            DesktopModeHelper.SetClickThrough(window, false);
             IsLyricsWindowLocked = false;
         }
     }

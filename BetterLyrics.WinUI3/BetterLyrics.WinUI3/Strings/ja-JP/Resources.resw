@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>地元の音楽図書館</value>
+    <value>地元のメディア図書館</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>音楽や歌詞を保存するフォルダーを追加します</value>
@@ -280,7 +280,7 @@
     <value>について</value>
   </data>
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>歌詞ライブラリ</value>
+    <value>歌詞</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>アプリの外観</value>
@@ -292,7 +292,7 @@
     <value>グローエフェクトスコープ</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>歌詞検索プロバイダーを構成します</value>
+    <value>歌詞ソースを構成します</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
     <value>ドラッグしてソートすると、歌詞の検索注文は次の順序で行われます</value>
@@ -310,7 +310,7 @@
     <value>今は音楽が再生されていません</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>開発者オプション</value>
+    <value>高度なオプション</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>テスト音楽を再生します</value>
@@ -459,13 +459,10 @@
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>余分な黒</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>歌詞全体</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
     <value>現在の行</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>現在の文字</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
@@ -526,7 +523,7 @@
     <value>プログラムを終了します</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>ウィンドウのロックを解除する（再起動が必要）</value>
+    <value>ウィンドウのロックを解除します</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>ロック</value>
@@ -573,11 +570,11 @@
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>アニメーションタイプを緩和します</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>メディアソース</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>再生ソース</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>メディアソース</value>
+    <value>再生ソース</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>指定されたメディアソースの歌詞ディスプレイを有効または無効にする</value>
@@ -653,5 +650,89 @@
   </data>
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
     <value>曲を切り替えると、0 に自動的にリセットされます</value>
+  </data>
+  <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
+    <value>歌詞の翻訳は最初に読まれます。一致していない場合、機械の翻訳はLibretranslate Serverから要求されます</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
+    <value>アルバムカバーソースを構成します</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
+    <value>ドラッグしてソートすると、アルバムアートサーチオーダーは次の順序で行われます</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>アルバムアートソース</value>
+  </data>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>ローカル音楽ファイル</value>
+  </data>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>音楽プレーヤー</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>メディアライブラリ</value>
+  </data>
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>歌詞スクロールアニメーションタイプ</value>
+  </data>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>歌詞スクロールアニメーションの期間</value>
+  </data>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>リニア</value>
+  </data>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>スムーズなステップ</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>サインがゆっくりと出入りします</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>セカンダリスローインとアウト</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>弾力性は内外に遅くなります</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>リバウンドはスローアウトで遅くなります</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>ゆっくりと出入りします</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>丸い、ゆっくりと出入り</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>インデックスは内外に遅くなります</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>5つの遅いインとアウト</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>4つの遅いインとアウト</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>3つの遅いインとアウト</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>現在のラインが現在の文字から始まります</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>ハイライトスコープ</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>歌詞タイムライン同期しきい値</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>歌詞の進行が不安定な場合は、このしきい値を増やしてみてください。この値を変更すると、歌詞の同期が逸脱する可能性があります</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQフィードバック＆チャットグループ</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>今すぐ参加してください</value>
   </data>
 </root>

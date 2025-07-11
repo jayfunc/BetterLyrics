@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>Local music libraries</value>
+    <value>Local media library</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Add folders storing music or lyrics</value>
@@ -292,7 +292,7 @@
     <value>Glow effect scope</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>Configure lyrics search providers</value>
+    <value>Configure lyrics source</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
     <value>Drag to sort, the lyrics search order will be in the following order</value>
@@ -310,7 +310,7 @@
     <value>No music playing now</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>Developer options</value>
+    <value>Advanced options</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>Play test music</value>
@@ -459,13 +459,10 @@
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>Extra Black</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>Whole lyrics</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
     <value>Current line</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>Current char</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
@@ -526,7 +523,7 @@
     <value>Exit</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>Unlock the window (Restart needed)</value>
+    <value>Unlock the window</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>Lock</value>
@@ -573,11 +570,11 @@
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>Easing animation type</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>Media sources</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>Playback sources</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>Media source</value>
+    <value>Playback sources</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>Enable or disable lyrics display for a specified media source</value>
@@ -653,5 +650,89 @@
   </data>
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
     <value>Will automatically reset to 0 when switching songs</value>
+  </data>
+  <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
+    <value>The translation in the lyrics will be read first. If there is no match, the machine translation will be requested from the LibreTranslate server</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
+    <value>Configure album cover source</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
+    <value>Drag to sort, the album art search order will be in the following order</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>Album art source</value>
+  </data>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>Local music files</value>
+  </data>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>Music player</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>Media library</value>
+  </data>
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation type</value>
+  </data>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation duration</value>
+  </data>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>Linear</value>
+  </data>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>Smooth step</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>Ease-in-out sine</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>Ease-in-out quad</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>Ease-in-out elastic</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>Ease-in-out back</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>Ease-in-out bounce</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>Ease-in-out circ</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>Ease-in-out expo</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>Ease-in-out quint</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>Ease-in-out quart</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>Ease-in-out cubic</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>Current line start to current char</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>Highlight scope</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>Lyrics timeline sync threshold</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>If the lyrics progress is jittery, try increasing this threshold; changing this value can cause lyrics synchronization to deviate</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQ feedback &amp; chat group</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>Join now</value>
   </data>
 </root>

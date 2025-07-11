@@ -6,11 +6,16 @@
 
 <h2 align="center">
 BetterLyrics
-</div>
+</h2>
 
 <h3 align="center">
 使用 WinUI 3 构建的流畅动态歌词显示工具
-</div>
+</h3>
+
+---
+
+- QQ[「BetterLyrics」反馈交流群（简体中文）](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
+- Discord [「BetterLyrics」反馈交流群（繁体中文/英文）](https://discord.gg/5yAQPnyCKv)
 
 ---
 
@@ -21,6 +26,7 @@ BetterLyrics
 - 流畅的用户界面随歌曲切换
 - 每个字符均支持渐变卡拉 OK（带光晕）效果
 - 沉浸式桌面歌词（停靠模式）
+- 本地翻译（支持 30 种语言）
 
 > 该项目目前仍在开发中，最新的开发分支中可能存在错误和意外行为。
 
@@ -121,7 +127,3 @@ BetterLyrics
 ## 欢迎提出任何问题和 PR
 
 如果您发现错误，请提交至 issues；如果您有任何想法，请随时在此处分享。
-
-或者，您也可以加入群聊，分享您的宝贵反馈：
-- QQ[「BetterLyrics」反馈交流群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
-- Discord [「BetterLyrics」反馈交流群](https://discord.gg/rbnF556r)

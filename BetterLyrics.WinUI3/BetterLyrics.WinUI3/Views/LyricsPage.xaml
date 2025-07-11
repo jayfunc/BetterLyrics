@@ -94,8 +94,8 @@
                             <StackPanel>
                                 <Slider
                                     x:Uid="MainPagePositionOffsetSlider"
-                                    Maximum="2000"
-                                    Minimum="-2000"
+                                    Maximum="5000"
+                                    Minimum="-5000"
                                     SnapsTo="Ticks"
                                     StepFrequency="100"
                                     TickFrequency="100"
@@ -114,7 +114,7 @@
                                         RelativePanel.AlignVerticalCenterWithPanel="True"
                                         Style="{StaticResource GhostButtonStyle}" />
                                 </RelativePanel>
-                                <TextBlock Opacity="0.5" x:Uid="LyricsPagePositionOffsetHint"/>
+                                <TextBlock x:Uid="LyricsPagePositionOffsetHint" Opacity="0.5" />
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>

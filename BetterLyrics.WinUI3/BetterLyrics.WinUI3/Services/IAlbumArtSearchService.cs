@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services
 {
-    public interface ILibreTranslateService
+    public interface IAlbumArtSearchService
     {
-        Task<string> TranslateAsync(string text, CancellationToken? token);
+        Task<byte[]?> SearchAsync(string title, string artist, string album, byte[]? bytesFromSMTC = null);
     }
 }

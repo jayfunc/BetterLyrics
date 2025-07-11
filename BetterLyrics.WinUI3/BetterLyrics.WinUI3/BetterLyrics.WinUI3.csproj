@@ -19,6 +19,7 @@
     <PRIResource Remove="ViewModels\Lyrics\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\Core14.profile.xml" />
     <None Remove="Controls\SystemTray.xaml" />
     <None Remove="Views\SettingsWindow.xaml" />
   </ItemGroup>
@@ -42,13 +43,14 @@
     <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
     <PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
-    <PackageReference Include="iTunesSearch" Version="1.0.44" />
     <PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
+    <PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
+    <PackageReference Include="NTextCat" Version="0.3.65" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageReference Include="ShadowViewer.Controls.Notification" Version="1.2.1" />

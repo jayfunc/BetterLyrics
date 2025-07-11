@@ -6,13 +6,6 @@ using BetterLyrics.WinUI3.Enums;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class AnimationHelper
-    {
-        public const int DebounceDefaultDuration = 200;
-        public const int StackedNotificationsShowingDuration = 3900;
-        public const int StoryboardDefaultDuration = 200;
-    }
-
     public class ValueTransition<T>
         where T : struct
     {
@@ -52,9 +45,16 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                _easingType = EasingType.SmoothStep;
+                _easingType = EasingType.Linear;
                 _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
+        }
+
+        public void SetDuration(float seconds)
+        {
+            if (seconds <= 0)
+                throw new ArgumentOutOfRangeException(nameof(seconds), "Duration must be positive.");
+            _durationSeconds = seconds;
         }
 
         private void JumpTo(T value)

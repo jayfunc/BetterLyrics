@@ -1,6 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System.Threading.Tasks;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
@@ -14,8 +13,11 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.UI;
 using WinRT.Interop;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
@@ -25,7 +27,8 @@ namespace BetterLyrics.WinUI3
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<bool>>
     {
-        private ForegroundWindowWatcherHelper? _watcherHelper = null;
+        private ForegroundWindowWatcher? _windowWatcher = null;
+        private bool _ignoreFullscreenWindow = false;
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
@@ -49,21 +52,14 @@ namespace BetterLyrics.WinUI3
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
-        public partial Notification Notification { get; set; } = new();
-
-        [ObservableProperty]
-        public partial bool ShowInfoBar { get; set; } = false;
-
-        [ObservableProperty]
         public partial ElementTheme ThemeType { get; set; } = ElementTheme.Default;
 
         [ObservableProperty]
         public partial double TitleBarFontSize { get; set; } = 11;
 
         [ObservableProperty]
-        public partial double TitleBarHeight { get; set; } = 36;
-
-        private bool _ignoreFullscreenWindow = false;
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsMouseWithinWindow { get; set; } = false;
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -114,13 +110,13 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        public void StartWatchWindowColorChange(WindowColorSampleMode mode)
+        public void StartWatchWindowColorChange(WindowPixelSampleMode mode)
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
-            _watcherHelper = new ForegroundWindowWatcherHelper(
+            _windowWatcher = new ForegroundWindowWatcher(
                 hwnd,
                 onWindowChanged =>
                 {
@@ -131,13 +127,19 @@ namespace BetterLyrics.WinUI3
                     UpdateAccentColor(hwnd, mode);
                 }
             );
-            _watcherHelper.Start();
+            _windowWatcher.Start();
             UpdateAccentColor(hwnd, mode);
         }
 
-        public void UpdateAccentColor(nint hwnd, WindowColorSampleMode mode)
+        private void StopWatchWindowColorChange()
         {
-            ActivatedWindowAccentColor = WindowColorHelper.GetDominantColor(hwnd, mode).ToColor();
+            _windowWatcher?.Stop();
+            _windowWatcher = null;
+        }
+
+        public void UpdateAccentColor(nint hwnd, WindowPixelSampleMode mode)
+        {
+            ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, mode).ToColor();
         }
 
         [RelayCommand]
@@ -146,14 +148,8 @@ namespace BetterLyrics.WinUI3
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DesktopModeHelper.Lock(window);
+            DesktopModeHelper.SetClickThrough(window, true);
             IsLyricsWindowLocked = true;
-        }
-
-        private void StopWatchWindowColorChange()
-        {
-            _watcherHelper?.Stop();
-            _watcherHelper = null;
         }
 
         [RelayCommand]
@@ -167,8 +163,8 @@ namespace BetterLyrics.WinUI3
             IsDesktopMode = !IsDesktopMode;
             if (IsDesktopMode)
             {
-                StartWatchWindowColorChange(WindowColorSampleMode.WindowEdge);
                 DesktopModeHelper.Enable(window);
+                StartWatchWindowColorChange(WindowPixelSampleMode.WindowEdge);
             }
             else
             {
@@ -187,8 +183,8 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
-                StartWatchWindowColorChange(WindowColorSampleMode.BelowWindow);
                 DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 4);
+                StartWatchWindowColorChange(WindowPixelSampleMode.BelowWindow);
             }
             else
             {

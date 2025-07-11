@@ -5,17 +5,17 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public partial class LyricsSearchProviderInfo : ObservableObject
+    public partial class MediaSourceProviderInfo : ObservableObject
     {
         [ObservableProperty]
         public partial bool IsEnabled { get; set; }
 
         [ObservableProperty]
-        public partial LyricsSearchProvider Provider { get; set; }
+        public partial string Provider { get; set; }
 
-        public LyricsSearchProviderInfo() { }
+        public MediaSourceProviderInfo() { }
 
-        public LyricsSearchProviderInfo(LyricsSearchProvider provider, bool isEnabled)
+        public MediaSourceProviderInfo(string provider, bool isEnabled)
         {
             Provider = provider;
             IsEnabled = isEnabled;

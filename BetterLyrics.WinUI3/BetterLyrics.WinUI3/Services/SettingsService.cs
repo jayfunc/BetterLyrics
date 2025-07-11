@@ -62,8 +62,10 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsFontSizeKey = "LyricsFontSize";
         private const string LyricsFontWeightKey = "LyricsFontWeightKey";
         private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
+        private const string LyricsHighlightSopeKey = "LyricsHighlightSope";
         private const string LyricsLineSpacingFactorKey = "LyricsLineSpacingFactor";
         private const string LyricsSearchProvidersInfoKey = "LyricsSearchProvidersInfo";
+        private const string AlbumArtSearchProvidersInfoKey = "AlbumArtSearchProvidersInfo";
         private const string LyricsVerticalEdgeOpacityKey = "LyricsVerticalEdgeOpacity";
 
         private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
@@ -73,10 +75,13 @@ namespace BetterLyrics.WinUI3.Services
         private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
 
         private const string LyricsBackgroundThemeKey = "LyricsBackgroundTheme";
-
         private const string IgnoreFullscreenWindowKey = "IgnoreFullscreenWindow";
-
         private const string PreferredDisplayTypeKey = "PreferredDisplayTypeKey";
+
+        private const string LyricsScrollEasingTypeKey = "LyricsScrollEasingType";
+        private const string LyricsScrollDurationKey = "LyricsScrollDuration";
+
+        public const string TimelineSyncThresholdKey = "TimelineSyncThreshold";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -96,7 +101,6 @@ namespace BetterLyrics.WinUI3.Services
                     SourceGenerationContext.Default.ListLyricsSearchProviderInfo
                 )
             );
-            SetDefault(MediaSourceProvidersInfoKey, "[]");
             if (LyricsSearchProvidersInfo.Count != Enum.GetValues<LyricsSearchProvider>().Length)
             {
                 LyricsSearchProvidersInfo = Enum.GetValues<LyricsSearchProvider>()
@@ -109,6 +113,31 @@ namespace BetterLyrics.WinUI3.Services
                     ))
                     .ToList();
             }
+
+            SetDefault(
+                AlbumArtSearchProvidersInfoKey,
+                System.Text.Json.JsonSerializer.Serialize(
+                    Enum.GetValues<AlbumArtSearchProvider>()
+                        .Select(p => new AlbumArtSearchProviderInfo(p, true))
+                        .ToList(),
+                    SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
+                )
+            );
+            if (AlbumArtSearchProvidersInfo.Count != Enum.GetValues<AlbumArtSearchProvider>().Length)
+            {
+                AlbumArtSearchProvidersInfo = Enum.GetValues<AlbumArtSearchProvider>()
+                    .Select(p => new AlbumArtSearchProviderInfo(
+                        p,
+                        AlbumArtSearchProvidersInfo
+                            .Where(x => x.Provider == p)
+                            .FirstOrDefault()
+                            ?.IsEnabled ?? true
+                    ))
+                    .ToList();
+            }
+
+            SetDefault(MediaSourceProvidersInfoKey, "[]");
+
             // App appearance
             SetDefault(LanguageKey, (int)Language.FollowSystem);
 
@@ -129,7 +158,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IsCoverOverlayEnabledKey, true);
             SetDefault(IsDynamicCoverOverlayEnabledKey, true);
             SetDefault(CoverOverlayOpacityKey, 100); // 100 % = 1.0
-            SetDefault(CoverOverlayBlurAmountKey, 200);
+            SetDefault(CoverOverlayBlurAmountKey, 100);
             SetDefault(CoverImageRadiusKey, 12); // 12 %
             // Lyrics
             SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Center);
@@ -142,7 +171,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsBgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
             SetDefault(LyricsFgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
             SetDefault(LyricsStrokeFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
-            
+
             SetDefault(LyricsCustomBgFontColorKey, Colors.White.ToInt());
             SetDefault(LyricsCustomFgFontColorKey, Colors.White.ToInt());
             SetDefault(LyricsCustomStrokeFontColorKey, Colors.White.ToInt());
@@ -151,7 +180,8 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
             SetDefault(LyricsVerticalEdgeOpacityKey, 0);
             SetDefault(IsLyricsGlowEffectEnabledKey, true);
-            SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.CurrentCharOnly);
+            SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.CurrentChar);
+            SetDefault(LyricsHighlightSopeKey, (int)LineRenderingType.LineStartToCurrentChar);
             SetDefault(IsFanLyricsEnabledKey, false);
 
             SetDefault(LibreTranslateServerKey, "");
@@ -159,10 +189,24 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(SelectedTargetLanguageIndexKey, 6);
 
             SetDefault(LyricsFontStrokeWidthKey, 3);
-
             SetDefault(IgnoreFullscreenWindowKey, false);
-
             SetDefault(PreferredDisplayTypeKey, (int)LyricsDisplayType.SplitView);
+
+            SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutQuad);
+            SetDefault(LyricsScrollDurationKey, 500); // 500ms
+            SetDefault(TimelineSyncThresholdKey, 0); // 0ms
+        }
+
+        public EasingType LyricsScrollEasingType
+        {
+            get => (EasingType)GetValue<int>(LyricsScrollEasingTypeKey);
+            set => SetValue(LyricsScrollEasingTypeKey, (int)value);
+        }
+
+        public int LyricsScrollDuration
+        {
+            get => GetValue<int>(LyricsScrollDurationKey);
+            set => SetValue(LyricsScrollDurationKey, value);
         }
 
         public LyricsDisplayType PreferredDisplayType
@@ -380,6 +424,12 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(LyricsGlowEffectScopeKey, (int)value);
         }
 
+        public LineRenderingType LyricsHighlightScope
+        {
+            get => (LineRenderingType)GetValue<int>(LyricsHighlightSopeKey);
+            set => SetValue(LyricsHighlightSopeKey, (int)value);
+        }
+
         public float LyricsLineSpacingFactor
         {
             get => GetValue<float>(LyricsLineSpacingFactorKey);
@@ -399,6 +449,23 @@ namespace BetterLyrics.WinUI3.Services
                     System.Text.Json.JsonSerializer.Serialize(
                         value,
                         SourceGenerationContext.Default.ListLyricsSearchProviderInfo
+                    )
+                );
+        }
+
+        public List<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo
+        {
+            get =>
+                System.Text.Json.JsonSerializer.Deserialize(
+                    GetValue<string>(AlbumArtSearchProvidersInfoKey) ?? "[]",
+                    SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
+                )!;
+            set =>
+                SetValue(
+                    AlbumArtSearchProvidersInfoKey,
+                    System.Text.Json.JsonSerializer.Serialize(
+                        value,
+                        SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
                     )
                 );
         }
@@ -448,6 +515,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(IgnoreFullscreenWindowKey);
             set => SetValue(IgnoreFullscreenWindowKey, value);
+        }
+
+        public int TimelineSyncThreshold
+        {
+            get => GetValue<int>(TimelineSyncThresholdKey);
+            set => SetValue(TimelineSyncThresholdKey, value);
         }
 
         private T? GetValue<T>(string key)

@@ -1,5 +1,6 @@
 // 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -104,6 +105,32 @@ namespace BetterLyrics.WinUI3.Views
         private void AutoStartupToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             ViewModel.ToggleAutoStartupAsync(AutoStartupToggleSwitch.IsOn);
+        }
+
+        private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        {
+            ViewModel.OnAlbumArtSearchProvidersReordered();
+        }
+
+        private void AlbumArtSearchProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                if (toggleSwitch.DataContext is AlbumArtSearchProviderInfo providerInfo)
+                {
+                    ViewModel.ToggleAlbumArtSearchProvider(providerInfo);
+                }
+            }
+        }
+
+        private void QQGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Launcher.LaunchUriAsync(new Uri(MetadataHelper.QQGroupUrl));
+        }
+
+        private void DiscodGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Launcher.LaunchUriAsync(new Uri(MetadataHelper.DiscordUrl));
         }
     }
 }

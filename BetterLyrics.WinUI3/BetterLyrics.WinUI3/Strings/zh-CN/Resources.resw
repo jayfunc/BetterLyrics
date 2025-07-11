@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>本地音乐媒体库</value>
+    <value>本地媒体库</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>添加存放音乐或歌词的文件夹</value>
@@ -280,7 +280,7 @@
     <value>关于</value>
   </data>
   <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>歌词库</value>
+    <value>歌词源</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>应用外观</value>
@@ -292,7 +292,7 @@
     <value>辉光效果作用范围</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>配置歌词搜索服务</value>
+    <value>配置歌词源</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
     <value>拖动排序，歌词搜索顺序将按以下顺序</value>
@@ -310,7 +310,7 @@
     <value>当前没有正在播放的音乐</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>开发者选项</value>
+    <value>高级选项</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>播放测试音乐</value>
@@ -459,13 +459,10 @@
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>超黑</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>全部歌词</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
     <value>当前行</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>当前字符</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
@@ -526,7 +523,7 @@
     <value>退出程序</value>
   </data>
   <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>解锁窗口（需要重新启动）</value>
+    <value>解锁窗口</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>锁定</value>
@@ -573,11 +570,11 @@
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>缓动动画类型</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>媒体来源</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>播放源</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>媒体来源</value>
+    <value>播放源</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
     <value>为指定媒体源启用或禁用歌词显示</value>
@@ -653,5 +650,89 @@
   </data>
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
     <value>切换歌曲时将自动重置为 0</value>
+  </data>
+  <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
+    <value>将优先读取歌词内翻译，若无匹配则向 LibreTranslate 服务器请求机器翻译</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
+    <value>配置专辑封面源</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
+    <value>拖动排序，专辑封面搜索顺序将按以下顺序</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>专辑封面源</value>
+  </data>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>本地音乐文件</value>
+  </data>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>音乐播放器</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>媒体库</value>
+  </data>
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>歌词滚动动画类型</value>
+  </data>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>歌词滚动动画持续时间</value>
+  </data>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>线性</value>
+  </data>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>平滑步进</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>正弦缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>二次缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>弹性缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>回弹缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>弹跳缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>圆形缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>指数缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>五次缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>四次缓入缓出</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>三次缓入缓出</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>当前歌词开始到当前字符</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>高亮显示范围</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>歌词时间轴同步阈值</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>当歌词进度抖动时，请尝试增加该阈值；更改此值会导致歌词同步有偏差</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQ 反馈交流群</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>立即加入</value>
   </data>
 </root>

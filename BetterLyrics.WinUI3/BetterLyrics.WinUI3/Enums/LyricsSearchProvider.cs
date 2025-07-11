@@ -23,11 +23,11 @@ namespace BetterLyrics.WinUI3.Enums
         {
             return provider switch
             {
-                LyricsSearchProvider.LrcLib => AppInfo.LrcLibLyricsCacheDirectory,
-                LyricsSearchProvider.QQ => AppInfo.QQLyricsCacheDirectory,
-                LyricsSearchProvider.Netease => AppInfo.NeteaseLyricsCacheDirectory,
-                LyricsSearchProvider.Kugou => AppInfo.KugouLyricsCacheDirectory,
-                LyricsSearchProvider.AmllTtmlDb => AppInfo.AmllTtmlDbLyricsCacheDirectory,
+                LyricsSearchProvider.LrcLib => PathHelper.LrcLibLyricsCacheDirectory,
+                LyricsSearchProvider.QQ => PathHelper.QQLyricsCacheDirectory,
+                LyricsSearchProvider.Netease => PathHelper.NeteaseLyricsCacheDirectory,
+                LyricsSearchProvider.Kugou => PathHelper.KugouLyricsCacheDirectory,
+                LyricsSearchProvider.AmllTtmlDb => PathHelper.AmllTtmlDbLyricsCacheDirectory,
                 _ => throw new System.ArgumentOutOfRangeException(nameof(provider)),
             };
         }
