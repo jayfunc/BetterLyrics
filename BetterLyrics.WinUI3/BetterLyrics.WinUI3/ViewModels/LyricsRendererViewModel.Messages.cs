@@ -57,8 +57,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        // Receive methods for handling messages from other view models
-
         public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is SettingsPageViewModel)
@@ -86,12 +84,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
                     _isDockMode = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
                     _isDesktopMode = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
                 {
@@ -122,7 +120,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _immersiveBgTransition.StartTransition(message.NewValue);
                     _environmentalColor = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
             }
             else if (message.Sender is SettingsPageViewModel)
@@ -130,17 +128,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsCustomBgFontColor))
                 {
                     _customBgFontColor = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsCustomFgFontColor))
                 {
                     _customFgFontColor = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsCustomStrokeFontColor))
                 {
                     _customStrokeFontColor = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
             }
         }
@@ -202,6 +200,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _canvasYScrollTransition.SetDuration(message.NewValue / 1000f);
                 }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.TimelineSyncThreshold))
+                {
+                    _timelineSyncThreshold = message.NewValue;
+                }
             }
             else if (message.Sender is LyricsPageViewModel)
             {
@@ -219,6 +221,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsGlowEffectScope))
                 {
                     _lyricsGlowEffectScope = message.NewValue;
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsHighlightScope))
+                {
+                    _lyricsHighlightScope = message.NewValue;
                 }
             }
         }
@@ -251,17 +257,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsBgFontColorType))
                 {
                     _lyricsBgFontColorType = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFgFontColorType))
                 {
                     _lyricsFgFontColorType = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsStrokeFontColorType))
                 {
                     _lyricsStrokeFontColorType = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
             }
         }
@@ -285,7 +291,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsBackgroundTheme))
                 {
                     _lyricsBgTheme = message.NewValue;
-                    UpdateFontColor();
+                    UpdateColorConfig();
                 }
             }
         }

@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static List<Windows.UI.Color> GetAccentColorsFromByte(byte[] bytes)
+        public static List<Color> GetAccentColorsFromByte(byte[] bytes)
         {
             // 使用 ImageSharp 读取图片
             using var image = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(bytes);
@@ -172,21 +172,21 @@ namespace BetterLyrics.WinUI3.Helper
             return memoryStream.ToArray();
         }
 
-        //public static float GetAverageLuminance(CanvasBitmap bitmap)
-        //{
-        //    var pixels = bitmap.GetPixelBytes();
-        //    double sum = 0;
-        //    for (int i = 0; i < pixels.Length; i += 4)
-        //    {
-        //        // BGRA
-        //        byte b = pixels[i];
-        //        byte g = pixels[i + 1];
-        //        byte r = pixels[i + 2];
-        //        // 忽略A
-        //        double y = 0.299 * r + 0.587 * g + 0.114 * b;
-        //        sum += y / 255.0;
-        //    }
-        //    return (float)(sum / (pixels.Length / 4));
-        //}
+        public static float GetAverageLuminance(CanvasBitmap bitmap)
+        {
+            var pixels = bitmap.GetPixelBytes();
+            double sum = 0;
+            for (int i = 0; i < pixels.Length; i += 4)
+            {
+                // BGRA
+                byte b = pixels[i];
+                byte g = pixels[i + 1];
+                byte r = pixels[i + 2];
+                // 忽略A
+                double y = 0.299 * r + 0.587 * g + 0.114 * b;
+                sum += y / 255.0;
+            }
+            return (float)(sum / (pixels.Length / 4));
+        }
     }
 }

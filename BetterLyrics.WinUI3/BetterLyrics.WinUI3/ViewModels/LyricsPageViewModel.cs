@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class LyricsPageViewModel : BaseViewModel, IRecipient<PropertyChangedMessage<int>>, IRecipient<PropertyChangedMessage<bool>>
+    public partial class LyricsPageViewModel : BaseViewModel, IRecipient<PropertyChangedMessage<bool>>
     {
         private readonly IPlaybackService _playbackService;
 
@@ -23,15 +23,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
         {
-            LyricsFontSize = _settingsService.LyricsFontSize;
+            IsFirstRun = _settingsService.IsFirstRun;
             IsTranslationEnabled = _settingsService.IsTranslationEnabled;
             PreferredDisplayType = _settingsService.PreferredDisplayType;
 
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
-
-
-            IsFirstRun = _settingsService.IsFirstRun;
         }
 
         private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
@@ -52,12 +49,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsWelcomeTeachingTipOpen { get; set; }
 
         [ObservableProperty]
-        public partial Visibility BottomCommandGridVisibility { get; set; } = Visibility.Visible;
-
-        [ObservableProperty]
-        public partial int LyricsFontSize { get; set; }
-
-        [ObservableProperty]
         public partial LyricsDisplayType PreferredDisplayType { get; set; }
 
         [ObservableProperty]
@@ -69,7 +60,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial bool IsTranslationEnabled { get; set; } = false;
+        public partial bool IsTranslationEnabled { get; set; }
 
         partial void OnIsTranslationEnabledChanged(bool value)
         {
@@ -98,19 +89,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void Receive(PropertyChangedMessage<int> message)
-        {
-            if (message.Sender is SettingsPageViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
-                {
-                    LyricsFontSize = message.NewValue;
-                }
-            }
-        }
-
         [RelayCommand]
-        private void OpenSettingsWindow()
+        private static void OpenSettingsWindow()
         {
             WindowHelper.OpenOrShowWindow<SettingsWindow>();
         }

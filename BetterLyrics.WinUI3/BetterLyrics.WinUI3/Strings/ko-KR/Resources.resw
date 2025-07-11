@@ -310,7 +310,7 @@
     <value>지금 음악이 재생되지 않습니다</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>개발자 옵션</value>
+    <value>고급 옵션</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>테스트 음악을 재생하십시오</value>
@@ -459,13 +459,10 @@
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>여분의 검은 색</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>전체 가사</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
     <value>현재 라인</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>현재 숯</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
@@ -716,5 +713,26 @@
   </data>
   <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
     <value>세 번 느리게 안팎으로</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>현재 라인은 현재 숯으로 시작합니다</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>하이라이트 범위</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>가사 타임 라인 동기화 임계 값</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>가사 진행 상황이 불안하다면이 임계 값을 높이십시오. 이 값을 변경하면 가사가 동기화 될 수 있습니다</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQ 피드백 및 채팅 그룹</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>지금 가입하십시오</value>
   </data>
 </root>

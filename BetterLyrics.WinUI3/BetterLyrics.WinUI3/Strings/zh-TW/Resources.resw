@@ -310,7 +310,7 @@
     <value>目前沒有正在播放的音樂</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>開發者選項</value>
+    <value>高級選項</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>播放測試音樂</value>
@@ -459,13 +459,10 @@
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>超黑</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>全部歌詞</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
     <value>目前行</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>目前字元</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
@@ -716,5 +713,26 @@
   </data>
   <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
     <value>三次緩入緩出</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>當前歌詞開始到當前字符</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>高亮顯示範圍</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>歌詞時間軸同步閾值</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>當歌詞進度抖動時，請嘗試增加該閾值；更改此值會導致歌詞同步偏差</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQ 回饋交流群</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>立即加入</value>
   </data>
 </root>

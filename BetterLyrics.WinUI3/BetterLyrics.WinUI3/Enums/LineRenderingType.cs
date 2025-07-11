@@ -4,7 +4,8 @@ namespace BetterLyrics.WinUI3.Enums
 {
     public enum LineRenderingType
     {
-        UntilCurrentChar,
-        CurrentCharOnly,
+        CurrentChar,
+        LineStartToCurrentChar,
+        CurrentLine
     }
 }

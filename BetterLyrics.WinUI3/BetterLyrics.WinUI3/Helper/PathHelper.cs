@@ -20,18 +20,26 @@ namespace BetterLyrics.WinUI3.Helper
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
 
-        public static string LrcLibLyricsCacheDirectory => Path.Combine(CacheFolder, "lrclib-lyrics");
-        public static string NeteaseLyricsCacheDirectory => Path.Combine(CacheFolder, "netease-lyrics");
-        public static string QQLyricsCacheDirectory => Path.Combine(CacheFolder, "qq-lyrics");
-        public static string KugouLyricsCacheDirectory => Path.Combine(CacheFolder, "kugou-lyrics");
-        public static string AmllTtmlDbLyricsCacheDirectory => Path.Combine(CacheFolder, "amll-ttml-db-lyrics");
-        public static string AmllTtmlDbIndexPath => Path.Combine(CacheFolder, "amll-ttml-db-index.json");
+        public static string LyricsCacheDirectory => Path.Combine(CacheFolder, "lyrics");
 
-        public static string iTunesAlbumArtCacheDirectory => Path.Combine(CacheFolder, "itunes-album-art");
+        public static string LrcLibLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "lrclib");
+        public static string NeteaseLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "netease");
+        public static string QQLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "qq");
+        public static string KugouLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "kugou");
+        public static string AmllTtmlDbLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "amll-ttml-db");
+        public static string AmllTtmlDbIndexPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-index.json");
+        public static string AmllTtmlDbLastUpdatedPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-last-updated.txt");
+
+        public static string TranslationCacheDirectory => Path.Combine(CacheFolder, "translations");
+
+        public static string QQTranslationCacheDirectory => Path.Combine(TranslationCacheDirectory, "qq");
+
+        public static string AlbumArtCacheDirectory => Path.Combine(CacheFolder, "album-art");
+
+        public static string iTunesAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "itunes");
 
         public static void EnsureDirectories()
         {
-            Directory.CreateDirectory(LocalFolder);
             Directory.CreateDirectory(LogDirectory);
 
             Directory.CreateDirectory(LrcLibLyricsCacheDirectory);
@@ -39,6 +47,8 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(KugouLyricsCacheDirectory);
             Directory.CreateDirectory(NeteaseLyricsCacheDirectory);
             Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
+
+            Directory.CreateDirectory(QQTranslationCacheDirectory);
 
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
         }

@@ -310,7 +310,7 @@
     <value>当前没有正在播放的音乐</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>开发者选项</value>
+    <value>高级选项</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>播放测试音乐</value>
@@ -459,13 +459,10 @@
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>超黑</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>全部歌词</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
     <value>当前行</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>当前字符</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
@@ -716,5 +713,26 @@
   </data>
   <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
     <value>三次缓入缓出</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>当前歌词开始到当前字符</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>高亮显示范围</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>歌词时间轴同步阈值</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>当歌词进度抖动时，请尝试增加该阈值；更改此值会导致歌词同步有偏差</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQ 反馈交流群</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>立即加入</value>
   </data>
 </root>

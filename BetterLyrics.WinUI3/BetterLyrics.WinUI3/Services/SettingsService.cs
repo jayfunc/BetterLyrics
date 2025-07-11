@@ -62,6 +62,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsFontSizeKey = "LyricsFontSize";
         private const string LyricsFontWeightKey = "LyricsFontWeightKey";
         private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
+        private const string LyricsHighlightSopeKey = "LyricsHighlightSope";
         private const string LyricsLineSpacingFactorKey = "LyricsLineSpacingFactor";
         private const string LyricsSearchProvidersInfoKey = "LyricsSearchProvidersInfo";
         private const string AlbumArtSearchProvidersInfoKey = "AlbumArtSearchProvidersInfo";
@@ -79,6 +80,8 @@ namespace BetterLyrics.WinUI3.Services
 
         private const string LyricsScrollEasingTypeKey = "LyricsScrollEasingType";
         private const string LyricsScrollDurationKey = "LyricsScrollDuration";
+
+        public const string TimelineSyncThresholdKey = "TimelineSyncThreshold";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -155,7 +158,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IsCoverOverlayEnabledKey, true);
             SetDefault(IsDynamicCoverOverlayEnabledKey, true);
             SetDefault(CoverOverlayOpacityKey, 100); // 100 % = 1.0
-            SetDefault(CoverOverlayBlurAmountKey, 200);
+            SetDefault(CoverOverlayBlurAmountKey, 100);
             SetDefault(CoverImageRadiusKey, 12); // 12 %
             // Lyrics
             SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Center);
@@ -177,7 +180,8 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
             SetDefault(LyricsVerticalEdgeOpacityKey, 0);
             SetDefault(IsLyricsGlowEffectEnabledKey, true);
-            SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.CurrentCharOnly);
+            SetDefault(LyricsGlowEffectScopeKey, (int)LineRenderingType.CurrentChar);
+            SetDefault(LyricsHighlightSopeKey, (int)LineRenderingType.LineStartToCurrentChar);
             SetDefault(IsFanLyricsEnabledKey, false);
 
             SetDefault(LibreTranslateServerKey, "");
@@ -190,6 +194,7 @@ namespace BetterLyrics.WinUI3.Services
 
             SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutQuad);
             SetDefault(LyricsScrollDurationKey, 500); // 500ms
+            SetDefault(TimelineSyncThresholdKey, 0); // 0ms
         }
 
         public EasingType LyricsScrollEasingType
@@ -419,6 +424,12 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(LyricsGlowEffectScopeKey, (int)value);
         }
 
+        public LineRenderingType LyricsHighlightScope
+        {
+            get => (LineRenderingType)GetValue<int>(LyricsHighlightSopeKey);
+            set => SetValue(LyricsHighlightSopeKey, (int)value);
+        }
+
         public float LyricsLineSpacingFactor
         {
             get => GetValue<float>(LyricsLineSpacingFactorKey);
@@ -504,6 +515,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(IgnoreFullscreenWindowKey);
             set => SetValue(IgnoreFullscreenWindowKey, value);
+        }
+
+        public int TimelineSyncThreshold
+        {
+            get => GetValue<int>(TimelineSyncThresholdKey);
+            set => SetValue(TimelineSyncThresholdKey, value);
         }
 
         private T? GetValue<T>(string key)

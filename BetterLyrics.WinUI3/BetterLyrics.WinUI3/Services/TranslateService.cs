@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
+using BetterLyrics.WinUI3.ViewModels;
 using Lyricify.Lyrics.Helpers.General;
 using System;
 using System.Collections.Generic;
@@ -13,19 +14,16 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services
 {
-    public class TranslateService : ITranslateService
+    public class TranslateService : BaseViewModel, ITranslateService
     {
-        private readonly ISettingsService _settingsService;
-
         private readonly HttpClient _httpClient;
 
-        public TranslateService(ISettingsService settingsService)
+        public TranslateService(ISettingsService settingsService) :base(settingsService)
         {
-            _settingsService = settingsService;
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> TranslateAsync(string text, string targetLangCode, CancellationToken? token)
+        public async Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken? token)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -46,6 +44,19 @@ namespace BetterLyrics.WinUI3.Services
                 return ChineseConverter.ConvertToTraditionalChinese(text);
             }
 
+            if (string.IsNullOrEmpty(_settingsService.LibreTranslateServer))
+            {
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    App.Current.LyricsWindowNotificationPanel?.Notify(
+                        App.ResourceLoader!.GetString("TranslateServerNotSet"),
+                        Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning
+                    );
+                });
+
+                throw new InvalidOperationException("LibreTranslate server URL is not configured.");
+            }
+
             var url = $"{_settingsService.LibreTranslateServer}/translate";
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
             [
@@ -62,5 +73,21 @@ namespace BetterLyrics.WinUI3.Services
             var result = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.TranslateResponse);
             return result?.TranslatedText ?? string.Empty;
         }
+
+        public int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr)
+        {
+            string targetLangCode = LanguageHelper.GetUserTargetLanguageCode();
+            if (lyricsDataArr.Count > 1)
+            {
+                for (int i = 1;  i < lyricsDataArr.Count; i++)
+                {
+                    if (lyricsDataArr[i].LanguageCode == targetLangCode)
+                    {
+                        return i; // Translation lyrics data found
+                    }
+                }
+            }
+            return -1; // No translation lyrics data found
+        } 
     }
 }

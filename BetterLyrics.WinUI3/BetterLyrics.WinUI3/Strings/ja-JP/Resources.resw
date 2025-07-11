@@ -310,7 +310,7 @@
     <value>今は音楽が再生されていません</value>
   </data>
   <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>開発者オプション</value>
+    <value>高度なオプション</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>テスト音楽を再生します</value>
@@ -459,13 +459,10 @@
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>余分な黒</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeWholeLyrics.Content" xml:space="preserve">
-    <value>歌詞全体</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentLine.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
     <value>現在の行</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScopeCurrentChar.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>現在の文字</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
@@ -716,5 +713,26 @@
   </data>
   <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
     <value>3つの遅いインとアウト</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>現在のラインが現在の文字から始まります</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>ハイライトスコープ</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>歌詞タイムライン同期しきい値</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>歌詞の進行が不安定な場合は、このしきい値を増やしてみてください。この値を変更すると、歌詞の同期が逸脱する可能性があります</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQフィードバック＆チャットグループ</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>今すぐ参加してください</value>
   </data>
 </root>

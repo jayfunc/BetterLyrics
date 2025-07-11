@@ -2,8 +2,7 @@
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public class SettingsWindowViewModel : BaseWindowViewModel
+    public partial class SettingsWindowViewModel(ISettingsService settingsService) : BaseWindowViewModel(settingsService)
     {
-        public SettingsWindowViewModel(ISettingsService settingsService) : base(settingsService) { }
     }
 }

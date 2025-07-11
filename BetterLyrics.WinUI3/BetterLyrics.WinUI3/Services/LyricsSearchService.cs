@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services
 {
@@ -39,6 +40,23 @@ namespace BetterLyrics.WinUI3.Services
             _amllTtmlDbHttpClient = new();
         }
 
+        private static bool IsAmllTtmlDbIndexInvalid()
+        {
+            bool existed = File.Exists(PathHelper.AmllTtmlDbIndexPath);
+
+            if (!existed)
+            {
+                return true;
+            }
+            else
+            {
+                long currentTs = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                string lastUpdatedStr = File.ReadAllText(PathHelper.AmllTtmlDbLastUpdatedPath);
+                long lastUpdated = Convert.ToInt64(lastUpdatedStr);
+                return currentTs - lastUpdated > 1 * 24 * 60 * 60;
+            }
+        }
+
         public async Task<bool> DownloadAmllTtmlDbIndexAsync()
         {
             const string url = "https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/metadata/raw-lyrics-index.jsonl";
@@ -55,6 +73,9 @@ namespace BetterLyrics.WinUI3.Services
                     FileShare.None
                 );
                 await stream.CopyToAsync(fs);
+
+                long currentTs = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                File.WriteAllText(PathHelper.AmllTtmlDbLastUpdatedPath, currentTs.ToString());
 
                 return true;
             }
@@ -192,11 +213,10 @@ namespace BetterLyrics.WinUI3.Services
 
         private async Task<string?> SearchAmllTtmlDbAsync(string title, string artist)
         {
-            // 检索本地 JSONL 索引文件，查找 rawLyricFile
-            if (!File.Exists(PathHelper.AmllTtmlDbIndexPath))
+            if (IsAmllTtmlDbIndexInvalid())
             {
                 var downloadOk = await DownloadAmllTtmlDbIndexAsync();
-                if (!downloadOk || !File.Exists(PathHelper.AmllTtmlDbIndexPath))
+                if (!downloadOk)
                     return null;
             }
 

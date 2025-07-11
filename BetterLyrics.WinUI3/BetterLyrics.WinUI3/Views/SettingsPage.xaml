@@ -188,8 +188,8 @@
                                             VerticalAlignment="Center"
                                             Text="{x:Bind ViewModel.CoverOverlayBlurAmount, Mode=OneWay}" />
                                         <Slider
-                                            Maximum="200"
-                                            Minimum="50"
+                                            Maximum="100"
+                                            Minimum="0"
                                             SnapsTo="Ticks"
                                             StepFrequency="10"
                                             TickFrequency="10"
@@ -653,6 +653,14 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsHighlightScope" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E6;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsHighlightScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
                                 <controls:SettingsExpander
                                     x:Uid="SettingsPageLyricsGlowEffect"
                                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -662,8 +670,9 @@
                                     <controls:SettingsExpander.Items>
                                         <controls:SettingsCard x:Uid="SettingsPageLyricsGlowEffectScope" IsEnabled="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
                                             <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentLine" />
-                                                <ComboBoxItem x:Uid="SettingsPageLyricsGlowEffectScopeCurrentChar" />
+                                                <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
+                                                <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
+                                                <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
                                             </ComboBox>
                                         </controls:SettingsCard>
                                     </controls:SettingsExpander.Items>
@@ -794,6 +803,7 @@
                         <!--  About  -->
                         <controls:Case Value="About">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
                                 <controls:SettingsCard Header="BetterLyrics" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
                                     <controls:SettingsCard.Description>
                                         <RichTextBlock>
@@ -815,24 +825,52 @@
                                                              Glyph=&#xE943;}"
                                     IsClickEnabled="True" />
 
+                                <controls:SettingsCard x:Uid="SettingsPageQQGroup" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/QQ.png}">
+                                    <Button x:Uid="SettingsPageJoinNowButton" Click="QQGroupButton_Click" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageDiscord" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Discord.png}">
+                                    <Button x:Uid="SettingsPageJoinNowButton" Click="DiscodGroupButton_Click" />
+                                </controls:SettingsCard>
+
                             </StackPanel>
                         </controls:Case>
 
                         <!--  Dev  -->
                         <controls:Case Value="Dev">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
                                 <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
-                                    <HyperlinkButton
-                                        x:Uid="SettingsPagePlayingMockMusicButton"
-                                        Command="{x:Bind ViewModel.PlayTestingMusicTaskCommand}"
-                                        NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
+                                    <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
                                 </controls:SettingsCard>
+
                                 <controls:SettingsCard x:Uid="SettingsPageCache">
                                     <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
                                 </controls:SettingsCard>
+
                                 <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.TimelineSyncThreshold, Mode=OneWay}" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text=" ms" />
+                                        <Slider
+                                            Maximum="1000"
+                                            Minimum="0"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="100"
+                                            TickFrequency="100"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.TimelineSyncThreshold, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
                             </StackPanel>
                         </controls:Case>
 

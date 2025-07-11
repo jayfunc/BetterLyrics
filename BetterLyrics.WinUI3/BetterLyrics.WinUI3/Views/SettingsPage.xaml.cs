@@ -1,5 +1,6 @@
 // 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -120,6 +121,16 @@ namespace BetterLyrics.WinUI3.Views
                     ViewModel.ToggleAlbumArtSearchProvider(providerInfo);
                 }
             }
+        }
+
+        private void QQGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Launcher.LaunchUriAsync(new Uri(MetadataHelper.QQGroupUrl));
+        }
+
+        private void DiscodGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Launcher.LaunchUriAsync(new Uri(MetadataHelper.DiscordUrl));
         }
     }
 }
