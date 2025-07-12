@@ -1,7 +1,9 @@
 ---
+layout: default
 title: FAQ
 layout: FAQ
---- 
+nav_order: 2
+---
 
 ### I couldn't see any button that I can interact with
 
@@ -41,4 +43,4 @@ Hover your mouse at the very bottom of the app and then click on the very last i
 
 Go to "Advanced options" section, increase the threshold value (marked with the bigger red rectangle) until the lyrics is working properly.
 
-----
+---
