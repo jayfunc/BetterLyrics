@@ -93,6 +93,10 @@
                 <Setter Property="Background" Value="Transparent" />
             </Style>
 
+            <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="TextFillColorPrimaryBrush" />
+            <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+            <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="TextFillColorPrimaryBrush" />
+
             <!--  Dimensions  -->
 
             <!--  Fonts  -->

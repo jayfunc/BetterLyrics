@@ -1,8 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Helper;
+
 namespace BetterLyrics.WinUI3.Models
 {
-    public class CharTiming
+    public class LyricsChar
     {
         public int EndMs { get; set; }
         public int StartIndex { get; set; }

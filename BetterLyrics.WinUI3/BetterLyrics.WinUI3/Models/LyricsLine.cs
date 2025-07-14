@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Models
         public Vector2 CenterPosition { get; set; }
         public Vector2 Position { get; set; }
 
-        public List<CharTiming> CharTimings { get; set; } = [];
+        public List<LyricsChar> LyricsChars { get; set; } = [];
 
         public int DurationMs => EndMs - StartMs;
         public int EndMs { get; set; }

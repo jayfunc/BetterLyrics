@@ -1,10 +1,12 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
+using Lyricify.Lyrics.Helpers.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StringHelper = BetterLyrics.WinUI3.Helper.StringHelper;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -35,7 +37,23 @@ namespace BetterLyrics.WinUI3.Models
                 }
                 else
                 {
-                    line.DisplayedText = $"{line.OriginalText}{StringHelper.NewLine}({translationData.LyricsLines[i].OriginalText})";
+                    if (translationData.LanguageCode?.Substring(0, 2) == "zh")
+                    {
+                        string tmp = "";
+                        if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hant")
+                        {
+                            tmp = ChineseConverter.ConvertToTraditionalChinese(translationData.LyricsLines[i].OriginalText);
+                        }
+                        else if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hans")
+                        {
+                            tmp = ChineseConverter.ConvertToSimplifiedChinese(translationData.LyricsLines[i].OriginalText);
+                        }
+                        line.DisplayedText = $"{line.OriginalText}\n{tmp}";
+                    }
+                    else
+                    {
+                        line.DisplayedText = $"{line.OriginalText}\n{translationData.LyricsLines[i].OriginalText}";
+                    }
                 }
                 i++;
             }
@@ -74,7 +92,7 @@ namespace BetterLyrics.WinUI3.Models
                 StartMs = 0,
                 EndMs = durationMs,
                 OriginalText = App.ResourceLoader!.GetString("LyricsNotFound"),
-                CharTimings = [],
+                LyricsChars = [],
             }]);
         }
 
@@ -87,7 +105,7 @@ namespace BetterLyrics.WinUI3.Models
                     EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
                     OriginalText = "● ● ●",
                     DisplayedText = "● ● ●",
-                    CharTimings = [],
+                    LyricsChars = [],
                 },
             ]);
         }

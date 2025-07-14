@@ -83,6 +83,14 @@ namespace BetterLyrics.WinUI3.Services
 
         public const string TimelineSyncThresholdKey = "TimelineSyncThreshold";
 
+        private const string IsLyricsFloatAnimationEnabledKey = "IsLyricsFloatAnimationEnabled";
+
+        private const string ResetPositionOffsetOnSongChangedKey = "ResetPositionOffsetOnSongChanged";
+
+        private const string PositionOffsetKey = "PositionOffset";
+
+        private const string LockHotKeyIndexKey = "LockHotKeyIndex";
+
         private readonly ApplicationDataContainer _localSettings;
 
         public SettingsService()
@@ -186,7 +194,7 @@ namespace BetterLyrics.WinUI3.Services
 
             SetDefault(LibreTranslateServerKey, "");
             SetDefault(IsTranslationEnabledKey, false);
-            SetDefault(SelectedTargetLanguageIndexKey, 6);
+            SetDefault(SelectedTargetLanguageIndexKey, LanguageHelper.GetDefaultTargetLanguageIndex());
 
             SetDefault(LyricsFontStrokeWidthKey, 3);
             SetDefault(IgnoreFullscreenWindowKey, false);
@@ -195,6 +203,18 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutQuad);
             SetDefault(LyricsScrollDurationKey, 500); // 500ms
             SetDefault(TimelineSyncThresholdKey, 0); // 0ms
+
+            SetDefault(IsLyricsFloatAnimationEnabledKey, false);
+
+            SetDefault(ResetPositionOffsetOnSongChangedKey, false);
+            SetDefault(PositionOffsetKey, 0);
+            SetDefault(LockHotKeyIndexKey, 'U' - 'A');
+        }
+
+        public int LockHotKeyIndex
+        {
+            get => GetValue<int>(LockHotKeyIndexKey);
+            set => SetValue(LockHotKeyIndexKey, value);
         }
 
         public EasingType LyricsScrollEasingType
@@ -521,6 +541,24 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<int>(TimelineSyncThresholdKey);
             set => SetValue(TimelineSyncThresholdKey, value);
+        }
+
+        public bool IsLyricsFloatAnimationEnabled
+        {
+            get => GetValue<bool>(IsLyricsFloatAnimationEnabledKey);
+            set => SetValue(IsLyricsFloatAnimationEnabledKey, value);
+        }
+
+        public bool ResetPositionOffsetOnSongChanged
+        {
+            get => GetValue<bool>(ResetPositionOffsetOnSongChangedKey);
+            set => SetValue(ResetPositionOffsetOnSongChangedKey, value);
+        }
+
+        public int PositionOffset
+        {
+            get => GetValue<int>(PositionOffsetKey);
+            set => SetValue(PositionOffsetKey, value);
         }
 
         private T? GetValue<T>(string key)

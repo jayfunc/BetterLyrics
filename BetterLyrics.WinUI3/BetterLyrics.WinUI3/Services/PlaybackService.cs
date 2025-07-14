@@ -255,6 +255,42 @@ namespace BetterLyrics.WinUI3.Services
             });
         }
 
+        public async Task PlayAsync()
+        {
+            var focusedSession = _mediaManager.GetFocusedSession();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession.TryPlayAsync();
+            }
+        }
+
+        public async Task PauseAsync()
+        {
+            var focusedSession = _mediaManager.GetFocusedSession();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession.TryPauseAsync();
+            }
+        }
+
+        public async Task PreviousAsync()
+        {
+            var focusedSession = _mediaManager.GetFocusedSession();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession.TrySkipPreviousAsync();
+            }
+        }
+
+        public async Task NextAsync()
+        {
+            var focusedSession = _mediaManager.GetFocusedSession();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession.TrySkipNextAsync();
+            }
+        }
+
         public void Receive(PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>> message)
         {
             if (message.Sender is SettingsPageViewModel)

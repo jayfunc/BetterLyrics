@@ -9,8 +9,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.UI.Xaml;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -26,17 +24,39 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsFirstRun = _settingsService.IsFirstRun;
             IsTranslationEnabled = _settingsService.IsTranslationEnabled;
             PreferredDisplayType = _settingsService.PreferredDisplayType;
+            ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
+            PositionOffset = _settingsService.PositionOffset;
+
+            //Volume = SystemVolumeHelper.GetMasterVolume();
+            //SystemVolumeHelper.VolumeChanged += SystemVolumeHelper_VolumeChanged;
 
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
+            _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
+        }
+
+        //private void SystemVolumeHelper_VolumeChanged(int volume)
+        //{
+        //    Volume = volume;
+        //}
+
+        private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
+        {
+            IsSongPlaying = e.IsPlaying;
         }
 
         private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
         {
             SongInfo = e.SongInfo;
-            PositionOffset = 0; // Reset position offset when song changes
+            if (ResetPositionOffsetOnSongChanged)
+            {
+                PositionOffset = 0;
+            }
             TrySwitchToPreferredDisplayType(e.SongInfo);
         }
+
+        //[ObservableProperty]
+        //public partial int Volume { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -56,21 +76,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial int PositionOffset { get; set; } = 0;
+        public partial int PositionOffset { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsTranslationEnabled { get; set; }
 
-        partial void OnIsTranslationEnabledChanged(bool value)
-        {
-            _settingsService.IsTranslationEnabled = value;
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool ResetPositionOffsetOnSongChanged { get; set; }
 
-        partial void OnPreferredDisplayTypeChanged(LyricsDisplayType value)
-        {
-            _settingsService.PreferredDisplayType = value;
-        }
+        [ObservableProperty]
+        public partial bool IsSongPlaying { get; set; }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -93,6 +110,30 @@ namespace BetterLyrics.WinUI3.ViewModels
         private static void OpenSettingsWindow()
         {
             WindowHelper.OpenOrShowWindow<SettingsWindow>();
+        }
+
+        [RelayCommand]
+        private async Task PlaySongAsync()
+        {
+            await _playbackService.PlayAsync();
+        }
+
+        [RelayCommand]
+        private async Task PauseSongAsync()
+        {
+            await _playbackService.PauseAsync();
+        }
+
+        [RelayCommand]
+        private async Task PreviousSongAsync()
+        {
+            await _playbackService.PreviousAsync();
+        }
+
+        [RelayCommand]
+        private async Task NextSongAsync()
+        {
+            await _playbackService.NextAsync();
         }
 
         private void SetNonStandardModePreferredDisplayType(bool isEnabled)
@@ -134,5 +175,25 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsWelcomeTeachingTipOpen = value;
             _settingsService.IsFirstRun = false;
         }
+
+        partial void OnIsTranslationEnabledChanged(bool value)
+        {
+            _settingsService.IsTranslationEnabled = value;
+        }
+
+        partial void OnPreferredDisplayTypeChanged(LyricsDisplayType value)
+        {
+            _settingsService.PreferredDisplayType = value;
+        }
+
+        partial void OnPositionOffsetChanged(int value)
+        {
+            _settingsService.PositionOffset = value;
+        }
+
+        //partial void OnVolumeChanged(int value)
+        //{
+        //    SystemVolumeHelper.SetMasterVolume(value);
+        //}
     }
 }

@@ -48,7 +48,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            BottomCommandGrid.Opacity = 1;
+            BottomCommandGrid.Opacity = 0.5;
         }
 
         private void BottomCommandGrid_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)

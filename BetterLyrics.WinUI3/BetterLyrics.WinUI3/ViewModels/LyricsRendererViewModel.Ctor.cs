@@ -51,6 +51,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             _canvasYScrollTransition.SetDuration(_settingsService.LyricsScrollDuration / 1000f);
             _canvasYScrollTransition.SetEasingType(_settingsService.LyricsScrollEasingType);
 
+            _isLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
+
             _libWatcherService.MusicLibraryFilesChanged +=
                 LibWatcherService_MusicLibraryFilesChanged;
 

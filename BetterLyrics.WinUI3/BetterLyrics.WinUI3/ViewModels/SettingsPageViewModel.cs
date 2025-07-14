@@ -89,6 +89,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsScrollDuration = _settingsService.LyricsScrollDuration;
             TimelineSyncThreshold = _settingsService.TimelineSyncThreshold;
 
+            IsLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
+            ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
+            LockHotKeyIndex = _settingsService.LockHotKeyIndex;
+
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
             Task.Run(async () =>
@@ -101,6 +105,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LockHotKeyIndex { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -223,6 +231,14 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial object NavViewSelectedItemTag { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool ResetPositionOffsetOnSongChanged { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsLyricsFloatAnimationEnabled { get; set; }
 
         public string Version { get; set; } = MetadataHelper.AppVersion;
 
@@ -597,6 +613,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _settingsService.TimelineSyncThreshold = value;
         }
-
+        partial void OnIsLyricsFloatAnimationEnabledChanged(bool value)
+        {
+            _settingsService.IsLyricsFloatAnimationEnabled = value;
+        }
+        partial void OnResetPositionOffsetOnSongChangedChanged(bool value)
+        {
+            _settingsService.ResetPositionOffsetOnSongChanged = value;
+        }
     }
 }
