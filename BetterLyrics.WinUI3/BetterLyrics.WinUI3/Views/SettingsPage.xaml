@@ -138,6 +138,43 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AutoLockOnDesktopMode, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageLockHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock
+                                            Margin="0,0,0,2"
+                                            VerticalAlignment="Center"
+                                            Text="Ctrl + Alt + " />
+                                        <ComboBox SelectedIndex="{x:Bind ViewModel.LockHotKeyIndex, Mode=TwoWay}">
+                                            <ComboBoxItem Content="A" />
+                                            <ComboBoxItem Content="B" />
+                                            <ComboBoxItem Content="C" />
+                                            <ComboBoxItem Content="D" />
+                                            <ComboBoxItem Content="E" />
+                                            <ComboBoxItem Content="F" />
+                                            <ComboBoxItem Content="G" />
+                                            <ComboBoxItem Content="H" />
+                                            <ComboBoxItem Content="I" />
+                                            <ComboBoxItem Content="J" />
+                                            <ComboBoxItem Content="K" />
+                                            <ComboBoxItem Content="L" />
+                                            <ComboBoxItem Content="M" />
+                                            <ComboBoxItem Content="N" />
+                                            <ComboBoxItem Content="O" />
+                                            <ComboBoxItem Content="P" />
+                                            <ComboBoxItem Content="Q" />
+                                            <ComboBoxItem Content="R" />
+                                            <ComboBoxItem Content="S" />
+                                            <ComboBoxItem Content="T" />
+                                            <ComboBoxItem Content="U" />
+                                            <ComboBoxItem Content="V" />
+                                            <ComboBoxItem Content="W" />
+                                            <ComboBoxItem Content="X" />
+                                            <ComboBoxItem Content="Y" />
+                                            <ComboBoxItem Content="Z" />
+                                        </ComboBox>
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
                                 <controls:SettingsCard x:Uid="SettingsPageIgnoreFullscreenWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE66C;}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IgnoreFullscreenWindow, Mode=TwoWay}" />
                                 </controls:SettingsCard>
@@ -668,7 +705,7 @@
                                     IsExpanded="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
                                     <controls:SettingsExpander.Items>
-                                        <controls:SettingsCard x:Uid="SettingsPageLyricsGlowEffectScope" IsEnabled="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                        <controls:SettingsCard x:Uid="SettingsPageScope" IsEnabled="{x:Bind ViewModel.IsLyricsGlowEffectEnabled, Mode=OneWay}">
                                             <ComboBox SelectedIndex="{x:Bind ViewModel.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
                                                 <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
@@ -677,6 +714,10 @@
                                         </controls:SettingsCard>
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8C5;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsLyricsFloatAnimationEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageFan" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEBC5;}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsFanLyricsEnabled, Mode=TwoWay}" />

@@ -9,6 +9,7 @@ using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Helpers.General;
+using Lyricify.Lyrics.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
@@ -131,6 +132,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private bool _isDynamicCoverOverlayEnabled;
         private bool _isLyricsGlowEffectEnabled;
 
+        private bool _isLyricsFloatAnimationEnabled;
+
         private bool _isLayoutChanged = true;
 
         private int _langIndex = 0;
@@ -227,12 +230,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             // 3. 有逐字时间轴
-            if (line.CharTimings != null && line.CharTimings.Count > 0)
+            if (line.LyricsChars != null && line.LyricsChars.Count > 0)
             {
-                int charTimingsCount = line.CharTimings.Count;
+                int charTimingsCount = line.LyricsChars.Count;
                 for (int i = 0; i < charTimingsCount; i++)
                 {
-                    var timing = line.CharTimings[i];
+                    var timing = line.LyricsChars[i];
 
                     // 当前时间在某个字的高亮区间
                     if (now >= timing.StartMs && now <= timing.EndMs)
@@ -342,6 +345,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void UpdateTranslations()
         {
+            _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
+            _isLayoutChanged = true;
+
             IsTranslating = true;
             if (_isTranslationEnabled)
             {
@@ -354,7 +360,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                _lyricsDataArr[0].SetDisplayedTextInOriginalText();
+                _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
                 IsTranslating = false;
                 _isLayoutChanged = true;
             }
@@ -382,10 +388,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else
                 {
-                    var translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
-                    token.ThrowIfCancellationRequested();
-
-                    _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
+                    try
+                    {
+                        var translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
+                        token.ThrowIfCancellationRequested();
+                        _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
+                    }
+                    catch (Exception) { }
                 }
             }
         }
@@ -398,10 +407,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isLayoutChanged = true;
 
             string? lyricsRaw = null;
+            LyricsSearchProvider? provider = null;
 
             if (SongInfo != null)
             {
-                lyricsRaw = await _lyrcsSearchService.SearchAsync(
+                (lyricsRaw, provider) = await _lyrcsSearchService.SearchAsync(
                     SongInfo.Title,
                     SongInfo.Artist,
                     SongInfo.Album ?? "",
@@ -410,13 +420,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                 );
                 _logger.LogInformation("Lyrics search result: {LyricsRaw}", lyricsRaw ?? "null");
                 token.ThrowIfCancellationRequested();
+                _lyricsDataArr = new LyricsParser().Parse(lyricsRaw, (int?)SongInfo?.DurationMs);
+                FillTranslationFromCache(provider);
             }
             else
             {
                 _logger.LogWarning("SongInfo is null, cannot search lyrics.");
             }
 
-            _lyricsDataArr = new LyricsParser().Parse(lyricsRaw, (int?)SongInfo?.DurationMs);
             _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _lyricsDataArr.Count);
 
             // This ensures that original lyrics are always shown while waiting for translations
@@ -424,6 +435,44 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isLayoutChanged = true;
 
             UpdateTranslations();
+        }
+
+        private void FillTranslationFromCache(LyricsSearchProvider? provider)
+        {
+            string? translationRaw = null;
+            switch (provider)
+            {
+                case LyricsSearchProvider.QQ:
+                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
+                    break;
+                case LyricsSearchProvider.Kugou:
+                    break;
+                case LyricsSearchProvider.Netease:
+                    break;
+                case LyricsSearchProvider.LrcLib:
+                    break;
+                case LyricsSearchProvider.AmllTtmlDb:
+                    break;
+                case LyricsSearchProvider.LocalMusicFile:
+                    break;
+                case LyricsSearchProvider.LocalLrcFile:
+                    break;
+                case LyricsSearchProvider.LocalEslrcFile:
+                    break;
+                case LyricsSearchProvider.LocalTtmlFile:
+                    break;
+                default:
+                    break;
+            }
+            if (translationRaw != null)
+            {
+                var translationData = new LyricsParser().Parse(translationRaw, (int?)SongInfo?.DurationMs);
+                foreach (var data in translationData)
+                {
+                    data.LyricsLines = data.LyricsLines.Where(line => !string.IsNullOrWhiteSpace(line.OriginalText)).ToList();
+                }
+                _lyricsDataArr = _lyricsDataArr.Concat(translationData).ToList();
+            }
         }
     }
 }

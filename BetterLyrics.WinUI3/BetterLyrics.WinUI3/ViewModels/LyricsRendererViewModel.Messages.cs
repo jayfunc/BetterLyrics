@@ -78,6 +78,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _isFanLyricsEnabled = message.NewValue;
                     _isLayoutChanged = true;
                 }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.IsLyricsFloatAnimationEnabled))
+                {
+                    _isLyricsFloatAnimationEnabled = message.NewValue;
+                }
             }
             else if (message.Sender is LyricsWindowViewModel)
             {

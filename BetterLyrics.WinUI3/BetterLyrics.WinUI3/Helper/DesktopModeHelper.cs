@@ -5,6 +5,8 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using WinRT.Interop;
@@ -17,8 +19,10 @@ namespace BetterLyrics.WinUI3.Helper
         private static readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         private static readonly Dictionary<IntPtr, bool> _originalTopmostStates = [];
+        private static readonly Dictionary<IntPtr, nint> _oldWndProcs = new();
         private static readonly Dictionary<IntPtr, (double X, double Y, double Width, double Height)> _originalWindowBounds = [];
         private static readonly Dictionary<IntPtr, WindowStyle> _originalWindowStyles = [];
+        private static List<Rectangle> _interactiveRects = new();
 
         private delegate nint WndProcDelegate(nint hWnd, uint msg, nint wParam, nint lParam);
 
@@ -90,6 +94,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
             int exStyle = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE);
+
             if (enable)
             {
                 // 记忆原样式
@@ -98,6 +103,16 @@ namespace BetterLyrics.WinUI3.Helper
 
                 window.ToggleWindowStyle(true, WindowStyle.Popup | WindowStyle.Visible);
                 User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, exStyle | (int)User32.WindowStylesEx.WS_EX_TRANSPARENT | (int)User32.WindowStylesEx.WS_EX_LAYERED);
+
+                //// 安装自定义WndProc
+                //if (!_oldWndProcs.ContainsKey(hwnd))
+                //{
+                //    nint newWndProc = Marshal.GetFunctionPointerForDelegate((WndProcDelegate)((hWnd, msg, wParam, lParam) =>
+                //        CustomWndProc(hWnd, msg, wParam, lParam, hwnd)
+                //    ));
+                //    nint oldWndProc = User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWLP_WNDPROC, newWndProc);
+                //    _oldWndProcs[hwnd] = oldWndProc;
+                //}
             }
             else
             {
@@ -108,7 +123,51 @@ namespace BetterLyrics.WinUI3.Helper
                     window.SetWindowStyle(style);
                     _originalWindowStyles.Remove(hwnd);
                 }
+
+                //// 恢复原WndProc
+                //if (_oldWndProcs.TryGetValue(hwnd, out var oldWndProc))
+                //{
+                //    User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWLP_WNDPROC, oldWndProc);
+                //    _oldWndProcs.Remove(hwnd);
+                //}
             }
         }
+
+        private static nint CustomWndProc(nint hWnd, uint msg, nint wParam, nint lParam, IntPtr hwnd)
+        {
+            const int WM_NCHITTEST = 0x84;
+            const int HTCLIENT = 1;
+            const int HTTRANSPARENT = -1;
+
+            if (msg == WM_NCHITTEST)
+            {
+                int x = (short)(lParam.ToInt32() & 0xFFFF);
+                int y = (short)((lParam.ToInt32() >> 16) & 0xFFFF);
+
+                // 转为窗口坐标
+                POINT pt = new() { x = x, y = y };
+                User32.ScreenToClient(hWnd, ref pt);
+
+                foreach (var rect in _interactiveRects)
+                {
+                    if (rect.Contains(pt.x, pt.y))
+                        return HTCLIENT;
+                }
+                return HTTRANSPARENT;
+            }
+
+            // 调用原WndProc
+            if (_oldWndProcs.TryGetValue(hwnd, out var oldWndProc))
+            {
+                return User32.CallWindowProc(oldWndProc, hWnd, msg, wParam, lParam);
+            }
+            return User32.DefWindowProc(hWnd, msg, wParam, lParam);
+        }
+
+        public static void SetInteractiveRects(IEnumerable<Rectangle> rects)
+        {
+            _interactiveRects = rects.ToList();
+        }
+
     }
 }

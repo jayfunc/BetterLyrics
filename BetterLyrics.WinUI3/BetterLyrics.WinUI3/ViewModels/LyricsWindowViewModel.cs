@@ -15,6 +15,8 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Vanara.PInvoke;
+using Windows.System;
 using Windows.UI;
 using WinRT.Interop;
 using WinUIEx;
@@ -60,6 +62,9 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsMouseWithinWindow { get; set; } = false;
+
+        [ObservableProperty]
+        public partial string LockHotKey { get; set; }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -107,7 +112,35 @@ namespace BetterLyrics.WinUI3
                         DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), message.NewValue * 4);
                     }
                 }
+                else if (message.Sender is SettingsPageViewModel)
+                {
+                    if (message.PropertyName == nameof(SettingsPageViewModel.LockHotKeyIndex))
+                    {
+                        UpdateLockHotKey(message.NewValue);
+                    }
+                }
             }
+        }
+
+        private void UpdateLockHotKey(int hotKeyIndex)
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            GlobalHotKeyHelper.UnregisterAllHotKeys(window);
+            GlobalHotKeyHelper.RegisterHotKey(
+                window,
+                User32.HotKeyModifiers.MOD_CONTROL | User32.HotKeyModifiers.MOD_ALT,
+                (uint)(hotKeyIndex + (int)VirtualKey.A),
+                () =>
+                {
+                    if (IsDesktopMode)
+                    {
+                        ToggleLockWindowCommand.Execute(null);
+                    }
+                }
+            );
+            LockHotKey = ((VirtualKey)(hotKeyIndex + (int)VirtualKey.A)).ToString();
         }
 
         public void StartWatchWindowColorChange(WindowPixelSampleMode mode)
@@ -142,14 +175,27 @@ namespace BetterLyrics.WinUI3
             ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, mode).ToColor();
         }
 
+        public void InitLockHotKey()
+        {
+            UpdateLockHotKey(_settingsService.LockHotKeyIndex);
+        }
+
         [RelayCommand]
-        private void LockWindow()
+        private void ToggleLockWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DesktopModeHelper.SetClickThrough(window, true);
-            IsLyricsWindowLocked = true;
+            if (IsLyricsWindowLocked)
+            {
+                DesktopModeHelper.SetClickThrough(window, false);
+                IsLyricsWindowLocked = false;
+            }
+            else
+            {
+                DesktopModeHelper.SetClickThrough(window, true);
+                IsLyricsWindowLocked = true;
+            }
         }
 
         [RelayCommand]

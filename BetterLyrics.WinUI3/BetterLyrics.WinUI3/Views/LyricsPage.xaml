@@ -55,6 +55,72 @@
                 <StackPanel.OpacityTransition>
                     <ScalarTransition />
                 </StackPanel.OpacityTransition>
+                <!--<Button Style="{StaticResource GhostButtonStyle}">
+                    <Grid>
+                -->
+                <!--  Volumn: 0  -->
+                <!--
+                        <FontIcon
+                            x:Name="VolumeLevel0"
+                            FontFamily="{StaticResource IconFontFamily}"
+                            Glyph="&#xE74F;">
+                            <FontIcon.OpacityTransition>
+                                <ScalarTransition />
+                            </FontIcon.OpacityTransition>
+                        </FontIcon>
+                -->
+                <!--  Volumn: 1-32  -->
+                <!--
+                        <FontIcon
+                            x:Name="VolumeLevel1"
+                            FontFamily="{StaticResource IconFontFamily}"
+                            Glyph="&#xE993;">
+                            <FontIcon.OpacityTransition>
+                                <ScalarTransition />
+                            </FontIcon.OpacityTransition>
+                        </FontIcon>
+                -->
+                <!--  Volumn: 33-65  -->
+                <!--
+                        <FontIcon
+                            x:Name="VolumeLevel2"
+                            FontFamily="{StaticResource IconFontFamily}"
+                            Glyph="&#xE994;">
+                            <FontIcon.OpacityTransition>
+                                <ScalarTransition />
+                            </FontIcon.OpacityTransition>
+                        </FontIcon>
+                -->
+                <!--  Volumn: 66-100  -->
+                <!--
+                        <FontIcon
+                            x:Name="VolumeLevel3"
+                            FontFamily="{StaticResource IconFontFamily}"
+                            Glyph="&#xE995;">
+                            <FontIcon.OpacityTransition>
+                                <ScalarTransition />
+                            </FontIcon.OpacityTransition>
+                        </FontIcon>
+                    </Grid>
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.Volume, Mode=OneWay}" />
+                                <TextBlock Margin="0,0,14,0" VerticalAlignment="Center" />
+                                <Slider
+                                    Width="150"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    SnapsTo="Ticks"
+                                    StepFrequency="1"
+                                    TickFrequency="1"
+                                    TickPlacement="None"
+                                    Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>-->
             </StackPanel>
 
             <StackPanel
@@ -65,6 +131,56 @@
                 <StackPanel.OpacityTransition>
                     <ScalarTransition />
                 </StackPanel.OpacityTransition>
+                <Button
+                    Command="{x:Bind ViewModel.PreviousSongCommand}"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          Glyph=&#xE622;}"
+                    Style="{StaticResource GhostButtonStyle}" />
+                <Button
+                    Command="{x:Bind ViewModel.PauseSongCommand}"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          Glyph=&#xE62E;}"
+                    Style="{StaticResource GhostButtonStyle}">
+                    <interactivity:Interaction.Behaviors>
+                        <interactivity:DataTriggerBehavior
+                            Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                            ComparisonCondition="Equal"
+                            Value="True">
+                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                        </interactivity:DataTriggerBehavior>
+                        <interactivity:DataTriggerBehavior
+                            Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                            ComparisonCondition="Equal"
+                            Value="False">
+                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                        </interactivity:DataTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </Button>
+                <Button
+                    Command="{x:Bind ViewModel.PlaySongCommand}"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          Glyph=&#xF5B0;}"
+                    Style="{StaticResource GhostButtonStyle}">
+                    <interactivity:Interaction.Behaviors>
+                        <interactivity:DataTriggerBehavior
+                            Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                            ComparisonCondition="Equal"
+                            Value="True">
+                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                        </interactivity:DataTriggerBehavior>
+                        <interactivity:DataTriggerBehavior
+                            Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                            ComparisonCondition="Equal"
+                            Value="False">
+                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                        </interactivity:DataTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </Button>
+                <Button
+                    Command="{x:Bind ViewModel.NextSongCommand}"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          Glyph=&#xE623;}"
+                    Style="{StaticResource GhostButtonStyle}" />
             </StackPanel>
 
             <StackPanel
@@ -114,7 +230,9 @@
                                         RelativePanel.AlignVerticalCenterWithPanel="True"
                                         Style="{StaticResource GhostButtonStyle}" />
                                 </RelativePanel>
-                                <TextBlock x:Uid="LyricsPagePositionOffsetHint" Opacity="0.5" />
+                                <CheckBox IsChecked="{x:Bind ViewModel.ResetPositionOffsetOnSongChanged, Mode=TwoWay}">
+                                    <TextBlock x:Uid="LyricsPagePositionOffsetHint" />
+                                </CheckBox>
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
@@ -122,8 +240,9 @@
 
                 <!--  Translation  -->
                 <ToggleButton
+                    x:Name="TranslationToggleButton"
                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                          Glyph=&#xE8C1;}"
+                                          Glyph=&#xE8BD;}"
                     IsChecked="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}"
                     Style="{StaticResource GhostToggleButtonStyle}">
                     <ToolTipService.ToolTip>
@@ -163,7 +282,7 @@
                     x:Name="SettingsButton"
                     Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                          Glyph=&#xE713;}"
+                                          Glyph=&#xF8B0;}"
                     Style="{StaticResource GhostButtonStyle}">
                     <ToolTipService.ToolTip>
                         <ToolTip x:Name="SettingsToolTip" x:Uid="LyricsPageSettingsButtonToolTip" />
@@ -207,6 +326,64 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+            <!--<VisualStateGroup x:Name="VolumeState">
+                <VisualState x:Name="Volume0">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                            To="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="VolumeLevel0.Opacity" Value="1" />
+                        <Setter Target="VolumeLevel1.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel2.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel3.Opacity" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Volume1">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="LessThanOrEqual"
+                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                            To="32" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="VolumeLevel0.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel1.Opacity" Value="1" />
+                        <Setter Target="VolumeLevel2.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel3.Opacity" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Volume2">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="LessThanOrEqual"
+                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                            To="65" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="VolumeLevel0.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel1.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel2.Opacity" Value="1" />
+                        <Setter Target="VolumeLevel3.Opacity" Value="0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Volume3">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="LessThanOrEqual"
+                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                            To="100" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="VolumeLevel0.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel1.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel2.Opacity" Value="0" />
+                        <Setter Target="VolumeLevel3.Opacity" Value="1" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>-->
         </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

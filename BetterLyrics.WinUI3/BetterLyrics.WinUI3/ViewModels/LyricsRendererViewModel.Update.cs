@@ -19,7 +19,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private bool _isCanvasHeightChanged = false;
 
         private bool _isDisplayTypeChanged = false;
-        
+
         private bool _isPlayingLineChanged = false;
         private bool _isVisibleLinesBoundaryChanged = false;
 
@@ -297,7 +297,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (_adaptiveGrayedFontColor == _lightColor)
             {
                 grayedEnvironmentalColor = _darkColor;
-            } else if (_adaptiveGrayedFontColor == _darkColor)
+            }
+            else if (_adaptiveGrayedFontColor == _darkColor)
             {
                 grayedEnvironmentalColor = _lightColor;
             }

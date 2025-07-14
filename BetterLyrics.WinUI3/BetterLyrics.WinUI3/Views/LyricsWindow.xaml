@@ -17,7 +17,8 @@
         x:Name="RootGrid"
         PointerEntered="RootGrid_PointerEntered"
         PointerExited="RootGrid_PointerExited"
-        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
+        RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}"
+        SizeChanged="RootGrid_SizeChanged">
 
         <local:LyricsPage />
 
@@ -55,14 +56,29 @@
                 <!--  Look  -->
                 <Button
                     x:Name="ClickThroughButton"
-                    Command="{x:Bind ViewModel.LockWindowCommand}"
+                    Command="{x:Bind ViewModel.ToggleLockWindowCommand}"
                     Style="{StaticResource TitleBarButtonStyle}">
                     <FontIcon
                         FontFamily="{StaticResource IconFontFamily}"
                         FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                         Glyph="&#xE72E;" />
                     <ToolTipService.ToolTip>
-                        <ToolTip x:Name="LockToolTip" x:Uid="HostWindowLockToolTip" />
+                        <ToolTip x:Name="LockToolTip">
+                            <ToolTip.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Uid="HostWindowLockToolTip" />
+                                    <TextBlock
+                                        Margin="6,0"
+                                        VerticalAlignment="Center"
+                                        Opacity="0.7"
+                                        Text="Ctrl + Alt + " />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Opacity="0.7"
+                                        Text="{x:Bind ViewModel.LockHotKey, Mode=OneWay}" />
+                                </StackPanel>
+                            </ToolTip.Content>
+                        </ToolTip>
                     </ToolTipService.ToolTip>
                 </Button>
                 <!--  More  -->

@@ -85,7 +85,7 @@ namespace BetterLyrics.WinUI3.Services
             }
         }
 
-        public async Task<string?> SearchAsync(string title, string artist, string album, double durationMs, CancellationToken token)
+        public async Task<(string?, LyricsSearchProvider?)> SearchAsync(string title, string artist, string album, double durationMs, CancellationToken token)
         {
             _logger.LogInformation("Searching img for: {Title} - {Artist} (Album: {Album}, Duration: {DurationMs}ms)", title, artist, album, durationMs);
 
@@ -105,7 +105,7 @@ namespace BetterLyrics.WinUI3.Services
                     cachedLyrics = FileHelper.ReadLyricsCache(title, artist, lyricsFormat, provider.Provider.GetCacheDirectory());
                     if (!string.IsNullOrWhiteSpace(cachedLyrics))
                     {
-                        return cachedLyrics;
+                        return (cachedLyrics, provider.Provider);
                     }
                 }
 
@@ -155,11 +155,11 @@ namespace BetterLyrics.WinUI3.Services
                         FileHelper.WriteLyricsCache(title, artist, searchedLyrics, lyricsFormat, provider.Provider.GetCacheDirectory());
                     }
 
-                    return searchedLyrics;
+                    return (searchedLyrics, provider.Provider);
                 }
             }
 
-            return null;
+            return (null, null);
         }
 
         private async Task<string?> SearchFile(string title, string artist, LyricsFormat format)
@@ -327,6 +327,17 @@ namespace BetterLyrics.WinUI3.Services
             {
                 var response = await Lyricify.Lyrics.Helpers.ProviderHelper.QQMusicApi.GetLyricsAsync(qqResult.Id);
                 var original = response?.Lyrics;
+                var translated = response?.Trans;
+                if (!string.IsNullOrEmpty(translated))
+                {
+                    FileHelper.WriteLyricsCache(
+                        title,
+                        artist,
+                        translated,
+                        LyricsFormat.Lrc,
+                        PathHelper.QQTranslationCacheDirectory
+                    );
+                }
                 return original;
             }
             else if (result is NeteaseSearchResult neteaseResult)

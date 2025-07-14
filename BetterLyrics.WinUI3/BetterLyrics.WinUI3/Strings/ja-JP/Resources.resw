@@ -288,9 +288,6 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>グロー効果</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
-    <value>グローエフェクトスコープ</value>
-  </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>歌詞ソースを構成します</value>
   </data>
@@ -528,8 +525,8 @@
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>ロック</value>
   </data>
-  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
-    <value>ロック後にロックを解除するには、システムトレイに移動してロックを解除します</value>
+  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
+    <value>ロック後にロックを解除するには、システムトレイに移動してロックを解除または押します</value>
   </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>ファンの歌詞</value>
@@ -649,7 +646,7 @@
     <value>翻訳サーバーは設定されていません。最初に設定で構成してください</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
-    <value>曲を切り替えると、0 に自動的にリセットされます</value>
+    <value>曲を切り替えるときに0にリセットします</value>
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>歌詞の翻訳は最初に読まれます。一致していない場合、機械の翻訳はLibretranslate Serverから要求されます</value>
@@ -734,5 +731,14 @@
   </data>
   <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
     <value>今すぐ参加してください</value>
+  </data>
+  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+    <value>フローティングアニメーション</value>
+  </data>
+  <data name="SettingsPageScope.Header" xml:space="preserve">
+    <value>範囲</value>
+  </data>
+  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
+    <value>ショートカットキーのロックを解除およびロックします</value>
   </data>
 </root>

@@ -39,6 +39,8 @@ namespace BetterLyrics.WinUI3.Services
 
         string LibreTranslateServer { get; set; }
         int SelectedTargetLanguageIndex { get; set; }
+        bool ResetPositionOffsetOnSongChanged { get; set; }
+        int PositionOffset { get; set; }
         // Lyrics lib
 
         List<LocalLyricsFolder> LocalLyricsFolders { get; set; }
@@ -69,6 +71,8 @@ namespace BetterLyrics.WinUI3.Services
         LineRenderingType LyricsGlowEffectScope { get; set; }
         LineRenderingType LyricsHighlightScope { get; set; }
 
+        bool IsLyricsFloatAnimationEnabled { get; set; }
+
         float LyricsLineSpacingFactor { get; set; }
 
         List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
@@ -87,5 +91,6 @@ namespace BetterLyrics.WinUI3.Services
         LyricsDisplayType PreferredDisplayType { get; set; }
 
         int TimelineSyncThreshold { get; set; }
+        int LockHotKeyIndex { get; set; }
     }
 }
