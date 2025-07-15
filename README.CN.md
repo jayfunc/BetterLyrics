@@ -1,7 +1,7 @@
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.md">_**Click here to see the English version**_</a>
 
 <div align="center">
-<img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
+  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
 </div>
 
 <h2 align="center">
@@ -9,121 +9,137 @@ BetterLyrics
 </h2>
 
 <h3 align="center">
-使用 WinUI 3 构建的流畅动态歌词显示工具
+基于 WinUI 3 打造的丝滑动态歌词显示工具
 </h3>
 
 ---
 
-- QQ[「BetterLyrics」反馈交流群（简体中文）](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
-- Discord [「BetterLyrics」反馈交流群（繁体中文/英文）](https://discord.gg/5yAQPnyCKv)
+- [「BetterLyrics」反馈交流群（简体中文）](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (QQ群号：1054700388)
+- [「BetterLyrics」反馈交流群（繁体中文/英文）](https://discord.gg/5yAQPnyCKv) (Discord)
 
 ---
 
-## 亮点功能
+## 核心特色
 
-- 动态模糊专辑封面作为背景
-- 流畅的歌词淡入/淡出、放大/缩小效果
-- 流畅的用户界面随歌曲切换
-- 每个字符均支持渐变卡拉 OK（带光晕）效果
+- 动态模糊专辑封面背景
+- 丝滑的歌词淡入/淡出、缩放效果
+- 歌曲切换时的流畅界面过渡
+- 逐字渐变的卡拉OK效果（带光晕）
 - 沉浸式桌面歌词（停靠模式）
-- 本地翻译（支持 30 种语言）
+- 本地化歌词翻译（支持 30 种语言）
 
-> 该项目目前仍在开发中，最新的开发分支中可能存在错误和意外行为。
+> 项目仍在开发中，最新分支可能存在未修复的 Bug 或异常行为
 
 ## 支持的歌词来源
 
-- 来自您的本地存储
+- 本地资源
   - 音乐文件（内嵌歌词）
-  - [.lrc](https://en.wikipedia.org/wiki/LRC_(file_format)) 文件（包含核心格式和增强格式）
+  - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) 文件（标准格式与增强格式）
   - [.eslrc](https://github.com/ESLyric/release) 文件
   - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) 文件
 
-（歌词下载，您可以使用 [LDDC](https://github.com/chenmozhijin/LDDC))
+（歌词下载推荐工具：[LDDC](https://github.com/chenmozhijin/LDDC)）
 
-- 来自在线歌词提供商
-  - QQ 音乐
+- 在线歌词源
+  - QQ音乐
   - 网易云音乐
   - 酷狗音乐
   - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
   - [LRCLIB](https://lrclib.net/)
 
-## 截图
+## 效果展示
 
-![alt text](Screenshots/mode.png)
+### 标准模式
 
-![alt text](Screenshots/glow.png)
+![标准模式](Screenshots/image.png)
 
-![alt text](Screenshots/glow.gif)
+![光晕浮动效果](Screenshots/glow-float.gif)
 
-![alt text](Screenshots/dock.png)
+![歌词面板](Screenshots/fan.png)
 
-![alt text](Screenshots/immersive-dock.gif)
+![纯歌词模式](Screenshots/lyrics-only.png)
 
-![alt text](Screenshots/dock.gif)
+![纯专辑封面模式](Screenshots/album-art-only.png)
 
-![alt text](Screenshots/pip.png)
+### 停靠模式
 
-![alt text](Screenshots/settings.png)
+![停靠模式1](Screenshots/dock-1.png)
 
-![alt text](Screenshots/fs.png)
+![停靠模式2](Screenshots/dock-2.png)
 
-## 演示
+### 桌面模式
 
-在 Bilibili 上观看我们的介绍视频（上传于 2025 年 5 月 31 日） [此处](https://b23.tv/QjKkYmL)。
+![桌面模式1](Screenshots/desktop-1.png)
+
+![桌面模式2](Screenshots/desktop-2.png)
+
+## 演示视频
+
+观看 B 站演示视频（2025年7月7日发布）[点击此处](https://www.bilibili.com/video/BV1zjGjzfEXh)
 
 ## 立即体验
 
-- 稳定版本
+- 稳定版
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
-<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
+	<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
 </a>
 
-> **最简单**的获取方式。 **无限**免费试用或购买（免费版和付费版**没有区别**，如果您喜欢，可以购买来支持我）
+> **最便捷**的获取方式，提供**无限制**免费试用或购买（免费版与付费版**功能完全一致**，购买视为对开发者的支持）
 
-或者您也可以从 Google Drive 获取（链接见 [release](https://github.com/jayfunc/BetterLyrics/releases/latest) 页面）
+或通过 Google Drive 获取（链接见[发布页](https://github.com/jayfunc/BetterLyrics/releases/latest)）
 
-> 请注意，您正在下载“.zip”文件，有关安装指南，请参考[此文档](How2Install/How2Install.md)。
+> 下载的是 ".zip" 压缩包，安装指南请参阅[此文档](How2Install/How2Install.md)
 
-- 最新开发版本
+- 开发版
+可通过 `git clone` 拉取项目源码自行编译
 
-您可以使用 `git clone` 命令克隆此项目并自行构建。
+## 已测试播放器
 
-## 已知不支持的音乐播放器
+- 酷狗音乐
+  - **时间轴同步限制**：酷狗不广播时间轴信息，调整进度时歌词无法实时跟随
+- Apple Music
+  - 需在设置中调整时间轴阈值至 600 ms 左右（路径：设置→高级选项）
+- foobar2000
+  - 需配合安装 [foo_mediacontrol](https://github.com/dumbie/foo_mediacontrol) 插件
+- Spotify
+- QQ音乐
+- PotPlayer
+- 系统自带媒体播放器
 
-- 网易云音乐
-
-## 非常感谢
+## 鸣谢
 
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
-  - 提供 QQ、网易、酷狗等平台歌词的获取、解密和解析功能
+  - 提供 QQ/网易云/酷狗歌词获取与解密
 - [LRCLIB](https://lrclib.net/)
-  - LRCLIB 歌词 API 提供程序
-- [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
-  - 用于提取音乐文件中的图片
+  - 歌词 API 服务
+- [ATL.NET](https://github.com/Zeugma440/atldotnet)
+  - 音乐文件封面提取
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
-  - 提供访问 Win32 窗口 API 的便捷方法
+  - Win32 窗口 API 封装
 - [TagLib#](https://github.com/mono/taglib-sharp)
-  - 用于读取原版歌词内容
-- [Stackoverflow - 如何在 WPF 中为 Margin 属性设置动画](https://stackoverflow.com/a/21542882/11048731)
+  - 歌词内容解析
+- [Vanara](https://github.com/dahall/Vanara)
+  - Win32 API 封装库
+- [Stackoverflow - WPF边距动画实现](https://stackoverflow.com/a/21542882/11048731)
 - [DevWinUI](https://github.com/ghost1372/DevWinUI)
-- [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
-- [cnblogs - .NET App 与 Windows 系统媒体控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
-- [Win2D中的游戏循环：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
-- [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
-- [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
+- [B站 - WinUI3系统背景效果教程](https://www.bilibili.com/video/BV1PY4FevEkS)
+- [博客园 - .NET应用与SMTC交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
+- [Win2D游戏循环实现](https://www.cnblogs.com/walterlv/p/10236395.html)
+- [Win2D高级示例](https://github.com/r2d2rigo/Win2D-Samples)
+- [CommunityToolkit开发指南](https://mvvm.coldwind.top/)
 
-## 灵感来自
+## 灵感来源
 
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
+- [网易云歌词增强](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
-- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
-- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
+- [椒盐音乐播放器](https://moriafly.com/program/salt-player)
+- [MyToolBar任务栏工具](https://github.com/TwilightLemon/MyToolBar)
 
-## Star 历史
+## 项目星标历史
 
-[![星盘历史Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
-## 欢迎提出任何问题和 PR
+## 欢迎反馈与贡献
 
-如果您发现错误，请提交至 issues；如果您有任何想法，请随时在此处分享。
+如遇问题请提交 Issue，如有改进建议欢迎提交 PR
