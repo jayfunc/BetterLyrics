@@ -1,5 +1,7 @@
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.md">_**Click here to see the English version**_</a>
 
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**点此处查看常见问题与解答（FAQ）**_</a>
+
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
 </div>

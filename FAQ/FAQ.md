@@ -1,10 +1,3 @@
----
-layout: default
-title: FAQ
-layout: FAQ
-nav_order: 2
----
-
 ### I couldn't see any button that I can interact with
 
 This app is built with immersive experience, just hover your mouse on the top/bottom area of the app and then you'll see everything.
@@ -17,13 +10,13 @@ This app is built with immersive experience, just hover your mouse on the top/bo
 
 ![alt text](image-6.png)
 
-Again, hover you mouse on the top, click on the lock icon and you're good to go!
+Again, hover you mouse on the top, click on the lock icon and you're good to go! Or, alternatively, press `Ctrl + Alt + U`.
 
 ### How can I unlock the window in desktop mode
 
 ![alt text](image-7.png)
 
-It's in the system tray, right-click on the icon and you'll see "Unlock the window".
+It's in the system tray, right-click on the icon and you'll see "Unlock the window". Or, alternatively, press `Ctrl + Alt + U`.
 
 ### There's a delay in lyrics timeline
 
