@@ -35,6 +35,8 @@ namespace BetterLyrics.WinUI3
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
             _ignoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
+            IsImmersiveMode = _settingsService.IsImmersiveMode;
+            OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
         }
 
         [ObservableProperty]
@@ -54,6 +56,13 @@ namespace BetterLyrics.WinUI3
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsImmersiveMode { get; set; }
+
+        [ObservableProperty]
+        public partial float TopCommandGridOpacity { get; set; }
+
+        [ObservableProperty]
         public partial ElementTheme ThemeType { get; set; } = ElementTheme.Default;
 
         [ObservableProperty]
@@ -64,7 +73,19 @@ namespace BetterLyrics.WinUI3
         public partial bool IsMouseWithinWindow { get; set; } = false;
 
         [ObservableProperty]
-        public partial string LockHotKey { get; set; }
+        public partial string LockHotKey { get; set; } = "";
+
+        partial void OnIsImmersiveModeChanged(bool value)
+        {
+            if (value)
+            {
+                TopCommandGridOpacity = 0f;
+            }
+            else
+            {
+                TopCommandGridOpacity = 0.5f;
+            }
+        }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -190,11 +211,13 @@ namespace BetterLyrics.WinUI3
             {
                 DesktopModeHelper.SetClickThrough(window, false);
                 IsLyricsWindowLocked = false;
+                IsImmersiveMode = _settingsService.IsImmersiveMode;
             }
             else
             {
                 DesktopModeHelper.SetClickThrough(window, true);
                 IsLyricsWindowLocked = true;
+                IsImmersiveMode = true;
             }
         }
 
@@ -236,6 +259,12 @@ namespace BetterLyrics.WinUI3
             {
                 DockModeHelper.Disable(window);
             }
+        }
+
+        [RelayCommand]
+        private void OnImmersiveToggleButtonEnabledChanged()
+        {
+            _settingsService.IsImmersiveMode = IsImmersiveMode;
         }
     }
 }

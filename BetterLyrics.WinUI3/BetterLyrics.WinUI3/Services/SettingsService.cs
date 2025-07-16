@@ -41,6 +41,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string StandardWindowHeightKey = "StandardWindowHeight";
 
         private const string AutoLockOnDesktopModeKey = "AutoLockOnDesktopMode";
+        private const string IsImmersiveModeKey = "IsImmersiveMode";
 
         private const string IsDynamicCoverOverlayEnabledKey = "IsDynamicCoverOverlayEnabled";
         private const string IsFanLyricsEnabledKey = "IsFanLyricsEnabled";
@@ -73,6 +74,8 @@ namespace BetterLyrics.WinUI3.Services
         private const string IsTranslationEnabledKey = "IsTranslationEnabled";
         private const string LibreTranslateServerKey = "LibreTranslateServer";
         private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
+
+        private const string LXMusicServerKey = "LXMusicServer";
 
         private const string LyricsBackgroundThemeKey = "LyricsBackgroundTheme";
         private const string IgnoreFullscreenWindowKey = "IgnoreFullscreenWindow";
@@ -160,6 +163,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(StandardWindowWidthKey, 1600);
 
             SetDefault(AutoLockOnDesktopModeKey, false);
+            SetDefault(IsImmersiveModeKey, false);
             // App behavior
             SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.StandardMode);
             // Album art
@@ -195,6 +199,8 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LibreTranslateServerKey, "");
             SetDefault(IsTranslationEnabledKey, false);
             SetDefault(SelectedTargetLanguageIndexKey, LanguageHelper.GetDefaultTargetLanguageIndex());
+
+            SetDefault(LXMusicServerKey, "");
 
             SetDefault(LyricsFontStrokeWidthKey, 3);
             SetDefault(IgnoreFullscreenWindowKey, false);
@@ -531,6 +537,12 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(SelectedTargetLanguageIndexKey, value);
         }
 
+        public string LXMusicServer
+        {
+            get => GetValue<string>(LXMusicServerKey)!;
+            set => SetValue(LXMusicServerKey, value);
+        }
+
         public bool IgnoreFullscreenWindow
         {
             get => GetValue<bool>(IgnoreFullscreenWindowKey);
@@ -559,6 +571,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<int>(PositionOffsetKey);
             set => SetValue(PositionOffsetKey, value);
+        }
+
+        public bool IsImmersiveMode
+        {
+            get => GetValue<bool>(IsImmersiveModeKey);
+            set => SetValue(IsImmersiveModeKey, value);
         }
 
         private T? GetValue<T>(string key)

@@ -82,7 +82,7 @@
                 <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="VerticalAlignment" Value="Stretch" />
                 <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="16,0" />
+                <Setter Property="Padding" Value="10,0" />
                 <Setter Property="Background" Value="Transparent" />
             </Style>
             <Style x:Key="GhostToggleButtonStyle" TargetType="ToggleButton">
@@ -92,6 +92,12 @@
                 <Setter Property="Padding" Value="8" />
                 <Setter Property="Background" Value="Transparent" />
             </Style>
+            <Style x:Key="CardGridStyle" TargetType="Grid">
+                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefault}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="6" />
+            </Style>
 
             <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
@@ -100,7 +106,7 @@
             <!--  Dimensions  -->
 
             <!--  Fonts  -->
-            <FontFamily x:Key="IconFontFamily">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+            <FontFamily x:Key="IconFontFamily">ms-appx:///Assets/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

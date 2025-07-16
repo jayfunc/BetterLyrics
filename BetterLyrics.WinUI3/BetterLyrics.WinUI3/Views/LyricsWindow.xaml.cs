@@ -165,6 +165,7 @@ namespace BetterLyrics.WinUI3.Views
                     AOTFlyoutItem.Visibility = DesktopFlyoutItem.Visibility = FullScreenFlyoutItem.Visibility = DockFlyoutItem.Visibility =
                     ClickThroughButton.Visibility = Visibility.Collapsed;
 
+                    ViewModel.IsImmersiveMode = true;
                     break;
                 case AppWindowPresenterKind.FullScreen:
                     MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
@@ -175,7 +176,6 @@ namespace BetterLyrics.WinUI3.Views
                     DockFlyoutItem.Visibility =
                         Visibility.Collapsed;
                     FullScreenFlyoutItem.IsChecked = true;
-
                     break;
                 case AppWindowPresenterKind.Overlapped:
                     DockFlyoutItem.Visibility = Visibility.Visible;
@@ -193,6 +193,7 @@ namespace BetterLyrics.WinUI3.Views
                         MiniFlyoutItem.Visibility =
                             Visibility.Collapsed;
 
+                        ViewModel.IsImmersiveMode = true;
                     }
                     else if (DesktopFlyoutItem.IsChecked)
                     {
@@ -234,6 +235,8 @@ namespace BetterLyrics.WinUI3.Views
                             MaximiseButton.Visibility = Visibility.Visible;
                             RestoreButton.Visibility = Visibility.Collapsed;
                         }
+
+                        ViewModel.IsImmersiveMode = _settingsService.IsImmersiveMode;
                     }
                     break;
                 default:
@@ -272,12 +275,18 @@ namespace BetterLyrics.WinUI3.Views
 
         private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            TopCommandGrid.Opacity = 0.5;
+            if (ViewModel.IsImmersiveMode)
+            {
+                ViewModel.TopCommandGridOpacity = .5f;
+            }
         }
 
         private void TopCommandGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            TopCommandGrid.Opacity = 0;
+            if (ViewModel.IsImmersiveMode)
+            {
+                ViewModel.TopCommandGridOpacity = 0f;
+            }
         }
 
         private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)

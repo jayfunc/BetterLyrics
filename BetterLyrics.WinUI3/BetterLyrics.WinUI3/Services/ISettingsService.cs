@@ -3,10 +3,8 @@
 using System.Collections.Generic;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Windows.UI;
-using Windows.UI.Text;
 
 namespace BetterLyrics.WinUI3.Services
 {
@@ -92,5 +90,7 @@ namespace BetterLyrics.WinUI3.Services
 
         int TimelineSyncThreshold { get; set; }
         int LockHotKeyIndex { get; set; }
+        bool IsImmersiveMode { get; set; }
+        string LXMusicServer { get; set; }
     }
 }

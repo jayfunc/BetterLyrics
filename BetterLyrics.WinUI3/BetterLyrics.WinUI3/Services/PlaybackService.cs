@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using EvtSource;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using System;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
@@ -29,14 +31,20 @@ namespace BetterLyrics.WinUI3.Services
     {
         private readonly IAlbumArtSearchService _albumArtSearchService;
         private readonly ILogger<PlaybackService> _logger;
+
+        private readonly string _lxMusicId = "cn.toside.music.desktop";
+
+        private EventSourceReader? _sse = null;
+
         private readonly MediaManager _mediaManager = new();
+
         private readonly LatestOnlyTaskRunner _AlbumArtRefreshRunner = new();
         private readonly LatestOnlyTaskRunner _OnAnyMediaPropertyChangedRunner = new();
 
         private SongInfo? _cachedSongInfo;
         private List<MediaSourceProviderInfo> _mediaSourceProvidersInfo;
         private byte[]? _SMTCAlbumArtBytes = null;
-        private AlbumArtChangedEventArgs _albumArtChangedEventArgs = new AlbumArtChangedEventArgs();
+        private AlbumArtChangedEventArgs _albumArtChangedEventArgs = new();
 
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
         public event EventHandler<PositionChangedEventArgs>? PositionChanged;
@@ -140,6 +148,15 @@ namespace BetterLyrics.WinUI3.Services
 
                 token.ThrowIfCancellationRequested();
 
+                if (id == _lxMusicId)
+                {
+                    StartSSE();
+                }
+                else
+                {
+                    StopSSE();
+                }
+
                 _cachedSongInfo = new SongInfo
                 {
                     Title = mediaProperties.Title,
@@ -232,7 +249,7 @@ namespace BetterLyrics.WinUI3.Services
 
             if (bytes == null)
             {
-                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync($"{_cachedSongInfo!.Artist} - {_cachedSongInfo.Title}", 400, 400);
+                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(400, 400);
                 token.ThrowIfCancellationRequested();
             }
 
@@ -253,6 +270,46 @@ namespace BetterLyrics.WinUI3.Services
             {
                 AlbumArtChangedChanged?.Invoke(this, _albumArtChangedEventArgs);
             });
+        }
+
+        private void StartSSE()
+        {
+            _sse = new EventSourceReader(new Uri($"{_settingsService.LXMusicServer}/subscribe-player-status?filter=progress")).Start();
+            _sse.MessageReceived += Sse_MessageReceived;
+            _sse.Disconnected += Sse_Disconnected;
+        }
+
+        private void StopSSE()
+        {
+            if (_sse != null)
+            {
+                _sse.MessageReceived -= Sse_MessageReceived;
+                _sse.Disconnected -= Sse_Disconnected;
+                _sse.Dispose();
+                _sse = null;
+            }
+        }
+
+        private void Sse_Disconnected(object sender, DisconnectEventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                await Task.Delay(e.ReconnectDelay);
+                if (_sse != null && !_sse.IsDisposed) _sse.Start();
+            });
+        }
+
+        private void Sse_MessageReceived(object sender, EventSourceMessageEventArgs e)
+        {
+            var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
+
+            if (data.TryGetDouble(out double positionSeconds))
+            {
+                if (_cachedSongInfo?.SourceAppUserModelId == _lxMusicId)
+                {
+                    PositionChanged?.Invoke(this, new PositionChangedEventArgs(TimeSpan.FromSeconds(positionSeconds)));
+                }
+            }
         }
 
         public async Task PlayAsync()

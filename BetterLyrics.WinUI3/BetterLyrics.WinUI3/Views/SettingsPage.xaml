@@ -175,7 +175,7 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageIgnoreFullscreenWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE66C;}">
+                                <controls:SettingsCard x:Uid="SettingsPageIgnoreFullscreenWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE967;}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IgnoreFullscreenWindow, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
@@ -911,6 +911,20 @@
                                             Value="{x:Bind ViewModel.TimelineSyncThreshold, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLXMusicServer">
+                                    <StackPanel Orientation="Horizontal" Spacing="12">
+                                        <TextBox
+                                            IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                            PlaceholderText="http://127.0.0.1:23330"
+                                            Text="{x:Bind ViewModel.LXMusicServer, Mode=TwoWay}" />
+                                        <Button
+                                            x:Uid="SettingsPageServerTestButton"
+                                            Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
+                                            IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
 
                             </StackPanel>
                         </controls:Case>

@@ -26,6 +26,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             PreferredDisplayType = _settingsService.PreferredDisplayType;
             ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
             PositionOffset = _settingsService.PositionOffset;
+            IsImmersiveMode = _settingsService.IsImmersiveMode;
+            OnIsImmersiveModeChanged(IsImmersiveMode);
 
             //Volume = SystemVolumeHelper.GetMasterVolume();
             //SystemVolumeHelper.VolumeChanged += SystemVolumeHelper_VolumeChanged;
@@ -57,6 +59,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         //[ObservableProperty]
         //public partial int Volume { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsImmersiveMode { get; set; }
+
+        [ObservableProperty]
+        public partial float BottomCommandGridOpacity { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -102,6 +110,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     SetNonStandardModePreferredDisplayType(message.NewValue);
                     TrySwitchToPreferredDisplayType(SongInfo);
+                }
+                else if (message.PropertyName == nameof(LyricsWindowViewModel.IsImmersiveMode))
+                {
+                    IsImmersiveMode = message.NewValue;
                 }
             }
         }
@@ -189,6 +201,18 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnPositionOffsetChanged(int value)
         {
             _settingsService.PositionOffset = value;
+        }
+
+        partial void OnIsImmersiveModeChanged(bool value)
+        {
+            if (value)
+            {
+                BottomCommandGridOpacity = 0f;
+            }
+            else
+            {
+                BottomCommandGridOpacity = .5f;
+            }
         }
 
         //partial void OnVolumeChanged(int value)

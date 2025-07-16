@@ -603,10 +603,10 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>Visit https://github.com/LibreTranslate/LibreTranslate for installation instructions and more information (this software is not affiliated with this translation service in any way)</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>Server test successful</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
     <value>Server test failed</value>
   </data>
   <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
@@ -740,5 +740,8 @@
   </data>
   <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
     <value>Unlock and lock shortcut keys</value>
+  </data>
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>LX Music Server</value>
   </data>
 </root>

@@ -603,10 +603,10 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>造訪 https://github.com/LibreTranslate/LibreTranslate 以取得安裝教學及更多資訊（本軟體與此翻譯服務無任何關聯）</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>服務器測試成功</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
     <value>服務器測試失敗</value>
   </data>
   <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
@@ -740,5 +740,8 @@
   </data>
   <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
     <value>解鎖和鎖定快捷鍵</value>
+  </data>
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>LX 音樂服務器</value>
   </data>
 </root>

@@ -25,145 +25,161 @@
         <!--  Top command  -->
         <Grid
             x:Name="TopCommandGrid"
-            Margin="6"
+            Margin="12"
             VerticalAlignment="Top"
-            Opacity="0"
+            Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}"
             PointerEntered="TopCommandGrid_PointerEntered"
             PointerExited="TopCommandGrid_PointerExited">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <StackPanel
-                x:Name="TopLeftCommandStackPanel"
-                Margin="12"
+            <Grid
+                Padding="6"
                 HorizontalAlignment="Left"
-                Orientation="Horizontal"
-                Spacing="6">
-                <StackPanel.OpacityTransition>
-                    <ScalarTransition />
-                </StackPanel.OpacityTransition>
-            </StackPanel>
+                Style="{StaticResource CardGridStyle}">
+                <StackPanel
+                    x:Name="TopLeftCommandStackPanel"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <StackPanel.OpacityTransition>
+                        <ScalarTransition />
+                    </StackPanel.OpacityTransition>
+                    <ToggleButton
+                        x:Name="ImmersiveButton"
+                        Command="{x:Bind ViewModel.ImmersiveToggleButtonEnabledChangedCommand}"
+                        IsChecked="{x:Bind ViewModel.IsImmersiveMode, Mode=TwoWay}"
+                        Style="{StaticResource TitleBarToggleButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize}"
+                            Glyph="&#xED1A;" />
+                    </ToggleButton>
+                </StackPanel>
+            </Grid>
 
-            <StackPanel
-                x:Name="TopRightCommandStackPanel"
+            <Grid
+                Padding="6"
                 HorizontalAlignment="Right"
-                Orientation="Horizontal">
-                <StackPanel.OpacityTransition>
-                    <ScalarTransition />
-                </StackPanel.OpacityTransition>
+                Style="{StaticResource CardGridStyle}">
+                <StackPanel x:Name="TopRightCommandStackPanel" Orientation="Horizontal">
+                    <StackPanel.OpacityTransition>
+                        <ScalarTransition />
+                    </StackPanel.OpacityTransition>
 
-                <!--  Look  -->
-                <Button
-                    x:Name="ClickThroughButton"
-                    Command="{x:Bind ViewModel.ToggleLockWindowCommand}"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <FontIcon
-                        FontFamily="{StaticResource IconFontFamily}"
-                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE72E;" />
-                    <ToolTipService.ToolTip>
-                        <ToolTip x:Name="LockToolTip">
-                            <ToolTip.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock x:Uid="HostWindowLockToolTip" />
-                                    <TextBlock
-                                        Margin="6,0"
-                                        VerticalAlignment="Center"
-                                        Opacity="0.7"
-                                        Text="Ctrl + Alt + " />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        Opacity="0.7"
-                                        Text="{x:Bind ViewModel.LockHotKey, Mode=OneWay}" />
-                                </StackPanel>
-                            </ToolTip.Content>
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                </Button>
-                <!--  More  -->
-                <Button x:Name="MoreButton" Style="{StaticResource TitleBarButtonStyle}">
-                    <FontIcon
-                        FontFamily="{StaticResource IconFontFamily}"
-                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE712;" />
-                    <ToolTipService.ToolTip>
-                        <ToolTip x:Name="MoreButtonToolTip" x:Uid="HostWindowMoreButtonToolTip" />
-                    </ToolTipService.ToolTip>
-                    <Button.Flyout>
-                        <MenuFlyout>
-                            <ToggleMenuFlyoutItem
-                                x:Name="AOTFlyoutItem"
-                                x:Uid="BaseWindowAOTFlyoutItem"
-                                Click="AOTFlyoutItem_Click" />
-                            <ToggleMenuFlyoutItem
-                                x:Name="FullScreenFlyoutItem"
-                                x:Uid="BaseWindowFullScreenFlyoutItem"
-                                Click="FullScreenFlyoutItem_Click" />
-                            <ToggleMenuFlyoutItem
-                                x:Name="DockFlyoutItem"
-                                x:Uid="HostWindowDockFlyoutItem"
-                                Command="{x:Bind ViewModel.ToggleDockModeCommand}"
-                                IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
-                            <ToggleMenuFlyoutItem
-                                x:Name="DesktopFlyoutItem"
-                                x:Uid="HostWindowDesktopFlyoutItem"
-                                Command="{x:Bind ViewModel.ToggleDesktopModeCommand}"
-                                IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=OneWay}" />
-                            <ToggleMenuFlyoutItem
-                                x:Name="MiniFlyoutItem"
-                                x:Uid="BaseWindowMiniFlyoutItem"
-                                Click="MiniFlyoutItem_Click" />
-                            <MenuFlyoutItem
-                                x:Name="SettingsFlyoutItem"
-                                x:Uid="HostWindowSettingsFlyoutItem"
-                                Click="SettingsMenuFlyoutItem_Click" />
-                        </MenuFlyout>
-                    </Button.Flyout>
-                </Button>
+                    <!--  Look  -->
+                    <Button
+                        x:Name="ClickThroughButton"
+                        Command="{x:Bind ViewModel.ToggleLockWindowCommand}"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE72E;" />
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="LockToolTip">
+                                <ToolTip.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="HostWindowLockToolTip" />
+                                        <TextBlock
+                                            Margin="6,0"
+                                            VerticalAlignment="Center"
+                                            Opacity="0.7"
+                                            Text="Ctrl + Alt + " />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Opacity="0.7"
+                                            Text="{x:Bind ViewModel.LockHotKey, Mode=OneWay}" />
+                                    </StackPanel>
+                                </ToolTip.Content>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                    </Button>
+                    <!--  More  -->
+                    <Button x:Name="MoreButton" Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE712;" />
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Name="MoreButtonToolTip" x:Uid="HostWindowMoreButtonToolTip" />
+                        </ToolTipService.ToolTip>
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <ToggleMenuFlyoutItem
+                                    x:Name="AOTFlyoutItem"
+                                    x:Uid="BaseWindowAOTFlyoutItem"
+                                    Click="AOTFlyoutItem_Click" />
+                                <ToggleMenuFlyoutItem
+                                    x:Name="FullScreenFlyoutItem"
+                                    x:Uid="BaseWindowFullScreenFlyoutItem"
+                                    Click="FullScreenFlyoutItem_Click" />
+                                <ToggleMenuFlyoutItem
+                                    x:Name="DockFlyoutItem"
+                                    x:Uid="HostWindowDockFlyoutItem"
+                                    Command="{x:Bind ViewModel.ToggleDockModeCommand}"
+                                    IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
+                                <ToggleMenuFlyoutItem
+                                    x:Name="DesktopFlyoutItem"
+                                    x:Uid="HostWindowDesktopFlyoutItem"
+                                    Command="{x:Bind ViewModel.ToggleDesktopModeCommand}"
+                                    IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=OneWay}" />
+                                <ToggleMenuFlyoutItem
+                                    x:Name="MiniFlyoutItem"
+                                    x:Uid="BaseWindowMiniFlyoutItem"
+                                    Click="MiniFlyoutItem_Click" />
+                                <MenuFlyoutItem
+                                    x:Name="SettingsFlyoutItem"
+                                    x:Uid="HostWindowSettingsFlyoutItem"
+                                    Click="SettingsMenuFlyoutItem_Click" />
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
 
-                <!--  Window Minimise  -->
-                <Button
-                    x:Name="MinimiseButton"
-                    Click="MinimiseButton_Click"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <FontIcon
-                        FontFamily="{StaticResource IconFontFamily}"
-                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE738;" />
-                </Button>
-                <!--  Window Maximise  -->
-                <Button
-                    x:Name="MaximiseButton"
-                    Click="MaximiseButton_Click"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <FontIcon
-                        FontFamily="{StaticResource IconFontFamily}"
-                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE71A;" />
-                </Button>
-                <!--  Window Restore  -->
-                <Button
-                    x:Name="RestoreButton"
-                    Click="RestoreButton_Click"
-                    Style="{StaticResource TitleBarButtonStyle}"
-                    Visibility="Collapsed">
-                    <FontIcon
-                        FontFamily="{StaticResource IconFontFamily}"
-                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE744;" />
-                </Button>
-                <!--  Window Close  -->
-                <Button
-                    x:Name="CloseButton"
-                    Click="CloseButton_Click"
-                    Style="{StaticResource TitleBarButtonStyle}">
-                    <FontIcon
-                        FontFamily="{StaticResource IconFontFamily}"
-                        FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                        Glyph="&#xE711;" />
-                </Button>
-            </StackPanel>
+                    <!--  Window Minimise  -->
+                    <Button
+                        x:Name="MinimiseButton"
+                        Click="MinimiseButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE738;" />
+                    </Button>
+                    <!--  Window Maximise  -->
+                    <Button
+                        x:Name="MaximiseButton"
+                        Click="MaximiseButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE71A;" />
+                    </Button>
+                    <!--  Window Restore  -->
+                    <Button
+                        x:Name="RestoreButton"
+                        Click="RestoreButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="Collapsed">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE744;" />
+                    </Button>
+                    <!--  Window Close  -->
+                    <Button
+                        x:Name="CloseButton"
+                        Click="CloseButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE711;" />
+                    </Button>
+                </StackPanel>
+            </Grid>
 
         </Grid>
 

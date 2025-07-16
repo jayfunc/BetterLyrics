@@ -603,10 +603,10 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>설치 지침 및 자세한 정보는 https://github.com/LibreTranslate/LibreTranslate 를 방문하십시오 (이 소프트웨어는이 번역 서비스와 제휴하지 않습니다).</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>서버 테스트 성공</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
     <value>서버 테스트가 실패했습니다</value>
   </data>
   <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
@@ -740,5 +740,8 @@
   </data>
   <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
     <value>바로 가기 키를 잠금 해제하고 잠그십시오</value>
+  </data>
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>LX 음악 서버</value>
   </data>
 </root>

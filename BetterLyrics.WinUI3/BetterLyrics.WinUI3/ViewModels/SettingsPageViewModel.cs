@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Controls;
 using System;
 using System.Collections.Generic;
@@ -92,6 +93,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
             ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
             LockHotKeyIndex = _settingsService.LockHotKeyIndex;
+
+            LXMusicServer = _settingsService.LXMusicServer;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
@@ -274,6 +277,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         [NotifyPropertyChangedRecipients]
         public partial int TimelineSyncThreshold { get; set; }
 
+        [ObservableProperty]
+        public partial bool IsLXMusicServerTesting { get; set; } = false;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial string LXMusicServer { get; set; }
+
         public void OnLyricsSearchProvidersReordered()
         {
             _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
@@ -415,7 +425,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, null);
                     _dispatcherQueue.TryEnqueue(() =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageLibreTranslateTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
                         IsLibreTranslateServerTesting = false;
                     });
                 }
@@ -423,10 +433,27 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _dispatcherQueue.TryEnqueue(() =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageLibreTranslateTestFailedInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
                         IsLibreTranslateServerTesting = false;
                     });
                 }
+            });
+        }
+
+        [RelayCommand]
+        private void LXMusicServerTest()
+        {
+            IsLXMusicServerTesting = true;
+            Task.Run(async () =>
+            {
+                bool testResult = await NetHelper.CheckConnectivity($"{LXMusicServer}/status");
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    App.Current.SettingsWindowNotificationPanel?.Notify(
+                        App.ResourceLoader!.GetString($"SettingsPageServerTest{(testResult ? "Success" : "Failed")}Info"),
+                        testResult ? InfoBarSeverity.Success : InfoBarSeverity.Error);
+                    IsLXMusicServerTesting = false;
+                });
             });
         }
 
@@ -489,6 +516,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnLibreTranslateServerChanged(string value)
         {
             _settingsService.LibreTranslateServer = value;
+        }
+        partial void OnLXMusicServerChanged(string value)
+        {
+            _settingsService.LXMusicServer = value;
         }
         partial void OnAutoStartWindowTypeChanged(AutoStartWindowType value)
         {
