@@ -93,7 +93,7 @@
                 <Setter Property="Background" Value="Transparent" />
             </Style>
             <Style x:Key="CardGridStyle" TargetType="Grid">
-                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefault}" />
+                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="CornerRadius" Value="6" />

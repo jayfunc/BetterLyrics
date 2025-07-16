@@ -35,14 +35,14 @@
             </Grid.OpacityTransition>
 
             <Grid
-                Padding="6"
+                Padding="3"
                 HorizontalAlignment="Left"
                 Style="{StaticResource CardGridStyle}">
                 <StackPanel
                     x:Name="TopLeftCommandStackPanel"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal"
-                    Spacing="6">
+                    Spacing="3">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
@@ -60,10 +60,13 @@
             </Grid>
 
             <Grid
-                Padding="6"
+                Padding="3"
                 HorizontalAlignment="Right"
                 Style="{StaticResource CardGridStyle}">
-                <StackPanel x:Name="TopRightCommandStackPanel" Orientation="Horizontal">
+                <StackPanel
+                    x:Name="TopRightCommandStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="3">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
@@ -101,7 +104,7 @@
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE712;" />
+                            Glyph="&#xE700;" />
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="MoreButtonToolTip" x:Uid="HostWindowMoreButtonToolTip" />
                         </ToolTipService.ToolTip>
@@ -145,7 +148,7 @@
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE738;" />
+                            Glyph="&#xE654;" />
                     </Button>
                     <!--  Window Maximise  -->
                     <Button
@@ -155,7 +158,7 @@
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE71A;" />
+                            Glyph="&#xE655;" />
                     </Button>
                     <!--  Window Restore  -->
                     <Button
@@ -166,7 +169,7 @@
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE744;" />
+                            Glyph="&#xE656;" />
                     </Button>
                     <!--  Window Close  -->
                     <Button
@@ -176,7 +179,7 @@
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE711;" />
+                            Glyph="&#xE653;" />
                     </Button>
                 </StackPanel>
             </Grid>

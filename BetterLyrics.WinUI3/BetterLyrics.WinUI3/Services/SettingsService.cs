@@ -93,6 +93,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string PositionOffsetKey = "PositionOffset";
 
         private const string LockHotKeyIndexKey = "LockHotKeyIndex";
+        private const string DockPlacementKey = "DockPlacement";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -210,11 +211,18 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsScrollDurationKey, 500); // 500ms
             SetDefault(TimelineSyncThresholdKey, 0); // 0ms
 
-            SetDefault(IsLyricsFloatAnimationEnabledKey, false);
+            SetDefault(IsLyricsFloatAnimationEnabledKey, true);
 
             SetDefault(ResetPositionOffsetOnSongChangedKey, false);
             SetDefault(PositionOffsetKey, 0);
             SetDefault(LockHotKeyIndexKey, 'U' - 'A');
+            SetDefault(DockPlacementKey, (int)DockPlacement.Top);
+        }
+
+        public DockPlacement DockPlacement
+        {
+            get => (DockPlacement)GetValue<int>(DockPlacementKey);
+            set => SetValue(DockPlacementKey, (int)value);
         }
 
         public int LockHotKeyIndex
@@ -235,7 +243,7 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(LyricsScrollDurationKey, value);
         }
 
-        public LyricsDisplayType PreferredDisplayType
+        public LyricsDisplayType DisplayType
         {
             get => (LyricsDisplayType)GetValue<int>(PreferredDisplayTypeKey);
             set => SetValue(PreferredDisplayTypeKey, (int)value);

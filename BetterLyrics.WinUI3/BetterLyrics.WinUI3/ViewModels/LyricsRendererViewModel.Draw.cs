@@ -509,7 +509,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                                 Displacement = mask,
                                 XChannelSelect = EffectChannelSelect.Red,
                                 YChannelSelect = EffectChannelSelect.Alpha,
-                                Amount = 2f
+                                Amount = 1f
                             });
                         }
                         else

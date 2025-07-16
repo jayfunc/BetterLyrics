@@ -134,6 +134,14 @@
                                     </ComboBox>
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageIgnoreFullscreenWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE967;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IgnoreFullscreenWindow, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <!--  Desktop mode  -->
+
+                                <TextBlock x:Uid="SettingsPageAppDesktop" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
                                 <controls:SettingsCard x:Uid="SettingsPageAutoLock" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE755;}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AutoLockOnDesktopMode, Mode=TwoWay}" />
                                 </controls:SettingsCard>
@@ -175,8 +183,15 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageIgnoreFullscreenWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE967;}">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IgnoreFullscreenWindow, Mode=TwoWay}" />
+                                <!--  Dock mode  -->
+
+                                <TextBlock x:Uid="SettingsPageAppDock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <controls:SettingsCard x:Uid="SettingsPageDockPlacement" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE66A;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
+                                        <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
+                                    </ComboBox>
                                 </controls:SettingsCard>
 
                             </StackPanel>

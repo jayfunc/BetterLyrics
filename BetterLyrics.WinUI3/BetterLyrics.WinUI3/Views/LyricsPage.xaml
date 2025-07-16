@@ -23,7 +23,7 @@
         <renderer:LyricsRenderer />
 
         <!--  No music playing placeholder  -->
-        <Grid x:Name="NoMusicPlayingGrid" Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
+        <Grid x:Name="NoMusicPlayingGrid" Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
             <TextBlock
                 x:Uid="MainPageNoMusicPlaying"
                 HorizontalAlignment="Center"
@@ -37,7 +37,7 @@
         <!--  Bottom command area  -->
         <Grid
             x:Name="BottomCommandGrid"
-            Margin="12"
+            Margin="{x:Bind ViewModel.BottomCommandGridMargin, Mode=OneWay}"
             VerticalAlignment="Bottom"
             Opacity="{x:Bind ViewModel.BottomCommandGridOpacity, Mode=OneWay}"
             PointerEntered="BottomCommandGrid_PointerEntered"
@@ -46,11 +46,11 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <Grid Padding="6" HorizontalAlignment="Left">
+            <Grid Padding="3" HorizontalAlignment="Left">
                 <StackPanel
                     x:Name="BottomLeftCommandStackPanel"
                     Orientation="Horizontal"
-                    Spacing="6">
+                    Spacing="3">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
@@ -124,13 +124,13 @@
             </Grid>
 
             <Grid
-                Padding="6"
+                Padding="3"
                 HorizontalAlignment="Center"
                 Style="{StaticResource CardGridStyle}">
                 <StackPanel
                     x:Name="BottomCenterCommandStackPanel"
                     Orientation="Horizontal"
-                    Spacing="6">
+                    Spacing="3">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
@@ -188,19 +188,19 @@
             </Grid>
 
             <Grid
-                Padding="6"
+                Padding="3"
                 HorizontalAlignment="Right"
                 Style="{StaticResource CardGridStyle}">
                 <StackPanel
                     x:Name="BottomRightCommandStackPanel"
                     Orientation="Horizontal"
-                    Spacing="6">
+                    Spacing="3">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
                     <!--  Position offset  -->
-                    <Button Style="{StaticResource GhostButtonStyle}">
+                    <Button Click="TimelineOffsetButton_Click" Style="{StaticResource GhostButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             Glyph="&#xECE7;"
@@ -212,8 +212,8 @@
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="TimelineOffsetToolTip" x:Uid="LyricsPageTimelineOffsetButtonToolTip" />
                         </ToolTipService.ToolTip>
-                        <Button.Flyout>
-                            <Flyout>
+                        <Button.DataContext>
+                            <Flyout x:Name="TimelineOffsetFlyout" ShouldConstrainToRootBounds="False">
                                 <StackPanel>
                                     <Slider
                                         x:Uid="MainPagePositionOffsetSlider"
@@ -242,7 +242,7 @@
                                     </CheckBox>
                                 </StackPanel>
                             </Flyout>
-                        </Button.Flyout>
+                        </Button.DataContext>
                     </Button>
 
                     <!--  Translation  -->
@@ -261,14 +261,15 @@
                     <Button
                         x:Name="DisplayTypeSwitchButton"
                         x:Uid="MainPageDisplayTypeSwitcher"
+                        Click="DisplayTypeSwitchButton_Click"
                         Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                               Glyph=&#xF246;}"
                         Style="{StaticResource GhostButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="PresentationTypeToolTip" x:Uid="LyricsPageDisplayTypeButtonToolTip" />
                         </ToolTipService.ToolTip>
-                        <Button.Flyout>
-                            <Flyout>
+                        <Button.DataContext>
+                            <Flyout x:Name="DisplayTypeSwitchFlyout" ShouldConstrainToRootBounds="false">
                                 <Flyout.FlyoutPresenterStyle>
                                     <Style TargetType="FlyoutPresenter">
                                         <Setter Property="Padding" Value="12,2,12,8" />
@@ -281,7 +282,7 @@
                                     <RadioButton x:Uid="MainPageSplitView" Click="SplitViewRadioButton_Click" />
                                 </RadioButtons>
                             </Flyout>
-                        </Button.Flyout>
+                        </Button.DataContext>
                     </Button>
 
                     <!--  Settings  -->

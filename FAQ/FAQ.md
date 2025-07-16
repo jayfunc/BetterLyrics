@@ -6,6 +6,12 @@ This app is built with immersive experience, just hover your mouse on the top/bo
 
 ![alt text](image-4.png)
 
+### I have set up all the settings related to translation but there is no translation at all
+
+![alt text](image-8.png)
+
+Please make sure that you have already enable "Translation" function (at the bottom-right of the lyrics page, click to toggle).
+
 ### How can I lock the window when switching to desktop mode
 
 ![alt text](image-6.png)
