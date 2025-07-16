@@ -417,7 +417,13 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>停靠模式</value>
   </data>
+  <data name="SettingsPageAppDock.Text" xml:space="preserve">
+    <value>停靠模式</value>
+  </data>
   <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>桌面模式</value>
+  </data>
+  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
     <value>桌面模式</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
@@ -743,5 +749,14 @@
   </data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX 音乐服务器</value>
+  </data>
+  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>停靠模式位置</value>
+  </data>
+  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>顶部</value>
+  </data>
+  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>底部</value>
   </data>
 </root>

@@ -156,6 +156,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateTitleBarWindowButtonsVisibility()
         {
+            TopCommandGrid.Margin = new Thickness(12);
+
             switch (AppWindow.Presenter.Kind)
             {
                 case AppWindowPresenterKind.Default:
@@ -194,6 +196,7 @@ namespace BetterLyrics.WinUI3.Views
                             Visibility.Collapsed;
 
                         ViewModel.IsImmersiveMode = true;
+                        TopCommandGrid.Margin = new Thickness();
                     }
                     else if (DesktopFlyoutItem.IsChecked)
                     {
@@ -277,7 +280,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (ViewModel.IsImmersiveMode)
             {
-                ViewModel.TopCommandGridOpacity = .5f;
+                ViewModel.TopCommandGridOpacity = 1f;
             }
         }
 

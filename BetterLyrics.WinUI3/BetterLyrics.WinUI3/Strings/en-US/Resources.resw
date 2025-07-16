@@ -417,7 +417,13 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>Dock mode</value>
   </data>
+  <data name="SettingsPageAppDock.Text" xml:space="preserve">
+    <value>Dock mode</value>
+  </data>
   <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>Desktop mode</value>
+  </data>
+  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
     <value>Desktop mode</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
@@ -743,5 +749,14 @@
   </data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX Music Server</value>
+  </data>
+  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>Dock mode placement</value>
+  </data>
+  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>Bottom</value>
   </data>
 </root>

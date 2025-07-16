@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.UI.Xaml;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -17,13 +18,11 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly IPlaybackService _playbackService;
 
-        private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToNonStandardMode;
-
         public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
         {
             IsFirstRun = _settingsService.IsFirstRun;
             IsTranslationEnabled = _settingsService.IsTranslationEnabled;
-            PreferredDisplayType = _settingsService.PreferredDisplayType;
+            DisplayType = _settingsService.DisplayType;
             ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
             PositionOffset = _settingsService.PositionOffset;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
@@ -54,7 +53,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 PositionOffset = 0;
             }
-            TrySwitchToPreferredDisplayType(e.SongInfo);
         }
 
         //[ObservableProperty]
@@ -67,6 +65,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial float BottomCommandGridOpacity { get; set; }
 
         [ObservableProperty]
+        public partial Thickness BottomCommandGridMargin { get; set; } = new Thickness(12);
+
+        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial LyricsDisplayType DisplayType { get; set; } = LyricsDisplayType.PlaceholderOnly;
 
@@ -75,9 +76,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial bool IsWelcomeTeachingTipOpen { get; set; }
-
-        [ObservableProperty]
-        public partial LyricsDisplayType PreferredDisplayType { get; set; }
 
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; } = null;
@@ -103,13 +101,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
-                    SetNonStandardModePreferredDisplayType(message.NewValue);
-                    TrySwitchToPreferredDisplayType(SongInfo);
+                    DisplayType = LyricsDisplayType.LyricsOnly;
+                    BottomCommandGridMargin = message.NewValue ? new Thickness(0) : new Thickness(12);
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
-                    SetNonStandardModePreferredDisplayType(message.NewValue);
-                    TrySwitchToPreferredDisplayType(SongInfo);
+                    DisplayType = LyricsDisplayType.LyricsOnly;
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsImmersiveMode))
                 {
@@ -148,38 +145,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             await _playbackService.NextAsync();
         }
 
-        private void SetNonStandardModePreferredDisplayType(bool isEnabled)
+        partial void OnDisplayTypeChanged(LyricsDisplayType value)
         {
-            if (isEnabled)
-            {
-                _preferredDisplayTypeBeforeSwitchToNonStandardMode = PreferredDisplayType;
-                PreferredDisplayType = LyricsDisplayType.LyricsOnly;
-            }
-            else
-            {
-                PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToNonStandardMode ?? LyricsDisplayType.SplitView;
-            }
-        }
-
-        private void TrySwitchToPreferredDisplayType(SongInfo? songInfo)
-        {
-            LyricsDisplayType displayType;
-
-            if (songInfo == null)
-            {
-                displayType = LyricsDisplayType.PlaceholderOnly;
-            }
-            else if (PreferredDisplayType is LyricsDisplayType preferredDisplayType)
-            {
-                displayType = preferredDisplayType;
-            }
-            else
-            {
-                displayType = LyricsDisplayType.SplitView;
-            }
-
-            DisplayType = displayType;
-
+            _settingsService.DisplayType = value;
         }
 
         partial void OnIsFirstRunChanged(bool value)
@@ -191,11 +159,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnIsTranslationEnabledChanged(bool value)
         {
             _settingsService.IsTranslationEnabled = value;
-        }
-
-        partial void OnPreferredDisplayTypeChanged(LyricsDisplayType value)
-        {
-            _settingsService.PreferredDisplayType = value;
         }
 
         partial void OnPositionOffsetChanged(int value)
@@ -211,7 +174,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                BottomCommandGridOpacity = .5f;
+                BottomCommandGridOpacity = 1f;
             }
         }
 

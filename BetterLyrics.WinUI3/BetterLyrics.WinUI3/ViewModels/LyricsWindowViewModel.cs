@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
@@ -26,16 +27,23 @@ namespace BetterLyrics.WinUI3
     public partial class LyricsWindowViewModel
         : BaseWindowViewModel,
             IRecipient<PropertyChangedMessage<int>>,
+            IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>,
-            IRecipient<PropertyChangedMessage<bool>>
+            IRecipient<PropertyChangedMessage<DockPlacement>>
     {
         private ForegroundWindowWatcher? _windowWatcher = null;
         private bool _ignoreFullscreenWindow = false;
+        private int _dockWindowMinHeight = 96;
+
+        private DockPlacement _dockPlacement;
+        private int _lyricsFontSize;
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
             _ignoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
+            _dockPlacement = _settingsService.DockPlacement;
+            _lyricsFontSize = _settingsService.LyricsFontSize;
             OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
         }
 
@@ -75,6 +83,14 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         public partial string LockHotKey { get; set; } = "";
 
+        private void UpdateDockWindow()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
+        }
+
         partial void OnIsImmersiveModeChanged(bool value)
         {
             if (value)
@@ -83,7 +99,7 @@ namespace BetterLyrics.WinUI3
             }
             else
             {
-                TopCommandGridOpacity = 0.5f;
+                TopCommandGridOpacity = 1f;
             }
         }
 
@@ -125,13 +141,8 @@ namespace BetterLyrics.WinUI3
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
                 {
-                    if (IsDockMode)
-                    {
-                        var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-                        if (window == null) return;
-
-                        DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), message.NewValue * 4);
-                    }
+                    _lyricsFontSize = message.NewValue;
+                    UpdateDockWindow();
                 }
                 else if (message.Sender is SettingsPageViewModel)
                 {
@@ -252,7 +263,7 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
-                DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 4);
+                DockModeHelper.Enable(window, Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
                 StartWatchWindowColorChange(WindowPixelSampleMode.BelowWindow);
             }
             else
@@ -265,6 +276,18 @@ namespace BetterLyrics.WinUI3
         private void OnImmersiveToggleButtonEnabledChanged()
         {
             _settingsService.IsImmersiveMode = IsImmersiveMode;
+        }
+
+        public void Receive(PropertyChangedMessage<DockPlacement> message)
+        {
+            if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.DockPlacement))
+                {
+                    _dockPlacement = message.NewValue;
+                    UpdateDockWindow();
+                }
+            }
         }
     }
 }

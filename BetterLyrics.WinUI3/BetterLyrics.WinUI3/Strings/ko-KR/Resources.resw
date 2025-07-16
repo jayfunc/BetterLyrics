@@ -417,7 +417,13 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>도크 모드</value>
   </data>
+  <data name="SettingsPageAppDock.Text" xml:space="preserve">
+    <value>도크 모드</value>
+  </data>
   <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>데스크탑 모드</value>
+  </data>
+  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
     <value>데스크탑 모드</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
@@ -743,5 +749,14 @@
   </data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX 음악 서버</value>
+  </data>
+  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>도크 모드 배치</value>
+  </data>
+  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>맨 위</value>
+  </data>
+  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>맨 아래</value>
   </data>
 </root>

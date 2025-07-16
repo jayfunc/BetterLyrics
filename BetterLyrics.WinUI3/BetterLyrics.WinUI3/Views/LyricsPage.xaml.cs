@@ -28,17 +28,17 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.PreferredDisplayType = ViewModel.DisplayType = LyricsDisplayType.LyricsOnly;
+            ViewModel.DisplayType = LyricsDisplayType.LyricsOnly;
         }
 
         private void AlbumArtOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.PreferredDisplayType = ViewModel.DisplayType = LyricsDisplayType.AlbumArtOnly;
+            ViewModel.DisplayType = LyricsDisplayType.AlbumArtOnly;
         }
 
         private void SplitViewRadioButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.PreferredDisplayType = ViewModel.DisplayType = LyricsDisplayType.SplitView;
+            ViewModel.DisplayType = LyricsDisplayType.SplitView;
         }
 
         private void PositionOffsetResetButton_Click(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (ViewModel.IsImmersiveMode)
             {
-                ViewModel.BottomCommandGridOpacity = .5f;
+                ViewModel.BottomCommandGridOpacity = 1f;
             }
         }
 
@@ -60,6 +60,16 @@ namespace BetterLyrics.WinUI3.Views
             {
                 ViewModel.BottomCommandGridOpacity = 0f;
             }
+        }
+
+        private void DisplayTypeSwitchButton_Click(object sender, RoutedEventArgs e)
+        {
+            DisplayTypeSwitchFlyout.ShowAt(BottomRightCommandStackPanel);
+        }
+
+        private void TimelineOffsetButton_Click(object sender, RoutedEventArgs e)
+        {
+            TimelineOffsetFlyout.ShowAt(BottomRightCommandStackPanel);
         }
     }
 }

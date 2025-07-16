@@ -95,6 +95,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             LockHotKeyIndex = _settingsService.LockHotKeyIndex;
 
             LXMusicServer = _settingsService.LXMusicServer;
+            DockPlacement = _settingsService.DockPlacement;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
@@ -108,6 +109,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial DockPlacement DockPlacement { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -489,6 +494,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             return result;
         }
 
+        partial void OnDockPlacementChanged(DockPlacement value)
+        {
+            _settingsService.DockPlacement = value;
+        }
         partial void OnLyricsScrollEasingTypeChanged(EasingType value)
         {
             _settingsService.LyricsScrollEasingType = value;

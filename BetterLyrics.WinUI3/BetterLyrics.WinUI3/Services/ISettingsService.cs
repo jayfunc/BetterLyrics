@@ -86,11 +86,12 @@ namespace BetterLyrics.WinUI3.Services
 
         bool IsTranslationEnabled { get; set; }
 
-        LyricsDisplayType PreferredDisplayType { get; set; }
+        LyricsDisplayType DisplayType { get; set; }
 
         int TimelineSyncThreshold { get; set; }
         int LockHotKeyIndex { get; set; }
         bool IsImmersiveMode { get; set; }
         string LXMusicServer { get; set; }
+        DockPlacement DockPlacement { get; set; }
     }
 }
