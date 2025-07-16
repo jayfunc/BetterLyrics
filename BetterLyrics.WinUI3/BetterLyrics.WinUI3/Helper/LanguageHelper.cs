@@ -98,16 +98,19 @@ namespace BetterLyrics.WinUI3.Services
             };
         }
 
-        public static string DetectCountryCode(string? text)
+        public static string ConvertToCountryCode(string? languageCode)
         {
-            if (text == null) return "en";
-            var code = DetectLanguageCode(text);
-            if (code == null) return "en";
-            // 处理中文简体和繁体
-            if (code == "zh-Hans") return "cn";
-            if (code == "zh-Hant") return "cn";
-            // 其他语言直接返回两字母代码
-            return code;
+            if (languageCode == null) return "us";
+
+            return languageCode switch
+            {
+                "zh" => "cn",
+                "zh-Hans" => "cn",
+                "zh-Hant" => "tw",
+                "ja" => "jp",
+                "ko" => "kr",
+                _ => "us"
+            };
         }
 
         public static string GetUserTargetLanguageCode()

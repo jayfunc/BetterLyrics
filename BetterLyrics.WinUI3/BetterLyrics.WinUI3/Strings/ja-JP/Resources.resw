@@ -603,10 +603,10 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>https://github.com/LibreTranslate/LibreTranslate にアクセスしてください。</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>サーバーテストが成功しました</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
     <value>サーバーテストに失敗しました</value>
   </data>
   <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
@@ -740,5 +740,8 @@
   </data>
   <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
     <value>ショートカットキーのロックを解除およびロックします</value>
+  </data>
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>LX Music Server</value>
   </data>
 </root>

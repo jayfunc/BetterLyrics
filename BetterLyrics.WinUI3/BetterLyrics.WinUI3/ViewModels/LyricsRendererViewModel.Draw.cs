@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else if (_isDesktopMode)
             {
-                DrawImmersiveBackground(control, combinedDs, 12f);
+                DrawImmersiveBackground(control, combinedDs, 0f);
             }
             else
             {
@@ -196,7 +196,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     BlurAmount = _albumArtBgBlurAmount,
                     Source = overlappedCovers,
                     BorderMode = EffectBorderMode.Soft,
-                    Optimization = EffectOptimization.Quality,
+                    Optimization = EffectOptimization.Speed,
                 },
             };
             ds.DrawImage(coverOverlayEffect);

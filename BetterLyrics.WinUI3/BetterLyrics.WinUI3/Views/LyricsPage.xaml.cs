@@ -48,12 +48,18 @@ namespace BetterLyrics.WinUI3.Views
 
         private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            BottomCommandGrid.Opacity = 0.5;
+            if (ViewModel.IsImmersiveMode)
+            {
+                ViewModel.BottomCommandGridOpacity = .5f;
+            }
         }
 
         private void BottomCommandGrid_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            BottomCommandGrid.Opacity = 0;
+            if (ViewModel.IsImmersiveMode)
+            {
+                ViewModel.BottomCommandGridOpacity = 0f;
+            }
         }
     }
 }

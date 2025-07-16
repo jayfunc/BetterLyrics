@@ -20,6 +20,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Assets\Core14.profile.xml" />
+		<None Remove="Assets\Segoe Fluent Icons.ttf" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Views\SettingsWindow.xaml" />
 	</ItemGroup>
@@ -30,6 +31,7 @@
 		<Manifest Include="$(ApplicationManifest)" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.230830" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.OpacityMaskView" Version="0.1.250513-build.2126" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
@@ -79,6 +81,11 @@
 	<!--Disable Trimming for Specific Packages-->
 	<ItemGroup>
 		<TrimmerRootAssembly Include="TagLibSharp" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Update="Assets\Segoe Fluent Icons.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Views\SettingsWindow.xaml">
