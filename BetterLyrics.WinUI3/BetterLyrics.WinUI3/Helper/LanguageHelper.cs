@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.Services
 
         public static bool IsCJK(string text)
         {
-            return DetectLanguageCode(text) switch
+            return DetectLanguageCode(text)?.Substring(0, 2) switch
             {
                 "zh" or "ja" or "ko" => true,
                 _ => false

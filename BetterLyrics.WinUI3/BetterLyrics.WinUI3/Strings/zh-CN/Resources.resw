@@ -759,4 +759,10 @@
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>底部</value>
   </data>
+  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>启用翻译</value>
+  </data>
+  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>仅显示翻译</value>
+  </data>
 </root>

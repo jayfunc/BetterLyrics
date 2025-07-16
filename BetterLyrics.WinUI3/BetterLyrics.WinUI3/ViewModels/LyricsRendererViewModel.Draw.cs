@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (currentPlayingLine != null)
                 {
                     GetLinePlayingProgress(
-                        currentPlayingLine,
+                        _playingLineIndex,
                         out int charStartIndex,
                         out int charLength,
                         out float charProgress
@@ -368,7 +368,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     if (i == _playingLineIndex)
                     {
                         GetLinePlayingProgress(
-                            line,
+                            i,
                             out int charStartIndex,
                             out int charLength,
                             out float charProgress

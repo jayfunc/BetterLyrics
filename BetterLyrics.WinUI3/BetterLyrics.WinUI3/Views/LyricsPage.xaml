@@ -246,16 +246,26 @@
                     </Button>
 
                     <!--  Translation  -->
-                    <ToggleButton
-                        x:Name="TranslationToggleButton"
+                    <Button
+                        Click="TranslationButton_Click"
                         Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                               Glyph=&#xE8BD;}"
-                        IsChecked="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}"
-                        Style="{StaticResource GhostToggleButtonStyle}">
+                        Style="{StaticResource GhostButtonStyle}">
                         <ToolTipService.ToolTip>
                             <ToolTip x:Name="TranslationToolTip" x:Uid="LyricsPageTranslationButtonToolTip" />
                         </ToolTipService.ToolTip>
-                    </ToggleButton>
+                        <Button.DataContext>
+                            <Flyout x:Name="TranslationFlyout" ShouldConstrainToRootBounds="False">
+                                <StackPanel>
+                                    <ToggleSwitch x:Uid="LyricsPageTranslationEnabled" IsOn="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}" />
+                                    <ToggleSwitch
+                                        x:Uid="LyricsPageTranslationOnly"
+                                        IsEnabled="{x:Bind ViewModel.IsTranslationEnabled, Mode=OneWay}"
+                                        IsOn="{x:Bind ViewModel.ShowTranslationOnly, Mode=TwoWay}" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.DataContext>
+                    </Button>
 
                     <!--  Display type  -->
                     <Button

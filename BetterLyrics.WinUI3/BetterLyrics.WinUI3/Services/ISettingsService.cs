@@ -85,6 +85,7 @@ namespace BetterLyrics.WinUI3.Services
         bool IgnoreFullscreenWindow { get; set; }
 
         bool IsTranslationEnabled { get; set; }
+        bool ShowTranslationOnly { get; set; }
 
         LyricsDisplayType DisplayType { get; set; }
 

@@ -72,6 +72,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
 
         private const string IsTranslationEnabledKey = "IsTranslationEnabled";
+        private const string ShowTranslationOnlyKey = "ShowTranslationOnly";
         private const string LibreTranslateServerKey = "LibreTranslateServer";
         private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
 
@@ -198,7 +199,8 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IsFanLyricsEnabledKey, false);
 
             SetDefault(LibreTranslateServerKey, "");
-            SetDefault(IsTranslationEnabledKey, false);
+            SetDefault(IsTranslationEnabledKey, true);
+            SetDefault(ShowTranslationOnlyKey, false);
             SetDefault(SelectedTargetLanguageIndexKey, LanguageHelper.GetDefaultTargetLanguageIndex());
 
             SetDefault(LXMusicServerKey, "");
@@ -217,6 +219,12 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(PositionOffsetKey, 0);
             SetDefault(LockHotKeyIndexKey, 'U' - 'A');
             SetDefault(DockPlacementKey, (int)DockPlacement.Top);
+        }
+
+        public bool ShowTranslationOnly
+        {
+            get => GetValue<bool>(ShowTranslationOnlyKey);
+            set => SetValue(ShowTranslationOnlyKey, value);
         }
 
         public DockPlacement DockPlacement

@@ -43,6 +43,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isFanLyricsEnabled = _settingsService.IsFanLyricsEnabled;
             _lyricsFontStrokeWidth = _settingsService.LyricsFontStrokeWidth;
             _isTranslationEnabled = _settingsService.IsTranslationEnabled;
+            _showTranslationOnly = _settingsService.ShowTranslationOnly;
             _targetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
 

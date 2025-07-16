@@ -26,6 +26,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
             PositionOffset = _settingsService.PositionOffset;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
+            ShowTranslationOnly = _settingsService.ShowTranslationOnly;
+
             OnIsImmersiveModeChanged(IsImmersiveMode);
 
             //Volume = SystemVolumeHelper.GetMasterVolume();
@@ -69,7 +71,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial LyricsDisplayType DisplayType { get; set; } = LyricsDisplayType.PlaceholderOnly;
+        public partial LyricsDisplayType DisplayType { get; set; }
 
         [ObservableProperty]
         public partial bool IsFirstRun { get; set; }
@@ -87,6 +89,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsTranslationEnabled { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool ShowTranslationOnly { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -176,6 +182,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 BottomCommandGridOpacity = 1f;
             }
+        }
+
+        partial void OnShowTranslationOnlyChanged(bool value)
+        {
+            _settingsService.ShowTranslationOnly = value;
         }
 
         //partial void OnVolumeChanged(int value)
