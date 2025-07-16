@@ -113,6 +113,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _logger.LogInformation("Translation enabled state changed: {IsEnabled}", _isTranslationEnabled);
                     UpdateTranslations();
                 }
+                else if (message.PropertyName == nameof(LyricsPageViewModel.ShowTranslationOnly))
+                {
+                    _showTranslationOnly = message.NewValue;
+                    UpdateTranslations();
+                }
             }
         }
 

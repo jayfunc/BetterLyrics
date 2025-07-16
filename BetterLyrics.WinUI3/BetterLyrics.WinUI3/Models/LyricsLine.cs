@@ -23,8 +23,8 @@ namespace BetterLyrics.WinUI3.Models
 
         public List<LyricsChar> LyricsChars { get; set; } = [];
 
-        public int DurationMs => EndMs - StartMs;
-        public int EndMs { get; set; }
+        public int? DurationMs => EndMs - StartMs;
+        public int? EndMs { get; set; }
         public int StartMs { get; set; }
 
         public string DisplayedText { get; set; } = "";

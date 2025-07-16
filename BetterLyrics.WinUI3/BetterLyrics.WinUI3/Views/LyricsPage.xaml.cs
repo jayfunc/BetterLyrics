@@ -71,5 +71,10 @@ namespace BetterLyrics.WinUI3.Views
         {
             TimelineOffsetFlyout.ShowAt(BottomRightCommandStackPanel);
         }
+
+        private void TranslationButton_Click(object sender, RoutedEventArgs e)
+        {
+            TranslationFlyout.ShowAt(BottomRightCommandStackPanel);
+        }
     }
 }

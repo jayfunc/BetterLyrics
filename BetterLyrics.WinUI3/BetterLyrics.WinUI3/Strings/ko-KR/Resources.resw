@@ -759,4 +759,10 @@
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>맨 아래</value>
   </data>
+  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>번역 활성화</value>
+  </data>
+  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>번역 만 표시하십시오</value>
+  </data>
 </root>

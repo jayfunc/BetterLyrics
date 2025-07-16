@@ -128,7 +128,6 @@ namespace BetterLyrics.WinUI3.Helper
                     var line = new LyricsLine
                     {
                         StartMs = start,
-                        EndMs = 0, // 稍后统一修正
                         OriginalText = text,
                         LyricsChars = [],
                     };
@@ -143,7 +142,6 @@ namespace BetterLyrics.WinUI3.Helper
                                 new LyricsChar
                                 {
                                     StartMs = charStart,
-                                    EndMs = 0, // Fixed later
                                     Text = charText ?? "",
                                     StartIndex = startIndex,
                                 }
@@ -170,7 +168,9 @@ namespace BetterLyrics.WinUI3.Helper
                 {
                     // 句级时间
                     string? pBegin = p.Attribute("begin")?.Value;
+                    string? pEnd = p.Attribute("end")?.Value;
                     int pStartMs = ParseTtmlTime(pBegin);
+                    int pEndMs = ParseTtmlTime(pEnd);
 
                     // 只获取一级span，且排除ttm:role="x-bg"的span
                     var spans = p.Elements()
@@ -202,11 +202,13 @@ namespace BetterLyrics.WinUI3.Helper
                     foreach (var span in originalTextSpans)
                     {
                         string? sBegin = span.Attribute("begin")?.Value;
+                        string? sEnd = span.Attribute("end")?.Value;
                         int sStartMs = ParseTtmlTime(sBegin);
+                        int sEndMs = ParseTtmlTime(sEnd);
                         originalCharTimings.Add(new LyricsChar
                         {
                             StartMs = sStartMs,
-                            EndMs = 0,
+                            EndMs = sEndMs,
                             StartIndex = originalStartIndex,
                             Text = span.Value
                         });
@@ -218,7 +220,7 @@ namespace BetterLyrics.WinUI3.Helper
                     originalLines.Add(new LyricsLine
                     {
                         StartMs = pStartMs,
-                        EndMs = 0,
+                        EndMs = pEndMs,
                         OriginalText = originalText,
                         LyricsChars = originalCharTimings,
                     });
@@ -230,11 +232,13 @@ namespace BetterLyrics.WinUI3.Helper
                     foreach (var span in translationTextSpans)
                     {
                         string? sBegin = span.Attribute("begin")?.Value;
+                        string? sEnd = span.Attribute("end")?.Value;
                         int sStartMs = ParseTtmlTime(sBegin);
+                        int sEndMs = ParseTtmlTime(sEnd);
                         translationCharTimings.Add(new LyricsChar
                         {
                             StartMs = sStartMs,
-                            EndMs = 0,
+                            EndMs = sEndMs,
                             StartIndex = translationStartIndex,
                             Text = span.Value
                         });
@@ -245,7 +249,7 @@ namespace BetterLyrics.WinUI3.Helper
                         translationLines.Add(new LyricsLine
                         {
                             StartMs = pStartMs,
-                            EndMs = 0,
+                            EndMs = pEndMs,
                             OriginalText = translationText,
                             LyricsChars = translationCharTimings,
                         });
@@ -336,7 +340,7 @@ namespace BetterLyrics.WinUI3.Helper
                     var lineWrite = new LyricsLine
                     {
                         StartMs = lineRead.StartTime ?? 0,
-                        EndMs = 0,
+                        EndMs = lineRead.EndTime ?? 0,
                         OriginalText = lineRead.Text,
                         LyricsChars = [],
                     };
@@ -355,18 +359,10 @@ namespace BetterLyrics.WinUI3.Helper
                             var charTiming = new LyricsChar
                             {
                                 StartMs = syllable.StartTime,
-                                EndMs = 0,
+                                EndMs = syllable.EndTime,
                                 Text = syllable.Text,
                                 StartIndex = startIndex,
                             };
-                            if (syllableIndex + 1 < syllables.Count)
-                            {
-                                charTiming.EndMs = syllables[syllableIndex + 1].StartTime;
-                            }
-                            else
-                            {
-                                charTiming.EndMs = lineWrite.EndMs;
-                            }
                             lineWrite.LyricsChars.Add(charTiming);
                             startIndex += syllable.Text.Length;
                         }
@@ -384,34 +380,6 @@ namespace BetterLyrics.WinUI3.Helper
             for (int langIdx = 0; langIdx < _lyricsDataArr.Count; langIdx++)
             {
                 var lines = _lyricsDataArr[langIdx].LyricsLines;
-                for (int i = 0; i < lines.Count; i++)
-                {
-                    if (i + 1 < lines.Count)
-                    {
-                        lines[i].EndMs = lines[i + 1].StartMs;
-                    }
-                    else
-                    {
-                        lines[i].EndMs = durationMs;
-                    }
-
-                    // 修正 CharTimings 的 EndMs
-                    var timings = lines[i].LyricsChars;
-                    if (timings.Count > 0)
-                    {
-                        for (int j = 0; j < timings.Count; j++)
-                        {
-                            if (j + 1 < timings.Count)
-                            {
-                                timings[j].EndMs = timings[j + 1].StartMs;
-                            }
-                            else
-                            {
-                                timings[j].EndMs = lines[i].EndMs;
-                            }
-                        }
-                    }
-                }
                 if (lines.Count > 0)
                 {
                     if (lines[0].StartMs > 0)

@@ -34,6 +34,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private TimeSpan _totalTime = TimeSpan.Zero;
         private TimeSpan _positionOffset = TimeSpan.Zero;
 
+        private int _songDurationMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
+
         private SoftwareBitmap? _lastAlbumArtSwBitmap = null;
         private SoftwareBitmap? _albumArtSwBitmap = null;
 
@@ -140,8 +142,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private List<LyricsData> _lyricsDataArr = [];
         private List<string> _translationList = [];
-        private bool _isTranslationEnabled = false;
-        private int _targetLanguageIndex = 6;
+        private bool _isTranslationEnabled;
+        private bool _showTranslationOnly;
+        private int _targetLanguageIndex;
 
         private int _timelineSyncThreshold;
 
@@ -193,27 +196,36 @@ namespace BetterLyrics.WinUI3.ViewModels
             for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
             {
                 var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines[i];
-                if (line == null)
+                if (line == null) continue;
+                var nextLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i + 1);
+                var totalMs = _totalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
+                if (nextLine != null && line.StartMs <= totalMs && totalMs < nextLine.StartMs)
                 {
-                    continue;
+                    return i;
                 }
-                if (
-                    line.StartMs <= _totalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds
-                    && _totalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds <= line.EndMs
-                )
+                else if (nextLine == null && line.StartMs <= totalMs)
                 {
                     return i;
                 }
             }
 
-            return -1;
+            return GetMaxLyricsLineIndexBoundaries().Item2;
         }
 
-        private void GetLinePlayingProgress(LyricsLine line, out int charStartIndex, out int charLength, out float charProgress)
+        private void GetLinePlayingProgress(int lineIndex, out int charStartIndex, out int charLength, out float charProgress)
         {
             charStartIndex = 0;
             charLength = 0;
             charProgress = 0f;
+
+            var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(lineIndex);
+            if (line == null) return;
+            var nextLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(lineIndex + 1);
+
+            int lineEndMs;
+            if (line.EndMs != null) lineEndMs = line.EndMs.Value;
+            else if (nextLine != null) lineEndMs = nextLine.StartMs;
+            else lineEndMs = _songDurationMs;
 
             float now = (float)_totalTime.TotalMilliseconds + (float)_positionOffset.TotalMilliseconds;
 
@@ -224,27 +236,37 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             // 2. 已经超过本句
-            if (now > line.EndMs)
+            if (now > lineEndMs)
             {
+                charProgress = 1f;
+                charStartIndex = 0;
+                charLength = line.OriginalText.Length;
                 return;
             }
 
             // 3. 有逐字时间轴
-            if (line.LyricsChars != null && line.LyricsChars.Count > 0)
+            if (line.LyricsChars != null && line.LyricsChars.Count > 1)
             {
                 int charTimingsCount = line.LyricsChars.Count;
                 for (int i = 0; i < charTimingsCount; i++)
                 {
                     var timing = line.LyricsChars[i];
+                    var nextTiming = line.LyricsChars.ElementAtOrDefault(i + 1);
+
+                    int timingEndMs;
+                    if (timing.EndMs != null) timingEndMs = timing.EndMs.Value;
+                    else if (nextTiming != null) timingEndMs = nextTiming.StartMs;
+                    else timingEndMs = lineEndMs;
+
+                    charStartIndex = timing.StartIndex;
+                    charLength = timing.Text.Length;
 
                     // 当前时间在某个字的高亮区间
-                    if (now >= timing.StartMs && now <= timing.EndMs)
+                    if (now >= timing.StartMs && now <= timingEndMs)
                     {
-                        charStartIndex = timing.StartIndex;
-                        charLength = timing.Text.Length;
-                        if (timing.EndMs != timing.StartMs)
+                        if (timingEndMs != timing.StartMs)
                         {
-                            charProgress = (now - timing.StartMs) / (timing.EndMs - timing.StartMs);
+                            charProgress = (now - timing.StartMs) / (timingEndMs - timing.StartMs);
                         }
                         else
                         {
@@ -252,12 +274,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                         }
                         return;
                     }
+                    else if (now > timingEndMs && (nextTiming == null || now < nextTiming?.StartMs))
+                    {
+                        charProgress = 1f;
+                        return;
+                    }
                 }
             }
             else
             {
                 // 没有逐字时间轴，直接线性
-                charProgress = (now - line.StartMs) / line.DurationMs;
+                charProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
                 charProgress = Math.Clamp(charProgress, 0f, 1f);
                 charStartIndex = 0;
                 charLength = line.OriginalText.Length;
@@ -312,6 +339,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _lastSongArtist = _songArtist;
                 _songArtist = SongInfo?.Artist;
 
+                _songDurationMs = (int)(SongInfo?.DurationMs ?? TimeSpan.FromMinutes(99).TotalMilliseconds);
+
                 _songInfoOpacityTransition.Reset(0f);
                 _songInfoOpacityTransition.StartTransition(1f);
 
@@ -361,6 +390,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             else
             {
                 _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
+                _langIndex = 0;
                 IsTranslating = false;
                 _isLayoutChanged = true;
             }
@@ -384,7 +414,16 @@ namespace BetterLyrics.WinUI3.ViewModels
                 int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr);
                 if (found >= 0)
                 {
-                    _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found]);
+                    if (_showTranslationOnly)
+                    {
+                        _lyricsDataArr[found].SetDisplayedTextInOriginalText();
+                        _langIndex = found;
+                    }
+                    else
+                    {
+                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found]);
+                        _langIndex = 0;
+                    }
                 }
                 else
                 {
@@ -392,7 +431,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         var translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
                         token.ThrowIfCancellationRequested();
-                        _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
+                        if (_showTranslationOnly)
+                        {
+                            // TODO
+                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
+                            _langIndex = 0;
+                        }
+                        else
+                        {
+                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
+                            _langIndex = 0;
+                        }
                     }
                     catch (Exception) { }
                 }
