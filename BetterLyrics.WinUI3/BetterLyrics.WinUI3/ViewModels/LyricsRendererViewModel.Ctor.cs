@@ -51,6 +51,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _canvasYScrollTransition.SetDuration(_settingsService.LyricsScrollDuration / 1000f);
             _canvasYScrollTransition.SetEasingType(_settingsService.LyricsScrollEasingType);
+            _defaultOpacity = _settingsService.LyricsBgFontOpacity / 100f;
 
             _isLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
 

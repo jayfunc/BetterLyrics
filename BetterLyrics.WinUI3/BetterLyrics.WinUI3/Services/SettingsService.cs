@@ -95,6 +95,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private const string LockHotKeyIndexKey = "LockHotKeyIndex";
         private const string DockPlacementKey = "DockPlacement";
+        private const string LyricsBgFontOpacityKey = "LyricsBgFontOpacity";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -219,6 +220,13 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(PositionOffsetKey, 0);
             SetDefault(LockHotKeyIndexKey, 'U' - 'A');
             SetDefault(DockPlacementKey, (int)DockPlacement.Top);
+            SetDefault(LyricsBgFontOpacityKey, 30); // 30%
+        }
+
+        public int LyricsBgFontOpacity
+        {
+            get => GetValue<int>(LyricsBgFontOpacityKey);
+            set => SetValue(LyricsBgFontOpacityKey, value);
         }
 
         public bool ShowTranslationOnly

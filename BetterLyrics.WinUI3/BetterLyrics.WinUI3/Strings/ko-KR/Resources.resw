@@ -765,4 +765,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>번역 만 표시하십시오</value>
   </data>
+  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
+    <value>글꼴 불투명 (비 전류 재생 영역)</value>
+  </data>
 </root>

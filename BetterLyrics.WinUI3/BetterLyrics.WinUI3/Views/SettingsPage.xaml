@@ -187,7 +187,7 @@
 
                                 <TextBlock x:Uid="SettingsPageAppDock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                                <controls:SettingsCard x:Uid="SettingsPageDockPlacement" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE66A;}">
+                                <controls:SettingsCard x:Uid="SettingsPageDockPlacement" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                         <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
                                         <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
@@ -498,6 +498,25 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsBlack" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsExtraBlack" />
                                     </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsBgFontOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE799;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.LyricsBgFontOpacity, Mode=OneWay}" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text=" %" />
+                                        <Slider
+                                            Maximum="100"
+                                            Minimum="0"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="1"
+                                            TickFrequency="1"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.LyricsBgFontOpacity, Mode=TwoWay}" />
+                                    </StackPanel>
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC12;}">

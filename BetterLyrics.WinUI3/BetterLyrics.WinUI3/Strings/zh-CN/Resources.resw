@@ -765,4 +765,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>仅显示翻译</value>
   </data>
+  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
+    <value>字体不透明度（非当前播放区域）</value>
+  </data>
 </root>

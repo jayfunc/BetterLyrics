@@ -213,6 +213,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _timelineSyncThreshold = message.NewValue;
                 }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsBgFontOpacity))
+                {
+                    _defaultOpacity = message.NewValue / 100f;
+                    _isLayoutChanged = true;
+                }
             }
             else if (message.Sender is LyricsPageViewModel)
             {

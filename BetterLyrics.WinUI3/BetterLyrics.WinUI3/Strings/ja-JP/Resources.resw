@@ -765,4 +765,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>翻訳のみを表示します</value>
   </data>
+  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
+    <value>フォントの不透明度（非電流再生エリア）</value>
+  </data>
 </root>
