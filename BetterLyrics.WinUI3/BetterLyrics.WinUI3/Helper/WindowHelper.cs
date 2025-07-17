@@ -30,8 +30,9 @@ namespace BetterLyrics.WinUI3.Helper
         {
             while (_activeWindows.Count > 0)
             {
-                var window = _activeWindows[0];
-                ((Window)window).Close();
+                var window = (Window)_activeWindows[0];
+                DockModeHelper.Disable(window);
+                window.Close();
                 _activeWindows.Remove(window);
             }
             App.Current.Exit();

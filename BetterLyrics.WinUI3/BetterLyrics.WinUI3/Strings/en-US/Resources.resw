@@ -301,7 +301,8 @@
     <value>Welcome to BetterLyrics</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>Click on the top-left button to enable immersive mode, enjoy!</value>
+    <value>Click on the top-left button to enable immersive mode.
+If you encounter any problems, please go to the Settings page, About tab, and view the FAQ or contact the author for feedback</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>No music playing now</value>
@@ -767,5 +768,8 @@
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>Font opacity (Non-current playback area)</value>
+  </data>
+  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+    <value>Frequently asked questions</value>
   </data>
 </root>

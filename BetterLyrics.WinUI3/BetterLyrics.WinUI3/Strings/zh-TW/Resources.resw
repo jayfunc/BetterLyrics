@@ -301,7 +301,8 @@
     <value>歡迎使用 BetterLyrics</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>單擊左上角按鈕以啟用沉浸式模式，盡情享用吧！</value>
+    <value>單擊左上按鈕以啟用沉浸式模式。
+如果遇到任何問題，請轉到“設置”頁面，關於標籤，查看常見問題解答或聯繫作者以獲取反饋</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>目前沒有正在播放的音樂</value>
@@ -767,5 +768,8 @@
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>字體不透明度（非目前播放區域）</value>
+  </data>
+  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+    <value>常見問題與解答</value>
   </data>
 </root>

@@ -301,7 +301,8 @@
     <value>BetterLyrics へようこそ</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>左上ボタンをクリックして、没入型モードを有効にしてください。お楽しみください！</value>
+    <value>左上ボタンをクリックして、没入型モードを有効にします。
+問題が発生した場合は、[設定]ページ、[タブについて]にアクセスして、FAQを表示するか、フィードバックについて著者に連絡してください</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>今は音楽が再生されていません</value>
@@ -767,5 +768,8 @@
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>フォントの不透明度（非電流再生エリア）</value>
+  </data>
+  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+    <value>よくある質問</value>
   </data>
 </root>

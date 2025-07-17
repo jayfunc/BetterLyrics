@@ -900,6 +900,10 @@
                                                              Glyph=&#xE943;}"
                                     IsClickEnabled="True" />
 
+                                <controls:SettingsCard x:Uid="SettingsPageFAQ" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE897;}">
+                                    <HyperlinkButton Content="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md" NavigateUri="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md" />
+                                </controls:SettingsCard>
+
                                 <controls:SettingsCard x:Uid="SettingsPageQQGroup" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/QQ.png}">
                                     <Button x:Uid="SettingsPageJoinNowButton" Click="QQGroupButton_Click" />
                                 </controls:SettingsCard>
