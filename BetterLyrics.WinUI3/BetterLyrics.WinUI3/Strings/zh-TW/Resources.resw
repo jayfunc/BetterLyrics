@@ -772,4 +772,7 @@
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>常見問題與解答</value>
   </data>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>無法連接到 LX 音樂服務器，請轉到設置 - 高級選項以檢查是否正確輸入鏈接</value>
+  </data>
 </root>

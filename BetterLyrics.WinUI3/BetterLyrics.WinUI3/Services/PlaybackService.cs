@@ -13,6 +13,7 @@ using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
@@ -34,17 +35,18 @@ namespace BetterLyrics.WinUI3.Services
 
         private readonly string _lxMusicId = "cn.toside.music.desktop";
 
+        private bool _cachedIsPlaying = false;
+
         private EventSourceReader? _sse = null;
 
         private readonly MediaManager _mediaManager = new();
 
-        private readonly LatestOnlyTaskRunner _AlbumArtRefreshRunner = new();
-        private readonly LatestOnlyTaskRunner _OnAnyMediaPropertyChangedRunner = new();
+        private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
+        private readonly LatestOnlyTaskRunner _onAnyMediaPropertyChangedRunner = new();
 
         private SongInfo? _cachedSongInfo;
         private List<MediaSourceProviderInfo> _mediaSourceProvidersInfo;
         private byte[]? _SMTCAlbumArtBytes = null;
-        private AlbumArtChangedEventArgs _albumArtChangedEventArgs = new();
 
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
         public event EventHandler<PositionChangedEventArgs>? PositionChanged;
@@ -60,6 +62,8 @@ namespace BetterLyrics.WinUI3.Services
             _mediaSourceProvidersInfo = _settingsService.MediaSourceProvidersInfo;
             InitMediaManager();
         }
+
+        public bool IsPlaying => _cachedIsPlaying;
 
         private bool IsMediaSourceEnabled(string id)
         {
@@ -88,7 +92,7 @@ namespace BetterLyrics.WinUI3.Services
             }
             else
             {
-                _dispatcherQueue.TryEnqueue(async () =>
+                Task.Run(async () =>
                 {
                     try
                     {
@@ -96,11 +100,7 @@ namespace BetterLyrics.WinUI3.Services
                         MediaManager_OnAnyMediaPropertyChanged(mediaSession, props);
                         MediaManager_OnAnyPlaybackStateChanged(mediaSession, mediaSession.ControlSession.GetPlaybackInfo());
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.LogWarning(ex, "TryGetMediaPropertiesAsync failed");
-                        SendNullMessages();
-                    }
+                    catch (Exception) { }
                 });
             }
         }
@@ -123,7 +123,7 @@ namespace BetterLyrics.WinUI3.Services
             RecordMediaSourceProviderInfo(mediaSession);
             if (!IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId) || mediaSession != _mediaManager.GetFocusedSession()) return;
 
-            bool isPlaying = playbackInfo.PlaybackStatus switch
+            _cachedIsPlaying = playbackInfo.PlaybackStatus switch
             {
                 GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => true,
                 _ => false,
@@ -132,23 +132,31 @@ namespace BetterLyrics.WinUI3.Services
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
                 () =>
                 {
-                    IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(isPlaying));
+                    IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
                 }
             );
         }
 
-        private void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
+        private async void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
         {
-            _ = _OnAnyMediaPropertyChangedRunner.RunAsync(async token =>
+            string id = mediaSession.ControlSession.SourceAppUserModelId;
+
+            RecordMediaSourceProviderInfo(mediaSession);
+            if (!IsMediaSourceEnabled(id) || mediaSession != _mediaManager.GetFocusedSession()) return;
+
+            _cachedSongInfo = new SongInfo
+            {
+                Title = mediaProperties.Title,
+                Artist = mediaProperties.Artist,
+                Album = mediaProperties.AlbumTitle,
+                DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
+                SourceAppUserModelId = id,
+            };
+
+            await _onAnyMediaPropertyChangedRunner.RunAsync(async token =>
             {
                 _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                     mediaProperties.Title, mediaProperties.Artist, mediaProperties.AlbumTitle);
-
-                RecordMediaSourceProviderInfo(mediaSession);
-                string id = mediaSession.ControlSession.SourceAppUserModelId;
-                if (!IsMediaSourceEnabled(id) || mediaSession != _mediaManager.GetFocusedSession()) return;
-
-                token.ThrowIfCancellationRequested();
 
                 if (id == _lxMusicId)
                 {
@@ -159,30 +167,24 @@ namespace BetterLyrics.WinUI3.Services
                     StopSSE();
                 }
 
-                _cachedSongInfo = new SongInfo
-                {
-                    Title = mediaProperties.Title,
-                    Artist = mediaProperties.Artist,
-                    Album = mediaProperties.AlbumTitle,
-                    DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
-                    SourceAppUserModelId = id,
-                };
-
                 if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
                 {
                     _SMTCAlbumArtBytes = await ImageHelper.ToByteArrayAsync(streamReference);
                     token.ThrowIfCancellationRequested();
                 }
+                else
+                {
+                    _SMTCAlbumArtBytes = null;
+                }
 
-                _ = _AlbumArtRefreshRunner.RunAsync(async tokne =>
+                await _albumArtRefreshRunner.RunAsync(async tokne =>
                 {
                     await UpdateAlbumArtRelated(tokne);
                 });
 
                 if (!token.IsCancellationRequested)
                 {
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-                    () =>
+                    _dispatcherQueue.TryEnqueue(() =>
                     {
                         SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
                     });
@@ -227,8 +229,9 @@ namespace BetterLyrics.WinUI3.Services
             () =>
             {
                 _cachedSongInfo = null;
+                _cachedIsPlaying = false;
                 SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
-                IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(false));
+                IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
                 PositionChanged?.Invoke(this, new PositionChangedEventArgs(TimeSpan.Zero));
             });
         }
@@ -264,22 +267,34 @@ namespace BetterLyrics.WinUI3.Services
             var decoder = await BitmapDecoder.CreateAsync(stream);
             token.ThrowIfCancellationRequested();
 
-            _albumArtChangedEventArgs.AlbumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
+            var _albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
             token.ThrowIfCancellationRequested();
 
-            _albumArtChangedEventArgs.AlbumArtAccentColor = ImageHelper.GetAccentColorsFromByte(bytes).FirstOrDefault();
+            var _albumArtAccentColor = ImageHelper.GetAccentColorsFromByte(bytes).FirstOrDefault();
 
             _dispatcherQueue.TryEnqueue(() =>
             {
-                AlbumArtChangedChanged?.Invoke(this, _albumArtChangedEventArgs);
+                AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(_albumArtSwBitmap, _albumArtAccentColor));
             });
         }
 
         private void StartSSE()
         {
-            _sse = new EventSourceReader(new Uri($"{_settingsService.LXMusicServer}/subscribe-player-status?filter=progress")).Start();
-            _sse.MessageReceived += Sse_MessageReceived;
-            _sse.Disconnected += Sse_Disconnected;
+            try
+            {
+                _sse = new EventSourceReader(new Uri($"{_settingsService.LXMusicServer}/subscribe-player-status?filter=progress")).Start();
+                _sse.MessageReceived += Sse_MessageReceived;
+                _sse.Disconnected += Sse_Disconnected;
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Failed to start SSE connection for LX Music.");
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    App.Current.LyricsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("FailToStartLXMusicServer"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                });
+                StopSSE();
+            }
         }
 
         private void StopSSE()
@@ -364,7 +379,7 @@ namespace BetterLyrics.WinUI3.Services
             }
         }
 
-        public void Receive(PropertyChangedMessage<ObservableCollection<AlbumArtSearchProviderInfo>> message)
+        public async void Receive(PropertyChangedMessage<ObservableCollection<AlbumArtSearchProviderInfo>> message)
         {
             if (message.Sender is SettingsPageViewModel)
             {
@@ -372,7 +387,7 @@ namespace BetterLyrics.WinUI3.Services
                 {
                     // Album art search providers info changed, re-fetch album art
                     _logger.LogInformation("Album art search providers info changed, refreshing album art.");
-                    _ = _AlbumArtRefreshRunner.RunAsync(async tokne =>
+                    await _albumArtRefreshRunner.RunAsync(async tokne =>
                     {
                         await UpdateAlbumArtRelated(tokne);
                     });
