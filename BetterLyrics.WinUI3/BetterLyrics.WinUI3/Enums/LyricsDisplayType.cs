@@ -7,6 +7,5 @@ namespace BetterLyrics.WinUI3.Enums
         AlbumArtOnly,
         LyricsOnly,
         SplitView,
-        PlaceholderOnly,
     }
 }

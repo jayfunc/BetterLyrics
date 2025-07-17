@@ -301,7 +301,7 @@
     <value>歡迎使用 BetterLyrics</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>將鼠標懸停在應用程序的頂部或底部區域以顯示更多功能選項</value>
+    <value>單擊左上角按鈕以啟用沉浸式模式，盡情享用吧！</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>目前沒有正在播放的音樂</value>

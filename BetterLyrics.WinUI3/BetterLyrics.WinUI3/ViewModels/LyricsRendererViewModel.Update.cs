@@ -92,8 +92,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                         _lyricsXTransition.StartTransition((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2 + _leftMargin + _middleMargin, jumpTo);
                         _albumArtXTransition.StartTransition(_leftMargin + ((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2 - _albumArtSize) / 2, jumpTo);
                         break;
-                    case LyricsDisplayType.PlaceholderOnly:
-                        break;
                     default:
                         break;
                 }
