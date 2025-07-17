@@ -48,6 +48,7 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
             PostProcessLyricsLines(durationMs.Value);
+            _lyricsDataArr.Add(new LyricsData()); // 为机翻预留
             return _lyricsDataArr;
         }
 
@@ -113,8 +114,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             // 初始化每种语言的歌词列表
             _lyricsDataArr.Clear();
-            for (int i = 0; i < languageCount; i++)
-                _lyricsDataArr.Add(new LyricsData());
+            for (int i = 0; i < languageCount; i++) _lyricsDataArr.Add(new LyricsData());
 
             // 遍历每个时间分组
             foreach (var group in grouped)
