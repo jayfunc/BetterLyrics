@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -48,7 +50,11 @@ namespace BetterLyrics.WinUI3.Services
                         result = bytesFromSMTC;
                         break;
                     case AlbumArtSearchProvider.iTunes:
-                        result = await SearchiTunesAsync(artist, album);
+                        foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
+                        {
+                            result = await SearchiTunesAsync(artist, album, title, countryCode);
+                            if (result != null) break;
+                        }
                         break;
                     default:
                         break;
@@ -82,7 +88,7 @@ namespace BetterLyrics.WinUI3.Services
             return null;
         }
 
-        private async Task<byte[]?> SearchiTunesAsync(string artist, string album)
+        private async Task<byte[]?> SearchiTunesAsync(string artist, string album, string title, string countryCode)
         {
             // Source: https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce
             try
@@ -96,10 +102,9 @@ namespace BetterLyrics.WinUI3.Services
                 }
 
                 // Build the iTunes API URL
-                string url = $"https://itunes.apple.com/search?term=" + artist + "+" + album + "&country=" + LanguageHelper.DetectCountryCode(album + artist) + "&entity=album";
-                url.Replace(" ", "-");
-                // Make a request to the API
+                string url = $"https://itunes.apple.com/search?term=" + WebUtility.UrlEncode($"{artist} {album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
 
+                // Make a request to the API
                 HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();

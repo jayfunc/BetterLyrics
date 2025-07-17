@@ -288,9 +288,6 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Glow effect</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
-    <value>Glow effect scope</value>
-  </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>Configure lyrics source</value>
   </data>
@@ -304,7 +301,8 @@
     <value>Welcome to BetterLyrics</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>Hover the mouse over the top or bottom area of ​​the app to display more function options</value>
+    <value>Click on the top-left button to enable immersive mode.
+If you encounter any problems, please go to the Settings page, About tab, and view the FAQ or contact the author for feedback</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>No music playing now</value>
@@ -420,7 +418,13 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>Dock mode</value>
   </data>
+  <data name="SettingsPageAppDock.Text" xml:space="preserve">
+    <value>Dock mode</value>
+  </data>
   <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>Desktop mode</value>
+  </data>
+  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
     <value>Desktop mode</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
@@ -528,8 +532,8 @@
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>Lock</value>
   </data>
-  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
-    <value>To unlock after locking, go to the system tray to unlock</value>
+  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
+    <value>To unlock after locking, go to the system tray to unlock or press</value>
   </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>Fan lyrics</value>
@@ -606,10 +610,10 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>Visit https://github.com/LibreTranslate/LibreTranslate for installation instructions and more information (this software is not affiliated with this translation service in any way)</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>Server test successful</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
     <value>Server test failed</value>
   </data>
   <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
@@ -649,7 +653,7 @@
     <value>Translate server is not set, please configure it in settings first</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
-    <value>Will automatically reset to 0 when switching songs</value>
+    <value>Reset to 0 when switching songs</value>
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>The translation in the lyrics will be read first. If there is no match, the machine translation will be requested from the LibreTranslate server</value>
@@ -734,5 +738,41 @@
   </data>
   <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
     <value>Join now</value>
+  </data>
+  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+    <value>Floating animation</value>
+  </data>
+  <data name="SettingsPageScope.Header" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
+    <value>Unlock and lock shortcut keys</value>
+  </data>
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>LX Music Server</value>
+  </data>
+  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>Dock mode placement</value>
+  </data>
+  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>Enable translation</value>
+  </data>
+  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>Show translation only</value>
+  </data>
+  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
+    <value>Font opacity (Non-current playback area)</value>
+  </data>
+  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+    <value>Frequently asked questions</value>
+  </data>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>Unable to connect to LX Music server, please go to Settings - Advanced options to check if the link is entered correctly</value>
   </data>
 </root>

@@ -43,6 +43,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isFanLyricsEnabled = _settingsService.IsFanLyricsEnabled;
             _lyricsFontStrokeWidth = _settingsService.LyricsFontStrokeWidth;
             _isTranslationEnabled = _settingsService.IsTranslationEnabled;
+            _showTranslationOnly = _settingsService.ShowTranslationOnly;
             _targetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
 
@@ -50,6 +51,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _canvasYScrollTransition.SetDuration(_settingsService.LyricsScrollDuration / 1000f);
             _canvasYScrollTransition.SetEasingType(_settingsService.LyricsScrollEasingType);
+            _defaultOpacity = _settingsService.LyricsBgFontOpacity / 100f;
+
+            _isLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
+            _displayType = _displayTypeReceived = _settingsService.DisplayType;
 
             _libWatcherService.MusicLibraryFilesChanged +=
                 LibWatcherService_MusicLibraryFilesChanged;

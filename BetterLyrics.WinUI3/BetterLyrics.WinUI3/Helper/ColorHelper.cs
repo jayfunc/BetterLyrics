@@ -119,6 +119,13 @@ namespace BetterLyrics.WinUI3.Helper
                         int sampleY = myRect.Bottom + 1;
                         return GetAverageColorFromScreenRegion(0, sampleY, screenWidth, sampleHeight);
                     }
+                case WindowPixelSampleMode.AboveWindow:
+                    {
+                        int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
+                        int sampleHeight = 1;
+                        int sampleY = myRect.Top - 1;
+                        return GetAverageColorFromScreenRegion(0, sampleY, screenWidth, sampleHeight);
+                    }
                 case WindowPixelSampleMode.WindowArea:
                     {
                         int width = myRect.Right - myRect.Left;

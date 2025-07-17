@@ -3,10 +3,8 @@
 using System.Collections.Generic;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Windows.UI;
-using Windows.UI.Text;
 
 namespace BetterLyrics.WinUI3.Services
 {
@@ -39,6 +37,8 @@ namespace BetterLyrics.WinUI3.Services
 
         string LibreTranslateServer { get; set; }
         int SelectedTargetLanguageIndex { get; set; }
+        bool ResetPositionOffsetOnSongChanged { get; set; }
+        int PositionOffset { get; set; }
         // Lyrics lib
 
         List<LocalLyricsFolder> LocalLyricsFolders { get; set; }
@@ -53,6 +53,8 @@ namespace BetterLyrics.WinUI3.Services
         Color LyricsCustomBgFontColor { get; set; }
         Color LyricsCustomFgFontColor { get; set; }
         Color LyricsCustomStrokeFontColor { get; set; }
+
+        int LyricsBgFontOpacity { get; set; }
 
         LyricsFontColorType LyricsBgFontColorType { get; set; }
         LyricsFontColorType LyricsFgFontColorType { get; set; }
@@ -69,6 +71,8 @@ namespace BetterLyrics.WinUI3.Services
         LineRenderingType LyricsGlowEffectScope { get; set; }
         LineRenderingType LyricsHighlightScope { get; set; }
 
+        bool IsLyricsFloatAnimationEnabled { get; set; }
+
         float LyricsLineSpacingFactor { get; set; }
 
         List<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
@@ -83,9 +87,14 @@ namespace BetterLyrics.WinUI3.Services
         bool IgnoreFullscreenWindow { get; set; }
 
         bool IsTranslationEnabled { get; set; }
+        bool ShowTranslationOnly { get; set; }
 
-        LyricsDisplayType PreferredDisplayType { get; set; }
+        LyricsDisplayType DisplayType { get; set; }
 
         int TimelineSyncThreshold { get; set; }
+        int LockHotKeyIndex { get; set; }
+        bool IsImmersiveMode { get; set; }
+        string LXMusicServer { get; set; }
+        DockPlacement DockPlacement { get; set; }
     }
 }

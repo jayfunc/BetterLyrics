@@ -19,7 +19,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private bool _isCanvasHeightChanged = false;
 
         private bool _isDisplayTypeChanged = false;
-        
+
         private bool _isPlayingLineChanged = false;
         private bool _isVisibleLinesBoundaryChanged = false;
 
@@ -91,8 +91,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                         _albumArtOpacityTransition.StartTransition(1f, jumpTo);
                         _lyricsXTransition.StartTransition((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2 + _leftMargin + _middleMargin, jumpTo);
                         _albumArtXTransition.StartTransition(_leftMargin + ((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2 - _albumArtSize) / 2, jumpTo);
-                        break;
-                    case LyricsDisplayType.PlaceholderOnly:
                         break;
                     default:
                         break;
@@ -297,7 +295,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (_adaptiveGrayedFontColor == _lightColor)
             {
                 grayedEnvironmentalColor = _darkColor;
-            } else if (_adaptiveGrayedFontColor == _darkColor)
+            }
+            else if (_adaptiveGrayedFontColor == _darkColor)
             {
                 grayedEnvironmentalColor = _lightColor;
             }

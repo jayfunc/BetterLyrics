@@ -10,7 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
-using System.Diagnostics;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -19,28 +19,65 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly IPlaybackService _playbackService;
 
-        private LyricsDisplayType? _preferredDisplayTypeBeforeSwitchToNonStandardMode;
-
         public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
         {
             IsFirstRun = _settingsService.IsFirstRun;
             IsTranslationEnabled = _settingsService.IsTranslationEnabled;
-            PreferredDisplayType = _settingsService.PreferredDisplayType;
+            DisplayType = _settingsService.DisplayType;
+            ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
+            PositionOffset = _settingsService.PositionOffset;
+            IsImmersiveMode = _settingsService.IsImmersiveMode;
+            ShowTranslationOnly = _settingsService.ShowTranslationOnly;
+
+            OnIsImmersiveModeChanged(IsImmersiveMode);
+
+            //Volume = SystemVolumeHelper.GetMasterVolume();
+            //SystemVolumeHelper.VolumeChanged += SystemVolumeHelper_VolumeChanged;
 
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
+            _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
+
+            IsSongPlaying = _playbackService.IsPlaying;
+        }
+
+        //private void SystemVolumeHelper_VolumeChanged(int volume)
+        //{
+        //    Volume = volume;
+        //}
+
+        private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
+        {
+            IsSongPlaying = e.IsPlaying;
         }
 
         private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
         {
             SongInfo = e.SongInfo;
-            PositionOffset = 0; // Reset position offset when song changes
-            TrySwitchToPreferredDisplayType(e.SongInfo);
+            if (ResetPositionOffsetOnSongChanged)
+            {
+                PositionOffset = 0;
+            }
         }
+
+        //[ObservableProperty]
+        //public partial int Volume { get; set; }
+
+        [ObservableProperty]
+        public partial Vector3 BottomCenterCommandGridTranslation { get; set; } = new Vector3(0, 0, 0);
+
+        [ObservableProperty]
+        public partial bool IsImmersiveMode { get; set; }
+
+        [ObservableProperty]
+        public partial float BottomCommandGridOpacity { get; set; }
+
+        [ObservableProperty]
+        public partial Thickness BottomCommandGridMargin { get; set; } = new Thickness(12);
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial LyricsDisplayType DisplayType { get; set; } = LyricsDisplayType.PlaceholderOnly;
+        public partial LyricsDisplayType DisplayType { get; set; }
 
         [ObservableProperty]
         public partial bool IsFirstRun { get; set; }
@@ -49,28 +86,26 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsWelcomeTeachingTipOpen { get; set; }
 
         [ObservableProperty]
-        public partial LyricsDisplayType PreferredDisplayType { get; set; }
-
-        [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; } = null;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial int PositionOffset { get; set; } = 0;
+        public partial int PositionOffset { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsTranslationEnabled { get; set; }
 
-        partial void OnIsTranslationEnabledChanged(bool value)
-        {
-            _settingsService.IsTranslationEnabled = value;
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool ShowTranslationOnly { get; set; }
 
-        partial void OnPreferredDisplayTypeChanged(LyricsDisplayType value)
-        {
-            _settingsService.PreferredDisplayType = value;
-        }
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool ResetPositionOffsetOnSongChanged { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsSongPlaying { get; set; }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -78,13 +113,30 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
-                    SetNonStandardModePreferredDisplayType(message.NewValue);
-                    TrySwitchToPreferredDisplayType(SongInfo);
+                    if (message.NewValue)
+                    {
+                        DisplayType = LyricsDisplayType.LyricsOnly;
+                    }
+                    else
+                    {
+                        DisplayType = _settingsService.DisplayType;
+                    }
+                    BottomCommandGridMargin = message.NewValue ? new Thickness(0) : new Thickness(12);
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
-                    SetNonStandardModePreferredDisplayType(message.NewValue);
-                    TrySwitchToPreferredDisplayType(SongInfo);
+                    if (message.NewValue)
+                    {
+                        DisplayType = LyricsDisplayType.LyricsOnly;
+                    }
+                    else
+                    {
+                        DisplayType = _settingsService.DisplayType;
+                    }
+                }
+                else if (message.PropertyName == nameof(LyricsWindowViewModel.IsImmersiveMode))
+                {
+                    IsImmersiveMode = message.NewValue;
                 }
             }
         }
@@ -95,38 +147,28 @@ namespace BetterLyrics.WinUI3.ViewModels
             WindowHelper.OpenOrShowWindow<SettingsWindow>();
         }
 
-        private void SetNonStandardModePreferredDisplayType(bool isEnabled)
+        [RelayCommand]
+        private async Task PlaySongAsync()
         {
-            if (isEnabled)
-            {
-                _preferredDisplayTypeBeforeSwitchToNonStandardMode = PreferredDisplayType;
-                PreferredDisplayType = LyricsDisplayType.LyricsOnly;
-            }
-            else
-            {
-                PreferredDisplayType = _preferredDisplayTypeBeforeSwitchToNonStandardMode ?? LyricsDisplayType.SplitView;
-            }
+            await _playbackService.PlayAsync();
         }
 
-        private void TrySwitchToPreferredDisplayType(SongInfo? songInfo)
+        [RelayCommand]
+        private async Task PauseSongAsync()
         {
-            LyricsDisplayType displayType;
+            await _playbackService.PauseAsync();
+        }
 
-            if (songInfo == null)
-            {
-                displayType = LyricsDisplayType.PlaceholderOnly;
-            }
-            else if (PreferredDisplayType is LyricsDisplayType preferredDisplayType)
-            {
-                displayType = preferredDisplayType;
-            }
-            else
-            {
-                displayType = LyricsDisplayType.SplitView;
-            }
+        [RelayCommand]
+        private async Task PreviousSongAsync()
+        {
+            await _playbackService.PreviousAsync();
+        }
 
-            DisplayType = displayType;
-
+        [RelayCommand]
+        private async Task NextSongAsync()
+        {
+            await _playbackService.NextAsync();
         }
 
         partial void OnIsFirstRunChanged(bool value)
@@ -134,5 +176,37 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsWelcomeTeachingTipOpen = value;
             _settingsService.IsFirstRun = false;
         }
+
+        partial void OnIsTranslationEnabledChanged(bool value)
+        {
+            _settingsService.IsTranslationEnabled = value;
+        }
+
+        partial void OnPositionOffsetChanged(int value)
+        {
+            _settingsService.PositionOffset = value;
+        }
+
+        partial void OnIsImmersiveModeChanged(bool value)
+        {
+            if (value)
+            {
+                BottomCommandGridOpacity = 0f;
+            }
+            else
+            {
+                BottomCommandGridOpacity = 1f;
+            }
+        }
+
+        partial void OnShowTranslationOnlyChanged(bool value)
+        {
+            _settingsService.ShowTranslationOnly = value;
+        }
+
+        //partial void OnVolumeChanged(int value)
+        //{
+        //    SystemVolumeHelper.SetMasterVolume(value);
+        //}
     }
 }

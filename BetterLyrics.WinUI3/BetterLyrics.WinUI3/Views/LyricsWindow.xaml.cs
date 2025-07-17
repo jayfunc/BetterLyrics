@@ -10,13 +10,19 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using System.Drawing;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Vanara.PInvoke;
+using Windows.System;
+using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class LyricsWindow : Window
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        private readonly WindowMessageMonitor _wmm;
 
         public LyricsWindow()
         {
@@ -28,6 +34,19 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
             Title = App.ResourceLoader!.GetString("LyricsPageTitle");
             SetTitleBar(TopCommandGrid);
+            //SetTitleBar(RootGrid);
+
+            _wmm = new WindowMessageMonitor(this);
+            _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
+        }
+
+        private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
+        {
+            if (e.Message.MessageId == (uint)User32.WindowMessage.WM_HOTKEY)
+            {
+                int id = (int)e.Message.WParam;
+                GlobalHotKeyHelper.TryInvokeAction(id);
+            }
         }
 
         public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
@@ -54,7 +73,7 @@ namespace BetterLyrics.WinUI3.Views
                     ViewModel.ToggleDesktopModeCommand.Execute(null);
                     if (autoLook == null && _settingsService.AutoLockOnDesktopMode)
                     {
-                        ViewModel.LockWindowCommand.Execute(null);
+                        ViewModel.ToggleLockWindowCommand.Execute(null);
                     }
                     break;
                 default:
@@ -138,6 +157,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateTitleBarWindowButtonsVisibility()
         {
+            TopCommandGrid.Margin = new Thickness(12);
+
             switch (AppWindow.Presenter.Kind)
             {
                 case AppWindowPresenterKind.Default:
@@ -147,6 +168,7 @@ namespace BetterLyrics.WinUI3.Views
                     AOTFlyoutItem.Visibility = DesktopFlyoutItem.Visibility = FullScreenFlyoutItem.Visibility = DockFlyoutItem.Visibility =
                     ClickThroughButton.Visibility = Visibility.Collapsed;
 
+                    ViewModel.IsImmersiveMode = true;
                     break;
                 case AppWindowPresenterKind.FullScreen:
                     MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
@@ -157,7 +179,6 @@ namespace BetterLyrics.WinUI3.Views
                     DockFlyoutItem.Visibility =
                         Visibility.Collapsed;
                     FullScreenFlyoutItem.IsChecked = true;
-
                     break;
                 case AppWindowPresenterKind.Overlapped:
                     DockFlyoutItem.Visibility = Visibility.Visible;
@@ -175,6 +196,8 @@ namespace BetterLyrics.WinUI3.Views
                         MiniFlyoutItem.Visibility =
                             Visibility.Collapsed;
 
+                        ViewModel.IsImmersiveMode = true;
+                        TopCommandGrid.Margin = new Thickness();
                     }
                     else if (DesktopFlyoutItem.IsChecked)
                     {
@@ -189,7 +212,6 @@ namespace BetterLyrics.WinUI3.Views
                             Visibility.Collapsed;
 
                         ClickThroughButton.Visibility = Visibility.Visible;
-
                     }
                     else
                     {
@@ -217,6 +239,8 @@ namespace BetterLyrics.WinUI3.Views
                             MaximiseButton.Visibility = Visibility.Visible;
                             RestoreButton.Visibility = Visibility.Collapsed;
                         }
+
+                        ViewModel.IsImmersiveMode = _settingsService.IsImmersiveMode;
                     }
                     break;
                 default:
@@ -255,12 +279,18 @@ namespace BetterLyrics.WinUI3.Views
 
         private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            TopCommandGrid.Opacity = 1;
+            if (ViewModel.IsImmersiveMode)
+            {
+                ViewModel.TopCommandGridOpacity = 1f;
+            }
         }
 
         private void TopCommandGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            TopCommandGrid.Opacity = 0;
+            if (ViewModel.IsImmersiveMode)
+            {
+                ViewModel.TopCommandGridOpacity = 0f;
+            }
         }
 
         private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
@@ -276,6 +306,22 @@ namespace BetterLyrics.WinUI3.Views
         private void RootGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.IsMouseWithinWindow = false;
+        }
+
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (ClickThroughButton == null) return;
+
+            // 获取锁控件在窗口中的位置（相对于窗口左上角）
+            var transform = ClickThroughButton.TransformToVisual(Content);
+            var point = transform.TransformPoint(new Windows.Foundation.Point(0, 0));
+            var btnRect = new Rectangle(
+                (int)point.X,
+                (int)point.Y,
+                (int)ClickThroughButton.ActualWidth,
+                (int)ClickThroughButton.ActualHeight
+            );
+            DesktopModeHelper.SetInteractiveRects([btnRect]);
         }
     }
 }

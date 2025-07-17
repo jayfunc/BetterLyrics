@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using BetterLyrics.WinUI3.Enums;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,11 +22,16 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void Disable(Window window)
         {
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            if (!_registered.Contains(hwnd)) return;
+
             window.SetIsShownInSwitchers(true);
             window.ExtendsContentIntoTitleBar = true;
             window.SetIsAlwaysOnTop(false);
 
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+            UnregisterAppBar(hwnd);
+            RefreshWorkArea();
 
             window.SetWindowStyle(_originalWindowStyle[hwnd]);
             _originalWindowStyle.Remove(hwnd);
@@ -42,11 +49,9 @@ namespace BetterLyrics.WinUI3.Helper
                 );
                 _originalPositions.Remove(hwnd);
             }
-
-            UnregisterAppBar(hwnd);
         }
 
-        public static void Enable(Window window, int appBarHeight)
+        public static void Enable(Window window, int appBarHeight, DockPlacement dockPlacement)
         {
             window.SetIsShownInSwitchers(false);
             window.ExtendsContentIntoTitleBar = false;
@@ -68,36 +73,44 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
 
-            RegisterAppBar(hwnd, appBarHeight);
+            RegisterAppBar(hwnd, appBarHeight, dockPlacement);
 
             int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
             int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
+            int y = dockPlacement == DockPlacement.Top ? 0 : screenHeight - appBarHeight;
             User32.SetWindowPos(
                 hwnd,
                 IntPtr.Zero,
                 0,
-                0,
+                y,
                 screenWidth,
                 appBarHeight,
                 User32.SetWindowPosFlags.SWP_SHOWWINDOW
             );
+
+            RefreshWorkArea();
         }
 
-        private static void RegisterAppBar(IntPtr hwnd, int height)
+        private static void RegisterAppBar(IntPtr hwnd, int height, DockPlacement dockPlacement)
         {
             if (_registered.Contains(hwnd)) return;
+
+            var uEdge = dockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
+            int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
+            int top = dockPlacement == DockPlacement.Top ? 0 : screenHeight - height;
+            int bottom = dockPlacement == DockPlacement.Top ? height : screenHeight;
 
             Shell32.APPBARDATA abd = new()
             {
                 cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
                 hWnd = hwnd,
-                uEdge = Shell32.ABE.ABE_TOP,
+                uEdge = uEdge,
                 rc = new RECT
                 {
                     Left = 0,
-                    Top = 0,
+                    Top = top,
                     Right = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
-                    Bottom = height,
+                    Bottom = bottom,
                 },
             };
 
@@ -119,40 +132,57 @@ namespace BetterLyrics.WinUI3.Helper
             };
 
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
+
             _registered.Remove(hwnd);
         }
 
-        public static void UpdateAppBarHeight(IntPtr hwnd, int newHeight)
+        private static void RefreshWorkArea()
         {
-            if (!_registered.Contains(hwnd))
-                return;
+            User32.SendMessage(HWND.HWND_BROADCAST, User32.WindowMessage.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
+        }
 
-            Shell32.APPBARDATA abd = new()
+        public static void UpdateAppBarHeight(IntPtr hwnd, int newHeight, DockPlacement dockPlacement)
+        {
+            App.DispatcherQueueTimer?.Debounce(() =>
             {
-                cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
-                hWnd = hwnd,
-                uEdge = Shell32.ABE.ABE_TOP,
-                rc = new RECT
+                if (!_registered.Contains(hwnd))
+                    return;
+
+                var uEdge = dockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
+                int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
+                int top = dockPlacement == DockPlacement.Top ? 0 : screenHeight - newHeight;
+                int bottom = dockPlacement == DockPlacement.Top ? newHeight : screenHeight;
+
+                Shell32.APPBARDATA abd = new()
                 {
-                    Left = 0,
-                    Top = 0,
-                    Right = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
-                    Bottom = newHeight,
-                },
-            };
+                    cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+                    hWnd = hwnd,
+                    uEdge = uEdge,
+                    rc = new RECT
+                    {
+                        Left = 0,
+                        Top = top,
+                        Right = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
+                        Bottom = bottom,
+                    },
+                };
 
-            Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
+                Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
-            // 同步窗口实际高度
-            User32.SetWindowPos(
-                hwnd,
-                IntPtr.Zero,
-                0,
-                0,
-                User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
-                newHeight,
-                User32.SetWindowPosFlags.SWP_SHOWWINDOW
-            );
+                // 同步窗口实际高度和位置
+                int y = dockPlacement == DockPlacement.Top ? 0 : screenHeight - newHeight;
+                User32.SetWindowPos(
+                    hwnd,
+                    IntPtr.Zero,
+                    0,
+                    y,
+                    User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
+                    newHeight,
+                    User32.SetWindowPosFlags.SWP_SHOWWINDOW
+                );
+
+                RefreshWorkArea();
+            }, TimeSpan.FromMilliseconds(100));
         }
     }
 }

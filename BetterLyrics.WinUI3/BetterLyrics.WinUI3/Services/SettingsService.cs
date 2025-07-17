@@ -41,6 +41,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string StandardWindowHeightKey = "StandardWindowHeight";
 
         private const string AutoLockOnDesktopModeKey = "AutoLockOnDesktopMode";
+        private const string IsImmersiveModeKey = "IsImmersiveMode";
 
         private const string IsDynamicCoverOverlayEnabledKey = "IsDynamicCoverOverlayEnabled";
         private const string IsFanLyricsEnabledKey = "IsFanLyricsEnabled";
@@ -71,8 +72,11 @@ namespace BetterLyrics.WinUI3.Services
         private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
 
         private const string IsTranslationEnabledKey = "IsTranslationEnabled";
+        private const string ShowTranslationOnlyKey = "ShowTranslationOnly";
         private const string LibreTranslateServerKey = "LibreTranslateServer";
         private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
+
+        private const string LXMusicServerKey = "LXMusicServer";
 
         private const string LyricsBackgroundThemeKey = "LyricsBackgroundTheme";
         private const string IgnoreFullscreenWindowKey = "IgnoreFullscreenWindow";
@@ -82,6 +86,16 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsScrollDurationKey = "LyricsScrollDuration";
 
         public const string TimelineSyncThresholdKey = "TimelineSyncThreshold";
+
+        private const string IsLyricsFloatAnimationEnabledKey = "IsLyricsFloatAnimationEnabled";
+
+        private const string ResetPositionOffsetOnSongChangedKey = "ResetPositionOffsetOnSongChanged";
+
+        private const string PositionOffsetKey = "PositionOffset";
+
+        private const string LockHotKeyIndexKey = "LockHotKeyIndex";
+        private const string DockPlacementKey = "DockPlacement";
+        private const string LyricsBgFontOpacityKey = "LyricsBgFontOpacity";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -152,6 +166,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(StandardWindowWidthKey, 1600);
 
             SetDefault(AutoLockOnDesktopModeKey, false);
+            SetDefault(IsImmersiveModeKey, false);
             // App behavior
             SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.StandardMode);
             // Album art
@@ -185,8 +200,11 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IsFanLyricsEnabledKey, false);
 
             SetDefault(LibreTranslateServerKey, "");
-            SetDefault(IsTranslationEnabledKey, false);
-            SetDefault(SelectedTargetLanguageIndexKey, 6);
+            SetDefault(IsTranslationEnabledKey, true);
+            SetDefault(ShowTranslationOnlyKey, false);
+            SetDefault(SelectedTargetLanguageIndexKey, LanguageHelper.GetDefaultTargetLanguageIndex());
+
+            SetDefault(LXMusicServerKey, "");
 
             SetDefault(LyricsFontStrokeWidthKey, 3);
             SetDefault(IgnoreFullscreenWindowKey, false);
@@ -195,6 +213,38 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutQuad);
             SetDefault(LyricsScrollDurationKey, 500); // 500ms
             SetDefault(TimelineSyncThresholdKey, 0); // 0ms
+
+            SetDefault(IsLyricsFloatAnimationEnabledKey, true);
+
+            SetDefault(ResetPositionOffsetOnSongChangedKey, false);
+            SetDefault(PositionOffsetKey, 0);
+            SetDefault(LockHotKeyIndexKey, 'U' - 'A');
+            SetDefault(DockPlacementKey, (int)DockPlacement.Top);
+            SetDefault(LyricsBgFontOpacityKey, 30); // 30%
+        }
+
+        public int LyricsBgFontOpacity
+        {
+            get => GetValue<int>(LyricsBgFontOpacityKey);
+            set => SetValue(LyricsBgFontOpacityKey, value);
+        }
+
+        public bool ShowTranslationOnly
+        {
+            get => GetValue<bool>(ShowTranslationOnlyKey);
+            set => SetValue(ShowTranslationOnlyKey, value);
+        }
+
+        public DockPlacement DockPlacement
+        {
+            get => (DockPlacement)GetValue<int>(DockPlacementKey);
+            set => SetValue(DockPlacementKey, (int)value);
+        }
+
+        public int LockHotKeyIndex
+        {
+            get => GetValue<int>(LockHotKeyIndexKey);
+            set => SetValue(LockHotKeyIndexKey, value);
         }
 
         public EasingType LyricsScrollEasingType
@@ -209,7 +259,7 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(LyricsScrollDurationKey, value);
         }
 
-        public LyricsDisplayType PreferredDisplayType
+        public LyricsDisplayType DisplayType
         {
             get => (LyricsDisplayType)GetValue<int>(PreferredDisplayTypeKey);
             set => SetValue(PreferredDisplayTypeKey, (int)value);
@@ -511,6 +561,12 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(SelectedTargetLanguageIndexKey, value);
         }
 
+        public string LXMusicServer
+        {
+            get => GetValue<string>(LXMusicServerKey)!;
+            set => SetValue(LXMusicServerKey, value);
+        }
+
         public bool IgnoreFullscreenWindow
         {
             get => GetValue<bool>(IgnoreFullscreenWindowKey);
@@ -521,6 +577,30 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<int>(TimelineSyncThresholdKey);
             set => SetValue(TimelineSyncThresholdKey, value);
+        }
+
+        public bool IsLyricsFloatAnimationEnabled
+        {
+            get => GetValue<bool>(IsLyricsFloatAnimationEnabledKey);
+            set => SetValue(IsLyricsFloatAnimationEnabledKey, value);
+        }
+
+        public bool ResetPositionOffsetOnSongChanged
+        {
+            get => GetValue<bool>(ResetPositionOffsetOnSongChangedKey);
+            set => SetValue(ResetPositionOffsetOnSongChangedKey, value);
+        }
+
+        public int PositionOffset
+        {
+            get => GetValue<int>(PositionOffsetKey);
+            set => SetValue(PositionOffsetKey, value);
+        }
+
+        public bool IsImmersiveMode
+        {
+            get => GetValue<bool>(IsImmersiveModeKey);
+            set => SetValue(IsImmersiveModeKey, value);
         }
 
         private T? GetValue<T>(string key)

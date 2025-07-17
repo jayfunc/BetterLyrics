@@ -1,10 +1,12 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
+using Lyricify.Lyrics.Helpers.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StringHelper = BetterLyrics.WinUI3.Helper.StringHelper;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -35,7 +37,23 @@ namespace BetterLyrics.WinUI3.Models
                 }
                 else
                 {
-                    line.DisplayedText = $"{line.OriginalText}{StringHelper.NewLine}({translationData.LyricsLines[i].OriginalText})";
+                    if (translationData.LanguageCode?.Substring(0, 2) == "zh")
+                    {
+                        string tmp = "";
+                        if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hant")
+                        {
+                            tmp = ChineseConverter.ConvertToTraditionalChinese(translationData.LyricsLines[i].OriginalText);
+                        }
+                        else if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hans")
+                        {
+                            tmp = ChineseConverter.ConvertToSimplifiedChinese(translationData.LyricsLines[i].OriginalText);
+                        }
+                        line.DisplayedText = $"{line.OriginalText}\n{tmp}";
+                    }
+                    else
+                    {
+                        line.DisplayedText = $"{line.OriginalText}\n{translationData.LyricsLines[i].OriginalText}";
+                    }
                 }
                 i++;
             }
@@ -53,7 +71,7 @@ namespace BetterLyrics.WinUI3.Models
                 }
                 else
                 {
-                    line.DisplayedText = $"{line.OriginalText}{StringHelper.NewLine}({translationArr[i]})";
+                    line.DisplayedText = $"{line.OriginalText}{StringHelper.NewLine}{translationArr[i]}";
                 }
                 i++;
             }
@@ -67,6 +85,30 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
+        public LyricsData CreateLyricsDataFrom(string translation)
+        {
+            var result = new LyricsData(LyricsLines.Select(line => new LyricsLine
+            {
+                StartMs = line.StartMs,
+                EndMs = line.EndMs,
+            }).ToList());
+            List<string> translationArr = translation.Split(StringHelper.NewLine).ToList();
+            int i = 0;
+            foreach (var line in result.LyricsLines)
+            {
+                if (i >= translationArr.Count)
+                {
+                    break;
+                }
+                else
+                {
+                    line.OriginalText = translationArr[i];
+                }
+                i++;
+            }
+            return result;
+        }
+
         public static LyricsData GetNotfoundPlaceholder(int durationMs)
         {
             return new LyricsData([new LyricsLine
@@ -74,7 +116,7 @@ namespace BetterLyrics.WinUI3.Models
                 StartMs = 0,
                 EndMs = durationMs,
                 OriginalText = App.ResourceLoader!.GetString("LyricsNotFound"),
-                CharTimings = [],
+                LyricsChars = [],
             }]);
         }
 
@@ -87,7 +129,7 @@ namespace BetterLyrics.WinUI3.Models
                     EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
                     OriginalText = "● ● ●",
                     DisplayedText = "● ● ●",
-                    CharTimings = [],
+                    LyricsChars = [],
                 },
             ]);
         }

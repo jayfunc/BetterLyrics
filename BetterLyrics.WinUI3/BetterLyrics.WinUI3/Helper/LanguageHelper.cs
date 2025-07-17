@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services
 {
@@ -90,28 +91,38 @@ namespace BetterLyrics.WinUI3.Services
 
         public static bool IsCJK(string text)
         {
-            return DetectLanguageCode(text) switch
+            return DetectLanguageCode(text)?.Substring(0, 2) switch
             {
                 "zh" or "ja" or "ko" => true,
                 _ => false
             };
         }
 
-        public static string DetectCountryCode(string? text)
+        public static string ConvertToCountryCode(string? languageCode)
         {
-            if (text == null) return "en";
-            var code = DetectLanguageCode(text);
-            if (code == null) return "en";
-            // 处理中文简体和繁体
-            if (code == "zh-Hans") return "cn";
-            if (code == "zh-Hant") return "cn";
-            // 其他语言直接返回两字母代码
-            return code;
+            if (languageCode == null) return "us";
+
+            return languageCode switch
+            {
+                "zh" => "cn",
+                "zh-Hans" => "cn",
+                "zh-Hant" => "tw",
+                "ja" => "jp",
+                "ko" => "kr",
+                _ => "us"
+            };
         }
 
         public static string GetUserTargetLanguageCode()
         {
             return SupportedTargetLanguages[_settingsService.SelectedTargetLanguageIndex].Code;
+        }
+
+        public static int GetDefaultTargetLanguageIndex()
+        {
+            int found = SupportedTargetLanguages.FindIndex(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.Code) == true);
+            if (found == -1) found = 7; // 默认使用英语
+            return found;
         }
     }
 }

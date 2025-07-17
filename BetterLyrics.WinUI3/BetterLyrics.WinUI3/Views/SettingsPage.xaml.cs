@@ -7,14 +7,13 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Windows.Forms;
 using Windows.System;
 
 namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class SettingsPage : Page
     {
-        private bool _isUserToggle;
-
         public SettingsPage()
         {
             this.InitializeComponent();

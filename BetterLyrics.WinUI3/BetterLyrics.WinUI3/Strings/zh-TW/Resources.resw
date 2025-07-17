@@ -288,9 +288,6 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>輝光效果</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffectScope.Header" xml:space="preserve">
-    <value>輝光效果作用範圍</value>
-  </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
     <value>配置歌詞源</value>
   </data>
@@ -304,7 +301,8 @@
     <value>歡迎使用 BetterLyrics</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>將鼠標懸停在應用程序的頂部或底部區域以顯示更多功能選項</value>
+    <value>單擊左上按鈕以啟用沉浸式模式。
+如果遇到任何問題，請轉到“設置”頁面，關於標籤，查看常見問題解答或聯繫作者以獲取反饋</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>目前沒有正在播放的音樂</value>
@@ -337,7 +335,7 @@
     <value>適應歌詞背景（灰色）</value>
   </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
-    <value>专辑区域样式</value>
+    <value>專輯區域樣式</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>圓角半徑</value>
@@ -420,7 +418,13 @@
   <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
     <value>停靠模式</value>
   </data>
+  <data name="SettingsPageAppDock.Text" xml:space="preserve">
+    <value>停靠模式</value>
+  </data>
   <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
+    <value>桌面模式</value>
+  </data>
+  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
     <value>桌面模式</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
@@ -528,8 +532,8 @@
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>鎖定</value>
   </data>
-  <data name="HostWindowLockToolTip.Content" xml:space="preserve">
-    <value>鎖定後解鎖，請轉到系統托盤解鎖</value>
+  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
+    <value>鎖定後解鎖，請轉到系統托盤解鎖或按下</value>
   </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>扇形歌詞</value>
@@ -606,10 +610,10 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>造訪 https://github.com/LibreTranslate/LibreTranslate 以取得安裝教學及更多資訊（本軟體與此翻譯服務無任何關聯）</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestSuccessInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>服務器測試成功</value>
   </data>
-  <data name="SettingsPageLibreTranslateTestFailedInfo" xml:space="preserve">
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
     <value>服務器測試失敗</value>
   </data>
   <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
@@ -649,7 +653,7 @@
     <value>未設定翻譯伺服器，請先在設定中進行配置</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
-    <value>將在切換歌曲時自動重設為 0</value>
+    <value>切換歌曲時重置為 0</value>
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>將優先讀取歌詞內翻譯，若無匹配則向 LibreTranslate 伺服器請求機器翻譯</value>
@@ -734,5 +738,41 @@
   </data>
   <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
     <value>立即加入</value>
+  </data>
+  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+    <value>浮動動畫</value>
+  </data>
+  <data name="SettingsPageScope.Header" xml:space="preserve">
+    <value>範圍</value>
+  </data>
+  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
+    <value>解鎖和鎖定快捷鍵</value>
+  </data>
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>LX 音樂服務器</value>
+  </data>
+  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>停靠模式位置</value>
+  </data>
+  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>頂部</value>
+  </data>
+  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>底部</value>
+  </data>
+  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>啟用翻譯</value>
+  </data>
+  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>僅顯示翻譯</value>
+  </data>
+  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
+    <value>字體不透明度（非目前播放區域）</value>
+  </data>
+  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+    <value>常見問題與解答</value>
+  </data>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>無法連接到 LX 音樂服務器，請轉到設置 - 高級選項以檢查是否正確輸入鏈接</value>
   </data>
 </root>

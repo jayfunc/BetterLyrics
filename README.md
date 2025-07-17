@@ -1,5 +1,7 @@
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md">_**点此处查看中文说明**_</a>
 
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**Click here to view frequently asked questions (FAQ)**_</a>
+
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
 </div>
@@ -19,6 +21,10 @@ Your smooth dynamic lyrics display tool built with WinUI 3
 
 ---
 
+🎉 This project was featured by SSPAI! Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
+
+---
+
 ## Highlighted features
 
 - Dynamic blur album art as background
@@ -28,13 +34,13 @@ Your smooth dynamic lyrics display tool built with WinUI 3
 - Immersive desktop lyrics (dock mode)
 - Local translation (supporting 30 languages)
 
-> This project is still under development now, bugs and unexpected behaviors may be existed in the latest dev branch.
+> This project is still under development, bugs and unexpected behaviors may be existed in the latest branch.
 
 ## Supported lyrics source
 
 - From your local storage
   - Music files (with embedded lyrics)
-  - [.lrc](https://en.wikipedia.org/wiki/LRC_(file_format)) files (with both core format and enhanced format)
+  - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) files (with both core format and enhanced format)
   - [.eslrc](https://github.com/ESLyric/release) files
   - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
 
@@ -49,27 +55,33 @@ Your smooth dynamic lyrics display tool built with WinUI 3
 
 ## Screenshots
 
-![alt text](Screenshots/mode.png)
+### Standard mode
 
-![alt text](Screenshots/glow.png)
+![alt text](Screenshots/image.png)
 
-![alt text](Screenshots/glow.gif)
+![alt text](Screenshots/glow-float.gif)
 
-![alt text](Screenshots/dock.png)
+![alt text](Screenshots/fan.png)
 
-![alt text](Screenshots/immersive-dock.gif)
+![alt text](Screenshots/lyrics-only.png)
 
-![alt text](Screenshots/dock.gif)
+![alt text](Screenshots/album-art-only.png)
 
-![alt text](Screenshots/pip.png)
+### Dock mode
 
-![alt text](Screenshots/settings.png)
+![alt text](Screenshots/dock-1.png)
 
-![alt text](Screenshots/fs.png)
+![alt text](Screenshots/dock-2.png)
+
+### Desktop mode
+
+![alt text](Screenshots/desktop-1.png)
+
+![alt text](Screenshots/desktop-2.png)
 
 ## Demonstration
 
-Watch our introduction video (uploaded on 31 May 2025) on Bilibili [here](https://b23.tv/QjKkYmL).
+Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https://www.bilibili.com/video/BV1zjGjzfEXh).
 
 ## Try it now
 
@@ -81,7 +93,7 @@ Watch our introduction video (uploaded on 31 May 2025) on Bilibili [here](https:
 
 > **Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version, if you like you can purchase to support me)
 
-Or alternatively get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases/latest) page for the link)
+Or alternatively get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
 
@@ -89,9 +101,18 @@ Or alternatively get it from Google Drive (see [release](https://github.com/jayf
 
 You can `git clone` this project and build it yourself.
 
-## Known unsupported music player
+## Tested music player
 
-- 网易云音乐 NetEase Cloud Music
+- Kugou Music
+  - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change. 
+- Apple Music
+  - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
+- foobar2000
+  - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
+- Spofity
+- QQ Music
+- PotPlayer
+- Media Player (System)
 
 ## Many thanks to
 
@@ -105,6 +126,8 @@ You can `git clone` this project and build it yourself.
   - Provide easy ways to access Win32 API regarding windowing
 - [TagLib#](https://github.com/mono/taglib-sharp)
   - Used for reading original lyrics content
+- [Vanara](https://github.com/dahall/Vanara)
+  - Win32 API wrapper
 - [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
 - [DevWinUI](https://github.com/ghost1372/DevWinUI)
 - [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)

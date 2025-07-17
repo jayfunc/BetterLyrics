@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Services
     {
         private readonly HttpClient _httpClient;
 
-        public TranslateService(ISettingsService settingsService) :base(settingsService)
+        public TranslateService(ISettingsService settingsService) : base(settingsService)
         {
             _httpClient = new HttpClient();
         }
@@ -76,18 +76,18 @@ namespace BetterLyrics.WinUI3.Services
 
         public int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr)
         {
-            string targetLangCode = LanguageHelper.GetUserTargetLanguageCode();
+            string targetLangCode = LanguageHelper.GetUserTargetLanguageCode().Substring(0, 2);
             if (lyricsDataArr.Count > 1)
             {
-                for (int i = 1;  i < lyricsDataArr.Count; i++)
+                for (int i = 1; i < lyricsDataArr.Count; i++)
                 {
-                    if (lyricsDataArr[i].LanguageCode == targetLangCode)
+                    if (lyricsDataArr[i].LanguageCode?.Substring(0, 2) == targetLangCode)
                     {
                         return i; // Translation lyrics data found
                     }
                 }
             }
             return -1; // No translation lyrics data found
-        } 
+        }
     }
 }

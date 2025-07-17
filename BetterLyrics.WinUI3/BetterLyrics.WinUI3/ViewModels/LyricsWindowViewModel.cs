@@ -13,8 +13,11 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Vanara.PInvoke;
+using Windows.System;
 using Windows.UI;
 using WinRT.Interop;
 using WinUIEx;
@@ -24,15 +27,24 @@ namespace BetterLyrics.WinUI3
     public partial class LyricsWindowViewModel
         : BaseWindowViewModel,
             IRecipient<PropertyChangedMessage<int>>,
+            IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>,
-            IRecipient<PropertyChangedMessage<bool>>
+            IRecipient<PropertyChangedMessage<DockPlacement>>
     {
         private ForegroundWindowWatcher? _windowWatcher = null;
         private bool _ignoreFullscreenWindow = false;
+        private int _dockWindowMinHeight = 96;
+
+        private DockPlacement _dockPlacement;
+        private int _lyricsFontSize;
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
             _ignoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
+            IsImmersiveMode = _settingsService.IsImmersiveMode;
+            _dockPlacement = _settingsService.DockPlacement;
+            _lyricsFontSize = _settingsService.LyricsFontSize;
+            OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
         }
 
         [ObservableProperty]
@@ -52,6 +64,13 @@ namespace BetterLyrics.WinUI3
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsImmersiveMode { get; set; }
+
+        [ObservableProperty]
+        public partial float TopCommandGridOpacity { get; set; }
+
+        [ObservableProperty]
         public partial ElementTheme ThemeType { get; set; } = ElementTheme.Default;
 
         [ObservableProperty]
@@ -60,6 +79,29 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsMouseWithinWindow { get; set; } = false;
+
+        [ObservableProperty]
+        public partial string LockHotKey { get; set; } = "";
+
+        private void UpdateDockWindow()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
+        }
+
+        partial void OnIsImmersiveModeChanged(bool value)
+        {
+            if (value)
+            {
+                TopCommandGridOpacity = 0f;
+            }
+            else
+            {
+                TopCommandGridOpacity = 1f;
+            }
+        }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -99,18 +141,41 @@ namespace BetterLyrics.WinUI3
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
                 {
-                    if (IsDockMode)
+                    _lyricsFontSize = message.NewValue;
+                    UpdateDockWindow();
+                }
+                else if (message.Sender is SettingsPageViewModel)
+                {
+                    if (message.PropertyName == nameof(SettingsPageViewModel.LockHotKeyIndex))
                     {
-                        var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-                        if (window == null) return;
-
-                        DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), message.NewValue * 4);
+                        UpdateLockHotKey(message.NewValue);
                     }
                 }
             }
         }
 
-        public void StartWatchWindowColorChange(WindowPixelSampleMode mode)
+        private void UpdateLockHotKey(int hotKeyIndex)
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            GlobalHotKeyHelper.UnregisterAllHotKeys(window);
+            GlobalHotKeyHelper.RegisterHotKey(
+                window,
+                User32.HotKeyModifiers.MOD_CONTROL | User32.HotKeyModifiers.MOD_ALT,
+                (uint)(hotKeyIndex + (int)VirtualKey.A),
+                () =>
+                {
+                    if (IsDesktopMode)
+                    {
+                        ToggleLockWindowCommand.Execute(null);
+                    }
+                }
+            );
+            LockHotKey = ((VirtualKey)(hotKeyIndex + (int)VirtualKey.A)).ToString();
+        }
+
+        public void StartWatchWindowColorChange()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
@@ -124,11 +189,11 @@ namespace BetterLyrics.WinUI3
                     {
                         presenter.IsAlwaysOnTop = true;
                     }
-                    UpdateAccentColor(hwnd, mode);
+                    UpdateAccentColor(hwnd);
                 }
             );
             _windowWatcher.Start();
-            UpdateAccentColor(hwnd, mode);
+            UpdateAccentColor(hwnd);
         }
 
         private void StopWatchWindowColorChange()
@@ -137,19 +202,35 @@ namespace BetterLyrics.WinUI3
             _windowWatcher = null;
         }
 
-        public void UpdateAccentColor(nint hwnd, WindowPixelSampleMode mode)
+        public void UpdateAccentColor(nint hwnd)
         {
+            WindowPixelSampleMode mode = IsDesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
             ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, mode).ToColor();
         }
 
+        public void InitLockHotKey()
+        {
+            UpdateLockHotKey(_settingsService.LockHotKeyIndex);
+        }
+
         [RelayCommand]
-        private void LockWindow()
+        private void ToggleLockWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DesktopModeHelper.SetClickThrough(window, true);
-            IsLyricsWindowLocked = true;
+            if (IsLyricsWindowLocked)
+            {
+                DesktopModeHelper.SetClickThrough(window, false);
+                IsLyricsWindowLocked = false;
+                IsImmersiveMode = _settingsService.IsImmersiveMode;
+            }
+            else
+            {
+                DesktopModeHelper.SetClickThrough(window, true);
+                IsLyricsWindowLocked = true;
+                IsImmersiveMode = true;
+            }
         }
 
         [RelayCommand]
@@ -164,7 +245,7 @@ namespace BetterLyrics.WinUI3
             if (IsDesktopMode)
             {
                 DesktopModeHelper.Enable(window);
-                StartWatchWindowColorChange(WindowPixelSampleMode.WindowEdge);
+                StartWatchWindowColorChange();
             }
             else
             {
@@ -183,12 +264,30 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
-                DockModeHelper.Enable(window, _settingsService.LyricsFontSize * 4);
-                StartWatchWindowColorChange(WindowPixelSampleMode.BelowWindow);
+                DockModeHelper.Enable(window, Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
+                StartWatchWindowColorChange();
             }
             else
             {
                 DockModeHelper.Disable(window);
+            }
+        }
+
+        [RelayCommand]
+        private void OnImmersiveToggleButtonEnabledChanged()
+        {
+            _settingsService.IsImmersiveMode = IsImmersiveMode;
+        }
+
+        public void Receive(PropertyChangedMessage<DockPlacement> message)
+        {
+            if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.DockPlacement))
+                {
+                    _dockPlacement = message.NewValue;
+                    UpdateDockWindow();
+                }
             }
         }
     }

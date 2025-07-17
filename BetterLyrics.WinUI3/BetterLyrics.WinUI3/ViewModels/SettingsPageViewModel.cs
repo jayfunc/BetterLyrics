@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Controls;
 using System;
 using System.Collections.Generic;
@@ -89,6 +90,14 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsScrollDuration = _settingsService.LyricsScrollDuration;
             TimelineSyncThreshold = _settingsService.TimelineSyncThreshold;
 
+            IsLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
+            ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
+            LockHotKeyIndex = _settingsService.LockHotKeyIndex;
+
+            LXMusicServer = _settingsService.LXMusicServer;
+            DockPlacement = _settingsService.DockPlacement;
+            LyricsBgFontOpacity = _settingsService.LyricsBgFontOpacity;
+
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
             Task.Run(async () =>
@@ -101,6 +110,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial DockPlacement DockPlacement { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LockHotKeyIndex { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -187,6 +204,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
+        public partial int LyricsBgFontOpacity { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         public partial LyricsFontColorType LyricsBgFontColorType { get; set; }
 
         [ObservableProperty]
@@ -224,6 +245,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial object NavViewSelectedItemTag { get; set; }
 
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool ResetPositionOffsetOnSongChanged { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsLyricsFloatAnimationEnabled { get; set; }
+
         public string Version { get; set; } = MetadataHelper.AppVersion;
 
         public string BuildDate { get; set; } = string.Empty;
@@ -257,6 +286,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial int TimelineSyncThreshold { get; set; }
+
+        [ObservableProperty]
+        public partial bool IsLXMusicServerTesting { get; set; } = false;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial string LXMusicServer { get; set; }
 
         public void OnLyricsSearchProvidersReordered()
         {
@@ -399,7 +435,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, null);
                     _dispatcherQueue.TryEnqueue(() =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageLibreTranslateTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
                         IsLibreTranslateServerTesting = false;
                     });
                 }
@@ -407,10 +443,27 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _dispatcherQueue.TryEnqueue(() =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageLibreTranslateTestFailedInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
                         IsLibreTranslateServerTesting = false;
                     });
                 }
+            });
+        }
+
+        [RelayCommand]
+        private void LXMusicServerTest()
+        {
+            IsLXMusicServerTesting = true;
+            Task.Run(async () =>
+            {
+                bool testResult = await NetHelper.CheckConnectivity($"{LXMusicServer}/status");
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    App.Current.SettingsWindowNotificationPanel?.Notify(
+                        App.ResourceLoader!.GetString($"SettingsPageServerTest{(testResult ? "Success" : "Failed")}Info"),
+                        testResult ? InfoBarSeverity.Success : InfoBarSeverity.Error);
+                    IsLXMusicServerTesting = false;
+                });
             });
         }
 
@@ -446,6 +499,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             return result;
         }
 
+        partial void OnDockPlacementChanged(DockPlacement value)
+        {
+            _settingsService.DockPlacement = value;
+        }
         partial void OnLyricsScrollEasingTypeChanged(EasingType value)
         {
             _settingsService.LyricsScrollEasingType = value;
@@ -473,6 +530,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnLibreTranslateServerChanged(string value)
         {
             _settingsService.LibreTranslateServer = value;
+        }
+        partial void OnLXMusicServerChanged(string value)
+        {
+            _settingsService.LXMusicServer = value;
         }
         partial void OnAutoStartWindowTypeChanged(AutoStartWindowType value)
         {
@@ -597,6 +658,17 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _settingsService.TimelineSyncThreshold = value;
         }
-
+        partial void OnIsLyricsFloatAnimationEnabledChanged(bool value)
+        {
+            _settingsService.IsLyricsFloatAnimationEnabled = value;
+        }
+        partial void OnResetPositionOffsetOnSongChangedChanged(bool value)
+        {
+            _settingsService.ResetPositionOffsetOnSongChanged = value;
+        }
+        partial void OnLyricsBgFontOpacityChanged(int value)
+        {
+            _settingsService.LyricsBgFontOpacity = value;
+        }
     }
 }

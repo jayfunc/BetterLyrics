@@ -59,6 +59,7 @@ namespace BetterLyrics.WinUI3
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (lyricsWindow == null) return;
 
+            lyricsWindow.ViewModel.InitLockHotKey();
             lyricsWindow.AutoSelectLyricsMode();
         }
 
@@ -84,6 +85,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILyricsSearchService, LyricsSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
                     .AddSingleton<ITranslateService, TranslateService>()
+                    // Manager
                     // ViewModels
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
