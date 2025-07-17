@@ -71,7 +71,7 @@ namespace BetterLyrics.WinUI3.Models
                 }
                 else
                 {
-                    line.DisplayedText = $"{line.OriginalText}{StringHelper.NewLine}({translationArr[i]})";
+                    line.DisplayedText = $"{line.OriginalText}{StringHelper.NewLine}{translationArr[i]}";
                 }
                 i++;
             }
@@ -83,6 +83,30 @@ namespace BetterLyrics.WinUI3.Models
             {
                 line.DisplayedText = line.OriginalText;
             }
+        }
+
+        public LyricsData CreateLyricsDataFrom(string translation)
+        {
+            var result = new LyricsData(LyricsLines.Select(line => new LyricsLine
+            {
+                StartMs = line.StartMs,
+                EndMs = line.EndMs,
+            }).ToList());
+            List<string> translationArr = translation.Split(StringHelper.NewLine).ToList();
+            int i = 0;
+            foreach (var line in result.LyricsLines)
+            {
+                if (i >= translationArr.Count)
+                {
+                    break;
+                }
+                else
+                {
+                    line.OriginalText = translationArr[i];
+                }
+                i++;
+            }
+            return result;
         }
 
         public static LyricsData GetNotfoundPlaceholder(int durationMs)

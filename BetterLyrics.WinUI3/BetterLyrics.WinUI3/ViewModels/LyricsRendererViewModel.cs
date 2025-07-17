@@ -283,11 +283,21 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                // 没有逐字时间轴，直接线性，模拟逐字高亮
+                // 没有逐字时间轴，均匀分配每个字的高亮时间
+                int textLength = line.OriginalText.Length;
+                if (textLength == 0) return;
+
                 float lineProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
-                charStartIndex = (int)(lineProgress * line.OriginalText.Length);
-                charProgress = lineProgress - (int)(lineProgress);
+                lineProgress = Math.Clamp(lineProgress, 0f, 1f);
+
+                // 计算当前高亮到第几个字
+                float charFloatIndex = lineProgress * textLength;
+                int charIndex = (int)charFloatIndex;
+                charStartIndex = Math.Clamp(charIndex, 0, textLength - 1);
                 charLength = 1;
+
+                // 当前字的进度（0~1）
+                charProgress = charFloatIndex - charIndex;
             }
         }
 
@@ -434,9 +444,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                         token.ThrowIfCancellationRequested();
                         if (_showTranslationOnly)
                         {
-                            // TODO
-                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
-                            _langIndex = 0;
+                            _lyricsDataArr[^1] = _lyricsDataArr[0].CreateLyricsDataFrom(translated);
+                            _lyricsDataArr[^1].SetDisplayedTextInOriginalText();
+                            _langIndex = _lyricsDataArr.Count - 1;
                         }
                         else
                         {

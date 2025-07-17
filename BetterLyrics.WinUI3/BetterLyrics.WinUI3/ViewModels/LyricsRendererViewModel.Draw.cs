@@ -443,7 +443,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                     else
                     {
                         float height = 0f;
-                        var regions = textLayout.GetCharacterRegions(0, string.Join("", line.LyricsChars.Select(x => x.Text)).Length);
+                        //var regions = textLayout.GetCharacterRegions(0, string.Join("", line.LyricsChars.Select(x => x.Text)).Length);
+                        var regions = textLayout.GetCharacterRegions(0, line.OriginalText.Length);
                         if (regions.Length > 0)
                         {
                             height = (float)regions[^1].LayoutBounds.Bottom - (float)regions[0].LayoutBounds.Top;
