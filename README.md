@@ -21,7 +21,7 @@ Your smooth dynamic lyrics display tool built with WinUI 3
 
 ---
 
-
+🎉 This project was featured by SSPAI! Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
 
 ---
 

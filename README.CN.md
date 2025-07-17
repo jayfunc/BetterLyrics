@@ -21,7 +21,7 @@ BetterLyrics
 
 ---
 
-🎉 This project was featured by SSPAI! Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
+🎉 本项目已被少数派精选推荐！欢迎阅读：[BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)
 
 ---
 
