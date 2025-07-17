@@ -123,14 +123,16 @@ namespace BetterLyrics.WinUI3.Services
             RecordMediaSourceProviderInfo(mediaSession);
             if (!IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId) || mediaSession != _mediaManager.GetFocusedSession()) return;
 
+            bool isPlaying = playbackInfo.PlaybackStatus switch
+            {
+                GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => true,
+                _ => false,
+            };
+
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
                 () =>
                 {
-                    IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(playbackInfo.PlaybackStatus switch
-                    {
-                        GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => true,
-                        _ => false,
-                    }));
+                    IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(isPlaying));
                 }
             );
         }
@@ -253,6 +255,8 @@ namespace BetterLyrics.WinUI3.Services
                 token.ThrowIfCancellationRequested();
             }
 
+            bytes = ImageHelper.MakeSquareWithThemeColor(bytes);
+
             using var stream = new InMemoryRandomAccessStream();
             await stream.WriteAsync(bytes.AsBuffer());
             token.ThrowIfCancellationRequested();
@@ -265,8 +269,7 @@ namespace BetterLyrics.WinUI3.Services
 
             _albumArtChangedEventArgs.AlbumArtAccentColor = ImageHelper.GetAccentColorsFromByte(bytes).FirstOrDefault();
 
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-            () =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 AlbumArtChangedChanged?.Invoke(this, _albumArtChangedEventArgs);
             });
