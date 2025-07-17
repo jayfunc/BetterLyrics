@@ -239,8 +239,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (now > lineEndMs)
             {
                 charProgress = 1f;
-                charStartIndex = 0;
-                charLength = line.OriginalText.Length;
+                charStartIndex = line.OriginalText.Length - 1;
+                charLength = 1;
                 return;
             }
 
@@ -283,11 +283,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                // 没有逐字时间轴，直接线性
-                charProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
-                charProgress = Math.Clamp(charProgress, 0f, 1f);
-                charStartIndex = 0;
-                charLength = line.OriginalText.Length;
+                // 没有逐字时间轴，直接线性，模拟逐字高亮
+                float lineProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
+                charStartIndex = (int)(lineProgress * line.OriginalText.Length);
+                charProgress = lineProgress - (int)(lineProgress);
+                charLength = 1;
             }
         }
 

@@ -34,6 +34,7 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
             Title = App.ResourceLoader!.GetString("LyricsPageTitle");
             SetTitleBar(TopCommandGrid);
+            //SetTitleBar(RootGrid);
 
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;

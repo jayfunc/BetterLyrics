@@ -28,6 +28,9 @@ namespace BetterLyrics.WinUI3.Helper
 
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
 
+            UnregisterAppBar(hwnd);
+            RefreshWorkArea();
+
             window.SetWindowStyle(_originalWindowStyle[hwnd]);
             _originalWindowStyle.Remove(hwnd);
 
@@ -44,8 +47,6 @@ namespace BetterLyrics.WinUI3.Helper
                 );
                 _originalPositions.Remove(hwnd);
             }
-
-            UnregisterAppBar(hwnd);
         }
 
         public static void Enable(Window window, int appBarHeight, DockPlacement dockPlacement)
@@ -84,6 +85,8 @@ namespace BetterLyrics.WinUI3.Helper
                 appBarHeight,
                 User32.SetWindowPosFlags.SWP_SHOWWINDOW
             );
+
+            RefreshWorkArea();
         }
 
         private static void RegisterAppBar(IntPtr hwnd, int height, DockPlacement dockPlacement)
@@ -127,7 +130,13 @@ namespace BetterLyrics.WinUI3.Helper
             };
 
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
+            
             _registered.Remove(hwnd);
+        }
+
+        private static void RefreshWorkArea()
+        {
+            User32.SendMessage(HWND.HWND_BROADCAST, User32.WindowMessage.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
         }
 
         public static void UpdateAppBarHeight(IntPtr hwnd, int newHeight, DockPlacement dockPlacement)
@@ -169,6 +178,8 @@ namespace BetterLyrics.WinUI3.Helper
                     newHeight,
                     User32.SetWindowPosFlags.SWP_SHOWWINDOW
                 );
+
+                RefreshWorkArea();
             }, TimeSpan.FromMilliseconds(100));
         }
     }

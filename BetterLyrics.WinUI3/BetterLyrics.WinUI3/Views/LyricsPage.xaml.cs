@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -12,6 +13,8 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class LyricsPage : Page
     {
+        private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        
         public LyricsPage()
         {
             this.InitializeComponent();
@@ -29,16 +32,19 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.LyricsOnly;
+            _settingsService.DisplayType = ViewModel.DisplayType;
         }
 
         private void AlbumArtOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.AlbumArtOnly;
+            _settingsService.DisplayType = ViewModel.DisplayType;
         }
 
         private void SplitViewRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.SplitView;
+            _settingsService.DisplayType = ViewModel.DisplayType;
         }
 
         private void PositionOffsetResetButton_Click(object sender, RoutedEventArgs e)

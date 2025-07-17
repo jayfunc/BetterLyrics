@@ -107,12 +107,26 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
-                    DisplayType = LyricsDisplayType.LyricsOnly;
+                    if (message.NewValue)
+                    {
+                        DisplayType = LyricsDisplayType.LyricsOnly;
+                    }
+                    else
+                    {
+                        DisplayType = _settingsService.DisplayType;
+                    }
                     BottomCommandGridMargin = message.NewValue ? new Thickness(0) : new Thickness(12);
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
-                    DisplayType = LyricsDisplayType.LyricsOnly;
+                    if (message.NewValue)
+                    {
+                        DisplayType = LyricsDisplayType.LyricsOnly;
+                    }
+                    else
+                    {
+                        DisplayType = _settingsService.DisplayType;
+                    }
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsImmersiveMode))
                 {
@@ -149,11 +163,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private async Task NextSongAsync()
         {
             await _playbackService.NextAsync();
-        }
-
-        partial void OnDisplayTypeChanged(LyricsDisplayType value)
-        {
-            _settingsService.DisplayType = value;
         }
 
         partial void OnIsFirstRunChanged(bool value)

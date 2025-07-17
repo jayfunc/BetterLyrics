@@ -301,7 +301,8 @@
     <value>Betterlyrics에 오신 것을 환영합니다</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>왼쪽 버튼을 클릭하여 몰입 형 모드를 활성화하려면 즐기십시오!</value>
+    <value>몰입 형 모드를 활성화하려면 왼쪽 상단 버튼을 클릭하십시오.
+문제가 발생하면 설정 페이지, 탭 정보로 이동하여 FAQ를보고 저자에게 연락하여 피드백을 받으십시오.</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>지금 음악이 재생되지 않습니다</value>
@@ -767,5 +768,8 @@
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>글꼴 불투명 (비 전류 재생 영역)</value>
+  </data>
+  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+    <value>자주 묻는 질문</value>
   </data>
 </root>
