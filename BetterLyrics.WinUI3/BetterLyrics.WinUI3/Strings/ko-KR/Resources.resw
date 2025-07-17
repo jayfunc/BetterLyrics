@@ -301,7 +301,7 @@
     <value>Betterlyrics에 오신 것을 환영합니다</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>더 많은 기능 옵션을 표시하려면 앱의 상단 또는 하단 영역 위로 마우스를 가져옵니다.</value>
+    <value>왼쪽 버튼을 클릭하여 몰입 형 모드를 활성화하려면 즐기십시오!</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>지금 음악이 재생되지 않습니다</value>

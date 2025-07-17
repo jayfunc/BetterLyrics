@@ -175,8 +175,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private LatestOnlyTaskRunner _refreshLyricsRunner = new();
         private LatestOnlyTaskRunner _showTranslationsRunner = new();
 
-        private LyricsDisplayType _displayTypeReceived = LyricsDisplayType.PlaceholderOnly;
-        private LyricsDisplayType _displayType = LyricsDisplayType.PlaceholderOnly;
+        private LyricsDisplayType _displayTypeReceived;
+        private LyricsDisplayType _displayType;
 
         private int _albumArtBgBlurAmount;
         private int _albumArtBgOpacity;

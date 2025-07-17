@@ -301,7 +301,7 @@
     <value>BetterLyrics へようこそ</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>マウスをアプリの上または下部の領域にホバリングして、より多くの機能オプションを表示します</value>
+    <value>左上ボタンをクリックして、没入型モードを有効にしてください。お楽しみください！</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>今は音楽が再生されていません</value>

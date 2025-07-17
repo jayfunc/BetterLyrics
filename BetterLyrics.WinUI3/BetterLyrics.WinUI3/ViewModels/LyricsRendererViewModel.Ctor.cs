@@ -54,6 +54,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _defaultOpacity = _settingsService.LyricsBgFontOpacity / 100f;
 
             _isLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
+            _displayType = _displayTypeReceived = _settingsService.DisplayType;
 
             _libWatcherService.MusicLibraryFilesChanged +=
                 LibWatcherService_MusicLibraryFilesChanged;

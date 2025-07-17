@@ -32,6 +32,20 @@
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.SongInfo, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="{x:Null}">
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.SongInfo, Mode=OneWay}"
+                    ComparisonCondition="NotEqual"
+                    Value="{x:Null}">
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                </interactivity:DataTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
         </Grid>
 
         <!--  Bottom command area  -->
@@ -322,29 +336,6 @@
         <uc:SystemTray />
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="MusicPlayingStates">
-                <VisualState x:Name="MusicPlaying">
-                    <VisualState.StateTriggers>
-                        <ui:IsNotEqualStateTrigger Value="{x:Bind ViewModel.DisplayType, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}" To="3" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="DisplayTypeSwitchButton.Visibility" Value="Visible" />
-                        <Setter Target="NoMusicPlayingGrid.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="NoMusicPlaying">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.DisplayType, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                            To="3" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="DisplayTypeSwitchButton.Visibility" Value="Collapsed" />
-                        <Setter Target="NoMusicPlayingGrid.Opacity" Value="1" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
             <!--<VisualStateGroup x:Name="VolumeState">
                 <VisualState x:Name="Volume0">
                     <VisualState.StateTriggers>

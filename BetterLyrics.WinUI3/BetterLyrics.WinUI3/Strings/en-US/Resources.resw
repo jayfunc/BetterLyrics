@@ -301,7 +301,7 @@
     <value>Welcome to BetterLyrics</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>Hover the mouse over the top or bottom area of ​​the app to display more function options</value>
+    <value>Click on the top-left button to enable immersive mode, enjoy!</value>
   </data>
   <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>No music playing now</value>
