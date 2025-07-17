@@ -93,7 +93,7 @@ BetterLyrics
 
 > **最便捷**的获取方式，提供**无限制**免费试用或购买（免费版与付费版**功能完全一致**，购买视为对开发者的支持）
 
-或通过 Google Drive 获取（链接见[发布页](https://github.com/jayfunc/BetterLyrics/releases/latest)）
+或通过 Google Drive 获取（链接见[发布页](https://github.com/jayfunc/BetterLyrics/releases)）
 
 > 下载的是 ".zip" 压缩包，安装指南请参阅[此文档](How2Install/How2Install.md)
 
