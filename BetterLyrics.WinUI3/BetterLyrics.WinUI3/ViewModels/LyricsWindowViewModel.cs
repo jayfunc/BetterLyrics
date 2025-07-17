@@ -175,7 +175,7 @@ namespace BetterLyrics.WinUI3
             LockHotKey = ((VirtualKey)(hotKeyIndex + (int)VirtualKey.A)).ToString();
         }
 
-        public void StartWatchWindowColorChange(WindowPixelSampleMode mode)
+        public void StartWatchWindowColorChange()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
@@ -189,11 +189,11 @@ namespace BetterLyrics.WinUI3
                     {
                         presenter.IsAlwaysOnTop = true;
                     }
-                    UpdateAccentColor(hwnd, mode);
+                    UpdateAccentColor(hwnd);
                 }
             );
             _windowWatcher.Start();
-            UpdateAccentColor(hwnd, mode);
+            UpdateAccentColor(hwnd);
         }
 
         private void StopWatchWindowColorChange()
@@ -202,8 +202,9 @@ namespace BetterLyrics.WinUI3
             _windowWatcher = null;
         }
 
-        public void UpdateAccentColor(nint hwnd, WindowPixelSampleMode mode)
+        public void UpdateAccentColor(nint hwnd)
         {
+            WindowPixelSampleMode mode = IsDesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
             ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, mode).ToColor();
         }
 
@@ -244,7 +245,7 @@ namespace BetterLyrics.WinUI3
             if (IsDesktopMode)
             {
                 DesktopModeHelper.Enable(window);
-                StartWatchWindowColorChange(WindowPixelSampleMode.WindowEdge);
+                StartWatchWindowColorChange();
             }
             else
             {
@@ -264,7 +265,7 @@ namespace BetterLyrics.WinUI3
             if (IsDockMode)
             {
                 DockModeHelper.Enable(window, Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
-                StartWatchWindowColorChange(WindowPixelSampleMode.BelowWindow);
+                StartWatchWindowColorChange();
             }
             else
             {

@@ -3,6 +3,7 @@
     public enum WindowPixelSampleMode
     {
         BelowWindow,
+        AboveWindow,
         WindowArea,
         WindowEdge,
     }
