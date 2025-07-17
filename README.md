@@ -93,7 +93,7 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
 
 > **Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version, if you like you can purchase to support me)
 
-Or alternatively get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases/latest) page for the link)
+Or alternatively get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
 
