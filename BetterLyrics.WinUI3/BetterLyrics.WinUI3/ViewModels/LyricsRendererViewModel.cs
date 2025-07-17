@@ -195,7 +195,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
             {
-                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines[i];
+                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
                 if (line == null) continue;
                 var nextLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i + 1);
                 var totalMs = _totalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;

@@ -22,11 +22,13 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void Disable(Window window)
         {
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            if (!_registered.Contains(hwnd)) return;
+
             window.SetIsShownInSwitchers(true);
             window.ExtendsContentIntoTitleBar = true;
             window.SetIsAlwaysOnTop(false);
-
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
 
             UnregisterAppBar(hwnd);
             RefreshWorkArea();
@@ -130,7 +132,7 @@ namespace BetterLyrics.WinUI3.Helper
             };
 
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
-            
+
             _registered.Remove(hwnd);
         }
 

@@ -123,7 +123,6 @@ namespace BetterLyrics.WinUI3.Services
 
                         if (fetched != null && fetched.Length > 0)
                         {
-                            fetched = ImageHelper.MakeSquareWithThemeColor(fetched);
                             // Write to cache
                             FileHelper.WriteAlbumArtCache(artist, album, fetched, format, PathHelper.iTunesAlbumArtCacheDirectory);
                             return fetched;
