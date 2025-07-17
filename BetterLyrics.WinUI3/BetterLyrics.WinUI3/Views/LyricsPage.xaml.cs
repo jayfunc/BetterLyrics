@@ -14,7 +14,7 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class LyricsPage : Page
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        
+
         public LyricsPage()
         {
             this.InitializeComponent();
@@ -81,6 +81,18 @@ namespace BetterLyrics.WinUI3.Views
         private void TranslationButton_Click(object sender, RoutedEventArgs e)
         {
             TranslationFlyout.ShowAt(BottomRightCommandStackPanel);
+        }
+
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width < 500)
+            {
+                ViewModel.BottomCenterCommandGridTranslation = new System.Numerics.Vector3(0, -48, 0);
+            }
+            else
+            {
+                ViewModel.BottomCenterCommandGridTranslation = new System.Numerics.Vector3(0, 0, 0);
+            }
         }
     }
 }
