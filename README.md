@@ -21,6 +21,10 @@ Your smooth dynamic lyrics display tool built with WinUI 3
 
 ---
 
+
+
+---
+
 ## Highlighted features
 
 - Dynamic blur album art as background

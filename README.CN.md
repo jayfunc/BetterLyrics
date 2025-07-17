@@ -21,6 +21,10 @@ BetterLyrics
 
 ---
 
+🎉 This project was featured by SSPAI! Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
+
+---
+
 ## 核心特色
 
 - 动态模糊专辑封面背景
