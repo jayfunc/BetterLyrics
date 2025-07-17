@@ -96,6 +96,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             LXMusicServer = _settingsService.LXMusicServer;
             DockPlacement = _settingsService.DockPlacement;
+            LyricsBgFontOpacity = _settingsService.LyricsBgFontOpacity;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
@@ -200,6 +201,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial Color LyricsCustomStrokeFontColor { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsBgFontOpacity { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -660,6 +665,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnResetPositionOffsetOnSongChangedChanged(bool value)
         {
             _settingsService.ResetPositionOffsetOnSongChanged = value;
+        }
+        partial void OnLyricsBgFontOpacityChanged(int value)
+        {
+            _settingsService.LyricsBgFontOpacity = value;
         }
     }
 }

@@ -54,6 +54,8 @@ namespace BetterLyrics.WinUI3.Services
         Color LyricsCustomFgFontColor { get; set; }
         Color LyricsCustomStrokeFontColor { get; set; }
 
+        int LyricsBgFontOpacity { get; set; }
+
         LyricsFontColorType LyricsBgFontColorType { get; set; }
         LyricsFontColorType LyricsFgFontColorType { get; set; }
         LyricsFontColorType LyricsStrokeFontColorType { get; set; }

@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private float _canvasWidth = 0f;
         private float _canvasHeight = 0f;
 
-        private readonly float _defaultOpacity = 0.3f;
+        private float _defaultOpacity;
         private readonly float _highlightedOpacity = 1.0f;
 
         private readonly float _defaultScale = 0.75f;
