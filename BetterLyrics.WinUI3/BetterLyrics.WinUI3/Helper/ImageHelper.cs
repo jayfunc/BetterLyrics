@@ -167,9 +167,11 @@ namespace BetterLyrics.WinUI3.Helper
         public static async Task<byte[]> ToByteArrayAsync(IRandomAccessStreamReference streamRef)
         {
             using IRandomAccessStream stream = await streamRef.OpenReadAsync();
-            using var memoryStream = new MemoryStream();
-            await stream.AsStreamForRead().CopyToAsync(memoryStream);
-            return memoryStream.ToArray();
+            using var reader = new DataReader(stream);
+            await reader.LoadAsync((uint)stream.Size);
+            byte[] buffer = new byte[stream.Size];
+            reader.ReadBytes(buffer);
+            return buffer;
         }
 
         public static float GetAverageLuminance(CanvasBitmap bitmap)

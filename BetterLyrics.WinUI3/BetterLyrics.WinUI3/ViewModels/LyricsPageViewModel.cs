@@ -36,6 +36,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
             _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
+
+            IsSongPlaying = _playbackService.IsPlaying;
         }
 
         //private void SystemVolumeHelper_VolumeChanged(int volume)

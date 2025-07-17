@@ -772,4 +772,7 @@
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>よくある質問</value>
   </data>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>LX Music Serverに接続できない場合は、設定に移動してください。リンクが正しく入力されているかどうかを確認するための高度なオプションに移動してください</value>
+  </data>
 </root>

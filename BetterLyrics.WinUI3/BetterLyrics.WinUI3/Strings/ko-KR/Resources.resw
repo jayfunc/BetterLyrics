@@ -772,4 +772,7 @@
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>자주 묻는 질문</value>
   </data>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>LX Music Server에 연결할 수 없습니다. 설정으로 이동하십시오 - 고급 옵션이 링크가 올바르게 입력되었는지 확인하십시오.</value>
+  </data>
 </root>

@@ -772,4 +772,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>Frequently asked questions</value>
   </data>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>Unable to connect to LX Music server, please go to Settings - Advanced options to check if the link is entered correctly</value>
+  </data>
 </root>
