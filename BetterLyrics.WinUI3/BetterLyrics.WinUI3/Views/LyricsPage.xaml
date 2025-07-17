@@ -18,7 +18,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
 
@@ -140,14 +140,15 @@
             <Grid
                 Padding="3"
                 HorizontalAlignment="Center"
-                Style="{StaticResource CardGridStyle}">
+                Style="{StaticResource CardGridStyle}"
+                Translation="{x:Bind ViewModel.BottomCenterCommandGridTranslation, Mode=OneWay}">
+                <Grid.TranslationTransition>
+                    <Vector3Transition />
+                </Grid.TranslationTransition>
                 <StackPanel
                     x:Name="BottomCenterCommandStackPanel"
                     Orientation="Horizontal"
                     Spacing="3">
-                    <StackPanel.OpacityTransition>
-                        <ScalarTransition />
-                    </StackPanel.OpacityTransition>
                     <Button
                         Command="{x:Bind ViewModel.PreviousSongCommand}"
                         Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},

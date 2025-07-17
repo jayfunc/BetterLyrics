@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -61,6 +62,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         //[ObservableProperty]
         //public partial int Volume { get; set; }
+
+        [ObservableProperty]
+        public partial Vector3 BottomCenterCommandGridTranslation { get; set; } = new Vector3(0, 0, 0);
 
         [ObservableProperty]
         public partial bool IsImmersiveMode { get; set; }
