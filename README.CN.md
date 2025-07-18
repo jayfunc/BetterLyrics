@@ -93,7 +93,6 @@ BetterLyrics
 - QQ音乐
 - PotPlayer
 - 媒体播放器（系统自带）
-- PotPlayer
 - LX 音乐
 
 ## 立即下载体验

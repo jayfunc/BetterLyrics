@@ -91,7 +91,6 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
 - QQ Music
 - PotPlayer
 - Media Player (System)
-- PotPlayer
 - LX Music
 
 ## Try it now
