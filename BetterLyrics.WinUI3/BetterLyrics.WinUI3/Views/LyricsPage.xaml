@@ -205,14 +205,15 @@
             <Grid
                 Padding="3"
                 HorizontalAlignment="Right"
-                Style="{StaticResource CardGridStyle}">
+                Style="{StaticResource CardGridStyle}"
+                Translation="{x:Bind ViewModel.BottomRightCommandGridTranslation, Mode=OneWay}">
+                <Grid.TranslationTransition>
+                    <Vector3Transition />
+                </Grid.TranslationTransition>
                 <StackPanel
                     x:Name="BottomRightCommandStackPanel"
                     Orientation="Horizontal"
                     Spacing="3">
-                    <StackPanel.OpacityTransition>
-                        <ScalarTransition />
-                    </StackPanel.OpacityTransition>
 
                     <!--  Position offset  -->
                     <Button Click="TimelineOffsetButton_Click" Style="{StaticResource GhostButtonStyle}">

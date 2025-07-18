@@ -33,17 +33,16 @@ namespace BetterLyrics.WinUI3
     {
         private ForegroundWindowWatcher? _windowWatcher = null;
         private bool _ignoreFullscreenWindow = false;
-        private int _dockWindowMinHeight = 96;
 
         private DockPlacement _dockPlacement;
-        private int _lyricsFontSize;
+        private int _dockWindowHeight;
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
             _ignoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
             _dockPlacement = _settingsService.DockPlacement;
-            _lyricsFontSize = _settingsService.LyricsFontSize;
+            _dockWindowHeight = _settingsService.DockWindowHeight;
             OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
         }
 
@@ -88,7 +87,7 @@ namespace BetterLyrics.WinUI3
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
+            DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), _dockWindowHeight, _dockPlacement);
         }
 
         partial void OnIsImmersiveModeChanged(bool value)
@@ -139,9 +138,9 @@ namespace BetterLyrics.WinUI3
         {
             if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
+                if (message.PropertyName == nameof(SettingsPageViewModel.DockWindowHeight))
                 {
-                    _lyricsFontSize = message.NewValue;
+                    _dockWindowHeight = message.NewValue;
                     UpdateDockWindow();
                 }
                 else if (message.Sender is SettingsPageViewModel)
@@ -264,7 +263,7 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
-                DockModeHelper.Enable(window, Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
+                DockModeHelper.Enable(window, _dockWindowHeight, _dockPlacement);
                 StartWatchWindowColorChange();
             }
             else

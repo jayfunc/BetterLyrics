@@ -83,6 +83,9 @@ BetterLyrics
 
 ## 已测试的音乐播放器
 
+- 网易云音乐
+  - 请先安装 [BetterNCM 插件](https://microblock.cc/betterncm) 安装完成后如若弹出降级指引，请根据指引完成网易云音乐的降级操作（降级至 2.10.13）；
+  - 之后请在 PluginMarket 内安装 InfLink 插件，安装完成后请重启网易云音乐。至此，所有预备操作均已完成，尽情享用吧！
 - 酷狗音乐
   - 不会广播时间线信息，这意味着当您在酷狗音乐中更改播放进度时，BetterLyrics无法检测到此更改。
 - Apple Music

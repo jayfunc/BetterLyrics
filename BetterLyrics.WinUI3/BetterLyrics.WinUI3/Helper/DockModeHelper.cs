@@ -74,6 +74,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             RegisterAppBar(hwnd, appBarHeight, dockPlacement);
+            RefreshWorkArea();
 
             int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
             int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
@@ -87,8 +88,6 @@ namespace BetterLyrics.WinUI3.Helper
                 appBarHeight,
                 User32.SetWindowPosFlags.SWP_SHOWWINDOW
             );
-
-            RefreshWorkArea();
         }
 
         private static void RegisterAppBar(IntPtr hwnd, int height, DockPlacement dockPlacement)
@@ -168,6 +167,7 @@ namespace BetterLyrics.WinUI3.Helper
                 };
 
                 Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
+                RefreshWorkArea();
 
                 // 同步窗口实际高度和位置
                 int y = dockPlacement == DockPlacement.Top ? 0 : screenHeight - newHeight;
@@ -180,8 +180,6 @@ namespace BetterLyrics.WinUI3.Helper
                     newHeight,
                     User32.SetWindowPosFlags.SWP_SHOWWINDOW
                 );
-
-                RefreshWorkArea();
             }, TimeSpan.FromMilliseconds(100));
         }
     }
