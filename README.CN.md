@@ -97,6 +97,10 @@ BetterLyrics
 - PotPlayer
 - 媒体播放器（系统自带）
 - LX 音乐
+  - 请确保您已在 LX 音乐设置页面启用“开放 API”
+  - 然后打开 BetterLyrics，进入设置，点击“高级选项”，输入您的 LX 音乐服务器地址（例如 http://127.0.0.1:23330）即可
+- MusicBee
+  - 使用前请安装 https://github.com/HenryPDT/mb_MediaControl
 
 ## 立即下载体验
 
