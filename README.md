@@ -79,6 +79,21 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https://www.bilibili.com/video/BV1zjGjzfEXh).
 
+## Tested music player
+
+- Kugou Music
+  - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change. 
+- Apple Music
+  - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
+- foobar2000
+  - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
+- Spofity
+- QQ Music
+- PotPlayer
+- Media Player (System)
+- PotPlayer
+- LX Music
+
 ## Try it now
 
 ### Microsoft Store
@@ -98,19 +113,6 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
 Wanna try the **latest** version? get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
-
-## Tested music player
-
-- Kugou Music
-  - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change. 
-- Apple Music
-  - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
-- foobar2000
-  - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
-- Spofity
-- QQ Music
-- PotPlayer
-- Media Player (System)
 
 ## Many thanks to
 

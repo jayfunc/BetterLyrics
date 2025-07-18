@@ -81,6 +81,21 @@ BetterLyrics
 
 观看我们的介绍视频（2025年7月7日上传）：[B站链接](https://www.bilibili.com/video/BV1zjGjzfEXh)
 
+## 已测试的音乐播放器
+
+- 酷狗音乐
+  - 不会广播时间线信息，这意味着当您在酷狗音乐中更改播放进度时，BetterLyrics无法检测到此更改。
+- Apple Music
+  - 确保您在设置中将时间线阈值设置为约600毫秒（进入"设置"-"高级选项"进行更改），否则歌词会不断前后跳动。
+- foobar2000
+  - 确保您安装了 https://github.com/dumbie/foo_mediacontrol 插件
+- Spotify
+- QQ音乐
+- PotPlayer
+- 媒体播放器（系统自带）
+- PotPlayer
+- LX 音乐
+
 ## 立即下载体验
 
 ### Microsoft Store
@@ -100,19 +115,6 @@ BetterLyrics
 想要体验**最新**版本？从Google Drive获取（请查看[发布页面](https://github.com/jayfunc/BetterLyrics/releases)获取链接）
 
 > 请注意您下载的是".zip"文件，安装指南请参考[此文档](How2Install/How2Install.md)。
-
-## 已测试的音乐播放器
-
-- 酷狗音乐
-  - 不会广播时间线信息，这意味着当您在酷狗音乐中更改播放进度时，BetterLyrics无法检测到此更改。
-- Apple Music
-  - 确保您在设置中将时间线阈值设置为约600毫秒（进入"设置"-"高级选项"进行更改），否则歌词会不断前后跳动。
-- foobar2000
-  - 确保您安装了 https://github.com/dumbie/foo_mediacontrol 插件
-- Spotify
-- QQ音乐
-- PotPlayer
-- 媒体播放器（系统自带）
 
 ## 特别感谢
 
