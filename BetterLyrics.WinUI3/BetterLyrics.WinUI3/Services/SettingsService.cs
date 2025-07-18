@@ -96,6 +96,8 @@ namespace BetterLyrics.WinUI3.Services
         private const string LockHotKeyIndexKey = "LockHotKeyIndex";
         private const string DockPlacementKey = "DockPlacement";
         private const string LyricsBgFontOpacityKey = "LyricsBgFontOpacity";
+        private const string HideWindowWhenNotPlayingKey = "HideWindowWhenNotPlaying";
+        private const string DockWindowHeightKey = "DockWindowHeight";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -221,6 +223,20 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LockHotKeyIndexKey, 'U' - 'A');
             SetDefault(DockPlacementKey, (int)DockPlacement.Top);
             SetDefault(LyricsBgFontOpacityKey, 30); // 30%
+            SetDefault(HideWindowWhenNotPlayingKey, false);
+            SetDefault(DockWindowHeightKey, 64); // 64px
+        }
+
+        public bool HideWindowWhenNotPlaying
+        {
+            get => GetValue<bool>(HideWindowWhenNotPlayingKey);
+            set => SetValue(HideWindowWhenNotPlayingKey, value);
+        }
+
+        public int DockWindowHeight
+        {
+            get => GetValue<int>(DockWindowHeightKey);
+            set => SetValue(DockWindowHeightKey, value);
         }
 
         public int LyricsBgFontOpacity

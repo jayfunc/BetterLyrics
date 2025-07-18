@@ -775,4 +775,13 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>LX Music Server에 연결할 수 없습니다. 설정으로 이동하십시오 - 고급 옵션이 링크가 올바르게 입력되었는지 확인하십시오.</value>
   </data>
+  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>자동 가죽 창</value>
+  </data>
+  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>도크 모드 또는 데스크탑 모드에서 재생되지 않을 때는 창을 자동으로 숨기고 있습니다.</value>
+  </data>
+  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>창 높이</value>
+  </data>
 </root>

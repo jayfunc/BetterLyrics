@@ -96,5 +96,7 @@ namespace BetterLyrics.WinUI3.Services
         bool IsImmersiveMode { get; set; }
         string LXMusicServer { get; set; }
         DockPlacement DockPlacement { get; set; }
+        bool HideWindowWhenNotPlaying { get; set; }
+        int DockWindowHeight { get; set; }
     }
 }

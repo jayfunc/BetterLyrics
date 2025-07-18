@@ -193,12 +193,14 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int GetCurrentPlayingLineIndex()
         {
+            var totalMs = _totalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
+            if (totalMs < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.FirstOrDefault()?.StartMs) return 0;
+
             for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
             {
                 var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
                 if (line == null) continue;
                 var nextLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i + 1);
-                var totalMs = _totalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
                 if (nextLine != null && line.StartMs <= totalMs && totalMs < nextLine.StartMs)
                 {
                     return i;
@@ -530,6 +532,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 foreach (var data in translationData)
                 {
                     data.LyricsLines = data.LyricsLines.Where(line => !string.IsNullOrWhiteSpace(line.OriginalText)).ToList();
+                    foreach (var item in data.LyricsLines)
+                    {
+                        if (item.OriginalText == "//") item.OriginalText = "";
+                    }
                 }
                 _lyricsDataArr = _lyricsDataArr.Concat(translationData).ToList();
             }

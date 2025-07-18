@@ -775,4 +775,13 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>LX Music Serverに接続できない場合は、設定に移動してください。リンクが正しく入力されているかどうかを確認するための高度なオプションに移動してください</value>
   </data>
+  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>自動ハイドウィンドウ</value>
+  </data>
+  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>ドックモードやデスクトップモードで再生されている曲がないときにウィンドウを自動的に非表示にする</value>
+  </data>
+  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>窓の高さ</value>
+  </data>
 </root>

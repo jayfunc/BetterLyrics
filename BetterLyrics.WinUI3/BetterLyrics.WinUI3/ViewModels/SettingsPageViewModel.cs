@@ -97,6 +97,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             LXMusicServer = _settingsService.LXMusicServer;
             DockPlacement = _settingsService.DockPlacement;
             LyricsBgFontOpacity = _settingsService.LyricsBgFontOpacity;
+            HideWindowWhenNotPlaying = _settingsService.HideWindowWhenNotPlaying;
+            DockWindowHeight = _settingsService.DockWindowHeight;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
@@ -293,6 +295,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial string LXMusicServer { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool HideWindowWhenNotPlaying { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int DockWindowHeight { get; set; }
 
         public void OnLyricsSearchProvidersReordered()
         {
@@ -669,6 +679,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnLyricsBgFontOpacityChanged(int value)
         {
             _settingsService.LyricsBgFontOpacity = value;
+        }
+        partial void OnHideWindowWhenNotPlayingChanged(bool value)
+        {
+            _settingsService.HideWindowWhenNotPlaying = value;
+        }
+        partial void OnDockWindowHeightChanged(int value)
+        {
+            _settingsService.DockWindowHeight = value;
         }
     }
 }

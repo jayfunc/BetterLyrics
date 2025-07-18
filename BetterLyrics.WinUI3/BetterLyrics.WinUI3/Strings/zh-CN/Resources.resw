@@ -775,4 +775,13 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>无法连接到 LX 音乐服务器，请转到设置 - 高级选项以检查是否正确输入链接</value>
   </data>
+  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>自动隐藏窗口</value>
+  </data>
+  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>停靠模式或桌面模式下，无歌曲正在播放时，自动隐藏窗口</value>
+  </data>
+  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>窗口高度</value>
+  </data>
 </root>
