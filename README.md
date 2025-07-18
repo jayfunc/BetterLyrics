@@ -1,6 +1,6 @@
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md">_**点此处查看中文说明**_</a>
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md">_**🌐点此处查看中文说明**_</a>
 
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**Click here to view frequently asked questions (FAQ)**_</a>
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓Click here to view frequently asked questions (FAQ)**_</a>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
@@ -9,21 +9,17 @@
 <h2 align="center">
 BetterLyrics
 </h2>
-
-<h3 align="center">
+<h4 align="center">
 Your smooth dynamic lyrics display tool built with WinUI 3
 </h3>
 
----
+## 🎉 This project was featured by SSPAI!
+Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
+
+## Feedback and chat group
 
 - [「BetterLyrics」反馈交流群（简体中文）](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) on QQ
 - [「BetterLyrics」Feedback Chat Group (Traditional Chinese / English)](https://discord.gg/5yAQPnyCKv) on Discord
-
----
-
-🎉 This project was featured by SSPAI! Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
-
----
 
 ## Highlighted features
 
@@ -85,21 +81,23 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
 
 ## Try it now
 
-- Stable version
+### Microsoft Store
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-> **Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version, if you like you can purchase to support me)
+**Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version)
 
-Or alternatively get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
+☕ If you find it helpful, please consider purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
+
+> Please note that the version in Microsoft Store may not be the latest.
+
+### Google Drive
+
+Wanna try the **latest** version? get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
-
-- Latest dev version
-
-You can `git clone` this project and build it yourself.
 
 ## Tested music player
 
