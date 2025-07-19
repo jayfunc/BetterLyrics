@@ -120,7 +120,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
         public partial bool IsDragEverywhereEnabled { get; set; }
 
         [ObservableProperty]
@@ -722,6 +721,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnIsDragEverywhereEnabledChanged(bool value)
         {
             _settingsService.IsDragEverywhereEnabled = value;
+
+            LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (lyricsWindow != null)
+            {
+                lyricsWindow.UpdateTitleBarArea();
+            }
         }
     }
 }

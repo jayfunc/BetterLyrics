@@ -142,6 +142,10 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.HideWindowWhenNotPlaying, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageGlobalDrag" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C2;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsDragEverywhereEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
                                 <!--  Desktop mode  -->
 
                                 <TextBlock x:Uid="SettingsPageAppDesktop" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />

@@ -787,4 +787,10 @@
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
     <value>歌词字体</value>
   </data>
+  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
+    <value>全局拖拽</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
+    <value>将标题栏扩展至整个页面使得在任意非交互区域均可拖拽窗口</value>
+  </data>
 </root>
