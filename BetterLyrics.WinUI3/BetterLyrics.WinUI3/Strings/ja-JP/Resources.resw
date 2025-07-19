@@ -787,4 +787,10 @@
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
     <value>歌詞フォントファミリー</value>
   </data>
+  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
+    <value>グローバルドラッグ</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
+    <value>タイトルバーをページ全体に拡張して、ウィンドウを非対話領域でドラッグできるようにします</value>
+  </data>
 </root>

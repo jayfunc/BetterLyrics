@@ -33,11 +33,23 @@ namespace BetterLyrics.WinUI3.Views
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
             Title = App.ResourceLoader!.GetString("LyricsPageTitle");
-            SetTitleBar(TopCommandGrid);
-            //SetTitleBar(RootGrid);
+
+            UpdateTitleBarArea();
 
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
+        }
+
+        public void UpdateTitleBarArea()
+        {
+            if (_settingsService.IsDragEverywhereEnabled)
+            {
+                SetTitleBar(RootGrid);
+            }
+            else
+            {
+                SetTitleBar(TopCommandGrid);
+            }
         }
 
         private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)

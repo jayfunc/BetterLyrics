@@ -787,4 +787,10 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
     <value>Lyrics font family</value>
   </data>
+  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
+    <value>Global drag</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
+    <value>Extend the title bar to the entire page so that the window can be dragged in any non-interactive area</value>
+  </data>
 </root>
