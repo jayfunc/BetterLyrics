@@ -101,6 +101,8 @@ BetterLyrics
   - 然后打开 BetterLyrics，进入设置，点击“高级选项”，输入您的 LX 音乐服务器地址（例如 http://127.0.0.1:23330）即可
 - MusicBee
   - 使用前请安装 https://github.com/HenryPDT/mb_MediaControl
+- iTunes
+  - 请安装 https://github.com/thewizrd/iTunes-SMTC
 
 ## 立即下载体验
 
