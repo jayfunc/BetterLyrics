@@ -100,5 +100,6 @@ namespace BetterLyrics.WinUI3.Services
         int DockWindowHeight { get; set; }
         int SelectedFontFamilyIndex { get; set; }
         string LyricsFontFamily { get; set; }
+        bool IsDragEverywhereEnabled { get; set; }
     }
 }

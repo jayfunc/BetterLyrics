@@ -183,7 +183,7 @@ namespace BetterLyrics.WinUI3.Helper
                     y,
                     User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
                     newHeight,
-                    User32.SetWindowPosFlags.SWP_SHOWWINDOW
+                    newHeight == 0 ? User32.SetWindowPosFlags.SWP_HIDEWINDOW : User32.SetWindowPosFlags.SWP_SHOWWINDOW
                 );
             }, TimeSpan.FromMilliseconds(100));
         }

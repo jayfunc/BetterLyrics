@@ -101,6 +101,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private const string SelectedFontFamilyIndexKey = "SelectedFontFamilyIndex";
         private const string LyricsFontFamilyKey = "LyricsFontFamily";
+        private const string IsDragEverywhereEnabledKey = "IsDragEverywhereEnabled";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -230,6 +231,13 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(DockWindowHeightKey, 64); // 64px
             SetDefault(SelectedFontFamilyIndexKey, 0);
             SetDefault(LyricsFontFamilyKey, FontHelper.SystemFontFamilies.ElementAtOrDefault(0));
+            SetDefault(IsDragEverywhereEnabledKey, true);
+        }
+
+        public bool IsDragEverywhereEnabled
+        {
+            get => GetValue<bool>(IsDragEverywhereEnabledKey);
+            set => SetValue(IsDragEverywhereEnabledKey, value);
         }
 
         public string LyricsFontFamily

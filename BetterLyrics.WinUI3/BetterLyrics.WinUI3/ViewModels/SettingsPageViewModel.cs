@@ -104,6 +104,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             SystemFontNames = [.. FontHelper.SystemFontFamilies];
             SelectedFontFamilyIndex = _settingsService.SelectedFontFamilyIndex;
             LyricsFontFamily = _settingsService.LyricsFontFamily;
+            IsDragEverywhereEnabled = _settingsService.IsDragEverywhereEnabled;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
@@ -117,6 +118,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsDragEverywhereEnabled { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -713,6 +718,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnLyricsFontFamilyChanged(string value)
         {
             _settingsService.LyricsFontFamily = value;
+        }
+        partial void OnIsDragEverywhereEnabledChanged(bool value)
+        {
+            _settingsService.IsDragEverywhereEnabled = value;
         }
     }
 }
