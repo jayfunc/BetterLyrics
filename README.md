@@ -99,6 +99,8 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
   - Then open BetterLyrics, go to settings, go to "Advanced options", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
 - MusicBee
   - Please install https://github.com/HenryPDT/mb_MediaControl before using
+- iTunes
+  - Please install https://github.com/thewizrd/iTunes-SMTC before using
 
 ## Try it now
 
