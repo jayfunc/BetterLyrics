@@ -15,7 +15,10 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class LyricsPageViewModel : BaseViewModel, IRecipient<PropertyChangedMessage<bool>>
+    public partial class LyricsPageViewModel : BaseViewModel, 
+        IRecipient<PropertyChangedMessage<bool>>, 
+        IRecipient<PropertyChangedMessage<int>>,
+        IRecipient<PropertyChangedMessage<string>>
     {
         private readonly IPlaybackService _playbackService;
 
@@ -28,6 +31,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             PositionOffset = _settingsService.PositionOffset;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
             ShowTranslationOnly = _settingsService.ShowTranslationOnly;
+            LyricsFontSize = _settingsService.LyricsFontSize;
+            LyricsFontFamily = _settingsService.LyricsFontFamily;
 
             OnIsImmersiveModeChanged(IsImmersiveMode);
 
@@ -62,6 +67,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         //[ObservableProperty]
         //public partial int Volume { get; set; }
+
+        [ObservableProperty]
+        public partial string LyricsFontFamily { get; set; }
+
+        [ObservableProperty]
+        public partial int LyricsFontSize { get; set; }
 
         [ObservableProperty]
         public partial Vector3 BottomRightCommandGridTranslation { get; set; } = new Vector3(0, 0, 0);
@@ -124,7 +135,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         DisplayType = _settingsService.DisplayType;
                     }
-                    BottomCommandGridMargin = message.NewValue ? new Thickness(0) : new Thickness(12);
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
@@ -205,6 +215,28 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnShowTranslationOnlyChanged(bool value)
         {
             _settingsService.ShowTranslationOnly = value;
+        }
+
+        public void Receive(PropertyChangedMessage<int> message)
+        {
+            if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
+                {
+                    LyricsFontSize = message.NewValue;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<string> message)
+        {
+            if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontFamily))
+                {
+                    LyricsFontFamily = message.NewValue;
+                }
+            }
         }
 
         //partial void OnVolumeChanged(int value)

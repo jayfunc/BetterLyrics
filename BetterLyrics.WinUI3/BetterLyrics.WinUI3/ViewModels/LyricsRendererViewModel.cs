@@ -413,7 +413,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _logger.LogInformation("Showing translation for lyrics...");
             string targetLangCode = LanguageHelper.GetUserTargetLanguageCode();
-            string originalText = _lyricsDataArr[0].WrappedOriginalText;
+            string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
+            if (originalText == null) return;
+
             string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
 
             if (originalLangCode == targetLangCode)

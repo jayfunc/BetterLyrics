@@ -187,7 +187,7 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageDockWindowHeight">
+                                <controls:SettingsCard x:Uid="SettingsPageDockWindowHeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED5E;}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
                                         <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.DockWindowHeight, Mode=OneWay}" />
@@ -197,7 +197,7 @@
                                             Text=" px" />
                                         <Slider
                                             Maximum="200"
-                                            Minimum="40"
+                                            Minimum="64"
                                             SnapsTo="Ticks"
                                             StepFrequency="1"
                                             TickFrequency="1"
@@ -504,6 +504,16 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
+                                    <ComboBox ItemsSource="{x:Bind ViewModel.SystemFontNames, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.SelectedFontFamilyIndex, Mode=TwoWay}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </controls:SettingsCard>
 

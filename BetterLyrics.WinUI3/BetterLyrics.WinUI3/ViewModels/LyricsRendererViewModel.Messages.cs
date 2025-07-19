@@ -12,6 +12,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsRendererViewModel
         : IRecipient<PropertyChangedMessage<int>>,
+            IRecipient<PropertyChangedMessage<string>>,
             IRecipient<PropertyChangedMessage<float>>,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<Color>>,
@@ -317,6 +318,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsScrollEasingType))
                 {
                     _canvasYScrollTransition.SetEasingType(message.NewValue);
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<string> message)
+        {
+            if (message.Sender is SettingsPageViewModel)
+            {
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontFamily))
+                {
+                    _lyricsTextFormat.FontFamily = _artistTextFormat.FontFamily = _titleTextFormat.FontFamily = message.NewValue;
+                    _isLayoutChanged = true;
                 }
             }
         }

@@ -28,7 +28,8 @@
                 x:Uid="MainPageNoMusicPlaying"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Style="{StaticResource TitleTextBlockStyle}" />
+                FontFamily="{x:Bind ViewModel.LyricsFontFamily, Mode=OneWay}"
+                FontSize="{x:Bind ViewModel.LyricsFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>

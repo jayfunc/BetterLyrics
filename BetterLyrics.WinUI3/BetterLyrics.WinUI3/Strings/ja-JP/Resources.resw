@@ -784,4 +784,7 @@
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>窓の高さ</value>
   </data>
+  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>歌詞フォントファミリー</value>
+  </data>
 </root>
