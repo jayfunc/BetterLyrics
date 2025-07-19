@@ -104,19 +104,19 @@ namespace BetterLyrics.WinUI3
             {
                 if (_hideWindowWhenNotPlaying && _playbackService.SongInfo == null)
                 {
-                    window.Hide();
                     if (IsDockMode)
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, 0, _dockPlacement);
                     }
+                    window.Hide();
                 }
                 else
                 {
-                    window.Show();
                     if (IsDockMode)
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockWindowHeight, _dockPlacement);
                     }
+                    window.Show();
                 }
             }
         }
@@ -126,7 +126,10 @@ namespace BetterLyrics.WinUI3
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), _dockWindowHeight, _dockPlacement);
+            if (!_hideWindowWhenNotPlaying || _playbackService.SongInfo != null)
+            {
+                DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), _dockWindowHeight, _dockPlacement);
+            }
         }
 
         partial void OnIsImmersiveModeChanged(bool value)

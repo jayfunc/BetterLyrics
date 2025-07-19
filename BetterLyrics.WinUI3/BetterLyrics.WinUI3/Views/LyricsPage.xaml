@@ -46,6 +46,18 @@
                     Value="{x:Null}">
                     <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
                 </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{Binding ElementName=RootGrid, Path=ActualHeight, Mode=OneWay}"
+                    ComparisonCondition="LessThanOrEqual"
+                    Value="1">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{Binding ElementName=RootGrid, Path=ActualHeight, Mode=OneWay}"
+                    ComparisonCondition="GreaterThan"
+                    Value="1">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                </interactivity:DataTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </Grid>
 
@@ -146,6 +158,25 @@
                 <Grid.TranslationTransition>
                     <Vector3Transition />
                 </Grid.TranslationTransition>
+                <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
+                    <Grid.OpacityTransition>
+                        <ScalarTransition />
+                    </Grid.OpacityTransition>
+                    <interactivity:Interaction.Behaviors>
+                        <interactivity:DataTriggerBehavior
+                            Binding="{x:Bind ViewModel.BottomCommandGridMargin.Bottom, Mode=OneWay}"
+                            ComparisonCondition="Equal"
+                            Value="0">
+                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                        </interactivity:DataTriggerBehavior>
+                        <interactivity:DataTriggerBehavior
+                            Binding="{x:Bind ViewModel.BottomCommandGridMargin.Bottom, Mode=OneWay}"
+                            ComparisonCondition="NotEqual"
+                            Value="0">
+                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                        </interactivity:DataTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </Grid>
                 <StackPanel
                     x:Name="BottomCenterCommandStackPanel"
                     Orientation="Horizontal"
