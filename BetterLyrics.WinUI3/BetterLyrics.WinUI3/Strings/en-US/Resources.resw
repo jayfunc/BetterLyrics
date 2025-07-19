@@ -784,4 +784,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>Window height</value>
   </data>
+  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>Lyrics font family</value>
+  </data>
 </root>

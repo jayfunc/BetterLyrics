@@ -26,6 +26,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _lyricsTextFormat.FontWeight = _settingsService.LyricsFontWeight.ToFontWeight();
 
+            _lyricsTextFormat.FontFamily = _artistTextFormat.FontFamily = _titleTextFormat.FontFamily = _settingsService.LyricsFontFamily;
+
             _lyricsAlignmentType = _settingsService.LyricsAlignmentType;
             _lyricsVerticalEdgeOpacity = _settingsService.LyricsVerticalEdgeOpacity;
             _lyricsLineSpacingFactor = _settingsService.LyricsLineSpacingFactor;

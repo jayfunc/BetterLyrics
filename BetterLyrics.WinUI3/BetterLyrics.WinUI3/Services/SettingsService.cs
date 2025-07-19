@@ -99,6 +99,9 @@ namespace BetterLyrics.WinUI3.Services
         private const string HideWindowWhenNotPlayingKey = "HideWindowWhenNotPlaying";
         private const string DockWindowHeightKey = "DockWindowHeight";
 
+        private const string SelectedFontFamilyIndexKey = "SelectedFontFamilyIndex";
+        private const string LyricsFontFamilyKey = "LyricsFontFamily";
+
         private readonly ApplicationDataContainer _localSettings;
 
         public SettingsService()
@@ -225,6 +228,20 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsBgFontOpacityKey, 30); // 30%
             SetDefault(HideWindowWhenNotPlayingKey, false);
             SetDefault(DockWindowHeightKey, 64); // 64px
+            SetDefault(SelectedFontFamilyIndexKey, 0);
+            SetDefault(LyricsFontFamilyKey, FontHelper.SystemFontFamilies.ElementAtOrDefault(0));
+        }
+
+        public string LyricsFontFamily
+        {
+            get => GetValue<string>(LyricsFontFamilyKey)!;
+            set => SetValue(LyricsFontFamilyKey, value);
+        }
+
+        public int SelectedFontFamilyIndex
+        {
+            get => GetValue<int>(SelectedFontFamilyIndexKey);
+            set => SetValue(SelectedFontFamilyIndexKey, value);
         }
 
         public bool HideWindowWhenNotPlaying

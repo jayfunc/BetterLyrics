@@ -64,6 +64,7 @@ namespace BetterLyrics.WinUI3.Services
         }
 
         public bool IsPlaying => _cachedIsPlaying;
+        public SongInfo? SongInfo => _cachedSongInfo;
 
         private bool IsMediaSourceEnabled(string id)
         {

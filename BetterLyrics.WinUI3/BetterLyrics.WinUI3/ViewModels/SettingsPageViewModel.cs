@@ -8,6 +8,7 @@ using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Controls;
@@ -100,6 +101,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             HideWindowWhenNotPlaying = _settingsService.HideWindowWhenNotPlaying;
             DockWindowHeight = _settingsService.DockWindowHeight;
 
+            SystemFontNames = [.. FontHelper.SystemFontFamilies];
+            SelectedFontFamilyIndex = _settingsService.SelectedFontFamilyIndex;
+            LyricsFontFamily = _settingsService.LyricsFontFamily;
+
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
             Task.Run(async () =>
@@ -112,6 +117,18 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial string LyricsFontFamily { get; set; }
+
+
+        [ObservableProperty]
+        public partial ObservableCollection<string> SystemFontNames { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int SelectedFontFamilyIndex { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -687,6 +704,15 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnDockWindowHeightChanged(int value)
         {
             _settingsService.DockWindowHeight = value;
+        }
+        partial void OnSelectedFontFamilyIndexChanged(int value)
+        {
+            _settingsService.SelectedFontFamilyIndex = value;
+            LyricsFontFamily = SystemFontNames[value];
+        }
+        partial void OnLyricsFontFamilyChanged(string value)
+        {
+            _settingsService.LyricsFontFamily = value;
         }
     }
 }

@@ -63,6 +63,7 @@
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
 		<PackageReference Include="Vanara.PInvoke.CoreAudio" Version="4.1.6" />
+		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.1.6" />
 		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.1.6" />
 		<PackageReference Include="Vanara.PInvoke.Shell32" Version="4.1.6" />
 		<PackageReference Include="Vanara.PInvoke.User32" Version="4.1.6" />

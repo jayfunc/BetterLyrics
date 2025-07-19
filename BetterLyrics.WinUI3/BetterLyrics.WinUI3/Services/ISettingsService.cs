@@ -98,5 +98,7 @@ namespace BetterLyrics.WinUI3.Services
         DockPlacement DockPlacement { get; set; }
         bool HideWindowWhenNotPlaying { get; set; }
         int DockWindowHeight { get; set; }
+        int SelectedFontFamilyIndex { get; set; }
+        string LyricsFontFamily { get; set; }
     }
 }
