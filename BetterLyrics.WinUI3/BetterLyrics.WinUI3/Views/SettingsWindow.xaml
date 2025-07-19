@@ -12,8 +12,6 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
-        <local:SettingsPage />
-    </Grid>
+    <local:SettingsPage />
 
 </Window>

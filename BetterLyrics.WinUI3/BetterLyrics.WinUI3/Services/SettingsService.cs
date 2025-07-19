@@ -96,6 +96,12 @@ namespace BetterLyrics.WinUI3.Services
         private const string LockHotKeyIndexKey = "LockHotKeyIndex";
         private const string DockPlacementKey = "DockPlacement";
         private const string LyricsBgFontOpacityKey = "LyricsBgFontOpacity";
+        private const string HideWindowWhenNotPlayingKey = "HideWindowWhenNotPlaying";
+        private const string DockWindowHeightKey = "DockWindowHeight";
+
+        private const string SelectedFontFamilyIndexKey = "SelectedFontFamilyIndex";
+        private const string LyricsFontFamilyKey = "LyricsFontFamily";
+        private const string IsDragEverywhereEnabledKey = "IsDragEverywhereEnabled";
 
         private readonly ApplicationDataContainer _localSettings;
 
@@ -221,6 +227,41 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LockHotKeyIndexKey, 'U' - 'A');
             SetDefault(DockPlacementKey, (int)DockPlacement.Top);
             SetDefault(LyricsBgFontOpacityKey, 30); // 30%
+            SetDefault(HideWindowWhenNotPlayingKey, false);
+            SetDefault(DockWindowHeightKey, 64); // 64px
+            SetDefault(SelectedFontFamilyIndexKey, 0);
+            SetDefault(LyricsFontFamilyKey, FontHelper.SystemFontFamilies.ElementAtOrDefault(0));
+            SetDefault(IsDragEverywhereEnabledKey, true);
+        }
+
+        public bool IsDragEverywhereEnabled
+        {
+            get => GetValue<bool>(IsDragEverywhereEnabledKey);
+            set => SetValue(IsDragEverywhereEnabledKey, value);
+        }
+
+        public string LyricsFontFamily
+        {
+            get => GetValue<string>(LyricsFontFamilyKey)!;
+            set => SetValue(LyricsFontFamilyKey, value);
+        }
+
+        public int SelectedFontFamilyIndex
+        {
+            get => GetValue<int>(SelectedFontFamilyIndexKey);
+            set => SetValue(SelectedFontFamilyIndexKey, value);
+        }
+
+        public bool HideWindowWhenNotPlaying
+        {
+            get => GetValue<bool>(HideWindowWhenNotPlayingKey);
+            set => SetValue(HideWindowWhenNotPlayingKey, value);
+        }
+
+        public int DockWindowHeight
+        {
+            get => GetValue<int>(DockWindowHeightKey);
+            set => SetValue(DockWindowHeightKey, value);
         }
 
         public int LyricsBgFontOpacity

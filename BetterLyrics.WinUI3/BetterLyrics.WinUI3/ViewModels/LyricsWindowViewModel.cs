@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -31,20 +32,29 @@ namespace BetterLyrics.WinUI3
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<DockPlacement>>
     {
+        private readonly IPlaybackService _playbackService = Ioc.Default.GetRequiredService<IPlaybackService>();
         private ForegroundWindowWatcher? _windowWatcher = null;
-        private bool _ignoreFullscreenWindow = false;
-        private int _dockWindowMinHeight = 96;
+        private bool _ignoreFullscreenWindow;
+        private bool _hideWindowWhenNotPlaying;
 
         private DockPlacement _dockPlacement;
-        private int _lyricsFontSize;
+        private int _dockWindowHeight;
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
             _ignoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
+            _hideWindowWhenNotPlaying = _settingsService.HideWindowWhenNotPlaying;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
             _dockPlacement = _settingsService.DockPlacement;
-            _lyricsFontSize = _settingsService.LyricsFontSize;
+            _dockWindowHeight = _settingsService.DockWindowHeight;
             OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
+
+            _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
+        }
+
+        private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
+        {
+            AutoHideOrShowWindow();
         }
 
         [ObservableProperty]
@@ -83,12 +93,43 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         public partial string LockHotKey { get; set; } = "";
 
+        private void AutoHideOrShowWindow()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            var hwnd = WindowNative.GetWindowHandle(window);
+
+            if (IsDockMode || IsDesktopMode)
+            {
+                if (_hideWindowWhenNotPlaying && _playbackService.SongInfo == null)
+                {
+                    if (IsDockMode)
+                    {
+                        DockModeHelper.UpdateAppBarHeight(hwnd, 0, _dockPlacement);
+                    }
+                    window.Hide();
+                }
+                else
+                {
+                    if (IsDockMode)
+                    {
+                        DockModeHelper.UpdateAppBarHeight(hwnd, _dockWindowHeight, _dockPlacement);
+                    }
+                    window.Show();
+                }
+            }
+        }
+
         private void UpdateDockWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
-            DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
+            if (!_hideWindowWhenNotPlaying || _playbackService.SongInfo != null)
+            {
+                DockModeHelper.UpdateAppBarHeight(WindowNative.GetWindowHandle(window), _dockWindowHeight, _dockPlacement);
+            }
         }
 
         partial void OnIsImmersiveModeChanged(bool value)
@@ -121,6 +162,11 @@ namespace BetterLyrics.WinUI3
                 {
                     _ignoreFullscreenWindow = message.NewValue;
                 }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.HideWindowWhenNotPlaying))
+                {
+                    _hideWindowWhenNotPlaying = message.NewValue;
+                    AutoHideOrShowWindow();
+                }
             }
         }
 
@@ -139,9 +185,9 @@ namespace BetterLyrics.WinUI3
         {
             if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
+                if (message.PropertyName == nameof(SettingsPageViewModel.DockWindowHeight))
                 {
-                    _lyricsFontSize = message.NewValue;
+                    _dockWindowHeight = message.NewValue;
                     UpdateDockWindow();
                 }
                 else if (message.Sender is SettingsPageViewModel)
@@ -231,6 +277,8 @@ namespace BetterLyrics.WinUI3
                 IsLyricsWindowLocked = true;
                 IsImmersiveMode = true;
             }
+
+            AutoHideOrShowWindow();
         }
 
         [RelayCommand]
@@ -264,13 +312,15 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
-                DockModeHelper.Enable(window, Math.Max(_dockWindowMinHeight, _lyricsFontSize * 4), _dockPlacement);
+                DockModeHelper.Enable(window, _dockWindowHeight, _dockPlacement);
                 StartWatchWindowColorChange();
             }
             else
             {
                 DockModeHelper.Disable(window);
             }
+
+            AutoHideOrShowWindow();
         }
 
         [RelayCommand]

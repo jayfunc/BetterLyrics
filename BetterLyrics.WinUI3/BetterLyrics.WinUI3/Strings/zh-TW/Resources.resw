@@ -775,4 +775,22 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>無法連接到 LX 音樂服務器，請轉到設置 - 高級選項以檢查是否正確輸入鏈接</value>
   </data>
+  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>自動隱藏窗口</value>
+  </data>
+  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>停靠模式或桌面模式下，無歌曲正在播放時，自動隱藏窗口</value>
+  </data>
+  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>窗口高度</value>
+  </data>
+  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>歌詞字體</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
+    <value>全域拖曳</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
+    <value>將標題列擴展至整個頁面使得在任意非互動區域均可拖曳窗口</value>
+  </data>
 </root>

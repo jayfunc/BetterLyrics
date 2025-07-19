@@ -31,10 +31,11 @@ namespace BetterLyrics.WinUI3.Helper
             window.SetIsAlwaysOnTop(false);
 
             UnregisterAppBar(hwnd);
-            RefreshWorkArea();
 
             window.SetWindowStyle(_originalWindowStyle[hwnd]);
             _originalWindowStyle.Remove(hwnd);
+
+            window.ExtendsContentIntoTitleBar = true;
 
             if (_originalPositions.TryGetValue(hwnd, out var rect))
             {
@@ -54,7 +55,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static void Enable(Window window, int appBarHeight, DockPlacement dockPlacement)
         {
             window.SetIsShownInSwitchers(false);
-            window.ExtendsContentIntoTitleBar = false;
+            //window.ExtendsContentIntoTitleBar = false;
             window.SetIsAlwaysOnTop(true);
 
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
@@ -63,7 +64,6 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 _originalWindowStyle[hwnd] = window.GetWindowStyle();
             }
-            window.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
 
             if (!_originalPositions.ContainsKey(hwnd))
             {
@@ -78,6 +78,7 @@ namespace BetterLyrics.WinUI3.Helper
             int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
             int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
             int y = dockPlacement == DockPlacement.Top ? 0 : screenHeight - appBarHeight;
+
             User32.SetWindowPos(
                 hwnd,
                 IntPtr.Zero,
@@ -85,10 +86,11 @@ namespace BetterLyrics.WinUI3.Helper
                 y,
                 screenWidth,
                 appBarHeight,
-                User32.SetWindowPosFlags.SWP_SHOWWINDOW
+                User32.SetWindowPosFlags.SWP_HIDEWINDOW
             );
-
-            RefreshWorkArea();
+            window.ExtendsContentIntoTitleBar = false;
+            window.ToggleWindowStyle(true, WindowStyle.Popup);
+            window.Show();
         }
 
         private static void RegisterAppBar(IntPtr hwnd, int height, DockPlacement dockPlacement)
@@ -114,7 +116,9 @@ namespace BetterLyrics.WinUI3.Helper
                 },
             };
 
+            // Ref: https://github.com/TwilightLemon/AppBarTest/blob/master/AppBarCreator.cs
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_NEW, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
             _registered.Add(hwnd);
@@ -167,6 +171,7 @@ namespace BetterLyrics.WinUI3.Helper
                     },
                 };
 
+                Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
                 Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
                 // 同步窗口实际高度和位置
@@ -178,10 +183,8 @@ namespace BetterLyrics.WinUI3.Helper
                     y,
                     User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
                     newHeight,
-                    User32.SetWindowPosFlags.SWP_SHOWWINDOW
+                    newHeight == 0 ? User32.SetWindowPosFlags.SWP_HIDEWINDOW : User32.SetWindowPosFlags.SWP_SHOWWINDOW
                 );
-
-                RefreshWorkArea();
             }, TimeSpan.FromMilliseconds(100));
         }
     }

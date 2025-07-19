@@ -8,6 +8,7 @@ using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using ShadowViewer.Controls;
@@ -97,6 +98,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             LXMusicServer = _settingsService.LXMusicServer;
             DockPlacement = _settingsService.DockPlacement;
             LyricsBgFontOpacity = _settingsService.LyricsBgFontOpacity;
+            HideWindowWhenNotPlaying = _settingsService.HideWindowWhenNotPlaying;
+            DockWindowHeight = _settingsService.DockWindowHeight;
+
+            SystemFontNames = [.. FontHelper.SystemFontFamilies];
+            SelectedFontFamilyIndex = _settingsService.SelectedFontFamilyIndex;
+            LyricsFontFamily = _settingsService.LyricsFontFamily;
+            IsDragEverywhereEnabled = _settingsService.IsDragEverywhereEnabled;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
 
@@ -110,6 +118,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        public partial bool IsDragEverywhereEnabled { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial string LyricsFontFamily { get; set; }
+
+
+        [ObservableProperty]
+        public partial ObservableCollection<string> SystemFontNames { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int SelectedFontFamilyIndex { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -293,6 +316,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial string LXMusicServer { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool HideWindowWhenNotPlaying { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int DockWindowHeight { get; set; }
 
         public void OnLyricsSearchProvidersReordered()
         {
@@ -669,6 +700,33 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnLyricsBgFontOpacityChanged(int value)
         {
             _settingsService.LyricsBgFontOpacity = value;
+        }
+        partial void OnHideWindowWhenNotPlayingChanged(bool value)
+        {
+            _settingsService.HideWindowWhenNotPlaying = value;
+        }
+        partial void OnDockWindowHeightChanged(int value)
+        {
+            _settingsService.DockWindowHeight = value;
+        }
+        partial void OnSelectedFontFamilyIndexChanged(int value)
+        {
+            _settingsService.SelectedFontFamilyIndex = value;
+            LyricsFontFamily = SystemFontNames[value];
+        }
+        partial void OnLyricsFontFamilyChanged(string value)
+        {
+            _settingsService.LyricsFontFamily = value;
+        }
+        partial void OnIsDragEverywhereEnabledChanged(bool value)
+        {
+            _settingsService.IsDragEverywhereEnabled = value;
+
+            LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (lyricsWindow != null)
+            {
+                lyricsWindow.UpdateTitleBarArea();
+            }
         }
     }
 }

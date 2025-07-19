@@ -138,6 +138,14 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IgnoreFullscreenWindow, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED1A;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.HideWindowWhenNotPlaying, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageGlobalDrag" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C2;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsDragEverywhereEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
                                 <!--  Desktop mode  -->
 
                                 <TextBlock x:Uid="SettingsPageAppDesktop" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
@@ -180,6 +188,25 @@
                                             <ComboBoxItem Content="Y" />
                                             <ComboBoxItem Content="Z" />
                                         </ComboBox>
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageDockWindowHeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED5E;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.DockWindowHeight, Mode=OneWay}" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text=" px" />
+                                        <Slider
+                                            Maximum="200"
+                                            Minimum="64"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="1"
+                                            TickFrequency="1"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.DockWindowHeight, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
@@ -481,6 +508,16 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
+                                    <ComboBox ItemsSource="{x:Bind ViewModel.SystemFontNames, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.SelectedFontFamilyIndex, Mode=TwoWay}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </controls:SettingsCard>
 

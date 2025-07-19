@@ -93,6 +93,25 @@ namespace BetterLyrics.WinUI3.Views
             {
                 ViewModel.BottomCenterCommandGridTranslation = new System.Numerics.Vector3(0, 0, 0);
             }
+
+            if (e.NewSize.Height < 80)
+            {
+                ViewModel.BottomRightCommandGridTranslation = new System.Numerics.Vector3(-200, 0, 0);
+            }
+            else
+            {
+                ViewModel.BottomRightCommandGridTranslation = new System.Numerics.Vector3(0, 0, 0);
+            }
+
+            if (e.NewSize.Height < 100)
+            {
+                ViewModel.BottomCommandGridMargin = new Thickness(0);
+            }
+            else
+            {
+                ViewModel.BottomCommandGridMargin = new Thickness(12);
+            }
+
         }
     }
 }

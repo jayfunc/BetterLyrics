@@ -775,4 +775,22 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>Unable to connect to LX Music server, please go to Settings - Advanced options to check if the link is entered correctly</value>
   </data>
+  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>Auto-hide window</value>
+  </data>
+  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>Automatically hide the window when no songs are playing in dock mode or desktop mode</value>
+  </data>
+  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>Window height</value>
+  </data>
+  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>Lyrics font family</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
+    <value>Global drag</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
+    <value>Extend the title bar to the entire page so that the window can be dragged in any non-interactive area</value>
+  </data>
 </root>

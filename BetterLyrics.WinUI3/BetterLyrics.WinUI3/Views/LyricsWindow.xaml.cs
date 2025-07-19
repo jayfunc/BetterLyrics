@@ -33,11 +33,23 @@ namespace BetterLyrics.WinUI3.Views
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
             Title = App.ResourceLoader!.GetString("LyricsPageTitle");
-            SetTitleBar(TopCommandGrid);
-            //SetTitleBar(RootGrid);
+
+            UpdateTitleBarArea();
 
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
+        }
+
+        public void UpdateTitleBarArea()
+        {
+            if (_settingsService.IsDragEverywhereEnabled)
+            {
+                SetTitleBar(RootGrid);
+            }
+            else
+            {
+                SetTitleBar(TopCommandGrid);
+            }
         }
 
         private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
@@ -157,8 +169,6 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateTitleBarWindowButtonsVisibility()
         {
-            TopCommandGrid.Margin = new Thickness(12);
-
             switch (AppWindow.Presenter.Kind)
             {
                 case AppWindowPresenterKind.Default:
@@ -197,7 +207,6 @@ namespace BetterLyrics.WinUI3.Views
                             Visibility.Collapsed;
 
                         ViewModel.IsImmersiveMode = true;
-                        TopCommandGrid.Margin = new Thickness();
                     }
                     else if (DesktopFlyoutItem.IsChecked)
                     {
@@ -310,18 +319,14 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (ClickThroughButton == null) return;
-
-            // 获取锁控件在窗口中的位置（相对于窗口左上角）
-            var transform = ClickThroughButton.TransformToVisual(Content);
-            var point = transform.TransformPoint(new Windows.Foundation.Point(0, 0));
-            var btnRect = new Rectangle(
-                (int)point.X,
-                (int)point.Y,
-                (int)ClickThroughButton.ActualWidth,
-                (int)ClickThroughButton.ActualHeight
-            );
-            DesktopModeHelper.SetInteractiveRects([btnRect]);
+            if (e.NewSize.Height < 100)
+            {
+                TopCommandGrid.Margin = new Thickness(0);
+            }
+            else
+            {
+                TopCommandGrid.Margin = new Thickness(12);
+            }
         }
     }
 }

@@ -47,7 +47,6 @@ namespace BetterLyrics.WinUI3.Helper
                         break;
                 }
             }
-            PostProcessLyricsLines(durationMs.Value);
             _lyricsDataArr.Add(new LyricsData()); // 为机翻预留
             return _lyricsDataArr;
         }
@@ -373,30 +372,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             _lyricsDataArr.Add(new LyricsData(lyricsLines));
-        }
-
-        private void PostProcessLyricsLines(int durationMs)
-        {
-            for (int langIdx = 0; langIdx < _lyricsDataArr.Count; langIdx++)
-            {
-                var lines = _lyricsDataArr[langIdx].LyricsLines;
-                if (lines.Count > 0)
-                {
-                    if (lines[0].StartMs > 0)
-                    {
-                        lines.Insert(
-                            0,
-                            new LyricsLine
-                            {
-                                StartMs = 0,
-                                EndMs = lines[0].StartMs,
-                                OriginalText = "● ● ●",
-                                LyricsChars = [],
-                            }
-                        );
-                    }
-                }
-            }
         }
     }
 }
