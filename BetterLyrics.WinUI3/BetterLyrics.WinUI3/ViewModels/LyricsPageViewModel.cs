@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
@@ -24,6 +25,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         IRecipient<PropertyChangedMessage<TimeSpan>>
     {
         private readonly IPlaybackService _playbackService;
+        private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
 
         public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
         {
@@ -256,10 +258,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(LyricsRendererViewModel.TotalTime))
                 {
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    if (_timelineThrottle.CanTrigger())
                     {
-                        TimelinePositionSeconds = message.NewValue.TotalSeconds;
-                    });
+                        _dispatcherQueue.TryEnqueue(() =>
+                        {
+                            TimelinePositionSeconds = message.NewValue.TotalSeconds;
+                        });
+                    }
                 }
             }
         }

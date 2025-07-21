@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             Task.Run(async () =>
             {
-                BuildDate = (await Helper.MetadataHelper.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
+                BuildDate = (await MetadataHelper.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
             });
         }
 
@@ -258,7 +258,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial int LyricsVerticalEdgeOpacity { get; set; }
 
         [ObservableProperty]
-        public partial object NavViewSelectedItemTag { get; set; }
+        public partial object NavViewSelectedItemTag { get; set; } = "App";
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]

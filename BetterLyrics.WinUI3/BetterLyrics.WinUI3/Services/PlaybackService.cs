@@ -110,9 +110,7 @@ namespace BetterLyrics.WinUI3.Services
         {
             if (!IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId) || mediaSession != _mediaManager.GetFocusedSession()) return;
 
-            _dispatcherQueue.TryEnqueue(
-                DispatcherQueuePriority.High,
-                () =>
+            _dispatcherQueue.TryEnqueue(() =>
                 {
                     PositionChanged?.Invoke(this, new PositionChangedEventArgs(timelineProperties.Position));
                 }
@@ -130,8 +128,7 @@ namespace BetterLyrics.WinUI3.Services
                 _ => false,
             };
 
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-                () =>
+            _dispatcherQueue.TryEnqueue(() =>
                 {
                     IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
                 }
@@ -218,8 +215,7 @@ namespace BetterLyrics.WinUI3.Services
             {
                 _mediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id, true));
                 _settingsService.MediaSourceProvidersInfo = _mediaSourceProvidersInfo;
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-                () =>
+                _dispatcherQueue.TryEnqueue(() =>
                 {
                     MediaSourceProvidersInfoChanged?.Invoke(this, new MediaSourceProvidersInfoEventArgs(_mediaSourceProvidersInfo));
                 });
@@ -228,8 +224,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private void SendNullMessages()
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High,
-            () =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 _cachedSongInfo = null;
                 _cachedIsPlaying = false;
