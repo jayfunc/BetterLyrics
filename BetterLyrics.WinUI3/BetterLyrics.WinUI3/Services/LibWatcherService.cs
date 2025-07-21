@@ -69,9 +69,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private void OnChanged(string folder, FileSystemEventArgs e)
         {
-            App.DispatcherQueue!.TryEnqueue(
-                Microsoft.UI.Dispatching.DispatcherQueuePriority.High,
-                () =>
+            App.DispatcherQueue!.TryEnqueue(() =>
                 {
                     MusicLibraryFilesChanged?.Invoke(
                         this,
