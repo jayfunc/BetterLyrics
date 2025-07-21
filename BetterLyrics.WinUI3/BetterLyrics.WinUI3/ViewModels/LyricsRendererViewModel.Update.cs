@@ -7,6 +7,8 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Windows.UI;
@@ -29,7 +31,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (_isPlaying)
             {
-                _totalTime += _elapsedTime;
+                TotalTime += _elapsedTime;
             }
 
             var playingLineIndex = GetCurrentPlayingLineIndex();
@@ -194,48 +196,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _canvasYScrollTransition.Update(_elapsedTime);
 
-            int startVisibleLineIndex = -1;
-            int endVisibleLineIndex = -1;
-
             // Update visible line indices
-            for (int i = startLineIndex; i <= endLineIndex; i++)
-            {
-                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
+            var lines = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines;
+            if (lines == null || lines.Count == 0) return;
 
-                if (line == null || line.CanvasTextLayout == null)
-                {
-                    continue;
-                }
-
-                var textLayout = line.CanvasTextLayout;
-
-                if (
-                    _canvasYScrollTransition.Value
-                        + _canvasHeight / 2
-                        + line.Position.Y
-                        + textLayout.LayoutBounds.Height
-                    >= 0
-                )
-                {
-                    if (startVisibleLineIndex == -1)
-                    {
-                        startVisibleLineIndex = i;
-                    }
-                }
-                if (
-                    _canvasYScrollTransition.Value
-                        + _canvasHeight / 2
-                        + line.Position.Y
-                        + textLayout.LayoutBounds.Height
-                    >= control.Size.Height
-                )
-                {
-                    if (endVisibleLineIndex == -1)
-                    {
-                        endVisibleLineIndex = i;
-                    }
-                }
-            }
+            float offset = _canvasYScrollTransition.Value + _canvasHeight / 2;
+            int startVisibleLineIndex = FindFirstVisibleLine(lines, offset);
+            int endVisibleLineIndex = FindLastVisibleLine(lines, offset, _canvasHeight);
 
             if (startVisibleLineIndex != -1 && endVisibleLineIndex == -1)
             {
@@ -246,6 +213,52 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _startVisibleLineIndex = startVisibleLineIndex;
             _endVisibleLineIndex = endVisibleLineIndex;
+        }
+
+        private int FindFirstVisibleLine(IList<LyricsLine> lines, float offset)
+        {
+            int left = 0, right = lines.Count - 1, result = -1;
+            while (left <= right)
+            {
+                int mid = (left + right) / 2;
+                var line = lines[mid];
+                var layout = line.CanvasTextLayout;
+                if (layout == null) break;
+                float value = offset + line.Position.Y + (float)layout.LayoutBounds.Height;
+                if (value >= 0)
+                {
+                    result = mid;
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+            return result;
+        }
+
+        private int FindLastVisibleLine(IList<LyricsLine> lines, float offset, float canvasHeight)
+        {
+            int left = 0, right = lines.Count - 1, result = -1;
+            while (left <= right)
+            {
+                int mid = (left + right) / 2;
+                var line = lines[mid];
+                var layout = line.CanvasTextLayout;
+                if (layout == null) break;
+                float value = offset + line.Position.Y + (float)layout.LayoutBounds.Height;
+                if (value >= canvasHeight)
+                {
+                    result = mid;
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+            return result;
         }
 
         private void UpdateColorConfig()

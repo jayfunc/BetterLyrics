@@ -7,25 +7,17 @@ using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using ShadowViewer.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Globalization;
-using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Popups;
 using WinRT.Interop;
 using MetadataHelper = BetterLyrics.WinUI3.Helper.MetadataHelper;
 
@@ -48,7 +40,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             LibreTranslateServer = _settingsService.LibreTranslateServer;
             SelectedTargetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
 
-            LocalLyricsFolders = [.. _settingsService.LocalLyricsFolders];
+            LocalMediaFolders = [.. _settingsService.LocalMediaFolders];
             LyricsSearchProvidersInfo = [.. _settingsService.LyricsSearchProvidersInfo];
             AlbumArtSearchProvidersInfo = [.. _settingsService.AlbumArtSearchProvidersInfo];
 
@@ -180,7 +172,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial Enums.Language Language { get; set; }
 
         [ObservableProperty]
-        public partial ObservableCollection<LocalLyricsFolder> LocalLyricsFolders { get; set; }
+        public partial ObservableCollection<LocalMediaFolder> LocalMediaFolders { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -345,18 +337,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             );
         }
 
-        public void RemoveFolderAsync(LocalLyricsFolder folder)
+        public void RemoveFolderAsync(LocalMediaFolder folder)
         {
-            LocalLyricsFolders.Remove(folder);
-            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
-            _libWatcherService.UpdateWatchers([.. LocalLyricsFolders]);
-            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
+            LocalMediaFolders.Remove(folder);
+            _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
+            _libWatcherService.UpdateWatchers([.. LocalMediaFolders]);
+            Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
-        public void ToggleLocalLyricsFolder(LocalLyricsFolder folder)
+        public void ToggleLocalLyricsFolder(LocalMediaFolder folder)
         {
-            _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
-            Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
+            _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
+            Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
         public void ToggleLyricsSearchProvider(LyricsSearchProviderInfo providerInfo)
@@ -392,16 +384,16 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             var normalizedPath = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
 
-            if (LocalLyricsFolders.Any(x => Path.GetFullPath(x.Path).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
+            if (LocalMediaFolders.Any(x => Path.GetFullPath(x.Path).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
             {
                 App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathExistedInfo"));
             }
-            else if (LocalLyricsFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
+            else if (LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
             {
                 // 添加的文件夹是现有文件夹的子文件夹
                 App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo"));
             }
-            else if (LocalLyricsFolders.Any(item => Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
+            else if (LocalMediaFolders.Any(item => Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
             )
             {
                 // 添加的文件夹是现有文件夹的父文件夹
@@ -409,10 +401,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                LocalLyricsFolders.Add(new LocalLyricsFolder(path, true));
-                _settingsService.LocalLyricsFolders = [.. LocalLyricsFolders];
-                _libWatcherService.UpdateWatchers([.. LocalLyricsFolders]);
-                Broadcast(LocalLyricsFolders, LocalLyricsFolders, nameof(LocalLyricsFolders));
+                LocalMediaFolders.Add(new LocalMediaFolder(path, true));
+                _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
+                _libWatcherService.UpdateWatchers([.. LocalMediaFolders]);
+                Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
             }
         }
 

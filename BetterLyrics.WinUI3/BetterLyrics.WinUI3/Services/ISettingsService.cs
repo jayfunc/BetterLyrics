@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.Services
         int PositionOffset { get; set; }
         // Lyrics lib
 
-        List<LocalLyricsFolder> LocalLyricsFolders { get; set; }
+        List<LocalMediaFolder> LocalMediaFolders { get; set; }
 
         // Lyrics style and effetc
 

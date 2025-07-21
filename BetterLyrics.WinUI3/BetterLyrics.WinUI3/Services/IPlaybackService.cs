@@ -19,6 +19,7 @@ namespace BetterLyrics.WinUI3.Services
         Task PauseAsync();
         Task PreviousAsync();
         Task NextAsync();
+        Task ChangePosition(double seconds);
 
         bool IsPlaying { get; }
         SongInfo? SongInfo { get; }

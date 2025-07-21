@@ -109,25 +109,27 @@ namespace BetterLyrics.WinUI3.Views
                 var rect = AppWindow.Position;
                 var size = AppWindow.Size;
 
-                if (ViewModel.IsDesktopMode)
+                if (rect.X >= 0 && rect.Y >= 0 && size.Width > 0 && size.Height > 0)
                 {
-                    _settingsService.DesktopWindowLeft = rect.X;
-                    _settingsService.DesktopWindowTop = rect.Y;
-                    _settingsService.DesktopWindowWidth = size.Width;
-                    _settingsService.DesktopWindowHeight = size.Height;
-                }
-                else if (ViewModel.IsDockMode)
-                {
+                    if (ViewModel.IsDesktopMode)
+                    {
+                        _settingsService.DesktopWindowLeft = rect.X;
+                        _settingsService.DesktopWindowTop = rect.Y;
+                        _settingsService.DesktopWindowWidth = size.Width;
+                        _settingsService.DesktopWindowHeight = size.Height;
+                    }
+                    else if (ViewModel.IsDockMode)
+                    {
 
+                    }
+                    else
+                    {
+                        _settingsService.StandardWindowLeft = rect.X;
+                        _settingsService.StandardWindowTop = rect.Y;
+                        _settingsService.StandardWindowWidth = size.Width;
+                        _settingsService.StandardWindowHeight = size.Height;
+                    }
                 }
-                else
-                {
-                    _settingsService.StandardWindowLeft = rect.X;
-                    _settingsService.StandardWindowTop = rect.Y;
-                    _settingsService.StandardWindowWidth = size.Width;
-                    _settingsService.StandardWindowHeight = size.Height;
-                }
-
             }
         }
 
@@ -164,7 +166,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+            WindowHelper.OpenWindow<SettingsWindow>();
         }
 
         private void UpdateTitleBarWindowButtonsVisibility()
@@ -259,7 +261,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.ExitAllWindows();
+            DockModeHelper.Disable(this);
+            App.Current.Exit();
         }
 
         private void MaximiseButton_Click(object sender, RoutedEventArgs e)
@@ -310,23 +313,22 @@ namespace BetterLyrics.WinUI3.Views
         private void RootGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.IsMouseWithinWindow = true;
+            e.Handled = true;
         }
 
         private void RootGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.IsMouseWithinWindow = false;
+            e.Handled = true;
         }
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Height < 100)
-            {
-                TopCommandGrid.Margin = new Thickness(0);
-            }
-            else
-            {
-                TopCommandGrid.Margin = new Thickness(12);
-            }
+        }
+
+        private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenWindow<MusicGalleryWindow>();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Services
         public LibWatcherService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            UpdateWatchers(_settingsService.LocalLyricsFolders);
+            UpdateWatchers(_settingsService.LocalMediaFolders);
         }
 
         public event EventHandler<LibChangedEventArgs>? MusicLibraryFilesChanged;
@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.Services
             _watchers.Clear();
         }
 
-        public void UpdateWatchers(List<LocalLyricsFolder> folders)
+        public void UpdateWatchers(List<LocalMediaFolder> folders)
         {
             // 移除不再监听的
             foreach (var key in _watchers.Keys.ToList())

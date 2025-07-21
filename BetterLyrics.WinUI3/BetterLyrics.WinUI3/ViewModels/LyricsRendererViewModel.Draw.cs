@@ -78,7 +78,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         $"[DEBUG]\n" +
                             $"Cur playing {_playingLineIndex}, char start idx {charStartIndex}, length {charLength}, prog {charProgress}\n" +
                             $"Visible lines [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n" +
-                            $"Cur time {_totalTime + _positionOffset}\n" +
+                            $"Cur time {TotalTime + _positionOffset}\n" +
                             $"Lang size {_lyricsDataArr.Count}\n" +
                             $"Song duration {TimeSpan.FromMilliseconds(SongInfo?.DurationMs ?? 0)}",
                         new Vector2(10, 10),

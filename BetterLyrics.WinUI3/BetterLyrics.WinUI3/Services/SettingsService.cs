@@ -231,7 +231,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(DockWindowHeightKey, 64); // 64px
             SetDefault(SelectedFontFamilyIndexKey, 0);
             SetDefault(LyricsFontFamilyKey, FontHelper.SystemFontFamilies.ElementAtOrDefault(0));
-            SetDefault(IsDragEverywhereEnabledKey, true);
+            SetDefault(IsDragEverywhereEnabledKey, false);
         }
 
         public bool IsDragEverywhereEnabled
@@ -420,19 +420,19 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(LanguageKey, (int)value);
         }
 
-        public List<LocalLyricsFolder> LocalLyricsFolders
+        public List<LocalMediaFolder> LocalMediaFolders
         {
             get =>
                 System.Text.Json.JsonSerializer.Deserialize(
                     GetValue<string>(LocalLyricsFoldersKey) ?? "[]",
-                    SourceGenerationContext.Default.ListLocalLyricsFolder
+                    SourceGenerationContext.Default.ListLocalMediaFolder
                 )!;
             set =>
                 SetValue(
                     LocalLyricsFoldersKey,
                     System.Text.Json.JsonSerializer.Serialize(
                         value,
-                        SourceGenerationContext.Default.ListLocalLyricsFolder
+                        SourceGenerationContext.Default.ListLocalMediaFolder
                     )
                 );
         }

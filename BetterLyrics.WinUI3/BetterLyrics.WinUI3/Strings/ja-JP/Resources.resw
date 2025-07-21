@@ -793,4 +793,7 @@
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>タイトルバーをページ全体に拡張して、ウィンドウを非対話領域でドラッグできるようにします</value>
   </data>
+  <data name="MusicGalleryPageTitle" xml:space="preserve">
+    <value>音楽ギャラリー</value>
+  </data>
 </root>
