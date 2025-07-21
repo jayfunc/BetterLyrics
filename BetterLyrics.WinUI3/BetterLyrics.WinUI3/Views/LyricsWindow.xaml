@@ -26,6 +26,7 @@
         <Grid
             x:Name="TopCommandGrid"
             VerticalAlignment="Top"
+            Background="Transparent"
             Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}"
             PointerEntered="TopCommandGrid_PointerEntered"
             PointerExited="TopCommandGrid_PointerExited">

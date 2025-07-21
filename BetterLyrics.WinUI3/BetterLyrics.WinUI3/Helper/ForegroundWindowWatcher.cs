@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using Vanara.PInvoke;
 using Windows.System;
@@ -16,6 +17,7 @@ namespace BetterLyrics.WinUI3.Helper
         private readonly List<User32.HWINEVENTHOOK> _hooks = new();
         private HWND _currentForeground = HWND.NULL;
         private readonly IntPtr _selfHwnd;
+        private readonly ThrottleHelper _winEventProcThrottle = new(TimeSpan.FromSeconds(1));
 
         public delegate void WindowChangedHandler(HWND hwnd);
         private readonly WindowChangedHandler _onWindowChanged;

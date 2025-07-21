@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -16,7 +17,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Globalization;
-using Windows.System;
 using Windows.UI;
 using WinRT.Interop;
 using MetadataHelper = BetterLyrics.WinUI3.Helper.MetadataHelper;
@@ -411,13 +411,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Launcher.LaunchUriAsync(new Uri(MetadataHelper.GithubUrl));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(MetadataHelper.GithubUrl));
         }
 
         [RelayCommand]
         private static async Task OpenCacheFolderAsync()
         {
-            await Launcher.LaunchFolderPathAsync(PathHelper.CacheFolder);
+            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.CacheFolder);
         }
 
         [RelayCommand]
@@ -456,7 +456,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     string targetLangCode = LanguageHelper.SupportedTargetLanguages[SelectedTargetLanguageIndex].Code;
                     string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, null);
-                    _dispatcherQueue.TryEnqueue(() =>
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
                         App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
                         IsLibreTranslateServerTesting = false;
@@ -464,7 +464,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 catch (Exception)
                 {
-                    _dispatcherQueue.TryEnqueue(() =>
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
                         App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
                         IsLibreTranslateServerTesting = false;
@@ -480,7 +480,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             Task.Run(async () =>
             {
                 bool testResult = await NetHelper.CheckConnectivity($"{LXMusicServer}/status");
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     App.Current.SettingsWindowNotificationPanel?.Notify(
                         App.ResourceLoader!.GetString($"SettingsPageServerTest{(testResult ? "Success" : "Failed")}Info"),

@@ -63,7 +63,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 var data = pNotify.ToStructure<AUDIO_VOLUME_NOTIFICATION_DATA>();
                 _masterVolume = (int)(data.fMasterVolume * 100);
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     VolumeChanged?.Invoke(_masterVolume);
                 });
