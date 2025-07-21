@@ -6,18 +6,17 @@ using System.IO;
 using System.Linq;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.ViewModels;
+using Microsoft.UI.Dispatching;
 
 namespace BetterLyrics.WinUI3.Services
 {
-    public class LibWatcherService : IDisposable, ILibWatcherService
+    public class LibWatcherService : BaseViewModel, IDisposable, ILibWatcherService
     {
-        private readonly ISettingsService _settingsService;
-
         private readonly Dictionary<string, FileSystemWatcher> _watchers = [];
 
-        public LibWatcherService(ISettingsService settingsService)
+        public LibWatcherService(ISettingsService settingsService) : base(settingsService)
         {
-            _settingsService = settingsService;
             UpdateWatchers(_settingsService.LocalMediaFolders);
         }
 
@@ -69,16 +68,13 @@ namespace BetterLyrics.WinUI3.Services
 
         private void OnChanged(string folder, FileSystemEventArgs e)
         {
-            App.DispatcherQueue!.TryEnqueue(
-                Microsoft.UI.Dispatching.DispatcherQueuePriority.High,
-                () =>
-                {
-                    MusicLibraryFilesChanged?.Invoke(
-                        this,
-                        new LibChangedEventArgs(folder, e.FullPath, e.ChangeType)
-                    );
-                }
-            );
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            {
+                MusicLibraryFilesChanged?.Invoke(
+                    this,
+                    new LibChangedEventArgs(folder, e.FullPath, e.ChangeType)
+                );
+            });
         }
     }
 }

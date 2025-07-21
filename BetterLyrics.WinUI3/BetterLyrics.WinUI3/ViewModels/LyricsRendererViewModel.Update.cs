@@ -411,5 +411,33 @@ namespace BetterLyrics.WinUI3.ViewModels
                 line.HighlightOpacityTransition.Update(_elapsedTime);
             }
         }
+
+        private void UpdateImmersiveBackgroundOpacity()
+        {
+            float targetOpacity;
+            if (_isDesktopMode)
+            {
+                if (_isLyricsWindowLocked)
+                {
+                    targetOpacity = 0;
+                }
+                else
+                {
+                    if (_isMouseWithinWindow)
+                    {
+                        targetOpacity = 1f;
+                    }
+                    else
+                    {
+                        targetOpacity = 0f;
+                    }
+                }
+            }
+            else
+            {
+                targetOpacity = 1f;
+            }
+            _immersiveBgOpacityTransition.StartTransition(targetOpacity);
+        }
     }
 }

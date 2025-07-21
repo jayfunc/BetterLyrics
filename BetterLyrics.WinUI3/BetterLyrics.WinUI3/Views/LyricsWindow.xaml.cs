@@ -270,7 +270,7 @@ namespace BetterLyrics.WinUI3.Views
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             DockModeHelper.Disable(this);
-            App.Current.Exit();
+            Application.Current.Exit();
         }
 
         private void MaximiseButton_Click(object sender, RoutedEventArgs e)

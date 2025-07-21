@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.WinUI;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -231,11 +232,14 @@ namespace BetterLyrics.WinUI3
                 hwnd,
                 onWindowChanged =>
                 {
-                    if (_ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
+                    _dispatcherQueueTimer.Debounce(() =>
                     {
-                        presenter.IsAlwaysOnTop = true;
-                    }
-                    UpdateAccentColor(hwnd);
+                        if (_ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
+                        {
+                            presenter.IsAlwaysOnTop = true;
+                        }
+                        UpdateAccentColor(hwnd);
+                    }, TimeSpan.FromMilliseconds(300));
                 }
             );
             _windowWatcher.Start();
