@@ -90,7 +90,7 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
   - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
 - foobar2000
   - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
-- Spofity
+- Spotify
 - QQ Music
 - PotPlayer
 - Media Player (System)
