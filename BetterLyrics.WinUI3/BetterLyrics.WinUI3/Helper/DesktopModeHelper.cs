@@ -73,6 +73,14 @@ namespace BetterLyrics.WinUI3.Helper
             int targetX = _settingsService.DesktopWindowLeft;
             int targetY = _settingsService.DesktopWindowTop;
 
+            if (targetWidth <= 0 || targetHeight <= 0 || targetX < 0 || targetY < 0)
+            {
+                targetWidth = 1200;
+                targetHeight = 600;
+                targetX = 200;
+                targetY = 200;
+            }
+
             // 设置窗口大小和位置
             window.AppWindow.MoveAndResize(
                 new Windows.Graphics.RectInt32(targetX, targetY, targetWidth, targetHeight)

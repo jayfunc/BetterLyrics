@@ -116,10 +116,10 @@ namespace BetterLyrics.WinUI3.Views
             await _playbackService.ChangePosition(e.NewValue);
         }
 
-        private void VolumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            VolumeFlyout.ShowAt(BottomRightCommandStackPanel);
-        }
+        //private void VolumeButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    VolumeFlyout.ShowAt(BottomRightCommandStackPanel);
+        //}
 
         private void BottomCommandFlyoutTrigger_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {

@@ -193,13 +193,12 @@
                         Spacing="3">
 
                         <!--  Volume  -->
-                        <Button
-                            Click="VolumeButton_Click"
-                            Style="{StaticResource GhostButtonStyle}"
-                            Visibility="Collapsed">
+                        <!--<Button Click="VolumeButton_Click" Style="{StaticResource GhostButtonStyle}">
                             <Grid>
 
-                                <!--  Volumn: 0  -->
+                        -->
+                        <!--  Volumn: 0  -->
+                        <!--
                                 <FontIcon
                                     x:Name="VolumeLevel0"
                                     FontFamily="{StaticResource IconFontFamily}"
@@ -209,7 +208,9 @@
                                     </FontIcon.OpacityTransition>
                                 </FontIcon>
 
-                                <!--  Volumn: 1-32  -->
+                        -->
+                        <!--  Volumn: 1-32  -->
+                        <!--
                                 <FontIcon
                                     x:Name="VolumeLevel1"
                                     FontFamily="{StaticResource IconFontFamily}"
@@ -219,7 +220,9 @@
                                     </FontIcon.OpacityTransition>
                                 </FontIcon>
 
-                                <!--  Volumn: 33-65  -->
+                        -->
+                        <!--  Volumn: 33-65  -->
+                        <!--
                                 <FontIcon
                                     x:Name="VolumeLevel2"
                                     FontFamily="{StaticResource IconFontFamily}"
@@ -229,7 +232,9 @@
                                     </FontIcon.OpacityTransition>
                                 </FontIcon>
 
-                                <!--  Volumn: 66-100  -->
+                        -->
+                        <!--  Volumn: 66-100  -->
+                        <!--
                                 <FontIcon
                                     x:Name="VolumeLevel3"
                                     FontFamily="{StaticResource IconFontFamily}"
@@ -257,7 +262,7 @@
                                     </StackPanel>
                                 </Flyout>
                             </Button.DataContext>
-                        </Button>
+                        </Button>-->
 
                         <!--  Translation  -->
                         <Button
@@ -395,10 +400,10 @@
             IsOpen="{x:Bind ViewModel.IsWelcomeTeachingTipOpen, Mode=OneWay}"
             Target="{x:Bind RootGrid}" />
 
-        <!--<uc:SystemTray />-->
+        <uc:SystemTray />
 
         <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VolumeState">
+            <!--<VisualStateGroup x:Name="VolumeState">
                 <VisualState x:Name="Volume0">
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
@@ -455,7 +460,7 @@
                         <Setter Target="VolumeLevel3.Opacity" Value="1" />
                     </VisualState.Setters>
                 </VisualState>
-            </VisualStateGroup>
+            </VisualStateGroup>-->
         </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
