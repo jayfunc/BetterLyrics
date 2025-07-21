@@ -9,16 +9,19 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class LyricsPageViewModel : BaseViewModel, 
-        IRecipient<PropertyChangedMessage<bool>>, 
+    public partial class LyricsPageViewModel : BaseViewModel,
+        IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<int>>,
-        IRecipient<PropertyChangedMessage<string>>
+        IRecipient<PropertyChangedMessage<string>>,
+        IRecipient<PropertyChangedMessage<TimeSpan>>
     {
         private readonly IPlaybackService _playbackService;
 
@@ -46,10 +49,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsSongPlaying = _playbackService.IsPlaying;
         }
 
-        //private void SystemVolumeHelper_VolumeChanged(int volume)
-        //{
-        //    Volume = volume;
-        //}
+        private void SystemVolumeHelper_VolumeChanged(int volume)
+        {
+            Volume = volume;
+        }
 
         private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
         {
@@ -59,14 +62,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
         {
             SongInfo = e.SongInfo;
+            SongDurationSeconds = SongInfo?.Duration ?? 0;
             if (ResetPositionOffsetOnSongChanged)
             {
                 PositionOffset = 0;
             }
         }
 
-        //[ObservableProperty]
-        //public partial int Volume { get; set; }
+        [ObservableProperty]
+        public partial double TimelinePositionSeconds { get; set; }
+
+        [ObservableProperty]
+        public partial int SongDurationSeconds { get; set; }
+
+        [ObservableProperty]
+        public partial int Volume { get; set; }
 
         [ObservableProperty]
         public partial string LyricsFontFamily { get; set; }
@@ -75,19 +85,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial int LyricsFontSize { get; set; }
 
         [ObservableProperty]
-        public partial Vector3 BottomRightCommandGridTranslation { get; set; } = new Vector3(0, 0, 0);
-
-        [ObservableProperty]
-        public partial Vector3 BottomCenterCommandGridTranslation { get; set; } = new Vector3(0, 0, 0);
-
-        [ObservableProperty]
         public partial bool IsImmersiveMode { get; set; }
 
         [ObservableProperty]
         public partial float BottomCommandGridOpacity { get; set; }
 
         [ObservableProperty]
-        public partial Thickness BottomCommandGridMargin { get; set; } = new Thickness(12);
+        public partial float BottomCommandFlyoutTriggerOpacity { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -157,7 +161,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static void OpenSettingsWindow()
         {
-            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+            WindowHelper.OpenWindow<SettingsWindow>();
         }
 
         [RelayCommand]
@@ -205,10 +209,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (value)
             {
                 BottomCommandGridOpacity = 0f;
+                BottomCommandFlyoutTriggerOpacity = 0f;
             }
             else
             {
                 BottomCommandGridOpacity = 1f;
+                BottomCommandFlyoutTriggerOpacity = 1f;
             }
         }
 
@@ -239,9 +245,23 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        //partial void OnVolumeChanged(int value)
-        //{
-        //    SystemVolumeHelper.SetMasterVolume(value);
-        //}
+        partial void OnVolumeChanged(int value)
+        {
+            SystemVolumeHelper.SetMasterVolume(value);
+        }
+
+        public void Receive(PropertyChangedMessage<TimeSpan> message)
+        {
+            if (message.Sender is LyricsRendererViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsRendererViewModel.TotalTime))
+                {
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        TimelinePositionSeconds = message.NewValue.TotalSeconds;
+                    });
+                }
+            }
+        }
     }
 }

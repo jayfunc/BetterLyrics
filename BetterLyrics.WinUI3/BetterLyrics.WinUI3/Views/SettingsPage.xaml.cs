@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (sender is ToggleSwitch toggleSwitch)
             {
-                if (toggleSwitch.DataContext is LocalLyricsFolder localLyricsFolder)
+                if (toggleSwitch.DataContext is LocalMediaFolder localLyricsFolder)
                 {
                     ViewModel.ToggleLocalLyricsFolder(localLyricsFolder);
                 }
@@ -65,7 +65,7 @@ namespace BetterLyrics.WinUI3.Views
             Microsoft.UI.Xaml.RoutedEventArgs e
         )
         {
-            ViewModel.RemoveFolderAsync((LocalLyricsFolder)(sender as HyperlinkButton)!.Tag);
+            ViewModel.RemoveFolderAsync((LocalMediaFolder)(sender as HyperlinkButton)!.Tag);
         }
 
         private void MediaSourceProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)

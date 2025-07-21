@@ -154,6 +154,8 @@ namespace BetterLyrics.WinUI3.Services
                 SourceAppUserModelId = id,
             };
 
+            _cachedSongInfo.Duration = (int)(_cachedSongInfo.DurationMs / 1000f);
+
             await _onAnyMediaPropertyChangedRunner.RunAsync(async token =>
             {
                 _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
@@ -364,6 +366,15 @@ namespace BetterLyrics.WinUI3.Services
             if (focusedSession != null)
             {
                 await focusedSession.ControlSession.TrySkipNextAsync();
+            }
+        }
+
+        public async Task ChangePosition(double seconds)
+        {
+            var focusedSession = _mediaManager.GetFocusedSession();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession.TryChangePlaybackPositionAsync(TimeSpan.FromSeconds(seconds).Ticks);
             }
         }
 

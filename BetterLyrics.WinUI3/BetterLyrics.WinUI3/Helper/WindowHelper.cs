@@ -31,11 +31,8 @@ namespace BetterLyrics.WinUI3.Helper
             while (_activeWindows.Count > 0)
             {
                 var window = (Window)_activeWindows[0];
-                DockModeHelper.Disable(window);
                 window.Close();
-                _activeWindows.Remove(window);
             }
-            App.Current.Exit();
         }
 
         public static T? GetWindowByWindowType<T>()
@@ -49,33 +46,32 @@ namespace BetterLyrics.WinUI3.Helper
             }
             return default;
         }
-        public static void OpenOrShowWindow<T>()
+        public static void OpenWindow<T>()
         {
             var window = _activeWindows.Find(w => w is T);
-            if (window != null)
+            if (window == null)
             {
-                var castedWindow = (Window)window;
-                castedWindow.Restore();
-            }
-            else
-            {
-                object newWindow;
                 if (typeof(T) == typeof(LyricsWindow))
                 {
-                    newWindow = new LyricsWindow();
-                    ((LyricsWindow)newWindow).SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
+                    window = new LyricsWindow();
+                    ((LyricsWindow)window).SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
                 }
                 else if (typeof(T) == typeof(SettingsWindow))
                 {
-                    newWindow = new SettingsWindow();
+                    window = new SettingsWindow();
+                }
+                else if (typeof(T) == typeof(MusicGalleryWindow))
+                {
+                    window = new MusicGalleryWindow();
                 }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));
                 }
-                ((Window)newWindow).Activate();
-                TrackWindow(newWindow);
+                TrackWindow(window);
             }
+            var castedWindow = (Window)window;
+            castedWindow.Restore();
         }
 
         public static void RestartApp(string args = "")
@@ -101,7 +97,19 @@ namespace BetterLyrics.WinUI3.Helper
         private static void TrackWindow(object window)
         {
             if (!_activeWindows.Contains(window))
+            {
                 _activeWindows.Add(window);
+                var castedWindow = (Window)window;
+                castedWindow.Closed += WindowHelper_Closed;
+            }
+        }
+
+        private static void WindowHelper_Closed(object sender, WindowEventArgs args)
+        {
+            if (_activeWindows.Contains(sender))
+            {
+                _activeWindows.Remove(sender);
+            }
         }
     }
 }

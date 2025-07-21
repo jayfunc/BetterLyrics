@@ -15,6 +15,9 @@ namespace BetterLyrics.WinUI3.Models
         public partial string Artist { get; set; }
 
         [ObservableProperty]
+        public partial int? Duration { get; set; }
+
+        [ObservableProperty]
         public partial double? DurationMs { get; set; }
 
         [ObservableProperty]

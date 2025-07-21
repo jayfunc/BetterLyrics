@@ -391,7 +391,7 @@
                                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                              Glyph=&#xE8B7;}"
                                     IsExpanded="True"
-                                    ItemsSource="{x:Bind ViewModel.LocalLyricsFolders, Mode=OneWay}">
+                                    ItemsSource="{x:Bind ViewModel.LocalMediaFolders, Mode=OneWay}">
                                     <controls:SettingsExpander.ItemTemplate>
                                         <DataTemplate>
                                             <controls:SettingsCard>
@@ -426,13 +426,13 @@
                                             <interactivity:Interaction.Behaviors>
 
                                                 <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
+                                                    Binding="{x:Bind ViewModel.LocalMediaFolders.Count, Mode=OneWay}"
                                                     ComparisonCondition="Equal"
                                                     Value="0">
                                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                                                 </interactivity:DataTriggerBehavior>
                                                 <interactivity:DataTriggerBehavior
-                                                    Binding="{x:Bind ViewModel.LocalLyricsFolders.Count, Mode=OneWay}"
+                                                    Binding="{x:Bind ViewModel.LocalMediaFolders.Count, Mode=OneWay}"
                                                     ComparisonCondition="NotEqual"
                                                     Value="0">
                                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />

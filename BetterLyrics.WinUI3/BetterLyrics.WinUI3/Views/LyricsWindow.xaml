@@ -25,7 +25,6 @@
         <!--  Top command  -->
         <Grid
             x:Name="TopCommandGrid"
-            Margin="12"
             VerticalAlignment="Top"
             Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}"
             PointerEntered="TopCommandGrid_PointerEntered"
@@ -34,10 +33,7 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <Grid
-                Padding="3"
-                HorizontalAlignment="Left"
-                Style="{StaticResource CardGridStyle}">
+            <Grid Padding="3" HorizontalAlignment="Left">
                 <StackPanel
                     x:Name="TopLeftCommandStackPanel"
                     HorizontalAlignment="Left"
@@ -46,6 +42,18 @@
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
+
+                    <!--  Music gallery  -->
+                    <Button
+                        Click="MusicGalleryButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="Collapsed">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize}"
+                            Glyph="&#xE8A9;" />
+                    </Button>
+                    <!--  Immersive mode  -->
                     <ToggleButton
                         x:Name="ImmersiveButton"
                         Command="{x:Bind ViewModel.ImmersiveToggleButtonEnabledChangedCommand}"
@@ -59,10 +67,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid
-                Padding="3"
-                HorizontalAlignment="Right"
-                Style="{StaticResource CardGridStyle}">
+            <Grid Padding="3" HorizontalAlignment="Right">
                 <StackPanel
                     x:Name="TopRightCommandStackPanel"
                     Orientation="Horizontal"

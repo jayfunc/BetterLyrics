@@ -793,4 +793,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>Extend the title bar to the entire page so that the window can be dragged in any non-interactive area</value>
   </data>
+  <data name="MusicGalleryPageTitle" xml:space="preserve">
+    <value>Music gallery</value>
+  </data>
 </root>
