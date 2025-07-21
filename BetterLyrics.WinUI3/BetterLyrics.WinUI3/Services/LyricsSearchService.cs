@@ -164,7 +164,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private async Task<string?> SearchFile(string title, string artist, LyricsFormat format)
         {
-            foreach (var folder in _settingsService.LocalLyricsFolders)
+            foreach (var folder in _settingsService.LocalMediaFolders)
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
@@ -186,7 +186,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private string? SearchEmbedded(string title, string artist)
         {
-            foreach (var folder in _settingsService.LocalLyricsFolders)
+            foreach (var folder in _settingsService.LocalMediaFolders)
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {

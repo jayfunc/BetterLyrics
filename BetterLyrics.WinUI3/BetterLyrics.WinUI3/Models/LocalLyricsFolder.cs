@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public partial class LocalLyricsFolder : ObservableObject
+    public partial class LocalMediaFolder : ObservableObject
     {
         [ObservableProperty]
         public partial bool IsEnabled { get; set; }
@@ -12,9 +12,9 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty]
         public partial string Path { get; set; }
 
-        public LocalLyricsFolder() { }
+        public LocalMediaFolder() { }
 
-        public LocalLyricsFolder(string path, bool isEnabled)
+        public LocalMediaFolder(string path, bool isEnabled)
         {
             Path = path;
             IsEnabled = isEnabled;

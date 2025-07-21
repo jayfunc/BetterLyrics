@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -24,13 +25,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<EasingType>>,
             IRecipient<PropertyChangedMessage<ObservableCollection<LyricsSearchProviderInfo>>>,
-            IRecipient<PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>>>
+            IRecipient<PropertyChangedMessage<ObservableCollection<LocalMediaFolder>>>
     {
-        public void Receive(PropertyChangedMessage<ObservableCollection<LocalLyricsFolder>> message)
+        public void Receive(PropertyChangedMessage<ObservableCollection<LocalMediaFolder>> message)
         {
             if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LocalLyricsFolders))
+                if (message.PropertyName == nameof(SettingsPageViewModel.LocalMediaFolders))
                 {
                     // Music lib changed, re-fetch lyrics
                     _logger.LogInformation("Local lyrics folders changed, refreshing lyrics.");
@@ -333,5 +334,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
         }
+
     }
 }

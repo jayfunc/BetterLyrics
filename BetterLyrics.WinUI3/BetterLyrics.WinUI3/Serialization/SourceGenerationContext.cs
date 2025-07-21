@@ -11,7 +11,7 @@ namespace BetterLyrics.WinUI3.Serialization
     [JsonSerializable(typeof(List<AlbumArtSearchProviderInfo>))]
     [JsonSerializable(typeof(List<LyricsSearchProviderInfo>))]
     [JsonSerializable(typeof(List<MediaSourceProviderInfo>))]
-    [JsonSerializable(typeof(List<LocalLyricsFolder>))]
+    [JsonSerializable(typeof(List<LocalMediaFolder>))]
     [JsonSerializable(typeof(List<string>))]
     [JsonSerializable(typeof(TranslateResponse))]
     [JsonSerializable(typeof(JsonElement))]

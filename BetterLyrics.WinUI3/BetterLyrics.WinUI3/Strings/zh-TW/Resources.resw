@@ -793,4 +793,7 @@
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>將標題列擴展至整個頁面使得在任意非互動區域均可拖曳窗口</value>
   </data>
+  <data name="MusicGalleryPageTitle" xml:space="preserve">
+    <value>音樂庫</value>
+  </data>
 </root>

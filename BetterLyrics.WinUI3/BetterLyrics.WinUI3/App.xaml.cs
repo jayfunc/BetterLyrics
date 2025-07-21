@@ -55,7 +55,7 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            WindowHelper.OpenOrShowWindow<LyricsWindow>();
+            WindowHelper.OpenWindow<LyricsWindow>();
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (lyricsWindow == null) return;
 
@@ -85,13 +85,13 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILyricsSearchService, LyricsSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
                     .AddSingleton<ITranslateService, TranslateService>()
-                    // Manager
                     // ViewModels
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<LyricsPageViewModel>()
+                    .AddSingleton<MusicGalleryViewModel>()
                     .AddSingleton<LyricsRendererViewModel>()
                     .BuildServiceProvider()
             );

@@ -14,6 +14,6 @@ namespace BetterLyrics.WinUI3.Services
     {
         event EventHandler<LibChangedEventArgs>? MusicLibraryFilesChanged;
 
-        public void UpdateWatchers(List<LocalLyricsFolder> folders);
+        public void UpdateWatchers(List<LocalMediaFolder> folders);
     }
 }

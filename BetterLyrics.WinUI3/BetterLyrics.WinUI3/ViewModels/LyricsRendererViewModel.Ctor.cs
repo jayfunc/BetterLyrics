@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -65,6 +66,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
             _playbackService.AlbumArtChangedChanged += PlaybackService_AlbumArtChangedChanged;
             _playbackService.PositionChanged += PlaybackService_PositionChanged;
+
+            _isPlaying = _playbackService.IsPlaying;
 
             UpdateColorConfig();
         }

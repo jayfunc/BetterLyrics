@@ -35,6 +35,17 @@ namespace BetterLyrics.WinUI3.Helper
             return stream;
         }
 
+        public static RandomAccessStreamReference ByteArrayToRandomAccessStreamReference(byte[] bytes)
+        {
+            var stream = new InMemoryRandomAccessStream();
+            var writer = new DataWriter(stream);
+            writer.WriteBytes(bytes);
+            writer.StoreAsync().GetAwaiter().GetResult();
+            writer.FlushAsync().GetAwaiter().GetResult();
+            writer.DetachStream();
+            return RandomAccessStreamReference.CreateFromStream(stream);
+        }
+
         public static async Task<byte[]> CreateTextPlaceholderBytesAsync(int width, int height)
         {
             var device = CanvasDevice.GetSharedDevice();

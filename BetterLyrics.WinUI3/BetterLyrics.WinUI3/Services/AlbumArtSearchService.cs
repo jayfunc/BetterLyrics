@@ -67,7 +67,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private byte[]? SearchFile(string artist, string album)
         {
-            foreach (var folder in _settingsService.LocalLyricsFolders)
+            foreach (var folder in _settingsService.LocalMediaFolders)
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {

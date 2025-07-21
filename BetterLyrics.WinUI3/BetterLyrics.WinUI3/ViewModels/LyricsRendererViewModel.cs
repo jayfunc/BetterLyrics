@@ -31,7 +31,11 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class LyricsRendererViewModel : BaseViewModel
     {
         private TimeSpan _elapsedTime = TimeSpan.Zero;
-        private TimeSpan _totalTime = TimeSpan.Zero;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
+
         private TimeSpan _positionOffset = TimeSpan.Zero;
 
         private int _songDurationMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
@@ -193,7 +197,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int GetCurrentPlayingLineIndex()
         {
-            var totalMs = _totalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
+            var totalMs = TotalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
             if (totalMs < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.FirstOrDefault()?.StartMs) return 0;
 
             for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
@@ -229,7 +233,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             else if (nextLine != null) lineEndMs = nextLine.StartMs;
             else lineEndMs = _songDurationMs;
 
-            float now = (float)_totalTime.TotalMilliseconds + (float)_positionOffset.TotalMilliseconds;
+            float now = (float)TotalTime.TotalMilliseconds + (float)_positionOffset.TotalMilliseconds;
 
             // 1. 还没到本句
             if (now < line.StartMs)
@@ -333,9 +337,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void PlaybackService_PositionChanged(object? sender, PositionChangedEventArgs e)
         {
-            if (Math.Abs(_totalTime.TotalMilliseconds - e.Position.TotalMilliseconds) >= _timelineSyncThreshold)
+            if (Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds) >= _timelineSyncThreshold)
             {
-                _totalTime = e.Position;
+                TotalTime = e.Position;
             }
         }
 
@@ -362,7 +366,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     await RefreshLyricsAsync(token);
                 });
-                _totalTime = TimeSpan.Zero;
+                TotalTime = TimeSpan.Zero;
             }
         }
 
