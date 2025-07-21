@@ -69,6 +69,14 @@ namespace BetterLyrics.WinUI3.Views
             switch (type!)
             {
                 case AutoStartWindowType.StandardMode:
+                    if (_settingsService.StandardWindowLeft < 0 || _settingsService.StandardWindowTop < 0 ||
+                        _settingsService.StandardWindowWidth <= 0 || _settingsService.StandardWindowHeight <= 0)
+                    {
+                        _settingsService.StandardWindowLeft = 200;
+                        _settingsService.StandardWindowTop = 200;
+                        _settingsService.StandardWindowWidth = 1600;
+                        _settingsService.StandardWindowHeight = 800;
+                    }
                     AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
                         _settingsService.StandardWindowLeft,
                         _settingsService.StandardWindowTop,
