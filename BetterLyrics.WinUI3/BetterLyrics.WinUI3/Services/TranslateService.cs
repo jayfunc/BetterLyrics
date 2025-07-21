@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.ViewModels;
 using Lyricify.Lyrics.Helpers.General;
+using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace BetterLyrics.WinUI3.Services
 
             if (string.IsNullOrEmpty(_settingsService.LibreTranslateServer))
             {
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     App.Current.LyricsWindowNotificationPanel?.Notify(
                         App.ResourceLoader!.GetString("TranslateServerNotSet"),

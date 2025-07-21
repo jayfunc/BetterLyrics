@@ -110,8 +110,8 @@ namespace BetterLyrics.WinUI3.Services
         {
             if (!IsMediaSourceEnabled(mediaSession.ControlSession.SourceAppUserModelId) || mediaSession != _mediaManager.GetFocusedSession()) return;
 
-            _dispatcherQueue.TryEnqueue(() =>
-                {
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            {
                     PositionChanged?.Invoke(this, new PositionChangedEventArgs(timelineProperties.Position));
                 }
             );
@@ -128,8 +128,8 @@ namespace BetterLyrics.WinUI3.Services
                 _ => false,
             };
 
-            _dispatcherQueue.TryEnqueue(() =>
-                {
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            {
                     IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
                 }
             );
@@ -184,7 +184,7 @@ namespace BetterLyrics.WinUI3.Services
 
                 if (!token.IsCancellationRequested)
                 {
-                    _dispatcherQueue.TryEnqueue(() =>
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
                         SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
                     });
@@ -215,7 +215,7 @@ namespace BetterLyrics.WinUI3.Services
             {
                 _mediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id, true));
                 _settingsService.MediaSourceProvidersInfo = _mediaSourceProvidersInfo;
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     MediaSourceProvidersInfoChanged?.Invoke(this, new MediaSourceProvidersInfoEventArgs(_mediaSourceProvidersInfo));
                 });
@@ -224,7 +224,7 @@ namespace BetterLyrics.WinUI3.Services
 
         private void SendNullMessages()
         {
-            _dispatcherQueue.TryEnqueue(() =>
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
                 _cachedSongInfo = null;
                 _cachedIsPlaying = false;
@@ -270,7 +270,7 @@ namespace BetterLyrics.WinUI3.Services
 
             var _albumArtAccentColor = ImageHelper.GetAccentColorsFromByte(bytes).FirstOrDefault();
 
-            _dispatcherQueue.TryEnqueue(() =>
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
                 AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(_albumArtSwBitmap, _albumArtAccentColor));
             });
@@ -287,7 +287,7 @@ namespace BetterLyrics.WinUI3.Services
             catch (Exception)
             {
                 _logger.LogError("Failed to start SSE connection for LX Music.");
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     App.Current.LyricsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("FailToStartLXMusicServer"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
                 });

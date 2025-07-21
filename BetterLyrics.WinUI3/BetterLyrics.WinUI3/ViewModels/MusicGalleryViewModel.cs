@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
                         {
                             Track track = new(file);
-                            _dispatcherQueue.TryEnqueue(() =>
+                            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                             {
                                 Tracks.Add(track);
                             });
@@ -102,7 +103,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                 }
 
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     IsDataLoading = false;
                 });

@@ -91,20 +91,23 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _isDockMode = message.NewValue;
                     UpdateColorConfig();
+                    UpdateImmersiveBackgroundOpacity();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
                     _isDesktopMode = message.NewValue;
                     UpdateColorConfig();
+                    UpdateImmersiveBackgroundOpacity();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
                 {
                     _isLyricsWindowLocked = message.NewValue;
+                    UpdateImmersiveBackgroundOpacity();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsMouseWithinWindow))
                 {
                     _isMouseWithinWindow = message.NewValue;
-                    _immersiveBgOpacityTransition.StartTransition(_isDesktopMode ? (_isMouseWithinWindow ? 1f : 0f) : 1f);
+                    UpdateImmersiveBackgroundOpacity();
                 }
             }
             else if (message.Sender is LyricsPageViewModel)

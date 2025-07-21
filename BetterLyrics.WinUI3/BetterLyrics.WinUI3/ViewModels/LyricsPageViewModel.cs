@@ -260,7 +260,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     if (_timelineThrottle.CanTrigger())
                     {
-                        _dispatcherQueue.TryEnqueue(() =>
+                        _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                         {
                             TimelinePositionSeconds = message.NewValue.TotalSeconds;
                         });
