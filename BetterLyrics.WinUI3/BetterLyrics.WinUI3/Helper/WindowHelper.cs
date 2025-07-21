@@ -26,15 +26,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static void ExitAllWindows()
-        {
-            while (_activeWindows.Count > 0)
-            {
-                var window = (Window)_activeWindows[0];
-                window.Close();
-            }
-        }
-
         public static T? GetWindowByWindowType<T>()
         {
             foreach (var window in _activeWindows)

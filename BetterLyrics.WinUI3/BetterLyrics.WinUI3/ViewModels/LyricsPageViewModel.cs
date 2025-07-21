@@ -49,10 +49,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsSongPlaying = _playbackService.IsPlaying;
         }
 
-        private void SystemVolumeHelper_VolumeChanged(int volume)
-        {
-            Volume = volume;
-        }
+        //private void SystemVolumeHelper_VolumeChanged(int volume)
+        //{
+        //    Volume = volume;
+        //}
 
         private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
         {
@@ -245,10 +245,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        partial void OnVolumeChanged(int value)
-        {
-            SystemVolumeHelper.SetMasterVolume(value);
-        }
+        //partial void OnVolumeChanged(int value)
+        //{
+        //    SystemVolumeHelper.SetMasterVolume(value);
+        //}
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)
         {
