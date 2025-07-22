@@ -26,6 +26,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ILibWatcherService _libWatcherService;
         private readonly MediaPlayer _mediaPlayer = new();
+        private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
 
         [ObservableProperty]
@@ -36,6 +37,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService) : base(settingsService)
         {
+            _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+            _timelineController = _mediaPlayer.TimelineController = new();
+            _timelineController.PositionChanged += TimelineController_PositionChanged;
             _smtc = _mediaPlayer.SystemMediaTransportControls;
             _mediaPlayer.CommandManager.IsEnabled = false;
             _smtc.IsEnabled = true;
@@ -44,15 +48,23 @@ namespace BetterLyrics.WinUI3.ViewModels
             _smtc.IsNextEnabled = true;
             _smtc.IsPreviousEnabled = true;
             _smtc.ButtonPressed += Smtc_ButtonPressed;
-            _smtc.PlaybackPositionChangeRequested += Smtc_PlaybackPositionChangeRequested;
 
             _libWatcherService = libWatcherService;
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
         }
 
-        private void Smtc_PlaybackPositionChangeRequested(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
+        private void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
         {
-            _mediaPlayer.TimelineController.Position = args.RequestedPlaybackPosition;
+            throw new NotImplementedException();
+        }
+
+        private void TimelineController_PositionChanged(MediaTimelineController sender, object args)
+        {
+            _smtc.UpdateTimelineProperties(new SystemMediaTransportControlsTimelineProperties()
+            {
+                Position = sender.Position,
+                EndTime = sender.Duration ?? TimeSpan.Zero
+            });
         }
 
         private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
@@ -128,8 +140,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         updater.Thumbnail = ImageHelper.ByteArrayToRandomAccessStreamReference(pictureData);
                     }
+                    _timelineController.Duration = TimeSpan.FromSeconds(track.Duration);
+                    _timelineController.Start();
                     updater.Update();
-                    _mediaPlayer.Play();
                     _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
                 }
             }

@@ -112,9 +112,8 @@ namespace BetterLyrics.WinUI3.Services
 
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
-                    PositionChanged?.Invoke(this, new PositionChangedEventArgs(timelineProperties.Position));
-                }
-            );
+                PositionChanged?.Invoke(this, new PositionChangedEventArgs(timelineProperties.Position));
+            });
         }
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)
@@ -130,8 +129,8 @@ namespace BetterLyrics.WinUI3.Services
 
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
-                    IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
-                }
+                IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
+            }
             );
         }
 
