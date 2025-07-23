@@ -133,8 +133,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     BlackPoint = new Vector2(blackX, blackY),
                 },
                 Opacity = opacity,
-            }, new Vector2(x, y)
-            );
+            }, new Vector2(x, y));
         }
 
         private void DrawForegroundImgae(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasBitmap canvasBitmap, float opacity)

@@ -337,6 +337,5 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
         }
-
     }
 }
