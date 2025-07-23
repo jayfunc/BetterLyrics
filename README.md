@@ -102,6 +102,8 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
   - Please install https://github.com/HenryPDT/mb_MediaControl before using
 - iTunes
   - Please install https://github.com/thewizrd/iTunes-SMTC before using
+- AIMP
+  - Please install https://www.aimp.ru/?do=catalog&rec_id=1097 before using
 
 ## Try it now
 
@@ -113,13 +115,13 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
 
 **Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version)
 
-☕ If you find it helpful, please consider purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
+☕ If you find it useful, please consider purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
 
-> Please note that the version in Microsoft Store may not be the latest.
+> When there's a stable version built, Microsoft Store will be the first channel to get updated.
 
 ### Google Drive
 
-Wanna try the **latest** version? get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
+Or get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
 
