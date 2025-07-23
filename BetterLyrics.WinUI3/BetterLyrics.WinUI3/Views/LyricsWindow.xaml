@@ -45,7 +45,10 @@
                     </StackPanel.OpacityTransition>
 
                     <!--  Music gallery  -->
-                    <Button Click="MusicGalleryButton_Click" Style="{StaticResource TitleBarButtonStyle}">
+                    <Button
+                        Click="MusicGalleryButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="Collapsed">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize}"
