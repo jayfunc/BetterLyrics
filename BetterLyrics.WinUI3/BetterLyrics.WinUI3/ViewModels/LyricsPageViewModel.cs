@@ -48,8 +48,14 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService = playbackService;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
             _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
+            _playbackService.TimelineChanged += PlaybackService_TimelineChanged;
 
             IsSongPlaying = _playbackService.IsPlaying;
+        }
+
+        private void PlaybackService_TimelineChanged(object? sender, Events.TimelineChangedEventArgs e)
+        {
+            SongDurationSeconds = (int)e.End.TotalSeconds;
         }
 
         //private void SystemVolumeHelper_VolumeChanged(int volume)

@@ -10,7 +10,7 @@ namespace BetterLyrics.WinUI3.Services
     public interface IPlaybackService
     {
         event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
-        event EventHandler<PositionChangedEventArgs>? PositionChanged;
+        event EventHandler<TimelineChangedEventArgs>? TimelineChanged;
         event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
         event EventHandler<AlbumArtChangedEventArgs>? AlbumArtChangedChanged;
         event EventHandler<MediaSourceProvidersInfoEventArgs>? MediaSourceProvidersInfoChanged;
