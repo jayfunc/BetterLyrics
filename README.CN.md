@@ -1,8 +1,8 @@
 > 注：以下内容使用 https://claude.ai/ 依照英文原文翻译
 
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.md">_**🌐Click here to see the English version**_</a>
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.md">_**🌐 Click here to see the English version**_</a>
 
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓点击查看常见问题（FAQ）**_</a>
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓ 点击查看常见问题（FAQ）**_</a>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
@@ -87,6 +87,7 @@ BetterLyrics
   - 请先安装 [BetterNCM 插件](https://microblock.cc/betterncm) 安装完成后如若弹出降级指引，请根据指引完成网易云音乐的降级操作（降级至 2.10.13）；
   - 之后请在 PluginMarket 内安装 InfLink 插件，安装完成后请重启网易云音乐。至此，所有预备操作均已完成，尽情享用吧！
 - 酷狗音乐
+  - 请确保酷狗音乐设置项 “支持系统播放控件，如锁屏界面” 已开启
   - 不会广播时间线信息，这意味着当您在酷狗音乐中更改播放进度时，BetterLyrics无法检测到此更改。
 - Apple Music
   - 确保您在设置中将时间线阈值设置为约600毫秒（进入"设置"-"高级选项"进行更改），否则歌词会不断前后跳动。
@@ -152,6 +153,12 @@ BetterLyrics
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
+
+## ✍️ 帮助我们翻译成您的语言
+
+找不到您的语言？
+别担心！立即开始翻译，成为贡献者！😆
+点击[链接](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)，立即通过 Crowdin 将这款应用翻译成您的语言！
 
 ## Star 历史
 

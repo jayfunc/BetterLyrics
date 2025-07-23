@@ -111,11 +111,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private async void TimelineSliderOverlay_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
-        {
-            await _playbackService.ChangePosition(e.NewValue);
-        }
-
         //private void VolumeButton_Click(object sender, RoutedEventArgs e)
         //{
         //    VolumeFlyout.ShowAt(BottomRightCommandStackPanel);
@@ -143,6 +138,11 @@ namespace BetterLyrics.WinUI3.Views
             {
                 BottomCommandFlyout.ShowAt(BottomCommandFlyoutTrigger);
             }
+        }
+
+        private void TimelineSliderOverlay_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            _playbackService.ChangePosition(TimelineSliderOverlay.Value);
         }
     }
 }

@@ -3,6 +3,7 @@
     x:Class="BetterLyrics.WinUI3.Views.MusicGalleryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:atl="using:ATL"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -10,16 +11,32 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
+    <Page.Resources>
+        <CollectionViewSource
+            x:Name="TracksByTitleCVS"
+            IsSourceGrouped="True"
+            Source="{x:Bind ViewModel.TracksByTitle, Mode=OneWay}" />
+    </Page.Resources>
 
     <Grid>
-        <Grid Padding="0,12,0,0">
+        <Grid Margin="0,12,0,0">
+            <AutoSuggestBox
+                x:Name="SongSearchBox"
+                Margin="36,0"
+                VerticalAlignment="Top"
+                PlaceholderText="搜索歌曲"
+                QueryIcon="Find"
+                QuerySubmitted="SongSearchBox_QuerySubmitted"
+                SuggestionChosen="SongSearchBox_SuggestionChosen"
+                TextChanged="SongSearchBox_TextChanged" />
 
             <controls:Segmented
                 x:Name="Segmented"
-                Margin="36,0"
+                Margin="36,48,36,0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
                 SelectedIndex="0"
@@ -49,121 +66,136 @@
                 <controls:SegmentedItem Content="艺术家" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
             </controls:Segmented>
 
-            <controls:OpacityMaskView Margin="0,36,0,0" HorizontalContentAlignment="Stretch">
-                <controls:OpacityMaskView.OpacityMask>
-                    <Rectangle>
-                        <Rectangle.Fill>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Offset="0" Color="Transparent" />
-                                <GradientStop Offset="0.05" Color="White" />
-                                <GradientStop Offset="0.95" Color="White" />
-                                <GradientStop Offset="1" Color="Transparent" />
-                            </LinearGradientBrush>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </controls:OpacityMaskView.OpacityMask>
-                <Grid>
-                    <ScrollViewer>
-                        <controls:SwitchPresenter Padding="36,6" Value="{Binding ElementName=Segmented, Path=Tag, Mode=OneWay}">
-                            <controls:SwitchPresenter.ContentTransitions>
-                                <TransitionCollection>
-                                    <PopupThemeTransition />
-                                </TransitionCollection>
-                            </controls:SwitchPresenter.ContentTransitions>
+            <controls:SwitchPresenter Margin="0,96,0,0" Value="{Binding ElementName=Segmented, Path=Tag, Mode=OneWay}">
+                <controls:SwitchPresenter.ContentTransitions>
+                    <TransitionCollection>
+                        <PopupThemeTransition />
+                    </TransitionCollection>
+                </controls:SwitchPresenter.ContentTransitions>
 
-                            <controls:Case Value="Song">
-                                <ListView ItemsSource="{x:Bind ViewModel.Tracks, Mode=OneWay}" SelectionChanged="SongListView_SelectionChanged">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            <Setter Property="Margin" Value="0" />
-                                            <Setter Property="Padding" Value="0" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Padding="12">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="2*" />
-                                                    <!--  歌曲名  -->
-                                                    <ColumnDefinition Width="1.5*" />
-                                                    <!--  歌手名  -->
-                                                    <ColumnDefinition Width="1.5*" />
-                                                    <!--  专辑名  -->
-                                                    <ColumnDefinition Width="1*" />
-                                                    <!--  年份  -->
-                                                    <ColumnDefinition Width="1.2*" />
-                                                    <!--  流派  -->
-                                                    <ColumnDefinition Width="1*" />
-                                                    <!--  歌曲时长  -->
-                                                </Grid.ColumnDefinitions>
+                <controls:Case Value="Song">
+                    <SemanticZoom>
+                        <SemanticZoom.ZoomedInView>
+                            <GridView
+                                ItemsSource="{x:Bind TracksByTitleCVS.View, Mode=OneWay}"
+                                ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                                SelectionMode="None">
+                                <GridView.GroupStyle>
+                                    <GroupStyle />
+                                </GridView.GroupStyle>
+                            </GridView>
+                        </SemanticZoom.ZoomedInView>
 
+                        <SemanticZoom.ZoomedOutView>
+                            <ListView ItemsSource="{x:Bind TracksByTitleCVS.View.CollectionGroups, Mode=OneWay}" SelectionChanged="SongListView_SelectionChanged">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel AreStickyGroupHeadersEnabled="True" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate x:DataType="models:GroupInfoList">
+                                                <Border AutomationProperties.AccessibilityView="Raw">
+                                                    <TextBlock
+                                                        AutomationProperties.AccessibilityView="Raw"
+                                                        Style="{ThemeResource TitleTextBlockStyle}"
+                                                        Text="{x:Bind Key}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                    </GroupStyle>
+                                </ListView.GroupStyle>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="Padding" Value="36,0" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="atl:Track">
+                                        <Grid Padding="12">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="2*" />
                                                 <!--  歌曲名  -->
-                                                <TextBlock
-                                                    Grid.Column="0"
-                                                    VerticalAlignment="Center"
-                                                    Text="{Binding Title}"
-                                                    TextWrapping="Wrap" />
-
+                                                <ColumnDefinition Width="1.5*" />
                                                 <!--  歌手名  -->
-                                                <TextBlock
-                                                    Grid.Column="1"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                    Text="{Binding Artist}"
-                                                    TextWrapping="Wrap" />
-
+                                                <ColumnDefinition Width="1.5*" />
                                                 <!--  专辑名  -->
-                                                <TextBlock
-                                                    Grid.Column="2"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                    Text="{Binding Album}"
-                                                    TextWrapping="Wrap" />
-
+                                                <ColumnDefinition Width="1*" />
                                                 <!--  年份  -->
-                                                <TextBlock
-                                                    Grid.Column="3"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                    Text="{Binding Year}"
-                                                    TextWrapping="Wrap" />
-
+                                                <ColumnDefinition Width="1.2*" />
                                                 <!--  流派  -->
-                                                <TextBlock
-                                                    Grid.Column="4"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                    Text="{Binding Genre}"
-                                                    TextWrapping="Wrap" />
-
+                                                <ColumnDefinition Width="1*" />
                                                 <!--  歌曲时长  -->
-                                                <TextBlock
-                                                    Grid.Column="5"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                    Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
-                                                    TextAlignment="Right"
-                                                    TextWrapping="Wrap" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </controls:Case>
+                                            </Grid.ColumnDefinitions>
 
-                            <controls:Case Value="Album">
-                                <ListView />
-                            </controls:Case>
+                                            <!--  歌曲名  -->
+                                            <TextBlock
+                                                Grid.Column="0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Title}"
+                                                TextWrapping="Wrap" />
 
-                            <controls:Case Value="Artist">
-                                <ListView />
-                            </controls:Case>
+                                            <!--  歌手名  -->
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{Binding Artist}"
+                                                TextWrapping="Wrap" />
 
-                        </controls:SwitchPresenter>
+                                            <!--  专辑名  -->
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                VerticalAlignment="Center"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{Binding Album}"
+                                                TextWrapping="Wrap" />
 
-                    </ScrollViewer>
-                </Grid>
-            </controls:OpacityMaskView>
+                                            <!--  年份  -->
+                                            <TextBlock
+                                                Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{Binding Year}"
+                                                TextWrapping="Wrap" />
+
+                                            <!--  流派  -->
+                                            <TextBlock
+                                                Grid.Column="4"
+                                                VerticalAlignment="Center"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{Binding Genre}"
+                                                TextWrapping="Wrap" />
+
+                                            <!--  歌曲时长  -->
+                                            <TextBlock
+                                                Grid.Column="5"
+                                                VerticalAlignment="Center"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                                                TextAlignment="Right"
+                                                TextWrapping="Wrap" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </SemanticZoom.ZoomedOutView>
+                    </SemanticZoom>
+                </controls:Case>
+
+                <controls:Case Value="Album">
+                    <ListView />
+                </controls:Case>
+
+                <controls:Case Value="Artist">
+                    <ListView />
+                </controls:Case>
+
+            </controls:SwitchPresenter>
         </Grid>
 
         <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" Visibility="{x:Bind ViewModel.IsDataLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -184,6 +216,5 @@
             </Grid>
             <ProgressRing IsActive="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}" />
         </Grid>
-
     </Grid>
 </Page>

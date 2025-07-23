@@ -302,7 +302,7 @@
                                 <Grid.Resources>
                                     <Style x:Key="SliderThumbStyle" TargetType="Thumb">
                                         <Setter Property="BorderThickness" Value="0" />
-                                        <Setter Property="Background" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+                                        <Setter Property="Background" Value="Transparent" />
                                         <Setter Property="Template">
                                             <Setter.Value>
                                                 <ControlTemplate TargetType="Thumb">
@@ -354,12 +354,12 @@
                                             x:Name="HorizontalTrackRect"
                                             Grid.Row="1"
                                             Grid.ColumnSpan="3"
-                                            Height="2"
-                                            Fill="{TemplateBinding Background}" />
+                                            Height="8"
+                                            Fill="Transparent" />
                                         <Rectangle
                                             x:Name="HorizontalDecreaseRect"
                                             Grid.Row="1"
-                                            Fill="{TemplateBinding Foreground}" />
+                                            Fill="Transparent" />
                                         <TickBar
                                             x:Name="TopTickBar"
                                             Grid.ColumnSpan="3"
@@ -372,7 +372,7 @@
                                             x:Name="HorizontalInlineTickBar"
                                             Grid.Row="1"
                                             Grid.ColumnSpan="3"
-                                            Height="2"
+                                            Height="8"
                                             Fill="{ThemeResource SliderInlineTickBarFill}"
                                             Visibility="Collapsed" />
                                         <TickBar
@@ -389,8 +389,8 @@
                                             Grid.Row="0"
                                             Grid.RowSpan="3"
                                             Grid.Column="1"
-                                            Width="2"
-                                            Height="2"
+                                            Width="8"
+                                            Height="8"
                                             AutomationProperties.AccessibilityView="Raw"
                                             DataContext="{TemplateBinding Value}"
                                             FocusVisualMargin="-14,-6,-14,-6"
@@ -452,7 +452,7 @@
                                             Grid.Row="1"
                                             Grid.Column="0"
                                             Grid.ColumnSpan="3"
-                                            Width="24"
+                                            Width="8"
                                             Height="8"
                                             AutomationProperties.AccessibilityView="Raw"
                                             DataContext="{TemplateBinding Value}"

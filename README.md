@@ -1,6 +1,6 @@
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md">_**🌐点此处查看中文说明**_</a>
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md">_**🌐 点此处查看中文说明**_</a>
 
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓Click here to view frequently asked questions (FAQ)**_</a>
+<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓ Click here to view frequently asked questions (FAQ)**_</a>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
@@ -85,6 +85,7 @@ Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https:
   - Please install the [BetterNCM plugin](https://microblock.cc/betterncm) first. If a downgrade guide pops up after the installation, please follow the guide to complete the downgrade of NetEase Cloud Music (downgrade to 2.10.13);
   - After that, please install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed, enjoy it!
 - Kugou Music
+  - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
   - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change. 
 - Apple Music
   - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
@@ -150,6 +151,12 @@ Wanna try the **latest** version? get it from Google Drive (see [release](https:
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
+
+## ✍️ Help us translate into your language
+
+Cannot find your language?
+Don't worry! Start translating and become one of the contributors! 😆
+Click the [link](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866) to translate this app into your language via Crowdin now!
 
 ## Star History
 
