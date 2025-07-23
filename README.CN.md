@@ -101,9 +101,11 @@ BetterLyrics
   - 请确保您已在 LX 音乐设置页面启用“开放 API”
   - 然后打开 BetterLyrics，进入设置，点击“高级选项”，输入您的 LX 音乐服务器地址（例如 http://127.0.0.1:23330）即可
 - MusicBee
-  - 使用前请安装 https://github.com/HenryPDT/mb_MediaControl
+  - 请先安装 https://github.com/HenryPDT/mb_MediaControl
 - iTunes
-  - 请安装 https://github.com/thewizrd/iTunes-SMTC
+  - 请先安装 https://github.com/thewizrd/iTunes-SMTC
+- AIMP
+  - 请先安装 https://www.aimp.ru/?do=catalog&rec_id=1097
 
 ## 立即下载体验
 
@@ -115,13 +117,13 @@ BetterLyrics
 
 **最简单**的获取方式，**无限制**免费试用或购买（免费版与付费版**功能完全相同**）
 
-☕ 如果您觉得有用，请考虑在**Microsoft Store**中购买支持🧧，我会非常感激的！🥰
+☕ 如果您觉得本软件好用，请考虑在 **Microsoft Store** 中购买支持开发者 🧧，非常感谢您的支持！🥰
 
-> 请注意，Microsoft Store中的版本可能不是最新版本。
+> 稳定版本发布时，Microsoft Store 将永远是第一个收到更新的渠道。
 
 ### Google Drive
 
-想要体验**最新**版本？从Google Drive获取（请查看[发布页面](https://github.com/jayfunc/BetterLyrics/releases)获取链接）
+或从 Google Drive 获取（请查看[发布页面](https://github.com/jayfunc/BetterLyrics/releases)获取链接）
 
 > 请注意您下载的是".zip"文件，安装指南请参考[此文档](How2Install/How2Install.md)。
 
