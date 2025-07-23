@@ -335,7 +335,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isPlaying = e.IsPlaying;
         }
 
-        private void PlaybackService_PositionChanged(object? sender, PositionChangedEventArgs e)
+        private void PlaybackService_TimelineChanged(object? sender, TimelineChangedEventArgs e)
         {
             if (Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds) >= _timelineSyncThreshold)
             {

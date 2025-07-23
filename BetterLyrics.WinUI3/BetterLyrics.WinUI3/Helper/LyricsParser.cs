@@ -109,7 +109,12 @@ namespace BetterLyrics.WinUI3.Helper
 
             // 按时间分组
             var grouped = lrcLines.GroupBy(l => l.time).OrderBy(g => g.Key).ToList();
-            int languageCount = grouped.Max(g => g.Count());
+            int languageCount = 0;
+            if (grouped != null && grouped.Count > 0)
+            {
+                // 计算最大语言数量
+                languageCount = grouped.Max(g => g.Count());
+            }
 
             // 初始化每种语言的歌词列表
             _lyricsDataArr.Clear();
