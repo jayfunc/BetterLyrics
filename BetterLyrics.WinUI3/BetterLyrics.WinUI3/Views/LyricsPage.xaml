@@ -345,11 +345,11 @@
                     Margin="0,-32,0,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
-                    Maximum="{x:Bind ViewModel.SongDurationSeconds, Mode=OneWay}"
+                    Maximum="{Binding ElementName=TimelineSlider, Path=Maximum}"
                     Minimum="0"
                     Style="{StaticResource TransparentSliderStyle}"
-                    ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
-                    ValueChanged="TimelineSliderOverlay_ValueChanged" />
+                    Tapped="TimelineSliderOverlay_Tapped"
+                    ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}" />
             </Grid>
 
         </Grid>

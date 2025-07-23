@@ -28,16 +28,16 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
+        private List<Track> _tracks = [];
 
         [ObservableProperty]
-        public partial ObservableCollection<Track> Tracks { get; set; } = [];
+        public partial ObservableCollection<GroupInfoList> TracksByTitle { get; set; } = [];
 
         [ObservableProperty]
         public partial bool IsDataLoading { get; set; } = false;
 
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService) : base(settingsService)
         {
-            _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             _timelineController = _mediaPlayer.TimelineController = new();
             _timelineController.PositionChanged += TimelineController_PositionChanged;
             _smtc = _mediaPlayer.SystemMediaTransportControls;
@@ -51,11 +51,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _libWatcherService = libWatcherService;
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
-        }
-
-        private void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
-        {
-            throw new NotImplementedException();
         }
 
         private void TimelineController_PositionChanged(MediaTimelineController sender, object args)
@@ -96,7 +91,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public void RefreshSongs()
         {
             IsDataLoading = true;
-            Tracks.Clear();
+            _tracks.Clear();
 
             Task.Run(() =>
             {
@@ -109,7 +104,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                             Track track = new(file);
                             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                             {
-                                Tracks.Add(track);
+                                _tracks.Add(track);
                             });
                         }
                     }
@@ -117,6 +112,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
+                    TracksByTitle.AddRange(_tracks.GetGroupedByTitleAsync());
                     IsDataLoading = false;
                 });
             });
@@ -126,7 +122,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (index.HasValue)
             {
-                var track = Tracks.ElementAtOrDefault(index.Value);
+                var track = _tracks.ElementAtOrDefault(index.Value);
                 if (track != null)
                 {
                     _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));

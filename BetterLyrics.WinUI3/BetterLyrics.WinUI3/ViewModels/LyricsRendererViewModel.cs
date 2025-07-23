@@ -446,10 +446,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else
                 {
+                    string translated = string.Empty;
                     try
                     {
-                        var translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
-                        token.ThrowIfCancellationRequested();
+                        translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
+                        if (translated == string.Empty) return;
+
                         if (_showTranslationOnly)
                         {
                             _lyricsDataArr[^1] = _lyricsDataArr[0].CreateLyricsDataFrom(translated);
@@ -461,6 +463,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                             _lyricsDataArr[0].SetDisplayedTextAlongWith(translated);
                             _langIndex = 0;
                         }
+                        token.ThrowIfCancellationRequested();
                     }
                     catch (Exception) { }
                 }

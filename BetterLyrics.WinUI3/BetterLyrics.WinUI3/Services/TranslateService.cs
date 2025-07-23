@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Services
         {
             if (string.IsNullOrWhiteSpace(text))
             {
-                throw new ArgumentException("Text and target language must be provided.");
+                throw new Exception(text + " is empty or null.");
             }
 
             string? originalLangCode = LanguageHelper.DetectLanguageCode(text);
@@ -47,15 +47,7 @@ namespace BetterLyrics.WinUI3.Services
 
             if (string.IsNullOrEmpty(_settingsService.LibreTranslateServer))
             {
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                {
-                    App.Current.LyricsWindowNotificationPanel?.Notify(
-                        App.ResourceLoader!.GetString("TranslateServerNotSet"),
-                        Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning
-                    );
-                });
-
-                throw new InvalidOperationException("LibreTranslate server URL is not configured.");
+                throw new Exception("LibreTranslate server URL is not set in settings.");
             }
 
             var url = $"{_settingsService.LibreTranslateServer}/translate";
