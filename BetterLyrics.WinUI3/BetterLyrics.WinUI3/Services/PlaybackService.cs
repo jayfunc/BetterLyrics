@@ -130,8 +130,6 @@ namespace BetterLyrics.WinUI3.Services
                 _ => false,
             };
 
-            MediaManager_OnAnyTimelinePropertyChanged(mediaSession, mediaSession.ControlSession.GetTimelineProperties());
-
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
                 IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
@@ -174,7 +172,6 @@ namespace BetterLyrics.WinUI3.Services
                 if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
                 {
                     _SMTCAlbumArtBytes = await ImageHelper.ToByteArrayAsync(streamReference);
-                    token.ThrowIfCancellationRequested();
                 }
                 else
                 {
@@ -193,9 +190,6 @@ namespace BetterLyrics.WinUI3.Services
                         SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
                     });
                 }
-                MediaManager_OnAnyTimelinePropertyChanged(mediaSession, mediaSession.ControlSession.GetTimelineProperties());
-                MediaManager_OnAnyPlaybackStateChanged(mediaSession, mediaSession.ControlSession.GetPlaybackInfo());
-
             }).ConfigureAwait(false);
         }
 
@@ -252,6 +246,8 @@ namespace BetterLyrics.WinUI3.Services
 
             var mediaProps = await _focusedSession.ControlSession.TryGetMediaPropertiesAsync();
             MediaManager_OnAnyMediaPropertyChanged(_focusedSession, mediaProps);
+            MediaManager_OnAnyPlaybackStateChanged(_focusedSession, _focusedSession.ControlSession.GetPlaybackInfo());
+            MediaManager_OnAnyTimelinePropertyChanged(_focusedSession, _focusedSession.ControlSession.GetTimelineProperties());
         }
 
         private async Task UpdateAlbumArtRelated(CancellationToken token)
