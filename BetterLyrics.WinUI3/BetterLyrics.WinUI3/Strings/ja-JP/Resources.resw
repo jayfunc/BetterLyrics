@@ -794,7 +794,7 @@
     <value>タイトルバーをページ全体に拡張して、ウィンドウを非対話領域でドラッグできるようにします</value>
   </data>
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>アクリル模倣効果の粗さ</value>
+    <value>仿亚克力效果粗糙度</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音楽ギャラリー</value>
