@@ -796,4 +796,7 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音乐库</value>
   </data>
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>Acrylic effect roughness</value>
+  </data>
 </root>

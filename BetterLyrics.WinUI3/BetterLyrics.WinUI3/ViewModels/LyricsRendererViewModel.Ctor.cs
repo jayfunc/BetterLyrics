@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
             _albumArtBgOpacity = _settingsService.CoverOverlayOpacity;
             _albumArtBgBlurAmount = _settingsService.CoverOverlayBlurAmount;
+            _coverAcrylicEffectAmount = _settingsService.CoverAcrylicEffectAmount;
 
             _lyricsBgFontColorType = _settingsService.LyricsBgFontColorType;
             _lyricsFgFontColorType = _settingsService.LyricsFgFontColorType;
