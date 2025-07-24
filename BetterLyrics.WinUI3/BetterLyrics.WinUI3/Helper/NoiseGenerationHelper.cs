@@ -20,18 +20,36 @@ namespace BetterLyrics.WinUI3.Helper
         static readonly string NoiseOverlayFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Assets", NoiseOverlayFileName);
 
         /// <summary>
+        /// 生成 BGRA 格式的灰阶噪声像素数据
+        /// </summary>
+        public static byte[] GenerateNoiseBitmapBGRA(int width, int height)
+        {
+            var random = new Random();
+            var pixelData = new byte[width * height * 4];
+            for (int i = 0; i < width * height; i++)
+            {
+                byte gray = (byte)random.Next(0, 256);
+                pixelData[i * 4 + 0] = gray; // B
+                pixelData[i * 4 + 1] = gray; // G
+                pixelData[i * 4 + 2] = gray; // R
+                pixelData[i * 4 + 3] = 255;  // A
+            }
+            return pixelData;
+        }
+
+        /// <summary>
         /// 生成单色灰阶随机噪声
         /// </summary>
         /// <param name="outputPath">输出文件路径</param>
         /// <param name="width">图片宽度</param>
         /// <param name="height">图片高度</param>
-        public static async Task<BitmapFile> GenerateNoiseBitmapAsync(int width, int height)
+        public static BitmapFile GenerateNoiseBitmap(int width, int height)
         {
             const uint NumOfGrayscale = 16;
             uint bitCount = NextPowerOfTwo((uint)Math.Round(Math.Sqrt(NumOfGrayscale)));
 
             var palette = BitmapFileCreator.CreateGrayscalePalette(16);
-            var pixelData = await GenerateRandomNoise(width, height, bitCount);
+            var pixelData = GenerateRandomNoise(width, height, bitCount);
 
             var fileHeader = BitmapFileCreator.CreateFileHeader(palette, pixelData);
             var infoHeader = BitmapFileCreator.CreateInfoHeader(width, height, bitCount);
@@ -95,16 +113,16 @@ namespace BetterLyrics.WinUI3.Helper
         /// <param name="height">填充高度</param>
         /// <param name="bitCount">单个调色盘索引所占比特位数</param>
         /// <returns>字节数据</returns>
-        private static Task<byte[]> GenerateRandomNoise(int width, int height, uint bitCount)
+        private static byte[] GenerateRandomNoise(int width, int height, uint bitCount)
         {
             // 创建位图行字节数，4K 对齐
             int rowSize = ((width * (int)bitCount + 31) >> 5) << 2;
 
             // 创建随机位图数据
             Random rnd = new();
-            return Task.Run(() => Enumerable.Range(0, rowSize * height)
+            return Enumerable.Range(0, rowSize * height)
                 .Select(i => (byte)rnd.Next(0x00, 0xFF))
-                .ToArray());
+                .ToArray();
         }
 
         private static uint NextPowerOfTwo(uint value)
