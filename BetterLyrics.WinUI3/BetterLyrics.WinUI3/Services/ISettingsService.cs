@@ -19,6 +19,7 @@ namespace BetterLyrics.WinUI3.Services
         int CoverOverlayBlurAmount { get; set; }
         int CoverOverlayOpacity { get; set; }
         bool IsDynamicCoverOverlayEnabled { get; set; }
+        int CoverAcrylicEffectAmount { get; set; }
         bool IsFanLyricsEnabled { get; set; }
         bool IsFirstRun { get; set; }
         bool IsLyricsGlowEffectEnabled { get; set; }

@@ -46,6 +46,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private CanvasBitmap? _lastAlbumArtCanvasBitmap = null;
         private CanvasBitmap? _albumArtCanvasBitmap = null;
 
+        private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
+
         private float _albumArtSize = 0f;
         private int _albumArtCornerRadius = 0;
 
@@ -184,6 +186,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int _albumArtBgBlurAmount;
         private int _albumArtBgOpacity;
+
+        private int _coverAcrylicEffectAmount;
 
         [ObservableProperty]
         public partial bool IsTranslating { get; set; } = false;
