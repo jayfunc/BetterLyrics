@@ -793,6 +793,9 @@
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>비 중과 영역에서 창을 드래그 할 수 있도록 제목 표시 줄을 전체 페이지로 확장하십시오.</value>
   </data>
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>아크릴 효과 모방 거칠기</value>
+  </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리</value>
   </data>

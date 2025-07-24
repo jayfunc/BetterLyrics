@@ -30,6 +30,8 @@ namespace BetterLyrics.WinUI3.Services
         private const string CoverOverlayOpacityKey = "CoverOverlayOpacity";
         private const string IsCoverOverlayEnabledKey = "IsCoverOverlayEnabled";
 
+        private const string CoverAcrylicEffectAmountKey = "CoverAcrylicEffectAmount";
+
         private const string DesktopWindowLeftKey = "DesktopWindowLeft";
         private const string DesktopWindowTopKey = "DesktopWindowTop";
         private const string DesktopWindowWidthKey = "DesktopWindowWidth";
@@ -181,6 +183,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(CoverOverlayOpacityKey, 100); // 100 % = 1.0
             SetDefault(CoverOverlayBlurAmountKey, 100);
             SetDefault(CoverImageRadiusKey, 12); // 12 %
+            SetDefault(CoverAcrylicEffectAmountKey, 0);
             // Lyrics
             SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Center);
             SetDefault(SongInfoAlignmentTypeKey, (int)TextAlignmentType.Left);
@@ -394,6 +397,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(IsDynamicCoverOverlayEnabledKey);
             set => SetValue(IsDynamicCoverOverlayEnabledKey, value);
+        }
+
+        public int CoverAcrylicEffectAmount
+        {
+            get => GetValue<int>(CoverAcrylicEffectAmountKey);
+            set => SetValue(CoverAcrylicEffectAmountKey, value);
         }
 
         public bool IsFanLyricsEnabled
