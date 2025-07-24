@@ -1,10 +1,12 @@
 ﻿using ATL;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -29,28 +31,59 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
         private List<Track> _tracks = [];
+        private List<Track> _filteredTracks = [];
 
         [ObservableProperty]
-        public partial ObservableCollection<GroupInfoList> TracksByTitle { get; set; } = [];
+        public partial bool IsLocalMediaNotFound { get; set; }
+
+        [ObservableProperty]
+        public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
+
+        [ObservableProperty]
+        public partial ObservableCollection<Track> TrackSearchSuggestions { get; set; } = [];
+
+        [ObservableProperty]
+        public partial SongOrderType SongOrderType { get; set; } = SongOrderType.Title;
 
         [ObservableProperty]
         public partial bool IsDataLoading { get; set; } = false;
 
+        [ObservableProperty]
+        public partial Track TrackRightTapped { get; set; } = new();
+
+        [ObservableProperty]
+        public partial int SelectedSongIndex { get; set; } = -1;
+
+        [ObservableProperty]
+        public partial string SongSearchQuery { get; set; } = string.Empty;
+
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService) : base(settingsService)
         {
+            _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             _timelineController = _mediaPlayer.TimelineController = new();
             _timelineController.PositionChanged += TimelineController_PositionChanged;
             _smtc = _mediaPlayer.SystemMediaTransportControls;
             _mediaPlayer.CommandManager.IsEnabled = false;
-            _smtc.IsEnabled = true;
             _smtc.IsPlayEnabled = true;
             _smtc.IsPauseEnabled = true;
             _smtc.IsNextEnabled = true;
             _smtc.IsPreviousEnabled = true;
             _smtc.ButtonPressed += Smtc_ButtonPressed;
+            _smtc.PlaybackPositionChangeRequested += Smtc_PlaybackPositionChangeRequested;
 
             _libWatcherService = libWatcherService;
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
+        }
+
+        private void Smtc_PlaybackPositionChangeRequested(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
+        {
+            _timelineController.Position = args.RequestedPlaybackPosition;
+        }
+
+        private void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
+        {
+            _timelineController.Start();
+            _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
         }
 
         private void TimelineController_PositionChanged(MediaTimelineController sender, object args)
@@ -58,7 +91,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _smtc.UpdateTimelineProperties(new SystemMediaTransportControlsTimelineProperties()
             {
                 Position = sender.Position,
-                EndTime = sender.Duration ?? TimeSpan.Zero
+                EndTime = _mediaPlayer.PlaybackSession.NaturalDuration
             });
         }
 
@@ -68,14 +101,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 case SystemMediaTransportControlsButton.Play:
                     _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
-                    _mediaPlayer.Play();
+                    _timelineController.Resume();
                     break;
                 case SystemMediaTransportControlsButton.Pause:
                     _smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
-                    _mediaPlayer.Pause();
+                    _timelineController.Pause();
                     break;
                 case SystemMediaTransportControlsButton.Next:
-                    //Next
                     break;
                 case SystemMediaTransportControlsButton.Previous:
                     //Previous
@@ -90,58 +122,108 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void RefreshSongs()
         {
-            IsDataLoading = true;
-            _tracks.Clear();
-
-            Task.Run(() =>
+            _dispatcherQueueTimer.Debounce(() =>
             {
-                foreach (var folder in _settingsService.LocalMediaFolders)
+                IsDataLoading = true;
+                _tracks.Clear();
+
+                Task.Run(() =>
                 {
-                    if (Directory.Exists(folder.Path) && folder.IsEnabled)
+                    foreach (var folder in _settingsService.LocalMediaFolders)
                     {
-                        foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
+                        if (Directory.Exists(folder.Path) && folder.IsEnabled)
                         {
-                            Track track = new(file);
-                            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                            foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
                             {
+                                Track track = new(file);
+                                if (track.Duration <= 0) continue;
                                 _tracks.Add(track);
-                            });
+                            }
                         }
                     }
-                }
 
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                {
-                    TracksByTitle.AddRange(_tracks.GetGroupedByTitleAsync());
-                    IsDataLoading = false;
+                    ApplySongSearchQuery();
+
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        IsLocalMediaNotFound = !_filteredTracks.Any();
+                        ApplySongOrderType();
+                        IsDataLoading = false;
+                    });
                 });
-            });
+            }, TimeSpan.FromMilliseconds(100));
         }
 
-        public void PlaySongAt(int? index)
+        public void ApplySongSearchQuery()
         {
-            if (index.HasValue)
+            if (string.IsNullOrWhiteSpace(SongSearchQuery))
             {
-                var track = _tracks.ElementAtOrDefault(index.Value);
-                if (track != null)
-                {
-                    _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
-                    var updater = _smtc.DisplayUpdater;
-                    updater.AppMediaId = Package.Current.Id.FullName;
-                    updater.Type = MediaPlaybackType.Music;
-                    updater.MusicProperties.Title = track.Title;
-                    updater.MusicProperties.Artist = track.Artist;
-                    updater.MusicProperties.AlbumTitle = track.Album;
-                    if (track.EmbeddedPictures.FirstOrDefault()?.PictureData is byte[] pictureData)
-                    {
-                        updater.Thumbnail = ImageHelper.ByteArrayToRandomAccessStreamReference(pictureData);
-                    }
-                    _timelineController.Duration = TimeSpan.FromSeconds(track.Duration);
-                    _timelineController.Start();
-                    updater.Update();
-                    _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
-                }
+                _filteredTracks = _tracks;
+                return;
             }
+            _filteredTracks = new List<Track>(
+                _tracks.Where(t => t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                                   t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                                   t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase))
+            );
+        }
+
+        private void ApplySongOrderType()
+        {
+            switch (SongOrderType)
+            {
+                case SongOrderType.Title:
+                    GroupedTracks = _filteredTracks.GetGroupedBy(
+                        t => LanguageHelper.GetOrderChar(t.Title),
+                        o => ((Track)o).Title
+                    );
+                    break;
+                case SongOrderType.Artist:
+                    GroupedTracks = _filteredTracks.GetGroupedBy(
+                        t => LanguageHelper.GetOrderChar(t.Artist),
+                        o => ((Track)o).Artist
+                    );
+                    break;
+                case SongOrderType.Album:
+                    GroupedTracks = _filteredTracks.GetGroupedBy(
+                        t => LanguageHelper.GetOrderChar(t.Album),
+                        o => ((Track)o).Album
+                    );
+                    break;
+            }
+            SelectedSongIndex = -1;
+        }
+
+        public void PlayTrack(Track? track)
+        {
+            if (track == null) return;
+
+            _smtc.IsEnabled = true;
+            _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
+            var updater = _smtc.DisplayUpdater;
+            updater.AppMediaId = Package.Current.Id.FullName;
+            updater.Type = MediaPlaybackType.Music;
+            updater.MusicProperties.Title = track.Title;
+            updater.MusicProperties.Artist = track.Artist;
+            updater.MusicProperties.AlbumTitle = track.Album;
+            if (track.EmbeddedPictures.FirstOrDefault()?.PictureData is byte[] pictureData)
+            {
+                updater.Thumbnail = ImageHelper.ByteArrayToRandomAccessStreamReference(pictureData);
+            }
+            updater.Update();
+        }
+
+        partial void OnSongOrderTypeChanged(SongOrderType value)
+        {
+            ApplySongOrderType();
+            IsLocalMediaNotFound = !_filteredTracks.Any();
+        }
+
+        partial void OnSongSearchQueryChanged(string value)
+        {
+            ApplySongSearchQuery();
+            IsLocalMediaNotFound = !_filteredTracks.Any();
+            ApplySongOrderType();
         }
 
         public void Receive(PropertyChangedMessage<ObservableCollection<LocalMediaFolder>> message)

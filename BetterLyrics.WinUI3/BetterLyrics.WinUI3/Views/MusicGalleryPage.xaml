@@ -12,190 +12,370 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:templateselector="using:BetterLyrics.WinUI3.TemplateSelector"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
     Loaded="Page_Loaded"
     mc:Ignorable="d">
     <Page.Resources>
+        <DataTemplate x:Key="ByTitleTemplate" x:DataType="atl:Track">
+            <Grid
+                Padding="12"
+                RightTapped="SongListVireItemGrid_RightTapped"
+                Tapped="SongListVireItemGrid_Tapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1.2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  歌曲名  -->
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{Binding Title}"
+                    TextWrapping="Wrap" />
+
+                <!--  歌手名  -->
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Artist}"
+                    TextWrapping="Wrap" />
+
+                <!--  专辑名  -->
+                <TextBlock
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Album}"
+                    TextWrapping="Wrap" />
+
+                <!--  年份  -->
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Year}"
+                    TextWrapping="Wrap" />
+
+                <!--  流派  -->
+                <TextBlock
+                    Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Genre}"
+                    TextWrapping="Wrap" />
+
+                <!--  歌曲时长  -->
+                <TextBlock
+                    Grid.Column="5"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextAlignment="Right"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ByAlbumTemplate" x:DataType="atl:Track">
+            <Grid
+                Padding="12"
+                RightTapped="SongListVireItemGrid_RightTapped"
+                Tapped="SongListVireItemGrid_Tapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1.2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  专辑名  -->
+                <TextBlock
+                    Grid.Column="0"
+                    Text="{Binding Album}"
+                    TextWrapping="Wrap" />
+
+                <!--  歌曲名  -->
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Title}"
+                    TextWrapping="Wrap" />
+
+                <!--  歌手名  -->
+                <TextBlock
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Artist}"
+                    TextWrapping="Wrap" />
+
+
+                <!--  年份  -->
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Year}"
+                    TextWrapping="Wrap" />
+
+                <!--  流派  -->
+                <TextBlock
+                    Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Genre}"
+                    TextWrapping="Wrap" />
+
+                <!--  歌曲时长  -->
+                <TextBlock
+                    Grid.Column="5"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextAlignment="Right"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ByArtistTemplate" x:DataType="atl:Track">
+            <Grid
+                Padding="12"
+                RightTapped="SongListVireItemGrid_RightTapped"
+                Tapped="SongListVireItemGrid_Tapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1.5*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1.2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  歌手名  -->
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{Binding Artist}"
+                    TextWrapping="Wrap" />
+
+                <!--  歌曲名  -->
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Title}"
+                    TextWrapping="Wrap" />
+
+                <!--  专辑名  -->
+                <TextBlock
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Album}"
+                    TextWrapping="Wrap" />
+
+                <!--  年份  -->
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Year}"
+                    TextWrapping="Wrap" />
+
+                <!--  流派  -->
+                <TextBlock
+                    Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Genre}"
+                    TextWrapping="Wrap" />
+
+                <!--  歌曲时长  -->
+                <TextBlock
+                    Grid.Column="5"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextAlignment="Right"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+        <templateselector:SongOrderTemplateSelector
+            x:Key="SongOrderTemplateSelector"
+            ByAlbumTemplate="{StaticResource ByAlbumTemplate}"
+            ByArtistTemplate="{StaticResource ByArtistTemplate}"
+            ByTitleTemplate="{StaticResource ByTitleTemplate}"
+            SongOrderType="{x:Bind ViewModel.SongOrderType, Mode=OneWay}" />
+
         <CollectionViewSource
             x:Name="TracksByTitleCVS"
             IsSourceGrouped="True"
-            Source="{x:Bind ViewModel.TracksByTitle, Mode=OneWay}" />
+            Source="{x:Bind ViewModel.GroupedTracks, Mode=OneWay}" />
     </Page.Resources>
 
     <Grid>
-        <Grid Margin="0,12,0,0">
-            <AutoSuggestBox
-                x:Name="SongSearchBox"
-                Margin="36,0"
-                VerticalAlignment="Top"
-                PlaceholderText="搜索歌曲"
-                QueryIcon="Find"
-                QuerySubmitted="SongSearchBox_QuerySubmitted"
-                SuggestionChosen="SongSearchBox_SuggestionChosen"
-                TextChanged="SongSearchBox_TextChanged" />
 
-            <controls:Segmented
-                x:Name="Segmented"
-                Margin="36,48,36,0"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Top"
-                SelectedIndex="0"
-                SelectionMode="Single">
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{Binding ElementName=Segmented, Path=SelectedIndex, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="Tag" Value="Song" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{Binding ElementName=Segmented, Path=SelectedIndex, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="Tag" Value="Album" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{Binding ElementName=Segmented, Path=SelectedIndex, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="2">
-                        <interactivity:ChangePropertyAction PropertyName="Tag" Value="Artist" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <controls:SegmentedItem Content="歌曲" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
-                <controls:SegmentedItem Content="专辑" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
-                <controls:SegmentedItem Content="艺术家" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
-            </controls:Segmented>
+        <Grid x:Name="SongViewer" Margin="0,36,0,0">
 
-            <controls:SwitchPresenter Margin="0,96,0,0" Value="{Binding ElementName=Segmented, Path=Tag, Mode=OneWay}">
-                <controls:SwitchPresenter.ContentTransitions>
-                    <TransitionCollection>
-                        <PopupThemeTransition />
-                    </TransitionCollection>
-                </controls:SwitchPresenter.ContentTransitions>
+            <Grid Margin="12" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <AutoSuggestBox
+                    x:Name="SongSearchBox"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    PlaceholderText="搜索歌曲"
+                    QueryIcon="Find"
+                    Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
+                <StackPanel
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="排序方式" />
+                    <controls:Segmented
+                        x:Name="Segmented"
+                        SelectedIndex="{x:Bind ViewModel.SongOrderType, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
+                        SelectionMode="Single">
+                        <controls:SegmentedItem Content="歌曲" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
+                        <controls:SegmentedItem Content="专辑" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
+                        <controls:SegmentedItem Content="艺术家" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
+                    </controls:Segmented>
+                </StackPanel>
+            </Grid>
 
-                <controls:Case Value="Song">
-                    <SemanticZoom>
-                        <SemanticZoom.ZoomedInView>
-                            <GridView
-                                ItemsSource="{x:Bind TracksByTitleCVS.View, Mode=OneWay}"
-                                ScrollViewer.IsHorizontalScrollChainingEnabled="False"
-                                SelectionMode="None">
-                                <GridView.GroupStyle>
-                                    <GroupStyle />
-                                </GridView.GroupStyle>
-                            </GridView>
-                        </SemanticZoom.ZoomedInView>
+            <SemanticZoom Margin="0,48,0,0">
+                <SemanticZoom.ZoomedInView>
+                    <ListView
+                        x:Name="SongListView"
+                        ItemTemplateSelector="{StaticResource SongOrderTemplateSelector}"
+                        ItemsSource="{x:Bind TracksByTitleCVS.View, Mode=OneWay}">
+                        <ListView.ContextFlyout>
+                            <Flyout Placement="Right" ShouldConstrainToRootBounds="False">
+                                <StackPanel Spacing="12">
 
-                        <SemanticZoom.ZoomedOutView>
-                            <ListView ItemsSource="{x:Bind TracksByTitleCVS.View.CollectionGroups, Mode=OneWay}" SelectionChanged="SongListView_SelectionChanged">
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <ItemsStackPanel AreStickyGroupHeadersEnabled="True" />
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                                <ListView.GroupStyle>
-                                    <GroupStyle>
-                                        <GroupStyle.HeaderTemplate>
-                                            <DataTemplate x:DataType="models:GroupInfoList">
-                                                <Border AutomationProperties.AccessibilityView="Raw">
-                                                    <TextBlock
-                                                        AutomationProperties.AccessibilityView="Raw"
-                                                        Style="{ThemeResource TitleTextBlockStyle}"
-                                                        Text="{x:Bind Key}" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </GroupStyle.HeaderTemplate>
-                                    </GroupStyle>
-                                </ListView.GroupStyle>
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                        <Setter Property="Margin" Value="0" />
-                                        <Setter Property="Padding" Value="36,0" />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="atl:Track">
-                                        <Grid Padding="12">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="2*" />
-                                                <!--  歌曲名  -->
-                                                <ColumnDefinition Width="1.5*" />
-                                                <!--  歌手名  -->
-                                                <ColumnDefinition Width="1.5*" />
-                                                <!--  专辑名  -->
-                                                <ColumnDefinition Width="1*" />
-                                                <!--  年份  -->
-                                                <ColumnDefinition Width="1.2*" />
-                                                <!--  流派  -->
-                                                <ColumnDefinition Width="1*" />
-                                                <!--  歌曲时长  -->
-                                            </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <!--<FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE946;" />-->
+                                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="文件信息" />
+                                    </StackPanel>
 
-                                            <!--  歌曲名  -->
+                                    <ScrollViewer Width="300" Height="300">
+                                        <StackPanel Spacing="12">
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="标题" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="艺术家" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="专辑" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="年份" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="时长" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="比特率" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="采样率" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="位深" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="格式" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="编码" />
+                                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
+                                            </StackPanel>
+                                            <StackPanel>
+                                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="路径" />
+                                                <HyperlinkButton Click="SongPathHyperlinkButton_Click" Content="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </ScrollViewer>
+
+                                </StackPanel>
+                            </Flyout>
+                        </ListView.ContextFlyout>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel AreStickyGroupHeadersEnabled="True" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate x:DataType="models:GroupInfoList">
+                                        <Border AutomationProperties.AccessibilityView="Raw">
                                             <TextBlock
-                                                Grid.Column="0"
-                                                VerticalAlignment="Center"
-                                                Text="{Binding Title}"
-                                                TextWrapping="Wrap" />
-
-                                            <!--  歌手名  -->
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{Binding Artist}"
-                                                TextWrapping="Wrap" />
-
-                                            <!--  专辑名  -->
-                                            <TextBlock
-                                                Grid.Column="2"
-                                                VerticalAlignment="Center"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{Binding Album}"
-                                                TextWrapping="Wrap" />
-
-                                            <!--  年份  -->
-                                            <TextBlock
-                                                Grid.Column="3"
-                                                VerticalAlignment="Center"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{Binding Year}"
-                                                TextWrapping="Wrap" />
-
-                                            <!--  流派  -->
-                                            <TextBlock
-                                                Grid.Column="4"
-                                                VerticalAlignment="Center"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{Binding Genre}"
-                                                TextWrapping="Wrap" />
-
-                                            <!--  歌曲时长  -->
-                                            <TextBlock
-                                                Grid.Column="5"
-                                                VerticalAlignment="Center"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
-                                                TextAlignment="Right"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
+                                                AutomationProperties.AccessibilityView="Raw"
+                                                Style="{ThemeResource TitleTextBlockStyle}"
+                                                Text="{Binding}" />
+                                        </Border>
                                     </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </SemanticZoom.ZoomedOutView>
-                    </SemanticZoom>
-                </controls:Case>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Padding" Value="36,0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </SemanticZoom.ZoomedInView>
 
-                <controls:Case Value="Album">
-                    <ListView />
-                </controls:Case>
+                <SemanticZoom.ZoomedOutView>
+                    <GridView
+                        MaxWidth="500"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        ItemsSource="{x:Bind TracksByTitleCVS.View.CollectionGroups, Mode=OneWay}"
+                        ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                        SelectionMode="None">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="models:GroupInfoList">
+                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </SemanticZoom.ZoomedOutView>
+            </SemanticZoom>
 
-                <controls:Case Value="Artist">
-                    <ListView />
-                </controls:Case>
+            <Grid Margin="0,48,0,0" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image MaxWidth="200" Source="/Assets/Planet.png" />
+                    <TextBlock HorizontalAlignment="Center" Text="未在媒体库内找到任何歌曲" />
+                </StackPanel>
+            </Grid>
 
-            </controls:SwitchPresenter>
         </Grid>
 
         <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" Visibility="{x:Bind ViewModel.IsDataLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -209,10 +389,10 @@
                     <RowDefinition Height="12" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <labs:Shimmer Grid.Row="0" CornerRadius="12" />
-                <labs:Shimmer Grid.Row="2" CornerRadius="12" />
-                <labs:Shimmer Grid.Row="4" CornerRadius="12" />
-                <labs:Shimmer Grid.Row="6" CornerRadius="12" />
+                <labs:Shimmer Grid.Row="0" CornerRadius="6" />
+                <labs:Shimmer Grid.Row="2" CornerRadius="6" />
+                <labs:Shimmer Grid.Row="4" CornerRadius="6" />
+                <labs:Shimmer Grid.Row="6" CornerRadius="6" />
             </Grid>
             <ProgressRing IsActive="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}" />
         </Grid>

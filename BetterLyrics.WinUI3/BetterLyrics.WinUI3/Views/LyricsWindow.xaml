@@ -22,6 +22,12 @@
 
         <local:LyricsPage />
 
+        <local:MusicGalleryPage x:Name="MusicGalleryPage" Padding="64">
+            <local:MusicGalleryPage.TranslationTransition>
+                <Vector3Transition />
+            </local:MusicGalleryPage.TranslationTransition>
+        </local:MusicGalleryPage>
+
         <!--  Top command  -->
         <Grid
             x:Name="TopCommandGrid"

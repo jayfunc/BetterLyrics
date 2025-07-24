@@ -345,13 +345,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
-        public void ToggleLocalLyricsFolder(LocalMediaFolder folder)
+        public void ToggleLocalLyricsFolder()
         {
             _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
             Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
-        public void ToggleLyricsSearchProvider(LyricsSearchProviderInfo providerInfo)
+        public void ToggleLyricsSearchProvider()
         {
             _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
             Broadcast(
