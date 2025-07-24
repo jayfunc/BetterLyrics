@@ -77,12 +77,12 @@ namespace BetterLyrics.WinUI3.Views
                         _settingsService.StandardWindowWidth = 1600;
                         _settingsService.StandardWindowHeight = 800;
                     }
-                    AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
-                        _settingsService.StandardWindowLeft,
-                        _settingsService.StandardWindowTop,
-                        _settingsService.StandardWindowWidth,
-                        _settingsService.StandardWindowHeight
-                    ));
+                    //AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
+                    //    _settingsService.StandardWindowLeft,
+                    //    _settingsService.StandardWindowTop,
+                    //    _settingsService.StandardWindowWidth,
+                    //    _settingsService.StandardWindowHeight
+                    //));
                     break;
                 case AutoStartWindowType.DockMode:
                     DockFlyoutItem.IsChecked = true;
@@ -332,11 +332,25 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            UpdateMusicGalleryPageTranslation();
         }
 
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenWindow<MusicGalleryWindow>();
+            ViewModel.IsMusicGalleryPageExpanded = !ViewModel.IsMusicGalleryPageExpanded;
+            UpdateMusicGalleryPageTranslation();
+        }
+
+        private void UpdateMusicGalleryPageTranslation()
+        {
+            if (ViewModel.IsMusicGalleryPageExpanded)
+            {
+                MusicGalleryPage.Translation = new System.Numerics.Vector3(0, 0, 0);
+            }
+            else
+            {
+                MusicGalleryPage.Translation = new System.Numerics.Vector3(0, (float)RootGrid.ActualHeight, 0);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using ICU4N.Text;
 using Lyricify.Lyrics.Helpers.General;
 using NTextCat;
 using System;
@@ -15,6 +16,7 @@ namespace BetterLyrics.WinUI3.Services
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
         private static readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        private static readonly Transliterator _transliterator = Transliterator.GetInstance("Any-Latin; Latin-ASCII;");
 
         public static List<Models.LanguageInfo> SupportedTargetLanguages =>
         [
@@ -123,6 +125,21 @@ namespace BetterLyrics.WinUI3.Services
             int found = SupportedTargetLanguages.FindIndex(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.Code) == true);
             if (found == -1) found = 7; // 默认使用英语
             return found;
+        }
+
+        public static string GetOrderChar(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return "#";
+            char c = text[0];
+            if (char.IsLetter(c) && c < 128) // 英文
+                return char.ToUpper(c).ToString();
+
+            // 使用 ICU4N 转写为拉丁字母
+            string latin = _transliterator.Transliterate(text);
+            if (!string.IsNullOrEmpty(latin) && char.IsLetter(latin[0]))
+                return char.ToUpper(latin[0]).ToString();
+
+            return "#";
         }
     }
 }

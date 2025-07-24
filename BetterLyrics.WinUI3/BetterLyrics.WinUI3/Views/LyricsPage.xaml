@@ -92,7 +92,7 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="TimelineOffsetToolTip" x:Uid="LyricsPageTimelineOffsetButtonToolTip" />
                             </ToolTipService.ToolTip>
-                            <Button.DataContext>
+                            <Button.ContextFlyout>
                                 <Flyout x:Name="TimelineOffsetFlyout" ShouldConstrainToRootBounds="False">
                                     <StackPanel>
                                         <Slider
@@ -122,7 +122,7 @@
                                         </CheckBox>
                                     </StackPanel>
                                 </Flyout>
-                            </Button.DataContext>
+                            </Button.ContextFlyout>
                         </Button>
 
                     </StackPanel>
@@ -244,7 +244,7 @@
                                     </FontIcon.OpacityTransition>
                                 </FontIcon>
                             </Grid>
-                            <Button.DataContext>
+                            <Button.ContextFlyout>
                                 <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
@@ -273,7 +273,7 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="TranslationToolTip" x:Uid="LyricsPageTranslationButtonToolTip" />
                             </ToolTipService.ToolTip>
-                            <Button.DataContext>
+                            <Button.ContextFlyout>
                                 <Flyout x:Name="TranslationFlyout" ShouldConstrainToRootBounds="False">
                                     <StackPanel>
                                         <ToggleSwitch x:Uid="LyricsPageTranslationEnabled" IsOn="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}" />
@@ -283,7 +283,7 @@
                                             IsOn="{x:Bind ViewModel.ShowTranslationOnly, Mode=TwoWay}" />
                                     </StackPanel>
                                 </Flyout>
-                            </Button.DataContext>
+                            </Button.ContextFlyout>
                         </Button>
 
                         <!--  Display type  -->
@@ -297,7 +297,7 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="PresentationTypeToolTip" x:Uid="LyricsPageDisplayTypeButtonToolTip" />
                             </ToolTipService.ToolTip>
-                            <Button.DataContext>
+                            <Button.ContextFlyout>
                                 <Flyout x:Name="DisplayTypeSwitchFlyout" ShouldConstrainToRootBounds="false">
                                     <Flyout.FlyoutPresenterStyle>
                                         <Style TargetType="FlyoutPresenter">
@@ -311,7 +311,7 @@
                                         <RadioButton x:Uid="MainPageSplitView" Click="SplitViewRadioButton_Click" />
                                     </RadioButtons>
                                 </Flyout>
-                            </Button.DataContext>
+                            </Button.ContextFlyout>
                         </Button>
 
                         <!--  Settings  -->

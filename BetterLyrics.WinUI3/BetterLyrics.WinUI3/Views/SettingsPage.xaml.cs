@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (toggleSwitch.DataContext is LocalMediaFolder localLyricsFolder)
                 {
-                    ViewModel.ToggleLocalLyricsFolder(localLyricsFolder);
+                    ViewModel.ToggleLocalLyricsFolder();
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (toggleSwitch.DataContext is LyricsSearchProviderInfo providerInfo)
                 {
-                    ViewModel.ToggleLyricsSearchProvider(providerInfo);
+                    ViewModel.ToggleLyricsSearchProvider();
                 }
             }
         }
