@@ -794,7 +794,7 @@
     <value>將標題列擴展至整個頁面使得在任意非互動區域均可拖曳窗口</value>
   </data>
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>仿亞克力效果粗糙度</value>
+    <value>仿亚克力效果粗糙度</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音樂庫</value>
