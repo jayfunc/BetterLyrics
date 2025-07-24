@@ -9,6 +9,7 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
@@ -174,10 +175,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
+            //ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
 
             using var overlappedCovers = new CanvasCommandList(control.Device);
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
+            overlappedCoversDs.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
 
             if (_lastAlbumArtCanvasBitmap != null)
             {
@@ -187,6 +189,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 DrawBackgroundImgae(control, overlappedCoversDs, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
             }
+
+            overlappedCoversDs.Transform = Matrix3x2.Identity;
 
             IGraphicsEffectSource blurredCover = new GaussianBlurEffect
             {
@@ -219,7 +223,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             };
             ds.DrawImage(coverOverlayEffect);
 
-            ds.Transform = Matrix3x2.Identity;
+            //ds.Transform = Matrix3x2.Identity;
         }
 
         private void DrawAlbumArt(ICanvasAnimatedControl control, CanvasDrawingSession ds)
