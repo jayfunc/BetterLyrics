@@ -277,6 +277,24 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageBackgroundAcrylicEffectAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind ViewModel.CoverAcrylicEffectAmount, Mode=OneWay}" />
+                                        <Slider
+                                            Maximum="100"
+                                            Minimum="0"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="5"
+                                            TickFrequency="5"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.CoverAcrylicEffectAmount, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
                             </StackPanel>
                         </controls:Case>
 
