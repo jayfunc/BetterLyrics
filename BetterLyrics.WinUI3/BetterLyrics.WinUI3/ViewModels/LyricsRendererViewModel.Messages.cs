@@ -185,6 +185,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _albumArtBgBlurAmount = message.NewValue;
                 }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.CoverAcrylicEffectAmount))
+                {
+                    _coverAcrylicEffectAmount = message.NewValue;
+                }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsVerticalEdgeOpacity))
                 {
                     _lyricsVerticalEdgeOpacity = message.NewValue;

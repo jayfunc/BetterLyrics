@@ -54,6 +54,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
 
+            CoverAcrylicEffectAmount = _settingsService.CoverAcrylicEffectAmount;
+
             LyricsAlignmentType = _settingsService.LyricsAlignmentType;
             SongInfoAlignmentType = _settingsService.SongInfoAlignmentType;
             LyricsFontWeight = _settingsService.LyricsFontWeight;
@@ -167,6 +169,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsDynamicCoverOverlayEnabled { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int CoverAcrylicEffectAmount { get; set; }
 
         [ObservableProperty]
         public partial Enums.Language Language { get; set; }
@@ -573,6 +579,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnCoverOverlayBlurAmountChanged(int value)
         {
             _settingsService.CoverOverlayBlurAmount = value;
+        }
+        partial void OnCoverAcrylicEffectAmountChanged(int value)
+        {
+            _settingsService.CoverAcrylicEffectAmount = value;
         }
         partial void OnCoverOverlayOpacityChanged(int value)
         {

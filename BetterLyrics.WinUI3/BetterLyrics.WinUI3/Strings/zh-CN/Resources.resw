@@ -793,6 +793,9 @@
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>将标题栏扩展至整个页面使得在任意非交互区域均可拖拽窗口</value>
   </data>
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>仿亚克力效果粗糙度</value>
+  </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音乐库</value>
   </data>

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.Graphics.Effects;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -187,16 +188,34 @@ namespace BetterLyrics.WinUI3.ViewModels
                 DrawBackgroundImgae(control, overlappedCoversDs, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
             }
 
-            using var coverOverlayEffect = new OpacityEffect
+            IGraphicsEffectSource blurredCover = new GaussianBlurEffect
+            {
+                BlurAmount = _albumArtBgBlurAmount,
+                Source = overlappedCovers,
+                BorderMode = EffectBorderMode.Soft,
+                Optimization = EffectOptimization.Speed,
+            };
+
+            // 应用亚克力噪点效果
+            // TODO: 没有写_coverAcrylicNoiseCanvasBitmap加载的代码
+            if (_coverAcrylicEffectAmount > 0 && _coverAcrylicNoiseCanvasBitmap != null)
+            {
+                blurredCover = new BlendEffect
+                {
+                    Mode = BlendEffectMode.SoftLight,
+                    Background = blurredCover,
+                    Foreground = new OpacityEffect
+                    {
+                        Source = _coverAcrylicNoiseCanvasBitmap,
+                        Opacity = _coverAcrylicEffectAmount / 100f,
+                    },
+                };
+            }
+
+            var coverOverlayEffect = new OpacityEffect
             {
                 Opacity = _albumArtBgOpacity / 100f,
-                Source = new GaussianBlurEffect
-                {
-                    BlurAmount = _albumArtBgBlurAmount,
-                    Source = overlappedCovers,
-                    BorderMode = EffectBorderMode.Soft,
-                    Optimization = EffectOptimization.Speed,
-                },
+                Source = blurredCover,
             };
             ds.DrawImage(coverOverlayEffect);
 
