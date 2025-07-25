@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -250,7 +250,7 @@
     <value>이 값을 조정하면 앨범 이미지의 배경 흐림 강도가 증가합니다.</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>현재 가치 : </value>
+    <value>当前值： </value>
   </data>
   <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
     <value>Blur가 활성화 될 때 상당히 높은 GPU 사용량 (&gt; 0)</value>
@@ -649,8 +649,8 @@
   <data name="LyricsPageSettingsButtonToolTip.Content" xml:space="preserve">
     <value>설정</value>
   </data>
-  <data name="TranslateServerNotSet" xml:space="preserve">
-    <value>번역 서버가 설정되지 않았습니다. 먼저 설정으로 구성하십시오.</value>
+  <data name="LibreTranslateFailed" xml:space="preserve">
+    <value>向 LibreTranslate 请求翻译失败，请检查设置或本机 LibreTranslate 配置</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
     <value>노래를 전환 할 때 0 으로 재설정하십시오</value>
@@ -779,7 +779,7 @@
     <value>자동 가죽 창</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>도크 모드 또는 데스크탑 모드에서 재생되지 않을 때는 창을 자동으로 숨기고 있습니다</value>
+    <value>도크 모드 또는 데스크탑 모드에서 재생되지 않을 때는 창을 자동으로 숨기고 있습니다.</value>
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>창 높이</value>
@@ -793,13 +793,13 @@
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>비 중과 영역에서 창을 드래그 할 수 있도록 제목 표시 줄을 전체 페이지로 확장하십시오.</value>
   </data>
-  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>仿亚克力效果粗糙度</value>
-  </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리</value>
   </data>
-  <data name="LibreTranslateFailed" xml:space="preserve">
-    <value>LibreTranslate에서 번역 요청 실패, 설정 또는 기본 LibreTranslate 구성을 확인하십시오.</value>
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>仿亚克力效果粗糙度</value>
+  </data>
+  <data name="TranslateServerNotSet" xml:space="preserve">
+    <value>未设置Translate服务器，请先在设置中进行配置</value>
   </data>
 </root>
