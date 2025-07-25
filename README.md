@@ -41,9 +41,12 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
     - [LRCLIB](https://lrclib.net/)
 - 🪟 **Multiple Display Modes**
-  - **Standard Mode** Enjoy an immersive listening journey with rich lyrics animations and beautifully dynamic backgrounds 
-  - **Dock Mode** A smart animated lyrics bar docked to your screen edge
-  - **Desktop Mode** Enjoy immersive lyrics floating above your apps
+  - **Standard Mode**
+    - Enjoy an immersive listening journey with rich lyrics animations and beautifully dynamic backgrounds 
+  - **Dock Mode**
+    - A smart animated lyrics bar docked to your screen edge
+  - **Desktop Mode**
+    - Enjoy immersive lyrics floating above your apps
 - 🧠 **Smart Behaviors**
   - Auto hide when music player closed
 
