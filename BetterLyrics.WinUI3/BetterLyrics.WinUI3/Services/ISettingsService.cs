@@ -102,5 +102,6 @@ namespace BetterLyrics.WinUI3.Services
         int SelectedFontFamilyIndex { get; set; }
         string LyricsFontFamily { get; set; }
         bool IsDragEverywhereEnabled { get; set; }
+        PlaybackOrder PlaybackOrder { get; set; }
     }
 }

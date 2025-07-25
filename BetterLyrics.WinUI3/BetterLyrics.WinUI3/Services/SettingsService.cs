@@ -92,6 +92,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string IsLyricsFloatAnimationEnabledKey = "IsLyricsFloatAnimationEnabled";
 
         private const string ResetPositionOffsetOnSongChangedKey = "ResetPositionOffsetOnSongChanged";
+        private const string PlaybackOrderKey = "PlaybackOrder";
 
         private const string PositionOffsetKey = "PositionOffset";
 
@@ -639,6 +640,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(ResetPositionOffsetOnSongChangedKey);
             set => SetValue(ResetPositionOffsetOnSongChangedKey, value);
+        }
+
+        public PlaybackOrder PlaybackOrder
+        {
+            get => (PlaybackOrder)GetValue<int>(PlaybackOrderKey);
+            set => SetValue(PlaybackOrderKey, (int)value);
         }
 
         public int PositionOffset
