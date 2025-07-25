@@ -40,7 +40,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
 
         [ObservableProperty]
-        public partial ObservableCollection<Track> TrackSearchSuggestions { get; set; } = [];
+        public partial ObservableCollection<Track> TrackPlayingQueue { get; set; } = [];
+
+        public Track? PlayingTrack => TrackPlayingQueue.ElementAtOrDefault(PlayingSongIndex);
+
+
 
         [ObservableProperty]
         public partial SongOrderType SongOrderType { get; set; } = SongOrderType.Title;
@@ -52,7 +56,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial Track TrackRightTapped { get; set; } = new();
 
         [ObservableProperty]
-        public partial int SelectedSongIndex { get; set; } = -1;
+        public partial int PlayingSongIndex { get; set; } = -1;
+
+        [ObservableProperty]
+        public partial int DisplayedPlayingSongIndex { get; set; } = 0;
 
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
@@ -108,9 +115,22 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _timelineController.Pause();
                     break;
                 case SystemMediaTransportControlsButton.Next:
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        if (PlayingSongIndex < TrackPlayingQueue.Count - 1)
+                        {
+                            PlayingSongIndex++;
+                        }
+                    });
                     break;
                 case SystemMediaTransportControlsButton.Previous:
-                    //Previous
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        if (PlayingSongIndex > 0)
+                        {
+                            PlayingSongIndex--;
+                        }
+                    });
                     break;
             }
         }
@@ -191,10 +211,15 @@ namespace BetterLyrics.WinUI3.ViewModels
                     );
                     break;
             }
-            SelectedSongIndex = -1;
         }
 
-        public void PlayTrack(Track? track)
+        public void InitPlayingQueue(Track? track)
+        {
+            TrackPlayingQueue = [.. GroupedTracks.SelectMany(g => g.Cast<Track>())];
+            PlayingSongIndex = track == null ? -1 : TrackPlayingQueue.IndexOf(track);
+        }
+
+        private void PlayTrack(Track? track)
         {
             if (track == null) return;
 
@@ -224,6 +249,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             ApplySongSearchQuery();
             IsLocalMediaNotFound = !_filteredTracks.Any();
             ApplySongOrderType();
+        }
+
+        partial void OnPlayingSongIndexChanged(int value)
+        {
+            DisplayedPlayingSongIndex = value + 1;
+            PlayTrack(TrackPlayingQueue.ElementAtOrDefault(value));
         }
 
         public void Receive(PropertyChangedMessage<ObservableCollection<LocalMediaFolder>> message)

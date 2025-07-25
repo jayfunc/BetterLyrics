@@ -365,7 +365,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _songInfoOpacityTransition.StartTransition(1f);
 
                 _logger.LogInformation("Song info changed: Title={Title}, Artist={Artist}, refreshing lyrics...", _songTitle, _songArtist);
-                Debug.WriteLine($"Song info changed: Title={_songTitle}, Artist={_songArtist}");
                 _ = _refreshLyricsRunner.RunAsync(async token =>
                 {
                     await RefreshLyricsAsync(token);

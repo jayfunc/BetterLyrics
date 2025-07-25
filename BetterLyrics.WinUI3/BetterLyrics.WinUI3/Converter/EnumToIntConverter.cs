@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    internal partial class EnumToIntConverter : IValueConverter
+    public partial class EnumToIntConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
