@@ -332,26 +332,11 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateOverlayFrameTranslation();
         }
 
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.IsMusicGalleryPageExpanded = !ViewModel.IsMusicGalleryPageExpanded;
-            UpdateOverlayFrameTranslation();
-        }
-
-        private void UpdateOverlayFrameTranslation()
-        {
-            if (ViewModel.IsMusicGalleryPageExpanded)
-            {
-                OverlayFrame.Translation = new System.Numerics.Vector3(0, 0, 0);
-                if (OverlayFrame.Content == null) OverlayFrame.Navigate(typeof(MusicGalleryPage));
-            }
-            else
-            {
-                OverlayFrame.Translation = new System.Numerics.Vector3(0, (float)RootGrid.ActualHeight, 0);
-            }
+            WindowHelper.OpenWindow<MusicGalleryWindow>();
         }
     }
 }

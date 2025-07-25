@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             switch (PlaybackOrder)
             {
                 case PlaybackOrder.RepeatAll:
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low , () =>
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
                         if (PlayingSongIndex < TrackPlayingQueue.Count - 1)
                         {
@@ -259,21 +259,28 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void PlayTrack(Track? track)
         {
-            if (track == null) return;
-
-            _smtc.IsEnabled = true;
-            _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
-            var updater = _smtc.DisplayUpdater;
-            updater.AppMediaId = Package.Current.Id.FullName;
-            updater.Type = MediaPlaybackType.Music;
-            updater.MusicProperties.Title = track.Title;
-            updater.MusicProperties.Artist = track.Artist;
-            updater.MusicProperties.AlbumTitle = track.Album;
-            if (track.EmbeddedPictures.FirstOrDefault()?.PictureData is byte[] pictureData)
+            if (track == null)
             {
-                updater.Thumbnail = ImageHelper.ByteArrayToRandomAccessStreamReference(pictureData);
+                _timelineController.Pause();
+                _mediaPlayer.Source = null;
+                _smtc.IsEnabled = false;
             }
-            updater.Update();
+            else
+            {
+                _smtc.IsEnabled = true;
+                _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
+                var updater = _smtc.DisplayUpdater;
+                updater.AppMediaId = Package.Current.Id.FullName;
+                updater.Type = MediaPlaybackType.Music;
+                updater.MusicProperties.Title = track.Title;
+                updater.MusicProperties.Artist = track.Artist;
+                updater.MusicProperties.AlbumTitle = track.Album;
+                if (track.EmbeddedPictures.FirstOrDefault()?.PictureData is byte[] pictureData)
+                {
+                    updater.Thumbnail = ImageHelper.ByteArrayToRandomAccessStreamReference(pictureData);
+                }
+                updater.Update();
+            }
         }
 
         partial void OnSongOrderTypeChanged(SongOrderType value)
