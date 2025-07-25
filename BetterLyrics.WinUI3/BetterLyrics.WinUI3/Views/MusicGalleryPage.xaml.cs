@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -42,9 +43,10 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.RefreshSongs();
         }
 
-        private void SongListVireItemGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        private void SongListViewItemGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             ViewModel.TrackRightTapped = (Track)((FrameworkElement)sender).DataContext;
+            SongFileInfoFlyout.ShowAt(sender as FrameworkElement);
         }
 
         private async void SongPathHyperlinkButton_Click(object sender, RoutedEventArgs e)
@@ -54,7 +56,21 @@ namespace BetterLyrics.WinUI3.Views
 
         private void SongListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ViewModel.PlayTrack((Track)((FrameworkElement)sender).DataContext);
+            var track = (Track)((FrameworkElement)sender).DataContext;
+            ViewModel.InitPlayingQueue(track);
+            PlayingQueueListView.ScrollIntoView(track, ScrollIntoViewAlignment.Leading);
+        }
+
+        private void EmptyPlayingQueueButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.TrackPlayingQueue.Clear();
+            ViewModel.PlayingSongIndex = -1;
+        }
+
+        private void ScrollToPlayingItemButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.PlayingTrack == null) return;
+            PlayingQueueListView.ScrollIntoView(ViewModel.PlayingTrack, ScrollIntoViewAlignment.Leading);
         }
     }
 }

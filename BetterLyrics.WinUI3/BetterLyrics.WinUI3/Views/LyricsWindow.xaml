@@ -22,11 +22,14 @@
 
         <local:LyricsPage />
 
-        <local:MusicGalleryPage x:Name="MusicGalleryPage" Padding="64">
-            <local:MusicGalleryPage.TranslationTransition>
+        <Frame
+            x:Name="OverlayFrame"
+            Padding="0,24,0,0"
+            Background="{ThemeResource AcrylicInAppFillColorBaseBrush}">
+            <Frame.TranslationTransition>
                 <Vector3Transition />
-            </local:MusicGalleryPage.TranslationTransition>
-        </local:MusicGalleryPage>
+            </Frame.TranslationTransition>
+        </Frame>
 
         <!--  Top command  -->
         <Grid

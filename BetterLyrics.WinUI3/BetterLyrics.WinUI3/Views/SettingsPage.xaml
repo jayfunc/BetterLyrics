@@ -351,18 +351,12 @@
                                     CanDragItems="True"
                                     CanReorderItems="True"
                                     DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
+                                    ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                                     ItemsSource="{x:Bind ViewModel.AlbumArtSearchProvidersInfo, Mode=OneWay}"
                                     SelectionMode="None">
                                     <ListView.OpacityTransition>
                                         <ScalarTransition />
                                     </ListView.OpacityTransition>
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            <Setter Property="Margin" Value="0" />
-                                            <Setter Property="Padding" Value="0" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="models:AlbumArtSearchProviderInfo">
                                             <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">

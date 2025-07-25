@@ -21,33 +21,33 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 - [「BetterLyrics」反馈交流群（简体中文）](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) on QQ
 - [「BetterLyrics」Feedback Chat Group (Traditional Chinese / English)](https://discord.gg/5yAQPnyCKv) on Discord
 
-## Highlighted features
+## 🌟 Highlighted features
 
-- Dynamic blur album art as background
-- Smooth lyrics fade in/out, zoom in/out effects
-- Smooth user interface change from song to song
-- Gradient Karaoke (with glow) effect on every single character
-- Immersive desktop lyrics (dock mode)
-- Local translation (supporting 30 languages)
+- 🌠 **Pleasing User Interface**
+  - Fluent animations and effects
+- ↔️ **Strong Lyrics Translation**
+  - Offline machine translation (supporting 30 languages)
+  - Auto reading local lyrics files for embedded translation
+- 🧩 **Various Lyrics Source**
+  - Local storage
+    - Music files (with embedded lyrics)
+    - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) files (with both core format and enhanced format)
+    - [.eslrc](https://github.com/ESLyric/release) files
+    - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
+  - Online lyrics providers
+    - QQ Music
+    - 网易云音乐 NetEase Cloud Music
+    - 酷狗音乐 Kugou Music
+    - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
+    - [LRCLIB](https://lrclib.net/)
+- 🪟 **Multiple Display Modes**
+  - **Standard Mode** Enjoy an immersive listening journey with rich lyrics animations and beautifully dynamic backgrounds 
+  - **Dock Mode** A smart animated lyrics bar docked to your screen edge
+  - **Desktop Mode** Enjoy immersive lyrics floating above your apps
+- 🧠 **Smart Behaviors**
+  - Auto hide when music player closed
 
 > This project is still under development, bugs and unexpected behaviors may be existed in the latest branch.
-
-## Supported lyrics source
-
-- From your local storage
-  - Music files (with embedded lyrics)
-  - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) files (with both core format and enhanced format)
-  - [.eslrc](https://github.com/ESLyric/release) files
-  - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
-
-(For lyrics downloading, you can use [LDDC](https://github.com/chenmozhijin/LDDC))
-
-- From online lyrics providers
-  - QQ Music
-  - 网易云音乐 NetEase Cloud Music
-  - 酷狗音乐 Kugou Music
-  - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
-  - [LRCLIB](https://lrclib.net/)
 
 ## Screenshots
 
