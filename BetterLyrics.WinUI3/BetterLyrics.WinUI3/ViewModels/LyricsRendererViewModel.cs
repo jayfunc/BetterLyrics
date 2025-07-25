@@ -468,7 +468,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                         }
                         token.ThrowIfCancellationRequested();
                     }
-                    catch (Exception) { }
+                    catch (Exception)
+                    {
+                        App.Current.LyricsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("LibreTranslateFailed")!, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                    }
                 }
             }
         }

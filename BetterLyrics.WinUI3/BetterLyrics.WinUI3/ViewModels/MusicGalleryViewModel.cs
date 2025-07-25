@@ -44,7 +44,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public Track? PlayingTrack => TrackPlayingQueue.ElementAtOrDefault(PlayingSongIndex);
 
-
+        [ObservableProperty]
+        public partial PlaybackOrder PlaybackOrder { get; set; }
 
         [ObservableProperty]
         public partial SongOrderType SongOrderType { get; set; } = SongOrderType.Title;
@@ -66,7 +67,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService) : base(settingsService)
         {
+            PlaybackOrder = _settingsService.PlaybackOrder;
+
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+            _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
             _timelineController = _mediaPlayer.TimelineController = new();
             _timelineController.PositionChanged += TimelineController_PositionChanged;
             _smtc = _mediaPlayer.SystemMediaTransportControls;
@@ -80,6 +84,40 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _libWatcherService = libWatcherService;
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
+        }
+
+        private void MediaPlayer_MediaEnded(MediaPlayer sender, object args)
+        {
+            switch (PlaybackOrder)
+            {
+                case PlaybackOrder.RepeatAll:
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low , () =>
+                    {
+                        if (PlayingSongIndex < TrackPlayingQueue.Count - 1)
+                        {
+                            PlayingSongIndex++;
+                        }
+                        else
+                        {
+                            PlayingSongIndex = 0;
+                        }
+                    });
+                    break;
+                case PlaybackOrder.RepeatOne:
+                    _timelineController.Position = TimeSpan.Zero;
+                    break;
+                case PlaybackOrder.Shuffle:
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        if (TrackPlayingQueue.Count > 0)
+                        {
+                            PlayingSongIndex = new Random().Next(0, TrackPlayingQueue.Count);
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Smtc_PlaybackPositionChangeRequested(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
@@ -255,6 +293,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             DisplayedPlayingSongIndex = value + 1;
             PlayTrack(TrackPlayingQueue.ElementAtOrDefault(value));
+        }
+
+        partial void OnPlaybackOrderChanged(PlaybackOrder value)
+        {
+            _settingsService.PlaybackOrder = value;
         }
 
         public void Receive(PropertyChangedMessage<ObservableCollection<LocalMediaFolder>> message)

@@ -399,7 +399,7 @@
                         <Button Click="EmptyPlayingQueueButton_Click" Content="清除全部" />
                         <Button Click="ScrollToPlayingItemButton_Click" Content="定位到播放项" />
                     </StackPanel>
-                    <controls:Segmented HorizontalAlignment="Stretch">
+                    <controls:Segmented HorizontalAlignment="Stretch" SelectedIndex="{x:Bind ViewModel.PlaybackOrder, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
                         <controls:Segmented.Items>
                             <controls:SegmentedItem Content="列表循环" />
                             <controls:SegmentedItem Content="单曲循环" />
