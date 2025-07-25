@@ -94,9 +94,6 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         public partial string LockHotKey { get; set; } = "";
 
-        [ObservableProperty]
-        public partial bool IsMusicGalleryPageExpanded { get; set; } = false;
-
         private void AutoHideOrShowWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();

@@ -229,53 +229,53 @@
 
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <!--<FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE946;" />-->
-                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="文件信息" />
+                        <TextBlock x:Uid="MusicGalleryPageFileInfo" Style="{StaticResource BodyStrongTextBlockStyle}" />
                     </StackPanel>
 
                     <ScrollViewer Width="300" Height="300">
                         <StackPanel Spacing="12">
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="标题" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoTitle" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="艺术家" />
+                                <TextBlock x:Uid="MusicGalleryPageFileArtist" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="专辑" />
+                                <TextBlock x:Uid="MusicGalleryPageFileAlbum" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="年份" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoYear" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="时长" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoDuration" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="比特率" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoBitrate" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="采样率" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoSampleRate" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="位深" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoBitDepth" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="格式" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoFormat" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="编码" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoEncoder" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
                             </StackPanel>
                             <StackPanel>
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="路径" />
+                                <TextBlock x:Uid="MusicGalleryPageFileInfoPath" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 <HyperlinkButton
                                     Margin="-12,0,0,0"
                                     Click="SongPathHyperlinkButton_Click"
@@ -303,9 +303,9 @@
                     </Grid.ColumnDefinitions>
                     <AutoSuggestBox
                         x:Name="SongSearchBox"
+                        x:Uid="MusicGalleryPageSongSearchBox"
                         Grid.Column="0"
                         HorizontalAlignment="Stretch"
-                        PlaceholderText="搜索歌曲"
                         QueryIcon="Find"
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
                     <StackPanel
@@ -313,16 +313,16 @@
                         Orientation="Horizontal"
                         Spacing="12">
                         <TextBlock
+                            x:Uid="MusicGalleryPageSortType"
                             VerticalAlignment="Center"
-                            Style="{StaticResource BodyStrongTextBlockStyle}"
-                            Text="排序方式" />
+                            Style="{StaticResource BodyStrongTextBlockStyle}" />
                         <controls:Segmented
                             x:Name="Segmented"
                             SelectedIndex="{x:Bind ViewModel.SongOrderType, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
                             SelectionMode="Single">
-                            <controls:SegmentedItem Content="歌曲" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
-                            <controls:SegmentedItem Content="专辑" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
-                            <controls:SegmentedItem Content="艺术家" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
+                            <controls:SegmentedItem x:Uid="MusicGalleryPageSortByTitle" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
+                            <controls:SegmentedItem x:Uid="MusicGalleryPageSortByAlbum" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
+                            <controls:SegmentedItem x:Uid="MusicGalleryPageSortByArtist" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
                         </controls:Segmented>
                     </StackPanel>
                 </Grid>
@@ -376,7 +376,7 @@
                 <Grid Margin="0,48,0,0" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image MaxWidth="200" Source="/Assets/Planet.png" />
-                        <TextBlock HorizontalAlignment="Center" Text="未在媒体库内找到任何歌曲" />
+                        <TextBlock x:Uid="MusicGalleryPageFileNotFound" HorizontalAlignment="Center" />
                     </StackPanel>
                 </Grid>
 
@@ -388,7 +388,7 @@
                 Margin="0,0,12,0">
                 <StackPanel Margin="0,10,0,0" Spacing="12">
                     <Grid Margin="0,6,0,0" VerticalAlignment="Top">
-                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="播放队列" />
+                        <TextBlock x:Uid="MusicGalleryPagePlayingQueue" Style="{StaticResource BodyStrongTextBlockStyle}" />
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                             <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.DisplayedPlayingSongIndex, Mode=OneWay}" />
                             <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
@@ -396,14 +396,14 @@
                         </StackPanel>
                     </Grid>
                     <StackPanel Orientation="Horizontal" Spacing="12">
-                        <Button Click="EmptyPlayingQueueButton_Click" Content="清除全部" />
-                        <Button Click="ScrollToPlayingItemButton_Click" Content="定位到播放项" />
+                        <Button x:Uid="MusicGalleryPageEmptyPlayingQueue" Click="EmptyPlayingQueueButton_Click" />
+                        <Button x:Uid="MusicGalleryPageScrollToPlayingItem" Click="ScrollToPlayingItemButton_Click" />
                     </StackPanel>
                     <controls:Segmented HorizontalAlignment="Stretch" SelectedIndex="{x:Bind ViewModel.PlaybackOrder, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
                         <controls:Segmented.Items>
-                            <controls:SegmentedItem Content="列表循环" />
-                            <controls:SegmentedItem Content="单曲循环" />
-                            <controls:SegmentedItem Content="随机" />
+                            <controls:SegmentedItem x:Uid="MusicGalleryPageQueueLoop" />
+                            <controls:SegmentedItem x:Uid="MusicGalleryPageSingleLoop" />
+                            <controls:SegmentedItem x:Uid="MusicGalleryPageQueueRandom" />
                         </controls:Segmented.Items>
                     </controls:Segmented>
                 </StackPanel>
@@ -431,7 +431,7 @@
                                     Style="{StaticResource GhostButtonStyle}">
                                     <Button.Flyout>
                                         <MenuFlyout>
-                                            <MenuFlyoutItem Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE738;}" Text="从播放队列移除" />
+                                            <MenuFlyoutItem x:Uid="MusicGalleryPageRemoveFromPlayingQueue" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE738;}" />
                                         </MenuFlyout>
                                     </Button.Flyout>
                                 </Button>
@@ -457,7 +457,7 @@
                     </interactivity:Interaction.Behaviors>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image MaxWidth="200" Source="/Assets/Planet.png" />
-                        <TextBlock HorizontalAlignment="Center" Text="播放队列为空" />
+                        <TextBlock x:Uid="MusicGalleryPagePlayingQueueEmpty" HorizontalAlignment="Center" />
                     </StackPanel>
                 </Grid>
             </Grid>

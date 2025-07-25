@@ -31,6 +31,13 @@ namespace BetterLyrics.WinUI3.Views
             Title = App.ResourceLoader!.GetString("MusicGalleryPageTitle");
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             this.SetIcon(@"Assets/Logo.ico");
+
+            AppWindow.Closing += AppWindow_Closing;
+        }
+
+        private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+        {
+            
         }
     }
 }

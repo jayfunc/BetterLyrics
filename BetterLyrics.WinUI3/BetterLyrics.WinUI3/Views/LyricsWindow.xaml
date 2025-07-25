@@ -22,15 +22,6 @@
 
         <local:LyricsPage />
 
-        <Frame
-            x:Name="OverlayFrame"
-            Padding="0,24,0,0"
-            Background="{ThemeResource AcrylicInAppFillColorBaseBrush}">
-            <Frame.TranslationTransition>
-                <Vector3Transition />
-            </Frame.TranslationTransition>
-        </Frame>
-
         <!--  Top command  -->
         <Grid
             x:Name="TopCommandGrid"
