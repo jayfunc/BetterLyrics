@@ -259,10 +259,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void PlayTrack(Track? track)
         {
+            _timelineController.Pause();
+            _mediaPlayer.Source = null;
             if (track == null)
             {
-                _timelineController.Pause();
-                _mediaPlayer.Source = null;
                 _smtc.IsEnabled = false;
             }
             else
@@ -278,6 +278,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (track.EmbeddedPictures.FirstOrDefault()?.PictureData is byte[] pictureData)
                 {
                     updater.Thumbnail = ImageHelper.ByteArrayToRandomAccessStreamReference(pictureData);
+                }
+                else
+                {
+                    updater.Thumbnail = null;
                 }
                 updater.Update();
             }

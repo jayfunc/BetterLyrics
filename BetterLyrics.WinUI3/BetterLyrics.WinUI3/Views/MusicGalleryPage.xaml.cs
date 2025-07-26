@@ -72,5 +72,11 @@ namespace BetterLyrics.WinUI3.Views
             if (ViewModel.PlayingTrack == null) return;
             PlayingQueueListView.ScrollIntoView(ViewModel.PlayingTrack, ScrollIntoViewAlignment.Leading);
         }
+
+        private void RemoveFromPlayingQueueMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var track = (Track)((FrameworkElement)sender).DataContext;
+            ViewModel.TrackPlayingQueue.Remove(track);
+        }
     }
 }

@@ -327,7 +327,24 @@
                     </StackPanel>
                 </Grid>
 
-                <SemanticZoom Margin="0,48,0,0">
+                <StackPanel
+                    Margin="12,58,12,0"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <Button>
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="添加到播放列表" />
+                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind TracksByTitleCVS.View.Count, Mode=OneWay}" />
+                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text=" 项" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button Content="多选" />
+                </StackPanel>
+
+                <SemanticZoom Margin="0,96,0,0">
                     <SemanticZoom.ZoomedInView>
                         <ListView
                             x:Name="SongListView"
@@ -431,7 +448,7 @@
                                     Style="{StaticResource GhostButtonStyle}">
                                     <Button.Flyout>
                                         <MenuFlyout>
-                                            <MenuFlyoutItem x:Uid="MusicGalleryPageRemoveFromPlayingQueue" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE738;}" />
+                                            <MenuFlyoutItem Click="RemoveFromPlayingQueueMenuFlyoutItem_Click" x:Uid="MusicGalleryPageRemoveFromPlayingQueue" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE738;}" />
                                         </MenuFlyout>
                                     </Button.Flyout>
                                 </Button>
