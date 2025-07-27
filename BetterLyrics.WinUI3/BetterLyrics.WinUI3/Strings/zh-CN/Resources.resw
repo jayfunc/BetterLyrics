@@ -857,13 +857,13 @@
     <value>未在媒体库内找到任何歌曲</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>播放列表</value>
+    <value>Play queue</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
-    <value>清空播放列表</value>
+    <value>Clear play queue</value>
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
-    <value>定位到播放项</value>
+    <value>Scroll to playing item</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
     <value>列表循环</value>
@@ -875,9 +875,27 @@
     <value>随机</value>
   </data>
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
-    <value>从播放列表移除</value>
+    <value>Remove from the Play queue</value>
   </data>
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>播放列表为空</value>
+    <value>Play queue is empty</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>Add to play queue</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>Next items</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>End of the list</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>Add to playlist</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>Create a playlist</value>
   </data>
 </root>
