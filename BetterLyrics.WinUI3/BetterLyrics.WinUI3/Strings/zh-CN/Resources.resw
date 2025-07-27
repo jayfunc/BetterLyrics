@@ -593,7 +593,7 @@
     <value>歌词时间轴偏移（毫秒）</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>配置翻译服务</value>
+    <value>LibreTranslate 翻译服务</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>服务器地址</value>
@@ -797,7 +797,7 @@
     <value>仿亚克力效果粗糙度</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>音乐库</value>
+    <value>音乐库 - BetterLyrics</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>向 LibreTranslate 请求翻译失败，请检查设置或本机 LibreTranslate 配置</value>
@@ -884,7 +884,7 @@
     <value>选择全部</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
-    <value>添加以播放队列</value>
+    <value>添加到播放队列</value>
   </data>
   <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>下一个项目</value>
@@ -897,5 +897,8 @@
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>创建歌单</value>
+  </data>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>打开音乐库</value>
   </data>
 </root>

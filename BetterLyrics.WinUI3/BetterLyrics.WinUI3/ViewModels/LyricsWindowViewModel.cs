@@ -316,6 +316,7 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
+                window.Restore();
                 DockModeHelper.Enable(window, _dockWindowHeight, _dockPlacement);
                 StartWatchWindowColorChange();
             }

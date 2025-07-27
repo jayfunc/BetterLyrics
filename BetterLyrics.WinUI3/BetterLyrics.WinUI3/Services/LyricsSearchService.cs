@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Providers.Web.Kugou;
 using Lyricify.Lyrics.Searchers;
 using Microsoft.Extensions.Logging;
+using NTextCat.Commons;
 using System;
 using System.IO;
 using System.Linq;
@@ -347,6 +348,17 @@ namespace BetterLyrics.WinUI3.Services
             else if (result is NeteaseSearchResult neteaseResult)
             {
                 var response = await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyric(neteaseResult.Id);
+                var translated = response?.Tlyric.Lyric;
+                if (!string.IsNullOrEmpty(translated))
+                {
+                    FileHelper.WriteLyricsCache(
+                        title,
+                        artist,
+                        translated,
+                        LyricsFormat.Lrc,
+                        PathHelper.NeteaseTranslationCacheDirectory
+                    );
+                }
                 return response?.Lrc.Lyric;
             }
             else if (result is KugouSearchResult kugouResult)

@@ -28,6 +28,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             this.InitializeComponent();
 
+            AppWindow.SetIcons();
+
             AppWindow.Changed += AppWindow_Changed;
 
             ExtendsContentIntoTitleBar = true;
@@ -77,12 +79,12 @@ namespace BetterLyrics.WinUI3.Views
                         _settingsService.StandardWindowWidth = 1600;
                         _settingsService.StandardWindowHeight = 800;
                     }
-                    //AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
-                    //    _settingsService.StandardWindowLeft,
-                    //    _settingsService.StandardWindowTop,
-                    //    _settingsService.StandardWindowWidth,
-                    //    _settingsService.StandardWindowHeight
-                    //));
+                    AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
+                        _settingsService.StandardWindowLeft,
+                        _settingsService.StandardWindowTop,
+                        _settingsService.StandardWindowWidth,
+                        _settingsService.StandardWindowHeight
+                    ));
                     break;
                 case AutoStartWindowType.DockMode:
                     DockFlyoutItem.IsChecked = true;
@@ -337,6 +339,22 @@ namespace BetterLyrics.WinUI3.Views
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
         {
             WindowHelper.OpenWindow<MusicGalleryWindow>();
+        }
+
+        private void ClickThroughButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ToggleLockWindowCommand.Execute(null);
+        }
+
+        private void DockFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ToggleDockModeCommand.Execute(null);
+        }
+
+        private void DesktopFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ToggleDesktopModeCommand.Execute(null);
+            UpdateTitleBarWindowButtonsVisibility();
         }
     }
 }

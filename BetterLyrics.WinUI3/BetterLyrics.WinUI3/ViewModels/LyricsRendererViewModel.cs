@@ -151,6 +151,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private bool _isTranslationEnabled;
         private bool _showTranslationOnly;
         private int _targetLanguageIndex;
+        private bool _isLibreTranslateEnabled;
 
         private int _timelineSyncThreshold;
 
@@ -447,7 +448,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         _langIndex = 0;
                     }
                 }
-                else
+                else if (_isLibreTranslateEnabled)
                 {
                     string translated = string.Empty;
                     try
@@ -525,6 +526,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 case LyricsSearchProvider.Kugou:
                     break;
                 case LyricsSearchProvider.Netease:
+                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.LrcLib:
                     break;
@@ -544,14 +546,21 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (translationRaw != null)
             {
                 var translationData = new LyricsParser().Parse(translationRaw, (int?)SongInfo?.DurationMs);
-                foreach (var data in translationData)
+                if (provider == LyricsSearchProvider.QQ)
                 {
-                    data.LyricsLines = data.LyricsLines.Where(line => !string.IsNullOrWhiteSpace(line.OriginalText)).ToList();
-                    foreach (var item in data.LyricsLines)
+                    foreach (var data in translationData)
                     {
-                        if (item.OriginalText == "//") item.OriginalText = "";
+                        data.LyricsLines = data.LyricsLines.Where(line => !string.IsNullOrWhiteSpace(line.OriginalText)).ToList();
+                        foreach (var item in data.LyricsLines)
+                        {
+                            if (item.OriginalText == "//")
+                            {
+                                item.OriginalText = "";
+                            }
+                        }
                     }
                 }
+
                 _lyricsDataArr = _lyricsDataArr.Concat(translationData).ToList();
             }
         }

@@ -593,7 +593,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Lyrics timeline offset (ms)</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>Configure translation services</value>
+    <value>LibreTranslate translation service</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>Server address</value>
@@ -797,7 +797,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Fluid acrylic effect roughness</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>Music gallery</value>
+    <value>Music gallery - BetterLyrics</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Requesting translation from LibreTranslate failed, please check the settings or the native LibreTranslate configuration</value>
@@ -897,5 +897,8 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>Create a playlist</value>
+  </data>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>Open music gallery</value>
   </data>
 </root>

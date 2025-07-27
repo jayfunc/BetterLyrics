@@ -37,6 +37,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService = playbackService;
             _libreTranslateService = libreTranslateService;
 
+            IsLibreTranslateEnabled = _settingsService.IsLibreTranslateEnabled;
             LibreTranslateServer = _settingsService.LibreTranslateServer;
             SelectedTargetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
 
@@ -112,6 +113,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsLibreTranslateEnabled { get; set; }
 
         [ObservableProperty]
         public partial bool IsDragEverywhereEnabled { get; set; }
@@ -729,6 +734,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 lyricsWindow.UpdateTitleBarArea();
             }
+        }
+        partial void OnIsLibreTranslateEnabledChanged(bool value)
+        {
+            _settingsService.IsLibreTranslateEnabled = value;
         }
     }
 }

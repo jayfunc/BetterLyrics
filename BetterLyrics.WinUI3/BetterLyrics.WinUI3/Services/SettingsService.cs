@@ -73,11 +73,14 @@ namespace BetterLyrics.WinUI3.Services
 
         private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
 
+        // Translation
         private const string IsTranslationEnabledKey = "IsTranslationEnabled";
         private const string ShowTranslationOnlyKey = "ShowTranslationOnly";
+        private const string IsLibreTranslateEnabledKey = "IsLibreTranslateEnabled";
         private const string LibreTranslateServerKey = "LibreTranslateServer";
         private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
 
+        // LX Music
         private const string LXMusicServerKey = "LXMusicServer";
 
         private const string LyricsBackgroundThemeKey = "LyricsBackgroundTheme";
@@ -210,6 +213,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IsFanLyricsEnabledKey, false);
 
             SetDefault(LibreTranslateServerKey, "");
+            SetDefault(IsLibreTranslateEnabledKey, false);
             SetDefault(IsTranslationEnabledKey, true);
             SetDefault(ShowTranslationOnlyKey, false);
             SetDefault(SelectedTargetLanguageIndexKey, LanguageHelper.GetDefaultTargetLanguageIndex());
@@ -604,6 +608,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(IsTranslationEnabledKey);
             set => SetValue(IsTranslationEnabledKey, value);
+        }
+
+        public bool IsLibreTranslateEnabled
+        {
+            get => GetValue<bool>(IsLibreTranslateEnabledKey);
+            set => SetValue(IsLibreTranslateEnabledKey, value);
         }
 
         public int SelectedTargetLanguageIndex

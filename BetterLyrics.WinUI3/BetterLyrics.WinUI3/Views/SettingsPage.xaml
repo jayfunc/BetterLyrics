@@ -894,9 +894,10 @@
                                     x:Uid="SettingsPageTranslationConfig"
                                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                              Glyph=&#xE8C1;}"
-                                    IsExpanded="True">
+                                    IsExpanded="{x:Bind ViewModel.IsLibreTranslateEnabled, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsLibreTranslateEnabled, Mode=TwoWay}" />
                                     <controls:SettingsExpander.Items>
-                                        <controls:SettingsCard x:Uid="SettingsPageLibreTranslateServer">
+                                        <controls:SettingsCard x:Uid="SettingsPageLibreTranslateServer" IsEnabled="{x:Bind ViewModel.IsLibreTranslateEnabled, Mode=OneWay}">
                                             <StackPanel Orientation="Horizontal" Spacing="12">
                                                 <TextBox
                                                     x:Name="LibreTranslateServerTextBox"

@@ -16,170 +16,6 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
     <Page.Resources>
-        <DataTemplate x:Key="ByTitleTemplate" x:DataType="atl:Track">
-            <Grid Padding="12" RightTapped="SongListViewItemGrid_RightTapped">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-
-                <!--  歌曲名  -->
-                <TextBlock
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    Text="{Binding Title}"
-                    TextWrapping="Wrap" />
-
-                <!--  歌手名  -->
-                <HyperlinkButton
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    IsEnabled="False">
-                    <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
-                </HyperlinkButton>
-
-                <!--  专辑名  -->
-                <HyperlinkButton
-                    Grid.Column="2"
-                    VerticalAlignment="Center"
-                    IsEnabled="False">
-                    <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
-                </HyperlinkButton>
-
-                <!--  年份  -->
-                <TextBlock
-                    Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Year}"
-                    TextWrapping="Wrap" />
-
-                <!--  歌曲时长  -->
-                <TextBlock
-                    Grid.Column="4"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
-                    TextAlignment="Right"
-                    TextWrapping="Wrap" />
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="ByAlbumTemplate" x:DataType="atl:Track">
-            <Grid Padding="12" RightTapped="SongListViewItemGrid_RightTapped">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition Width="1*" />
-                    <!--<ColumnDefinition Width="1.2*" />-->
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-
-                <!--  专辑名  -->
-                <HyperlinkButton
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    IsEnabled="False">
-                    <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
-                </HyperlinkButton>
-
-                <!--  歌曲名  -->
-                <TextBlock
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Title}"
-                    TextWrapping="Wrap" />
-
-                <!--  歌手名  -->
-                <HyperlinkButton
-                    Grid.Column="2"
-                    VerticalAlignment="Center"
-                    IsEnabled="False">
-                    <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
-                </HyperlinkButton>
-
-                <!--  年份  -->
-                <TextBlock
-                    Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Year}"
-                    TextWrapping="Wrap" />
-
-                <!--  歌曲时长  -->
-                <TextBlock
-                    Grid.Column="5"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
-                    TextAlignment="Right"
-                    TextWrapping="Wrap" />
-            </Grid>
-        </DataTemplate>
-        <DataTemplate x:Key="ByArtistTemplate" x:DataType="atl:Track">
-            <Grid Padding="12" RightTapped="SongListViewItemGrid_RightTapped">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition Width="1.5*" />
-                    <ColumnDefinition Width="1*" />
-                    <!--<ColumnDefinition Width="1.2*" />-->
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-
-                <!--  歌手名  -->
-                <HyperlinkButton
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    IsEnabled="False">
-                    <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
-                </HyperlinkButton>
-
-                <!--  歌曲名  -->
-                <TextBlock
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Title}"
-                    TextWrapping="Wrap" />
-
-                <!--  专辑名  -->
-                <HyperlinkButton
-                    Grid.Column="2"
-                    VerticalAlignment="Center"
-                    IsEnabled="False">
-                    <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
-                </HyperlinkButton>
-
-                <!--  年份  -->
-                <TextBlock
-                    Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Year}"
-                    TextWrapping="Wrap" />
-
-                <!--  歌曲时长  -->
-                <TextBlock
-                    Grid.Column="5"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
-                    TextAlignment="Right"
-                    TextWrapping="Wrap" />
-            </Grid>
-        </DataTemplate>
-        <templateselector:SongOrderTemplateSelector
-            x:Key="SongOrderTemplateSelector"
-            ByAlbumTemplate="{StaticResource ByAlbumTemplate}"
-            ByArtistTemplate="{StaticResource ByArtistTemplate}"
-            ByTitleTemplate="{StaticResource ByTitleTemplate}"
-            SongOrderType="{x:Bind ViewModel.SongOrderType, Mode=OneWay}" />
-
         <CollectionViewSource
             x:Name="TracksByTitleCVS"
             IsSourceGrouped="True"
@@ -312,10 +148,62 @@
                         <ListView
                             x:Name="SongListView"
                             Margin="12,0"
-                            ItemTemplateSelector="{StaticResource SongOrderTemplateSelector}"
                             ItemsSource="{x:Bind TracksByTitleCVS.View, Mode=OneWay}"
                             SelectionChanged="SongListView_SelectionChanged"
                             SelectionMode="Multiple">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="atl:Track">
+                                    <Grid Padding="12" RightTapped="SongListViewItemGrid_RightTapped">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="1.5*" />
+                                            <ColumnDefinition Width="1.5*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--  歌曲名  -->
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding Title}"
+                                            TextWrapping="Wrap" />
+
+                                        <!--  歌手名  -->
+                                        <HyperlinkButton
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            IsEnabled="False">
+                                            <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
+                                        </HyperlinkButton>
+
+                                        <!--  专辑名  -->
+                                        <HyperlinkButton
+                                            Grid.Column="2"
+                                            VerticalAlignment="Center"
+                                            IsEnabled="False">
+                                            <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
+                                        </HyperlinkButton>
+
+                                        <!--  年份  -->
+                                        <TextBlock
+                                            Grid.Column="3"
+                                            VerticalAlignment="Center"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Text="{Binding Year}"
+                                            TextWrapping="Wrap" />
+
+                                        <!--  歌曲时长  -->
+                                        <TextBlock
+                                            Grid.Column="4"
+                                            VerticalAlignment="Center"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                                            TextAlignment="Right"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsStackPanel AreStickyGroupHeadersEnabled="True" />
