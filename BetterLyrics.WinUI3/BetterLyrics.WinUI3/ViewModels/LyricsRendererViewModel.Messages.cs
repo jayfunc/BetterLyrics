@@ -84,6 +84,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _isLyricsFloatAnimationEnabled = message.NewValue;
                 }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.IsLibreTranslateEnabled))
+                {
+                    _isLibreTranslateEnabled = message.NewValue;
+                    UpdateTranslations();
+                }
             }
             else if (message.Sender is LyricsWindowViewModel)
             {

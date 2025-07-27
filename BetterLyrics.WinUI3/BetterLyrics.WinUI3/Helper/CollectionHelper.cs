@@ -28,8 +28,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
         {
-            if (collection == null) throw new ArgumentNullException(nameof(collection));
-            if (items == null) throw new ArgumentNullException(nameof(items));
+            if (collection == null) return;
+            if (items == null) return;
             foreach (var item in items)
             {
                 collection.Add(item);
@@ -38,9 +38,9 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items)
         {
-            if (list == null) throw new ArgumentNullException(nameof(list));
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (index < 0 || index > list.Count) throw new ArgumentOutOfRangeException(nameof(index));
+            if (list == null) return;
+            if (items == null) return;
+            if (index < 0 || index > list.Count) return;
             foreach (var item in items)
             {
                 list.Insert(index++, item);

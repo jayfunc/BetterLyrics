@@ -51,7 +51,6 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
-		<PackageReference Include="ICU4N" Version="60.1.0-alpha.438" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.7" />
@@ -68,6 +67,7 @@
 		<PackageReference Include="System.Drawing.Common" Version="9.0.7" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.7" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
+		<PackageReference Include="TinyPinyin.Net" Version="1.0.2" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
 		<PackageReference Include="Vanara.PInvoke.CoreAudio" Version="4.1.6" />
 		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.1.6" />

@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Helper;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -28,9 +29,10 @@ namespace BetterLyrics.WinUI3.Views
         public MusicGalleryWindow()
         {
             InitializeComponent();
-            Title = App.ResourceLoader!.GetString("MusicGalleryPageTitle");
+
+            Title = App.ResourceLoader?.GetString("MusicGalleryPageTitle");
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
-            this.SetIcon(@"Assets/Logo.ico");
+            AppWindow.SetIcons();
 
             AppWindow.Closing += AppWindow_Closing;
         }
