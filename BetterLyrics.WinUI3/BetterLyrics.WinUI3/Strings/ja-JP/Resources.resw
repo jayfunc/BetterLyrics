@@ -857,13 +857,13 @@
     <value>メディアライブラリには歌が見つかりませんでした</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>プレイリスト</value>
+    <value>Play queue</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
-    <value>プレイリストをクリアします</value>
+    <value>Clear play queue</value>
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
-    <value>アイテムを再生するための位置</value>
+    <value>Scroll to playing item</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
     <value>ループをリストします</value>
@@ -875,9 +875,27 @@
     <value>ランダム</value>
   </data>
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
-    <value>プレイリストから取り外します</value>
+    <value>Remove from the Play queue</value>
   </data>
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>プレイリストは空です</value>
+    <value>Play queue is empty</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>Add to play queue</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>Next items</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>End of the list</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>Add to playlist</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>Create a playlist</value>
   </data>
 </root>
