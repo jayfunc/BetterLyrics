@@ -593,7 +593,7 @@
     <value>歌詞タイムラインオフセット（ミリ秒）</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>翻訳サービスを構成します</value>
+    <value>LibreTranslate translation service</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>サーバーアドレス</value>
@@ -797,7 +797,7 @@
     <value>仿亚克力效果粗糙度</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>音楽ギャラリー</value>
+    <value>Music gallery - BetterLyrics</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>リブレットランスレートからの翻訳のリクエストが失敗しました。設定またはネイティブリブレットランレート構成を確認してください</value>
@@ -897,5 +897,8 @@
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>Create a playlist</value>
+  </data>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>Open music gallery</value>
   </data>
 </root>
