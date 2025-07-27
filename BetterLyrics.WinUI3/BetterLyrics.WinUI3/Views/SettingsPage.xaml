@@ -285,11 +285,11 @@
                                             VerticalAlignment="Center"
                                             Text="{x:Bind ViewModel.CoverAcrylicEffectAmount, Mode=OneWay}" />
                                         <Slider
-                                            Maximum="100"
+                                            Maximum="10"
                                             Minimum="0"
                                             SnapsTo="Ticks"
-                                            StepFrequency="5"
-                                            TickFrequency="5"
+                                            StepFrequency="1"
+                                            TickFrequency="1"
                                             TickPlacement="Outside"
                                             Value="{x:Bind ViewModel.CoverAcrylicEffectAmount, Mode=TwoWay}" />
                                     </StackPanel>

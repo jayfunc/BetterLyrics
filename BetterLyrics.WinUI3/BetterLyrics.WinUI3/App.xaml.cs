@@ -50,14 +50,16 @@ namespace BetterLyrics.WinUI3
 
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
-            //UnhandledException += App_UnhandledException;
-            //AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            //AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
-            //TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+            UnhandledException += App_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
+
             WindowHelper.OpenWindow<LyricsWindow>();
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (lyricsWindow == null) return;

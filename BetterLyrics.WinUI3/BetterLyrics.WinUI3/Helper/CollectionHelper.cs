@@ -36,5 +36,16 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
+        public static void InsertRange<T>(this IList<T> list, int index, IEnumerable<T> items)
+        {
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            if (items == null) throw new ArgumentNullException(nameof(items));
+            if (index < 0 || index > list.Count) throw new ArgumentOutOfRangeException(nameof(index));
+            foreach (var item in items)
+            {
+                list.Insert(index++, item);
+            }
+        }
+
     }
 }

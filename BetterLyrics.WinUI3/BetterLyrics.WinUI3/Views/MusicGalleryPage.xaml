@@ -14,20 +14,15 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:templateselector="using:BetterLyrics.WinUI3.TemplateSelector"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    Loaded="Page_Loaded"
     mc:Ignorable="d">
     <Page.Resources>
         <DataTemplate x:Key="ByTitleTemplate" x:DataType="atl:Track">
-            <Grid
-                Padding="12"
-                RightTapped="SongListViewItemGrid_RightTapped"
-                Tapped="SongListVireItemGrid_Tapped">
+            <Grid Padding="12" RightTapped="SongListViewItemGrid_RightTapped">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1.5*" />
                     <ColumnDefinition Width="1.5*" />
                     <ColumnDefinition Width="1*" />
-                    <!--<ColumnDefinition Width="1.2*" />-->
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
@@ -39,20 +34,20 @@
                     TextWrapping="Wrap" />
 
                 <!--  歌手名  -->
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="1"
                     VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Artist}"
-                    TextWrapping="Wrap" />
+                    IsEnabled="False">
+                    <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
 
                 <!--  专辑名  -->
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Album}"
-                    TextWrapping="Wrap" />
+                    IsEnabled="False">
+                    <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
 
                 <!--  年份  -->
                 <TextBlock
@@ -62,17 +57,9 @@
                     Text="{Binding Year}"
                     TextWrapping="Wrap" />
 
-                <!--  流派  -->
-                <!--<TextBlock
-                    Grid.Column="4"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Genre}"
-                    TextWrapping="Wrap" />-->
-
                 <!--  歌曲时长  -->
                 <TextBlock
-                    Grid.Column="5"
+                    Grid.Column="4"
                     VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
@@ -81,10 +68,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ByAlbumTemplate" x:DataType="atl:Track">
-            <Grid
-                Padding="12"
-                RightTapped="SongListViewItemGrid_RightTapped"
-                Tapped="SongListVireItemGrid_Tapped">
+            <Grid Padding="12" RightTapped="SongListViewItemGrid_RightTapped">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1.5*" />
@@ -95,10 +79,12 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  专辑名  -->
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="0"
-                    Text="{Binding Album}"
-                    TextWrapping="Wrap" />
+                    VerticalAlignment="Center"
+                    IsEnabled="False">
+                    <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
 
                 <!--  歌曲名  -->
                 <TextBlock
@@ -109,13 +95,12 @@
                     TextWrapping="Wrap" />
 
                 <!--  歌手名  -->
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Artist}"
-                    TextWrapping="Wrap" />
-
+                    IsEnabled="False">
+                    <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
 
                 <!--  年份  -->
                 <TextBlock
@@ -124,14 +109,6 @@
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{Binding Year}"
                     TextWrapping="Wrap" />
-
-                <!--  流派  -->
-                <!--<TextBlock
-                    Grid.Column="4"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Genre}"
-                    TextWrapping="Wrap" />-->
 
                 <!--  歌曲时长  -->
                 <TextBlock
@@ -144,10 +121,7 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ByArtistTemplate" x:DataType="atl:Track">
-            <Grid
-                Padding="12"
-                RightTapped="SongListViewItemGrid_RightTapped"
-                Tapped="SongListVireItemGrid_Tapped">
+            <Grid Padding="12" RightTapped="SongListViewItemGrid_RightTapped">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1.5*" />
@@ -158,11 +132,12 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  歌手名  -->
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="0"
                     VerticalAlignment="Center"
-                    Text="{Binding Artist}"
-                    TextWrapping="Wrap" />
+                    IsEnabled="False">
+                    <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
 
                 <!--  歌曲名  -->
                 <TextBlock
@@ -173,12 +148,12 @@
                     TextWrapping="Wrap" />
 
                 <!--  专辑名  -->
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="2"
                     VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Album}"
-                    TextWrapping="Wrap" />
+                    IsEnabled="False">
+                    <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
 
                 <!--  年份  -->
                 <TextBlock
@@ -187,14 +162,6 @@
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{Binding Year}"
                     TextWrapping="Wrap" />
-
-                <!--  流派  -->
-                <!--<TextBlock
-                    Grid.Column="4"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{Binding Genre}"
-                    TextWrapping="Wrap" />-->
 
                 <!--  歌曲时长  -->
                 <TextBlock
@@ -220,129 +187,125 @@
     </Page.Resources>
 
     <Grid>
-        <Grid.Tag>
-            <Flyout
-                x:Name="SongFileInfoFlyout"
-                Placement="Bottom"
-                ShouldConstrainToRootBounds="False">
-                <StackPanel Spacing="12">
-
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <!--<FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE946;" />-->
-                        <TextBlock x:Uid="MusicGalleryPageFileInfo" Style="{StaticResource BodyStrongTextBlockStyle}" />
-                    </StackPanel>
-
-                    <ScrollViewer Width="300" Height="300">
-                        <StackPanel Spacing="12">
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoTitle" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileArtist" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileAlbum" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoYear" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoDuration" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoBitrate" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoSampleRate" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoBitDepth" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoFormat" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoEncoder" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock x:Uid="MusicGalleryPageFileInfoPath" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                <HyperlinkButton
-                                    Margin="-12,0,0,0"
-                                    Click="SongPathHyperlinkButton_Click"
-                                    Content="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}" />
-                            </StackPanel>
-                        </StackPanel>
-                    </ScrollViewer>
-
-                </StackPanel>
-            </Flyout>
-        </Grid.Tag>
-
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid x:Name="SongViewer" Grid.Column="0">
+                <Grid.Tag>
+                    <Flyout
+                        x:Name="SongFileInfoFlyout"
+                        Placement="Bottom"
+                        ShouldConstrainToRootBounds="False">
+                        <ScrollViewer Width="300" Height="300">
+                            <StackPanel Spacing="12">
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoTitle" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileArtist" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileAlbum" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoYear" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoDuration" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoBitrate" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoSampleRate" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoBitDepth" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoFormat" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoEncoder" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <TextBlock Text="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Uid="MusicGalleryPageFileInfoPath" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    <HyperlinkButton
+                                        Margin="-12,0,0,0"
+                                        Click="SongPathHyperlinkButton_Click"
+                                        Content="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Flyout>
+                </Grid.Tag>
 
                 <Grid Margin="12" VerticalAlignment="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="16" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
                     <AutoSuggestBox
                         x:Name="SongSearchBox"
                         x:Uid="MusicGalleryPageSongSearchBox"
-                        Grid.Column="0"
                         HorizontalAlignment="Stretch"
                         QueryIcon="Find"
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
-                    <StackPanel
-                        Grid.Column="2"
-                        Orientation="Horizontal"
-                        Spacing="12">
-                        <TextBlock
-                            x:Uid="MusicGalleryPageSortType"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        <controls:Segmented
-                            x:Name="Segmented"
-                            SelectedIndex="{x:Bind ViewModel.SongOrderType, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
-                            SelectionMode="Single">
-                            <controls:SegmentedItem x:Uid="MusicGalleryPageSortByTitle" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
-                            <controls:SegmentedItem x:Uid="MusicGalleryPageSortByAlbum" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
-                            <controls:SegmentedItem x:Uid="MusicGalleryPageSortByArtist" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
-                        </controls:Segmented>
-                    </StackPanel>
                 </Grid>
 
-                <StackPanel
-                    Margin="12,58,12,0"
-                    VerticalAlignment="Top"
-                    Orientation="Horizontal"
-                    Spacing="12">
-                    <Button>
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="添加到播放列表" />
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind TracksByTitleCVS.View.Count, Mode=OneWay}" />
-                                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text=" 项" />
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-                    <Button Content="多选" />
-                </StackPanel>
+                <Grid Margin="12,58,12,0" VerticalAlignment="Top">
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal"
+                        Spacing="12">
+                        <ToggleButton
+                            x:Name="SelectAllToggleButton"
+                            x:Uid="MusicGalleryPageSelectAll"
+                            Click="SelectAllToggleButton_Click" />
+                        <Button x:Uid="MusicGalleryPageAddToPlayingQueue">
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Uid="MusicGalleryPageAddToNext" Click="AddSongToQueueNextMenuFlyoutItem_Click" />
+                                    <MenuFlyoutItem x:Uid="MusicGalleryPageAddToEnd" Click="AddSongToQueueEndMenuFlyoutItem_Click" />
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button x:Uid="MusicGalleryPageAddToCustomList" Visibility="Collapsed">
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Uid="MusicGalleryPageNewPlaylist" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE710;}" />
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="12">
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <TextBlock
+                                x:Uid="MusicGalleryPageSortType"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource BodyStrongTextBlockStyle}" />
+                            <controls:Segmented
+                                x:Name="Segmented"
+                                SelectedIndex="{x:Bind ViewModel.SongOrderType, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
+                                SelectionMode="Single">
+                                <controls:SegmentedItem x:Uid="MusicGalleryPageSortByTitle" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
+                                <controls:SegmentedItem x:Uid="MusicGalleryPageSortByAlbum" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
+                                <controls:SegmentedItem x:Uid="MusicGalleryPageSortByArtist" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
+                            </controls:Segmented>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
 
                 <SemanticZoom Margin="0,96,0,0">
                     <SemanticZoom.ZoomedInView>
@@ -350,7 +313,9 @@
                             x:Name="SongListView"
                             Margin="12,0"
                             ItemTemplateSelector="{StaticResource SongOrderTemplateSelector}"
-                            ItemsSource="{x:Bind TracksByTitleCVS.View, Mode=OneWay}">
+                            ItemsSource="{x:Bind TracksByTitleCVS.View, Mode=OneWay}"
+                            SelectionChanged="SongListView_SelectionChanged"
+                            SelectionMode="Multiple">
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsStackPanel AreStickyGroupHeadersEnabled="True" />
@@ -403,6 +368,7 @@
                 x:Name="PlayQueue"
                 Grid.Column="1"
                 Margin="0,0,12,0">
+
                 <StackPanel Margin="0,10,0,0" Spacing="12">
                     <Grid Margin="0,6,0,0" VerticalAlignment="Top">
                         <TextBlock x:Uid="MusicGalleryPagePlayingQueue" Style="{StaticResource BodyStrongTextBlockStyle}" />
@@ -432,26 +398,28 @@
                     SelectedIndex="{x:Bind ViewModel.PlayingSongIndex, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="0,6" RightTapped="SongListViewItemGrid_RightTapped">
-                                <StackPanel Margin="0,0,36,0">
-                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
-                                    <TextBlock
-                                        Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                        Text="{Binding Artist}"
-                                        TextWrapping="Wrap" />
-                                </StackPanel>
-                                <Button
-                                    HorizontalAlignment="Right"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                          Glyph=&#xE712;}"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource GhostButtonStyle}">
-                                    <Button.Flyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Click="RemoveFromPlayingQueueMenuFlyoutItem_Click" x:Uid="MusicGalleryPageRemoveFromPlayingQueue" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE738;}" />
-                                        </MenuFlyout>
-                                    </Button.Flyout>
-                                </Button>
+                            <Grid Padding="0,6">
+                                <Grid Tapped="PlayingQueueListVireItemGrid_Tapped">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                            Text="{Binding Artist}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid HorizontalAlignment="Right">
+                                    <Button
+                                        Click="RemoveFromPlayingQueueButton_Click"
+                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                              FontSize=12,
+                                                              Glyph=&#xE738;}"
+                                        Style="{StaticResource GhostButtonStyle}">
+                                        <ToolTipService.ToolTip>
+                                            <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />
+                                        </ToolTipService.ToolTip>
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
