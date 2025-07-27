@@ -593,7 +593,7 @@
     <value>가사 타임 라인 오프셋 (밀리초)</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>번역 서비스를 구성하십시오</value>
+    <value>LibreTranslate translation service</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>서버 주소</value>
@@ -797,7 +797,7 @@
     <value>仿亚克力效果粗糙度</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>음악 갤러리</value>
+    <value>Music gallery - BetterLyrics</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate에서 번역 요청 실패, 설정 또는 기본 LibreTranslate 구성을 확인하십시오.</value>
@@ -897,5 +897,8 @@
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>Create a playlist</value>
+  </data>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>Open music gallery</value>
   </data>
 </root>
