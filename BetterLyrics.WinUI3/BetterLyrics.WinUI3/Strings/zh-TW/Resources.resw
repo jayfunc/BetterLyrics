@@ -857,10 +857,10 @@
     <value>未在媒體庫內找到任何歌曲</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>播放列表</value>
+    <value>清除播放</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
-    <value>清空播放列表</value>
+    <value>清除播放隊列</value>
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
     <value>定位到播放項</value>
@@ -878,6 +878,24 @@
     <value>從播放列表移除</value>
   </data>
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>播放列表為空</value>
+    <value>播放隊列是空的</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>選擇全部</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>添加以播放隊列</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>下一個項目</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>列表的結尾</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>添加到歌單</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>建立歌單</value>
   </data>
 </root>

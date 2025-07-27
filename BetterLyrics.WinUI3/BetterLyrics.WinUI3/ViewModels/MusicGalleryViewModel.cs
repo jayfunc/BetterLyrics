@@ -40,6 +40,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
 
         [ObservableProperty]
+        public partial List<Track> SelectedTracks { get; set; } = [];
+
+        [ObservableProperty]
         public partial ObservableCollection<Track> TrackPlayingQueue { get; set; } = [];
 
         public Track? PlayingTrack => TrackPlayingQueue.ElementAtOrDefault(PlayingSongIndex);
@@ -67,6 +70,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService) : base(settingsService)
         {
+            RefreshSongs();
+
             PlaybackOrder = _settingsService.PlaybackOrder;
 
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
@@ -88,6 +93,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void MediaPlayer_MediaEnded(MediaPlayer sender, object args)
         {
+            PlayNextTrack();
+        }
+
+        public void PlayNextTrack()
+        {
             switch (PlaybackOrder)
             {
                 case PlaybackOrder.RepeatAll:
@@ -101,6 +111,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             PlayingSongIndex = 0;
                         }
+                        PlayTrack(PlayingTrack);
                     });
                     break;
                 case PlaybackOrder.RepeatOne:
@@ -113,6 +124,43 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             PlayingSongIndex = new Random().Next(0, TrackPlayingQueue.Count);
                         }
+                        PlayTrack(PlayingTrack);
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void PlayPreviousTrack()
+        {
+            switch (PlaybackOrder)
+            {
+                case PlaybackOrder.RepeatAll:
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        if (PlayingSongIndex > 0)
+                        {
+                            PlayingSongIndex--;
+                        }
+                        else
+                        {
+                            PlayingSongIndex = TrackPlayingQueue.Count - 1;
+                        }
+                        PlayTrack(PlayingTrack);
+                    });
+                    break;
+                case PlaybackOrder.RepeatOne:
+                    _timelineController.Position = TimeSpan.Zero;
+                    break;
+                case PlaybackOrder.Shuffle:
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        if (TrackPlayingQueue.Count > 0)
+                        {
+                            PlayingSongIndex = new Random().Next(0, TrackPlayingQueue.Count);
+                        }
+                        PlayTrack(PlayingTrack);
                     });
                     break;
                 default:
@@ -153,22 +201,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _timelineController.Pause();
                     break;
                 case SystemMediaTransportControlsButton.Next:
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                    {
-                        if (PlayingSongIndex < TrackPlayingQueue.Count - 1)
-                        {
-                            PlayingSongIndex++;
-                        }
-                    });
+                    PlayNextTrack();
                     break;
                 case SystemMediaTransportControlsButton.Previous:
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                    {
-                        if (PlayingSongIndex > 0)
-                        {
-                            PlayingSongIndex--;
-                        }
-                    });
+                    PlayPreviousTrack();
                     break;
             }
         }
@@ -251,13 +287,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void InitPlayingQueue(Track? track)
+        public void PlayTrackAt(int index)
         {
-            TrackPlayingQueue = [.. GroupedTracks.SelectMany(g => g.Cast<Track>())];
-            PlayingSongIndex = track == null ? -1 : TrackPlayingQueue.IndexOf(track);
+            PlayTrack(TrackPlayingQueue.ElementAtOrDefault(index));
         }
 
-        private void PlayTrack(Track? track)
+        public void PlayTrack(Track? track)
         {
             _timelineController.Pause();
             _mediaPlayer.Source = null;
@@ -267,9 +302,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
+                var updater = _smtc.DisplayUpdater;
                 _smtc.IsEnabled = true;
                 _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
-                var updater = _smtc.DisplayUpdater;
                 updater.AppMediaId = Package.Current.Id.FullName;
                 updater.Type = MediaPlaybackType.Music;
                 updater.MusicProperties.Title = track.Title;
@@ -303,7 +338,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnPlayingSongIndexChanged(int value)
         {
             DisplayedPlayingSongIndex = value + 1;
-            PlayTrack(TrackPlayingQueue.ElementAtOrDefault(value));
         }
 
         partial void OnPlaybackOrderChanged(PlaybackOrder value)

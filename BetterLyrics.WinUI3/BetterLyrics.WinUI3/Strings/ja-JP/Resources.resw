@@ -857,10 +857,10 @@
     <value>メディアライブラリには歌が見つかりませんでした</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>プレイリスト</value>
+    <value>キューを再生します</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
-    <value>プレイリストをクリアします</value>
+    <value>クリアプレイキュー</value>
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
     <value>アイテムを再生するための位置</value>
@@ -878,6 +878,24 @@
     <value>プレイリストから取り外します</value>
   </data>
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>プレイリストは空です</value>
+    <value>キューを再生するのは空です</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>すべてを選択します</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>キューを再生するために追加します</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>次のアイテム</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>リストの終わり</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>プレイリストに追加します</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>プレイリストを作成します</value>
   </data>
 </root>

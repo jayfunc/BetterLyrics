@@ -857,10 +857,10 @@
     <value>미디어 라이브러리에는 노래가 없습니다</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>재생 목록</value>
+    <value>대기열을 재생하십시오</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
-    <value>재생 목록을 지우십시오</value>
+    <value>플레이 대기열을 클리어합니다</value>
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
     <value>아이템을 재생하기위한 포지셔닝</value>
@@ -878,6 +878,24 @@
     <value>재생 목록에서 제거하십시오</value>
   </data>
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>재생 목록이 비어 있습니다</value>
+    <value>플레이 대기열이 비어 있습니다</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>모두를 선택하십시오</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>재생 큐에 추가하십시오</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>다음 항목</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>목록의 끝</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>재생 목록에 추가하십시오</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>재생 목록을 만듭니다</value>
   </data>
 </root>
