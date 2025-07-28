@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
+using System;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -40,7 +41,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 DockModeHelper.Disable(lyricsWindow);
             }
-            Application.Current.Exit();
+            Environment.Exit(0);
         }
 
         [RelayCommand]
