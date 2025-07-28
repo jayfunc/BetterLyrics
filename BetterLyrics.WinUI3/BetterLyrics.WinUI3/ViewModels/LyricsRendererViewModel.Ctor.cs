@@ -33,7 +33,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             _lyricsAlignmentType = _settingsService.LyricsAlignmentType;
             _lyricsVerticalEdgeOpacity = _settingsService.LyricsVerticalEdgeOpacity;
             _lyricsLineSpacingFactor = _settingsService.LyricsLineSpacingFactor;
-            _lyricsFontSize = _settingsService.LyricsFontSize;
+            
+            _lyricsStandardFontSize = _settingsService.LyricsStandardFontSize;
+            _lyricsDockFontSize = _settingsService.LyricsDockFontSize;
+            _lyricsDesktopFontSize = _settingsService.LyricsDesktopFontSize;
+
             _lyricsBlurAmount = _settingsService.LyricsBlurAmount;
             _isLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
             _lyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;

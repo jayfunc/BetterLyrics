@@ -142,7 +142,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void TimelineSliderOverlay_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            _playbackService.ChangePosition(TimelineSliderOverlay.Value);
+            _playbackService.ChangePosition(TimelineSlider.Value);
         }
     }
 }

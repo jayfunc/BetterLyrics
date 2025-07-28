@@ -85,7 +85,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         private LineRenderingType _lyricsHighlightScope;
 
         private int _lyricsFontStrokeWidth;
-        private int _lyricsFontSize;
+        private int _lyricsStandardFontSize;
+        private int _lyricsDockFontSize;
+        private int _lyricsDesktopFontSize;
         private float _lyricsLineSpacingFactor;
 
         private LyricsFontColorType _lyricsBgFontColorType;

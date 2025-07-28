@@ -140,7 +140,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (control == null)
                 return;
 
-            _lyricsTextFormat.FontSize = _lyricsFontSize;
+            if (_isDockMode)
+            {
+                _lyricsTextFormat.FontSize = _lyricsDockFontSize;
+            }
+            else if (_isDesktopMode)
+            {
+                _lyricsTextFormat.FontSize = _lyricsDesktopFontSize;
+            }
+            else
+            {
+                _lyricsTextFormat.FontSize = _lyricsStandardFontSize;
+            }
 
             float y = 0;
 

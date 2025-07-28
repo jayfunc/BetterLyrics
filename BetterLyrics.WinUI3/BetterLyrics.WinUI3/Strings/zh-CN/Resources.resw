@@ -264,8 +264,14 @@
   <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
     <value> 倍行高</value>
   </data>
-  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
-    <value>字体大小</value>
+  <data name="SettingsPageLyricsStandardFontSize.Header" xml:space="preserve">
+    <value>字体尺寸（标准模式）</value>
+  </data>
+  <data name="SettingsPageLyricsDockFontSize.Header" xml:space="preserve">
+    <value>字体大小（停靠模式）</value>
+  </data>
+  <data name="SettingsPageLyricsDesktopFontSize.Header" xml:space="preserve">
+    <value>字体尺寸（桌面模式）</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>仅显示歌词</value>
