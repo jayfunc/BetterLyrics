@@ -22,7 +22,7 @@
                 AreOpenCloseAnimationsEnabled="True"
                 LightDismissOverlayMode="On"
                 ShowMode="TransientWithDismissOnPointerMoveAway">
-                <MenuFlyoutItem x:Uid="SystemTrayMusicGallery" Command="{x:Bind ViewModel.OpenSettingsCommand}" />
+                <MenuFlyoutItem x:Uid="SystemTrayMusicGallery" Command="{x:Bind ViewModel.OpenMusicGalleryCommand}" />
                 <MenuFlyoutItem x:Uid="SystemTraySettings" Command="{x:Bind ViewModel.OpenSettingsCommand}" />
                 <MenuFlyoutItem x:Uid="SystemTrayExit" Command="{x:Bind ViewModel.ExitAppCommand}" />
                 <MenuFlyoutItem

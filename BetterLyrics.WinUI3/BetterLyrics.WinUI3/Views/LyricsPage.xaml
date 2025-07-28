@@ -29,7 +29,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontFamily="{x:Bind ViewModel.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.LyricsFontSize, Mode=OneWay}" />
+                FontSize="{x:Bind ViewModel.LyricsStandardFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -337,19 +337,9 @@
                     Maximum="{x:Bind ViewModel.SongDurationSeconds, Mode=OneWay}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
+                    Tapped="TimelineSliderOverlay_Tapped"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
                     Value="{x:Bind ViewModel.TimelinePositionSeconds, Mode=OneWay}" />
-
-                <Slider
-                    x:Name="TimelineSliderOverlay"
-                    Margin="0,-32,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Top"
-                    Maximum="{Binding ElementName=TimelineSlider, Path=Maximum}"
-                    Minimum="0"
-                    Style="{StaticResource TransparentSliderStyle}"
-                    Tapped="TimelineSliderOverlay_Tapped"
-                    ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}" />
             </Grid>
 
         </Grid>

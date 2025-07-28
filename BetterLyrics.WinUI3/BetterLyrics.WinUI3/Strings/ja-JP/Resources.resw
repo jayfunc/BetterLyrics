@@ -264,8 +264,14 @@
   <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
     <value>x線の高さ</value>
   </data>
-  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
-    <value>フォントサイズ</value>
+  <data name="SettingsPageLyricsStandardFontSize.Header" xml:space="preserve">
+    <value>フォントサイズ（標準モード）</value>
+  </data>
+  <data name="SettingsPageLyricsDockFontSize.Header" xml:space="preserve">
+    <value>フォントサイズ（ドックモード）</value>
+  </data>
+  <data name="SettingsPageLyricsDesktopFontSize.Header" xml:space="preserve">
+    <value>フォントサイズ（デスクトップモード）</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>歌詞のみ</value>

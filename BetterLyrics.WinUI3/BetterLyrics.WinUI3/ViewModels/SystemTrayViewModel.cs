@@ -51,6 +51,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
+        private static void OpenMusicGallery()
+        {
+            WindowHelper.OpenWindow<MusicGalleryWindow>();
+        }
+
+        [RelayCommand]
         private void UnlockWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
