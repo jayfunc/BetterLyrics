@@ -901,4 +901,13 @@
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>開啟音樂庫</value>
   </data>
+  <data name="TryRunMultipleInstance" xml:space="preserve">
+    <value>BetterLyrics 已經在運作</value>
+  </data>
+  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <value>所有歌曲</value>
+  </data>
+  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+    <value>Telegram</value>
+  </data>
 </root>

@@ -30,12 +30,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
+        // All songs
         private List<Track> _tracks = [];
+        // Songs in current playlist
+        private List<Track> _playlistTracks = [];
+        // Filtered songs based on search query for current playlist
         private List<Track> _filteredTracks = [];
 
         [ObservableProperty]
         public partial bool IsLocalMediaNotFound { get; set; }
 
+        /// <summary>
+        /// Grouped tracks after filtering and sorting for current playlist
+        /// </summary>
         [ObservableProperty]
         public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
 
@@ -43,15 +50,23 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial List<Track> SelectedTracks { get; set; } = [];
 
         [ObservableProperty]
-        public partial ObservableCollection<Track> TrackPlayingQueue { get; set; } = [];
+        public partial ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; } = [];
 
-        public Track? PlayingTrack => TrackPlayingQueue.ElementAtOrDefault(PlayingSongIndex);
+        public PlayQueueItem? PlayingQueueItem => TrackPlayingQueue.ElementAtOrDefault(PlayingSongIndex);
 
         [ObservableProperty]
         public partial PlaybackOrder PlaybackOrder { get; set; }
 
         [ObservableProperty]
-        public partial SongOrderType SongOrderType { get; set; } = SongOrderType.Title;
+        public partial CommonSongProperty SongOrderType { get; set; } = CommonSongProperty.Title;
+
+        [ObservableProperty]
+        public partial ObservableCollection<SongsTabInfo> SongsTabInfoList { get; set; } = [];
+
+        [ObservableProperty]
+        public partial int SelectedSongsTabInfoIndex { get; set; } = 0;
+
+        public SongsTabInfo? SelectedSongsTabInfo => SongsTabInfoList.ElementAtOrDefault(SelectedSongsTabInfoIndex);
 
         [ObservableProperty]
         public partial bool IsDataLoading { get; set; } = false;
@@ -70,6 +85,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService) : base(settingsService)
         {
+            SongsTabInfoList.Add(new SongsTabInfo(App.ResourceLoader!.GetString("MusicGalleryPageAllSongs"), "\uE8A9", false, CommonSongProperty.Title, string.Empty));
+
             RefreshSongs();
 
             PlaybackOrder = _settingsService.PlaybackOrder;
@@ -111,7 +128,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             PlayingSongIndex = 0;
                         }
-                        PlayTrack(PlayingTrack);
+                        PlayTrack(PlayingQueueItem);
                     });
                     break;
                 case PlaybackOrder.RepeatOne:
@@ -124,7 +141,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             PlayingSongIndex = new Random().Next(0, TrackPlayingQueue.Count);
                         }
-                        PlayTrack(PlayingTrack);
+                        PlayTrack(PlayingQueueItem);
                     });
                     break;
                 default:
@@ -147,7 +164,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             PlayingSongIndex = TrackPlayingQueue.Count - 1;
                         }
-                        PlayTrack(PlayingTrack);
+                        PlayTrack(PlayingQueueItem);
                     });
                     break;
                 case PlaybackOrder.RepeatOne:
@@ -160,7 +177,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             PlayingSongIndex = new Random().Next(0, TrackPlayingQueue.Count);
                         }
-                        PlayTrack(PlayingTrack);
+                        PlayTrack(PlayingQueueItem);
                     });
                     break;
                 default:
@@ -236,10 +253,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                         }
                     }
 
-                    ApplySongSearchQuery();
-
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
+                        ApplyPlaylist();
+                        ApplySongSearchQuery();
                         IsLocalMediaNotFound = !_filteredTracks.Any();
                         ApplySongOrderType();
                         IsDataLoading = false;
@@ -248,37 +265,64 @@ namespace BetterLyrics.WinUI3.ViewModels
             }, TimeSpan.FromMilliseconds(100));
         }
 
+        public void ApplyPlaylist()
+        {
+            if (SelectedSongsTabInfo?.FilterValue == string.Empty)
+            {
+                _playlistTracks = _tracks;
+            }
+            else
+            {
+                switch (SelectedSongsTabInfo?.FilterProperty)
+                {
+                    case CommonSongProperty.Title:
+                        _playlistTracks = _tracks.Where(t => t.Title.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        break;
+                    case CommonSongProperty.Album:
+                        _playlistTracks = _tracks.Where(t => t.Album.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        break;
+                    case CommonSongProperty.Artist:
+                        _playlistTracks = _tracks.Where(t => t.Artist.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            ApplySongSearchQuery();
+            IsLocalMediaNotFound = !_filteredTracks.Any();
+            ApplySongOrderType();
+        }
+
         public void ApplySongSearchQuery()
         {
             if (string.IsNullOrWhiteSpace(SongSearchQuery))
             {
-                _filteredTracks = _tracks;
+                _filteredTracks = _playlistTracks;
                 return;
             }
-            _filteredTracks = new List<Track>(
-                _tracks.Where(t => t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                                   t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                                   t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase))
-            );
+            _filteredTracks = _playlistTracks.Where(t =>
+                    t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                    t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                    t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         private void ApplySongOrderType()
         {
             switch (SongOrderType)
             {
-                case SongOrderType.Title:
+                case CommonSongProperty.Title:
                     GroupedTracks = _filteredTracks.GetGroupedBy(
                         t => LanguageHelper.GetOrderChar(t.Title),
                         o => ((Track)o).Title
                     );
                     break;
-                case SongOrderType.Artist:
+                case CommonSongProperty.Artist:
                     GroupedTracks = _filteredTracks.GetGroupedBy(
                         t => LanguageHelper.GetOrderChar(t.Artist),
                         o => ((Track)o).Artist
                     );
                     break;
-                case SongOrderType.Album:
+                case CommonSongProperty.Album:
                     GroupedTracks = _filteredTracks.GetGroupedBy(
                         t => LanguageHelper.GetOrderChar(t.Album),
                         o => ((Track)o).Album
@@ -287,21 +331,38 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
+        public void UpdateSelectedPlaylist(SongsTabInfo playlist)
+        {
+            var found = SongsTabInfoList.Where(x => x.FilterProperty == playlist.FilterProperty && x.FilterValue == playlist.FilterValue)
+                .ToList().FirstOrDefault();
+            if (found == null)
+            {
+                SongsTabInfoList.Add(playlist);
+                SelectedSongsTabInfoIndex = SongsTabInfoList.Count - 1;
+            }
+            else
+            {
+                SelectedSongsTabInfoIndex = SongsTabInfoList.IndexOf(found);
+            }
+            ApplyPlaylist();
+        }
+
         public void PlayTrackAt(int index)
         {
             PlayTrack(TrackPlayingQueue.ElementAtOrDefault(index));
         }
 
-        public void PlayTrack(Track? track)
+        public void PlayTrack(PlayQueueItem? playQueueItem)
         {
             _timelineController.Pause();
             _mediaPlayer.Source = null;
-            if (track == null)
+            if (playQueueItem == null)
             {
                 _smtc.IsEnabled = false;
             }
             else
             {
+                var track = playQueueItem.Track;
                 var updater = _smtc.DisplayUpdater;
                 _smtc.IsEnabled = true;
                 _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
@@ -322,7 +383,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        partial void OnSongOrderTypeChanged(SongOrderType value)
+        partial void OnSongOrderTypeChanged(CommonSongProperty value)
         {
             ApplySongOrderType();
             IsLocalMediaNotFound = !_filteredTracks.Any();

@@ -17,7 +17,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <CollectionViewSource
-            x:Name="TracksByTitleCVS"
+            x:Name="GroupedTracksCVS"
             IsSourceGrouped="True"
             Source="{x:Bind ViewModel.GroupedTracks, Mode=OneWay}" />
     </Page.Resources>
@@ -28,7 +28,10 @@
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid x:Name="SongViewer" Grid.Column="0">
+            <Grid
+                x:Name="SongViewer"
+                Grid.Column="0"
+                Padding="12">
                 <Grid.Tag>
                     <Flyout
                         x:Name="SongFileInfoFlyout"
@@ -88,7 +91,58 @@
                     </Flyout>
                 </Grid.Tag>
 
-                <Grid Margin="12" VerticalAlignment="Top">
+                <ListView
+                    VerticalAlignment="Top"
+                    ItemsSource="{x:Bind ViewModel.SongsTabInfoList, Mode=OneWay}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    SelectedIndex="{x:Bind ViewModel.SelectedSongsTabInfoIndex, Mode=TwoWay}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsStackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:SongsTabInfo">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid
+                                    Grid.Column="0"
+                                    Background="Transparent"
+                                    ColumnSpacing="6"
+                                    Tapped="PlaylistGrid_Tapped">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon
+                                        Grid.Column="0"
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="{Binding Icon}" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Name}" />
+                                </Grid>
+                                <Button
+                                    Grid.Column="1"
+                                    Click="PlaylistCloseButton_Click"
+                                    Content="{ui:FontIcon FontSize=10,
+                                                          FontFamily={StaticResource IconFontFamily},
+                                                          Glyph=&#xE8BB;}"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource GhostButtonStyle}"
+                                    Visibility="{Binding IsClosable, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Grid Margin="0,48,0,0" VerticalAlignment="Top">
                     <AutoSuggestBox
                         x:Name="SongSearchBox"
                         x:Uid="MusicGalleryPageSongSearchBox"
@@ -97,7 +151,7 @@
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
                 </Grid>
 
-                <Grid Margin="12,58,12,0" VerticalAlignment="Top">
+                <Grid Margin="0,96,0,0" VerticalAlignment="Top">
                     <StackPanel
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
@@ -143,12 +197,11 @@
                     </StackPanel>
                 </Grid>
 
-                <SemanticZoom Margin="0,96,0,0">
+                <SemanticZoom Margin="0,140,0,0">
                     <SemanticZoom.ZoomedInView>
                         <ListView
                             x:Name="SongListView"
-                            Margin="12,0"
-                            ItemsSource="{x:Bind TracksByTitleCVS.View, Mode=OneWay}"
+                            ItemsSource="{x:Bind GroupedTracksCVS.View, Mode=OneWay}"
                             SelectionChanged="SongListView_SelectionChanged"
                             SelectionMode="Multiple">
                             <ListView.ItemTemplate>
@@ -173,7 +226,8 @@
                                         <HyperlinkButton
                                             Grid.Column="1"
                                             VerticalAlignment="Center"
-                                            IsEnabled="False">
+                                            Click="ArtistHyperlibkButton_Click"
+                                            Tag="{Binding Artist}">
                                             <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
                                         </HyperlinkButton>
 
@@ -181,7 +235,8 @@
                                         <HyperlinkButton
                                             Grid.Column="2"
                                             VerticalAlignment="Center"
-                                            IsEnabled="False">
+                                            Click="AlbumHyperlibkButton_Click"
+                                            Tag="{Binding Album}">
                                             <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
                                         </HyperlinkButton>
 
@@ -216,7 +271,7 @@
                                             <Border AutomationProperties.AccessibilityView="Raw">
                                                 <TextBlock
                                                     AutomationProperties.AccessibilityView="Raw"
-                                                    Style="{ThemeResource TitleTextBlockStyle}"
+                                                    Style="{ThemeResource SubtitleTextBlockStyle}"
                                                     Text="{Binding}" />
                                             </Border>
                                         </DataTemplate>
@@ -231,7 +286,7 @@
                             MaxWidth="500"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            ItemsSource="{x:Bind TracksByTitleCVS.View.CollectionGroups, Mode=OneWay}"
+                            ItemsSource="{x:Bind GroupedTracksCVS.View.CollectionGroups, Mode=OneWay}"
                             ScrollViewer.IsHorizontalScrollChainingEnabled="False"
                             SelectionMode="None">
                             <GridView.ItemTemplate>
@@ -243,10 +298,16 @@
                     </SemanticZoom.ZoomedOutView>
                 </SemanticZoom>
 
-                <Grid Margin="0,48,0,0" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Image MaxWidth="200" Source="/Assets/Planet.png" />
-                        <TextBlock x:Uid="MusicGalleryPageFileNotFound" HorizontalAlignment="Center" />
+                <Grid Margin="0,140,0,0" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <Image MaxWidth="200" Source="/Assets/EmptyState.png" />
+                        <TextBlock
+                            x:Uid="MusicGalleryPageFileNotFound"
+                            HorizontalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                     </StackPanel>
                 </Grid>
 
@@ -289,10 +350,10 @@
                             <Grid Padding="0,6">
                                 <Grid Tapped="PlayingQueueListVireItemGrid_Tapped">
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
+                                        <TextBlock Text="{Binding Track.Title}" TextWrapping="Wrap" />
                                         <TextBlock
                                             Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                            Text="{Binding Artist}"
+                                            Text="{Binding Track.Artist}"
                                             TextWrapping="Wrap" />
                                     </StackPanel>
                                 </Grid>
@@ -328,9 +389,15 @@
                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                         </interactivity:DataTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Image MaxWidth="200" Source="/Assets/Planet.png" />
-                        <TextBlock x:Uid="MusicGalleryPagePlayingQueueEmpty" HorizontalAlignment="Center" />
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
+                        <TextBlock
+                            x:Uid="MusicGalleryPagePlayingQueueEmpty"
+                            HorizontalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                     </StackPanel>
                 </Grid>
             </Grid>

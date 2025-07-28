@@ -131,5 +131,10 @@ namespace BetterLyrics.WinUI3.Views
         {
             Launcher.LaunchUriAsync(new Uri(MetadataHelper.DiscordUrl));
         }
+
+        private void TelegramGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Launcher.LaunchUriAsync(new Uri(MetadataHelper.TelegramUrl));
+        }
     }
 }
