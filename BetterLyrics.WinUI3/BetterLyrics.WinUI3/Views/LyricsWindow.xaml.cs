@@ -28,6 +28,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             this.InitializeComponent();
 
+            AppWindow.SetIcons();
+
             AppWindow.Changed += AppWindow_Changed;
 
             ExtendsContentIntoTitleBar = true;
@@ -337,6 +339,22 @@ namespace BetterLyrics.WinUI3.Views
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
         {
             WindowHelper.OpenWindow<MusicGalleryWindow>();
+        }
+
+        private void ClickThroughButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ToggleLockWindowCommand.Execute(null);
+        }
+
+        private void DockFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ToggleDockModeCommand.Execute(null);
+        }
+
+        private void DesktopFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ToggleDesktopModeCommand.Execute(null);
+            UpdateTitleBarWindowButtonsVisibility();
         }
     }
 }

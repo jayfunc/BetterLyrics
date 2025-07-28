@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -250,7 +250,7 @@
     <value>이 값을 조정하면 앨범 이미지의 배경 흐림 강도가 증가합니다.</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>현재 가치 :</value>
+    <value>현재 가치 : </value>
   </data>
   <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
     <value>Blur가 활성화 될 때 상당히 높은 GPU 사용량 (&gt; 0)</value>
@@ -593,7 +593,7 @@
     <value>가사 타임 라인 오프셋 (밀리초)</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>번역 서비스를 구성하십시오</value>
+    <value>libretranslate 번역 서비스</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>서버 주소</value>
@@ -779,7 +779,7 @@
     <value>자동 가죽 창</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>도크 모드 또는 데스크탑 모드에서 재생되지 않을 때는 창을 자동으로 숨기고 있습니다.</value>
+    <value>도크 모드 또는 데스크탑 모드에서 재생되지 않을 때는 창을 자동으로 숨기고 있습니다</value>
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>창 높이</value>
@@ -793,7 +793,121 @@
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>비 중과 영역에서 창을 드래그 할 수 있도록 제목 표시 줄을 전체 페이지로 확장하십시오.</value>
   </data>
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>仿亚克力效果粗糙度</value>
+  </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>음악 갤러리</value>
+    <value>음악 갤러리 - BetterLyrics</value>
+  </data>
+  <data name="LibreTranslateFailed" xml:space="preserve">
+    <value>LibreTranslate에서 번역 요청 실패, 설정 또는 기본 LibreTranslate 구성을 확인하십시오.</value>
+  </data>
+  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
+    <value>파일 정보</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoTitle.Text" xml:space="preserve">
+    <value>제목</value>
+  </data>
+  <data name="MusicGalleryPageFileArtist.Text" xml:space="preserve">
+    <value>아티스트</value>
+  </data>
+  <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
+    <value>앨범</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoYear.Text" xml:space="preserve">
+    <value>년도</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoDuration.Text" xml:space="preserve">
+    <value>지속</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoBitrate.Text" xml:space="preserve">
+    <value>비트 레이트</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoSampleRate.Text" xml:space="preserve">
+    <value>샘플 속도</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoBitDepth.Text" xml:space="preserve">
+    <value>비트 깊이</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
+    <value>체재</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoEncoder.Text" xml:space="preserve">
+    <value>인코더</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
+    <value>길</value>
+  </data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <value>노래 검색</value>
+  </data>
+  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
+    <value>정렬 유형</value>
+  </data>
+  <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
+    <value>제목</value>
+  </data>
+  <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
+    <value>앨범</value>
+  </data>
+  <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
+    <value>아티스트</value>
+  </data>
+  <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
+    <value>미디어 라이브러리에는 노래가 없습니다</value>
+  </data>
+  <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
+    <value>대기열을 재생하십시오</value>
+  </data>
+  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
+    <value>플레이 대기열을 클리어합니다</value>
+  </data>
+  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
+    <value>아이템을 재생하기위한 포지셔닝</value>
+  </data>
+  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
+    <value>목록 루프</value>
+  </data>
+  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
+    <value>단일 루프</value>
+  </data>
+  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
+    <value>무작위의</value>
+  </data>
+  <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
+    <value>재생 목록에서 제거하십시오</value>
+  </data>
+  <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
+    <value>플레이 대기열이 비어 있습니다</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>모두를 선택하십시오</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>재생 큐에 추가하십시오</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>다음 항목</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>목록의 끝</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>재생 목록에 추가하십시오</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>재생 목록을 만듭니다</value>
+  </data>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>오픈 음악 갤러리</value>
+  </data>
+  <data name="TryRunMultipleInstance" xml:space="preserve">
+    <value>BetterLyrics 가 이미 실행 중입니다</value>
+  </data>
+  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <value>모든 노래</value>
+  </data>
+  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+    <value>Telegram</value>
   </data>
 </root>

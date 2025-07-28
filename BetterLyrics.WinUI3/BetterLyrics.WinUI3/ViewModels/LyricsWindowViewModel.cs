@@ -50,10 +50,10 @@ namespace BetterLyrics.WinUI3
             _dockWindowHeight = _settingsService.DockWindowHeight;
             OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
 
-            _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
+            _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
         }
 
-        private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
+        private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
         {
             AutoHideOrShowWindow();
         }
@@ -103,7 +103,7 @@ namespace BetterLyrics.WinUI3
 
             if (IsDockMode || IsDesktopMode)
             {
-                if (_hideWindowWhenNotPlaying && _playbackService.SongInfo == null)
+                if (_hideWindowWhenNotPlaying && !_playbackService.IsPlaying)
                 {
                     if (IsDockMode)
                     {
@@ -316,6 +316,7 @@ namespace BetterLyrics.WinUI3
             IsDockMode = !IsDockMode;
             if (IsDockMode)
             {
+                window.Restore();
                 DockModeHelper.Enable(window, _dockWindowHeight, _dockPlacement);
                 StartWatchWindowColorChange();
             }

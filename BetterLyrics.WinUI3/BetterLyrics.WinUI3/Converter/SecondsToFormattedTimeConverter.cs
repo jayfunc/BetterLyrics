@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    public class SecondsToFormattedTimeConverter : IValueConverter
+    public partial class SecondsToFormattedTimeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
+using Windows.Graphics.Imaging;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -71,6 +73,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _albumArtSize = MathF.Max(0, _albumArtSize);
 
                 _titleY = _albumArtY + _albumArtSize * 1.05f;
+
+                _isCoverAcrylicEffectAmountChanged = true;
+            }
+
+            if (_isCoverAcrylicEffectAmountChanged)
+            {
+                UpdateCoverAcrylicOverlay(control);
             }
 
             if (_isDisplayTypeChanged || _isCanvasWidthChanged)
@@ -438,6 +447,22 @@ namespace BetterLyrics.WinUI3.ViewModels
                 targetOpacity = 1f;
             }
             _immersiveBgOpacityTransition.StartTransition(targetOpacity);
+        }
+
+        private void UpdateCoverAcrylicOverlay(ICanvasAnimatedControl control)
+        {
+            if (_coverAcrylicEffectAmount > 0)
+            {
+                var ret = NoiseOverlayHelper.GenerateNoiseBitmapBGRA((int)_canvasWidth, (int)_canvasHeight);
+                _coverAcrylicNoiseCanvasBitmap = CanvasBitmap.CreateFromBytes(
+                    control,
+                    ret,
+                    (int)_canvasWidth,
+                    (int)_canvasHeight,
+                   Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized
+                );
+            }
+            _isCoverAcrylicEffectAmountChanged = false;
         }
     }
 }

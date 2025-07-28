@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
@@ -13,9 +14,9 @@ namespace BetterLyrics.WinUI3.Views
         public SettingsWindow()
         {
             InitializeComponent();
-            Title = App.ResourceLoader!.GetString("SettingsPageTitle");
+            Title = App.ResourceLoader?.GetString("SettingsPageTitle");
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
-            this.SetIcon(@"Assets/Logo.ico");
+            AppWindow.SetIcons();
         }
     }
 }

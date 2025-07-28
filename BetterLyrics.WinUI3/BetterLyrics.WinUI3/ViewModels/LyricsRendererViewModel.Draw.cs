@@ -7,11 +7,14 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.Graphics.Effects;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -173,10 +176,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
+            //ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
 
             using var overlappedCovers = new CanvasCommandList(control.Device);
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
+            overlappedCoversDs.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
 
             if (_lastAlbumArtCanvasBitmap != null)
             {
@@ -187,20 +191,40 @@ namespace BetterLyrics.WinUI3.ViewModels
                 DrawBackgroundImgae(control, overlappedCoversDs, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
             }
 
-            using var coverOverlayEffect = new OpacityEffect
+            overlappedCoversDs.Transform = Matrix3x2.Identity;
+
+            IGraphicsEffectSource blurredCover = new GaussianBlurEffect
+            {
+                BlurAmount = _albumArtBgBlurAmount,
+                Source = overlappedCovers,
+                BorderMode = EffectBorderMode.Soft,
+                Optimization = EffectOptimization.Speed,
+            };
+
+            // 应用亚克力噪点效果
+            // TODO: 没有写_coverAcrylicNoiseCanvasBitmap加载的代码
+            if (_coverAcrylicEffectAmount > 0 && _coverAcrylicNoiseCanvasBitmap != null)
+            {
+                blurredCover = new BlendEffect
+                {
+                    Mode = BlendEffectMode.SoftLight,
+                    Background = blurredCover,
+                    Foreground = new OpacityEffect
+                    {
+                        Source = _coverAcrylicNoiseCanvasBitmap,
+                        Opacity = _coverAcrylicEffectAmount / 100f,
+                    },
+                };
+            }
+
+            var coverOverlayEffect = new OpacityEffect
             {
                 Opacity = _albumArtBgOpacity / 100f,
-                Source = new GaussianBlurEffect
-                {
-                    BlurAmount = _albumArtBgBlurAmount,
-                    Source = overlappedCovers,
-                    BorderMode = EffectBorderMode.Soft,
-                    Optimization = EffectOptimization.Speed,
-                },
+                Source = blurredCover,
             };
             ds.DrawImage(coverOverlayEffect);
 
-            ds.Transform = Matrix3x2.Identity;
+            //ds.Transform = Matrix3x2.Identity;
         }
 
         private void DrawAlbumArt(ICanvasAnimatedControl control, CanvasDrawingSession ds)

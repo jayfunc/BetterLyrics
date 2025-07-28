@@ -469,6 +469,12 @@
                 </Setter>
             </Style>
 
+            <Style x:Key="ListViewStretchedItemContainerStyle" TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+
             <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="TextFillColorPrimaryBrush" />

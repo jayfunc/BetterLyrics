@@ -45,10 +45,7 @@
                     </StackPanel.OpacityTransition>
 
                     <!--  Music gallery  -->
-                    <Button
-                        Click="MusicGalleryButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}"
-                        Visibility="Collapsed">
+                    <Button Click="MusicGalleryButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize}"
@@ -80,7 +77,7 @@
                     <!--  Look  -->
                     <Button
                         x:Name="ClickThroughButton"
-                        Command="{x:Bind ViewModel.ToggleLockWindowCommand}"
+                        Click="ClickThroughButton_Click"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
@@ -127,12 +124,12 @@
                                 <ToggleMenuFlyoutItem
                                     x:Name="DockFlyoutItem"
                                     x:Uid="HostWindowDockFlyoutItem"
-                                    Command="{x:Bind ViewModel.ToggleDockModeCommand}"
+                                    Click="DockFlyoutItem_Click"
                                     IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
                                 <ToggleMenuFlyoutItem
                                     x:Name="DesktopFlyoutItem"
                                     x:Uid="HostWindowDesktopFlyoutItem"
-                                    Command="{x:Bind ViewModel.ToggleDesktopModeCommand}"
+                                    Click="DesktopFlyoutItem_Click"
                                     IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=OneWay}" />
                                 <ToggleMenuFlyoutItem
                                     x:Name="MiniFlyoutItem"

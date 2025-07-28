@@ -46,6 +46,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         private CanvasBitmap? _lastAlbumArtCanvasBitmap = null;
         private CanvasBitmap? _albumArtCanvasBitmap = null;
 
+        private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
+        private bool _isCoverAcrylicEffectAmountChanged = false;
+
         private float _albumArtSize = 0f;
         private int _albumArtCornerRadius = 0;
 
@@ -149,6 +152,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private bool _isTranslationEnabled;
         private bool _showTranslationOnly;
         private int _targetLanguageIndex;
+        private bool _isLibreTranslateEnabled;
 
         private int _timelineSyncThreshold;
 
@@ -184,6 +188,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int _albumArtBgBlurAmount;
         private int _albumArtBgOpacity;
+
+        private int _coverAcrylicEffectAmount;
 
         [ObservableProperty]
         public partial bool IsTranslating { get; set; } = false;
@@ -335,7 +341,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isPlaying = e.IsPlaying;
         }
 
-        private void PlaybackService_PositionChanged(object? sender, PositionChangedEventArgs e)
+        private void PlaybackService_TimelineChanged(object? sender, TimelineChangedEventArgs e)
         {
             if (Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds) >= _timelineSyncThreshold)
             {
@@ -361,7 +367,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _songInfoOpacityTransition.StartTransition(1f);
 
                 _logger.LogInformation("Song info changed: Title={Title}, Artist={Artist}, refreshing lyrics...", _songTitle, _songArtist);
-                Debug.WriteLine($"Song info changed: Title={_songTitle}, Artist={_songArtist}");
                 _ = _refreshLyricsRunner.RunAsync(async token =>
                 {
                     await RefreshLyricsAsync(token);
@@ -440,11 +445,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found]);
+                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], 50);
                         _langIndex = 0;
                     }
                 }
-                else
+                else if (_isLibreTranslateEnabled)
                 {
                     string translated = string.Empty;
                     try
@@ -465,7 +470,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                         }
                         token.ThrowIfCancellationRequested();
                     }
-                    catch (Exception) { }
+                    catch (Exception)
+                    {
+                        App.Current.LyricsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("LibreTranslateFailed")!, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                    }
                 }
             }
         }
@@ -519,6 +527,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 case LyricsSearchProvider.Kugou:
                     break;
                 case LyricsSearchProvider.Netease:
+                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.LrcLib:
                     break;
@@ -538,14 +547,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (translationRaw != null)
             {
                 var translationData = new LyricsParser().Parse(translationRaw, (int?)SongInfo?.DurationMs);
-                foreach (var data in translationData)
+                if (provider == LyricsSearchProvider.QQ)
                 {
-                    data.LyricsLines = data.LyricsLines.Where(line => !string.IsNullOrWhiteSpace(line.OriginalText)).ToList();
-                    foreach (var item in data.LyricsLines)
+                    foreach (var data in translationData)
                     {
-                        if (item.OriginalText == "//") item.OriginalText = "";
+                        foreach (var item in data.LyricsLines)
+                        {
+                            if (item.OriginalText == "//")
+                            {
+                                item.OriginalText = "";
+                            }
+                        }
                     }
                 }
+
                 _lyricsDataArr = _lyricsDataArr.Concat(translationData).ToList();
             }
         }

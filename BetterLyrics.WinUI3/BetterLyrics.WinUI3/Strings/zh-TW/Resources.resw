@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -250,7 +250,7 @@
     <value>調整此數值將同步提升專輯圖片背景模糊強度</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>目前值：</value>
+    <value>目前值： </value>
   </data>
   <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
     <value>啟用模糊（&gt; 0）時將顯著提升 GPU 佔用率</value>
@@ -593,7 +593,7 @@
     <value>歌詞時間軸偏移（毫秒）</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>配置翻譯服務</value>
+    <value>LibreTranslate 翻譯服務</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>服務器地址</value>
@@ -793,7 +793,121 @@
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>將標題列擴展至整個頁面使得在任意非互動區域均可拖曳窗口</value>
   </data>
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>仿亚克力效果粗糙度</value>
+  </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>音樂庫</value>
+    <value>音樂庫 - BetterLyrics</value>
+  </data>
+  <data name="LibreTranslateFailed" xml:space="preserve">
+    <value>向 LibreTranslate 請求翻譯失敗，請檢查設置或本機 LibreTranslate 配置</value>
+  </data>
+  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
+    <value>文件信息</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoTitle.Text" xml:space="preserve">
+    <value>標題</value>
+  </data>
+  <data name="MusicGalleryPageFileArtist.Text" xml:space="preserve">
+    <value>藝術家</value>
+  </data>
+  <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
+    <value>專輯</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoYear.Text" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoDuration.Text" xml:space="preserve">
+    <value>期間</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoBitrate.Text" xml:space="preserve">
+    <value>比特率</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoSampleRate.Text" xml:space="preserve">
+    <value>樣本率</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoBitDepth.Text" xml:space="preserve">
+    <value>位深度</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
+    <value>格式</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoEncoder.Text" xml:space="preserve">
+    <value>編碼器</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
+    <value>路徑</value>
+  </data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <value>搜索歌曲</value>
+  </data>
+  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
+    <value>排序類型</value>
+  </data>
+  <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
+    <value>標題</value>
+  </data>
+  <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
+    <value>專輯</value>
+  </data>
+  <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
+    <value>藝術家</value>
+  </data>
+  <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
+    <value>未在媒體庫內找到任何歌曲</value>
+  </data>
+  <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
+    <value>清除播放</value>
+  </data>
+  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
+    <value>清除播放隊列</value>
+  </data>
+  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
+    <value>定位到播放項</value>
+  </data>
+  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
+    <value>列表循環</value>
+  </data>
+  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
+    <value>單曲循環</value>
+  </data>
+  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
+    <value>隨機</value>
+  </data>
+  <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
+    <value>從播放列表移除</value>
+  </data>
+  <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
+    <value>播放隊列是空的</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>選擇全部</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>新增到播放隊列</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>下一個項目</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>列表的結尾</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>添加到歌單</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>建立歌單</value>
+  </data>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>開啟音樂庫</value>
+  </data>
+  <data name="TryRunMultipleInstance" xml:space="preserve">
+    <value>BetterLyrics 已經在運作</value>
+  </data>
+  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <value>所有歌曲</value>
+  </data>
+  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+    <value>Telegram</value>
   </data>
 </root>

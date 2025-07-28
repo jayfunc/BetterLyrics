@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using TinyPinyin;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services
@@ -123,6 +124,21 @@ namespace BetterLyrics.WinUI3.Services
             int found = SupportedTargetLanguages.FindIndex(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.Code) == true);
             if (found == -1) found = 7; // 默认使用英语
             return found;
+        }
+
+        public static string GetOrderChar(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return "#";
+            char c = text.ElementAtOrDefault(0);
+            if (char.IsLetter(c) && c < 128)
+                return char.ToUpper(c).ToString();
+
+            if (PinyinHelper.IsChinese(c))
+            {
+                return PinyinHelper.GetPinyinInitials($"{c}");
+            }
+
+            return "#";
         }
     }
 }

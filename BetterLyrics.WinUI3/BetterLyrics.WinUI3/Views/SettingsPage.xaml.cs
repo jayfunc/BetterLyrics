@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (toggleSwitch.DataContext is LocalMediaFolder localLyricsFolder)
                 {
-                    ViewModel.ToggleLocalLyricsFolder(localLyricsFolder);
+                    ViewModel.ToggleLocalLyricsFolder();
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (toggleSwitch.DataContext is LyricsSearchProviderInfo providerInfo)
                 {
-                    ViewModel.ToggleLyricsSearchProvider(providerInfo);
+                    ViewModel.ToggleLyricsSearchProvider();
                 }
             }
         }
@@ -130,6 +130,11 @@ namespace BetterLyrics.WinUI3.Views
         private void DiscodGroupButton_Click(object sender, RoutedEventArgs e)
         {
             Launcher.LaunchUriAsync(new Uri(MetadataHelper.DiscordUrl));
+        }
+
+        private void TelegramGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            Launcher.LaunchUriAsync(new Uri(MetadataHelper.TelegramUrl));
         }
     }
 }

@@ -30,6 +30,8 @@ namespace BetterLyrics.WinUI3.Services
         private const string CoverOverlayOpacityKey = "CoverOverlayOpacity";
         private const string IsCoverOverlayEnabledKey = "IsCoverOverlayEnabled";
 
+        private const string CoverAcrylicEffectAmountKey = "CoverAcrylicEffectAmount";
+
         private const string DesktopWindowLeftKey = "DesktopWindowLeft";
         private const string DesktopWindowTopKey = "DesktopWindowTop";
         private const string DesktopWindowWidthKey = "DesktopWindowWidth";
@@ -71,11 +73,14 @@ namespace BetterLyrics.WinUI3.Services
 
         private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
 
+        // Translation
         private const string IsTranslationEnabledKey = "IsTranslationEnabled";
         private const string ShowTranslationOnlyKey = "ShowTranslationOnly";
+        private const string IsLibreTranslateEnabledKey = "IsLibreTranslateEnabled";
         private const string LibreTranslateServerKey = "LibreTranslateServer";
         private const string SelectedTargetLanguageIndexKey = "SelectedTargetLanguageIndex";
 
+        // LX Music
         private const string LXMusicServerKey = "LXMusicServer";
 
         private const string LyricsBackgroundThemeKey = "LyricsBackgroundTheme";
@@ -90,6 +95,7 @@ namespace BetterLyrics.WinUI3.Services
         private const string IsLyricsFloatAnimationEnabledKey = "IsLyricsFloatAnimationEnabled";
 
         private const string ResetPositionOffsetOnSongChangedKey = "ResetPositionOffsetOnSongChanged";
+        private const string PlaybackOrderKey = "PlaybackOrder";
 
         private const string PositionOffsetKey = "PositionOffset";
 
@@ -181,6 +187,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(CoverOverlayOpacityKey, 100); // 100 % = 1.0
             SetDefault(CoverOverlayBlurAmountKey, 100);
             SetDefault(CoverImageRadiusKey, 12); // 12 %
+            SetDefault(CoverAcrylicEffectAmountKey, 0);
             // Lyrics
             SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Center);
             SetDefault(SongInfoAlignmentTypeKey, (int)TextAlignmentType.Left);
@@ -206,6 +213,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IsFanLyricsEnabledKey, false);
 
             SetDefault(LibreTranslateServerKey, "");
+            SetDefault(IsLibreTranslateEnabledKey, false);
             SetDefault(IsTranslationEnabledKey, true);
             SetDefault(ShowTranslationOnlyKey, false);
             SetDefault(SelectedTargetLanguageIndexKey, LanguageHelper.GetDefaultTargetLanguageIndex());
@@ -394,6 +402,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(IsDynamicCoverOverlayEnabledKey);
             set => SetValue(IsDynamicCoverOverlayEnabledKey, value);
+        }
+
+        public int CoverAcrylicEffectAmount
+        {
+            get => GetValue<int>(CoverAcrylicEffectAmountKey);
+            set => SetValue(CoverAcrylicEffectAmountKey, value);
         }
 
         public bool IsFanLyricsEnabled
@@ -596,6 +610,12 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(IsTranslationEnabledKey, value);
         }
 
+        public bool IsLibreTranslateEnabled
+        {
+            get => GetValue<bool>(IsLibreTranslateEnabledKey);
+            set => SetValue(IsLibreTranslateEnabledKey, value);
+        }
+
         public int SelectedTargetLanguageIndex
         {
             get => GetValue<int>(SelectedTargetLanguageIndexKey);
@@ -630,6 +650,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(ResetPositionOffsetOnSongChangedKey);
             set => SetValue(ResetPositionOffsetOnSongChangedKey, value);
+        }
+
+        public PlaybackOrder PlaybackOrder
+        {
+            get => (PlaybackOrder)GetValue<int>(PlaybackOrderKey);
+            set => SetValue(PlaybackOrderKey, (int)value);
         }
 
         public int PositionOffset

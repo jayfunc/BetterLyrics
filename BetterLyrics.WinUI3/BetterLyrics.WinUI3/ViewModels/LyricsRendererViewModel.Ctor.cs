@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
             _albumArtBgOpacity = _settingsService.CoverOverlayOpacity;
             _albumArtBgBlurAmount = _settingsService.CoverOverlayBlurAmount;
+            _coverAcrylicEffectAmount = _settingsService.CoverAcrylicEffectAmount;
 
             _lyricsBgFontColorType = _settingsService.LyricsBgFontColorType;
             _lyricsFgFontColorType = _settingsService.LyricsFgFontColorType;
@@ -47,6 +48,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _lyricsFontStrokeWidth = _settingsService.LyricsFontStrokeWidth;
             _isTranslationEnabled = _settingsService.IsTranslationEnabled;
             _showTranslationOnly = _settingsService.ShowTranslationOnly;
+            _isLibreTranslateEnabled = _settingsService.IsLibreTranslateEnabled;
             _targetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
 
@@ -65,7 +67,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
             _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
             _playbackService.AlbumArtChangedChanged += PlaybackService_AlbumArtChangedChanged;
-            _playbackService.PositionChanged += PlaybackService_PositionChanged;
+            _playbackService.TimelineChanged += PlaybackService_TimelineChanged;
 
             _isPlaying = _playbackService.IsPlaying;
 

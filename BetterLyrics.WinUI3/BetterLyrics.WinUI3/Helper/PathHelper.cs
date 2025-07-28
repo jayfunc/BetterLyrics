@@ -33,6 +33,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string TranslationCacheDirectory => Path.Combine(CacheFolder, "translations");
 
         public static string QQTranslationCacheDirectory => Path.Combine(TranslationCacheDirectory, "qq");
+        public static string NeteaseTranslationCacheDirectory => Path.Combine(TranslationCacheDirectory, "netease");
 
         public static string AlbumArtCacheDirectory => Path.Combine(CacheFolder, "album-art");
 
@@ -49,6 +50,7 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
 
             Directory.CreateDirectory(QQTranslationCacheDirectory);
+            Directory.CreateDirectory(NeteaseTranslationCacheDirectory);
 
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
         }

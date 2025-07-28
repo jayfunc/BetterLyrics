@@ -37,6 +37,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playbackService = playbackService;
             _libreTranslateService = libreTranslateService;
 
+            IsLibreTranslateEnabled = _settingsService.IsLibreTranslateEnabled;
             LibreTranslateServer = _settingsService.LibreTranslateServer;
             SelectedTargetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
 
@@ -53,6 +54,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
+
+            CoverAcrylicEffectAmount = _settingsService.CoverAcrylicEffectAmount;
 
             LyricsAlignmentType = _settingsService.LyricsAlignmentType;
             SongInfoAlignmentType = _settingsService.SongInfoAlignmentType;
@@ -99,17 +102,16 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsDragEverywhereEnabled = _settingsService.IsDragEverywhereEnabled;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
-
-            Task.Run(async () =>
-            {
-                BuildDate = (await MetadataHelper.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
-            });
         }
 
         private void PlaybackService_SessionIdsChanged(object? sender, Events.MediaSourceProvidersInfoEventArgs e)
         {
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial bool IsLibreTranslateEnabled { get; set; }
 
         [ObservableProperty]
         public partial bool IsDragEverywhereEnabled { get; set; }
@@ -167,6 +169,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsDynamicCoverOverlayEnabled { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int CoverAcrylicEffectAmount { get; set; }
 
         [ObservableProperty]
         public partial Enums.Language Language { get; set; }
@@ -270,8 +276,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public string Version { get; set; } = MetadataHelper.AppVersion;
 
-        public string BuildDate { get; set; } = string.Empty;
-
         [ObservableProperty]
         public partial string LibreTranslateServer { get; set; }
 
@@ -345,13 +349,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
-        public void ToggleLocalLyricsFolder(LocalMediaFolder folder)
+        public void ToggleLocalLyricsFolder()
         {
             _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
             Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
-        public void ToggleLyricsSearchProvider(LyricsSearchProviderInfo providerInfo)
+        public void ToggleLyricsSearchProvider()
         {
             _settingsService.LyricsSearchProvidersInfo = [.. LyricsSearchProvidersInfo];
             Broadcast(
@@ -574,6 +578,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _settingsService.CoverOverlayBlurAmount = value;
         }
+        partial void OnCoverAcrylicEffectAmountChanged(int value)
+        {
+            _settingsService.CoverAcrylicEffectAmount = value;
+        }
         partial void OnCoverOverlayOpacityChanged(int value)
         {
             _settingsService.CoverOverlayOpacity = value;
@@ -719,6 +727,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 lyricsWindow.UpdateTitleBarArea();
             }
+        }
+        partial void OnIsLibreTranslateEnabledChanged(bool value)
+        {
+            _settingsService.IsLibreTranslateEnabled = value;
         }
     }
 }
