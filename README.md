@@ -56,19 +56,19 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
     - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change.
 
-    <details>
+    </details>
 
   - <details><summary>Apple Music</summary>
 
     - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
 
-    <details>
+    </details>
 
   - <details><summary>foobar2000</summary>
 
     - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
 
-    <details>
+    </details>
 
   - Spotify
   - QQ Music
@@ -80,25 +80,25 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - Please make sure you have enabled "Open API" in LX Music settings page
     - Then open BetterLyrics, go to settings, go to "Advanced options", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
 
-    <details>
+    </details>
 
   - <details><summary>MusicBee</summary>
 
     - Please install https://github.com/HenryPDT/mb_MediaControl before using
 
-    <details>
+    </details>
 
   - <details><summary>iTunes</summary>
 
     - Please install https://github.com/thewizrd/iTunes-SMTC before using
 
-    <details>
+    </details>
 
   - <details><summary>AIMP</summary>
 
     - Please install https://www.aimp.ru/?do=catalog&rec_id=1097 before using
 
-    <details>
+    </details>
 
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
