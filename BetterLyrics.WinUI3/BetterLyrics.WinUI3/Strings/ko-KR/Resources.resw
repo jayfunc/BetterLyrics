@@ -264,8 +264,14 @@
   <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
     <value>X 라인 높이</value>
   </data>
-  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
-    <value>글꼴 크기</value>
+  <data name="SettingsPageLyricsStandardFontSize.Header" xml:space="preserve">
+    <value>Font size (Standard mode)</value>
+  </data>
+  <data name="SettingsPageLyricsDockFontSize.Header" xml:space="preserve">
+    <value>Font size (Dock mode)</value>
+  </data>
+  <data name="SettingsPageLyricsDesktopFontSize.Header" xml:space="preserve">
+    <value>Font size (Desktop mode)</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>가사 만</value>
