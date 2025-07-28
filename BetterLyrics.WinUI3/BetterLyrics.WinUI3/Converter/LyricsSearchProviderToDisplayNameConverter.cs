@@ -14,19 +14,19 @@ namespace BetterLyrics.WinUI3.Converter
             {
                 return provider switch
                 {
-                    LyricsSearchProvider.LrcLib => App.ResourceLoader!.GetString("LyricsSearchProviderLrcLib"),
-                    LyricsSearchProvider.QQ => App.ResourceLoader!.GetString("LyricsSearchProviderQQ"),
-                    LyricsSearchProvider.Netease => App.ResourceLoader!.GetString("LyricsSearchProviderNetease"),
-                    LyricsSearchProvider.Kugou => App.ResourceLoader!.GetString("LyricsSearchProviderKugou"),
-                    LyricsSearchProvider.AmllTtmlDb => App.ResourceLoader!.GetString("LyricsSearchProviderAmllTtmlDb"),
+                    LyricsSearchProvider.LrcLib => "LrcLib",
+                    LyricsSearchProvider.QQ => "QQ",
+                    LyricsSearchProvider.Netease => "Netease",
+                    LyricsSearchProvider.Kugou => "Kugou",
+                    LyricsSearchProvider.AmllTtmlDb => "amll-ttml-db",
                     LyricsSearchProvider.LocalLrcFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalLrcFile"),
                     LyricsSearchProvider.LocalMusicFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalMusicFile"),
                     LyricsSearchProvider.LocalEslrcFile => App.ResourceLoader!.GetString("LyricsSearchProviderEslrcFile"),
                     LyricsSearchProvider.LocalTtmlFile => App.ResourceLoader!.GetString("LyricsSearchProviderTtmlFile"),
-                    _ => "",
+                    _ => "N/A",
                 };
             }
-            return "";
+            return "N/A";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
