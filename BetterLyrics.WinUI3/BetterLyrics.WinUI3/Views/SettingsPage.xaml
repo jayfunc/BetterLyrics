@@ -694,16 +694,16 @@
                                         <TextBlock
                                             Margin="0,0,14,0"
                                             VerticalAlignment="Center"
-                                            Text="{Binding ElementName=LyricsFontSizeSlider, Path=Value, Mode=OneWay}" />
+                                            Text="{Binding ElementName=LyricsStandardFontSizeSlider, Path=Value, Mode=OneWay}" />
                                         <Slider
-                                            x:Name="LyricsFontSizeSlider"
+                                            x:Name="LyricsStandardFontSizeSlider"
                                             Maximum="96"
                                             Minimum="12"
                                             SnapsTo="Ticks"
                                             StepFrequency="2"
                                             TickFrequency="2"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind ViewModel.LyricsFontSize, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.LyricsStandardFontSize, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 

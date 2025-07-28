@@ -75,8 +75,6 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
-
             WindowHelper.OpenWindow<LyricsWindow>();
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (lyricsWindow == null) return;

@@ -62,7 +62,11 @@ namespace BetterLyrics.WinUI3.Services
 
         private const string LyricsFontStrokeWidthKey = "LyricsFontStrokeWidth";
 
-        private const string LyricsFontSizeKey = "LyricsFontSize";
+        // Lyrics font size
+        private const string LyricsStandardFontSizeKey = "LyricsStandardFontSize";
+        private const string LyricsDockFontSizeKey = "LyricsDockFontSize";
+        private const string LyricsDesktopFontSizeKey = "LyricsDesktopFontSize";
+
         private const string LyricsFontWeightKey = "LyricsFontWeightKey";
         private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
         private const string LyricsHighlightSopeKey = "LyricsHighlightSope";
@@ -204,7 +208,10 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsCustomFgFontColorKey, Colors.White.ToInt());
             SetDefault(LyricsCustomStrokeFontColorKey, Colors.White.ToInt());
 
-            SetDefault(LyricsFontSizeKey, 28);
+            SetDefault(LyricsStandardFontSizeKey, 28);
+            SetDefault(LyricsDockFontSizeKey, 20);
+            SetDefault(LyricsDesktopFontSizeKey, 28);
+
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
             SetDefault(LyricsVerticalEdgeOpacityKey, 0);
             SetDefault(IsLyricsGlowEffectEnabledKey, true);
@@ -511,10 +518,22 @@ namespace BetterLyrics.WinUI3.Services
             set => SetValue(LyricsFontStrokeWidthKey, value);
         }
 
-        public int LyricsFontSize
+        public int LyricsStandardFontSize
         {
-            get => GetValue<int>(LyricsFontSizeKey);
-            set => SetValue(LyricsFontSizeKey, value);
+            get => GetValue<int>(LyricsStandardFontSizeKey);
+            set => SetValue(LyricsStandardFontSizeKey, value);
+        }
+
+        public int LyricsDockFontSize
+        {
+            get => GetValue<int>(LyricsDockFontSizeKey);
+            set => SetValue(LyricsDockFontSizeKey, value);
+        }
+
+        public int LyricsDesktopFontSize
+        {
+            get => GetValue<int>(LyricsDesktopFontSizeKey);
+            set => SetValue(LyricsDesktopFontSizeKey, value);
         }
 
         public LyricsFontWeight LyricsFontWeight

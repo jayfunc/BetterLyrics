@@ -205,7 +205,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _lyricsBlurAmount = message.NewValue;
                     _isLayoutChanged = true;
                 }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsStandardFontSize))
                 {
                     _lyricsFontSize = message.NewValue;
                     _isLayoutChanged = true;
