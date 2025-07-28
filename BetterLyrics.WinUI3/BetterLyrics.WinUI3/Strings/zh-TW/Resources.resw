@@ -487,9 +487,6 @@
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>本地音樂文件</value>
   </data>
-  <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
-    <value>LRCLIB</value>
-  </data>
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
@@ -504,18 +501,6 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>該文件夾包含已添加文件夾，請刪除這些文件夾以添加該文件夾</value>
-  </data>
-  <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
-    <value>amll-ttml-db</value>
-  </data>
-  <data name="LyricsSearchProviderQQ" xml:space="preserve">
-    <value>QQ</value>
-  </data>
-  <data name="LyricsSearchProviderNetease" xml:space="preserve">
-    <value>Netease</value>
-  </data>
-  <data name="LyricsSearchProviderKugou" xml:space="preserve">
-    <value>Kugou</value>
   </data>
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>顯示調試覆蓋層</value>
@@ -915,5 +900,11 @@
   </data>
   <data name="SettingsPageTelegram.Header" xml:space="preserve">
     <value>Telegram</value>
+  </data>
+  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
+    <value>Lyrics provider</value>
+  </data>
+  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
+    <value>Translation provider</value>
   </data>
 </root>
