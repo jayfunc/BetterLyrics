@@ -164,7 +164,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 List<LyricsLine> originalLines = [];
                 List<LyricsLine> translationLines = [];
-                var xdoc = XDocument.Parse(raw);
+                var xdoc = XDocument.Parse(raw, LoadOptions.PreserveWhitespace);
                 var body = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "body");
                 if (body == null) return;
                 var ps = body.Descendants().Where(e => e.Name.LocalName == "p");
@@ -190,16 +190,18 @@ namespace BetterLyrics.WinUI3.Helper
                         .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value == "x-translation")
                         .ToList();
 
-                    // 原文（非 CJK 语言添加空格）
-                    string originalText = string.Concat(originalTextSpans.Select(s => s.Value));
-                    if (!LanguageHelper.IsCJK(originalText))
+                    // 处理原文span后的空白
+                    for (int i = 0; i < originalTextSpans.Count; i++)
                     {
-                        foreach (var span in originalTextSpans)
+                        var span = originalTextSpans[i];
+                        var nextNode = span.NodesAfterSelf().FirstOrDefault();
+                        if (nextNode is XText textNode)
                         {
-                            span.Value += " ";
+                            span.Value += textNode.Value;
                         }
-                        originalText = string.Concat(originalTextSpans.Select(s => s.Value));
                     }
+                    // 拼接空白字符后的原文
+                    string originalText = string.Concat(originalTextSpans.Select(s => s.Value));
 
                     var originalCharTimings = new List<LyricsChar>();
                     int originalStartIndex = 0;
