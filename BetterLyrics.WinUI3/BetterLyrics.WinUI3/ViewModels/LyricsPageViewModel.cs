@@ -37,7 +37,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             PositionOffset = _settingsService.PositionOffset;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
             ShowTranslationOnly = _settingsService.ShowTranslationOnly;
-            LyricsFontSize = _settingsService.LyricsFontSize;
+
+            LyricsStandardFontSize = _settingsService.LyricsStandardFontSize;
+            
             LyricsFontFamily = _settingsService.LyricsFontFamily;
 
             OnIsImmersiveModeChanged(IsImmersiveMode);
@@ -91,7 +93,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial string LyricsFontFamily { get; set; }
 
         [ObservableProperty]
-        public partial int LyricsFontSize { get; set; }
+        public partial int LyricsStandardFontSize { get; set; }
 
         [ObservableProperty]
         public partial bool IsImmersiveMode { get; set; }
@@ -236,9 +238,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (message.Sender is SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
+                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsStandardFontSize))
                 {
-                    LyricsFontSize = message.NewValue;
+                    LyricsStandardFontSize = message.NewValue;
                 }
             }
         }
