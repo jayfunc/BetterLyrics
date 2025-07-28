@@ -236,6 +236,10 @@ namespace BetterLyrics.WinUI3.Helper
         {
             using Image image = Image.Load(imageBytes);
             var factor = Math.Max(size / image.Width, size / image.Height);
+            if (factor <= 1)
+            {
+                return imageBytes;
+            }
             int width = image.Width * factor;
             int height = image.Height * factor;
             image.Mutate(x => x.Resize(width, height, KnownResamplers.Welch));
