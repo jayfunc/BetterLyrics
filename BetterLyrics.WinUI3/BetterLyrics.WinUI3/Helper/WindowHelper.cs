@@ -63,6 +63,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             var castedWindow = (Window)window;
             castedWindow.Restore();
+            castedWindow.Activate();
         }
 
         public static void RestartApp(string args = "")

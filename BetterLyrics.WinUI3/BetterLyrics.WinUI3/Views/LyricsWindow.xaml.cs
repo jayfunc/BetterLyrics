@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -272,7 +273,7 @@ namespace BetterLyrics.WinUI3.Views
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             DockModeHelper.Disable(this);
-            Application.Current.Exit();
+            Environment.Exit(0);
         }
 
         private void MaximiseButton_Click(object sender, RoutedEventArgs e)
