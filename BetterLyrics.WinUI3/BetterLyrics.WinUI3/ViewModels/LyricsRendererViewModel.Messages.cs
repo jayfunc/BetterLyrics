@@ -193,6 +193,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 else if (message.PropertyName == nameof(SettingsPageViewModel.CoverAcrylicEffectAmount))
                 {
                     _coverAcrylicEffectAmount = message.NewValue;
+                    _isCoverAcrylicEffectAmountChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsVerticalEdgeOpacity))
                 {

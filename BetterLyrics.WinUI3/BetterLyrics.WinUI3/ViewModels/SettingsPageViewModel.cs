@@ -102,11 +102,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsDragEverywhereEnabled = _settingsService.IsDragEverywhereEnabled;
 
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
-
-            Task.Run(async () =>
-            {
-                BuildDate = (await MetadataHelper.GetBuildDate()).ToString("(yyyy/MM/dd HH:mm:ss)");
-            });
         }
 
         private void PlaybackService_SessionIdsChanged(object? sender, Events.MediaSourceProvidersInfoEventArgs e)
@@ -280,8 +275,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLyricsFloatAnimationEnabled { get; set; }
 
         public string Version { get; set; } = MetadataHelper.AppVersion;
-
-        public string BuildDate { get; set; } = string.Empty;
 
         [ObservableProperty]
         public partial string LibreTranslateServer { get; set; }

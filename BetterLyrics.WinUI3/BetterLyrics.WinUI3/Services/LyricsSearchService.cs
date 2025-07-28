@@ -348,7 +348,7 @@ namespace BetterLyrics.WinUI3.Services
             else if (result is NeteaseSearchResult neteaseResult)
             {
                 var response = await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyric(neteaseResult.Id);
-                var translated = response?.Tlyric.Lyric;
+                var translated = response?.Tlyric?.Lyric;
                 if (!string.IsNullOrEmpty(translated))
                 {
                     FileHelper.WriteLyricsCache(

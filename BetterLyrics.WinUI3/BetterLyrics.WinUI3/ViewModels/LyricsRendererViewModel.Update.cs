@@ -74,6 +74,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 _titleY = _albumArtY + _albumArtSize * 1.05f;
 
+                _isCoverAcrylicEffectAmountChanged = true;
+            }
+
+            if (_isCoverAcrylicEffectAmountChanged)
+            {
                 UpdateCoverAcrylicOverlay(control);
             }
 
@@ -446,14 +451,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void UpdateCoverAcrylicOverlay(ICanvasAnimatedControl control)
         {
-            var ret = NoiseOverlayHelper.GenerateNoiseBitmapBGRA((int)_canvasWidth, (int)_canvasHeight);
-            _coverAcrylicNoiseCanvasBitmap = CanvasBitmap.CreateFromBytes(
-                control,
-                ret,
-                (int)_canvasWidth,
-                (int)_canvasHeight,
-               Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized
-            );
+            if (_coverAcrylicEffectAmount > 0)
+            {
+                var ret = NoiseOverlayHelper.GenerateNoiseBitmapBGRA((int)_canvasWidth, (int)_canvasHeight);
+                _coverAcrylicNoiseCanvasBitmap = CanvasBitmap.CreateFromBytes(
+                    control,
+                    ret,
+                    (int)_canvasWidth,
+                    (int)_canvasHeight,
+                   Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized
+                );
+            }
+            _isCoverAcrylicEffectAmountChanged = false;
         }
     }
 }

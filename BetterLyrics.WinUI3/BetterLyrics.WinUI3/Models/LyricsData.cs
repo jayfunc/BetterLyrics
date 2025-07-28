@@ -26,36 +26,39 @@ namespace BetterLyrics.WinUI3.Models
             LyricsLines = lyricsLines;
         }
 
-        public void SetDisplayedTextAlongWith(LyricsData translationData)
+        public void SetDisplayedTextAlongWith(LyricsData translationData, int toleranceMs = 0)
         {
-            int i = 0;
             foreach (var line in LyricsLines)
             {
-                if (i >= translationData.LyricsLines.Count)
+                // 在翻译歌词中查找与当前行开始时间最接近且在容忍范围内的行
+                var transLine = translationData.LyricsLines
+                    .FirstOrDefault(t => Math.Abs(t.StartMs - line.StartMs) <= toleranceMs);
+
+                if (transLine != null)
                 {
-                    line.DisplayedText = line.OriginalText; // No translation available, keep original text
-                }
-                else
-                {
-                    if (translationData.LanguageCode?.Substring(0, 2) == "zh")
+                    if (translationData.LanguageCode?.StartsWith("zh") == true)
                     {
                         string tmp = "";
                         if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hant")
                         {
-                            tmp = ChineseConverter.ConvertToTraditionalChinese(translationData.LyricsLines[i].OriginalText);
+                            tmp = ChineseConverter.ConvertToTraditionalChinese(transLine.OriginalText);
                         }
                         else if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hans")
                         {
-                            tmp = ChineseConverter.ConvertToSimplifiedChinese(translationData.LyricsLines[i].OriginalText);
+                            tmp = ChineseConverter.ConvertToSimplifiedChinese(transLine.OriginalText);
                         }
                         line.DisplayedText = $"{line.OriginalText}\n{tmp}";
                     }
                     else
                     {
-                        line.DisplayedText = $"{line.OriginalText}\n{translationData.LyricsLines[i].OriginalText}";
+                        line.DisplayedText = $"{line.OriginalText}\n{transLine.OriginalText}";
                     }
                 }
-                i++;
+                else
+                {
+                    // 没有匹配的翻译，翻译部分留空
+                    line.DisplayedText = $"{line.OriginalText}\n";
+                }
             }
         }
 

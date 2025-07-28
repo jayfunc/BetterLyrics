@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3
 {
@@ -36,6 +37,8 @@ namespace BetterLyrics.WinUI3
         public NotificationPanel? LyricsWindowNotificationPanel { get; set; }
         public NotificationPanel? SettingsWindowNotificationPanel { get; set; }
 
+        private static Mutex? _instanceMutex;
+
         public App()
         {
             this.InitializeComponent();
@@ -43,6 +46,8 @@ namespace BetterLyrics.WinUI3
             DispatcherQueue = DispatcherQueue.GetForCurrentThread();
             DispatcherQueueTimer = DispatcherQueue.CreateTimer();
             ResourceLoader = new ResourceLoader();
+
+            EnsureSingleInstance();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             PathHelper.EnsureDirectories();
@@ -54,6 +59,18 @@ namespace BetterLyrics.WinUI3
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+        }
+
+        private void EnsureSingleInstance()
+        {
+            bool createdNew;
+            _instanceMutex = new Mutex(true, MetadataHelper.AppName, out createdNew);
+
+            if (!createdNew)
+            {
+                User32.MessageBox(HWND.NULL, ResourceLoader!.GetString("TryRunMultipleInstance"), null, User32.MB_FLAGS.MB_APPLMODAL);
+                Environment.Exit(0);
+            }
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)

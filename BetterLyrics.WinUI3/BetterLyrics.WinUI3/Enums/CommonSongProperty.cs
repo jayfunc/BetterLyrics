@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Enums
 {
-    public enum SongOrderType
+    public enum CommonSongProperty
     {
         Title,
         Album,

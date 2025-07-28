@@ -1,6 +1,7 @@
 using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
@@ -51,13 +52,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            var frameworkElement = ((FrameworkElement)sender).Parent;
-            var index = PlayingQueueListView.FindChildIndex(frameworkElement);
-            ViewModel.PlayTrackAt(index);
-            DispatcherQueue.TryEnqueue(async () =>
-            {
-                await PlayingQueueListView.SmoothScrollIntoViewWithIndexAsync(index, ScrollItemPlacement.Center);
-            });
+            var item = (PlayQueueItem)((FrameworkElement)sender).DataContext;
+            ViewModel.PlayTrack(item);
+            PlayingQueueListView.ScrollIntoView(item);
         }
 
         private void EmptyPlayingQueueButton_Click(object sender, RoutedEventArgs e)
@@ -69,27 +66,32 @@ namespace BetterLyrics.WinUI3.Views
 
         private void ScrollToPlayingItemButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.PlayingTrack == null) return;
-            DispatcherQueue.TryEnqueue(async () =>
-            {
-                await PlayingQueueListView.SmoothScrollIntoViewWithIndexAsync(ViewModel.PlayingSongIndex, ScrollItemPlacement.Center);
-            });
+            if (ViewModel.PlayingQueueItem == null) return;
+            PlayingQueueListView.ScrollIntoView(ViewModel.PlayingQueueItem);
         }
 
         private void RemoveFromPlayingQueueButton_Click(object sender, RoutedEventArgs e)
         {
-            var frameworkElement = ((FrameworkElement)((FrameworkElement)sender).Parent).Parent;
             bool playNext = false;
-            int index = PlayingQueueListView.FindChildIndex(frameworkElement);
-            if (index == ViewModel.PlayingSongIndex)
+            var item = (PlayQueueItem)((FrameworkElement)sender).DataContext;
+            int index = ViewModel.TrackPlayingQueue.IndexOf(item);
+            if (item == ViewModel.PlayingQueueItem)
             {
                 playNext = true;
             }
-            ViewModel.TrackPlayingQueue.RemoveAt(index);
+            ViewModel.TrackPlayingQueue.Remove(item);
             if (playNext)
             {
+                if (ViewModel.TrackPlayingQueue.Count == 0)
+                {
+                    index = -1;
+                }
+                else if (index >= ViewModel.TrackPlayingQueue.Count)
+                {
+                    index = ViewModel.TrackPlayingQueue.Count - 1;
+                }
                 ViewModel.PlayingSongIndex = index;
-                ViewModel.PlayTrackAt(index);
+                ViewModel.PlayTrackAt(ViewModel.PlayingSongIndex);
             }
         }
 
@@ -101,7 +103,7 @@ namespace BetterLyrics.WinUI3.Views
         private void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = ViewModel.TrackPlayingQueue.Count == 0;
-            ViewModel.TrackPlayingQueue.InsertRange(ViewModel.PlayingSongIndex + 1, SongListView.SelectedItems.Cast<Track>());
+            ViewModel.TrackPlayingQueue.InsertRange(ViewModel.PlayingSongIndex + 1, SongListView.SelectedItems.Cast<Track>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
                 ViewModel.PlayingSongIndex = ViewModel.PlayingSongIndex + 1;
@@ -112,7 +114,7 @@ namespace BetterLyrics.WinUI3.Views
         private void AddSongToQueueEndMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = ViewModel.TrackPlayingQueue.Count == 0;
-            ViewModel.TrackPlayingQueue.AddRange(SongListView.SelectedItems.Cast<Track>());
+            ViewModel.TrackPlayingQueue.AddRange(SongListView.SelectedItems.Cast<Track>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
                 ViewModel.PlayingSongIndex = ViewModel.PlayingSongIndex + 1;
@@ -136,6 +138,34 @@ namespace BetterLyrics.WinUI3.Views
             {
                 SongListView.SelectedItems.Clear();
             }
+        }
+
+        private void ArtistHyperlibkButton_Click(object sender, RoutedEventArgs e)
+        {
+            var artist = (string)((HyperlinkButton)sender).Tag;
+            var playlist = new SongsTabInfo(artist, "\uEFA9", true, CommonSongProperty.Artist, artist);
+            ViewModel.UpdateSelectedPlaylist(playlist);
+        }
+
+        private void AlbumHyperlibkButton_Click(object sender, RoutedEventArgs e)
+        {
+            var album = (string)((HyperlinkButton)sender).Tag;
+            var playlist = new SongsTabInfo(album, "\uE93C", true, CommonSongProperty.Album, album);
+            ViewModel.UpdateSelectedPlaylist(playlist);
+        }
+
+        private void PlaylistGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
+            ViewModel.UpdateSelectedPlaylist(playlist);
+        }
+
+        private void PlaylistCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
+            ViewModel.SongsTabInfoList.Remove(playlist);
+            ViewModel.SelectedSongsTabInfoIndex = 0;
+            ViewModel.ApplyPlaylist();
         }
     }
 }

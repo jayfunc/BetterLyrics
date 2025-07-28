@@ -935,7 +935,6 @@
                                             <Paragraph>
                                                 <Run x:Uid="SettingsPageVersion" />
                                                 <Run Text="{x:Bind ViewModel.Version, Mode=OneWay}" />
-                                                <Run Text="{x:Bind ViewModel.BuildDate, Mode=OneWay}" />
                                             </Paragraph>
                                         </RichTextBlock>
                                     </controls:SettingsCard.Description>
@@ -960,6 +959,10 @@
 
                                 <controls:SettingsCard x:Uid="SettingsPageDiscord" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Discord.png}">
                                     <Button x:Uid="SettingsPageJoinNowButton" Click="DiscodGroupButton_Click" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageTelegram" HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Telegram.png}">
+                                    <Button x:Uid="SettingsPageJoinNowButton" Click="TelegramGroupButton_Click" />
                                 </controls:SettingsCard>
 
                             </StackPanel>

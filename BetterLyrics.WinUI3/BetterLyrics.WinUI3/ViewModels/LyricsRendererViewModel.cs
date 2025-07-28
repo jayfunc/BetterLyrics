@@ -47,6 +47,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private CanvasBitmap? _albumArtCanvasBitmap = null;
 
         private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
+        private bool _isCoverAcrylicEffectAmountChanged = false;
 
         private float _albumArtSize = 0f;
         private int _albumArtCornerRadius = 0;
@@ -444,7 +445,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found]);
+                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], 50);
                         _langIndex = 0;
                     }
                 }
@@ -550,7 +551,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     foreach (var data in translationData)
                     {
-                        data.LyricsLines = data.LyricsLines.Where(line => !string.IsNullOrWhiteSpace(line.OriginalText)).ToList();
                         foreach (var item in data.LyricsLines)
                         {
                             if (item.OriginalText == "//")

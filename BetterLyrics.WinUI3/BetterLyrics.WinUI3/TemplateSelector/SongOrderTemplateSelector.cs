@@ -10,15 +10,15 @@ public class SongOrderTemplateSelector : DataTemplateSelector
     public DataTemplate ByAlbumTemplate { get; set; }
     public DataTemplate ByArtistTemplate { get; set; }
 
-    public SongOrderType SongOrderType { get; set; }
+    public CommonSongProperty SongOrderType { get; set; }
 
     protected override DataTemplate SelectTemplateCore(object item)
     {
         return SongOrderType switch
         {
-            SongOrderType.Title => ByTitleTemplate,
-            SongOrderType.Album => ByAlbumTemplate,
-            SongOrderType.Artist => ByArtistTemplate,
+            CommonSongProperty.Title => ByTitleTemplate,
+            CommonSongProperty.Album => ByAlbumTemplate,
+            CommonSongProperty.Artist => ByArtistTemplate,
             _ => ByTitleTemplate
         };
     }
