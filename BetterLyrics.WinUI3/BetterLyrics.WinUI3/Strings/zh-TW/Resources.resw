@@ -869,13 +869,13 @@
     <value>列表循環</value>
   </data>
   <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
-    <value>單曲循環</value>
+    <value>Single loop</value>
   </data>
   <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
-    <value>隨機</value>
+    <value>Random</value>
   </data>
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
-    <value>Remove from the Play queue</value>
+    <value>Remove from play queue</value>
   </data>
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>Play queue is empty</value>
@@ -900,5 +900,14 @@
   </data>
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>Open music gallery</value>
+  </data>
+  <data name="TryRunMultipleInstance" xml:space="preserve">
+    <value>BetterLyrics is already running</value>
+  </data>
+  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <value>All songs</value>
+  </data>
+  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+    <value>Telegram</value>
   </data>
 </root>
