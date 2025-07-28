@@ -264,7 +264,7 @@
                             </Button.DataContext>
                         </Button>-->
 
-                        <!--  Translation  -->
+                        <!--  Lyrics & Translation  -->
                         <Button
                             Click="TranslationButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -275,12 +275,27 @@
                             </ToolTipService.ToolTip>
                             <Button.ContextFlyout>
                                 <Flyout x:Name="TranslationFlyout" ShouldConstrainToRootBounds="False">
-                                    <StackPanel>
-                                        <ToggleSwitch x:Uid="LyricsPageTranslationEnabled" IsOn="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}" />
-                                        <ToggleSwitch
-                                            x:Uid="LyricsPageTranslationOnly"
-                                            IsEnabled="{x:Bind ViewModel.IsTranslationEnabled, Mode=OneWay}"
-                                            IsOn="{x:Bind ViewModel.ShowTranslationOnly, Mode=TwoWay}" />
+                                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                        <controls:SettingsExpander
+                                            x:Uid="LyricsPageTranslationEnabled"
+                                            HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                     Glyph=&#xE774;}"
+                                            IsExpanded="True">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}" />
+                                            <controls:SettingsExpander.Items>
+                                                <controls:SettingsCard x:Uid="LyricsPageTranslationOnly" IsEnabled="{x:Bind ViewModel.IsTranslationEnabled, Mode=OneWay}">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.ShowTranslationOnly, Mode=TwoWay}" />
+                                                </controls:SettingsCard>
+                                            </controls:SettingsExpander.Items>
+                                        </controls:SettingsExpander>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock x:Uid="LyricsPageLyricsProviderPrefix" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock x:Uid="LyricsPageTranslationProviderPrefix" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                                        </StackPanel>
                                     </StackPanel>
                                 </Flyout>
                             </Button.ContextFlyout>

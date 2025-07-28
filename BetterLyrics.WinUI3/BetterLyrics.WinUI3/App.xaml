@@ -48,6 +48,7 @@
             <converter:IntToCornerRadius x:Key="IntToCornerRadius" />
             <converter:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
             <converter:LyricsSearchProviderToDisplayNameConverter x:Key="LyricsSearchProviderToDisplayNameConverter" />
+            <converter:TranslationSearchProviderToDisplayNameConverter x:Key="TranslationSearchProviderToDisplayNameConverter" />
             <converter:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
             <converter:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />

@@ -23,7 +23,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<TimeSpan>>
+        IRecipient<PropertyChangedMessage<TimeSpan>>,
+        IRecipient<PropertyChangedMessage<LyricsSearchProvider?>>,
+        IRecipient<PropertyChangedMessage<TranslationSearchProvider?>>
     {
         private readonly IPlaybackService _playbackService;
         private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
@@ -39,7 +41,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             ShowTranslationOnly = _settingsService.ShowTranslationOnly;
 
             LyricsStandardFontSize = _settingsService.LyricsStandardFontSize;
-            
+
             LyricsFontFamily = _settingsService.LyricsFontFamily;
 
             OnIsImmersiveModeChanged(IsImmersiveMode);
@@ -135,6 +137,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial bool IsSongPlaying { get; set; }
+
+        [ObservableProperty]
+        public partial LyricsSearchProvider? LyricsSearchProvider { get; set; } = null;
+
+        [ObservableProperty]
+        public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -274,6 +282,28 @@ namespace BetterLyrics.WinUI3.ViewModels
                             TimelinePositionSeconds = message.NewValue.TotalSeconds;
                         });
                     }
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsSearchProvider?> message)
+        {
+            if (message.Sender is LyricsRendererViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsSearchProvider))
+                {
+                    LyricsSearchProvider = message.NewValue;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<TranslationSearchProvider?> message)
+        {
+            if (message.Sender is LyricsRendererViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsRendererViewModel.TranslationSearchProvider))
+                {
+                    TranslationSearchProvider = message.NewValue;
                 }
             }
         }

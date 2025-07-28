@@ -61,5 +61,22 @@ namespace BetterLyrics.WinUI3.Enums
         {
             return !provider.IsLocal();
         }
+
+        public static TranslationSearchProvider? ToTranslationSearchProvider(this LyricsSearchProvider? provider)
+        {
+            return provider switch
+            {
+                LyricsSearchProvider.LrcLib => TranslationSearchProvider.LrcLib,
+                LyricsSearchProvider.QQ => TranslationSearchProvider.QQ,
+                LyricsSearchProvider.Kugou => TranslationSearchProvider.Kugou,
+                LyricsSearchProvider.Netease => TranslationSearchProvider.Netease,
+                LyricsSearchProvider.AmllTtmlDb => TranslationSearchProvider.AmllTtmlDb,
+                LyricsSearchProvider.LocalMusicFile => TranslationSearchProvider.LocalMusicFile,
+                LyricsSearchProvider.LocalLrcFile => TranslationSearchProvider.LocalLrcFile,
+                LyricsSearchProvider.LocalEslrcFile => TranslationSearchProvider.LocalEslrcFile,
+                LyricsSearchProvider.LocalTtmlFile => TranslationSearchProvider.LocalTtmlFile,
+                _ => null,
+            };
+        }
     }
 }

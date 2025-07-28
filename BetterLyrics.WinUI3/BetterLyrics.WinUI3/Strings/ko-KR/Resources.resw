@@ -487,9 +487,6 @@
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>로컬 음악 파일</value>
   </data>
-  <data name="LyricsSearchProviderLrcLib" xml:space="preserve">
-    <value>LRCLIB</value>
-  </data>
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
@@ -504,18 +501,6 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>이 폴더에는 추가 된 폴더가 포함되어 있습니다. 폴더를 추가하려면이 폴더를 삭제하십시오.</value>
-  </data>
-  <data name="LyricsSearchProviderAmllTtmlDb" xml:space="preserve">
-    <value>amll-ttml-db</value>
-  </data>
-  <data name="LyricsSearchProviderQQ" xml:space="preserve">
-    <value>QQ</value>
-  </data>
-  <data name="LyricsSearchProviderNetease" xml:space="preserve">
-    <value>Netease</value>
-  </data>
-  <data name="LyricsSearchProviderKugou" xml:space="preserve">
-    <value>Kugou</value>
   </data>
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>디버그 오버레이를 표시하십시오</value>
@@ -915,5 +900,11 @@
   </data>
   <data name="SettingsPageTelegram.Header" xml:space="preserve">
     <value>Telegram</value>
+  </data>
+  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
+    <value>가사 제공자</value>
+  </data>
+  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
+    <value>번역 제공자</value>
   </data>
 </root>
