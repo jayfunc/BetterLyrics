@@ -56,29 +56,33 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - [LRCLIB](https://lrclib.net/)
 - 🎶 **Multiple Music Players Supported**
 
-  - <details><summary>NetEase Cloud Music</summary>
+  - <details><summary>⚠️ NetEase Cloud Music</summary>
 
     - Please install the [BetterNCM plugin](https://microblock.cc/betterncm) first. If a downgrade guide pops up after the installation, please follow the guide to complete the downgrade of NetEase Cloud Music (downgrade to 2.10.13);
     - After that, please install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed, enjoy it!
+    - ⚠️ Please note that there is issues with timeline due to plugin issue
 
     </details>
 
-  - <details><summary>Kugou Music</summary>
+  - <details><summary>⚠️ Kugou Music</summary>
 
     - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
     - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change.
+    - ⚠️ Please note that there is issues with timeline due to Kugou itself
 
     </details>
 
-  - <details><summary>Apple Music</summary>
+  - <details><summary>⚠️ Apple Music</summary>
 
     - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
+    - ⚠️ Please note that you need additional settings to stop from seeing shaking lyrics (see FAQ at the end of this document for more information)
 
     </details>
 
-  - <details><summary>foobar2000</summary>
+  - <details><summary>⚠️ foobar2000</summary>
 
     - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
+    - Please note that there is issues with timeline due to plugin issue
 
     </details>
 
@@ -211,10 +215,54 @@ Cannot find your language?
 Don't worry! Start translating and become one of the contributors! 😆
 Click the [link](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866) to translate this app into your language via Crowdin now!
 
-## Star History
+## Star history
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+[![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
 ## Any issues and PRs are welcomed
 
 If you find a bug please file it in issues or if you have any ideas feel free to share it here.
+
+---
+
+## Frequently asked questions (FAQ)
+
+### I couldn't see any button in dock mode
+
+It is important to note that when you enter "Docked Mode", the action buttons are hidden. Hover your mouse over the top to access the "Immerse", "More", and "Close" buttons.
+
+![alt text](FAQ/image-10.png)
+
+Hover the mouse slightly above the bottom edge of the window to display the white control floating window at the bottom
+
+![alt text](FAQ/image-11.png)
+
+Tap the "little white bar" to display the bottom control bar in floating window form (including current playback progress view, timeline offset adjustment; previous song, pause/play, next song; translation, layout, settings)
+
+![alt text](FAQ/image-12.png)
+
+### How can I lock the window in desktop mode
+
+![alt text](FAQ/image-6.png)
+
+Hover you mouse on the top, click on the lock icon and you're good to go! Or, alternatively, press `Ctrl + Alt + U`.
+
+### How can I unlock the window in desktop mode
+
+![alt text](FAQ/image-7.png)
+
+It's in the system tray, right-click on the icon and you'll see "Unlock the window". Or, alternatively, press `Ctrl + Alt + U`.
+
+### There's a delay in lyrics timeline
+
+Hover you mouse on the very bottom of the app,
+
+![alt text](FAQ/image.png)
+
+And then click on the first icon button (Lyrics timeline offset), here you can adjust the offset freely.
+
+### The lyrics jump back and forth frequently (e.g. Apple Music)
+
+![alt text](FAQ/image-2.png)
+
+Go to "Advanced options" section, increase the threshold value (marked with the bigger red rectangle) until the lyrics is working properly.
