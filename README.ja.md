@@ -1,4 +1,8 @@
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**cullyよくある質問（FAQ）を表示するには、ここをクリックしてください**_</a>
+<div style="text-align: center;">
+
+[cullyよくある質問（FAQ）を表示するには、ここをクリックしてください](#faq)
+
+</div>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
@@ -121,7 +125,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
         </details>
 
--   🪟**Multiple Display Modes**
+-   🪟**複数の表示モード**
     -   **標準モード**
         -   豊かな歌詞のアニメーションと美しくダイナミックな背景を備えた没入型のリスニングの旅をお楽しみください
     -   **ドックモード**
@@ -219,7 +223,7 @@ Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご
 
 あなたの言語が見つかりませんか？
 心配しないで！翻訳を開始して、貢献者の1人になりましょう！ 😆
-クリックします[リンク](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866) to translate this app into your language via Crowdin now!
+クリックします[リンク](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)今すぐCrowdinを介してこのアプリをあなたの言語に翻訳するために！
 
 ## 星の歴史
 
@@ -231,7 +235,7 @@ Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご
 
 * * *
 
-## よくある質問（FAQ）
+## よくある質問
 
 ### ドックモードでボタンが表示されませんでした
 
@@ -253,7 +257,7 @@ Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご
 
 上部にマウスを置き、ロックアイコンをクリックすると、行ってもいいです！または、または押します`Ctrl + Alt + U`.
 
-### デスクトップモードでウィンドウのロックを解除するにはどうすればよいですか
+### How can I unlock the window in desktop mode
 
 ![alt text](FAQ/image-7.png)
 
