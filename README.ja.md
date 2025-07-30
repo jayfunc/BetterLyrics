@@ -58,29 +58,33 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 -   🎶**複数の音楽プレーヤーがサポートされています**
 
-    -   <details><summary>NetEase Cloud Music</summary>
+    -   <details><summary>⚠️ NetEase Cloud Music</summary>
 
         -   インストールしてください[BetterNCMプラグイン](https://microblock.cc/betterncm)初め。インストール後にダウングレードガイドがポップアップした場合は、ガイドに従ってNetEase Cloud Musicのダウングレードを完了してください（2.10.13にダウングレード）。
         -   その後、プラグインマーケットにflinkプラグインをインストールしてください。インストールが完了したら、NetEase Cloud Musicを再起動してください。この時点で、すべての準備操作が完了しました、それを楽しんでください！
+        -   pluginの問題によりタイムラインに問題があることに注意してください
 
         </details>
 
-    -   <details><summary>Kugou Music</summary>
+    -   <details><summary>⚠️ Kugou Music</summary>
 
         -   クゴウ音楽の設定「ロック画面インターフェイスなどのサポートシステムの再生コントロール」がオンになっていることを確認してください
         -   タイムライン情報は放送されていません。つまり、クゴウ音楽のタイムラインポジションを変更すると、この変更を検出する方法はありません。
+        -   ⚠️クゴウ自体のためにタイムラインに問題があることに注意してください
 
         </details>
 
-    -   <details><summary>Apple Music</summary>
+    -   <details><summary>⚠️ Apple Music</summary>
 
         -   タイムラインのしきい値を設定で約600ミリ秒に設定していることを確認してください（「設定」 - 「高度なオプション」に変更するには）。そうしないと、歌詞は常に前進します。
+        -   shaking shaking歌詞を見るのをやめるには、追加の設定が必要であることに注意してください（詳細については、このドキュメントの最後のFAQを参照してください）
 
         </details>
 
-    -   <details><summary>foobar2000</summary>
+    -   <details><summary>⚠️ foobar2000</summary>
 
         -   あなたが持っていることを確認してください<https://github.com/dumbie/foo_mediacontrol>それでインストールされています
+        -   プラグインの問題によりタイムラインに問題があることに注意してください
 
         </details>
 
@@ -117,7 +121,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
         </details>
 
--   🪟**複数の表示モード**
+-   🪟**Multiple Display Modes**
     -   **標準モード**
         -   豊かな歌詞のアニメーションと美しくダイナミックな背景を備えた没入型のリスニングの旅をお楽しみください
     -   **ドックモード**
@@ -215,12 +219,56 @@ Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご
 
 あなたの言語が見つかりませんか？
 心配しないで！翻訳を開始して、貢献者の1人になりましょう！ 😆
-クリックします[リンク](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)今すぐCrowdinを介してこのアプリをあなたの言語に翻訳するために！
+クリックします[リンク](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866) to translate this app into your language via Crowdin now!
 
 ## 星の歴史
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+[![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
 ## 問題やPRを歓迎します
 
 バグが見つかった場合は、問題で提出してください。または、アイデアがある場合は、ここでお気軽に共有してください。
+
+* * *
+
+## よくある質問（FAQ）
+
+### ドックモードでボタンが表示されませんでした
+
+「ドッキングモード」を入力すると、アクションボタンが非表示になることに注意することが重要です。マウスを上部にホバリングして、「浸す」、「その他」、「閉じる」ボタンにアクセスします。
+
+![alt text](FAQ/image-10.png)
+
+窓の下端の少し上にマウスをホバリングして、下部に白いコントロールフローティングウィンドウを表示します
+
+![alt text](FAQ/image-11.png)
+
+「Little White Bar」をタップして、フローティングウィンドウ形式のボトムコントロールバーを表示します（現在の再生プログレスビュー、タイムラインオフセット調整、前の曲、Pause/Play、次の曲、翻訳、レイアウト、設定を含む）
+
+![alt text](FAQ/image-12.png)
+
+### ウィンドウをデスクトップモードでロックするにはどうすればよいですか
+
+![alt text](FAQ/image-6.png)
+
+上部にマウスを置き、ロックアイコンをクリックすると、行ってもいいです！または、または押します`Ctrl + Alt + U`.
+
+### デスクトップモードでウィンドウのロックを解除するにはどうすればよいですか
+
+![alt text](FAQ/image-7.png)
+
+システムトレイにあり、アイコンを右クリックすると、「ウィンドウのロックを解除する」が表示されます。または、または押します`Ctrl + Alt + U`.
+
+### 歌詞のタイムラインに遅延があります
+
+アプリの最下部にマウスを置く、
+
+![alt text](FAQ/image.png)
+
+次に、最初のアイコンボタン（歌詞タイムラインオフセット）をクリックします。ここでは、オフセットを自由に調整できます。
+
+### 歌詞は頻繁にジャンプします（例：Apple Music）
+
+![alt text](FAQ/image-2.png)
+
+「Advanced Options」セクションに移動し、歌詞が適切に機能するまで、しきい値（より大きな赤い長方形でマークされた）を増やします。
