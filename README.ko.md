@@ -1,4 +1,8 @@
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓ 자주 묻는 질문을 보려면 여기를 클릭하십시오 (FAQ)**_</a>
+<div style="text-align: center;">
+
+[❓ 자주 묻는 질문을 보려면 여기를 클릭하십시오 (FAQ)](#faq)
+
+</div>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
@@ -77,7 +81,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>⚠️ Apple Music</summary>
 
         -   설정에서 타임 라인 임계 값을 약 600ms로 설정했는지 확인하십시오 ( "설정" - "고급 옵션"으로 이동). 그렇지 않으면 가사가 앞으로 계속 진행됩니다.
-        -   ⚠️ Please note that you need additional settings to stop from seeing shaking lyrics (see FAQ at the end of this document for more information)
+        -   shaking 가사를 보는 것을 막기 위해 추가 설정이 필요합니다 (자세한 내용은이 문서 끝의 FAQ 참조).
 
         </details>
 
@@ -231,7 +235,7 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 * * *
 
-## 자주 묻는 질문 (FAQ)
+## FAQ
 
 ### 도크 모드에서 버튼을 볼 수 없었습니다
 
