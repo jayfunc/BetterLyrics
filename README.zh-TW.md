@@ -58,29 +58,33 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 -   🎶**支持多個音樂播放器**
 
-    -   <details><summary>NetEase Cloud Music</summary>
+    -   <details><summary>⚠️ NetEase Cloud Music</summary>
 
         -   請安裝[BetterNCM插件](https://microblock.cc/betterncm)第一的。如果安裝後降級指南彈出，請遵循指南以完成降級NetEases Cloud Music（降級為2.10.13）；
         -   之後，請在Pluginmarket中安裝Afflink插件。安裝完成後，請重新啟動NetASE Cloud Music。在這一點上，所有準備操作都已經完成，請享受！
+        -   ⚠️請注意，由於插件問題，時間表存在問題
 
         </details>
 
-    -   <details><summary>Kugou Music</summary>
+    -   <details><summary>⚠️ Kugou Music</summary>
 
         -   請確保Kugou音樂設置“支持系統播放控件，例如鎖定屏幕接口”
         -   沒有廣播的時間表信息，這意味著當您更改Kugou Music中的時間軸位置時，Betterlyrics無法檢測到此更改。
+        -   ⚠️請注意，由於Kugou本身，時間表有問題
 
         </details>
 
-    -   <details><summary>Apple Music</summary>
+    -   <details><summary>⚠️ Apple Music</summary>
 
         -   確保您將時間軸閾值設置為設置約600毫秒左右（轉到“設置”  - “高級選項”以進行更改），否則，歌詞將不斷向前發展。
+        -   ⚠️請注意，您需要其他設置才能阻止搖晃歌詞（有關更多信息，請參見本文檔末尾的常見問題解答）
 
         </details>
 
-    -   <details><summary>foobar2000</summary>
+    -   <details><summary>⚠️ foobar2000</summary>
 
         -   確保你有<https://github.com/dumbie/foo_mediacontrol>與之安裝
+        -   請注意，由於插件問題，時間表存在問題
 
         </details>
 
@@ -132,7 +136,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ## 屏幕截圖
 
-### Standard mode
+### 標準模式
 
 ![alt text](Screenshots/image.png)
 
@@ -219,8 +223,52 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ## 星曆史
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+[![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
 ## 任何問題和公關都受到歡迎
 
 如果您找到錯誤，請在問題中提交錯誤，或者您有任何想法可以隨時在這里分享。
+
+* * *
+
+## 常見問題（常見問題解答）
+
+### 我在碼頭模式下看不到任何按鈕
+
+重要的是要注意，當您輸入“停靠模式”時，操作按鈕就會隱藏。將鼠標懸停在頂部，以訪問“浸入”，“更多”和“關閉”按鈕。
+
+![alt text](FAQ/image-10.png)
+
+將鼠標懸停在窗戶底部邊緣上方，以顯示底部的白色控制浮動窗口
+
+![alt text](FAQ/image-11.png)
+
+點擊“小白色欄”以浮動窗口形式顯示底部控制欄（包括當前的播放進度視圖，時間表偏移調整；先前的歌曲，暫停/播放，下一首歌；翻譯，佈局，設置）
+
+![alt text](FAQ/image-12.png)
+
+### 如何在桌面模式下鎖定窗口
+
+![alt text](FAQ/image-6.png)
+
+將鼠標懸停在頂部，單擊鎖定圖標，您可以走！或者，請按`Ctrl + Alt + U`.
+
+### 如何在桌面模式下解鎖窗口
+
+![alt text](FAQ/image-7.png)
+
+它在系統托盤中，右鍵單擊圖標，您會看到“解鎖窗口”。或者，請按`Ctrl + Alt + U`.
+
+### 歌詞時間表延遲
+
+將鼠標懸停在應用程序的底部，
+
+![alt text](FAQ/image.png)
+
+然後單擊第一個圖標按鈕（歌詞時間線偏移），在這裡您可以自由調整偏移量。
+
+### 歌詞經常來回跳動（例如，蘋果音樂）
+
+![alt text](FAQ/image-2.png)
+
+轉到“高級選項”部分，增加閾值值（用較大的紅色矩形標記），直到歌詞正常工作。
