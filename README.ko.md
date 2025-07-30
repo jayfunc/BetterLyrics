@@ -58,29 +58,33 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 -   🎶**여러 음악 플레이어가 지원했습니다**
 
-    -   <details><summary>NetEase Cloud Music</summary>
+    -   <details><summary>⚠️ NetEase Cloud Music</summary>
 
         -   설치하십시오[더 나은 플러그인](https://microblock.cc/betterncm)첫 번째. 설치 후 다운 그레이드 가이드가 나타나면 안내서를 따라 Netease Cloud Music의 다운 그레이드를 완료하십시오 (다운 그레이드 2.10.13);
         -   그런 다음 플러그인 마켓에 link 링크 플러그인을 설치하십시오. 설치가 완료되면 Netease Cloud Music을 다시 시작하십시오. 이 시점에서 모든 준비 작업이 완료되었으며 즐기십시오!
+        -   plugin 플러그인 문제로 인한 타임 라인에 문제가 있습니다.
 
         </details>
 
-    -   <details><summary>Kugou Music</summary>
+    -   <details><summary>⚠️ Kugou Music</summary>
 
         -   Kugou Music 설정 "Lock Screen Interface와 같은 시스템 재생 컨트롤 지원"이 켜져 있는지 확인하십시오.
         -   타임 라인 정보가 방송되지 않으므로 Kugou Music의 타임 라인 위치를 변경할 때 Beterlyrics는 이러한 변화를 감지 할 방법이 없습니다.
+        -   ⚠️ kugou 자체로 인한 타임 라인에 문제가 있습니다.
 
         </details>
 
-    -   <details><summary>Apple Music</summary>
+    -   <details><summary>⚠️ Apple Music</summary>
 
         -   설정에서 타임 라인 임계 값을 약 600ms로 설정했는지 확인하십시오 ( "설정" - "고급 옵션"으로 이동). 그렇지 않으면 가사가 앞으로 계속 진행됩니다.
+        -   ⚠️ Please note that you need additional settings to stop from seeing shaking lyrics (see FAQ at the end of this document for more information)
 
         </details>
 
-    -   <details><summary>foobar2000</summary>
+    -   <details><summary>⚠️ foobar2000</summary>
 
         -   당신이 가지고 있는지 확인하십시오<https://github.com/dumbie/foo_mediacontrol>그것으로 설치
+        -   플러그인 문제로 인한 타임 라인에 문제가 있습니다.
 
         </details>
 
@@ -180,7 +184,7 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 > 설치 방법에 대한 가이드 ".zip"파일을 다운로드하는 데 주목하십시오.[이 문서](How2Install/How2Install.md).
 
-## 💖 Many thanks to
+## 💖 많은 감사합니다
 
 -   [가사-리크스 헬퍼](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
     -   QQ, Netease, Kugou Sources의 가사 페치, 암호 해독 및 구문 분석 제공
@@ -219,8 +223,52 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 ## 스타 역사
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+[![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
 ## 모든 문제와 PR은 환영됩니다
 
 버그를 찾으면 문제로 제출하거나 아이디어가 있으면 여기에서 자유롭게 공유하십시오.
+
+* * *
+
+## 자주 묻는 질문 (FAQ)
+
+### 도크 모드에서 버튼을 볼 수 없었습니다
+
+"도킹 모드"를 입력하면 액션 버튼이 숨겨져 있음에 유의해야합니다. 마우스를 상단 위로 가져 가서 "Immerse", "more"및 "닫기"버튼에 액세스하십시오.
+
+![alt text](FAQ/image-10.png)
+
+창의 하단 가장자리 위에 마우스를 약간 위로 이동하여 하단에 흰색 제어 플로팅 창을 표시합니다.
+
+![alt text](FAQ/image-11.png)
+
+"Little White Bar"를 탭하여 Floating Window 형식에 하단 제어 막대를 표시합니다 (현재 재생 진행보기, 타임 라인 오프셋 조정 포함; 이전 노래, 일시 정지/재생, 다음 곡; 번역, 레이아웃, 설정)
+
+![alt text](FAQ/image-12.png)
+
+### 데스크탑 모드에서 창을 어떻게 잠글 수 있습니까?
+
+![alt text](FAQ/image-6.png)
+
+위에 마우스를 마우스로 가져 가서 잠금 아이콘을 클릭하면 좋습니다. 또는 대안으로 누르십시오`Ctrl + Alt + U`.
+
+### 데스크탑 모드에서 창을 잠금 해제하려면 어떻게해야합니까?
+
+![alt text](FAQ/image-7.png)
+
+시스템 트레이에 있고 아이콘을 마우스 오른쪽 버튼으로 클릭하면 "창 잠금 해제"가 표시됩니다. 또는 대안으로 누르십시오`Ctrl + Alt + U`.
+
+### 가사 타임 라인에는 지연이 있습니다
+
+앱의 바닥에 마우스를 마우기,
+
+![alt text](FAQ/image.png)
+
+그런 다음 첫 번째 아이콘 버튼 (가사 타임 라인 오프셋)을 클릭하면 여기에서 오프셋을 자유롭게 조정할 수 있습니다.
+
+### 가사는 자주 앞뒤로 점프합니다 (예 : Apple Music)
+
+![alt text](FAQ/image-2.png)
+
+"고급 옵션"섹션으로 이동하여 가사가 제대로 작동 할 때까지 임계 값 (더 큰 빨간색 사각형으로 표시)을 늘리십시오.
