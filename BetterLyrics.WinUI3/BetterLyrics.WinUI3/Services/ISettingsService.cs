@@ -61,7 +61,9 @@ namespace BetterLyrics.WinUI3.Services
         LyricsFontColorType LyricsFgFontColorType { get; set; }
         LyricsFontColorType LyricsStrokeFontColorType { get; set; }
 
-        int LyricsFontSize { get; set; }
+        int LyricsStandardFontSize { get; set; }
+        int LyricsDockFontSize { get; set; }
+        int LyricsDesktopFontSize { get; set; }
 
         ElementTheme LyricsBackgroundTheme { get; set; }
 

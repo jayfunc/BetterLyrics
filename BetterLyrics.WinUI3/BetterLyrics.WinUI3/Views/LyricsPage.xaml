@@ -29,7 +29,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontFamily="{x:Bind ViewModel.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.LyricsFontSize, Mode=OneWay}" />
+                FontSize="{x:Bind ViewModel.LyricsStandardFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -264,7 +264,7 @@
                             </Button.DataContext>
                         </Button>-->
 
-                        <!--  Translation  -->
+                        <!--  Lyrics & Translation  -->
                         <Button
                             Click="TranslationButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -275,12 +275,27 @@
                             </ToolTipService.ToolTip>
                             <Button.ContextFlyout>
                                 <Flyout x:Name="TranslationFlyout" ShouldConstrainToRootBounds="False">
-                                    <StackPanel>
-                                        <ToggleSwitch x:Uid="LyricsPageTranslationEnabled" IsOn="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}" />
-                                        <ToggleSwitch
-                                            x:Uid="LyricsPageTranslationOnly"
-                                            IsEnabled="{x:Bind ViewModel.IsTranslationEnabled, Mode=OneWay}"
-                                            IsOn="{x:Bind ViewModel.ShowTranslationOnly, Mode=TwoWay}" />
+                                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                        <controls:SettingsExpander
+                                            x:Uid="LyricsPageTranslationEnabled"
+                                            HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                     Glyph=&#xE774;}"
+                                            IsExpanded="True">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.IsTranslationEnabled, Mode=TwoWay}" />
+                                            <controls:SettingsExpander.Items>
+                                                <controls:SettingsCard x:Uid="LyricsPageTranslationOnly" IsEnabled="{x:Bind ViewModel.IsTranslationEnabled, Mode=OneWay}">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.ShowTranslationOnly, Mode=TwoWay}" />
+                                                </controls:SettingsCard>
+                                            </controls:SettingsExpander.Items>
+                                        </controls:SettingsExpander>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock x:Uid="LyricsPageLyricsProviderPrefix" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock x:Uid="LyricsPageTranslationProviderPrefix" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                                        </StackPanel>
                                     </StackPanel>
                                 </Flyout>
                             </Button.ContextFlyout>
@@ -337,19 +352,9 @@
                     Maximum="{x:Bind ViewModel.SongDurationSeconds, Mode=OneWay}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
+                    Tapped="TimelineSliderOverlay_Tapped"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
                     Value="{x:Bind ViewModel.TimelinePositionSeconds, Mode=OneWay}" />
-
-                <Slider
-                    x:Name="TimelineSliderOverlay"
-                    Margin="0,-32,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Top"
-                    Maximum="{Binding ElementName=TimelineSlider, Path=Maximum}"
-                    Minimum="0"
-                    Style="{StaticResource TransparentSliderStyle}"
-                    Tapped="TimelineSliderOverlay_Tapped"
-                    ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}" />
             </Grid>
 
         </Grid>

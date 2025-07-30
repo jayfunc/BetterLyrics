@@ -688,22 +688,60 @@
                                     </interactivity:Interaction.Behaviors>
                                 </ColorPicker>
 
-                                <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsStandardFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
                                         <TextBlock
                                             Margin="0,0,14,0"
                                             VerticalAlignment="Center"
-                                            Text="{Binding ElementName=LyricsFontSizeSlider, Path=Value, Mode=OneWay}" />
+                                            Text="{Binding ElementName=LyricsStandardFontSizeSlider, Path=Value, Mode=OneWay}" />
                                         <Slider
-                                            x:Name="LyricsFontSizeSlider"
+                                            x:Name="LyricsStandardFontSizeSlider"
                                             Maximum="96"
                                             Minimum="12"
                                             SnapsTo="Ticks"
                                             StepFrequency="2"
                                             TickFrequency="2"
                                             TickPlacement="Outside"
-                                            Value="{x:Bind ViewModel.LyricsFontSize, Mode=TwoWay}" />
+                                            Value="{x:Bind ViewModel.LyricsStandardFontSize, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsDockFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ElementName=LyricsDockFontSizeSlider, Path=Value, Mode=OneWay}" />
+                                        <Slider
+                                            x:Name="LyricsDockFontSizeSlider"
+                                            Maximum="96"
+                                            Minimum="12"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="2"
+                                            TickFrequency="2"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.LyricsDockFontSize, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsDesktopFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding ElementName=LyricsDesktopFontSizeSlider, Path=Value, Mode=OneWay}" />
+                                        <Slider
+                                            x:Name="LyricsDesktopFontSizeSlider"
+                                            Maximum="96"
+                                            Minimum="12"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="2"
+                                            TickFrequency="2"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.LyricsDesktopFontSize, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 

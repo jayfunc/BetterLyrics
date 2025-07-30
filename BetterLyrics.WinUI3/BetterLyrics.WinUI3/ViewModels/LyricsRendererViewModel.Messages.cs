@@ -97,12 +97,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _isDockMode = message.NewValue;
                     UpdateColorConfig();
                     UpdateImmersiveBackgroundOpacity();
+                    _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
                     _isDesktopMode = message.NewValue;
                     UpdateColorConfig();
                     UpdateImmersiveBackgroundOpacity();
+                    _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
                 {
@@ -205,9 +207,19 @@ namespace BetterLyrics.WinUI3.ViewModels
                     _lyricsBlurAmount = message.NewValue;
                     _isLayoutChanged = true;
                 }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontSize))
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsStandardFontSize))
                 {
-                    _lyricsFontSize = message.NewValue;
+                    _lyricsStandardFontSize = message.NewValue;
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsDockFontSize))
+                {
+                    _lyricsDockFontSize = message.NewValue;
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsDesktopFontSize))
+                {
+                    _lyricsDesktopFontSize = message.NewValue;
                     _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.SelectedTargetLanguageIndex))

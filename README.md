@@ -3,22 +3,25 @@
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓ Click here to view frequently asked questions (FAQ)**_</a>
 
 <div align="center">
-  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64"/>
+  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
 </div>
 
 <h2 align="center">
 BetterLyrics
 </h2>
 <h4 align="center">
-Your smooth dynamic lyrics display tool built with WinUI 3
+Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with local playback and other players
 </h3>
 
 ## 🎉 This project was featured by SSPAI!
+
 Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
 
 ## 🔈 Feedback and chat group
 
-- [QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) | [Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\QQ.png" height="20"> QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Discord.png" height="12"> Discord](https://discord.gg/5yAQPnyCKv)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Telegram.png" height="16"> Telegram](https://t.me/+svhSLZ7awPsxNGY1)
 
 ## 🌟 Highlighted features
 
@@ -39,9 +42,67 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - 酷狗音乐 Kugou Music
     - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
     - [LRCLIB](https://lrclib.net/)
+- 🎶 **Multiple Music Players Supported**
+
+  - <details><summary>NetEase Cloud Music</summary>
+
+    - Please install the [BetterNCM plugin](https://microblock.cc/betterncm) first. If a downgrade guide pops up after the installation, please follow the guide to complete the downgrade of NetEase Cloud Music (downgrade to 2.10.13);
+    - After that, please install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed, enjoy it!
+
+    </details>
+
+  - <details><summary>Kugou Music</summary>
+
+    - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
+    - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change.
+
+    </details>
+
+  - <details><summary>Apple Music</summary>
+
+    - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
+
+    </details>
+
+  - <details><summary>foobar2000</summary>
+
+    - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
+
+    </details>
+
+  - Spotify
+  - QQ Music
+  - PotPlayer
+  - Media Player (System)
+
+  - <details><summary>LX Music</summary>
+
+    - Please make sure you have enabled "Open API" in LX Music settings page
+    - Then open BetterLyrics, go to settings, go to "Advanced options", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
+
+    </details>
+
+  - <details><summary>MusicBee</summary>
+
+    - Please install https://github.com/HenryPDT/mb_MediaControl before using
+
+    </details>
+
+  - <details><summary>iTunes</summary>
+
+    - Please install https://github.com/thewizrd/iTunes-SMTC before using
+
+    </details>
+
+  - <details><summary>AIMP</summary>
+
+    - Please install https://www.aimp.ru/?do=catalog&rec_id=1097 before using
+
+    </details>
+
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
-    - Enjoy an immersive listening journey with rich lyrics animations and beautifully dynamic backgrounds 
+    - Enjoy an immersive listening journey with rich lyrics animations and beautifully dynamic backgrounds
   - **Dock Mode**
     - A smart animated lyrics bar docked to your screen edge
   - **Desktop Mode**
@@ -80,32 +141,6 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 ## Demonstration
 
 Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https://www.bilibili.com/video/BV1zjGjzfEXh).
-
-## Tested music player
-
-- NetEase Cloud Music
-  - Please install the [BetterNCM plugin](https://microblock.cc/betterncm) first. If a downgrade guide pops up after the installation, please follow the guide to complete the downgrade of NetEase Cloud Music (downgrade to 2.10.13);
-  - After that, please install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed, enjoy it!
-- Kugou Music
-  - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
-  - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change. 
-- Apple Music
-  - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
-- foobar2000
-  - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
-- Spotify
-- QQ Music
-- PotPlayer
-- Media Player (System)
-- LX Music
-  - Please make sure you have enabled "Open API" in LX Music settings page
-  - Then open BetterLyrics, go to settings, go to "Advanced options", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
-- MusicBee
-  - Please install https://github.com/HenryPDT/mb_MediaControl before using
-- iTunes
-  - Please install https://github.com/thewizrd/iTunes-SMTC before using
-- AIMP
-  - Please install https://www.aimp.ru/?do=catalog&rec_id=1097 before using
 
 ## Try it now
 

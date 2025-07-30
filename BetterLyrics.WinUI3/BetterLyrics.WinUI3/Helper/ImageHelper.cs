@@ -231,5 +231,22 @@ namespace BetterLyrics.WinUI3.Helper
             square.Save(ms, new PngEncoder());
             return ms.ToArray();
         }
+
+        public static byte[] Resize(byte[] imageBytes, int size)
+        {
+            using Image image = Image.Load(imageBytes);
+            var factor = Math.Max(size / image.Width, size / image.Height);
+            if (factor <= 1)
+            {
+                return imageBytes;
+            }
+            int width = image.Width * factor;
+            int height = image.Height * factor;
+            image.Mutate(x => x.Resize(width, height, KnownResamplers.Welch));
+
+            using var ms = new MemoryStream();
+            image.Save(ms, new PngEncoder());
+            return ms.ToArray();
+        }
     }
 }

@@ -176,6 +176,7 @@ namespace BetterLyrics.WinUI3.Services
                 if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
                 {
                     _SMTCAlbumArtBytes = await ImageHelper.ToByteArrayAsync(streamReference);
+                    _SMTCAlbumArtBytes = ImageHelper.Resize(_SMTCAlbumArtBytes, 800);
                 }
                 else
                 {
@@ -343,18 +344,18 @@ namespace BetterLyrics.WinUI3.Services
 
         private void Sse_MessageReceived(object sender, EventSourceMessageEventArgs e)
         {
-            var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
-            if (data.TryGetDouble(out double seconds))
+            if (_cachedSongInfo?.SourceAppUserModelId == _lxMusicId)
             {
-                if (_cachedSongInfo?.SourceAppUserModelId == _lxMusicId)
+                var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
+                if (data.ValueKind == JsonValueKind.Number)
                 {
                     if (e.Event == "progress")
                     {
-                        _lxMusicPositionSeconds = seconds;
+                        _lxMusicPositionSeconds = data.GetDouble();
                     }
                     else if (e.Event == "duration")
                     {
-                        _lxMusicDurationSeconds = seconds;
+                        _lxMusicDurationSeconds = data.GetDouble();
                     }
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
@@ -367,31 +368,46 @@ namespace BetterLyrics.WinUI3.Services
         public async Task PlayAsync()
         {
             var focusedSession = _mediaManager.GetFocusedSession();
-            await focusedSession?.ControlSession.TryPlayAsync();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession?.TryPlayAsync();
+            }
         }
 
         public async Task PauseAsync()
         {
             var focusedSession = _mediaManager.GetFocusedSession();
-            await focusedSession?.ControlSession.TryPauseAsync();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession?.TryPauseAsync();
+            }
         }
 
         public async Task PreviousAsync()
         {
             var focusedSession = _mediaManager.GetFocusedSession();
-            await focusedSession?.ControlSession.TrySkipPreviousAsync();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession?.TrySkipPreviousAsync();
+            }
         }
 
         public async Task NextAsync()
         {
             var focusedSession = _mediaManager.GetFocusedSession();
-            await focusedSession?.ControlSession.TrySkipNextAsync();
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession?.TrySkipNextAsync();
+            }
         }
 
         public async Task ChangePosition(double seconds)
         {
             var focusedSession = _mediaManager.GetFocusedSession();
-            await focusedSession?.ControlSession.TryChangePlaybackPositionAsync(TimeSpan.FromSeconds(seconds).Ticks);
+            if (focusedSession != null)
+            {
+                await focusedSession.ControlSession?.TryChangePlaybackPositionAsync(TimeSpan.FromSeconds(seconds).Ticks);
+            }
         }
 
         public void Receive(PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>> message)
