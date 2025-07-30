@@ -76,11 +76,13 @@ namespace BetterLyrics.WinUI3
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             WindowHelper.OpenWindow<LyricsWindow>();
-            var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-            if (lyricsWindow == null) return;
 
-            lyricsWindow.ViewModel.InitLockHotKey();
-            lyricsWindow.AutoSelectLyricsMode();
+            var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (lyricsWindow != null)
+            {
+                lyricsWindow.ViewModel.InitLockHotKey();
+                lyricsWindow.AutoSelectLyricsMode();
+            }
         }
 
         private static void ConfigureServices()
