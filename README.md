@@ -85,7 +85,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
   - <details><summary>⚠️ foobar2000</summary>
 
     - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
-    - Please note that there is issues with timeline due to plugin issue
+    - ⚠️ Please note that there is issues with timeline due to plugin issue
 
     </details>
 
