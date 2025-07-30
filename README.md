@@ -1,5 +1,8 @@
+<div style="text-align: center;">
 
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓ Click here to view frequently asked questions (FAQ)**_</a>
+[❓ Click here to view frequently asked questions (FAQ)](#faq)
+
+</div>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
@@ -225,7 +228,7 @@ If you find a bug please file it in issues or if you have any ideas feel free to
 
 ---
 
-## Frequently asked questions (FAQ)
+## FAQ
 
 ### I couldn't see any button in dock mode
 
