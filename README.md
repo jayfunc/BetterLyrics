@@ -1,4 +1,8 @@
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md">_**🌐 点此处查看中文说明**_</a>
+🌐 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue
+"></a> <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue
+"></a> <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E6%97%A5%E6%9C%AC%E8%AA%9E-blue
+"></a> <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md"><img alt="Static Badge" src="https://img.shields.io/badge/%ED%95%9C%EA%B5%AD%EC%9D%B8-blue
+"></a>
 
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓ Click here to view frequently asked questions (FAQ)**_</a>
 
@@ -108,7 +112,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
   - **Desktop Mode**
     - Enjoy immersive lyrics floating above your apps
 - 🧠 **Smart Behaviors**
-  - Auto hide when music player closed
+  - Auto hide when music paused
 
 > This project is still under development, bugs and unexpected behaviors may be existed in the latest branch.
 
@@ -162,11 +166,11 @@ Or get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyri
 
 > Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
 
-## Many thanks to
+## 💖 Many thanks to
 
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
   - Provide lyrics fetch, decryption, and parse for QQ, Netease, Kugou sources
-- [LRCLIB](https://lrclib.net/)
+- [lrclib](https://github.com/tranxuanthang/lrclib)
   - LRCLIB lyrics API provider
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
   - Used for extracting pictures in music files
@@ -176,6 +180,8 @@ Or get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyri
   - Used for reading original lyrics content
 - [Vanara](https://github.com/dahall/Vanara)
   - Win32 API wrapper
+- [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
+  - Provide the ability for offline lyrics translation
 - [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
 - [DevWinUI](https://github.com/ghost1372/DevWinUI)
 - [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
