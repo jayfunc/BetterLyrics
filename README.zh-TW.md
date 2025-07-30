@@ -1,4 +1,8 @@
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓單擊此處查看常見問題（常見問題解答）**_</a>
+<div style="text-align: center;">
+
+[❓單擊此處查看常見問題（常見問題解答）](#faq)
+
+</div>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
@@ -231,7 +235,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 * * *
 
-## 常見問題（常見問題解答）
+## FAQ
 
 ### 我在碼頭模式下看不到任何按鈕
 
