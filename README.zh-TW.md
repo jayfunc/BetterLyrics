@@ -1,9 +1,3 @@
-🌐<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue
-"></a><a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue
-"></a><a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E6%97%A5%E6%9C%AC%E8%AA%9E-blue
-"></a><a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md"><img alt="Static Badge" src="https://img.shields.io/badge/%ED%95%9C%EA%B5%AD%EC%9D%B8-blue
-"></a>
-
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓單擊此處查看常見問題（常見問題解答）**_</a>
 
 <div align="center">
@@ -13,6 +7,19 @@
 <h2 align="center">
 BetterLyrics
 </h2>
+
+<div style="text-align: center;">
+
+[![](https://img.shields.io/badge/zh--CN-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md)[![Static Badge](https://img.shields.io/badge/zh--TW-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md)[![Static Badge](https://img.shields.io/badge/ja-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md)[![Static Badge](https://img.shields.io/badge/ko-%ED%95%9C%EA%B5%AD%EC%9D%B8-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md)
+
+</div>
+
+<div style="text-align: center;">
+
+![Static Badge](https://img.shields.io/badge/Language-C%23-purple)![Static Badge](https://img.shields.io/badge/License-MIT-red)![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple)![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
+
+</div>
+
 <h4 align="center">
 Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with local playback and other players
 </h3>
@@ -94,7 +101,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
     -   <details><summary>MusicBee</summary>
 
-        -   Please install <https://github.com/HenryPDT/mb_MediaControl>使用之前
+        -   請安裝<https://github.com/HenryPDT/mb_MediaControl>使用之前
 
         </details>
 
@@ -125,7 +132,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ## 屏幕截圖
 
-### 標準模式
+### Standard mode
 
 ![alt text](Screenshots/image.png)
 
