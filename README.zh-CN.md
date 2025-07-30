@@ -1,4 +1,8 @@
-<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓单击此处查看常见问题（常见问题解答）**_</a>
+<div style="text-align: center;">
+
+[❓单击此处查看常见问题（常见问题解答）](#faq)
+
+</div>
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
@@ -148,7 +152,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](Screenshots/album-art-only.png)
 
-### Dock mode
+### 码头模式
 
 ![alt text](Screenshots/dock-1.png)
 
@@ -231,7 +235,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 * * *
 
-## 常见问题（常见问题解答）
+## FAQ
 
 ### 我在码头模式下看不到任何按钮
 
