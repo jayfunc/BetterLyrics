@@ -1,9 +1,3 @@
-🌐<a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue
-"></a><a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue
-"></a><a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md"><img alt="Static Badge" src="https://img.shields.io/badge/%E6%97%A5%E6%9C%AC%E8%AA%9E-blue
-"></a><a href="https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md"><img alt="Static Badge" src="https://img.shields.io/badge/%ED%95%9C%EA%B5%AD%EC%9D%B8-blue
-"></a>
-
 <a href="https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md">_**❓ 자주 묻는 질문을 보려면 여기를 클릭하십시오 (FAQ)**_</a>
 
 <div align="center">
@@ -13,6 +7,19 @@
 <h2 align="center">
 BetterLyrics
 </h2>
+
+<div style="text-align: center;">
+
+[![](https://img.shields.io/badge/zh--CN-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md)[![Static Badge](https://img.shields.io/badge/zh--TW-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md)[![Static Badge](https://img.shields.io/badge/ja-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md)[![Static Badge](https://img.shields.io/badge/ko-%ED%95%9C%EA%B5%AD%EC%9D%B8-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md)
+
+</div>
+
+<div style="text-align: center;">
+
+![Static Badge](https://img.shields.io/badge/Language-C%23-purple)![Static Badge](https://img.shields.io/badge/License-MIT-red)![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple)![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
+
+</div>
+
 <h4 align="center">
 Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with local playback and other players
 </h3>
@@ -34,7 +41,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 -   ↔️**강한 가사 번역**
     -   오프라인 기계 번역 (30 개 언어 지원)
-    -   Auto reading local lyrics files for embedded translation
+    -   내장 번역을위한 자동 읽기 로컬 가사 파일
 
 -   🧩**다양한 가사 소스**
     -   로컬 스토리지
@@ -88,7 +95,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>LX Music</summary>
 
         -   LX Music 설정 페이지에서 "API 열기"를 활성화했는지 확인하십시오.
-        -   Then open BetterLyrics, go to settings, go to "Advanced options", input your LX Music server address (mostly like <http://127.0.0.1:23330>) 그리고 당신은 간다!
+        -   그런 다음 더 나은 문학을 열고, 설정으로 이동하고, "고급 옵션"으로 이동하고, LX Music Server 주소를 입력하십시오 (주로 좋아요.<http://127.0.0.1:23330>) 그리고 당신은 간다!
 
         </details>
 
@@ -173,7 +180,7 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 > 설치 방법에 대한 가이드 ".zip"파일을 다운로드하는 데 주목하십시오.[이 문서](How2Install/How2Install.md).
 
-## 💖 많은 감사합니다
+## 💖 Many thanks to
 
 -   [가사-리크스 헬퍼](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
     -   QQ, Netease, Kugou Sources의 가사 페치, 암호 해독 및 구문 분석 제공
