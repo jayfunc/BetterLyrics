@@ -64,7 +64,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
     -   <details><summary>⚠️ NetEase Cloud Music</summary>
 
-        -   请安装[BetterNCM插件](https://microblock.cc/betterncm) first. If a downgrade guide pops up after the installation, please follow the guide to complete the downgrade of NetEase Cloud Music (downgrade to 2.10.13);
+        -   请安装[BetterNCM插件](https://microblock.cc/betterncm)第一的。如果安装后降级指南弹出，请遵循指南以完成降级NetEases Cloud Music（降级为2.10.13）；
         -   之后，请在Pluginmarket中安装Afflink插件。安装完成后，请重新启动NetASE Cloud Music。在这一点上，所有准备操作都已经完成，请享受！
         -   ⚠️请注意，由于插件问题，时间表存在问题
 
@@ -247,7 +247,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](FAQ/image-11.png)
 
-点击“小白色栏”以浮动窗口形式显示底部控制条（包括当前的播放进度视图，时间表偏移调整；上一首歌，暂停/播放，下一首歌；翻译，布局，设置）
+点击“小白色栏”以浮动窗口形式显示底部控制栏（包括当前的播放进度视图，时间表偏移调整；先前的歌曲，暂停/播放，下一首歌；翻译，布局，设置）
 
 ![alt text](FAQ/image-12.png)
 
