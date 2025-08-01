@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>本地媒體庫</value>
+    <value>本地音樂資料庫</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>新增存放音樂或歌詞的資料夾</value>
@@ -127,7 +127,7 @@
     <value>在檔案總管中開啟</value>
   </data>
   <data name="SettingsPageRemovePath.Content" xml:space="preserve">
-    <value>從應用程式中移除</value>
+    <value>從應用程序中移除</value>
   </data>
   <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
     <value>您可以安全刪除以下項目</value>
@@ -563,7 +563,7 @@
     <value>歌曲標題和藝術家</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
-    <value>缓动动画类型</value>
+    <value>緩動動畫類型</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
     <value>播放來源</value>
@@ -581,7 +581,7 @@
     <value>歌詞翻譯</value>
   </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>歌詞時間軸偏移（毫秒）</value>
+    <value>歌詞時間軌偏移（毫秒）</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate 翻譯服務</value>
@@ -596,7 +596,7 @@
     <value>目標語言</value>
   </data>
   <data name="SettingsPageTranslationInfo.Header" xml:space="preserve">
-    <value>翻译服务由 LibreTranslate 驱动</value>
+    <value>翻譯服務由 LibreTranslate 驅動</value>
   </data>
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>造訪 https://github.com/LibreTranslate/LibreTranslate 以取得安裝教學及更多資訊（本軟體與此翻譯服務無任何關聯）</value>
@@ -611,13 +611,13 @@
     <value>歌詞描邊寬度（僅桌面模式）</value>
   </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>跟随系统</value>
+    <value>跟隨系統</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動啟動</value>
   </data>
   <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
-    <value>歌词描边颜色（仅桌面模式）</value>
+    <value>歌詞描邊顏色（僅桌面模式）</value>
   </data>
   <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
     <value>始終顯示在全螢幕應用程式上方</value>
@@ -716,7 +716,7 @@
     <value>高亮顯示範圍</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
-    <value>歌詞時間軸同步閾值</value>
+    <value>歌詞時間軌同步閾值</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>當歌詞進度抖動時，請嘗試增加該閾值；更改此值會導致歌詞同步偏差</value>

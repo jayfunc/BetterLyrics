@@ -200,7 +200,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsFontWeightKey, (int)LyricsFontWeight.Bold);
             SetDefault(LyricsBlurAmountKey, 5);
 
-            SetDefault(LyricsBackgroundThemeKey, (int)ElementTheme.Default);
+            SetDefault(LyricsBackgroundThemeKey, (int)ElementTheme.Dark);
 
             SetDefault(LyricsBgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);
             SetDefault(LyricsFgFontColorTypeKey, (int)LyricsFontColorType.AdaptiveGrayed);

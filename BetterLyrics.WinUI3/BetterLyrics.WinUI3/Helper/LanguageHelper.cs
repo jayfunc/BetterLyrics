@@ -57,36 +57,20 @@ namespace BetterLyrics.WinUI3.Services
             _identifier = _factory.Load(PathHelper.LanguageProfilePath);
         }
 
-        private static string? ThreeLetterToTwoLetter(string? threeLetterCode)
-        {
-            if (threeLetterCode == null) return null;
-
-            foreach (var ci in CultureInfo.GetCultures(CultureTypes.AllCultures))
-            {
-                if (string.Equals(ci.ThreeLetterISOLanguageName, threeLetterCode, StringComparison.OrdinalIgnoreCase))
-                {
-                    return ci.TwoLetterISOLanguageName;
-                }
-            }
-            return null;
-        }
-
         public static string? DetectLanguageCode(string? text)
         {
             if (text == null) return null;
 
-            string? code = ThreeLetterToTwoLetter(_identifier.Identify(text).FirstOrDefault()?.Item1.Iso639_2T);
-            if (code != null && code == "zh")
+            var guessList = _identifier.Identify(text);
+            string? code = guessList?.FirstOrDefault()?.Item1.Iso639_2T;
+            code = code switch
             {
-                if (ChineseConverter.ConvertToTraditionalChinese(text) == text)
-                {
-                    return "zh-Hant";
-                }
-                else
-                {
-                    return "zh-Hans";
-                }
-            }
+                "simple" => "en",
+                "zh_classical" => "zh-Hant",
+                "zh_yue" => "zh-Hant",
+                "zh" => "zh-Hans",
+                _ => code
+            };
             return code;
         }
 
