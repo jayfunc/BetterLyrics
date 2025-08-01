@@ -43,8 +43,8 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 -   🌠**心地よいユーザーインターフェイス**
     -   流fluentアニメーションとエフェクト
 
--   ↔️**強い歌詞翻訳**
-    -   オフラインの機械翻訳（30言語をサポート）
+-   ↔️**Strong Lyrics Translation**
+    -   Offline machine translation (supporting 30 languages)
     -   埋め込まれた翻訳のための自動読み取り地元の歌詞ファイル
 
 -   🧩**さまざまな歌詞ソース**
@@ -168,7 +168,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご覧ください[ここ](https://www.bilibili.com/video/BV1zjGjzfEXh).
 
-## 今すぐ試してみてください
+## Try it now
 
 ### マイクロソフトストア
 
@@ -243,7 +243,7 @@ Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご
 
 ![alt text](FAQ/image-10.png)
 
-窓の下端の少し上にマウスをホバリングして、下部に白いコントロールフローティングウィンドウを表示します
+Hover the mouse slightly above the bottom edge of the window to display the white control floating window at the bottom
 
 ![alt text](FAQ/image-11.png)
 
