@@ -20,8 +20,8 @@
 		<PRIResource Remove="ViewModels\Lyrics\**" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Assets\Core14.profile.xml" />
 		<None Remove="Assets\Segoe Fluent Icons.ttf" />
+		<None Remove="Assets\Wiki82.profile.xml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
@@ -93,7 +93,31 @@
 		<TrimmerRootAssembly Include="TagLibSharp" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Update="Assets\Discord.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\EmptyBox.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\EmptyState.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\Logo.ico">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\Logo.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\QQ.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="Assets\Segoe Fluent Icons.ttf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\Telegram.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\Wiki82.profile.xml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>

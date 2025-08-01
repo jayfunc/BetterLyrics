@@ -57,7 +57,7 @@ namespace BetterLyrics.WinUI3.Models
                 else
                 {
                     // 没有匹配的翻译，翻译部分留空
-                    line.DisplayedText = $"{line.OriginalText}\n";
+                    line.DisplayedText = $"{line.OriginalText}";
                 }
             }
         }

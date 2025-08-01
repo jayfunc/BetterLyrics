@@ -121,39 +121,45 @@ namespace BetterLyrics.WinUI3.Helper
             for (int i = 0; i < languageCount; i++) _lyricsDataArr.Add(new LyricsData());
 
             // 遍历每个时间分组
-            foreach (var group in grouped)
+            if (grouped != null)
             {
-                var linesInGroup = group.ToList();
-                for (int langIdx = 0; langIdx < languageCount; langIdx++)
+                foreach (var group in grouped)
                 {
-                    // 如果该语言有翻译，取对应行，否则用原文（第一行）
-                    var (start, text, syllables) =
-                        langIdx < linesInGroup.Count ? linesInGroup[langIdx] : linesInGroup[0];
-                    var line = new LyricsLine
+                    var linesInGroup = group.ToList();
+                    for (int langIdx = 0; langIdx < languageCount; langIdx++)
                     {
-                        StartMs = start,
-                        OriginalText = text,
-                        LyricsChars = [],
-                    };
-                    if (syllables != null && syllables.Count > 0)
-                    {
-                        int currentIndex = 0;
-                        for (int j = 0; j < syllables.Count; j++)
+                        // 只添加有对应行的语言，否则跳过
+                        if (langIdx < linesInGroup.Count)
                         {
-                            var (charStart, charText) = syllables[j];
-                            int startIndex = currentIndex;
-                            line.LyricsChars.Add(
-                                new LyricsChar
+                            var (start, text, syllables) = linesInGroup[langIdx];
+                            var line = new LyricsLine
+                            {
+                                StartMs = start,
+                                OriginalText = text,
+                                LyricsChars = [],
+                            };
+                            if (syllables != null && syllables.Count > 0)
+                            {
+                                int currentIndex = 0;
+                                for (int j = 0; j < syllables.Count; j++)
                                 {
-                                    StartMs = charStart,
-                                    Text = charText ?? "",
-                                    StartIndex = startIndex,
+                                    var (charStart, charText) = syllables[j];
+                                    int startIndex = currentIndex;
+                                    line.LyricsChars.Add(
+                                        new LyricsChar
+                                        {
+                                            StartMs = charStart,
+                                            Text = charText ?? "",
+                                            StartIndex = startIndex,
+                                        }
+                                    );
+                                    currentIndex += charText?.Length ?? 0;
                                 }
-                            );
-                            currentIndex += charText?.Length ?? 0;
+                            }
+                            _lyricsDataArr[langIdx].LyricsLines.Add(line);
                         }
+                        // 没有翻译行则不补原文，直接跳过
                     }
-                    _lyricsDataArr[langIdx].LyricsLines.Add(line);
                 }
             }
         }
