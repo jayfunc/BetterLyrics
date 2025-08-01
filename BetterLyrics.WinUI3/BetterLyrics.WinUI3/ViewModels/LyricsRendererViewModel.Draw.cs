@@ -30,15 +30,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 DrawBlurredLyrics(control, blurredLyricsDs);
             }
 
-            if (_lastAlbumArtSwBitmap != null && _lastAlbumArtCanvasBitmap == null)
-            {
-                _lastAlbumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _lastAlbumArtSwBitmap);
-            }
-            if (_albumArtSwBitmap != null && _albumArtCanvasBitmap == null)
-            {
-                _albumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _albumArtSwBitmap);
-            }
-
             using var combined = new CanvasCommandList(control);
             using var combinedDs = combined.CreateDrawingSession();
 

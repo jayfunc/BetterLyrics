@@ -49,12 +49,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             _displayType = _displayTypeReceived;
             _playingLineIndex = playingLineIndex;
 
-            _immersiveBgOpacityTransition.Update(_elapsedTime);
-            _immersiveBgTransition.Update(_elapsedTime);
-            _albumArtAccentColorTransition.Update(_elapsedTime);
-            _albumArtBgTransition.Update(_elapsedTime);
-            _lyricsBgBrightnessTransition.Update(_elapsedTime);
-            _songInfoOpacityTransition.Update(_elapsedTime);
+            if (_albumArtChanged)
+            {
+                if (_lastAlbumArtSwBitmap != null)
+                {
+                    _lastAlbumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _lastAlbumArtSwBitmap);
+                }
+                _albumArtBgTransition.Reset(0f);
+                _albumArtBgTransition.StartTransition(1f);
+                if (_albumArtSwBitmap != null)
+                {
+                    _albumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _albumArtSwBitmap);
+                }
+                _albumArtChanged = false;
+            }
 
             if (_isDynamicCoverOverlayEnabled)
             {
@@ -153,15 +161,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
 
-            _titleXTransition.Update(_elapsedTime);
-            _titleYTransition.Update(_elapsedTime);
-            _lyricsXTransition.Update(_elapsedTime);
-            _lyricsYTransition.Update(_elapsedTime);
-            _albumArtXTransition.Update(_elapsedTime);
-            _albumArtYTransition.Update(_elapsedTime);
-            _lyricsOpacityTransition.Update(_elapsedTime);
-            _albumArtOpacityTransition.Update(_elapsedTime);
-
             if (_isCanvasWidthChanged || _lyricsXTransition.IsTransitioning)
             {
                 _maxLyricsWidth = _canvasWidth - _lyricsXTransition.Value - _rightMargin;
@@ -182,6 +181,21 @@ namespace BetterLyrics.WinUI3.ViewModels
             UpdateLinesProps();
 
             _isLayoutChanged = false;
+
+            _titleXTransition.Update(_elapsedTime);
+            _titleYTransition.Update(_elapsedTime);
+            _lyricsXTransition.Update(_elapsedTime);
+            _lyricsYTransition.Update(_elapsedTime);
+            _albumArtXTransition.Update(_elapsedTime);
+            _albumArtYTransition.Update(_elapsedTime);
+            _lyricsOpacityTransition.Update(_elapsedTime);
+            _albumArtOpacityTransition.Update(_elapsedTime);
+            _immersiveBgOpacityTransition.Update(_elapsedTime);
+            _immersiveBgTransition.Update(_elapsedTime);
+            _albumArtAccentColorTransition.Update(_elapsedTime);
+            _albumArtBgTransition.Update(_elapsedTime);
+            _lyricsBgBrightnessTransition.Update(_elapsedTime);
+            _songInfoOpacityTransition.Update(_elapsedTime);
         }
 
         private void ReLayout(ICanvasAnimatedControl control)

@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         public static async Task<InMemoryRandomAccessStream> ByteArrayToStream(byte[] bytes)
         {
-            var stream = new InMemoryRandomAccessStream();
+            using var stream = new InMemoryRandomAccessStream();
             await stream.WriteAsync(bytes.AsBuffer());
             stream.Seek(0);
 
@@ -35,8 +35,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static RandomAccessStreamReference ByteArrayToRandomAccessStreamReference(byte[] bytes)
         {
-            var stream = new InMemoryRandomAccessStream();
-            var writer = new DataWriter(stream);
+            using var stream = new InMemoryRandomAccessStream();
+            using var writer = new DataWriter(stream);
             writer.WriteBytes(bytes);
             writer.StoreAsync().GetAwaiter().GetResult();
             writer.FlushAsync().GetAwaiter().GetResult();
@@ -46,8 +46,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static async Task<byte[]> CreateTextPlaceholderBytesAsync(int width, int height)
         {
-            var device = CanvasDevice.GetSharedDevice();
-            var renderTarget = new CanvasRenderTarget(device, width, height, 96);
+            using var device = CanvasDevice.GetSharedDevice();
+            using var renderTarget = new CanvasRenderTarget(device, width, height, 96);
 
             // 随机生成渐变色
             Windows.UI.Color RandomColor()
@@ -56,7 +56,7 @@ namespace BetterLyrics.WinUI3.Helper
                 double h = rand.NextDouble() * 360;
                 double s = 0.35 + rand.NextDouble() * 0.3; // 0.35~0.65，适中饱和度
                 double l = 0.5 + rand.NextDouble() * 0.3;  // 0.5~0.8，明亮
-                return HslToColor(h, s, l);
+                return CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(h, s, l);
             }
 
             Windows.UI.Color color1 = RandomColor();
@@ -65,51 +65,24 @@ namespace BetterLyrics.WinUI3.Helper
             using (var ds = renderTarget.CreateDrawingSession())
             {
                 // 绘制线性渐变背景
-                var gradientBrush = new Microsoft.Graphics.Canvas.Brushes.CanvasLinearGradientBrush(ds, color1, color2)
+                using var gradientBrush = new Microsoft.Graphics.Canvas.Brushes.CanvasLinearGradientBrush(ds, color1, color2)
                 {
-                    StartPoint = new System.Numerics.Vector2(0, 0),
-                    EndPoint = new System.Numerics.Vector2(width, height)
+                    StartPoint = new Vector2(0, 0),
+                    EndPoint = new Vector2(width, height)
                 };
                 ds.FillRectangle(0, 0, width, height, gradientBrush);
             }
 
             // 保存为 PNG 并转为 byte[]
-            using (var stream = new InMemoryRandomAccessStream())
+            using var stream = new InMemoryRandomAccessStream();
+            await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
+            var buffer = new byte[stream.Size];
+            using (var reader = new DataReader(stream.GetInputStreamAt(0)))
             {
-                await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
-                var buffer = new byte[stream.Size];
-                using (var reader = new DataReader(stream.GetInputStreamAt(0)))
-                {
-                    await reader.LoadAsync((uint)stream.Size);
-                    reader.ReadBytes(buffer);
-                }
-                return buffer;
+                await reader.LoadAsync((uint)stream.Size);
+                reader.ReadBytes(buffer);
             }
-
-            // HSL转Color
-            static Windows.UI.Color HslToColor(double h, double s, double l)
-            {
-                h = h / 360.0;
-                double r = l, g = l, b = l;
-                if (s != 0)
-                {
-                    double q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                    double p = 2 * l - q;
-                    r = HueToRgb(p, q, h + 1.0 / 3.0);
-                    g = HueToRgb(p, q, h);
-                    b = HueToRgb(p, q, h - 1.0 / 3.0);
-                }
-                return Windows.UI.Color.FromArgb(255, (byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
-            }
-            static double HueToRgb(double p, double q, double t)
-            {
-                if (t < 0) t += 1;
-                if (t > 1) t -= 1;
-                if (t < 1.0 / 6.0) return p + (q - p) * 6 * t;
-                if (t < 1.0 / 2.0) return q;
-                if (t < 2.0 / 3.0) return p + (q - p) * (2.0 / 3.0 - t) * 6;
-                return p;
-            }
+            return buffer;
         }
 
         public static List<Windows.UI.Color> GetAccentColorsFromByte(byte[] bytes, int count, bool? isDark = null)
