@@ -88,7 +88,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>⚠️ foobar2000</summary>
 
         -   確保你有<https://github.com/dumbie/foo_mediacontrol>與之安裝
-        -   ⚠️ Please note that there is issues with timeline due to plugin issue
+        -   ⚠️請注意，由於插件問題，時間表存在問題
 
         </details>
 
@@ -223,7 +223,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 找不到您的語言？
 不用擔心！開始翻譯並成為貢獻者之一！ 😆
-單擊[關聯](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866) to translate this app into your language via Crowdin now!
+單擊[關聯](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)現在通過Crowdin將此應用轉換為您的語言！
 
 ## 星曆史
 
@@ -247,7 +247,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](FAQ/image-11.png)
 
-點擊“小白色欄”以浮動窗口形式顯示底部控制條（包括當前的播放進度視圖，時間表偏移調整；上一首歌，暫停/播放，下一首歌；翻譯，佈局，設置）
+點擊“小白色欄”以浮動窗口形式顯示底部控制欄（包括當前的播放進度視圖，時間表偏移調整；先前的歌曲，暫停/播放，下一首歌；翻譯，佈局，設置）
 
 ![alt text](FAQ/image-12.png)
 

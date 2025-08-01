@@ -81,7 +81,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>⚠️ Apple Music</summary>
 
         -   タイムラインのしきい値を設定で約600ミリ秒に設定していることを確認してください（「設定」 - 「高度なオプション」に変更するには）。そうしないと、歌詞は常に前進します。
-        -   shaking shaking歌詞を見るのをやめるには、追加の設定が必要であることに注意してください（詳細については、このドキュメントの最後のFAQを参照してください）
+        -   shaking詳細については、シェイクの歌詞を見るのをやめるには、追加の設定が必要であることに注意してください。
 
         </details>
 
