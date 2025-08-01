@@ -96,7 +96,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
     -   QQ音乐
 
-    -   PotPlayer
+    -   Potplayer
 
     -   媒体播放器（系统）
 
