@@ -183,7 +183,6 @@ BetterLyrics
 
 ## ?? �؄e���x
 
-<<<<<<< HEAD
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
   - �ṩ QQ���W��녡��ṷ���~�@ȡ�������c����
 - [lrclib](https://github.com/tranxuanthang/lrclib)
@@ -207,31 +206,6 @@ BetterLyrics
 - [CommunityToolkit - �����T����ͨ](https://mvvm.coldwind.top/)
 
 ## �`�Ё�Դ
-=======
--   [抒情�?- 萊errics-helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
-    -   為QQ，NetEase，Kugou來源提供歌詞獲取，解密和解析
--   [lrclib](https://github.com/tranxuanthang/lrclib)
-    -   LRCLIB歌詞API提供�?
--   [.NET的音頻工具庫（ATL）](https://github.com/Zeugma440/atldotnet)
-    -   用於在音樂文件中提取圖片
--   [winuiex](https://github.com/dotMorten/WinUIEx)
-    -   提供簡單的方法來訪問Win32 API有關窗口
--   [taglib＃](https://github.com/mono/taglib-sharp)
-    -   用於閱讀原始歌詞內容
--   [老式](https://github.com/dahall/Vanara)
-    -   Win32 API包裝�?
--   [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
-    -   提供離線歌詞翻譯的能�?
--   [stackoverflow-如何在WPF中使用Anim Anim Anim Anim Anim Anim Anive Margin屬性](https://stackoverflow.com/a/21542882/11048731)
--   [揭示](https://github.com/ghost1372/DevWinUI)
--   [Bilibili -【WinUI3】SystemBackdropController：定義雲母、亞克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
--   [cnblogs - .NET App �?Windows 系統媒體控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
--   [Win2D 中的遊戲循環：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
--   [R2D2RIGO/WIN2D-SPALES](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
--   [CommunityToolkit - 從入門到精通](https://mvvm.coldwind.top/)
-
-## 受到啟發
->>>>>>> d75fe4b27ab293de4055c2aa77fe3b116fd4ae78
 
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
@@ -256,11 +230,7 @@ BetterLyrics
 
 ## FAQ
 
-<<<<<<< HEAD
 ### ͣ��ģʽ�¿��������o
-=======
-### I couldn't see any button in dock mode
->>>>>>> d75fe4b27ab293de4055c2aa77fe3b116fd4ae78
 
 �M�롸ͣ��ģʽ���ᣬ�������o���[�ء��������ͣ��ҕ��픲������@ʾ���������������ࡹ�����P�]�����o��
 
@@ -298,8 +268,4 @@ BetterLyrics
 
 ![alt text](FAQ/image-2.png)
 
-<<<<<<< HEAD
 �M�롸�M�A�x헡��������ֵ���t���ӛ̎����ֱ�����~������
-=======
-Go to "Advanced options" section, increase the threshold value (marked with the bigger red rectangle) until the lyrics is working properly.
->>>>>>> d75fe4b27ab293de4055c2aa77fe3b116fd4ae78
