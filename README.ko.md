@@ -125,7 +125,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
         </details>
 
--   🪟**다중 디스플레이 모드**
+-   🪟**Multiple Display Modes**
     -   **표준 모드**
         -   풍부한 가사 애니메이션과 아름답고 역동적 인 배경으로 몰입 형 청취 여행을 즐기십시오.
     -   **도크 모드**
@@ -247,7 +247,7 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 ![alt text](FAQ/image-11.png)
 
-"Little White Bar"를 탭하여 바닥 제어 막대를 플로팅 창 양식에 표시합니다 (현재 재생 진행보기, 타임 라인 오프셋 조정 포함; 이전 노래, 일시 정지/재생, 다음 곡; 번역, 레이아웃, 설정)
+"Little White Bar"를 탭하여 Floating Window 형식에 하단 제어 막대를 표시합니다 (현재 재생 진행보기, 타임 라인 오프셋 조정 포함; 이전 노래, 일시 정지/재생, 다음 곡; 번역, 레이아웃, 설정)
 
 ![alt text](FAQ/image-12.png)
 
