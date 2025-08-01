@@ -34,12 +34,6 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             AppWindow.SetIcons();
 
-            AppWindow.Closing += AppWindow_Closing;
-        }
-
-        private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
-        {
-            
         }
     }
 }

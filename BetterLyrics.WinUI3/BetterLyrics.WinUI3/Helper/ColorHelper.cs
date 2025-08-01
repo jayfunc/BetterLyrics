@@ -106,25 +106,25 @@ namespace BetterLyrics.WinUI3.Helper
             return CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(h, s, brightness);
         }
 
-        public static System.Drawing.Color GetAccentColor(IntPtr myHwnd, WindowPixelSampleMode mode)
+        public static System.Drawing.Color GetAccentColor(IntPtr myHwnd, string monitorDeviceName, WindowPixelSampleMode mode)
         {
             if (!User32.GetWindowRect(myHwnd, out RECT myRect)) return System.Drawing.Color.Transparent;
 
+            var monitorInfo = MonitorHelper.GetMonitorInfoExFromDeviceName(monitorDeviceName);
+            int screenWidth = monitorInfo.rcMonitor.Width;
             switch (mode)
             {
                 case WindowPixelSampleMode.BelowWindow:
                     {
-                        int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
                         int sampleHeight = 1;
                         int sampleY = myRect.Bottom + 1;
-                        return GetAverageColorFromScreenRegion(0, sampleY, screenWidth, sampleHeight);
+                        return GetAverageColorFromScreenRegion(myRect.Left, sampleY, screenWidth, sampleHeight);
                     }
                 case WindowPixelSampleMode.AboveWindow:
                     {
-                        int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
                         int sampleHeight = 1;
                         int sampleY = myRect.Top - 1;
-                        return GetAverageColorFromScreenRegion(0, sampleY, screenWidth, sampleHeight);
+                        return GetAverageColorFromScreenRegion(myRect.Left, sampleY, screenWidth, sampleHeight);
                     }
                 case WindowPixelSampleMode.WindowArea:
                     {

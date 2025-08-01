@@ -16,6 +16,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string AssetsFolder => Path.Combine(Package.Current.InstalledPath, "Assets");
 
         public static string LanguageProfilePath => Path.Combine(AssetsFolder, "Core14.profile.xml");
+        public static string LogoPath => Path.Combine(AssetsFolder, "Logo.ico");
 
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");

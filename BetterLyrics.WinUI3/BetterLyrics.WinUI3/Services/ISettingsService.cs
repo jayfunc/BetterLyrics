@@ -106,5 +106,6 @@ namespace BetterLyrics.WinUI3.Services
         bool IsDragEverywhereEnabled { get; set; }
         PlaybackOrder PlaybackOrder { get; set; }
         bool IsLibreTranslateEnabled { get; set; }
+        string DockMonitorDeviceName { get; set; }
     }
 }

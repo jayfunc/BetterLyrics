@@ -233,5 +233,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial int DockWindowHeight { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial string SelectedDockMonitorDeviceName { get; set; }
+
+        [ObservableProperty]
+        public partial ObservableCollection<string> MonitorDeviceNames { get; set; }
     }
 }

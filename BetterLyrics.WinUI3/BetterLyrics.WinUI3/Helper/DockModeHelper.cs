@@ -1,4 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Services;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
 using System;
@@ -16,6 +18,8 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class DockModeHelper
     {
+        private static readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
         private static readonly HashSet<IntPtr> _registered = [];
         private static readonly Dictionary<IntPtr, RECT> _originalPositions = [];
         private static readonly Dictionary<IntPtr, WindowStyle> _originalWindowStyle = [];
@@ -52,10 +56,9 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static void Enable(Window window, int appBarHeight, DockPlacement dockPlacement)
+        public static void Enable(Window window, string monitorDeviceName, int appBarHeight, DockPlacement dockPlacement)
         {
             window.SetIsShownInSwitchers(false);
-            //window.ExtendsContentIntoTitleBar = false;
             window.SetIsAlwaysOnTop(true);
 
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
@@ -73,16 +76,18 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
 
-            RegisterAppBar(hwnd, appBarHeight, dockPlacement);
+            RegisterAppBar(hwnd, monitorDeviceName, appBarHeight, dockPlacement);
 
-            int screenWidth = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN);
-            int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
-            int y = dockPlacement == DockPlacement.Top ? 0 : screenHeight - appBarHeight;
+            var monitorInfo = MonitorHelper.GetMonitorInfoExFromDeviceName(_settingsService.DockMonitorDeviceName);
+
+            int screenWidth = monitorInfo.rcMonitor.Width;
+            int screenHeight = monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top;
+            int y = dockPlacement == DockPlacement.Top ? monitorInfo.rcMonitor.Top : monitorInfo.rcMonitor.Bottom - appBarHeight;
 
             User32.SetWindowPos(
                 hwnd,
                 IntPtr.Zero,
-                0,
+                monitorInfo.rcMonitor.Left,
                 y,
                 screenWidth,
                 appBarHeight,
@@ -93,14 +98,16 @@ namespace BetterLyrics.WinUI3.Helper
             window.Show();
         }
 
-        private static void RegisterAppBar(IntPtr hwnd, int height, DockPlacement dockPlacement)
+        private static void RegisterAppBar(IntPtr hwnd, string monitorDeviceName, int height, DockPlacement dockPlacement)
         {
             if (_registered.Contains(hwnd)) return;
 
             var uEdge = dockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
-            int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
-            int top = dockPlacement == DockPlacement.Top ? 0 : screenHeight - height;
-            int bottom = dockPlacement == DockPlacement.Top ? height : screenHeight;
+
+            var monitorInfo = MonitorHelper.GetMonitorInfoExFromDeviceName(monitorDeviceName);
+
+            int top = dockPlacement == DockPlacement.Top ? monitorInfo.rcMonitor.Top : monitorInfo.rcMonitor.Bottom - height;
+            int bottom = dockPlacement == DockPlacement.Top ? monitorInfo.rcMonitor.Top + height : monitorInfo.rcMonitor.Bottom;
 
             Shell32.APPBARDATA abd = new()
             {
@@ -109,14 +116,13 @@ namespace BetterLyrics.WinUI3.Helper
                 uEdge = uEdge,
                 rc = new RECT
                 {
-                    Left = 0,
+                    Left = monitorInfo.rcMonitor.Left,
                     Top = top,
-                    Right = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
+                    Right = monitorInfo.rcMonitor.Right,
                     Bottom = bottom,
                 },
             };
 
-            // Ref: https://github.com/TwilightLemon/AppBarTest/blob/master/AppBarCreator.cs
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_NEW, ref abd);
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
@@ -140,12 +146,7 @@ namespace BetterLyrics.WinUI3.Helper
             _registered.Remove(hwnd);
         }
 
-        private static void RefreshWorkArea()
-        {
-            User32.SendMessage(HWND.HWND_BROADCAST, User32.WindowMessage.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
-        }
-
-        public static void UpdateAppBarHeight(IntPtr hwnd, int newHeight, DockPlacement dockPlacement)
+        public static void UpdateAppBarHeight(IntPtr hwnd, string monitorDeviceName, int newHeight, DockPlacement dockPlacement)
         {
             App.DispatcherQueueTimer?.Debounce(() =>
             {
@@ -153,9 +154,12 @@ namespace BetterLyrics.WinUI3.Helper
                     return;
 
                 var uEdge = dockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
-                int screenHeight = User32.GetSystemMetrics(User32.SystemMetric.SM_CYSCREEN);
-                int top = dockPlacement == DockPlacement.Top ? 0 : screenHeight - newHeight;
-                int bottom = dockPlacement == DockPlacement.Top ? newHeight : screenHeight;
+
+                var monitorInfo = MonitorHelper.GetMonitorInfoExFromDeviceName(monitorDeviceName);
+
+                int screenWidth = monitorInfo.rcMonitor.Width;
+                int top = dockPlacement == DockPlacement.Top ? monitorInfo.rcMonitor.Top : monitorInfo.rcMonitor.Bottom - newHeight;
+                int bottom = dockPlacement == DockPlacement.Top ? monitorInfo.rcMonitor.Top + newHeight : monitorInfo.rcMonitor.Bottom;
 
                 Shell32.APPBARDATA abd = new()
                 {
@@ -164,9 +168,9 @@ namespace BetterLyrics.WinUI3.Helper
                     uEdge = uEdge,
                     rc = new RECT
                     {
-                        Left = 0,
+                        Left = monitorInfo.rcMonitor.Left,
                         Top = top,
-                        Right = User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
+                        Right = monitorInfo.rcMonitor.Right,
                         Bottom = bottom,
                     },
                 };
@@ -175,16 +179,21 @@ namespace BetterLyrics.WinUI3.Helper
                 Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
                 // 同步窗口实际高度和位置
-                int y = dockPlacement == DockPlacement.Top ? 0 : screenHeight - newHeight;
-                User32.SetWindowPos(
-                    hwnd,
-                    IntPtr.Zero,
-                    0,
-                    y,
-                    User32.GetSystemMetrics(User32.SystemMetric.SM_CXSCREEN),
-                    newHeight,
-                    newHeight == 0 ? User32.SetWindowPosFlags.SWP_HIDEWINDOW : User32.SetWindowPosFlags.SWP_SHOWWINDOW
-                );
+                int y = dockPlacement == DockPlacement.Top ? monitorInfo.rcMonitor.Top : monitorInfo.rcMonitor.Bottom - newHeight;
+                int repeatCount = 2;
+                while (repeatCount > 0)
+                {
+                    repeatCount--;
+                    User32.SetWindowPos(
+                        hwnd,
+                        IntPtr.Zero,
+                        monitorInfo.rcMonitor.Left,
+                        y,
+                        screenWidth,
+                        newHeight,
+                        newHeight == 0 ? User32.SetWindowPosFlags.SWP_HIDEWINDOW : User32.SetWindowPosFlags.SWP_SHOWWINDOW
+                    );
+                }
             }, TimeSpan.FromMilliseconds(100));
         }
     }

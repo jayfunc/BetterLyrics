@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Windows.Forms;
 using Windows.System;
 
 namespace BetterLyrics.WinUI3.Views
@@ -135,6 +134,11 @@ namespace BetterLyrics.WinUI3.Views
         private void TelegramGroupButton_Click(object sender, RoutedEventArgs e)
         {
             Launcher.LaunchUriAsync(new Uri(MetadataHelper.TelegramUrl));
+        }
+
+        private void AutoStartupToggleSwitch_Unloaded(object sender, RoutedEventArgs e)
+        {
+            AutoStartupToggleSwitch.Toggled -= AutoStartupToggleSwitch_Toggled;
         }
     }
 }

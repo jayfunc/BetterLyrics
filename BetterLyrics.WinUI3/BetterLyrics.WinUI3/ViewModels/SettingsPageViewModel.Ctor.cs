@@ -85,6 +85,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsFontFamily = _settingsService.LyricsFontFamily;
             IsDragEverywhereEnabled = _settingsService.IsDragEverywhereEnabled;
 
+            MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
+            SelectedDockMonitorDeviceName = _settingsService.DockMonitorDeviceName;
+
             _playbackService.MediaSourceProvidersInfoChanged += PlaybackService_SessionIdsChanged;
         }
     }

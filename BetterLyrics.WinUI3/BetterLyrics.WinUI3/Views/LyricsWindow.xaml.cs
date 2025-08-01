@@ -3,19 +3,14 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
-using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using System;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Vanara.PInvoke;
-using Windows.System;
+using WinRT.Interop;
+using WinUIEx;
 using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.Views
@@ -34,13 +29,20 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.Changed += AppWindow_Changed;
 
             ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
-            Title = App.ResourceLoader!.GetString("LyricsPageTitle");
-
             UpdateTitleBarArea();
+
+            Title = App.ResourceLoader!.GetString("LyricsPageTitle");
 
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
+
+            AppWindow.Closing += AppWindow_Closing;
+        }
+
+        private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+        {
+            DockModeHelper.Disable(this);
+            Environment.Exit(0);
         }
 
         public void UpdateTitleBarArea()
@@ -72,20 +74,11 @@ namespace BetterLyrics.WinUI3.Views
             switch (type!)
             {
                 case AutoStartWindowType.StandardMode:
-                    if (_settingsService.StandardWindowLeft < 0 || _settingsService.StandardWindowTop < 0 ||
-                        _settingsService.StandardWindowWidth <= 0 || _settingsService.StandardWindowHeight <= 0)
-                    {
-                        _settingsService.StandardWindowLeft = 200;
-                        _settingsService.StandardWindowTop = 200;
-                        _settingsService.StandardWindowWidth = 1600;
-                        _settingsService.StandardWindowHeight = 800;
-                    }
                     AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
                         _settingsService.StandardWindowLeft,
                         _settingsService.StandardWindowTop,
                         _settingsService.StandardWindowWidth,
-                        _settingsService.StandardWindowHeight
-                    ));
+                        _settingsService.StandardWindowHeight));
                     break;
                 case AutoStartWindowType.DockMode:
                     DockFlyoutItem.IsChecked = true;
@@ -117,10 +110,14 @@ namespace BetterLyrics.WinUI3.Views
 
             if (args.DidPositionChange || args.DidSizeChange)
             {
-                var rect = AppWindow.Position;
                 var size = AppWindow.Size;
+                var rect = AppWindow.Position;
 
-                if (rect.X >= 0 && rect.Y >= 0 && size.Width > 0 && size.Height > 0)
+                if (rect.X < 0 && rect.Y < 0 && rect.X + size.Width < 0 && rect.Y + size.Height < 0)
+                {
+                    return;
+                }
+                else
                 {
                     if (ViewModel.IsDesktopMode)
                     {
@@ -187,14 +184,12 @@ namespace BetterLyrics.WinUI3.Views
                 case AppWindowPresenterKind.Default:
                     break;
                 case AppWindowPresenterKind.CompactOverlay:
-                    MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
                     AOTFlyoutItem.Visibility = DesktopFlyoutItem.Visibility = FullScreenFlyoutItem.Visibility = DockFlyoutItem.Visibility =
                     ClickThroughButton.Visibility = Visibility.Collapsed;
 
                     ViewModel.IsImmersiveMode = true;
                     break;
                 case AppWindowPresenterKind.FullScreen:
-                    MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
                     AOTFlyoutItem.Visibility =
                     ClickThroughButton.Visibility =
                     DesktopFlyoutItem.Visibility =
@@ -211,7 +206,6 @@ namespace BetterLyrics.WinUI3.Views
                         overlappedPresenter.IsMinimizable =
                         overlappedPresenter.IsMaximizable = false;
 
-                        MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
                         AOTFlyoutItem.Visibility =
                         DesktopFlyoutItem.Visibility =
                         ClickThroughButton.Visibility =
@@ -226,7 +220,6 @@ namespace BetterLyrics.WinUI3.Views
                         overlappedPresenter.IsMinimizable =
                         overlappedPresenter.IsMaximizable = false;
 
-                        MinimiseButton.Visibility = MaximiseButton.Visibility = RestoreButton.Visibility =
                         DockFlyoutItem.Visibility =
                         AOTFlyoutItem.Visibility =
                         FullScreenFlyoutItem.Visibility =
@@ -240,7 +233,6 @@ namespace BetterLyrics.WinUI3.Views
                         overlappedPresenter.IsMinimizable =
                         overlappedPresenter.IsMaximizable = true;
 
-                        MinimiseButton.Visibility =
                         AOTFlyoutItem.Visibility =
                         DesktopFlyoutItem.Visibility =
                         DockFlyoutItem.Visibility =
@@ -251,52 +243,11 @@ namespace BetterLyrics.WinUI3.Views
                         ClickThroughButton.Visibility = Visibility.Collapsed;
                         AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
 
-                        if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
-                        {
-                            MaximiseButton.Visibility = Visibility.Collapsed;
-                            RestoreButton.Visibility = Visibility.Visible;
-                        }
-                        else if (overlappedPresenter.State == OverlappedPresenterState.Restored)
-                        {
-                            MaximiseButton.Visibility = Visibility.Visible;
-                            RestoreButton.Visibility = Visibility.Collapsed;
-                        }
-
                         ViewModel.IsImmersiveMode = _settingsService.IsImmersiveMode;
                     }
                     break;
                 default:
                     break;
-            }
-        }
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            DockModeHelper.Disable(this);
-            Environment.Exit(0);
-        }
-
-        private void MaximiseButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AppWindow.Presenter is OverlappedPresenter presenter)
-            {
-                presenter.Maximize();
-            }
-        }
-
-        private void MinimiseButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AppWindow.Presenter is OverlappedPresenter presenter)
-            {
-                presenter.Minimize();
-            }
-        }
-
-        private void RestoreButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (AppWindow.Presenter is OverlappedPresenter presenter)
-            {
-                presenter.Restore();
             }
         }
 
@@ -337,11 +288,6 @@ namespace BetterLyrics.WinUI3.Views
         {
         }
 
-        private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHelper.OpenWindow<MusicGalleryWindow>();
-        }
-
         private void ClickThroughButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.ToggleLockWindowCommand.Execute(null);
@@ -356,6 +302,11 @@ namespace BetterLyrics.WinUI3.Views
         {
             ViewModel.ToggleDesktopModeCommand.Execute(null);
             UpdateTitleBarWindowButtonsVisibility();
+        }
+
+        private void MusicGalleryMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenWindow<MusicGalleryWindow>();
         }
     }
 }

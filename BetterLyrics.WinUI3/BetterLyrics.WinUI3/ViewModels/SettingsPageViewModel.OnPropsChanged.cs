@@ -223,5 +223,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _settingsService.IsLibreTranslateEnabled = value;
         }
+        partial void OnSelectedDockMonitorDeviceNameChanged(string value)
+        {
+            _settingsService.DockMonitorDeviceName = value;
+        }
     }
 }

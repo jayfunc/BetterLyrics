@@ -24,8 +24,6 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class ImageHelper
     {
-        private const int _accentColorCount = 1;
-
         public static async Task<InMemoryRandomAccessStream> ByteArrayToStream(byte[] bytes)
         {
             var stream = new InMemoryRandomAccessStream();
@@ -114,39 +112,20 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static List<Windows.UI.Color> GetAccentColorsFromByte(byte[] bytes)
+        public static List<Windows.UI.Color> GetAccentColorsFromByte(byte[] bytes, int count, bool? isDark = null)
         {
-            // 使用 ImageSharp 读取图片
-            using var image = SixLabors.ImageSharp.Image.Load<SixLabors.ImageSharp.PixelFormats.Rgba32>(bytes);
-
-            // 简单聚类法：统计所有像素出现频率，取出现最多的前 AccentColorCount 个颜色
-            var colorCount = new Dictionary<SixLabors.ImageSharp.PixelFormats.Rgba32, int>();
-
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    var color = image[x, y];
-                    // 可选：忽略透明像素
-                    if (color.A < 32) continue;
-                    if (colorCount.ContainsKey(color))
-                        colorCount[color]++;
-                    else
-                        colorCount[color] = 1;
-                }
-            }
-
-            // 按出现次数排序，取前 AccentColorCount 个
-            var topColors = colorCount
-                .OrderByDescending(kv => kv.Value)
-                .Take(_accentColorCount)
-                .Select(kv => kv.Key)
+            using var image = Image.Load<Rgba32>(bytes);
+            var colorThief = new ColorThief.ImageSharp.ColorThief();
+            var mainColor = colorThief.GetColor(image, 10, false);
+            var palette = colorThief.GetPalette(image, 255, 10, false);
+            var topColors = palette
+                .OrderByDescending(x => x.Population)
+                .Where(x => x.IsDark == (isDark ?? mainColor.IsDark))
+                .Select(x => Windows.UI.Color.FromArgb(x.Color.A, x.Color.R, x.Color.G, x.Color.B))
+                .Take(count)
                 .ToList();
 
-            // 转换为 Windows.UI.Color
-            return topColors
-                .Select(c => Windows.UI.Color.FromArgb(c.A, c.R, c.G, c.B))
-                .ToList();
+            return topColors;
         }
 
         //public static async Task<BitmapImage> GetBitmapImageFromBytesAsync(byte[] imageBytes)
@@ -214,7 +193,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             int size = Math.Max(image.Width, image.Height);
 
-            var themeColor = Rgba32.ParseHex(GetAccentColorsFromByte(imageBytes).FirstOrDefault().ToHex());
+            var themeColor = Rgba32.ParseHex(GetAccentColorsFromByte(imageBytes, 1).FirstOrDefault().ToHex());
 
             // 新建正方形画布
             using var square = new Image<Rgba32>(size, size, themeColor);

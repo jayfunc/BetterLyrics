@@ -8,9 +8,10 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Events
 {
-    public class AlbumArtChangedEventArgs(SoftwareBitmap? albumArtSwBitmap, Color? albumArtAccentColor) : EventArgs
+    public class AlbumArtChangedEventArgs(SoftwareBitmap? albumArtSwBitmap, Color? albumArtLightAccentColor, Color? albumArtDarkAccentColor) : EventArgs
     {
         public SoftwareBitmap? AlbumArtSwBitmap { get; set; } = albumArtSwBitmap;
-        public Color? AlbumArtAccentColor { get; set; } = albumArtAccentColor;
+        public Color? AlbumArtLightAccentColor { get; set; } = albumArtLightAccentColor;
+        public Color? AlbumArtDarkAccentColor { get; set; } = albumArtDarkAccentColor;
     }
 }

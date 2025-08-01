@@ -90,7 +90,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width < 500 || e.NewSize.Height < 100)
+            if (e.NewSize.Width < 450 || e.NewSize.Height < 100)
             {
                 if (BottomCommandGrid.Children.Count != 0)
                 {

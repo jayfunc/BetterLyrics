@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
@@ -52,12 +53,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private float _albumArtSize = 0f;
         private int _albumArtCornerRadius = 0;
 
-        private float _albumArtY = 0f;
-
         private string? _lastSongTitle;
         private string? _songTitle;
-
-        private float _titleY = 0f;
 
         private string? _lastSongArtist;
         private string? _songArtist;
@@ -119,7 +116,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private Color _adaptiveGrayedFontColor = Colors.Transparent;
         private Color? _adaptiveColoredFontColor = null;
 
-        private Color? _albumArtAccentColor = null;
+        private Color _albumArtLightAccentColor = Colors.Transparent;
+        private Color _albumArtDarkAccentColor = Colors.Transparent;
         private Color _environmentalColor = Colors.Transparent;
 
         private Color _lightColor = Colors.White;
@@ -158,7 +156,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private int _langIndex = 0;
 
         private List<LyricsData> _lyricsDataArr = [];
-        private List<string> _translationList = [];
         private bool _isTranslationEnabled;
         private bool _showTranslationOnly;
         private int _targetLanguageIndex;
@@ -195,6 +192,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private LyricsDisplayType _displayTypeReceived;
         private LyricsDisplayType _displayType;
+
+        private LyricsLayoutOrientation _lyricsLayoutOrientation;
 
         private int _albumArtBgBlurAmount;
         private int _albumArtBgOpacity;
@@ -395,7 +394,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _albumArtSwBitmap = e.AlbumArtSwBitmap;
                 _albumArtCanvasBitmap = null;
 
-                _albumArtAccentColor = e.AlbumArtAccentColor;
+                _albumArtLightAccentColor = e.AlbumArtLightAccentColor ?? Colors.Transparent;
+                _albumArtDarkAccentColor = e.AlbumArtDarkAccentColor ?? Colors.Transparent;
 
                 _albumArtBgTransition.Reset(0f);
                 _albumArtBgTransition.StartTransition(1f);

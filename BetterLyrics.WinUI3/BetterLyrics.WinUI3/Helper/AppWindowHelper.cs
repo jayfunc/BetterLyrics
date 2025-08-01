@@ -11,9 +11,9 @@ namespace BetterLyrics.WinUI3.Helper
     {
         public static void SetIcons(this AppWindow appWindow)
         {
-            appWindow.SetIcon(@"Assets/Logo.ico");
-            appWindow.SetTaskbarIcon(@"Assets/Logo.ico");
-            appWindow.SetTitleBarIcon(@"Assets/Logo.ico");
+            appWindow.SetIcon(PathHelper.LogoPath);
+            appWindow.SetTaskbarIcon(PathHelper.LogoPath);
+            appWindow.SetTitleBarIcon(PathHelper.LogoPath);
         }
     }
 }
