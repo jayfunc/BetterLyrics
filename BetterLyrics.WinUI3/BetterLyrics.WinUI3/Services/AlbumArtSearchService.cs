@@ -105,7 +105,7 @@ namespace BetterLyrics.WinUI3.Services
                 string url = $"https://itunes.apple.com/search?term=" + WebUtility.UrlEncode($"{artist} {album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
 
                 // Make a request to the API
-                HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url);
+                using HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
 

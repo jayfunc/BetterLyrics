@@ -18,6 +18,7 @@ using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -46,6 +47,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private CanvasBitmap? _lastAlbumArtCanvasBitmap = null;
         private CanvasBitmap? _albumArtCanvasBitmap = null;
+
+        private bool _albumArtChanged = false;
 
         private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
         private bool _isCoverAcrylicEffectAmountChanged = false;
@@ -388,17 +391,20 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (e.AlbumArtSwBitmap != _albumArtSwBitmap)
             {
+                //_lastAlbumArtSwBitmap?.Dispose();
                 _lastAlbumArtSwBitmap = _albumArtSwBitmap;
+                //_lastAlbumArtCanvasBitmap?.Dispose();
                 _lastAlbumArtCanvasBitmap = null;
 
+                //_albumArtSwBitmap?.Dispose();
                 _albumArtSwBitmap = e.AlbumArtSwBitmap;
+                //_albumArtCanvasBitmap?.Dispose();
                 _albumArtCanvasBitmap = null;
+
+                _albumArtChanged = true;
 
                 _albumArtLightAccentColor = e.AlbumArtLightAccentColor ?? Colors.Transparent;
                 _albumArtDarkAccentColor = e.AlbumArtDarkAccentColor ?? Colors.Transparent;
-
-                _albumArtBgTransition.Reset(0f);
-                _albumArtBgTransition.StartTransition(1f);
 
                 UpdateColorConfig();
             }

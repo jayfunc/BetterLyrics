@@ -271,7 +271,7 @@ namespace BetterLyrics.WinUI3.Services
             var url = $"https://raw.githubusercontent.com/Steve-xmh/amll-ttml-db/refs/heads/main/raw-lyrics/{rawLyricFile}";
             try
             {
-                var response = await _amllTtmlDbHttpClient.GetAsync(url);
+                using var response = await _amllTtmlDbHttpClient.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                     return null;
                 return await response.Content.ReadAsStringAsync();
@@ -292,7 +292,7 @@ namespace BetterLyrics.WinUI3.Services
                 $"&album_name={Uri.EscapeDataString(album)}" +
                 $"&durationMs={Uri.EscapeDataString(duration.ToString())}";
 
-            var response = await _lrcLibHttpClient.GetAsync(url);
+            using var response = await _lrcLibHttpClient.GetAsync(url);
             if (!response.IsSuccessStatusCode)
                 return null;
 
