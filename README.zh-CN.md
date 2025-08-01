@@ -1,6 +1,6 @@
-<div style="text-align: center;">
+ï»¿<div style="text-align: center;">
 
-[? µã»÷´Ë´¦²é¿´³£¼ûÎÊÌâ (FAQ)](#faq)
+[â“ ç‚¹å‡»æ­¤å¤„æŸ¥çœ‹å¸¸è§é—®é¢˜ (FAQ)](#faq)
 
 </div>
 
@@ -25,115 +25,115 @@ BetterLyrics
 </div>
 
 <h4 align="center">
-ÄãµÄ¶¯Ì¬¸è´ÊÏÔÊ¾¹¤¾ß£¬»ùÓÚ WinUI 3 ºÍ Win2D ¹¹½¨ ¡ª¡ª Ö§³Ö±¾µØ²¥·Å¼°¶àÖÖ²¥·ÅÆ÷
+ä½ çš„åŠ¨æ€æ­Œè¯æ˜¾ç¤ºå·¥å…·ï¼ŒåŸºäº WinUI 3 å’Œ Win2D æ„å»º â€”â€” æ”¯æŒæœ¬åœ°æ’­æ”¾åŠå¤šç§æ’­æ”¾å™¨
 </h3>
 
-## ?? ±¾ÏîÄ¿±»ÉÙÊıÅÉÍÆ¼ö£¡
+## ğŸ‰ æœ¬é¡¹ç›®è¢«å°‘æ•°æ´¾æ¨èï¼
 
-²é¿´ÎÄÕÂ£º[BetterLyrics ¨C Ò»¿îÎª Windows Éè¼ÆµÄ³Á½şÊ½Á÷³©¸è´ÊÏÔÊ¾¹¤¾ß](https://sspai.com/post/101028)
+æŸ¥çœ‹æ–‡ç« ï¼š[BetterLyrics â€“ ä¸€æ¬¾ä¸º Windows è®¾è®¡çš„æ²‰æµ¸å¼æµç•…æ­Œè¯æ˜¾ç¤ºå·¥å…·](https://sspai.com/post/101028)
 
-## ?? ·´À¡Óë½»Á÷Èº
+## ğŸ”ˆ åé¦ˆä¸äº¤æµç¾¤
 
 - [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\QQ.png" height="20"> QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
 - [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Discord.png" height="12"> Discord](https://discord.gg/5yAQPnyCKv)
 - [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Telegram.png" height="16"> Telegram](https://t.me/+svhSLZ7awPsxNGY1)
 
-## ?? Ö÷ÒªÌØĞÔ
+## ğŸŒŸ ä¸»è¦ç‰¹æ€§
 
-- ?? **ÃÀ¹ÛµÄÓÃ»§½çÃæ**
-  - Á÷³©µÄ¶¯»­ÓëÌØĞ§
-- ?? **Ç¿´óµÄ¸è´Ê·­Òë**
-  - ÀëÏß»úÆ÷·­Òë£¨Ö§³Ö 30 ÖÖÓïÑÔ£©
-  - ×Ô¶¯¶ÁÈ¡±¾µØ¸è´ÊÎÄ¼şÖĞµÄÇ¶Èë·­Òë
-- ?? **¶àÑùµÄ¸è´ÊÀ´Ô´**
-  - ±¾µØ´æ´¢
-    - ÒôÀÖÎÄ¼ş£¨º¬Ç¶Èë¸è´Ê£©
-    - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) ÎÄ¼ş£¨Ö§³Ö±ê×¼ÓëÔöÇ¿¸ñÊ½£©
-    - [.eslrc](https://github.com/ESLyric/release) ÎÄ¼ş
-    - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) ÎÄ¼ş
-  - ÔÚÏß¸è´ÊÔ´
-    - QQ ÒôÀÖ
-    - ÍøÒ×ÔÆÒôÀÖ NetEase Cloud Music
-    - ¿á¹·ÒôÀÖ Kugou Music
+- ğŸŒ  **ç¾è§‚çš„ç”¨æˆ·ç•Œé¢**
+  - æµç•…çš„åŠ¨ç”»ä¸ç‰¹æ•ˆ
+- â†”ï¸ **å¼ºå¤§çš„æ­Œè¯ç¿»è¯‘**
+  - ç¦»çº¿æœºå™¨ç¿»è¯‘ï¼ˆæ”¯æŒ 30 ç§è¯­è¨€ï¼‰
+  - è‡ªåŠ¨è¯»å–æœ¬åœ°æ­Œè¯æ–‡ä»¶ä¸­çš„åµŒå…¥ç¿»è¯‘
+- ğŸ§© **å¤šæ ·çš„æ­Œè¯æ¥æº**
+  - æœ¬åœ°å­˜å‚¨
+    - éŸ³ä¹æ–‡ä»¶ï¼ˆå«åµŒå…¥æ­Œè¯ï¼‰
+    - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) æ–‡ä»¶ï¼ˆæ”¯æŒæ ‡å‡†ä¸å¢å¼ºæ ¼å¼ï¼‰
+    - [.eslrc](https://github.com/ESLyric/release) æ–‡ä»¶
+    - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) æ–‡ä»¶
+  - åœ¨çº¿æ­Œè¯æº
+    - QQ éŸ³ä¹
+    - ç½‘æ˜“äº‘éŸ³ä¹ NetEase Cloud Music
+    - é…·ç‹—éŸ³ä¹ Kugou Music
     - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
     - [LRCLIB](https://lrclib.net/)
-- ?? **Ö§³Ö¶àÖÖÒôÀÖ²¥·ÅÆ÷**
+- ğŸ¶ **æ”¯æŒå¤šç§éŸ³ä¹æ’­æ”¾å™¨**
 
-  - <details><summary>?? ÍøÒ×ÔÆÒôÀÖ</summary>
+  - <details><summary>âš ï¸ ç½‘æ˜“äº‘éŸ³ä¹</summary>
 
-    - ÇëÏÈ°²×° [BetterNCM ²å¼ş](https://microblock.cc/betterncm)¡£Èç°²×°ºóµ¯³ö½µ¼¶Ö¸Òı£¬Çë°´Ö¸Òı½«ÍøÒ×ÔÆÒôÀÖ½µ¼¶ÖÁ 2.10.13£»
-    - È»ºóÔÚ²å¼şÊĞ³¡°²×° InfLink ²å¼ş£¬°²×°Íê³ÉºóÖØÆôÍøÒ×ÔÆÒôÀÖ¼´¿É¡£
-    - ?? ÓÉÓÚ²å¼şÎÊÌâ£¬Ê±¼äÖá¿ÉÄÜ´æÔÚÒì³£
-
-    </details>
-
-  - <details><summary>?? ¿á¹·ÒôÀÖ</summary>
-
-    - ÇëÈ·±£¿á¹·ÒôÀÖÉèÖÃÖĞ¡°Ö§³ÖÏµÍ³²¥·Å¿ØÖÆ£¨ÈçËøÆÁ½çÃæ£©¡±ÒÑ¿ªÆô
-    - ¿á¹·ÒôÀÖ²»»á¹ã²¥Ê±¼äÖáĞÅÏ¢£¬µ¼ÖÂÇĞ»»½ø¶ÈÊ± BetterLyrics ÎŞ·¨¼ì²â
-    - ?? Ê±¼äÖáÎÊÌâÎª¿á¹·±¾ÉíÏŞÖÆ
+    - è¯·å…ˆå®‰è£… [BetterNCM æ’ä»¶](https://microblock.cc/betterncm)ã€‚å¦‚å®‰è£…åå¼¹å‡ºé™çº§æŒ‡å¼•ï¼Œè¯·æŒ‰æŒ‡å¼•å°†ç½‘æ˜“äº‘éŸ³ä¹é™çº§è‡³ 2.10.13ï¼›
+    - ç„¶ååœ¨æ’ä»¶å¸‚åœºå®‰è£… InfLink æ’ä»¶ï¼Œå®‰è£…å®Œæˆåé‡å¯ç½‘æ˜“äº‘éŸ³ä¹å³å¯ã€‚
+    - âš ï¸ ç”±äºæ’ä»¶é—®é¢˜ï¼Œæ—¶é—´è½´å¯èƒ½å­˜åœ¨å¼‚å¸¸
 
     </details>
 
-  - <details><summary>?? Apple Music</summary>
+  - <details><summary>âš ï¸ é…·ç‹—éŸ³ä¹</summary>
 
-    - ÇëÔÚÉèÖÃÖĞ½«Ê±¼äÖáãĞÖµÉèÎªÔ¼ 600ms£¨¡°ÉèÖÃ¡±-¡°¸ß¼¶Ñ¡Ïî¡±£©£¬·ñÔò¸è´Ê»á²»¶ÏÇ°ºóÌø¶¯
-    - ?? Ğè¶îÍâÉèÖÃÒÔ±ÜÃâ¸è´Ê¶¶¶¯£¨Ïê¼ûÎÄÄ© FAQ£©
+    - è¯·ç¡®ä¿é…·ç‹—éŸ³ä¹è®¾ç½®ä¸­â€œæ”¯æŒç³»ç»Ÿæ’­æ”¾æ§åˆ¶ï¼ˆå¦‚é”å±ç•Œé¢ï¼‰â€å·²å¼€å¯
+    - é…·ç‹—éŸ³ä¹ä¸ä¼šå¹¿æ’­æ—¶é—´è½´ä¿¡æ¯ï¼Œå¯¼è‡´åˆ‡æ¢è¿›åº¦æ—¶ BetterLyrics æ— æ³•æ£€æµ‹
+    - âš ï¸ æ—¶é—´è½´é—®é¢˜ä¸ºé…·ç‹—æœ¬èº«é™åˆ¶
 
     </details>
 
-  - <details><summary>?? foobar2000</summary>
+  - <details><summary>âš ï¸ Apple Music</summary>
 
-    - Çë°²×° https://github.com/dumbie/foo_mediacontrol
-    - ?? ÓÉÓÚ²å¼şÎÊÌâ£¬Ê±¼äÖá¿ÉÄÜ´æÔÚÒì³£
+    - è¯·åœ¨è®¾ç½®ä¸­å°†æ—¶é—´è½´é˜ˆå€¼è®¾ä¸ºçº¦ 600msï¼ˆâ€œè®¾ç½®â€-â€œé«˜çº§é€‰é¡¹â€ï¼‰ï¼Œå¦åˆ™æ­Œè¯ä¼šä¸æ–­å‰åè·³åŠ¨
+    - âš ï¸ éœ€é¢å¤–è®¾ç½®ä»¥é¿å…æ­Œè¯æŠ–åŠ¨ï¼ˆè¯¦è§æ–‡æœ« FAQï¼‰
+
+    </details>
+
+  - <details><summary>âš ï¸ foobar2000</summary>
+
+    - è¯·å®‰è£… https://github.com/dumbie/foo_mediacontrol
+    - âš ï¸ ç”±äºæ’ä»¶é—®é¢˜ï¼Œæ—¶é—´è½´å¯èƒ½å­˜åœ¨å¼‚å¸¸
 
     </details>
 
   - Spotify
-  - QQ ÒôÀÖ
+  - QQ éŸ³ä¹
   - PotPlayer
-  - Ã½Ìå²¥·ÅÆ÷£¨ÏµÍ³£©
+  - åª’ä½“æ’­æ”¾å™¨ï¼ˆç³»ç»Ÿï¼‰
 
   - <details><summary>LX Music</summary>
 
-    - ÇëÈ·±£ÒÑÔÚ LX Music ÉèÖÃÒ³¿ªÆô¡°Open API¡±
-    - È»ºóÔÚ BetterLyrics ÉèÖÃ-¸ß¼¶Ñ¡ÏîÖĞÌîĞ´ LX Music ·şÎñÆ÷µØÖ·£¨Í¨³£Îª http://127.0.0.1:23330£©¼´¿É
+    - è¯·ç¡®ä¿å·²åœ¨ LX Music è®¾ç½®é¡µå¼€å¯â€œOpen APIâ€
+    - ç„¶ååœ¨ BetterLyrics è®¾ç½®-é«˜çº§é€‰é¡¹ä¸­å¡«å†™ LX Music æœåŠ¡å™¨åœ°å€ï¼ˆé€šå¸¸ä¸º http://127.0.0.1:23330ï¼‰å³å¯
 
     </details>
 
   - <details><summary>MusicBee</summary>
 
-    - Çë°²×° https://github.com/HenryPDT/mb_MediaControl
+    - è¯·å®‰è£… https://github.com/HenryPDT/mb_MediaControl
 
     </details>
 
   - <details><summary>iTunes</summary>
 
-    - Çë°²×° https://github.com/thewizrd/iTunes-SMTC
+    - è¯·å®‰è£… https://github.com/thewizrd/iTunes-SMTC
 
     </details>
 
   - <details><summary>AIMP</summary>
 
-    - Çë°²×° https://www.aimp.ru/?do=catalog&rec_id=1097
+    - è¯·å®‰è£… https://www.aimp.ru/?do=catalog&rec_id=1097
 
     </details>
 
-- ?? **¶àÖÖÏÔÊ¾Ä£Ê½**
-  - **±ê×¼Ä£Ê½**
-    - ³Á½şÊ½¸è´Ê¶¯»­Óë¶¯Ì¬±³¾°
-  - **Í£¿¿Ä£Ê½**
-    - ÖÇÄÜ¸è´ÊÌõÍ£¿¿ÆÁÄ»±ßÔµ
-  - **×ÀÃæÄ£Ê½**
-    - ¸è´ÊĞü¸¡ÓÚ×ÀÃæÓ¦ÓÃÖ®ÉÏ
-- ?? **ÖÇÄÜĞĞÎª**
-  - ÒôÀÖÔİÍ£Ê±×Ô¶¯Òş²Ø
+- ğŸªŸ **å¤šç§æ˜¾ç¤ºæ¨¡å¼**
+  - **æ ‡å‡†æ¨¡å¼**
+    - æ²‰æµ¸å¼æ­Œè¯åŠ¨ç”»ä¸åŠ¨æ€èƒŒæ™¯
+  - **åœé æ¨¡å¼**
+    - æ™ºèƒ½æ­Œè¯æ¡åœé å±å¹•è¾¹ç¼˜
+  - **æ¡Œé¢æ¨¡å¼**
+    - æ­Œè¯æ‚¬æµ®äºæ¡Œé¢åº”ç”¨ä¹‹ä¸Š
+- ğŸ§  **æ™ºèƒ½è¡Œä¸º**
+  - éŸ³ä¹æš‚åœæ—¶è‡ªåŠ¨éšè—
 
-> ±¾ÏîÄ¿ÈÔÔÚ¿ª·¢ÖĞ£¬×îĞÂ·ÖÖ§¿ÉÄÜ´æÔÚ bug »òÒì³£ĞĞÎª¡£
+> æœ¬é¡¹ç›®ä»åœ¨å¼€å‘ä¸­ï¼Œæœ€æ–°åˆ†æ”¯å¯èƒ½å­˜åœ¨ bug æˆ–å¼‚å¸¸è¡Œä¸ºã€‚
 
-## ½ØÍ¼
+## æˆªå›¾
 
-### ±ê×¼Ä£Ê½
+### æ ‡å‡†æ¨¡å¼
 
 ![alt text](Screenshots/image.png)
 
@@ -145,23 +145,23 @@ BetterLyrics
 
 ![alt text](Screenshots/album-art-only.png)
 
-### Í£¿¿Ä£Ê½
+### åœé æ¨¡å¼
 
 ![alt text](Screenshots/dock-1.png)
 
 ![alt text](Screenshots/dock-2.png)
 
-### ×ÀÃæÄ£Ê½
+### æ¡Œé¢æ¨¡å¼
 
 ![alt text](Screenshots/desktop-1.png)
 
 ![alt text](Screenshots/desktop-2.png)
 
-## ÑİÊ¾
+## æ¼”ç¤º
 
-ÔÚ B Õ¾¹Û¿´ÎÒÃÇµÄ½éÉÜÊÓÆµ£¨2025 Äê 7 ÔÂ 7 ÈÕÉÏ´«£©£º[µã´Ë¹Û¿´](https://www.bilibili.com/video/BV1zjGjzfEXh)
+åœ¨ B ç«™è§‚çœ‹æˆ‘ä»¬çš„ä»‹ç»è§†é¢‘ï¼ˆ2025 å¹´ 7 æœˆ 7 æ—¥ä¸Šä¼ ï¼‰ï¼š[ç‚¹æ­¤è§‚çœ‹](https://www.bilibili.com/video/BV1zjGjzfEXh)
 
-## Á¢¼´ÌåÑé
+## ç«‹å³ä½“éªŒ
 
 ### Microsoft Store
 
@@ -169,103 +169,103 @@ BetterLyrics
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-**×î¼òµ¥**µÄ»ñÈ¡·½Ê½¡£**ÎŞÏŞÖÆ**Ãâ·ÑÊÔÓÃ»ò¹ºÂò£¨Ãâ·ÑÓë¸¶·ÑÎŞ²î±ğ£©
+**æœ€ç®€å•**çš„è·å–æ–¹å¼ã€‚**æ— é™åˆ¶**å…è´¹è¯•ç”¨æˆ–è´­ä¹°ï¼ˆå…è´¹ä¸ä»˜è´¹æ— å·®åˆ«ï¼‰
 
-? Èç¹û¾õµÃºÃÓÃ£¬»¶Ó­ÔÚ **Microsoft Store** ¹ºÂòÖ§³Ö ??£¬¸ĞĞ»£¡??
+â˜• å¦‚æœè§‰å¾—å¥½ç”¨ï¼Œæ¬¢è¿åœ¨ **Microsoft Store** è´­ä¹°æ”¯æŒ ğŸ§§ï¼Œæ„Ÿè°¢ï¼ğŸ¥°
 
-> ÎÈ¶¨°æ·¢²¼ºó£¬Microsoft Store »áµÚÒ»Ê±¼ä¸üĞÂ¡£
+> ç¨³å®šç‰ˆå‘å¸ƒåï¼ŒMicrosoft Store ä¼šç¬¬ä¸€æ—¶é—´æ›´æ–°ã€‚
 
 ### Google Drive
 
-Ò²¿ÉÍ¨¹ı Google Drive »ñÈ¡£¨¼û [release](https://github.com/jayfunc/BetterLyrics/releases) Ò³Ãæ£©
+ä¹Ÿå¯é€šè¿‡ Google Drive è·å–ï¼ˆè§ [release](https://github.com/jayfunc/BetterLyrics/releases) é¡µé¢ï¼‰
 
-> ÏÂÔØµÄÊÇ ".zip" ÎÄ¼ş£¬°²×°·½·¨Çë²Î¿¼ [´ËÎÄµµ](How2Install/How2Install.md)¡£
+> ä¸‹è½½çš„æ˜¯ ".zip" æ–‡ä»¶ï¼Œå®‰è£…æ–¹æ³•è¯·å‚è€ƒ [æ­¤æ–‡æ¡£](How2Install/How2Install.md)ã€‚
 
-## ?? ÌØ±ğ¸ĞĞ»
+## ğŸ’– ç‰¹åˆ«æ„Ÿè°¢
 
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
-  - Ìá¹© QQ¡¢ÍøÒ×ÔÆ¡¢¿á¹·¸è´Ê»ñÈ¡¡¢½âÃÜÓë½âÎö
+  - æä¾› QQã€ç½‘æ˜“äº‘ã€é…·ç‹—æ­Œè¯è·å–ã€è§£å¯†ä¸è§£æ
 - [lrclib](https://github.com/tranxuanthang/lrclib)
-  - LRCLIB ¸è´Ê API Ìá¹©·½
+  - LRCLIB æ­Œè¯ API æä¾›æ–¹
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
-  - ÓÃÓÚÌáÈ¡ÒôÀÖÎÄ¼şÖĞµÄÍ¼Æ¬
+  - ç”¨äºæå–éŸ³ä¹æ–‡ä»¶ä¸­çš„å›¾ç‰‡
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
-  - Ìá¹©±ã½İµÄ Win32 ´°¿Ú API
+  - æä¾›ä¾¿æ·çš„ Win32 çª—å£ API
 - [TagLib#](https://github.com/mono/taglib-sharp)
-  - ÓÃÓÚ¶ÁÈ¡Ô­Ê¼¸è´ÊÄÚÈİ
+  - ç”¨äºè¯»å–åŸå§‹æ­Œè¯å†…å®¹
 - [Vanara](https://github.com/dahall/Vanara)
-  - Win32 API ·â×°¿â
+  - Win32 API å°è£…åº“
 - [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
-  - Ìá¹©ÀëÏß¸è´Ê·­ÒëÄÜÁ¦
-- [Stackoverflow - ÈçºÎÔÚ WPF ÖĞ¶¯»­»¯ Margin ÊôĞÔ](https://stackoverflow.com/a/21542882/11048731)
+  - æä¾›ç¦»çº¿æ­Œè¯ç¿»è¯‘èƒ½åŠ›
+- [Stackoverflow - å¦‚ä½•åœ¨ WPF ä¸­åŠ¨ç”»åŒ– Margin å±æ€§](https://stackoverflow.com/a/21542882/11048731)
 - [DevWinUI](https://github.com/ghost1372/DevWinUI)
-- [Bilibili -¡¾WinUI3¡¿SystemBackdropController£º¶¨ÒåÔÆÄ¸¡¢ÑÇ¿ËÁ¦Ğ§¹û](https://www.bilibili.com/video/BV1PY4FevEkS)
-- [cnblogs - .NET App Óë Windows ÏµÍ³Ã½Ìå¿ØÖÆ(SMTC)½»»¥](https://www.cnblogs.com/TwilightLemon/p/18279496)
-- [Win2D ÖĞµÄÓÎÏ·Ñ­»·£ºCanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
+- [Bilibili -ã€WinUI3ã€‘SystemBackdropControllerï¼šå®šä¹‰äº‘æ¯ã€äºšå…‹åŠ›æ•ˆæœ](https://www.bilibili.com/video/BV1PY4FevEkS)
+- [cnblogs - .NET App ä¸ Windows ç³»ç»Ÿåª’ä½“æ§åˆ¶(SMTC)äº¤äº’](https://www.cnblogs.com/TwilightLemon/p/18279496)
+- [Win2D ä¸­çš„æ¸¸æˆå¾ªç¯ï¼šCanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
 - [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
-- [CommunityToolkit - ´ÓÈëÃÅµ½¾«Í¨](https://mvvm.coldwind.top/)
+- [CommunityToolkit - ä»å…¥é—¨åˆ°ç²¾é€š](https://mvvm.coldwind.top/)
 
-## Áé¸ĞÀ´Ô´
+## çµæ„Ÿæ¥æº
 
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
-- [½·ÑÎÒôÀÖ Salt Player](https://moriafly.com/program/salt-player)
+- [æ¤’ç›éŸ³ä¹ Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
 
-## ?? »¶Ó­Ğ­Öú·­Òë
+## âœï¸ æ¬¢è¿ååŠ©ç¿»è¯‘
 
-Ã»ÓĞÕÒµ½ÄãµÄÓïÑÔ£¿
-±ğµ£ĞÄ£¡¿ìÀ´²ÎÓë·­Òë£¬³ÉÎª¹±Ï×ÕßÖ®Ò»°É£¡??
-µã»÷[´ËÁ´½Ó](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)Í¨¹ı Crowdin ·­Òë±¾Ó¦ÓÃ£¡
+æ²¡æœ‰æ‰¾åˆ°ä½ çš„è¯­è¨€ï¼Ÿ
+åˆ«æ‹…å¿ƒï¼å¿«æ¥å‚ä¸ç¿»è¯‘ï¼Œæˆä¸ºè´¡çŒ®è€…ä¹‹ä¸€å§ï¼ğŸ˜†
+ç‚¹å‡»[æ­¤é“¾æ¥](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)é€šè¿‡ Crowdin ç¿»è¯‘æœ¬åº”ç”¨ï¼
 
-## Star ¼ÇÂ¼
+## Star è®°å½•
 
 [![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
-## »¶Ó­Ìá issue ºÍ PR
+## æ¬¢è¿æ issue å’Œ PR
 
-Èç·¢ÏÖ bug ÇëÔÚ issues Ìá³ö£¬»òÓĞÏë·¨»¶Ó­ÔÚ´Ë·ÖÏí¡£
+å¦‚å‘ç° bug è¯·åœ¨ issues æå‡ºï¼Œæˆ–æœ‰æƒ³æ³•æ¬¢è¿åœ¨æ­¤åˆ†äº«ã€‚
 
 ---
 
 ## FAQ
 
-### Í£¿¿Ä£Ê½ÏÂ¿´²»µ½°´Å¥
+### åœé æ¨¡å¼ä¸‹çœ‹ä¸åˆ°æŒ‰é’®
 
-½øÈë¡°Í£¿¿Ä£Ê½¡±ºó£¬²Ù×÷°´Å¥»áÒş²Ø¡£½«Êó±êĞüÍ£ÔÚ´°¿Ú¶¥²¿¼´¿ÉÏÔÊ¾¡°³Á½ş¡±¡¢¡°¸ü¶à¡±¡¢¡°¹Ø±Õ¡±°´Å¥¡£
+è¿›å…¥â€œåœé æ¨¡å¼â€åï¼Œæ“ä½œæŒ‰é’®ä¼šéšè—ã€‚å°†é¼ æ ‡æ‚¬åœåœ¨çª—å£é¡¶éƒ¨å³å¯æ˜¾ç¤ºâ€œæ²‰æµ¸â€ã€â€œæ›´å¤šâ€ã€â€œå…³é—­â€æŒ‰é’®ã€‚
 
 ![alt text](FAQ/image-10.png)
 
-½«Êó±êĞüÍ£ÔÚ´°¿Úµ×²¿±ßÔµÉÔÉÏ·½£¬»áÏÔÊ¾µ×²¿°×É«Ğü¸¡¿ØÖÆ´°¿Ú
+å°†é¼ æ ‡æ‚¬åœåœ¨çª—å£åº•éƒ¨è¾¹ç¼˜ç¨ä¸Šæ–¹ï¼Œä¼šæ˜¾ç¤ºåº•éƒ¨ç™½è‰²æ‚¬æµ®æ§åˆ¶çª—å£
 
 ![alt text](FAQ/image-11.png)
 
-µã»÷¡°Ğ¡°×Ìõ¡±¿ÉÏÔÊ¾µ×²¿Ğü¸¡¿ØÖÆÀ¸£¨º¬µ±Ç°²¥·Å½ø¶È¡¢Ê±¼äÖáÆ«ÒÆµ÷Õû¡¢ÉÏÒ»Çú/ÔİÍ£/ÏÂÒ»Çú¡¢·­Òë¡¢²¼¾Ö¡¢ÉèÖÃ£©
+ç‚¹å‡»â€œå°ç™½æ¡â€å¯æ˜¾ç¤ºåº•éƒ¨æ‚¬æµ®æ§åˆ¶æ ï¼ˆå«å½“å‰æ’­æ”¾è¿›åº¦ã€æ—¶é—´è½´åç§»è°ƒæ•´ã€ä¸Šä¸€æ›²/æš‚åœ/ä¸‹ä¸€æ›²ã€ç¿»è¯‘ã€å¸ƒå±€ã€è®¾ç½®ï¼‰
 
 ![alt text](FAQ/image-12.png)
 
-### ×ÀÃæÄ£Ê½ÈçºÎËø¶¨´°¿Ú
+### æ¡Œé¢æ¨¡å¼å¦‚ä½•é”å®šçª—å£
 
 ![alt text](FAQ/image-6.png)
 
-½«Êó±êĞüÍ£ÔÚ¶¥²¿£¬µã»÷Ëø¶¨Í¼±ê¼´¿É£¬»ò°´ `Ctrl + Alt + U`¡£
+å°†é¼ æ ‡æ‚¬åœåœ¨é¡¶éƒ¨ï¼Œç‚¹å‡»é”å®šå›¾æ ‡å³å¯ï¼Œæˆ–æŒ‰ `Ctrl + Alt + U`ã€‚
 
-### ×ÀÃæÄ£Ê½ÈçºÎ½âËø´°¿Ú
+### æ¡Œé¢æ¨¡å¼å¦‚ä½•è§£é”çª—å£
 
 ![alt text](FAQ/image-7.png)
 
-ÔÚÏµÍ³ÍĞÅÌÓÒ¼üÍ¼±ê£¬Ñ¡Ôñ¡°½âËø´°¿Ú¡±£¬»ò°´ `Ctrl + Alt + U`¡£
+åœ¨ç³»ç»Ÿæ‰˜ç›˜å³é”®å›¾æ ‡ï¼Œé€‰æ‹©â€œè§£é”çª—å£â€ï¼Œæˆ–æŒ‰ `Ctrl + Alt + U`ã€‚
 
-### ¸è´ÊÊ±¼äÖáÓĞÑÓ³Ù
+### æ­Œè¯æ—¶é—´è½´æœ‰å»¶è¿Ÿ
 
-½«Êó±êĞüÍ£ÔÚÓ¦ÓÃµ×²¿£¬
+å°†é¼ æ ‡æ‚¬åœåœ¨åº”ç”¨åº•éƒ¨ï¼Œ
 
 ![alt text](FAQ/image.png)
 
-µã»÷µÚÒ»¸öÍ¼±ê°´Å¥£¨¸è´ÊÊ±¼äÖáÆ«ÒÆ£©£¬¼´¿É×ÔÓÉµ÷ÕûÆ«ÒÆÁ¿¡£
+ç‚¹å‡»ç¬¬ä¸€ä¸ªå›¾æ ‡æŒ‰é’®ï¼ˆæ­Œè¯æ—¶é—´è½´åç§»ï¼‰ï¼Œå³å¯è‡ªç”±è°ƒæ•´åç§»é‡ã€‚
 
-### ¸è´ÊÆµ·±Ìø¶¯£¨Èç Apple Music£©
+### æ­Œè¯é¢‘ç¹è·³åŠ¨ï¼ˆå¦‚ Apple Musicï¼‰
 
 ![alt text](FAQ/image-2.png)
 
-½øÈë¡°¸ß¼¶Ñ¡Ïî¡±£¬Ôö´óãĞÖµ£¨ºì¿ò±ê¼Ç´¦£©£¬Ö±ÖÁ¸è´ÊÕı³£¡£
+è¿›å…¥â€œé«˜çº§é€‰é¡¹â€ï¼Œå¢å¤§é˜ˆå€¼ï¼ˆçº¢æ¡†æ ‡è®°å¤„ï¼‰ï¼Œç›´è‡³æ­Œè¯æ­£å¸¸ã€‚
