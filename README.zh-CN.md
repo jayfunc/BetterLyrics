@@ -96,7 +96,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
     -   QQ音乐
 
-    -   Potplayer
+    -   PotPlayer
 
     -   媒体播放器（系统）
 
@@ -247,7 +247,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](FAQ/image-11.png)
 
-Tap the "little white bar" to display the bottom control bar in floating window form (including current playback progress view, timeline offset adjustment; previous song, pause/play, next song; translation, layout, settings)
+点击“小白色栏”以浮动窗口形式显示底部控制栏（包括当前的播放进度视图，时间表偏移调整；先前的歌曲，暂停/播放，下一首歌；翻译，布局，设置）
 
 ![alt text](FAQ/image-12.png)
 
