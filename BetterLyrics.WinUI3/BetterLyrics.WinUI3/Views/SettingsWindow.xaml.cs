@@ -17,6 +17,8 @@ namespace BetterLyrics.WinUI3.Views
             Title = App.ResourceLoader?.GetString("SettingsPageTitle");
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             AppWindow.SetIcons();
+
+            RootFrame.Navigate(typeof(SettingsPage));
         }
     }
 }

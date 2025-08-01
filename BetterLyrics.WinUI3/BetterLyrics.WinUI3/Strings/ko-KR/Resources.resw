@@ -907,4 +907,13 @@
   <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
     <value>번역 제공자</value>
   </data>
+  <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
+    <value>대상 모니터</value>
+  </data>
+  <data name="SystemTrayRestart.Text" xml:space="preserve">
+    <value>resart</value>
+  </data>
+  <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
+    <value>창 위치를 재설정합니다</value>
+  </data>
 </root>

@@ -123,7 +123,10 @@
                                 <TextBlock x:Uid="SettingsPageAppBehavior" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                                 <controls:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF71C;}">
-                                    <ToggleSwitch x:Name="AutoStartupToggleSwitch" Loaded="AutoStartupToggleSwitch_Loaded" />
+                                    <ToggleSwitch
+                                        x:Name="AutoStartupToggleSwitch"
+                                        Loaded="AutoStartupToggleSwitch_Loaded"
+                                        Unloaded="AutoStartupToggleSwitch_Unloaded" />
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageAutoStartWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE736;}">
@@ -191,6 +194,22 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
+                                <!--  Dock mode  -->
+
+                                <TextBlock x:Uid="SettingsPageAppDock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Button
+                                            Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
+                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                  FontSize=12,
+                                                                  Glyph=&#xE72C;}"
+                                            Style="{StaticResource GhostButtonStyle}" />
+                                        <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedDockMonitorDeviceName, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
                                 <controls:SettingsCard x:Uid="SettingsPageDockWindowHeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED5E;}">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
@@ -209,10 +228,6 @@
                                             Value="{x:Bind ViewModel.DockWindowHeight, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
-
-                                <!--  Dock mode  -->
-
-                                <TextBlock x:Uid="SettingsPageAppDock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                                 <controls:SettingsCard x:Uid="SettingsPageDockPlacement" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">

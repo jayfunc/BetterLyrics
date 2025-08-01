@@ -295,11 +295,12 @@ namespace BetterLyrics.WinUI3.Services
             var _albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
             token.ThrowIfCancellationRequested();
 
-            var _albumArtAccentColor = ImageHelper.GetAccentColorsFromByte(bytes).FirstOrDefault();
+            var _albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
+            var _albumArtDarkAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, true).FirstOrDefault();
 
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
-                AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(_albumArtSwBitmap, _albumArtAccentColor));
+                AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(_albumArtSwBitmap, _albumArtLightAccentColor, _albumArtDarkAccentColor));
             });
         }
 

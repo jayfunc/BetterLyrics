@@ -13,7 +13,7 @@
     </Window.SystemBackdrop>
 
     <Grid x:Name="RootGrid">
-        <local:SettingsPage />
+        <Frame x:Name="RootFrame" />
     </Grid>
 
 </Window>

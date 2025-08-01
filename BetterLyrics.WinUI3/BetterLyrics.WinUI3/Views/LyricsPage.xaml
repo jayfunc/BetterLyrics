@@ -29,7 +29,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontFamily="{x:Bind ViewModel.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.LyricsStandardFontSize, Mode=OneWay}" />
+                FontSize="{x:Bind ViewModel.HintMessageFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -388,7 +388,7 @@
                 <Flyout x:Name="BottomCommandFlyout" ShouldConstrainToRootBounds="False">
                     <Flyout.FlyoutPresenterStyle>
                         <Style TargetType="FlyoutPresenter">
-                            <Setter Property="MinWidth" Value="600" />
+                            <Setter Property="MinWidth" Value="450" />
                             <Setter Property="MinHeight" Value="100" />
                             <Setter Property="CornerRadius" Value="12" />
                         </Style>

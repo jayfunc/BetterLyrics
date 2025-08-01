@@ -113,6 +113,8 @@ namespace BetterLyrics.WinUI3.Services
         private const string LyricsFontFamilyKey = "LyricsFontFamily";
         private const string IsDragEverywhereEnabledKey = "IsDragEverywhereEnabled";
 
+        private const string DockMonitorDeviceNameKey = "DockMonitorDeviceName";
+
         private readonly ApplicationDataContainer _localSettings;
 
         public SettingsService()
@@ -247,6 +249,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(SelectedFontFamilyIndexKey, 0);
             SetDefault(LyricsFontFamilyKey, FontHelper.SystemFontFamilies.ElementAtOrDefault(0));
             SetDefault(IsDragEverywhereEnabledKey, false);
+            SetDefault(DockMonitorDeviceNameKey, MonitorHelper.GetPrimaryMonitorDeviceName());
         }
 
         public bool IsDragEverywhereEnabled
@@ -687,6 +690,12 @@ namespace BetterLyrics.WinUI3.Services
         {
             get => GetValue<bool>(IsImmersiveModeKey);
             set => SetValue(IsImmersiveModeKey, value);
+        }
+
+        public string DockMonitorDeviceName
+        {
+            get => GetValue<string>(DockMonitorDeviceNameKey)!;
+            set => SetValue(DockMonitorDeviceNameKey, value);
         }
 
         private T? GetValue<T>(string key)

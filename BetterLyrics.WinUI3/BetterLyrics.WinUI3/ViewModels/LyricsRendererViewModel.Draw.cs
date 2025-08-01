@@ -44,14 +44,15 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (_isDockMode)
             {
-                DrawImmersiveBackground(control, combinedDs, 0f);
+                FillBackground(control, combinedDs, _immersiveBgTransition.Value, 0f, _immersiveBgOpacityTransition.Value);
             }
             else if (_isDesktopMode)
             {
-                DrawImmersiveBackground(control, combinedDs, 0f);
+                FillBackground(control, combinedDs, _immersiveBgTransition.Value, 0f, _immersiveBgOpacityTransition.Value);
             }
             else
             {
+                FillBackground(control, combinedDs, _albumArtAccentColorTransition.Value, 0f, _albumArtBgOpacity / 100f);
                 DrawAlbumArtBackground(control, combinedDs);
             }
 
@@ -109,7 +110,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             float imageWidth = (float)canvasBitmap.Size.Width;
             float imageHeight = (float)canvasBitmap.Size.Height;
 
-            float targetSize = MathF.Sqrt(MathF.Pow(_canvasWidth, 2) + MathF.Pow(_canvasHeight, 2)) * 1.4f;
+            float targetSize = MathF.Sqrt(MathF.Pow(_canvasWidth, 2) + MathF.Pow(_canvasHeight, 2));
             float scaleFactor = targetSize / MathF.Min(imageWidth, imageHeight);
 
             float x = _canvasWidth / 2 - imageWidth * scaleFactor / 2;
@@ -170,8 +171,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     AlphaMask = cornerRadiusMask,
                 },
                 Opacity = opacity,
-            }, new Vector2(_albumArtXTransition.Value, _albumArtY)
-            );
+            }, new Vector2(_albumArtXTransition.Value, _albumArtYTransition.Value));
         }
 
         private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
@@ -246,7 +246,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 Source = albumArt,
                 BlurAmount = 12f,
-                Optimization = EffectOptimization.Quality,
+                Optimization = EffectOptimization.Speed,
             });
             opacityDs.DrawImage(albumArt);
 
@@ -271,21 +271,27 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void DrawSingleTitleAndArtist(ICanvasAnimatedControl control, CanvasDrawingSession ds, string? title, string? artist, float opacity)
         {
-            CanvasTextLayout titleLayout = new(
+            var maxWidth = _lyricsLayoutOrientation switch
+            {
+                LyricsLayoutOrientation.Horizontal => _albumArtSize,
+                LyricsLayoutOrientation.Vertical => _canvasWidth - _leftMargin - _albumArtSize - _rightMargin,
+                _ => 0f
+            };
+            using CanvasTextLayout titleLayout = new(
                 control, title ?? string.Empty,
-                _titleTextFormat, _albumArtSize, _canvasHeight
+                _titleTextFormat, maxWidth, _canvasHeight
             );
-            CanvasTextLayout artistLayout = new(
+            using CanvasTextLayout artistLayout = new(
                 control, artist ?? string.Empty,
-                _artistTextFormat, _albumArtSize, _canvasHeight
+                _artistTextFormat, maxWidth, _canvasHeight
             );
             ds.DrawTextLayout(
                 titleLayout,
-                new Vector2(_albumArtXTransition.Value, _titleY),
+                new Vector2(_titleXTransition.Value, _titleYTransition.Value),
                 _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 255 * opacity)));
             ds.DrawTextLayout(
                 artistLayout,
-                new Vector2(_albumArtXTransition.Value, _titleY + (float)titleLayout.LayoutBounds.Height),
+                new Vector2(_titleXTransition.Value, _titleYTransition.Value + (float)titleLayout.LayoutBounds.Height),
                 _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
         }
 
@@ -336,7 +342,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
 
                 float xOffset = _lyricsXTransition.Value;
-                float yOffset = _canvasYScrollTransition.Value + _canvasHeight / 2;
+                float yOffset = _canvasYScrollTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
 
                 // 组合变换：缩放 -> 旋转 -> 平移
                 ds.Transform =
@@ -374,8 +380,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         Source = new OpacityEffect { Source = bgLyrics, Opacity = line.OpacityTransition.Value * _lyricsOpacityTransition.Value },
                         BlurAmount = line.BlurAmountTransition.Value,
-                        Optimization = EffectOptimization.Quality,
                         BorderMode = EffectBorderMode.Soft,
+                        Optimization = EffectOptimization.Speed,
                     }
                 );
 
@@ -503,7 +509,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                                             },
                                         },
                                         BlurAmount = _lyricsGlowEffectAmount,
-                                        Optimization = EffectOptimization.Quality,
+                                        Optimization = EffectOptimization.Speed,
                                     }
                                     : new CanvasCommandList(control.Device),
                             Foreground = new AlphaMaskEffect
@@ -533,7 +539,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                                 Displacement = mask,
                                 XChannelSelect = EffectChannelSelect.Red,
                                 YChannelSelect = EffectChannelSelect.Alpha,
-                                Amount = 1f
+                                Amount = 1f,
                             });
                         }
                         else
@@ -556,7 +562,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        private void DrawImmersiveBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, float radius)
+        private void FillBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, Color color, float radius, float opacity)
         {
             CanvasCommandList list = new(control.Device);
             using var listDs = list.CreateDrawingSession();
@@ -564,12 +570,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 new Rect(0, 0, _canvasWidth, _canvasHeight),
                 radius,
                 radius,
-                _immersiveBgTransition.Value
+                color
             );
             ds.DrawImage(new OpacityEffect
             {
                 Source = list,
-                Opacity = _immersiveBgOpacityTransition.Value
+                Opacity = opacity
             });
         }
 
@@ -580,16 +586,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             float width
         )
         {
-            return new CanvasLinearGradientBrush(
-                control,
-                stops
-                    .Select(stops => new CanvasGradientStop
-                    {
-                        Position = stops.position,
-                        Color = Color.FromArgb((byte)(stops.opacity * 255), 128, 128, 128),
-                    })
-                    .ToArray()
-            )
+            return new CanvasLinearGradientBrush(control, stops.Select(stops => new CanvasGradientStop
+            {
+                Position = stops.position,
+                Color = Color.FromArgb((byte)(stops.opacity * 255), 128, 128, 128),
+            }).ToArray())
             {
                 StartPoint = new Vector2(startX, 0),
                 EndPoint = new Vector2(startX + width, 0),

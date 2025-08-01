@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using System;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -42,6 +43,22 @@ namespace BetterLyrics.WinUI3.ViewModels
                 DockModeHelper.Disable(lyricsWindow);
             }
             Environment.Exit(0);
+        }
+
+        [RelayCommand]
+        private static void RestartApp()
+        {
+            WindowHelper.RestartApp();
+        }
+
+        [RelayCommand]
+        private static void ResetWindowPosition()
+        {
+            LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (lyricsWindow != null)
+            {
+                lyricsWindow.MoveAndResize(0, 0, 800, 600);
+            }
         }
 
         [RelayCommand]

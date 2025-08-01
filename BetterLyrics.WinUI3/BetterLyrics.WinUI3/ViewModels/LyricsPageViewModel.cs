@@ -30,6 +30,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly IPlaybackService _playbackService;
         private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
 
+        private bool _isDockMode = false;
+        private bool _isDesktopMode = false;
+
+        private int _lyricsStandardFontSize = 8;
+        private int _lyricsDockFontSize = 8;
+        private int _lyricsDesktopFontSize = 8;
+
         public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
         {
             IsFirstRun = _settingsService.IsFirstRun;
@@ -40,7 +47,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsImmersiveMode = _settingsService.IsImmersiveMode;
             ShowTranslationOnly = _settingsService.ShowTranslationOnly;
 
-            LyricsStandardFontSize = _settingsService.LyricsStandardFontSize;
+            UpdateHintMessageFontSize();
 
             LyricsFontFamily = _settingsService.LyricsFontFamily;
 
@@ -95,7 +102,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial string LyricsFontFamily { get; set; }
 
         [ObservableProperty]
-        public partial int LyricsStandardFontSize { get; set; }
+        public partial int HintMessageFontSize { get; set; }
 
         [ObservableProperty]
         public partial bool IsImmersiveMode { get; set; }
@@ -144,12 +151,29 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
 
+        private void UpdateHintMessageFontSize()
+        {
+            if (_isDockMode)
+            {
+                HintMessageFontSize = _settingsService.LyricsDockFontSize;
+            }
+            else if (_isDesktopMode)
+            {
+                HintMessageFontSize = _settingsService.LyricsDesktopFontSize;
+            }
+            else
+            {
+                HintMessageFontSize = _settingsService.LyricsStandardFontSize;
+            }
+        }
+
         public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is LyricsWindowViewModel)
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
                 {
+                    _isDockMode = message.NewValue;
                     if (message.NewValue)
                     {
                         DisplayType = LyricsDisplayType.LyricsOnly;
@@ -158,9 +182,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         DisplayType = _settingsService.DisplayType;
                     }
+                    UpdateHintMessageFontSize();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
                 {
+                    _isDesktopMode = message.NewValue;
                     if (message.NewValue)
                     {
                         DisplayType = LyricsDisplayType.LyricsOnly;
@@ -169,6 +195,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         DisplayType = _settingsService.DisplayType;
                     }
+                    UpdateHintMessageFontSize();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowViewModel.IsImmersiveMode))
                 {
@@ -248,7 +275,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsStandardFontSize))
                 {
-                    LyricsStandardFontSize = message.NewValue;
+                    UpdateHintMessageFontSize();
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsDockFontSize))
+                {
+                    UpdateHintMessageFontSize();
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsDesktopFontSize))
+                {
+                    UpdateHintMessageFontSize();
                 }
             }
         }

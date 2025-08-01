@@ -44,36 +44,6 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
-                    <!--  Music gallery  -->
-                    <Button Click="MusicGalleryButton_Click" Style="{StaticResource TitleBarButtonStyle}">
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize}"
-                            Glyph="&#xE8A9;" />
-                    </Button>
-                    <!--  Immersive mode  -->
-                    <ToggleButton
-                        x:Name="ImmersiveButton"
-                        Command="{x:Bind ViewModel.ImmersiveToggleButtonEnabledChangedCommand}"
-                        IsChecked="{x:Bind ViewModel.IsImmersiveMode, Mode=TwoWay}"
-                        Style="{StaticResource TitleBarToggleButtonStyle}">
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize}"
-                            Glyph="&#xED1A;" />
-                    </ToggleButton>
-                </StackPanel>
-            </Grid>
-
-            <Grid Padding="3" HorizontalAlignment="Right">
-                <StackPanel
-                    x:Name="TopRightCommandStackPanel"
-                    Orientation="Horizontal"
-                    Spacing="3">
-                    <StackPanel.OpacityTransition>
-                        <ScalarTransition />
-                    </StackPanel.OpacityTransition>
-
                     <!--  Look  -->
                     <Button
                         x:Name="ClickThroughButton"
@@ -136,54 +106,38 @@
                                     x:Uid="BaseWindowMiniFlyoutItem"
                                     Click="MiniFlyoutItem_Click" />
                                 <MenuFlyoutItem
+                                    x:Name="MusicGalleryFlyoutItem"
+                                    x:Uid="SystemTrayMusicGallery"
+                                    Click="MusicGalleryMenuFlyoutItem_Click" />
+                                <MenuFlyoutItem
                                     x:Name="SettingsFlyoutItem"
-                                    x:Uid="HostWindowSettingsFlyoutItem"
+                                    x:Uid="SystemTraySettings"
                                     Click="SettingsMenuFlyoutItem_Click" />
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>
+                    <!--  Immersive mode  -->
+                    <ToggleButton
+                        x:Name="ImmersiveButton"
+                        Command="{x:Bind ViewModel.ImmersiveToggleButtonEnabledChangedCommand}"
+                        IsChecked="{x:Bind ViewModel.IsImmersiveMode, Mode=TwoWay}"
+                        Style="{StaticResource TitleBarToggleButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize}"
+                            Glyph="&#xED1A;" />
+                    </ToggleButton>
+                </StackPanel>
+            </Grid>
 
-                    <!--  Window Minimise  -->
-                    <Button
-                        x:Name="MinimiseButton"
-                        Click="MinimiseButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE654;" />
-                    </Button>
-                    <!--  Window Maximise  -->
-                    <Button
-                        x:Name="MaximiseButton"
-                        Click="MaximiseButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE655;" />
-                    </Button>
-                    <!--  Window Restore  -->
-                    <Button
-                        x:Name="RestoreButton"
-                        Click="RestoreButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}"
-                        Visibility="Collapsed">
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE656;" />
-                    </Button>
-                    <!--  Window Close  -->
-                    <Button
-                        x:Name="CloseButton"
-                        Click="CloseButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
-                        <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE653;" />
-                    </Button>
+            <Grid Padding="3" HorizontalAlignment="Right">
+                <StackPanel
+                    x:Name="TopRightCommandStackPanel"
+                    Orientation="Horizontal"
+                    Spacing="3">
+                    <StackPanel.OpacityTransition>
+                        <ScalarTransition />
+                    </StackPanel.OpacityTransition>
                 </StackPanel>
             </Grid>
 

@@ -209,6 +209,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             });
         }
 
+        [RelayCommand]
+        private void RefreshMonitorDeviceNames()
+        {
+            MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
+            SelectedDockMonitorDeviceName = MonitorHelper.GetPrimaryMonitorDeviceName();
+        }
+
         public async Task<bool> ToggleAutoStartupAsync(bool target)
         {
             StartupTask startupTask = await StartupTask.GetAsync(_autoStartupTaskId);

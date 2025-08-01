@@ -24,12 +24,33 @@ namespace BetterLyrics.WinUI3.ViewModels
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
 
+        private readonly ValueTransition<Color> _albumArtAccentColorTransition = new(
+            initialValue: Colors.Transparent,
+            durationSeconds: 0.3f,
+            interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+        );
+
         private readonly ValueTransition<float> _immersiveBgOpacityTransition = new(
             initialValue: 1f,
             durationSeconds: 0.2f
         );
 
+        private readonly ValueTransition<float> _titleXTransition = new(
+            initialValue: 0f,
+            durationSeconds: 0.3f
+        );
+
+        private readonly ValueTransition<float> _titleYTransition = new(
+            initialValue: 0f,
+            durationSeconds: 0.3f
+        );
+
         private readonly ValueTransition<float> _lyricsXTransition = new(
+            initialValue: 0f,
+            durationSeconds: 0.3f
+        );
+
+        private readonly ValueTransition<float> _lyricsYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f
         );
@@ -50,6 +71,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         );
 
         private readonly ValueTransition<float> _albumArtXTransition = new(
+            initialValue: 0f,
+            durationSeconds: 0.3f
+        );
+
+        private readonly ValueTransition<float> _albumArtYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f
         );
