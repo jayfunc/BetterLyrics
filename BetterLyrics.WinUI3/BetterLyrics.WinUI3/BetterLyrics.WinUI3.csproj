@@ -53,11 +53,11 @@
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-preview.6.25358.103" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0-preview.6.25358.103" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.7" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4654" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.250702007-experimental4" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
 		<PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
 		<PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
@@ -65,8 +65,8 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="ShadowViewer.Controls.Notification" Version="1.2.1" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
-		<PackageReference Include="System.Drawing.Common" Version="10.0.0-preview.6.25358.103" />
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.0-preview.6.25358.103" />
+		<PackageReference Include="System.Drawing.Common" Version="9.0.7" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.7" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="TinyPinyin.Net" Version="1.0.2" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
