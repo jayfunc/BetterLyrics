@@ -136,7 +136,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 -   🧠**聰明的行為**
     -   音樂停頓時自動隱藏
 
-> 該項目仍在開發中，最新分支可能存在錯誤和意外行為。
+> This project is still under development, bugs and unexpected behaviors may be existed in the latest branch.
 
 ## 屏幕截圖
 
@@ -176,7 +176,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-**最簡單**獲取它的方法。**無限**免費步道或購買（有**沒有區別**在免費版本和付費版本之間）
+**最簡單**獲取它的方法。**無限** free trail or purchase (there is **沒有區別**在免費版本和付費版本之間）
 
 ☕如果您覺得有用，請考慮購買🧧**Microsoft Store**，我會感謝它！ 🥰
 
@@ -212,7 +212,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 -   [R2D2RIGO/WIN2D-SPALES](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
 -   [CommunityToolkit - 從入門到精通](https://mvvm.coldwind.top/)
 
-## Inspired by
+## 受到啟發
 
 -   [改進的網狀網絡](https://github.com/solstice23/refined-now-playing-netease)
 -   [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
@@ -247,7 +247,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](FAQ/image-11.png)
 
-點擊“小白色欄”以浮動窗口形式顯示底部控制欄（包括當前的播放進度視圖，時間表偏移調整；先前的歌曲，暫停/播放，下一首歌；翻譯，佈局，設置）
+點擊“小白色欄”以浮動窗口形式顯示底部控制條（包括當前的播放進度視圖，時間表偏移調整；上一首歌，暫停/播放，下一首歌；翻譯，佈局，設置）
 
 ![alt text](FAQ/image-12.png)
 
