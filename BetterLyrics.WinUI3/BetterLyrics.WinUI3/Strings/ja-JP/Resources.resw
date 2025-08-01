@@ -907,4 +907,13 @@
   <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
     <value>Translation provider</value>
   </data>
+  <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
+    <value>Target monitor</value>
+  </data>
+  <data name="SystemTrayRestart.Text" xml:space="preserve">
+    <value>Resart</value>
+  </data>
+  <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
+    <value>Reset window position</value>
+  </data>
 </root>
