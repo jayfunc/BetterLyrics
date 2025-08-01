@@ -80,8 +80,8 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
     -   <details><summary>⚠️ Apple Music</summary>
 
-        -   タイムラインのしきい値を設定で約600ミリ秒に設定していることを確認してください（「設定」 - 「高度なオプション」に変更するには）。そうしないと、歌詞は常に前進します。
-        -   ⚠️ Please note that you need additional settings to stop from seeing shaking lyrics (see FAQ at the end of this document for more information)
+        -   Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
+        -   shaking shaking歌詞を見るのをやめるには、追加の設定が必要であることに注意してください（詳細については、このドキュメントの最後のFAQを参照してください）
 
         </details>
 
