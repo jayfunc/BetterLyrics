@@ -88,7 +88,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>⚠️ foobar2000</summary>
 
         -   あなたが持っていることを確認してください<https://github.com/dumbie/foo_mediacontrol>それでインストールされています
-        -   プラグインの問題によりタイムラインに問題があることに注意してください
+        -   pluginの問題によりタイムラインに問題があることに注意してください
 
         </details>
 
@@ -257,7 +257,7 @@ Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご
 
 上部にマウスを置き、ロックアイコンをクリックすると、行ってもいいです！または、または押します`Ctrl + Alt + U`.
 
-### How can I unlock the window in desktop mode
+### デスクトップモードでウィンドウのロックを解除するにはどうすればよいですか
 
 ![alt text](FAQ/image-7.png)
 

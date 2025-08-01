@@ -88,7 +88,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>⚠️ foobar2000</summary>
 
         -   确保你有<https://github.com/dumbie/foo_mediacontrol>与之安装
-        -   请注意，由于插件问题，时间表存在问题
+        -   ⚠️请注意，由于插件问题，时间表存在问题
 
         </details>
 
@@ -247,7 +247,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](FAQ/image-11.png)
 
-点击“小白色栏”以浮动窗口形式显示底部控制栏（包括当前的播放进度视图，时间表偏移调整；先前的歌曲，暂停/播放，下一首歌；翻译，布局，设置）
+Tap the "little white bar" to display the bottom control bar in floating window form (including current playback progress view, timeline offset adjustment; previous song, pause/play, next song; translation, layout, settings)
 
 ![alt text](FAQ/image-12.png)
 

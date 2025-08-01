@@ -88,7 +88,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>⚠️ foobar2000</summary>
 
         -   당신이 가지고 있는지 확인하십시오<https://github.com/dumbie/foo_mediacontrol>그것으로 설치
-        -   플러그인 문제로 인한 타임 라인에 문제가 있습니다.
+        -   plugin 플러그인 문제로 인한 타임 라인에 문제가 있습니다.
 
         </details>
 
@@ -247,7 +247,7 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 ![alt text](FAQ/image-11.png)
 
-"Little White Bar"를 탭하여 Floating Window 형식에 하단 제어 막대를 표시합니다 (현재 재생 진행보기, 타임 라인 오프셋 조정 포함; 이전 노래, 일시 정지/재생, 다음 곡; 번역, 레이아웃, 설정)
+"Little White Bar"를 탭하여 바닥 제어 막대를 플로팅 창 양식에 표시합니다 (현재 재생 진행보기, 타임 라인 오프셋 조정 포함; 이전 노래, 일시 정지/재생, 다음 곡; 번역, 레이아웃, 설정)
 
 ![alt text](FAQ/image-12.png)
 
