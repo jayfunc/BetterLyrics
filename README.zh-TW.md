@@ -136,7 +136,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 -   🧠**聰明的行為**
     -   音樂停頓時自動隱藏
 
-> This project is still under development, bugs and unexpected behaviors may be existed in the latest branch.
+> 該項目仍在開發中，最新分支可能存在錯誤和意外行為。
 
 ## 屏幕截圖
 
@@ -176,7 +176,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-**最簡單**獲取它的方法。**無限** free trail or purchase (there is **沒有區別**在免費版本和付費版本之間）
+**最簡單**獲取它的方法。**無限**免費步道或購買（有**沒有區別**在免費版本和付費版本之間）
 
 ☕如果您覺得有用，請考慮購買🧧**Microsoft Store**，我會感謝它！ 🥰
 
@@ -202,7 +202,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   用於閱讀原始歌詞內容
 -   [老式](https://github.com/dahall/Vanara)
     -   Win32 API包裝器
--   [librenslate](https://github.com/LibreTranslate/LibreTranslate)
+-   [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
     -   提供離線歌詞翻譯的能力
 -   [stackoverflow-如何在WPF中使用Anim Anim Anim Anim Anim Anim Anive Margin屬性](https://stackoverflow.com/a/21542882/11048731)
 -   [揭示](https://github.com/ghost1372/DevWinUI)
@@ -237,7 +237,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ## FAQ
 
-### 我在碼頭模式下看不到任何按鈕
+### I couldn't see any button in dock mode
 
 重要的是要注意，當您輸入“停靠模式”時，操作按鈕就會隱藏。將鼠標懸停在頂部，以訪問“浸入”，“更多”和“關閉”按鈕。
 
@@ -247,7 +247,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](FAQ/image-11.png)
 
-點擊“小白色欄”以浮動窗口形式顯示底部控制條（包括當前的播放進度視圖，時間表偏移調整；上一首歌，暫停/播放，下一首歌；翻譯，佈局，設置）
+點擊“小白色欄”以浮動窗口形式顯示底部控制欄（包括當前的播放進度視圖，時間表偏移調整；先前的歌曲，暫停/播放，下一首歌；翻譯，佈局，設置）
 
 ![alt text](FAQ/image-12.png)
 
@@ -275,4 +275,4 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](FAQ/image-2.png)
 
-轉到“高級選項”部分，增加閾值值（用較大的紅色矩形標記），直到歌詞正常工作。
+Go to "Advanced options" section, increase the threshold value (marked with the bigger red rectangle) until the lyrics is working properly.
