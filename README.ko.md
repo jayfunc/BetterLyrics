@@ -1,6 +1,6 @@
 <div style="text-align: center;">
 
-[❓ 자주 묻는 질문을 보려면 여기를 클릭하십시오 (FAQ)](#faq)
+[? ?? ?? ??(FAQ) ????](#faq)
 
 </div>
 
@@ -14,133 +14,126 @@ BetterLyrics
 
 <div style="text-align: center;">
 
-[![](https://img.shields.io/badge/zh--CN-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md)[![Static Badge](https://img.shields.io/badge/zh--TW-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md)[![Static Badge](https://img.shields.io/badge/ja-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md)[![Static Badge](https://img.shields.io/badge/ko-%ED%95%9C%EA%B5%AD%EC%9D%B8-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md)
+[![](https://img.shields.io/badge/zh--CN-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md) [![Static Badge](https://img.shields.io/badge/zh--TW-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md) [![Static Badge](https://img.shields.io/badge/ja-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md) [![Static Badge](https://img.shields.io/badge/ko-%ED%95%9C%EA%B5%AD%EC%9D%B8-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md)
 
 </div>
 
 <div style="text-align: center;">
 
-![Static Badge](https://img.shields.io/badge/Language-C%23-purple)![Static Badge](https://img.shields.io/badge/License-MIT-red)![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple)![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
+![Static Badge](https://img.shields.io/badge/Language-C%23-purple) ![Static Badge](https://img.shields.io/badge/License-MIT-red) ![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple) ![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
 
 </div>
 
 <h4 align="center">
-Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with local playback and other players
+WinUI 3? Win2D? ??? ?? ?? ????? ?? �� ?? ?? ? ??? ???? ??
 </h3>
 
-## 🎉이 프로젝트는 SSPAI가 소개했습니다!
+## ?? ? ????? SSPAI? ???????!
 
-기사를 확인하십시오.[Betterlyrics - Windows 용으로 설계된 몰입감 있고 부드러운 가사 디스플레이 도구](https://sspai.com/post/101028)
+?? ??: [BetterLyrics �C Windows? ??? ?? ???? ?? ????? ??](https://sspai.com/post/101028)
 
-## 🔈 피드백 및 채팅 그룹
+## ?? ??? ? ?? ??
 
--   [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\QQ.png" height="20">QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info)(1054700388)
--   [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Discord.png" height="12">불화](https://discord.gg/5yAQPnyCKv)
--   [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Telegram.png" height="16">전보](https://t.me/+svhSLZ7awPsxNGY1)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\QQ.png" height="20"> QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Discord.png" height="12"> Discord](https://discord.gg/5yAQPnyCKv)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Telegram.png" height="16"> Telegram](https://t.me/+svhSLZ7awPsxNGY1)
 
-## 🌟 강조 된 기능
+## ?? ?? ??
 
--   🌠**유쾌한 사용자 인터페이스**
-    -   유창한 애니메이션과 효과
+- ?? **???? ??? ?????**
+  - ???? ?????? ??
+- ?? **??? ?? ??**
+  - ???? ?? ??(30? ?? ??)
+  - ?? ?? ???? ?? ?? ?? ??
+- ?? **??? ?? ??**
+  - ?? ???
+    - ?? ??(?? ?? ??)
+    - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) ??(?? ? ?? ?? ??)
+    - [.eslrc](https://github.com/ESLyric/release) ??
+    - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) ??
+  - ??? ?? ???
+    - QQ Music
+    - NetEase Cloud Music(����������)
+    - Kugou Music(�ṷ����)
+    - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
+    - [LRCLIB](https://lrclib.net/)
+- ?? **??? ?? ???? ??**
 
--   ↔️**강한 가사 번역**
-    -   오프라인 기계 번역 (30 개 언어 지원)
-    -   내장 번역을위한 자동 읽기 로컬 가사 파일
+  - <details><summary>?? NetEase Cloud Music</summary>
 
--   🧩**다양한 가사 소스**
-    -   로컬 스토리지
-        -   음악 파일 (포함 된 가사 포함)
-        -   [.lrc](https://en.wikipedia.org/wiki/LRC_(file_format))파일 (핵심 형식 및 향상된 형식 모두)
-        -   [.eslrc](https://github.com/ESLyric/release)파일
-        -   [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language)파일
-    -   온라인 가사 제공 업체
-        -   QQ 음악
-        -   Netease Cloud Music Netease Cloud Music
-        -   쿠구 음악
-        -   [AMLL-TTML-DB](https://github.com/Steve-xmh/amll-ttml-db)
-        -   [lrclib](https://lrclib.net/)
+    - ?? [BetterNCM ????](https://microblock.cc/betterncm)? ?????. ?? ? ?????? ??? ??? ??? ?? NetEase Cloud Music? 2.10.13?? ?????????.
+    - ? ? PluginMarket?? InfLink ????? ???? NetEase Cloud Music? ??????.
+    - ?? ???? ??? ????? ??? ?? ? ????
 
--   🎶**여러 음악 플레이어가 지원했습니다**
+    </details>
 
-    -   <details><summary>⚠️ NetEase Cloud Music</summary>
+  - <details><summary>?? Kugou Music</summary>
 
-        -   설치하십시오[더 나은 플러그인](https://microblock.cc/betterncm)첫 번째. 설치 후 다운 그레이드 가이드가 나타나면 안내서를 따라 Netease Cloud Music의 다운 그레이드를 완료하십시오 (다운 그레이드 2.10.13);
-        -   그런 다음 플러그인 마켓에 link 링크 플러그인을 설치하십시오. 설치가 완료되면 Netease Cloud Music을 다시 시작하십시오. 이 시점에서 모든 준비 작업이 완료되었으며 즐기십시오!
-        -   plugin 플러그인 문제로 인한 타임 라인에 문제가 있습니다.
+    - Kugou Music ???? "??? ?? ???(?? ?? ?) ??"? ???
+    - Kugou Music? ???? ??? ???? ??, ?? ??? ???? BetterLyrics?? ??? ? ????
+    - ?? ???? ??? Kugou ??? ?????
 
-        </details>
+    </details>
 
-    -   <details><summary>⚠️ Kugou Music</summary>
+  - <details><summary>?? Apple Music</summary>
 
-        -   Kugou Music 설정 "Lock Screen Interface와 같은 시스템 재생 컨트롤 지원"이 켜져 있는지 확인하십시오.
-        -   타임 라인 정보가 방송되지 않으므로 Kugou Music의 타임 라인 위치를 변경할 때 Beterlyrics는 이러한 변화를 감지 할 방법이 없습니다.
-        -   ⚠️ kugou 자체로 인한 타임 라인에 문제가 있습니다.
+    - ??? "?? ??"?? ???? ???? ? 600ms? ?????. ??? ??? ??? ?? ??? ?????.
+    - ?? ?? ???? ????? ?? ??? ?????(??? ??? ?? ?? FAQ ??)
 
-        </details>
+    </details>
 
-    -   <details><summary>⚠️ Apple Music</summary>
+  - <details><summary>?? foobar2000</summary>
 
-        -   설정에서 타임 라인 임계 값을 약 600ms로 설정했는지 확인하십시오 ( "설정" - "고급 옵션"으로 이동). 그렇지 않으면 가사가 앞으로 계속 진행됩니다.
-        -   shaking 가사를 보는 것을 막기 위해 추가 설정이 필요합니다 (자세한 내용은이 문서 끝의 FAQ 참조).
+    - https://github.com/dumbie/foo_mediacontrol ? ?????
+    - ?? ???? ??? ????? ??? ?? ? ????
 
-        </details>
+    </details>
 
-    -   <details><summary>⚠️ foobar2000</summary>
+  - Spotify
+  - QQ Music
+  - PotPlayer
+  - ??? ????(???)
 
-        -   당신이 가지고 있는지 확인하십시오<https://github.com/dumbie/foo_mediacontrol>그것으로 설치
-        -   plugin 플러그인 문제로 인한 타임 라인에 문제가 있습니다.
+  - <details><summary>LX Music</summary>
 
-        </details>
+    - LX Music ?? ????? "Open API"? ??????
+    - BetterLyrics ??-?? ???? LX Music ?? ??(?? http://127.0.0.1:23330)? ?????
 
-    -   Spotify
+    </details>
 
-    -   QQ 음악
+  - <details><summary>MusicBee</summary>
 
-    -   포트 플레이어
+    - https://github.com/HenryPDT/mb_MediaControl ? ?????
 
-    -   미디어 플레이어 (시스템)
+    </details>
 
-    -   <details><summary>LX Music</summary>
+  - <details><summary>iTunes</summary>
 
-        -   LX Music 설정 페이지에서 "API 열기"를 활성화했는지 확인하십시오.
-        -   그런 다음 더 나은 문학을 열고, 설정으로 이동하고, "고급 옵션"으로 이동하고, LX Music Server 주소를 입력하십시오 (주로 좋아요.<http://127.0.0.1:23330>) 그리고 당신은 간다!
+    - https://github.com/thewizrd/iTunes-SMTC ? ?????
 
-        </details>
+    </details>
 
-    -   <details><summary>MusicBee</summary>
+  - <details><summary>AIMP</summary>
 
-        -   설치하십시오<https://github.com/HenryPDT/mb_MediaControl>사용하기 전에
+    - https://www.aimp.ru/?do=catalog&rec_id=1097 ? ?????
 
-        </details>
+    </details>
 
-    -   <details><summary>iTunes</summary>
+- ?? **??? ?? ??**
+  - **?? ??**
+    - ??? ?? ?? ?????? ?? ??
+  - **?? ??**
+    - ?? ????? ???? ??? ?? ?
+  - **???? ??**
+    - ? ?? ??? ??? ??
+- ?? **??? ??**
+  - ??? ?????? ???? ??
 
-        -   설치하십시오<https://github.com/thewizrd/iTunes-SMTC>사용하기 전에
+> ? ????? ?? ????. ?? ????? ??? ??? ?? ??? ?? ? ????.
 
-        </details>
+## ????
 
-    -   <details><summary>AIMP</summary>
-
-        -   설치하십시오<https://www.aimp.ru/?do=catalog&rec_id=1097>사용하기 전에
-
-        </details>
-
--   🪟**다중 디스플레이 모드**
-    -   **표준 모드**
-        -   풍부한 가사 애니메이션과 아름답고 역동적 인 배경으로 몰입 형 청취 여행을 즐기십시오.
-    -   **도크 모드**
-        -   스마트 애니메이션 가사 바가 화면 가장자리에 도킹되었습니다.
-    -   **데스크탑 모드**
-        -   앱 위에 떠 다니는 몰입 형 가사를 즐기십시오
-
--   🧠**현명한 행동**
-    -   음악이 잠시 멈췄을 때 자동 숨기십시오
-
-> 이 프로젝트는 여전히 개발 중이며 버그 및 예기치 않은 행동은 최신 지점에 존재할 수 있습니다.
-
-## 스크린 샷
-
-### 표준 모드
+### ?? ??
 
 ![alt text](Screenshots/image.png)
 
@@ -152,23 +145,23 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](Screenshots/album-art-only.png)
 
-### 도크 모드
+### ?? ??
 
 ![alt text](Screenshots/dock-1.png)
 
 ![alt text](Screenshots/dock-2.png)
 
-### 데스크탑 모드
+### ???? ??
 
 ![alt text](Screenshots/desktop-1.png)
 
 ![alt text](Screenshots/desktop-2.png)
 
-## 데모
+## ??
 
-Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여기](https://www.bilibili.com/video/BV1zjGjzfEXh).
+Bilibili?? ?? ??? ?????(2025? 7? 7? ???): [??? ??](https://www.bilibili.com/video/BV1zjGjzfEXh)
 
-## 지금 시도하십시오
+## ?? ??????
 
 ### Microsoft Store
 
@@ -176,103 +169,103 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-**가장 쉬운**그것을 얻는 방법.**제한 없는**무료 트레일 또는 구매 (있습니다**차이가 없습니다**무료 버전과 유료 버전 사이)
+**?? ??** ?? ??. **???** ?? ?? ?? ??(??? ?? ?? ?? ??)
 
-☕ 유용하다고 생각되면 구매를 고려하십시오.**Microsoft Store**, 감사합니다! 🥰
+? ????? **Microsoft Store**?? ??? ??? ???! ??
 
-> 안정적인 버전이 구축되면 Microsoft Store가 최초로 업데이트되는 채널이 될 것입니다.
+> ?? ??? ???? Microsoft Store? ?? ?? ???????.
 
-### 구글 드라이브
+### Google Drive
 
-또는 Google 드라이브에서 가져 오십시오 (참조[풀어 주다](https://github.com/jayfunc/BetterLyrics/releases)링크 페이지)
+Google Drive??? ????? ? ????([???](https://github.com/jayfunc/BetterLyrics/releases) ??? ??)
 
-> 설치 방법에 대한 가이드 ".zip"파일을 다운로드하는 데 주목하십시오.[이 문서](How2Install/How2Install.md).
+> ".zip" ??? ???????. ?? ??? [? ??](How2Install/How2Install.md)? ?????.
 
-## 💖 많은 감사합니다
+## ?? ?? ??
 
--   [가사-리크스 헬퍼](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
-    -   QQ, Netease, Kugou Sources의 가사 페치, 암호 해독 및 구문 분석 제공
--   [lrclib](https://github.com/tranxuanthang/lrclib)
-    -   lrclib 가사 API 제공 업체
--   [.NET 용 오디오 도구 라이브러리 (ATL)](https://github.com/Zeugma440/atldotnet)
-    -   음악 파일에서 사진을 추출하는 데 사용됩니다
--   [Winuiex](https://github.com/dotMorten/WinUIEx)
-    -   윈도우와 관련하여 Win32 API에 쉽게 액세스 할 수있는 방법을 제공하십시오
--   [taglib#](https://github.com/mono/taglib-sharp)
-    -   오리지널 가사 콘텐츠를 읽는 데 사용됩니다
--   [오래된 -지식](https://github.com/dahall/Vanara)
-    -   Win32 API 래퍼
--   [libretranslate](https://github.com/LibreTranslate/LibreTranslate)
-    -   오프라인 가사 번역 능력을 제공하십시오
--   [stackoverflow- WPF에서 마진 속성을 애니메이션하는 방법](https://stackoverflow.com/a/21542882/11048731)
--   [드러내다](https://github.com/ghost1372/DevWinUI)
--   [BILIBILI -il WINUI3】 SystemBackbackDropController : 운모 및 아크릴 효과를 정의하십시오](https://www.bilibili.com/video/BV1PY4FevEkS)
--   [CNBLOGS- .NET 앱은 Windows System Media Control (SMTC)과 상호 작용합니다.](https://www.cnblogs.com/TwilightLemon/p/18279496)
--   [WIN2D의 게임 루프 : CanvasanImatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
--   [r2d2rigo/win2d 샘플](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
--   [CommunityToolkit- 초보자부터 숙달까지](https://mvvm.coldwind.top/)
+- [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
+  - QQ, NetEase, Kugou ?? ????, ???, ?? ??
+- [lrclib](https://github.com/tranxuanthang/lrclib)
+  - LRCLIB ?? API ???
+- [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
+  - ?? ???? ??? ??? ??
+- [WinUIEx](https://github.com/dotMorten/WinUIEx)
+  - Win32 ? API? ?? ?? ??
+- [TagLib#](https://github.com/mono/taglib-sharp)
+  - ?? ?? ?? ??? ??
+- [Vanara](https://github.com/dahall/Vanara)
+  - Win32 API ??
+- [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
+  - ???? ?? ?? ?? ??
+- [Stackoverflow - WPF?? Margin ?? ????? ?? ??](https://stackoverflow.com/a/21542882/11048731)
+- [DevWinUI](https://github.com/ghost1372/DevWinUI)
+- [Bilibili -��WinUI3��SystemBackdropController: ??, ??? ?? ??](https://www.bilibili.com/video/BV1PY4FevEkS)
+- [cnblogs - .NET ?? Windows ??? ??? ???(SMTC) ??](https://www.cnblogs.com/TwilightLemon/p/18279496)
+- [Win2D? ?? ??: CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
+- [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
+- [CommunityToolkit - ???? ????](https://mvvm.coldwind.top/)
 
-## 영감을 받았습니다
+## ?? ?? ????
 
--   [정제-노우 플레이 네테이트](https://github.com/solstice23/refined-now-playing-netease)
--   [가사 애플](https://github.com/WXRIW/Lyricify-App)
--   [소금 플레이어](https://moriafly.com/program/salt-player)
--   [MyToolbar](https://github.com/TwilightLemon/MyToolBar)
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
+- [?? ?? Salt Player](https://moriafly.com/program/salt-player)
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
 
-## ✍️ 우리가 당신의 언어로 번역하도록 도와줍니다
+## ?? ??? ??? ???
 
-당신의 언어를 찾을 수 없습니까?
-괜찮아요! 번역을 시작하고 기고자 중 하나가 되십시오! 😆
-클릭하십시오[링크](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)이 앱을 Crowdin을 통해 언어로 번역하려면 지금!
+??? ??? ????
+?? ???! ??? ??? ???? ?? ???! ??
+[? ??](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)?? Crowdin?? ??? ??? ? ????.
 
-## 스타 역사
+## Star ??
 
 [![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
-## 모든 문제와 PR은 환영됩니다
+## ?? ? PR ??
 
-버그를 찾으면 문제로 제출하거나 아이디어가 있으면 여기에서 자유롭게 공유하십시오.
+??? ???? issues? ?????, ????? ???? ??? ???.
 
-* * *
+---
 
 ## FAQ
 
-### 도크 모드에서 버튼을 볼 수 없었습니다
+### ?? ???? ??? ??? ???
 
-"도킹 모드"를 입력하면 액션 버튼이 숨겨져 있음에 유의해야합니다. 마우스를 상단 위로 가져 가서 "Immerse", "more"및 "닫기"버튼에 액세스하십시오.
+"?? ??"? ???? ?? ??? ?????. ? ??? ???? ??? "??", "???", "??" ??? ?????.
 
 ![alt text](FAQ/image-10.png)
 
-창의 하단 가장자리 위에 마우스를 약간 위로 이동하여 하단에 흰색 제어 플로팅 창을 표시합니다.
+? ?? ???? ?? ?? ???? ??? ??? ?? ??? ??? ?? ?????
 
 ![alt text](FAQ/image-11.png)
 
-"Little White Bar"를 탭하여 Floating Window 형식에 하단 제어 막대를 표시합니다 (현재 재생 진행보기, 타임 라인 오프셋 조정 포함; 이전 노래, 일시 정지/재생, 다음 곡; 번역, 레이아웃, 설정)
+"?? ?? ?"? ???? ?? ??? ??? ?(?? ??, ???? ??? ??, ???/????/???, ??, ????, ?? ??)? ?????
 
 ![alt text](FAQ/image-12.png)
 
-### 데스크탑 모드에서 창을 어떻게 잠글 수 있습니까?
+### ???? ???? ?? ??? ??
 
 ![alt text](FAQ/image-6.png)
 
-상단에 마우스를 마우스로 가져 가서 잠금 아이콘을 클릭하면 좋습니다! 또는 대안으로 누르십시오`Ctrl + Alt + U`.
+??? ???? ??? ??? ???? ????? `Ctrl + Alt + U`? ????.
 
-### 데스크탑 모드에서 창을 잠금 해제하려면 어떻게해야합니까?
+### ???? ???? ? ?? ?? ??
 
 ![alt text](FAQ/image-7.png)
 
-시스템 트레이에 있고 아이콘을 마우스 오른쪽 버튼으로 클릭하면 "창 잠금 해제"가 표시됩니다. 또는 대안으로 누르십시오`Ctrl + Alt + U`.
+??? ??? ???? ???? "? ?? ??"? ????? `Ctrl + Alt + U`? ????.
 
-### 가사 타임 라인에는 지연이 있습니다
+### ?? ????? ??? ?
 
-앱의 바닥에 마우스를 마우기,
+? ? ??? ???? ????.
 
 ![alt text](FAQ/image.png)
 
-그런 다음 첫 번째 아이콘 버튼 (가사 타임 라인 오프셋)을 클릭하면 여기에서 오프셋을 자유롭게 조정할 수 있습니다.
+? ?? ??? ??(?? ???? ???)? ???? ???? ???? ??? ? ????.
 
-### 가사는 자주 앞뒤로 점프합니다 (예 : Apple Music)
+### ??? ?? ??? ????(?: Apple Music)
 
 ![alt text](FAQ/image-2.png)
 
-"고급 옵션"섹션으로 이동하여 가사가 제대로 작동 할 때까지 임계 값 (더 큰 빨간색 사각형으로 표시)을 늘리십시오.
+"?? ??"?? ???(?? ??? ??)? ??? ??? ????? ?????.

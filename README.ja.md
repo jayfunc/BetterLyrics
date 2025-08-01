@@ -1,6 +1,6 @@
 <div style="text-align: center;">
 
-[cullyよくある質問（FAQ）を表示するには、ここをクリックしてください](#faq)
+[? �褯�����|�� (FAQ) ��Ҋ��ˤϤ����򥯥�å�](#faq)
 
 </div>
 
@@ -14,133 +14,126 @@ BetterLyrics
 
 <div style="text-align: center;">
 
-[![](https://img.shields.io/badge/zh--CN-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md)[![Static Badge](https://img.shields.io/badge/zh--TW-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md)[![Static Badge](https://img.shields.io/badge/ja-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md)[![Static Badge](https://img.shields.io/badge/ko-%ED%95%9C%EA%B5%AD%EC%9D%B8-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md)
+[![](https://img.shields.io/badge/zh--CN-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md) [![Static Badge](https://img.shields.io/badge/zh--TW-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md) [![Static Badge](https://img.shields.io/badge/ja-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md) [![Static Badge](https://img.shields.io/badge/ko-%ED%95%9C%EA%B5%AD%EC%9D%B8-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md)
 
 </div>
 
 <div style="text-align: center;">
 
-![Static Badge](https://img.shields.io/badge/Language-C%23-purple)![Static Badge](https://img.shields.io/badge/License-MIT-red)![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple)![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
+![Static Badge](https://img.shields.io/badge/Language-C%23-purple) ![Static Badge](https://img.shields.io/badge/License-MIT-red) ![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple) ![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
 
 </div>
 
 <h4 align="center">
-Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with local playback and other players
+WinUI 3 �� Win2D �ǘ��B���줿�����`�������������Υץ�`��`�ˤ⌝�ꤹ��ӵĸ��~��ʾ�ĩ`��
 </h3>
 
-## 🎉このプロジェクトはSSPAIによって紹介されました！
+## ?? ���ץ��������Ȥ� SSPAI ���ؼ�����ޤ�����
 
-記事をご覧ください：[より良いことをする - ウィンドウ用に設計された没入型で滑らかな歌詞ディスプレイツール](https://sspai.com/post/101028)
+ӛ�¤Ϥ����飺[BetterLyrics �C Windows�򤱤�û���ͤǥ���`���ʸ��~��ʾ�ĩ`��](https://sspai.com/post/101028)
 
-## 🔈フィードバックとチャットグループ
+## ?? �ե��`�ɥХå�?����åȥ���`��
 
--   [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\QQ.png" height="20">QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info)(1054700388)
--   [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Discord.png" height="12">不和](https://discord.gg/5yAQPnyCKv)
--   [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Telegram.png" height="16">電報](https://t.me/+svhSLZ7awPsxNGY1)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\QQ.png" height="20"> QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Discord.png" height="12"> Discord](https://discord.gg/5yAQPnyCKv)
+- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Telegram.png" height="16"> Telegram](https://t.me/+svhSLZ7awPsxNGY1)
 
-## hidhight盛な機能
+## ?? �����؏�
 
--   🌠**心地よいユーザーインターフェイス**
-    -   流fluentアニメーションとエフェクト
+- ?? **��������`���`���󥿩`�ե��`��**
+  - ���餫�ʥ��˥�`�����ȥ��ե�����
+- ?? **�����ʸ��~���U**
+  - ���ե饤��Cе���U��30���Z���꣩
+  - ���`������~�ե����뤫������z�߷��U���Ԅ��i��ȡ��
+- ?? **�����ʸ��~���`��**
+  - ���`���륹�ȥ�`��
+    - ���S�ե����루����z�߸��~���꣩
+    - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) �ե����루�˜�?�����ե��`�ޥåȌ��꣩
+    - [.eslrc](https://github.com/ESLyric/release) �ե�����
+    - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) �ե�����
+  - ����饤����~�ץ��Х����`
+    - QQ Music
+    - NetEase Cloud Music�����������֣�
+    - Kugou Music���ṷ���֣�
+    - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
+    - [LRCLIB](https://lrclib.net/)
+- ?? **�}�������S�ץ�`��`����**
 
--   ↔️**Strong Lyrics Translation**
-    -   Offline machine translation (supporting 30 languages)
-    -   埋め込まれた翻訳のための自動読み取り地元の歌詞ファイル
+  - <details><summary>?? NetEase Cloud Music</summary>
 
--   🧩**さまざまな歌詞ソース**
-    -   ローカルストレージ
-        -   音楽ファイル（埋め込まれた歌詞付き）
-        -   [.lrc](https://en.wikipedia.org/wiki/LRC_(file_format))ファイル（コア形式と拡張形式の両方）
-        -   [.eslrc](https://github.com/ESLyric/release)ファイル
-        -   [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language)ファイル
-    -   オンライン歌詞プロバイダー
-        -   QQ音楽
-        -   NetEase Cloud Music NetEase Cloud Music
-        -   クゴウ音楽
-        -   [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
-        -   [lrclib](https://lrclib.net/)
+    - �ޤ� [BetterNCM �ץ饰����](https://microblock.cc/betterncm) �򥤥󥹥ȩ`�뤷�Ƥ������������󥹥ȩ`����˥����󥰥�`�ɥ����ɤ���ʾ���줿���Ϥϡ�ָʾ�ˏ��� NetEase Cloud Music �� 2.10.13 �˥����󥰥�`�ɤ��Ƥ���������
+    - �����ᡢPluginMarket �� InfLink �ץ饰����򥤥󥹥ȩ`�뤷��NetEase Cloud Music �������Ӥ��Ƥ���������
+    - ?? �ץ饰����Ά��}�ˤ�꥿����饤��˲��ߺϤ�������Ϥ�����ޤ�
 
--   🎶**複数の音楽プレーヤーがサポートされています**
+    </details>
 
-    -   <details><summary>⚠️ NetEase Cloud Music</summary>
+  - <details><summary>?? Kugou Music</summary>
 
-        -   インストールしてください[BetterNCMプラグイン](https://microblock.cc/betterncm)初め。インストール後にダウングレードガイドがポップアップした場合は、ガイドに従ってNetEase Cloud Musicのダウングレードを完了してください（2.10.13にダウングレード）。
-        -   その後、プラグインマーケットにflinkプラグインをインストールしてください。インストールが完了したら、NetEase Cloud Musicを再起動してください。この時点で、すべての準備操作が完了しました、それを楽しんでください！
-        -   pluginの問題によりタイムラインに問題があることに注意してください
+    - Kugou Music ���O���ǡ������ƥ���������ȥ��`�루���å�����ʤɣ��򥵥ݩ`�ȡ����Є��ˤ��Ƥ�������
+    - Kugou Music �ϥ�����饤���������Ť��ʤ����ᡢ����λ�ä������Ƥ� BetterLyrics �Ǘʳ��Ǥ��ޤ���
+    - ?? ������饤��Ά��}�� Kugou �Ȥ��˘��Ǥ�
 
-        </details>
+    </details>
 
-    -   <details><summary>⚠️ Kugou Music</summary>
+  - <details><summary>?? Apple Music</summary>
 
-        -   クゴウ音楽の設定「ロック画面インターフェイスなどのサポートシステムの再生コントロール」がオンになっていることを確認してください
-        -   タイムライン情報は放送されていません。つまり、クゴウ音楽のタイムラインポジションを変更すると、この変更を検出する方法はありません。
-        -   ⚠️クゴウ自体のためにタイムラインに問題があることに注意してください
+    - �O���Ρ��߶Ȥʥ��ץ���󡹤ǥ�����饤��铂���s 600ms ���O�����Ƥ����������������ʤ��ȸ��~��ǰ��˓e��A���ޤ���
+    - ?? ���~�Γe�������ˤ�׷���O������Ҫ�Ǥ���Ԕ���ϱ��ɥ������ĩβ�� FAQ ����գ�
 
-        </details>
+    </details>
 
-    -   <details><summary>⚠️ Apple Music</summary>
+  - <details><summary>?? foobar2000</summary>
 
-        -   タイムラインのしきい値を設定で約600ミリ秒に設定していることを確認してください（「設定」 - 「高度なオプション」に変更するには）。そうしないと、歌詞は常に前進します。
-        -   shaking詳細については、シェイクの歌詞を見るのをやめるには、追加の設定が必要であることに注意してください。
+    - https://github.com/dumbie/foo_mediacontrol �򥤥󥹥ȩ`�뤷�Ƥ�������
+    - ?? �ץ饰����Ά��}�ˤ�꥿����饤��˲��ߺϤ�������Ϥ�����ޤ�
 
-        </details>
+    </details>
 
-    -   <details><summary>⚠️ foobar2000</summary>
+  - Spotify
+  - QQ Music
+  - PotPlayer
+  - ��ǥ����ץ�`��`�������ƥࣩ
 
-        -   あなたが持っていることを確認してください<https://github.com/dumbie/foo_mediacontrol>それでインストールされています
-        -   pluginの問題によりタイムラインに問題があることに注意してください
+  - <details><summary>LX Music</summary>
 
-        </details>
+    - LX Music ���O���ک`���ǡ�Open API�����Є��ˤ��Ƥ�������
+    - BetterLyrics ���O�����߶Ȥʥ��ץ����� LX Music ���`�Щ`���ɥ쥹��ͨ�� http://127.0.0.1:23330�����������Ƥ�������
 
-    -   Spotify
+    </details>
 
-    -   QQ音楽
+  - <details><summary>MusicBee</summary>
 
-    -   ポットプレイヤー
+    - https://github.com/HenryPDT/mb_MediaControl �򥤥󥹥ȩ`�뤷�Ƥ�������
 
-    -   メディアプレーヤー（システム）
+    </details>
 
-    -   <details><summary>LX Music</summary>
+  - <details><summary>iTunes</summary>
 
-        -   LX Music Settingsページで「Open API」を有効にしていることを確認してください
-        -   次に、より良くなることを開き、設定に移動し、「Advanced Options」に移動し、LX Music Serverアドレスを入力します（ほとんどのように<http://127.0.0.1:23330>）そしてあなたはそこに行きます！
+    - https://github.com/thewizrd/iTunes-SMTC �򥤥󥹥ȩ`�뤷�Ƥ�������
 
-        </details>
+    </details>
 
-    -   <details><summary>MusicBee</summary>
+  - <details><summary>AIMP</summary>
 
-        -   インストールしてください<https://github.com/HenryPDT/mb_MediaControl>使用する前に
+    - https://www.aimp.ru/?do=catalog&rec_id=1097 �򥤥󥹥ȩ`�뤷�Ƥ�������
 
-        </details>
+    </details>
 
-    -   <details><summary>iTunes</summary>
+- ?? **�}���α�ʾ��`��**
+  - **�˜ʥ�`��**
+    - û��ФΤ�����~���˥�`�����Ȅӵı���
+  - **�ɥå���`��**
+    - ����ˤ˥ɥå��󥰤��륹�ީ`�Ȥʸ��~�Щ`
+  - **�ǥ����ȥåץ�`��**
+    - ���ץ���Ϥ˸��~��ե��`�ȱ�ʾ
+- ?? **���ީ`�Ȥʒ���**
+  - ���S��һ�rֹͣ������ԄӤǷǱ�ʾ
 
-        -   インストールしてください<https://github.com/thewizrd/iTunes-SMTC>使用する前に
+> ���ץ��������Ȥ��_�k�ФǤ������¥֥����ˤϥХ������ڤ��ʤ����������ޤ����Ϥ�����ޤ���
 
-        </details>
+## ������`�󥷥�å�
 
-    -   <details><summary>AIMP</summary>
-
-        -   インストールしてください<https://www.aimp.ru/?do=catalog&rec_id=1097>使用する前に
-
-        </details>
-
--   🪟**複数の表示モード**
-    -   **標準モード**
-        -   豊かな歌詞のアニメーションと美しくダイナミックな背景を備えた没入型のリスニングの旅をお楽しみください
-    -   **ドックモード**
-        -   スクリーンエッジにドッキングされたスマートなアニメーション歌詞バー
-    -   **デスクトップモード**
-        -   アプリの上に浮かぶ没入型の歌詞をお楽しみください
-
--   🧠**スマートな行動**
-    -   音楽が一時停止したときに自動隠す
-
-> このプロジェクトはまだ開発中であり、最新の支店にはバグと予期しない行動が存在する可能性があります。
-
-## スクリーンショット
-
-### 標準モード
+### �˜ʥ�`��
 
 ![alt text](Screenshots/image.png)
 
@@ -152,127 +145,127 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 ![alt text](Screenshots/album-art-only.png)
 
-### ドックモード
+### �ɥå���`��
 
 ![alt text](Screenshots/dock-1.png)
 
 ![alt text](Screenshots/dock-2.png)
 
-### デスクトップモード
+### �ǥ����ȥåץ�`��
 
 ![alt text](Screenshots/desktop-1.png)
 
 ![alt text](Screenshots/desktop-2.png)
 
-## デモンストレーション
+## �ǥ�
 
-Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご覧ください[ここ](https://www.bilibili.com/video/BV1zjGjzfEXh).
+Bilibili �ǽB��ӻ���2025��7��7�չ��_�����E����������[������](https://www.bilibili.com/video/BV1zjGjzfEXh)
 
-## Try it now
+## �񤹤�ԇ��
 
-### マイクロソフトストア
+### Microsoft Store
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-**最も簡単です**それを手に入れる方法。**無制限**無料のトレイルまたは購入（あります**違いはありません**無料版と有料版の間）
+**��⺆�g**�����ַ�����**�o����**�Οo�ϥȥ饤����ޤ���ُ�루�o�ϰ�����ϰ���`���Ϥ���ޤ���
 
-☕便利だと思う場合は、購入することを検討してください🧧**マイクロソフトストア**、感謝します！ 🥰
+? ��������˼�ä��顢**Microsoft Store** �Ǥ�ُ��?��֧Ԯ������������Ҥ����Ǥ���??
 
-> 安定したバージョンが構築されると、Microsoft Storeが更新された最初のチャンネルになります。
+> �����椬���`�������ȡ�Microsoft Store ������˸��¤���ޤ���
 
-### Googleドライブ
+### Google Drive
 
-または、Googleドライブから入手してください（参照してください[リリース](https://github.com/jayfunc/BetterLyrics/releases)リンクのページ）
+Google Drive ��������ֿ��ܤǤ���[���`��](https://github.com/jayfunc/BetterLyrics/releases)�ک`�����գ�
 
-> 「.zip」ファイルをダウンロードしていることに注意してください。インストール方法については、親切にフォローしてください[このドキュメント](How2Install/How2Install.md).
+> ��������`�ɥե�����ϡ�.zip���Ǥ������󥹥ȩ`�뷽����[������Υɥ������](How2Install/How2Install.md)�򤴲��դ���������
 
-## 💖ありがとう
+## ?? �؄e���x
 
--   [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
-    -   QQ、NetEase、Kugouソースの歌詞フェッチ、復号化、解析を提供する
--   [lrclib](https://github.com/tranxuanthang/lrclib)
-    -   lrclib歌詞APIプロバイダー
--   [.NET用のオーディオツールライブラリ（ATL）](https://github.com/Zeugma440/atldotnet)
-    -   音楽ファイルに写真を抽出するために使用されます
--   [winuiex](https://github.com/dotMorten/WinUIEx)
-    -   ウィンドウィングに関するWin32 APIに簡単にアクセスする方法を提供します
--   [タグリブ＃](https://github.com/mono/taglib-sharp)
-    -   オリジナルの歌詞コンテンツを読むために使用されます
--   [古いもの](https://github.com/dahall/Vanara)
-    -   Win32 APIラッパー
--   [リブレットランスレート](https://github.com/LibreTranslate/LibreTranslate)
-    -   オフラインの歌詞翻訳の機能を提供します
--   [StackOverFlow -WPFでマージンプロパティをアニメーション化する方法](https://stackoverflow.com/a/21542882/11048731)
--   [明らかにする](https://github.com/ghost1372/DevWinUI)
--   [bilibili -【winui3】SystemBackDropController：MICAおよびアクリル効果を定義します](https://www.bilibili.com/video/BV1PY4FevEkS)
--   [CNBLOGS -.NETアプリはWindowsシステムメディアコントロール（SMTC）と対話します](https://www.cnblogs.com/TwilightLemon/p/18279496)
--   [Win2dのゲームループ：CanvasanimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
--   [R2D2RIGO/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
--   [communitytoolkit-初心者から習得まで](https://mvvm.coldwind.top/)
+- [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
+  - QQ��NetEase��Kugou �θ��~ȡ��?�ͺ�?�������ṩ
+- [lrclib](https://github.com/tranxuanthang/lrclib)
+  - LRCLIB ���~ API �ץ��Х����`
+- [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
+  - ���S�ե����뤫�黭������ʹ��
+- [WinUIEx](https://github.com/dotMorten/WinUIEx)
+  - Win32 ������ɥ� API �ؤκ��g�ʥ����������ṩ
+- [TagLib#](https://github.com/mono/taglib-sharp)
+  - Ԫ�θ��~���ݤ��i��ȡ���ʹ��
+- [Vanara](https://github.com/dahall/Vanara)
+  - Win32 API ��åѩ`
+- [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
+  - ���ե饤����~���U�C�ܤ��ṩ
+- [Stackoverflow - WPF �� Margin �ץ��ѥƥ��򥢥˥�`����󻯤��뷽��](https://stackoverflow.com/a/21542882/11048731)
+- [DevWinUI](https://github.com/ghost1372/DevWinUI)
+- [Bilibili -��WinUI3��SystemBackdropController���ĸ?������넿���ζ��x](https://www.bilibili.com/video/BV1PY4FevEkS)
+- [cnblogs - .NET ���ץ�� Windows �����ƥ��ǥ�������ȥ��`��(SMTC)���BЯ](https://www.cnblogs.com/TwilightLemon/p/18279496)
+- [Win2D �Υ��`���`�ף�CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
+- [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
+- [CommunityToolkit - ���T������äޤ�](https://mvvm.coldwind.top/)
 
-## に触発された
+## ���󥹥ԥ�`�����
 
--   [洗練されたnowing-netease](https://github.com/solstice23/refined-now-playing-netease)
--   [lyricify-app](https://github.com/WXRIW/Lyricify-App)
--   [ソルトプレーヤー](https://moriafly.com/program/salt-player)
--   [mytoolbar](https://github.com/TwilightLemon/MyToolBar)
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
+- [�c���S Salt Player](https://moriafly.com/program/salt-player)
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
 
-## ✍唱私たちがあなたの言語に翻訳するのを手伝ってください
+## ?? ���U�f���Τ��
 
-あなたの言語が見つかりませんか？
-心配しないで！翻訳を開始して、貢献者の1人になりましょう！ 😆
-クリックします[リンク](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)今すぐCrowdinを介してこのアプリをあなたの言語に翻訳するために！
+�����������Z��Ҋ������ʤ����Ϥ⤴���Ĥ���������
+���ҷ��U�ˤ��μӤ�������������ȥ�ӥ�`���`�ˤʤ�ޤ��礦��??
+[������Υ��](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866)���� Crowdin �Ƿ��U�ˤ��f������������
 
-## 星の歴史
+## Star �Ěs
 
 [![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
-## 問題やPRを歓迎します
+## �Х����?PR�Zӭ
 
-バグが見つかった場合は、問題で提出してください。または、アイデアがある場合は、ここでお気軽に共有してください。
+�Х���Ҋ�Ĥ������Ϥ� issues �Ǥ���椯�������������ǥ��⤼�ҹ��Ф��Ƥ���������
 
-* * *
+---
 
-## よくある質問
+## FAQ
 
-### ドックモードでボタンが表示されませんでした
+### �ɥå���`�ɤǥܥ���Ҋ���ʤ�
 
-「ドッキングモード」を入力すると、アクションボタンが非表示になることに注意することが重要です。マウスを上部にホバリングして、「浸す」、「その他」、「閉じる」ボタンにアクセスします。
+���ɥå���`�ɡ��Ǥϲ����ܥ��󤬷Ǳ�ʾ�ˤʤ�ޤ���������ɥ��ϲ��˥ޥ������ؤͤ�ȡ�û�롹�������������]���롹�ܥ��󤬱�ʾ����ޤ���
 
 ![alt text](FAQ/image-10.png)
 
-Hover the mouse slightly above the bottom edge of the window to display the white control floating window at the bottom
+������ɥ��¶ˤ��٤��Ϥ˥ޥ������ؤͤ�ȡ��²��˰פ�����ȥ��`��ե��`�ƥ��󥰥�����ɥ�����ʾ����ޤ�
 
 ![alt text](FAQ/image-11.png)
 
-「Little White Bar」をタップして、フローティングウィンドウ形式のボトムコントロールバーを表示します（現在の再生プログレスビュー、タイムラインオフセット調整、前の曲、Pause/Play、次の曲、翻訳、レイアウト、設定を含む）
+���פ��Щ`���򥯥�å�����ȡ��²��Υե��`�ƥ��󥰥���ȥ��`��Щ`�������M�á�������饤�󥪥ե��å��{����ǰ��/һ�rֹͣ/���������U���쥤�����ȡ��O��������ʾ����ޤ�
 
 ![alt text](FAQ/image-12.png)
 
-### ウィンドウをデスクトップモードでロックするにはどうすればよいですか
+### �ǥ����ȥåץ�`�ɤǥ�����ɥ�����å����뷽��
 
 ![alt text](FAQ/image-6.png)
 
-上部にマウスを置き、ロックアイコンをクリックすると、行ってもいいです！または、または押します`Ctrl + Alt + U`.
+�ϲ��˥ޥ������ؤͤƥ��å���������򥯥�å����ޤ��� `Ctrl + Alt + U` ��Ѻ���Ƥ���������
 
-### デスクトップモードでウィンドウのロックを解除するにはどうすればよいですか
+### �ǥ����ȥåץ�`�ɤǥ�����ɥ��򥢥���å����뷽��
 
 ![alt text](FAQ/image-7.png)
 
-システムトレイにあり、アイコンを右クリックすると、「ウィンドウのロックを解除する」が表示されます。または、または押します`Ctrl + Alt + U`.
+�����ƥ�ȥ쥤�Υ���������ҥ���å�������������ɥ��Υ��å���������x�k���ޤ��� `Ctrl + Alt + U` ��Ѻ���Ƥ���������
 
-### 歌詞のタイムラインに遅延があります
+### ���~�Υ�����饤����W�Ӥ�����
 
-アプリの最下部にマウスを置く、
+���ץ��һ���¤˥ޥ������ؤͤƤ���������
 
 ![alt text](FAQ/image.png)
 
-次に、最初のアイコンボタン（歌詞タイムラインオフセット）をクリックします。ここでは、オフセットを自由に調整できます。
+����Υ�������ܥ��󣨸��~������饤�󥪥ե��åȣ��򥯥�å�����ȡ����ե��åȤ����ɤ��{���Ǥ��ޤ���
 
-### 歌詞は頻繁にジャンプします（例：Apple Music）
+### ���~���l����ǰ�᤹�루����Apple Music��
 
 ![alt text](FAQ/image-2.png)
 
-「Advanced Options」セクションに移動し、歌詞が適切に機能するまで、しきい値（より大きな赤い長方形でマークされた）を増やします。
+���߶Ȥʥ��ץ���󡹥��������ǡ������������������֣��򉈤䤹�ȸ��~�������˄������ޤ���
