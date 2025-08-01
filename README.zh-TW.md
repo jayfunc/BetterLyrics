@@ -212,7 +212,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 -   [R2D2RIGO/WIN2D-SPALES](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
 -   [CommunityToolkit - 從入門到精通](https://mvvm.coldwind.top/)
 
-## 受到啟發
+## Inspired by
 
 -   [改進的網狀網絡](https://github.com/solstice23/refined-now-playing-netease)
 -   [Lyricify-App](https://github.com/WXRIW/Lyricify-App)

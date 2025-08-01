@@ -125,7 +125,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
         </details>
 
--   🪟**Multiple Display Modes**
+-   🪟**다중 디스플레이 모드**
     -   **표준 모드**
         -   풍부한 가사 애니메이션과 아름답고 역동적 인 배경으로 몰입 형 청취 여행을 즐기십시오.
     -   **도크 모드**
@@ -255,7 +255,7 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 ![alt text](FAQ/image-6.png)
 
-위에 마우스를 마우스로 가져 가서 잠금 아이콘을 클릭하면 좋습니다. 또는 대안으로 누르십시오`Ctrl + Alt + U`.
+상단에 마우스를 마우스로 가져 가서 잠금 아이콘을 클릭하면 좋습니다! 또는 대안으로 누르십시오`Ctrl + Alt + U`.
 
 ### 데스크탑 모드에서 창을 잠금 해제하려면 어떻게해야합니까?
 
