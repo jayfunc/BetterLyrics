@@ -43,8 +43,8 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 -   🌠**心地よいユーザーインターフェイス**
     -   流fluentアニメーションとエフェクト
 
--   ↔️**Strong Lyrics Translation**
-    -   Offline machine translation (supporting 30 languages)
+-   ↔️**強い歌詞翻訳**
+    -   オフラインの機械翻訳（30言語をサポート）
     -   埋め込まれた翻訳のための自動読み取り地元の歌詞ファイル
 
 -   🧩**さまざまな歌詞ソース**
@@ -81,7 +81,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
     -   <details><summary>⚠️ Apple Music</summary>
 
         -   タイムラインのしきい値を設定で約600ミリ秒に設定していることを確認してください（「設定」 - 「高度なオプション」に変更するには）。そうしないと、歌詞は常に前進します。
-        -   shaking詳細については、シェイクの歌詞を見るのをやめるには、追加の設定が必要であることに注意してください。
+        -   ⚠️ Please note that you need additional settings to stop from seeing shaking lyrics (see FAQ at the end of this document for more information)
 
         </details>
 
@@ -168,7 +168,7 @@ Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with loc
 
 Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご覧ください[ここ](https://www.bilibili.com/video/BV1zjGjzfEXh).
 
-## Try it now
+## 今すぐ試してみてください
 
 ### マイクロソフトストア
 
@@ -243,7 +243,7 @@ Bilibiliではじめにビデオ（2025年7月7日にアップロード）をご
 
 ![alt text](FAQ/image-10.png)
 
-Hover the mouse slightly above the bottom edge of the window to display the white control floating window at the bottom
+窓の下端の少し上にマウスをホバリングして、下部に白いコントロールフローティングウィンドウを表示します
 
 ![alt text](FAQ/image-11.png)
 
