@@ -247,7 +247,7 @@ Bilibili에서 소개 비디오 (2025 년 7 월 7 일에 업로드) 시청[여�
 
 ![alt text](FAQ/image-11.png)
 
-"Little White Bar"를 탭하여 Floating Window 형식에 하단 제어 막대를 표시합니다 (현재 재생 진행보기, 타임 라인 오프셋 조정 포함; 이전 노래, 일시 정지/재생, 다음 곡; 번역, 레이아웃, 설정)
+Tap the "little white bar" to display the bottom control bar in floating window form (including current playback progress view, timeline offset adjustment; previous song, pause/play, next song; translation, layout, settings)
 
 ![alt text](FAQ/image-12.png)
 
