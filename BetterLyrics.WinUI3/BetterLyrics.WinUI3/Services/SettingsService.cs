@@ -211,7 +211,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsCustomStrokeFontColorKey, Colors.White.ToInt());
 
             SetDefault(LyricsStandardFontSizeKey, 28);
-            SetDefault(LyricsDockFontSizeKey, 20);
+            SetDefault(LyricsDockFontSizeKey, 16);
             SetDefault(LyricsDesktopFontSizeKey, 28);
 
             SetDefault(LyricsLineSpacingFactorKey, 0.5f);
