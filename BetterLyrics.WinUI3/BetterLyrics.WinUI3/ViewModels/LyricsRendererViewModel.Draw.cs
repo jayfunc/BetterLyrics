@@ -96,7 +96,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        private void DrawBackgroundImgae(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasBitmap canvasBitmap, float opacity)
+        private void DrawBackgroundImgae(OpacityEffect effect, CanvasDrawingSession ds, CanvasBitmap canvasBitmap)
         {
             float imageWidth = (float)canvasBitmap.Size.Width;
             float imageHeight = (float)canvasBitmap.Size.Height;
@@ -107,62 +107,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             float x = _canvasWidth / 2 - imageWidth * scaleFactor / 2;
             float y = _canvasHeight / 2 - imageHeight * scaleFactor / 2;
 
-            // Original source: https://zhuanlan.zhihu.com/p/37178216
-            float gain = _lyricsBgBrightnessTransition.Value;
-
-            float whiteX = 1 - 0.5f * gain;
-            float whiteY = 0.5f + 0.5f * gain;
-            float blackX = 0.5f - 0.5f * gain;
-            float blackY = 0 + 0.5f * gain;
-
-            ds.DrawImage(new OpacityEffect
-            {
-                Source = new BrightnessEffect
-                {
-                    Source = new ScaleEffect
-                    {
-                        Scale = new Vector2(scaleFactor),
-                        Source = canvasBitmap,
-                    },
-                    WhitePoint = new Vector2(whiteX, whiteY),
-                    BlackPoint = new Vector2(blackX, blackY),
-                },
-                Opacity = opacity,
-            }, new Vector2(x, y));
+            ds.DrawImage(effect, new Vector2(x, y));
         }
 
-        private void DrawForegroundImgae(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasBitmap canvasBitmap, float opacity)
+        private void DrawForegroundImgae(OpacityEffect effect, CanvasDrawingSession ds)
         {
-            if (opacity == 0) return;
-
-            float imageWidth = (float)canvasBitmap.Size.Width;
-            float imageHeight = (float)canvasBitmap.Size.Height;
-
-            float scaleFactor = _albumArtSize / Math.Min(imageWidth, imageHeight);
-            if (scaleFactor < 0.01f) return;
-
-            float cornerRadius = _albumArtCornerRadius / 100f * _albumArtSize / 2;
-
-            using var cornerRadiusMask = new CanvasCommandList(control.Device);
-            using var cornerRadiusMaskDs = cornerRadiusMask.CreateDrawingSession();
-            cornerRadiusMaskDs.FillRoundedRectangle(
-                new Rect(0, 0, imageWidth * scaleFactor, imageHeight * scaleFactor),
-                cornerRadius, cornerRadius, Colors.White
-            );
-
-            ds.DrawImage(new OpacityEffect
-            {
-                Source = new AlphaMaskEffect
-                {
-                    Source = new ScaleEffect
-                    {
-                        Scale = new Vector2(scaleFactor),
-                        Source = canvasBitmap,
-                    },
-                    AlphaMask = cornerRadiusMask,
-                },
-                Opacity = opacity,
-            }, new Vector2(_albumArtXTransition.Value, _albumArtYTransition.Value));
+            ds.DrawImage(effect, new Vector2(_albumArtXTransition.Value, _albumArtYTransition.Value));
         }
 
         private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
@@ -173,13 +123,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
             overlappedCoversDs.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
 
-            if (_lastAlbumArtCanvasBitmap != null)
+            if (_lastBgImageEffect != null && !_lastBgImageEffect.IsDisposed() && _lastAlbumArtCanvasBitmap != null)
             {
-                DrawBackgroundImgae(control, overlappedCoversDs, _lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+                DrawBackgroundImgae(_lastBgImageEffect, overlappedCoversDs, _lastAlbumArtCanvasBitmap);
             }
-            if (_albumArtCanvasBitmap != null)
+            if (_bgImageEffect != null && !_bgImageEffect.IsDisposed() && _albumArtCanvasBitmap != null)
             {
-                DrawBackgroundImgae(control, overlappedCoversDs, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
+                DrawBackgroundImgae(_bgImageEffect, overlappedCoversDs, _albumArtCanvasBitmap);
             }
 
             overlappedCoversDs.Transform = Matrix3x2.Identity;
@@ -222,13 +172,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             using var albumArt = new CanvasCommandList(control.Device);
             using var albumArtDs = albumArt.CreateDrawingSession();
-            if (_albumArtCanvasBitmap != null)
+
+            if (_lastFgImageEffect != null && !_lastFgImageEffect.IsDisposed() && _lastAlbumArtCanvasBitmap != null)
             {
-                DrawForegroundImgae(control, albumArtDs, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
+                DrawForegroundImgae(_lastFgImageEffect, albumArtDs);
             }
-            if (_lastAlbumArtCanvasBitmap != null)
+            if (_fgImageEffect != null && !_fgImageEffect.IsDisposed() && _albumArtCanvasBitmap != null)
             {
-                DrawForegroundImgae(control, albumArtDs, _lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+                DrawForegroundImgae(_fgImageEffect, albumArtDs);
             }
 
             using var opacity = new CanvasCommandList(control.Device);
@@ -367,12 +318,16 @@ namespace BetterLyrics.WinUI3.ViewModels
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
                 // Current line will not be blurred
                 combinedDs.DrawImage(
-                    new GaussianBlurEffect
+                    new OpacityEffect
                     {
-                        Source = new OpacityEffect { Source = bgLyrics, Opacity = line.OpacityTransition.Value * _lyricsOpacityTransition.Value },
-                        BlurAmount = line.BlurAmountTransition.Value,
-                        BorderMode = EffectBorderMode.Soft,
-                        Optimization = EffectOptimization.Speed,
+                        Source = new GaussianBlurEffect
+                        {
+                            Source = bgLyrics,
+                            BlurAmount = line.BlurAmountTransition.Value,
+                            BorderMode = EffectBorderMode.Soft,
+                            Optimization = EffectOptimization.Speed,
+                        },
+                        Opacity = line.OpacityTransition.Value * _lyricsOpacityTransition.Value,
                     }
                 );
 

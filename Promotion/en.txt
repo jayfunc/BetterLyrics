@@ -1,0 +1,44 @@
+* The free trial version is identical to the paid version — no feature limitations.
+
+🎵 BetterLyrics — Lyrics that move you, visuals that delight. A stunning lyrics display tool for Windows.
+
+Looking for a smooth, dynamic, and immersive way to view lyrics on Windows?
+BetterLyrics delivers a whole new visual experience — making every song truly sing on screen.
+
+✨ Key Features
+
+- Beautiful UI with smooth animations
+Built with WinUI 3, featuring multiple themes and dynamic backgrounds. Enjoy seamless lyric scrolling, fade effects, and rich visuals.
+
+- Offline translation with support for 30 languages
+Automatically reads translation lines embedded in local lyrics files. Multi-language support helps you understand every lyric, no internet needed.
+
+- Supports multiple lyric sources and formats
+Reads local lyrics in LRC, ESLRC, TTML, and other formats. Also fetches lyrics online from major sources like QQ Music, NetEase Cloud Music, Kugou, and LrcLib.
+
+- Real-time sync with various music players
+Compatible with NetEase Cloud, Kugou, Apple Music, Spotify, PotPlayer, MusicBee, AIMP, and even the default Windows player. Lyrics sync automatically—no setup required.
+
+- Multiple display modes to suit your workflow
+Switch easily between immersive full-screen mode, floating desktop lyrics, and smart window docking to fit any listening scenario.
+
+- Auto-hide when playback is paused
+The interface stays out of your way — lyrics automatically hide when music stops, keeping your screen clean and distraction-free.
+
+🔧 Extra Features You’ll Love
+
+- Fine-tune lyric timing with offset adjustment — perfect for mismatched audio versions
+
+- Toggle translation, customize layout, pin or lock windows — your lyrics, your way
+
+- Active community, frequent updates, and responsive support for user feedback
+
+✅ Perfect For:
+
+- Users who want floating desktop lyrics to elevate their listening experience
+
+- Listeners who use multiple players or need support for various lyric formats
+
+- Fans of beautiful, customizable visuals in their music tools
+
+🎧 Whether you're immersed in music through headphones or want lyrics to stay visible on your screen, BetterLyrics gives you a personalized, immersive way to experience every song.

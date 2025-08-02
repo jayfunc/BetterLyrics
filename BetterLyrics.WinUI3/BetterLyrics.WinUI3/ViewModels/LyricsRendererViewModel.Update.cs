@@ -49,20 +49,57 @@ namespace BetterLyrics.WinUI3.ViewModels
             _displayType = _displayTypeReceived;
             _playingLineIndex = playingLineIndex;
 
-            if (_albumArtChanged)
+            // 背景图切换计算
+            // 将当前背景图放到 _lastAlbumArtSwBitmap 中 并设置不透明度为 1 
+            // 将新的背景图放到 _albumArtSwBitmap 中 并设置不透明度为 0
+            // 这样可以实现背景图的连贯渐变效果
+            if (_albumArtChanged || _isCanvasHeightChanged || _isCanvasWidthChanged ||
+                _lyricsBgBrightnessTransition.IsTransitioning ||
+                _albumArtBgTransition.IsTransitioning)
             {
-                if (_lastAlbumArtSwBitmap != null)
+                // 必须先在此处重置动画
+                if (_albumArtChanged)
                 {
-                    _lastAlbumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _lastAlbumArtSwBitmap);
+                    _albumArtBgTransition.Reset(0f);
+                    _albumArtBgTransition.StartTransition(1f);
                 }
-                _albumArtBgTransition.Reset(0f);
-                _albumArtBgTransition.StartTransition(1f);
-                if (_albumArtSwBitmap != null)
+                // 更新 last
+                if (_albumArtChanged)
                 {
-                    _albumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _albumArtSwBitmap);
+                    if (_lastAlbumArtSwBitmap != null)
+                    {
+                        _lastAlbumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _lastAlbumArtSwBitmap);
+                    }
                 }
-                _albumArtChanged = false;
+                _lastBgImageEffect?.Dispose();
+                _lastBgImageEffect = null;
+                _lastFgImageEffect?.Dispose();
+                _lastFgImageEffect = null;
+                if (_lastAlbumArtCanvasBitmap != null)
+                {
+                    _lastFgImageEffect = CreateFgImageEffect(control, _lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+                    _lastBgImageEffect = CreateBgImageEffect(_lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+                }
+                // 更新 current
+                if (_albumArtChanged)
+                {
+                    if (_albumArtSwBitmap != null)
+                    {
+                        _albumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _albumArtSwBitmap);
+                    }
+                }
+                _bgImageEffect?.Dispose();
+                _bgImageEffect = null;
+                _fgImageEffect?.Dispose();
+                _fgImageEffect = null;
+                if (_albumArtCanvasBitmap != null)
+                {
+                    _fgImageEffect = CreateFgImageEffect(control, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
+                    _bgImageEffect = CreateBgImageEffect(_albumArtCanvasBitmap, _albumArtBgTransition.Value);
+                }
             }
+
+            _albumArtChanged = false;
 
             if (_isDynamicCoverOverlayEnabled)
             {
