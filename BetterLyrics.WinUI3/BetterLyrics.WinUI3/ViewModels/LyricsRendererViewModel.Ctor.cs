@@ -49,7 +49,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             _lyricsBgTheme = _settingsService.LyricsBackgroundTheme;
 
             _isFanLyricsEnabled = _settingsService.IsFanLyricsEnabled;
+
+            // 歌词描边
             _lyricsFontStrokeWidth = _settingsService.LyricsFontStrokeWidth;
+            _lyricsStrokeFontColorType = _settingsService.LyricsStrokeFontColorType;
+            _customStrokeFontColor = _settingsService.LyricsCustomStrokeFontColor;
+            
             _isTranslationEnabled = _settingsService.IsTranslationEnabled;
             _showTranslationOnly = _settingsService.ShowTranslationOnly;
             _isLibreTranslateEnabled = _settingsService.IsLibreTranslateEnabled;
