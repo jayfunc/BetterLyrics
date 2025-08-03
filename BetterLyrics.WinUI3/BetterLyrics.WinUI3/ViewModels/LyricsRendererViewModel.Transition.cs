@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ValueTransition<float> _canvasYScrollTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.SmoothStep
+            easingType: EasingType.EaseInOutSine
         );
 
         private readonly ValueTransition<Color> _immersiveBgColorTransition = new(
@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private readonly ValueTransition<float> _immersiveBgOpacityTransition = new(
             initialValue: 1f,
-            durationSeconds: 0.2f
+            durationSeconds: 0.3f
         );
 
         private readonly ValueTransition<float> _titleXTransition = new(
