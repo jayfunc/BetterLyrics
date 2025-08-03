@@ -916,4 +916,7 @@
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>Reset window position</value>
   </data>
+  <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
+    <value>This setting will not affect the dock mode and the dock mode will always remain centered.</value>
+  </data>
 </root>
