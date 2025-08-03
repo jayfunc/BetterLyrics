@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                _easingType = EasingType.SmoothStep;
+                _easingType = EasingType.EaseInOutSine;
                 _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
         }

@@ -195,7 +195,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(CoverImageRadiusKey, 12); // 12 %
             SetDefault(CoverAcrylicEffectAmountKey, 0);
             // Lyrics
-            SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Center);
+            SetDefault(LyricsAlignmentTypeKey, (int)TextAlignmentType.Left);
             SetDefault(SongInfoAlignmentTypeKey, (int)TextAlignmentType.Left);
             SetDefault(LyricsFontWeightKey, (int)LyricsFontWeight.Bold);
             SetDefault(LyricsBlurAmountKey, 5);
@@ -210,7 +210,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(LyricsCustomFgFontColorKey, Colors.White.ToInt());
             SetDefault(LyricsCustomStrokeFontColorKey, Colors.White.ToInt());
 
-            SetDefault(LyricsStandardFontSizeKey, 28);
+            SetDefault(LyricsStandardFontSizeKey, 32);
             SetDefault(LyricsDockFontSizeKey, 16);
             SetDefault(LyricsDesktopFontSizeKey, 28);
 
@@ -233,7 +233,7 @@ namespace BetterLyrics.WinUI3.Services
             SetDefault(IgnoreFullscreenWindowKey, false);
             SetDefault(PreferredDisplayTypeKey, (int)LyricsDisplayType.SplitView);
 
-            SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutQuad);
+            SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutSine);
             SetDefault(LyricsScrollDurationKey, 500); // 500ms
             SetDefault(TimelineSyncThresholdKey, 0); // 0ms
 
