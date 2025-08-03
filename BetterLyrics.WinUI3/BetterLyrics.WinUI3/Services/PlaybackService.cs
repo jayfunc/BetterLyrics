@@ -11,6 +11,8 @@ using EvtSource;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -292,15 +294,15 @@ namespace BetterLyrics.WinUI3.Services
             var decoder = await BitmapDecoder.CreateAsync(stream);
             token.ThrowIfCancellationRequested();
 
-            var _albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
+            var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
             token.ThrowIfCancellationRequested();
 
-            var _albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
-            var _albumArtDarkAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, true).FirstOrDefault();
+            var albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
+            var albumArtDarkAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, true).FirstOrDefault();
 
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
-                AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(_albumArtSwBitmap, _albumArtLightAccentColor, _albumArtDarkAccentColor));
+                AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(albumArtSwBitmap, albumArtLightAccentColor, albumArtDarkAccentColor));
             });
         }
 

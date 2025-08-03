@@ -41,8 +41,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            DockModeHelper.Disable(this);
-            Environment.Exit(0);
+            WindowHelper.ExitApp();
         }
 
         public void UpdateTitleBarArea()
@@ -267,11 +266,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
-        {
-            App.Current.LyricsWindowNotificationPanel = TipContainerCenter;
-        }
-
         private void RootGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             ViewModel.IsMouseWithinWindow = true;
@@ -307,6 +301,16 @@ namespace BetterLyrics.WinUI3.Views
         private void MusicGalleryMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             WindowHelper.OpenWindow<MusicGalleryWindow>();
+        }
+
+        private void ExitAppMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.ExitApp();
+        }
+
+        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
+        {
+            App.Current.LyricsWindowNotificationPanel = TipContainerCenter;
         }
     }
 }

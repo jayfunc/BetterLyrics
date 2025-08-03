@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using BetterLyrics.WinUI3.Helper;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
@@ -21,6 +22,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private OpacityEffect? _lastFgImageEffect;
         private OpacityEffect? _fgImageEffect;
+
+        private CanvasCommandList? _albumArtBgEffect;
 
         private OpacityEffect CreateBgImageEffect(CanvasBitmap canvasBitmap, float opacity)
         {
@@ -88,6 +91,102 @@ namespace BetterLyrics.WinUI3.ViewModels
                 },
                 Opacity = opacity,
             };
+        }
+
+        private void UpdateAlbumArtBgEffect(ICanvasAnimatedControl control)
+        {
+            _albumArtBgEffect?.Dispose();
+            _albumArtBgEffect = null;
+
+            var overlappedCovers = new CanvasCommandList(control);
+            var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
+
+            if (_lastBgImageEffect != null && !_lastBgImageEffect.IsDisposed() && _lastAlbumArtCanvasBitmap != null)
+            {
+                DrawBackgroundImgae(_lastBgImageEffect, overlappedCoversDs, _lastAlbumArtCanvasBitmap);
+            }
+            if (_bgImageEffect != null && !_bgImageEffect.IsDisposed() && _albumArtCanvasBitmap != null)
+            {
+                DrawBackgroundImgae(_bgImageEffect, overlappedCoversDs, _albumArtCanvasBitmap);
+            }
+
+            var blurredCover = new GaussianBlurEffect
+            {
+                BlurAmount = _albumArtBgBlurAmount,
+                Source = overlappedCovers,
+                BorderMode = EffectBorderMode.Soft,
+                Optimization = EffectOptimization.Speed,
+            };
+
+            var combined = new CanvasCommandList(control);
+            var combinedDs = combined.CreateDrawingSession();
+
+            if (_coverAcrylicEffectAmount > 0 && _coverAcrylicNoiseCanvasBitmap != null)
+            {
+                // 应用亚克力噪点效果
+                combinedDs.DrawImage(new BlendEffect
+                {
+                    Mode = BlendEffectMode.SoftLight,
+                    Background = blurredCover,
+                    Foreground = new OpacityEffect
+                    {
+                        Source = _coverAcrylicNoiseCanvasBitmap,
+                        Opacity = _coverAcrylicEffectAmount / 100f,
+                    },
+                });
+            }
+            else
+            {
+                combinedDs.DrawImage(blurredCover);
+            }
+
+            _albumArtBgEffect = new CanvasCommandList(control);
+            var albumArtBgDs = _albumArtBgEffect.CreateDrawingSession();
+            albumArtBgDs.DrawImage(new OpacityEffect
+            {
+                Opacity = _albumArtBgOpacity / 100f,
+                Source = combined,
+            });
+        }
+
+        private void UpdateLastBgImageEffect()
+        {
+            _lastBgImageEffect?.Dispose();
+            _lastBgImageEffect = null;
+            if (_lastAlbumArtCanvasBitmap != null)
+            {
+                _lastBgImageEffect = CreateBgImageEffect(_lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+            }
+        }
+
+        private void UpdateBgImageEffect()
+        {
+            _bgImageEffect?.Dispose();
+            _bgImageEffect = null;
+            if (_albumArtCanvasBitmap != null)
+            {
+                _bgImageEffect = CreateBgImageEffect(_albumArtCanvasBitmap, _albumArtBgTransition.Value);
+            }
+        }
+
+        private void UpdateLastFgImageEffect(ICanvasAnimatedControl control)
+        {
+            _lastFgImageEffect?.Dispose();
+            _lastFgImageEffect = null;
+            if (_lastAlbumArtCanvasBitmap != null)
+            {
+                _lastFgImageEffect = CreateFgImageEffect(control, _lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+            }
+        }
+
+        private void UpdateFgImageEffect(ICanvasAnimatedControl control)
+        {
+            _fgImageEffect?.Dispose();
+            _fgImageEffect = null;
+            if (_albumArtCanvasBitmap != null)
+            {
+                _fgImageEffect = CreateFgImageEffect(control, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
+            }
         }
     }
 }

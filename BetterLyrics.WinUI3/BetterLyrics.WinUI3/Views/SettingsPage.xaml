@@ -1078,16 +1078,5 @@
             </ScrollViewer>
         </NavigationView>
 
-        <scontrols:NotificationPanel
-            x:Name="TipContainerCenter"
-            Margin="0,0,0,52"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Canvas.ZIndex="1"
-            FlowDirection="RightToLeft"
-            Loaded="TipContainerCenter_Loaded"
-            Orientation="Vertical"
-            Visibility="Collapsed" />
-
     </Grid>
 </Page>

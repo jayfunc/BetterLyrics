@@ -89,11 +89,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
-        {
-            App.Current.SettingsWindowNotificationPanel = TipContainerCenter;
-        }
-
         private async void AutoStartupToggleSwitch_Loaded(object sender, RoutedEventArgs e)
         {
             AutoStartupToggleSwitch.IsOn = await ViewModel.DetectIsAutoStartupEnabledAsync();

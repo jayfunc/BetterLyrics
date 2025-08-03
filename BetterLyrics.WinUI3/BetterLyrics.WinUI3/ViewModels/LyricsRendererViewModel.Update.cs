@@ -28,6 +28,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         private bool _isPlayingLineChanged = false;
         private bool _isVisibleLinesBoundaryChanged = false;
 
+        private bool _isDebugOverlayEnabledChanged = false;
+
+        private bool _albumArtChanged = false;
+        private bool _isCoverAcrylicEffectAmountChanged = false;
+
+        private bool _isAlbumArtCornerRadiusChanged = true;
+
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
             _elapsedTime = args.Timing.ElapsedTime;
@@ -48,6 +55,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             _canvasHeight = (float)control.Size.Height;
             _displayType = _displayTypeReceived;
             _playingLineIndex = playingLineIndex;
+
+            if (_isDebugOverlayEnabledChanged)
+            {
+                if (_isDebugOverlayEnabled)
+                {
+                    _drawFrameStopwatch = Stopwatch.StartNew();
+                }
+                else
+                {
+                    _drawFrameStopwatch?.Stop();
+                    _drawFrameStopwatch = null;
+                }
+                _isDebugOverlayEnabledChanged = false;
+            }
 
             if (_isDynamicCoverOverlayEnabled)
             {
@@ -70,11 +91,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (_isCanvasWidthChanged || _isCanvasHeightChanged)
             {
                 _isCoverAcrylicEffectAmountChanged = true;
-            }
-
-            if (_isCoverAcrylicEffectAmountChanged)
-            {
-                UpdateCoverAcrylicOverlay(control);
             }
 
             if (_isDisplayTypeChanged || _isCanvasWidthChanged || _isCanvasHeightChanged)
@@ -146,6 +162,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
 
+            if (_isAlbumArtCornerRadiusChanged)
+            {
+                UpdateLastFgImageEffect(control);
+                UpdateFgImageEffect(control);
+                _isAlbumArtCornerRadiusChanged = false;
+            }
+
             // 背景图切换计算
             // 将当前背景图放到 _lastAlbumArtSwBitmap 中 并设置不透明度为 1 
             // 将新的背景图放到 _albumArtSwBitmap 中 并设置不透明度为 0
@@ -165,35 +188,35 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     if (_lastAlbumArtSwBitmap != null)
                     {
+                        _lastAlbumArtCanvasBitmap?.Dispose();
+                        _lastAlbumArtCanvasBitmap = null;
                         _lastAlbumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _lastAlbumArtSwBitmap);
                     }
                 }
-                _lastBgImageEffect?.Dispose();
-                _lastBgImageEffect = null;
-                _lastFgImageEffect?.Dispose();
-                _lastFgImageEffect = null;
-                if (_lastAlbumArtCanvasBitmap != null)
-                {
-                    _lastFgImageEffect = CreateFgImageEffect(control, _lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
-                    _lastBgImageEffect = CreateBgImageEffect(_lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
-                }
+                UpdateLastFgImageEffect(control);
+                UpdateLastBgImageEffect();
                 // 更新 current
                 if (_albumArtChanged)
                 {
                     if (_albumArtSwBitmap != null)
                     {
+                        _albumArtCanvasBitmap?.Dispose();
+                        _albumArtCanvasBitmap = null;
                         _albumArtCanvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(control, _albumArtSwBitmap);
                     }
                 }
-                _bgImageEffect?.Dispose();
-                _bgImageEffect = null;
-                _fgImageEffect?.Dispose();
-                _fgImageEffect = null;
-                if (_albumArtCanvasBitmap != null)
-                {
-                    _fgImageEffect = CreateFgImageEffect(control, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
-                    _bgImageEffect = CreateBgImageEffect(_albumArtCanvasBitmap, _albumArtBgTransition.Value);
-                }
+                UpdateFgImageEffect(control);
+                UpdateBgImageEffect();
+                // 更新叠加的背景效果
+                UpdateAlbumArtBgEffect(control);
+            }
+
+            if (_isCoverAcrylicEffectAmountChanged)
+            {
+                UpdateCoverAcrylicOverlay(control);
+                UpdateAlbumArtBgEffect(control);
+
+                _isCoverAcrylicEffectAmountChanged = false;
             }
 
             _albumArtChanged = false;
@@ -228,7 +251,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _lyricsOpacityTransition.Update(_elapsedTime);
             _albumArtOpacityTransition.Update(_elapsedTime);
             _immersiveBgOpacityTransition.Update(_elapsedTime);
-            _immersiveBgTransition.Update(_elapsedTime);
+            _immersiveBgColorTransition.Update(_elapsedTime);
             _albumArtAccentColorTransition.Update(_elapsedTime);
             _albumArtBgTransition.Update(_elapsedTime);
             _lyricsBgBrightnessTransition.Update(_elapsedTime);
@@ -265,22 +288,16 @@ namespace BetterLyrics.WinUI3.ViewModels
                     continue;
                 }
 
-                if (line.CanvasTextLayout != null)
-                {
-                    line.CanvasTextLayout.Dispose();
-                    line.CanvasTextLayout = null;
-                }
-
-                // Calculate layout bounds
-                line.CanvasTextLayout = new CanvasTextLayout(
-                    control,
-                    line.DisplayedText,
-                    _lyricsTextFormat,
-                    _maxLyricsWidth,
-                    _canvasHeight
-                );
-
+                line.UpdateTextLayout(control, _lyricsTextFormat, _maxLyricsWidth, _canvasHeight, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
+                line.UpdateTextGeometry();
                 line.Position = new Vector2(0, y);
+                line.UpdateCenterPosition(_maxLyricsWidth, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
+                line.UpdateFontEffect(control, _isDesktopMode, _strokeFontColor, _lyricsFontStrokeWidth, _bgFontColor);
+
+                if (line.CanvasTextLayout == null)
+                {
+                    continue;
+                }
 
                 y +=
                     (float)line.CanvasTextLayout.LayoutBounds.Height
@@ -480,6 +497,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 default:
                     break;
             }
+
+            _isLayoutChanged = true;
         }
 
         private void UpdateLinesProps()
@@ -556,6 +575,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (_coverAcrylicEffectAmount > 0)
             {
                 var ret = NoiseOverlayHelper.GenerateNoiseBitmapBGRA((int)_canvasWidth, (int)_canvasHeight);
+                _coverAcrylicNoiseCanvasBitmap?.Dispose();
+                _coverAcrylicNoiseCanvasBitmap = null;
                 _coverAcrylicNoiseCanvasBitmap = CanvasBitmap.CreateFromBytes(
                     control,
                     ret,
@@ -564,7 +585,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                    Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized
                 );
             }
-            _isCoverAcrylicEffectAmountChanged = false;
         }
     }
 }

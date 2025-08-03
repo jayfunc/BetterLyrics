@@ -70,6 +70,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 else if (message.PropertyName == nameof(SettingsPageViewModel.IsDebugOverlayEnabled))
                 {
                     _isDebugOverlayEnabled = message.NewValue;
+                    _isDebugOverlayEnabledChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.IsLyricsGlowEffectEnabled))
                 {
@@ -139,7 +140,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.ActivatedWindowAccentColor))
                 {
-                    _immersiveBgTransition.StartTransition(message.NewValue);
+                    _immersiveBgColorTransition.StartTransition(message.NewValue);
                     _environmentalColor = message.NewValue;
                     UpdateColorConfig();
                 }
@@ -183,6 +184,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsPageViewModel.CoverImageRadius))
                 {
                     _albumArtCornerRadius = message.NewValue;
+                    _isAlbumArtCornerRadiusChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.CoverOverlayOpacity))
                 {
@@ -231,6 +233,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontStrokeWidth))
                 {
                     _lyricsFontStrokeWidth = message.NewValue;
+                    _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsScrollDuration))
                 {
@@ -277,6 +280,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(SettingsPageViewModel.LyricsAlignmentType))
                 {
                     _lyricsAlignmentType = message.NewValue;
+                    _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.SongInfoAlignmentType))
                 {

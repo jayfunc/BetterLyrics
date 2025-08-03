@@ -37,12 +37,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static void ExitApp()
         {
-            LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-            if (lyricsWindow != null)
-            {
-                DockModeHelper.Disable(lyricsWindow);
-            }
-            Environment.Exit(0);
+            WindowHelper.ExitApp();
         }
 
         [RelayCommand]
