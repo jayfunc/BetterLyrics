@@ -916,4 +916,7 @@
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>重置窗口位置</value>
   </data>
+  <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
+    <value>此设置不会影响停靠模式，停靠模式将始终保持居中。</value>
+  </data>
 </root>

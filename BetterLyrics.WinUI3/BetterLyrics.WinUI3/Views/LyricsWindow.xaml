@@ -113,6 +113,7 @@
                                     x:Name="SettingsFlyoutItem"
                                     x:Uid="SystemTraySettings"
                                     Click="SettingsMenuFlyoutItem_Click" />
+                                <MenuFlyoutItem x:Uid="SystemTrayExit" Click="ExitAppMenuFlyoutItem_Click" />
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>

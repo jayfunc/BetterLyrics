@@ -107,6 +107,12 @@ namespace BetterLyrics.WinUI3.Helper
             return t * t * (3f - 2f * t);
         }
 
+        public static float CubicBezier(float t, float p0, float p1, float p2, float p3)
+        {
+            float u = 1 - t;
+            return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
+        }
+
         public static float Linear(float t) => t;
     }
 }

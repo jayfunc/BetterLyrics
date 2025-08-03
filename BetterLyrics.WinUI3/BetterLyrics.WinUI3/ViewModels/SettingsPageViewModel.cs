@@ -105,18 +105,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (LocalMediaFolders.Any(x => Path.GetFullPath(x.Path).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
             {
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathExistedInfo"));
+                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathExistedInfo"), InfoBarSeverity.Warning);
             }
             else if (LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
             {
                 // 添加的文件夹是现有文件夹的子文件夹
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo"));
+                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo"), InfoBarSeverity.Warning);
             }
             else if (LocalMediaFolders.Any(item => Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
             )
             {
                 // 添加的文件夹是现有文件夹的父文件夹
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathIncludingOthersInfo"));
+                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathIncludingOthersInfo"), InfoBarSeverity.Warning);
             }
             else
             {
@@ -136,19 +136,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static async Task OpenCacheFolderAsync()
         {
-            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.CacheFolder);
+            await Windows.System.Launcher.LaunchFolderPathAsync(Helper.PathHelper.CacheFolder);
         }
 
         [RelayCommand]
         private static void RestartApp()
         {
-            WindowHelper.RestartApp();
+            Helper.WindowHelper.RestartApp();
         }
 
         [RelayCommand]
         private async Task SelectAndAddFolderAsync(UIElement sender)
         {
-            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
+            var window = Helper.WindowHelper.GetWindowByWindowType<SettingsWindow>();
             if (window == null) return;
 
             var picker = new Windows.Storage.Pickers.FolderPicker();
@@ -177,18 +177,20 @@ namespace BetterLyrics.WinUI3.ViewModels
                     string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, null);
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success);
-                        IsLibreTranslateServerTesting = false;
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), InfoBarSeverity.Success);
                     });
                 }
                 catch (Exception)
                 {
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
-                        IsLibreTranslateServerTesting = false;
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), InfoBarSeverity.Error);
                     });
                 }
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                {
+                    IsLibreTranslateServerTesting = false;
+                });
             });
         }
 
@@ -201,9 +203,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                 bool testResult = await NetHelper.CheckConnectivity($"{LXMusicServer}/status");
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
-                    App.Current.SettingsWindowNotificationPanel?.Notify(
-                        App.ResourceLoader!.GetString($"SettingsPageServerTest{(testResult ? "Success" : "Failed")}Info"),
-                        testResult ? InfoBarSeverity.Success : InfoBarSeverity.Error);
+                    if (testResult)
+                    {
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), InfoBarSeverity.Success);
+                    }
+                    else
+                    {
+                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), InfoBarSeverity.Error);
+                    }
                     IsLXMusicServerTesting = false;
                 });
             });

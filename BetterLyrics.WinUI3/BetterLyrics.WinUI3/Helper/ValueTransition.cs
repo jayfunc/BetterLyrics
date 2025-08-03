@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                _easingType = EasingType.Linear;
+                _easingType = EasingType.SmoothStep;
                 _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
         }
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (!_isTransitioning) return;
 
-            _progress += (float)elapsedTime.TotalSeconds / _durationSeconds;
+            _progress += (float)(elapsedTime.TotalSeconds / _durationSeconds);
             if (_progress >= 1f)
             {
                 _progress = 1f;

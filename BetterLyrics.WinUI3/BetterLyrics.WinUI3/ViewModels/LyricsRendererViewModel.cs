@@ -1,24 +1,17 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using ABI.Microsoft.UI.Xaml;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Lyricify.Lyrics.Helpers.General;
-using Lyricify.Lyrics.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
-using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.Graphics.Display;
 using Microsoft.UI;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,16 +35,17 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private int _songDurationMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
 
+        private Stopwatch? _drawFrameStopwatch;
+        private int _drawFrameCount = 0;
+        private int _displayedDrawFrameCount = 0;
+
         private SoftwareBitmap? _lastAlbumArtSwBitmap = null;
         private SoftwareBitmap? _albumArtSwBitmap = null;
 
         private CanvasBitmap? _lastAlbumArtCanvasBitmap = null;
         private CanvasBitmap? _albumArtCanvasBitmap = null;
 
-        private bool _albumArtChanged = false;
-
         private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
-        private bool _isCoverAcrylicEffectAmountChanged = false;
 
         private float _albumArtSize = 0f;
         private int _albumArtCornerRadius = 0;
@@ -188,6 +182,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             WordWrapping = CanvasWordWrapping.NoWrap,
             TrimmingSign = CanvasTrimmingSign.Ellipsis,
             TrimmingGranularity = CanvasTextTrimmingGranularity.Character,
+        };
+        private CanvasTextFormat _debugTextFormat = new()
+        {
+            FontSize = 12,
+            FontWeight = FontWeights.ExtraBlack,
         };
 
         private LatestOnlyTaskRunner _refreshLyricsRunner = new();
@@ -392,14 +391,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (e.AlbumArtSwBitmap != _albumArtSwBitmap)
             {
                 //_lastAlbumArtSwBitmap?.Dispose();
+                _lastAlbumArtSwBitmap = null;
                 _lastAlbumArtSwBitmap = _albumArtSwBitmap;
-                //_lastAlbumArtCanvasBitmap?.Dispose();
-                _lastAlbumArtCanvasBitmap = null;
 
                 //_albumArtSwBitmap?.Dispose();
+                _albumArtSwBitmap = null;
                 _albumArtSwBitmap = e.AlbumArtSwBitmap;
-                //_albumArtCanvasBitmap?.Dispose();
-                _albumArtCanvasBitmap = null;
 
                 _albumArtChanged = true;
 
@@ -543,12 +540,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             switch (provider)
             {
                 case Enums.LyricsSearchProvider.QQ:
-                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
+                    translationRaw = Helper.FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, Helper.PathHelper.QQTranslationCacheDirectory);
                     break;
                 case Enums.LyricsSearchProvider.Kugou:
                     break;
                 case Enums.LyricsSearchProvider.Netease:
-                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
+                    translationRaw = Helper.FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, Helper.PathHelper.NeteaseTranslationCacheDirectory);
                     break;
                 case Enums.LyricsSearchProvider.LrcLib:
                     break;

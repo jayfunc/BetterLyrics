@@ -86,6 +86,16 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
+        public static void ExitApp()
+        {
+            LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (lyricsWindow != null)
+            {
+                DockModeHelper.Disable(lyricsWindow);
+            }
+            Environment.Exit(0);
+        }
+
         private static void TrackWindow(object window)
         {
             if (!_activeWindows.Contains(window))

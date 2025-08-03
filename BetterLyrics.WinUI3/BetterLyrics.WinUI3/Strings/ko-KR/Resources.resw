@@ -916,4 +916,7 @@
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>창 위치를 재설정합니다</value>
   </data>
+  <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
+    <value>이 설정은 도크 모드에 영향을 미치지 않으며 도크 모드는 항상 중앙에 유지됩니다.</value>
+  </data>
 </root>

@@ -20,5 +20,10 @@ namespace BetterLyrics.WinUI3.Views
 
             RootFrame.Navigate(typeof(SettingsPage));
         }
+
+        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
+        {
+            App.Current.SettingsWindowNotificationPanel = TipContainerCenter;
+        }
     }
 }

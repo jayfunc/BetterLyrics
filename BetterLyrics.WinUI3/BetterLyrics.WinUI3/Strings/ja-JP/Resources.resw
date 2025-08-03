@@ -916,4 +916,7 @@
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>ウィンドウの位置をリセットします</value>
   </data>
+  <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
+    <value>この設定はドックモードには影響しません。ドックモードは常に中心のままです。</value>
+  </data>
 </root>
