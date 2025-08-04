@@ -258,7 +258,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                 );
 
-                if (line.HighlightOpacityTransition.Value != 0)
+                if (line.HighlightOpacityTransition.Value !=0)
                 {
                     // 再叠加高亮行歌词层（前景歌词层）
                     using var mask = new CanvasCommandList(control.Device);
@@ -431,6 +431,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
+
+                line.DisposeFontEffects();
+                line.DisposeTextGeometry();
             }
         }
 
