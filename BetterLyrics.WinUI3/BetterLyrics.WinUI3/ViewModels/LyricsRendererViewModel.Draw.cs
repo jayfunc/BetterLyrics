@@ -83,7 +83,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                             $"Total line count: {GetMaxLyricsLineIndexBoundaries().Item2 + 1}\n" +
                             $"Cur time: {TotalTime + _positionOffset}\n" +
                             $"Lang size: {_lyricsDataArr.Count}\n" +
-                            $"Song duration: {TimeSpan.FromMilliseconds(SongInfo?.DurationMs ?? 0)}",
+                            $"Song duration: {TimeSpan.FromMilliseconds(SongInfo?.DurationMs ?? 0)}\n" + 
+                            $"Y offset: {_canvasYScrollTransition.Value}",
                         new Vector2(10, 40),
                         ThemeTypeSent == Microsoft.UI.Xaml.ElementTheme.Light ? Colors.Black : Colors.White,
                         _debugTextFormat
@@ -432,8 +433,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
 
-                //line.DisposeFontEffects();
-                //line.DisposeTextGeometry();
+                line.DisposeFontEffects();
+                line.DisposeTextGeometry();
             }
         }
 
