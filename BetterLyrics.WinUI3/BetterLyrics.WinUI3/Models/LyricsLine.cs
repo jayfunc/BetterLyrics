@@ -15,11 +15,31 @@ namespace BetterLyrics.WinUI3.Models
     public class LyricsLine
     {
         private const float _animationDuration = 0.3f;
-        public ValueTransition<float> AngleTransition { get; set; } = new(initialValue: 0f, durationSeconds: _animationDuration);
-        public ValueTransition<float> BlurAmountTransition { get; set; } = new(initialValue: 0f, durationSeconds: _animationDuration);
-        public ValueTransition<float> HighlightOpacityTransition { get; set; } = new(initialValue: 0f, durationSeconds: _animationDuration);
-        public ValueTransition<float> OpacityTransition { get; set; } = new(initialValue: 0f, durationSeconds: _animationDuration);
-        public ValueTransition<float> ScaleTransition { get; set; } = new(initialValue: 0.95f, durationSeconds: _animationDuration);
+        public ValueTransition<float> AngleTransition { get; set; } = new(
+            initialValue: 0f,
+            durationSeconds: _animationDuration,
+            easingType: EasingType.EaseInOutSine
+        );
+        public ValueTransition<float> BlurAmountTransition { get; set; } = new(
+            initialValue: 0f,
+            durationSeconds: _animationDuration,
+            easingType: EasingType.EaseInOutSine
+        );
+        public ValueTransition<float> HighlightOpacityTransition { get; set; } = new(
+            initialValue: 0f,
+            durationSeconds: _animationDuration,
+            easingType: EasingType.EaseInOutSine
+        );
+        public ValueTransition<float> OpacityTransition { get; set; } = new(
+            initialValue: 0f,
+            durationSeconds: _animationDuration,
+            easingType: EasingType.EaseInOutSine
+        );
+        public ValueTransition<float> ScaleTransition { get; set; } = new(
+            initialValue: 0f,
+            durationSeconds: _animationDuration,
+            easingType: EasingType.EaseInOutSine
+        );
 
         public CanvasTextLayout? CanvasTextLayout { get; private set; }
 

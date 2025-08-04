@@ -432,8 +432,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
 
-                line.DisposeFontEffects();
-                line.DisposeTextGeometry();
+                //line.DisposeFontEffects();
+                //line.DisposeTextGeometry();
             }
         }
 
