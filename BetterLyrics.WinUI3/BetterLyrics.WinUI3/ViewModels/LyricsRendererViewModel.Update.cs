@@ -292,6 +292,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                 line.Position = new Vector2(0, y);
                 line.UpdateTextLayout(control, _lyricsTextFormat, _maxLyricsWidth, _canvasHeight, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
                 line.UpdateCenterPosition(_maxLyricsWidth, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
+                
+                line.UpdateTextGeometry();
+                line.UpdateFontEffect(control, _isDesktopMode, _strokeFontColor, _lyricsFontStrokeWidth, _bgFontColor);
 
                 if (line.CanvasTextLayout == null)
                 {
@@ -514,8 +517,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 if (line == null) continue;
 
-                line.UpdateTextGeometry();
-                line.UpdateFontEffect(control, _isDesktopMode, _strokeFontColor, _lyricsFontStrokeWidth, _bgFontColor);
+                //line.UpdateTextGeometry();
+                //line.UpdateFontEffect(control, _isDesktopMode, _strokeFontColor, _lyricsFontStrokeWidth, _bgFontColor);
 
                 if (_isLayoutChanged || _isVisibleLinesBoundaryChanged || _isPlayingLineChanged)
                 {
