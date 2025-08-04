@@ -1,3 +1,5 @@
+![](Promotion/banner.png)
+
 <div style="text-align: center;">
 
 [❓ Click here to view frequently asked questions (FAQ)](#faq)
