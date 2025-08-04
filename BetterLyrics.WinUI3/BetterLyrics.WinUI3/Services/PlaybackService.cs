@@ -54,6 +54,7 @@ namespace BetterLyrics.WinUI3.Services
         private SongInfo? _cachedSongInfo;
         private List<MediaSourceProviderInfo> _mediaSourceProvidersInfo;
         private byte[]? _SMTCAlbumArtBytes = null;
+        private int _targetAlbumArtSize = 400;
 
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
         public event EventHandler<TimelineChangedEventArgs>? TimelineChanged;
@@ -178,7 +179,6 @@ namespace BetterLyrics.WinUI3.Services
                 if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
                 {
                     _SMTCAlbumArtBytes = await ImageHelper.ToByteArrayAsync(streamReference);
-                    _SMTCAlbumArtBytes = ImageHelper.Resize(_SMTCAlbumArtBytes, 800);
                 }
                 else
                 {
@@ -281,11 +281,12 @@ namespace BetterLyrics.WinUI3.Services
 
             if (bytes == null)
             {
-                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(400, 400);
+                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(_targetAlbumArtSize, _targetAlbumArtSize);
                 token.ThrowIfCancellationRequested();
             }
 
             bytes = ImageHelper.MakeSquareWithThemeColor(bytes);
+            bytes = ImageHelper.Resize(bytes, _targetAlbumArtSize);
 
             using var stream = new InMemoryRandomAccessStream();
             await stream.WriteAsync(bytes.AsBuffer());

@@ -187,13 +187,10 @@ namespace BetterLyrics.WinUI3.Helper
         public static byte[] Resize(byte[] imageBytes, int size)
         {
             using Image image = Image.Load(imageBytes);
-            var factor = Math.Max(size / image.Width, size / image.Height);
-            if (factor <= 1)
-            {
-                return imageBytes;
-            }
-            int width = image.Width * factor;
-            int height = image.Height * factor;
+            var factor = Math.Max((float)size / image.Width, (float)size / image.Height);
+
+            int width = (int)(image.Width * factor);
+            int height = (int)(image.Height * factor);
             image.Mutate(x => x.Resize(width, height, KnownResamplers.Welch));
 
             using var ms = new MemoryStream();
