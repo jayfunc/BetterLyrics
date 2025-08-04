@@ -1,4 +1,6 @@
-﻿<div style="text-align: center;">
+﻿![](Promotion/banner.png)
+
+<div style="text-align: center;">
 
 [❓ 点击此处查看常见问题 (FAQ)](#faq)
 
