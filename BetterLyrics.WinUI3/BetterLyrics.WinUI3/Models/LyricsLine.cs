@@ -64,10 +64,15 @@ namespace BetterLyrics.WinUI3.Models
             CanvasTextLayout.HorizontalAlignment = type.ToCanvasHorizontalAlignment();
         }
 
-        public void UpdateTextGeometry()
+        public void DisposeTextGeometry()
         {
             TextGeometry?.Dispose();
             TextGeometry = null;
+        }
+
+        public void UpdateTextGeometry()
+        {
+            DisposeTextGeometry();
             if (CanvasTextLayout == null)
             {
                 return;
@@ -75,12 +80,17 @@ namespace BetterLyrics.WinUI3.Models
             TextGeometry = CanvasGeometry.CreateText(CanvasTextLayout);
         }
 
-        public void UpdateFontEffect(ICanvasAnimatedControl control, bool drawStroke, Color strokeColor, int strokeWidth, Color fontColor)
+        public void DisposeFontEffects()
         {
             BackgroundFontEffect?.Dispose();
             BackgroundFontEffect = null;
             ForegroundFontEffect?.Dispose();
             ForegroundFontEffect = null;
+        }
+
+        public void UpdateFontEffect(ICanvasAnimatedControl control, bool drawStroke, Color strokeColor, int strokeWidth, Color fontColor)
+        {
+            DisposeFontEffects();
             if (TextGeometry == null)
             {
                 return;

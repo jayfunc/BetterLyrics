@@ -6,6 +6,7 @@ using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -238,7 +239,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 UpdateCanvasYScrollOffset(control, false, true);
             }
 
-            UpdateLinesProps();
+            UpdateLinesProps(control);
 
             _isLayoutChanged = false;
 
@@ -288,11 +289,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                     continue;
                 }
 
-                line.UpdateTextLayout(control, _lyricsTextFormat, _maxLyricsWidth, _canvasHeight, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
-                line.UpdateTextGeometry();
                 line.Position = new Vector2(0, y);
+                line.UpdateTextLayout(control, _lyricsTextFormat, _maxLyricsWidth, _canvasHeight, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
                 line.UpdateCenterPosition(_maxLyricsWidth, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
-                line.UpdateFontEffect(control, _isDesktopMode, _strokeFontColor, _lyricsFontStrokeWidth, _bgFontColor);
 
                 if (line.CanvasTextLayout == null)
                 {
@@ -501,7 +500,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _isLayoutChanged = true;
         }
 
-        private void UpdateLinesProps()
+        private void UpdateLinesProps(ICanvasAnimatedControl control)
         {
             var currentPlayingLine = _lyricsDataArr
                 .ElementAtOrDefault(_langIndex)
@@ -514,6 +513,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                 var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
 
                 if (line == null) continue;
+
+                line.UpdateTextGeometry();
+                line.UpdateFontEffect(control, _isDesktopMode, _strokeFontColor, _lyricsFontStrokeWidth, _bgFontColor);
 
                 if (_isLayoutChanged || _isVisibleLinesBoundaryChanged || _isPlayingLineChanged)
                 {
