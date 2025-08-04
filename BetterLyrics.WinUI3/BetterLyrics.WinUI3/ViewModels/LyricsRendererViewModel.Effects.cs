@@ -3,15 +3,9 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
-using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Graphics.Effects;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -70,9 +64,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             float cornerRadius = _albumArtCornerRadius / 100f * _albumArtSize / 2;
 
-            // TODO 当前未监听专辑封面圆角变化
             var cornerRadiusMask = new CanvasCommandList(control);
-            var cornerRadiusMaskDs = cornerRadiusMask.CreateDrawingSession();
+            using var cornerRadiusMaskDs = cornerRadiusMask.CreateDrawingSession();
             cornerRadiusMaskDs.FillRoundedRectangle(
                 new Rect(0, 0, imageWidth * scaleFactor, imageHeight * scaleFactor),
                 cornerRadius, cornerRadius, Colors.White
@@ -98,8 +91,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             _albumArtBgEffect?.Dispose();
             _albumArtBgEffect = null;
 
-            var overlappedCovers = new CanvasCommandList(control);
-            var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
+            using var overlappedCovers = new CanvasCommandList(control);
+            using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
 
             if (_lastBgImageEffect != null && !_lastBgImageEffect.IsDisposed() && _lastAlbumArtCanvasBitmap != null)
             {
@@ -110,7 +103,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 DrawBackgroundImgae(_bgImageEffect, overlappedCoversDs, _albumArtCanvasBitmap);
             }
 
-            var blurredCover = new GaussianBlurEffect
+            using var blurredCover = new GaussianBlurEffect
             {
                 BlurAmount = _albumArtBgBlurAmount,
                 Source = overlappedCovers,
@@ -118,8 +111,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 Optimization = EffectOptimization.Speed,
             };
 
-            var combined = new CanvasCommandList(control);
-            var combinedDs = combined.CreateDrawingSession();
+            using var combined = new CanvasCommandList(control);
+            using var combinedDs = combined.CreateDrawingSession();
 
             if (_coverAcrylicEffectAmount > 0 && _coverAcrylicNoiseCanvasBitmap != null)
             {
@@ -141,7 +134,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             _albumArtBgEffect = new CanvasCommandList(control);
-            var albumArtBgDs = _albumArtBgEffect.CreateDrawingSession();
+            using var albumArtBgDs = _albumArtBgEffect.CreateDrawingSession();
             albumArtBgDs.DrawImage(new OpacityEffect
             {
                 Opacity = _albumArtBgOpacity / 100f,

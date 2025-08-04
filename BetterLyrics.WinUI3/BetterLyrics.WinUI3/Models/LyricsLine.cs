@@ -6,8 +6,6 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Shapes;
 using System.Collections.Generic;
 using System.Numerics;
 using Windows.UI;
@@ -88,9 +86,9 @@ namespace BetterLyrics.WinUI3.Models
                 return;
             }
             BackgroundFontEffect = new CanvasCommandList(control);
-            var bgFontEffectDs = BackgroundFontEffect.CreateDrawingSession();
+            using var bgFontEffectDs = BackgroundFontEffect.CreateDrawingSession();
             ForegroundFontEffect = new CanvasCommandList(control);
-            var fgFontEffectDs = ForegroundFontEffect.CreateDrawingSession();
+            using var fgFontEffectDs = ForegroundFontEffect.CreateDrawingSession();
             if (drawStroke)
             {
                 bgFontEffectDs.DrawGeometry(TextGeometry, Position, strokeColor, strokeWidth); // 描边
