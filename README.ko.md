@@ -1,10 +1,6 @@
-﻿![](Promotion/banner.png)
+﻿[_자주 묻는 질문(FAQ) 보러가기_](#faq)
 
-<div align=center>
-
-[❓ 자주 묻는 질문(FAQ) 보러가기](#faq)
-
-</div>
+![](Promotion/banner.png)
 
 <div align=center>
   <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
@@ -23,6 +19,12 @@ BetterLyrics
 <div align=center>
 
 ![Static Badge](https://img.shields.io/badge/Language-C%23-purple) ![Static Badge](https://img.shields.io/badge/License-MIT-red) ![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple) ![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
+
+</div>
+
+<div align=center>
+
+[![GitHub Repo stars](https://img.shields.io/github/stars/jayfunc/BetterLyrics)](https://github.com/jayfunc/BetterLyrics/stargazers)
 
 </div>
 
