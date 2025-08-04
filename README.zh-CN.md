@@ -1,8 +1,8 @@
-﻿![](Promotion/banner.png)
+﻿[_点击此处查看常见问题_](#faq)
+
+![](Promotion/banner.png)
 
 <div align=center>
-
-[❓ 点击此处查看常见问题 (FAQ)](#faq)
 
 </div>
 
@@ -23,6 +23,12 @@ BetterLyrics
 <div align=center>
 
 ![Static Badge](https://img.shields.io/badge/Language-C%23-purple) ![Static Badge](https://img.shields.io/badge/License-MIT-red) ![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple) ![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
+
+</div>
+
+<div align=center>
+
+[![GitHub Repo stars](https://img.shields.io/github/stars/jayfunc/BetterLyrics)](https://github.com/jayfunc/BetterLyrics/stargazers)
 
 </div>
 
