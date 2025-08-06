@@ -3,8 +3,11 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
+using BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -17,6 +20,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.System;
@@ -34,7 +38,7 @@ namespace BetterLyrics.WinUI3
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<DockPlacement>>
     {
-        private readonly IPlaybackService _playbackService = Ioc.Default.GetRequiredService<IPlaybackService>();
+        private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
         private ForegroundWindowWatcher? _windowWatcher = null;
         private bool _ignoreFullscreenWindow;
         private bool _hideWindowWhenNotPlaying;
@@ -53,7 +57,7 @@ namespace BetterLyrics.WinUI3
             _dockWindowHeight = _settingsService.DockWindowHeight;
             OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
 
-            _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
+            _mediaSessionsService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
         }
 
         private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
@@ -106,7 +110,7 @@ namespace BetterLyrics.WinUI3
 
             if (IsDockMode || IsDesktopMode)
             {
-                if (_hideWindowWhenNotPlaying && !_playbackService.IsPlaying)
+                if (_hideWindowWhenNotPlaying && !_mediaSessionsService.IsPlaying)
                 {
                     if (IsDockMode)
                     {
@@ -222,16 +226,16 @@ namespace BetterLyrics.WinUI3
             var hwnd = WindowNative.GetWindowHandle(window);
             _windowWatcher = new ForegroundWindowWatcher(
                 hwnd,
-                onWindowChanged =>
+                fgHwnd =>
                 {
                     _dispatcherQueueTimer.Debounce(() =>
                     {
-                        if (_ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
+                        if ((IsDockMode || IsDesktopMode) && _ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
                         {
                             presenter.IsAlwaysOnTop = true;
                         }
                         UpdateAccentColor(hwnd);
-                    }, TimeSpan.FromMilliseconds(300));
+                    }, Constants.Time.DebounceTimeout);
                 }
             );
             _windowWatcher.Start();

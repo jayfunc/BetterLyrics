@@ -285,9 +285,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>에 대한</value>
   </data>
-  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>가사</value>
-  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>앱 모양</value>
   </data>
@@ -566,13 +563,10 @@
     <value>애니메이션 유형 완화</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>재생 소스</value>
+    <value>연극과 가사</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>재생 소스</value>
-  </data>
-  <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
-    <value>지정된 미디어 소스의 가사 디스플레이 활성화 또는 비활성화</value>
+    <value>이 재생 소스를 모니터링하십시오</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>로그 레코드</value>
@@ -643,7 +637,7 @@
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>번역 서버가 설정되지 않았습니다. 먼저 설정으로 구성하십시오.</value>
   </data>
-  <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
+  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>노래를 전환 할 때 0 으로 재설정하십시오</value>
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
@@ -918,5 +912,68 @@
   </data>
   <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
     <value>이 설정은 도크 모드에 영향을 미치지 않으며 도크 모드는 항상 중앙에 유지됩니다.</value>
+  </data>
+  <data name="SettingsPageLastFM.Content" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <value>승인</value>
+  </data>
+  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <value>취소 승인</value>
+  </data>
+  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+    <value>Last.fm 을 통해 청취 기록을 추적합니다</value>
+  </data>
+  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <value>사용자 이름</value>
+  </data>
+  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+    <value>총 플레이 카운트</value>
+  </data>
+  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <value>등록일</value>
+  </data>
+  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
+    <value>소스 및 번역 분리기</value>
+  </data>
+  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
+    <value>몰입 형 모드</value>
+  </data>
+  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
+    <value>모두 재생하십시오</value>
+  </data>
+  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+    <value>재생 소스가 캡처되지 않았습니다</value>
+  </data>
+  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <value>새로 고치다</value>
+  </data>
+  <data name="LastFMAuthFailed" xml:space="preserve">
+    <value>승인이 실패했습니다. 다시 시도하십시오</value>
+  </data>
+  <data name="LastFMRequestAuthTitle" xml:space="preserve">
+    <value>Last.fm 계정에 BetterLyrics 액세스 권한을 부여하세요!</value>
+  </data>
+  <data name="LastFMRequestAuthDesc" xml:space="preserve">
+    <value>브라우저에서 승인을 완료하십시오</value>
+  </data>
+  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
+    <value>나는 승인을 완료했다</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>취소</value>
+  </data>
+  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+    <value>Last.fm 계정에 대한 BetterLyrics 액세스를 취소하십시오!</value>
+  </data>
+  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+    <value>브라우저에서 취소 작업을 완료하십시오</value>
+  </data>
+  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+    <value>내 승인을 취소했습니다</value>
   </data>
 </root>

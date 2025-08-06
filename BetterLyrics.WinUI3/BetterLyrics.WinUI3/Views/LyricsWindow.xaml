@@ -123,6 +123,9 @@
                         Command="{x:Bind ViewModel.ImmersiveToggleButtonEnabledChangedCommand}"
                         IsChecked="{x:Bind ViewModel.IsImmersiveMode, Mode=TwoWay}"
                         Style="{StaticResource TitleBarToggleButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="LyricsWindowImmersiveButtonToolTip" />
+                        </ToolTipService.ToolTip>
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize}"

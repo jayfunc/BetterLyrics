@@ -1,0 +1,9 @@
+namespace BetterLyrics.WinUI3.Constants
+{
+    public static class LastFM
+    {
+        public const string ApiKey = "Your api key here";
+        public const string SharedSecret = "Your shared secret here";
+        public const string UnAuthUrl = "https://www.last.fm/settings/applications";
+    }
+}

@@ -1,5 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;

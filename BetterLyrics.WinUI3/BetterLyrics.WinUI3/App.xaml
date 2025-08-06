@@ -51,6 +51,8 @@
             <converter:TranslationSearchProviderToDisplayNameConverter x:Key="TranslationSearchProviderToDisplayNameConverter" />
             <converter:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
             <converter:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
+            <converter:MediaSourceProviderToLogoUriConverter x:Key="MediaSourceProviderToLogoUriConverter" />
+            <converter:MediaSourceProviderToDisplayedNameConverter x:Key="MediaSourceProviderToDisplayedNameConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
             <converters:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />

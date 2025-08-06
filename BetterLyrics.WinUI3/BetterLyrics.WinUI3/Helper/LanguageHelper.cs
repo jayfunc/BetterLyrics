@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Helpers.General;
 using NTextCat;

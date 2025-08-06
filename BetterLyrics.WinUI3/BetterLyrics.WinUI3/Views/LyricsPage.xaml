@@ -79,52 +79,6 @@
                             <TextBlock Text="{Binding ElementName=TimelineSlider, Path=Maximum, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
                         </StackPanel>
 
-                        <!--  Position offset  -->
-                        <Button Click="TimelineOffsetButton_Click" Style="{StaticResource GhostButtonStyle}">
-                            <FontIcon
-                                FontFamily="{StaticResource IconFontFamily}"
-                                Glyph="&#xECE7;"
-                                RenderTransformOrigin="0.5,0.5">
-                                <FontIcon.RenderTransform>
-                                    <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5" />
-                                </FontIcon.RenderTransform>
-                            </FontIcon>
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Name="TimelineOffsetToolTip" x:Uid="LyricsPageTimelineOffsetButtonToolTip" />
-                            </ToolTipService.ToolTip>
-                            <Button.ContextFlyout>
-                                <Flyout x:Name="TimelineOffsetFlyout" ShouldConstrainToRootBounds="False">
-                                    <StackPanel>
-                                        <Slider
-                                            x:Uid="MainPagePositionOffsetSlider"
-                                            Maximum="5000"
-                                            Minimum="-5000"
-                                            SnapsTo="Ticks"
-                                            StepFrequency="100"
-                                            TickFrequency="100"
-                                            TickPlacement="Outside"
-                                            Value="{x:Bind ViewModel.PositionOffset, Mode=TwoWay}" />
-                                        <RelativePanel>
-                                            <TextBlock
-                                                RelativePanel.AlignLeftWithPanel="True"
-                                                RelativePanel.AlignVerticalCenterWithPanel="True"
-                                                Text="{x:Bind ViewModel.PositionOffset, Mode=OneWay}" />
-                                            <Button
-                                                Click="PositionOffsetResetButton_Click"
-                                                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                                      Glyph=&#xE777;}"
-                                                RelativePanel.AlignRightWithPanel="True"
-                                                RelativePanel.AlignVerticalCenterWithPanel="True"
-                                                Style="{StaticResource GhostButtonStyle}" />
-                                        </RelativePanel>
-                                        <CheckBox IsChecked="{x:Bind ViewModel.ResetPositionOffsetOnSongChanged, Mode=TwoWay}">
-                                            <TextBlock x:Uid="LyricsPagePositionOffsetHint" />
-                                        </CheckBox>
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.ContextFlyout>
-                        </Button>
-
                     </StackPanel>
                 </Grid>
 

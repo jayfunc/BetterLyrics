@@ -3,7 +3,16 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
+using BetterLyrics.WinUI3.Services.LastFMService;
+using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.LyricsSearchService;
+using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
+using BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -64,7 +73,7 @@ namespace BetterLyrics.WinUI3
         private void EnsureSingleInstance()
         {
             bool createdNew;
-            _instanceMutex = new Mutex(true, MetadataHelper.AppName, out createdNew);
+            _instanceMutex = new Mutex(true, Constants.App.AppName, out createdNew);
 
             if (!createdNew)
             {
@@ -102,11 +111,12 @@ namespace BetterLyrics.WinUI3
                     })
                     // Services
                     .AddSingleton<ISettingsService, SettingsService>()
-                    .AddSingleton<IPlaybackService, PlaybackService>()
+                    .AddSingleton<IMediaSessionsService, MediaSessionsService>()
                     .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
                     .AddSingleton<ILyricsSearchService, LyricsSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
                     .AddSingleton<ITranslateService, TranslateService>()
+                    .AddSingleton<ILastFMService, LastFMService>()
                     // ViewModels
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
