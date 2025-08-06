@@ -285,9 +285,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>について</value>
   </data>
-  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>歌詞</value>
-  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>アプリの外観</value>
   </data>
@@ -566,13 +563,10 @@
     <value>アニメーションタイプを緩和します</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>再生ソース</value>
+    <value>プレイと歌詞</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>再生ソース</value>
-  </data>
-  <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
-    <value>指定されたメディアソースの歌詞ディスプレイを有効または無効にする</value>
+    <value>この再生ソースを監視します</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>ログレコード</value>
@@ -643,7 +637,7 @@
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>翻訳サーバーは設定されていません。最初に設定で構成してください</value>
   </data>
-  <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
+  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>曲を切り替えるときに0にリセットします</value>
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
@@ -918,5 +912,68 @@
   </data>
   <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
     <value>この設定はドックモードには影響しません。ドックモードは常に中心のままです。</value>
+  </data>
+  <data name="SettingsPageLastFM.Content" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <value>許可</value>
+  </data>
+  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <value>承認を取り消します</value>
+  </data>
+  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+    <value>last.fm 経由でリスニング履歴を追跡します</value>
+  </data>
+  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+    <value>合計プレイカウント</value>
+  </data>
+  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <value>登録日</value>
+  </data>
+  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
+    <value>ソースおよび翻訳セパレーター</value>
+  </data>
+  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
+    <value>没入モード</value>
+  </data>
+  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
+    <value>すべてを再生します</value>
+  </data>
+  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+    <value>キャプチャされた再生ソースはありません</value>
+  </data>
+  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <value>リフレッシュします</value>
+  </data>
+  <data name="LastFMAuthFailed" xml:space="preserve">
+    <value>承認が失敗しました、もう一度やり直してください</value>
+  </data>
+  <data name="LastFMRequestAuthTitle" xml:space="preserve">
+    <value>BetterLyricsにLast.fmアカウントへのアクセスを許可してください！</value>
+  </data>
+  <data name="LastFMRequestAuthDesc" xml:space="preserve">
+    <value>ブラウザの承認を完了してください</value>
+  </data>
+  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
+    <value>私は承認を完了しました</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+    <value>Last.fmアカウントへのBetterLyricsアクセスを取り消します！</value>
+  </data>
+  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+    <value>ブラウザでキャンセル操作を完了してください</value>
+  </data>
+  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+    <value>認可をキャンセルしました</value>
   </data>
 </root>

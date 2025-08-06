@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Services;
+﻿using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Graphics.Canvas.Text;
 using System;

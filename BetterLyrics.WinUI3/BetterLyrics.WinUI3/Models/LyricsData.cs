@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Models
             LyricsLines = lyricsLines;
         }
 
-        public void SetDisplayedTextAlongWith(LyricsData translationData, int toleranceMs = 0)
+        public void SetDisplayedTextAlongWith(LyricsData translationData, string separator, int toleranceMs = 0)
         {
             foreach (var line in LyricsLines)
             {
@@ -47,11 +47,11 @@ namespace BetterLyrics.WinUI3.Models
                         {
                             tmp = ChineseConverter.ConvertToSimplifiedChinese(transLine.OriginalText);
                         }
-                        line.DisplayedText = $"{line.OriginalText}\n{tmp}";
+                        line.DisplayedText = $"{line.OriginalText}{separator}{tmp}";
                     }
                     else
                     {
-                        line.DisplayedText = $"{line.OriginalText}\n{transLine.OriginalText}";
+                        line.DisplayedText = $"{line.OriginalText}{separator}{transLine.OriginalText}";
                     }
                 }
                 else
@@ -62,7 +62,7 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
-        public void SetDisplayedTextAlongWith(string translation)
+        public void SetDisplayedTextAlongWith(string translation, string separator)
         {
             List<string> translationArr = translation.Split(StringHelper.NewLine).ToList();
             int i = 0;
@@ -74,7 +74,7 @@ namespace BetterLyrics.WinUI3.Models
                 }
                 else
                 {
-                    line.DisplayedText = $"{line.OriginalText}{StringHelper.NewLine}{translationArr[i]}";
+                    line.DisplayedText = $"{line.OriginalText}{separator}{translationArr[i]}";
                 }
                 i++;
             }

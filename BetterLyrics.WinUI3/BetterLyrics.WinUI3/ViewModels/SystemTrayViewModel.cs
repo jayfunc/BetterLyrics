@@ -1,5 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLyricsWindowLocked { get; set; } = false;
 
         [ObservableProperty]
-        public partial string ToolTipText { get; set; } = MetadataHelper.AppName;
+        public partial string ToolTipText { get; set; } = Constants.App.AppName;
 
         public void Receive(PropertyChangedMessage<bool> message)
         {

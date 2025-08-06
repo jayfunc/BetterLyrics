@@ -1,7 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -16,7 +17,7 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class LyricsPage : Page
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        private readonly IPlaybackService _playbackService = Ioc.Default.GetRequiredService<IPlaybackService>();
+        private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
 
         public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
 
@@ -50,11 +51,6 @@ namespace BetterLyrics.WinUI3.Views
             _settingsService.DisplayType = ViewModel.DisplayType;
         }
 
-        private void PositionOffsetResetButton_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.PositionOffset = 0;
-        }
-
         private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             if (ViewModel.IsImmersiveMode && BottomCommandGrid.Children.Count != 0)
@@ -76,11 +72,6 @@ namespace BetterLyrics.WinUI3.Views
         private void DisplayTypeSwitchButton_Click(object sender, RoutedEventArgs e)
         {
             DisplayTypeSwitchFlyout.ShowAt(BottomRightCommandStackPanel);
-        }
-
-        private void TimelineOffsetButton_Click(object sender, RoutedEventArgs e)
-        {
-            TimelineOffsetFlyout.ShowAt(BottomLeftCommandStackPanel);
         }
 
         private void TranslationButton_Click(object sender, RoutedEventArgs e)
@@ -142,7 +133,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void TimelineSliderOverlay_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            _playbackService.ChangePosition(TimelineSlider.Value);
+            _mediaSessionsService.ChangePosition(TimelineSlider.Value);
         }
     }
 }

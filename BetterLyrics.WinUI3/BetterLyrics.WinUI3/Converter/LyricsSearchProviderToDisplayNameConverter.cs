@@ -15,9 +15,9 @@ namespace BetterLyrics.WinUI3.Converter
                 return provider switch
                 {
                     LyricsSearchProvider.LrcLib => "LrcLib",
-                    LyricsSearchProvider.QQ => "QQ",
-                    LyricsSearchProvider.Netease => "Netease",
-                    LyricsSearchProvider.Kugou => "Kugou",
+                    LyricsSearchProvider.QQ => "QQ 音乐",
+                    LyricsSearchProvider.Netease => "网易云音乐",
+                    LyricsSearchProvider.Kugou => "酷狗音乐",
                     LyricsSearchProvider.AmllTtmlDb => "amll-ttml-db",
                     LyricsSearchProvider.LocalLrcFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalLrcFile"),
                     LyricsSearchProvider.LocalMusicFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalMusicFile"),

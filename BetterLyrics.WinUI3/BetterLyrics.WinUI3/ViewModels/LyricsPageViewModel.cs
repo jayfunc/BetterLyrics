@@ -3,7 +3,8 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -27,7 +28,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         IRecipient<PropertyChangedMessage<LyricsSearchProvider?>>,
         IRecipient<PropertyChangedMessage<TranslationSearchProvider?>>
     {
-        private readonly IPlaybackService _playbackService;
+        private readonly IMediaSessionsService _mediaSessionsService;
         private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
 
         private bool _isDockMode = false;
@@ -37,12 +38,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         private int _lyricsDockFontSize = 8;
         private int _lyricsDesktopFontSize = 8;
 
-        public LyricsPageViewModel(ISettingsService settingsService, IPlaybackService playbackService) : base(settingsService)
+        public LyricsPageViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService) : base(settingsService)
         {
             IsFirstRun = _settingsService.IsFirstRun;
             IsTranslationEnabled = _settingsService.IsTranslationEnabled;
             DisplayType = _settingsService.DisplayType;
-            ResetPositionOffsetOnSongChanged = _settingsService.ResetPositionOffsetOnSongChanged;
             PositionOffset = _settingsService.PositionOffset;
             IsImmersiveMode = _settingsService.IsImmersiveMode;
             ShowTranslationOnly = _settingsService.ShowTranslationOnly;
@@ -56,12 +56,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             //Volume = SystemVolumeHelper.GetMasterVolume();
             //SystemVolumeHelper.VolumeChanged += SystemVolumeHelper_VolumeChanged;
 
-            _playbackService = playbackService;
-            _playbackService.SongInfoChanged += PlaybackService_SongInfoChanged;
-            _playbackService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
-            _playbackService.TimelineChanged += PlaybackService_TimelineChanged;
+            _mediaSessionsService = mediaSessionsService;
+            _mediaSessionsService.SongInfoChanged += PlaybackService_SongInfoChanged;
+            _mediaSessionsService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
+            _mediaSessionsService.TimelineChanged += PlaybackService_TimelineChanged;
 
-            IsSongPlaying = _playbackService.IsPlaying;
+            IsSongPlaying = _mediaSessionsService.IsPlaying;
         }
 
         private void PlaybackService_TimelineChanged(object? sender, Events.TimelineChangedEventArgs e)
@@ -83,10 +83,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             SongInfo = e.SongInfo;
             SongDurationSeconds = SongInfo?.Duration ?? 0;
-            if (ResetPositionOffsetOnSongChanged)
-            {
-                PositionOffset = 0;
-            }
         }
 
         [ObservableProperty]
@@ -137,10 +133,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool ShowTranslationOnly { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool ResetPositionOffsetOnSongChanged { get; set; }
 
         [ObservableProperty]
         public partial bool IsSongPlaying { get; set; }
@@ -213,25 +205,25 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task PlaySongAsync()
         {
-            await _playbackService.PlayAsync();
+            await _mediaSessionsService.PlayAsync();
         }
 
         [RelayCommand]
         private async Task PauseSongAsync()
         {
-            await _playbackService.PauseAsync();
+            await _mediaSessionsService.PauseAsync();
         }
 
         [RelayCommand]
         private async Task PreviousSongAsync()
         {
-            await _playbackService.PreviousAsync();
+            await _mediaSessionsService.PreviousAsync();
         }
 
         [RelayCommand]
         private async Task NextSongAsync()
         {
-            await _playbackService.NextAsync();
+            await _mediaSessionsService.NextAsync();
         }
 
         partial void OnIsFirstRunChanged(bool value)
@@ -271,17 +263,17 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender is SettingsPageViewModel)
+            if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsStandardFontSize))
+                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsStandardFontSize))
                 {
                     UpdateHintMessageFontSize();
                 }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsDockFontSize))
+                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsDockFontSize))
                 {
                     UpdateHintMessageFontSize();
                 }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.LyricsDesktopFontSize))
+                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsDesktopFontSize))
                 {
                     UpdateHintMessageFontSize();
                 }
@@ -290,9 +282,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<string> message)
         {
-            if (message.Sender is SettingsPageViewModel)
+            if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LyricsFontFamily))
+                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsFontFamily))
                 {
                     LyricsFontFamily = message.NewValue;
                 }
@@ -306,9 +298,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)
         {
-            if (message.Sender is LyricsRendererViewModel)
+            if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
             {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.TotalTime))
+                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.TotalTime))
                 {
                     if (_timelineThrottle.CanTrigger())
                     {
@@ -323,9 +315,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<LyricsSearchProvider?> message)
         {
-            if (message.Sender is LyricsRendererViewModel)
+            if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
             {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsSearchProvider))
+                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.LyricsSearchProvider))
                 {
                     LyricsSearchProvider = message.NewValue;
                 }
@@ -334,9 +326,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<TranslationSearchProvider?> message)
         {
-            if (message.Sender is LyricsRendererViewModel)
+            if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
             {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.TranslationSearchProvider))
+                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.TranslationSearchProvider))
                 {
                     TranslationSearchProvider = message.NewValue;
                 }

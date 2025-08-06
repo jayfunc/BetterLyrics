@@ -167,5 +167,15 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.SelectedSongsTabInfoIndex = 0;
             ViewModel.ApplyPlaylist();
         }
+
+        private void PlayAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.TrackPlayingQueue.Clear();
+            ViewModel.PlayingSongIndex = -1;
+
+            ViewModel.TrackPlayingQueue.InsertRange(ViewModel.PlayingSongIndex + 1, SongListView.Items.Cast<Track>().Select(x => new PlayQueueItem(x)));
+            ViewModel.PlayingSongIndex = ViewModel.PlayingSongIndex + 1;
+            ViewModel.PlayTrackAt(ViewModel.PlayingSongIndex);
+        }
     }
 }

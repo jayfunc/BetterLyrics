@@ -160,6 +160,7 @@
                             x:Name="SelectAllToggleButton"
                             x:Uid="MusicGalleryPageSelectAll"
                             Click="SelectAllToggleButton_Click" />
+                        <Button x:Uid="MusicGalleryPagePlayAll" Click="PlayAllButton_Click" />
                         <Button x:Uid="MusicGalleryPageAddToPlayingQueue">
                             <Button.Flyout>
                                 <MenuFlyout>

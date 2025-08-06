@@ -3,6 +3,8 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -408,9 +410,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<ObservableCollection<LocalMediaFolder>> message)
         {
-            if (message.Sender is SettingsPageViewModel)
+            if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.LocalMediaFolders))
+                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LocalMediaFolders))
                 {
                     RefreshSongs();
                 }

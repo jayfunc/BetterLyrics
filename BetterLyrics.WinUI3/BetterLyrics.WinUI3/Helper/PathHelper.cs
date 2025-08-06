@@ -18,6 +18,21 @@ namespace BetterLyrics.WinUI3.Helper
         //public static string LanguageProfilePath => Path.Combine(AssetsFolder, "Core14.profile.xml");
         public static string LanguageProfilePath => Path.Combine(AssetsFolder, "Wiki82.profile.xml");
         public static string LogoPath => Path.Combine(AssetsFolder, "Logo.ico");
+        public static string AIMPLogoPath => Path.Combine(AssetsFolder, "AIMP.png");
+        public static string Foobar2000LogoPath => Path.Combine(AssetsFolder, "foobar2000.png");
+        public static string MusicBeeLogoPath => Path.Combine(AssetsFolder, "MusicBee.png");
+        public static string SpotifyLogoPath => Path.Combine(AssetsFolder, "Spotify.png");
+        public static string AppleMusicLogoPath => Path.Combine(AssetsFolder, "AppleMusic.png");
+        public static string iTunesLogoPath => Path.Combine(AssetsFolder, "iTunes.png");
+        public static string KugouMusicLogoPath => Path.Combine(AssetsFolder, "KugouMusic.png");
+        public static string NetEaseCloudMusicLogoPath => Path.Combine(AssetsFolder, "NetEaseCloudMusic.png");
+        public static string QQMusicLogoPath => Path.Combine(AssetsFolder, "QQMusic.png");
+        public static string LXMusicLogoPath => Path.Combine(AssetsFolder, "LXMusic.png");
+        public static string MediaPlayerWindows11LogoPath => Path.Combine(AssetsFolder, "MediaPlayerWindows11.png");
+        public static string PotPlayerLogoPath => Path.Combine(AssetsFolder, "PotPlayer.png");
+        public static string ChromeLogoPath => Path.Combine(AssetsFolder, "Chrome.png");
+        public static string EdgeLogoPath => Path.Combine(AssetsFolder, "Edge.png");
+        public static string UnknownPlayerLogoPath => Path.Combine(AssetsFolder, "Question.png");
 
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");

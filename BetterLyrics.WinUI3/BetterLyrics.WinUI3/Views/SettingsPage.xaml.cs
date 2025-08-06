@@ -3,10 +3,12 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Threading.Tasks;
 using Windows.System;
 
 namespace BetterLyrics.WinUI3.Views
@@ -42,13 +44,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsSearchProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                if (toggleSwitch.DataContext is LyricsSearchProviderInfo providerInfo)
-                {
-                    ViewModel.ToggleLyricsSearchProvider();
-                }
-            }
+            ViewModel.BroadcastMediaSourceProvidersInfoChanged();
         }
 
         private void NavView_SelectionChanged(
@@ -71,9 +67,10 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (sender is ToggleSwitch toggleSwitch)
             {
-                if (toggleSwitch.DataContext is MediaSourceProviderInfo providerInfo)
+                if (ViewModel.SelectedMediaSourceProvider != null)
                 {
-                    ViewModel.ToggleMediaSourceProvider(providerInfo);
+                    ViewModel.SelectedMediaSourceProvider.IsEnabled = toggleSwitch.IsOn;
+                    ViewModel.BroadcastMediaSourceProvidersInfoChanged();
                 }
             }
         }
@@ -118,22 +115,54 @@ namespace BetterLyrics.WinUI3.Views
 
         private void QQGroupButton_Click(object sender, RoutedEventArgs e)
         {
-            Launcher.LaunchUriAsync(new Uri(MetadataHelper.QQGroupUrl));
+            Launcher.LaunchUriAsync(new Uri(Constants.Link.QQGroupUrl));
         }
 
         private void DiscodGroupButton_Click(object sender, RoutedEventArgs e)
         {
-            Launcher.LaunchUriAsync(new Uri(MetadataHelper.DiscordUrl));
+            Launcher.LaunchUriAsync(new Uri(Constants.Link.DiscordUrl));
         }
 
         private void TelegramGroupButton_Click(object sender, RoutedEventArgs e)
         {
-            Launcher.LaunchUriAsync(new Uri(MetadataHelper.TelegramUrl));
+            Launcher.LaunchUriAsync(new Uri(Constants.Link.TelegramUrl));
         }
 
         private void AutoStartupToggleSwitch_Unloaded(object sender, RoutedEventArgs e)
         {
             AutoStartupToggleSwitch.Toggled -= AutoStartupToggleSwitch_Toggled;
+        }
+
+        private void MediaSourceProviderLastFMTrackToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (sender is ToggleSwitch toggleSwitch)
+            {
+                if (ViewModel.SelectedMediaSourceProvider != null)
+                {
+                    ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled = toggleSwitch.IsOn;
+                    ViewModel.BroadcastMediaSourceProvidersInfoChanged();
+                }
+            }
+        }
+
+        private void MediaSourceProviderTimelineSyncThresholdSlider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            ViewModel.BroadcastMediaSourceProvidersInfoChanged();
+        }
+
+        private void MediaSourceProviderPositionOffsetResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.SelectedMediaSourceProvider?.PositionOffset = 0;
+        }
+
+        private void MediaSourceProviderPositionOffsetSlider_ValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            ViewModel.BroadcastMediaSourceProvidersInfoChanged();
+        }
+
+        private void ResetPositionOffsetOnSongChangedToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            ViewModel.BroadcastMediaSourceProvidersInfoChanged();
         }
     }
 }

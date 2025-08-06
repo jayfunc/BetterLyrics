@@ -32,6 +32,10 @@ namespace BetterLyrics.WinUI3.Helper
 
             if (isDisposedField != null) { return !Convert.ToBoolean(isDisposedField.GetValue(obj)); }
 
+            // Windows.Graphics.Imaging.SoftwareBitmap
+            isDisposedField = objType.GetField("_objRef_global__System_IDisposable", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (isDisposedField != null) { return !Convert.ToBoolean(isDisposedField.GetValue(obj)); }
+
             // System.IO.FileStream
             var strategyField = objType.GetField("_strategy", BindingFlags.NonPublic | BindingFlags.Instance);
             if (strategyField != null)

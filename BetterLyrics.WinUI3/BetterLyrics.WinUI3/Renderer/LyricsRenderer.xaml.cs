@@ -1,9 +1,8 @@
 // 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
 
 namespace BetterLyrics.WinUI3.Renderer
 {

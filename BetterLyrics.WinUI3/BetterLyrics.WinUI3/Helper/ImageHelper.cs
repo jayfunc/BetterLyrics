@@ -6,6 +6,7 @@ using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -168,34 +169,55 @@ namespace BetterLyrics.WinUI3.Helper
 
             var themeColor = Rgba32.ParseHex(GetAccentColorsFromByte(imageBytes, 1).FirstOrDefault().ToHex());
 
-            // 新建正方形画布
             using var square = new Image<Rgba32>(size, size, themeColor);
 
-            // 计算居中位置
             int offsetX = (size - image.Width) / 2;
             int offsetY = (size - image.Height) / 2;
 
-            // 绘制原图到正方形画布
             square.Mutate(ctx => ctx.DrawImage(image, new Point(offsetX, offsetY), 1f));
 
-            // 保存为 PNG 字节流
             using var ms = new MemoryStream();
-            square.Save(ms, new PngEncoder());
+            square.Save(ms, new JpegEncoder());
             return ms.ToArray();
         }
 
         public static byte[] Resize(byte[] imageBytes, int size)
         {
-            using Image image = Image.Load(imageBytes);
-            var factor = Math.Max((float)size / image.Width, (float)size / image.Height);
+            using (Image image = Image.Load(imageBytes))
+            {
+                var factor = Math.Max((float)size / image.Width, (float)size / image.Height);
 
-            int width = (int)(image.Width * factor);
-            int height = (int)(image.Height * factor);
-            image.Mutate(x => x.Resize(width, height, KnownResamplers.Welch));
+                int width = (int)(image.Width * factor);
+                int height = (int)(image.Height * factor);
 
-            using var ms = new MemoryStream();
-            image.Save(ms, new PngEncoder());
-            return ms.ToArray();
+                if (factor > 1)
+                {
+                    image.Mutate(x => x.Resize(width, height, KnownResamplers.Welch));
+                }
+                else
+                {
+                    image.Mutate(x => x.Resize(width, height, KnownResamplers.NearestNeighbor));
+                }
+
+                using var ms = new MemoryStream();
+                image.Save(ms, new JpegEncoder());
+                return ms.ToArray();
+            }
+        }
+
+        public static byte[] GenerateNoiseBGRA(int width, int height)
+        {
+            var random = new Random();
+            var pixelData = new byte[width * height * 4];
+            for (int i = 0; i < width * height; i++)
+            {
+                byte gray = (byte)random.Next(0, 256);
+                pixelData[i * 4 + 0] = gray; // B
+                pixelData[i * 4 + 1] = gray; // G
+                pixelData[i * 4 + 2] = gray; // R
+                pixelData[i * 4 + 3] = 255;  // A
+            }
+            return pixelData;
         }
     }
 }

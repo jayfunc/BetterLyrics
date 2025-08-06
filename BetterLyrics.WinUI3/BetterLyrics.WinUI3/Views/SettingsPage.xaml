@@ -23,62 +23,73 @@
             IsSettingsVisible="False"
             SelectionChanged="NavView_SelectionChanged">
             <NavigationView.MenuItems>
+
                 <NavigationViewItem
                     x:Uid="SettingsPageApp"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xECAA;}"
                     IsSelected="True"
                     Tag="App" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageAlbumStyle"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE93C;}"
                     Tag="AlbumArtStyle" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageMediaLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE8B7;}"
                     Tag="MediaLib" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageAlbumLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE7FA;}"
                     Tag="AlbumArtLib" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPagePlaybackLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xEA69;}"
                     Tag="PlaybackLib" />
-                <NavigationViewItem
-                    x:Uid="SettingsPageLyricsLib"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xE8F1;}"
-                    Tag="LyricsLib" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageBackgroundOverlay"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xF5EF;}"
                     Tag="Background" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageLyrics"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xEDC6;}"
                     Tag="Lyrics" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageTranslation"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE7F0;}"
                     Tag="Translation" />
+
+                <NavigationViewItem
+                    x:Uid="SettingsPageLastFM"
+                    Icon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
+                    Tag="LastFM" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE946;}"
                     Tag="About" />
+
                 <NavigationViewItem
                     x:Uid="SettingsPageDev"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xEC7A;}"
                     Tag="Dev" />
+
             </NavigationView.MenuItems>
 
             <ScrollViewer Padding="36,0">
@@ -200,13 +211,13 @@
 
                                 <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedDockMonitorDeviceName, Mode=TwoWay}" />
                                         <Button
                                             Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
                                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                                   FontSize=12,
                                                                   Glyph=&#xE72C;}"
                                             Style="{StaticResource GhostButtonStyle}" />
-                                        <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedDockMonitorDeviceName, Mode=TwoWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
 
@@ -383,31 +394,168 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <!--  Playback source  -->
+                        <!--  Playback and lyrics source  -->
                         <controls:Case Value="PlaybackLib">
-                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                                <controls:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA69;}" />
-                                <ListView
-                                    x:Name="MediaSourceProvidersListView"
-                                    Margin="0,-4,0,0"
-                                    ItemsSource="{x:Bind ViewModel.MediaSourceProvidersInfo, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            <Setter Property="Margin" Value="0" />
-                                            <Setter Property="Padding" Value="0" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.ItemTemplate>
+                            <Grid>
+                                <NavigationView
+                                    IsBackButtonVisible="Collapsed"
+                                    IsBackEnabled="False"
+                                    IsSettingsVisible="False"
+                                    MenuItemsSource="{x:Bind ViewModel.MediaSourceProvidersInfo, Mode=OneWay}"
+                                    PaneDisplayMode="Top"
+                                    SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                                            ComparisonCondition="NotEqual"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <NavigationView.MenuItemTemplate>
                                         <DataTemplate x:DataType="models:MediaSourceProviderInfo">
-                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Mode=OneWay}">
-                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="MediaSourceProviderToggleSwitch_Toggled" />
-                                            </controls:SettingsCard>
+                                            <NavigationViewItem>
+                                                <NavigationViewItem.Icon>
+                                                    <ImageIcon Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
+                                                </NavigationViewItem.Icon>
+                                                <NavigationViewItem.Content>
+                                                    <TextBlock
+                                                        MaxWidth="200"
+                                                        Text="{Binding Provider, Converter={StaticResource MediaSourceProviderToDisplayedNameConverter}, Mode=OneWay}"
+                                                        TextWrapping="Wrap" />
+                                                </NavigationViewItem.Content>
+                                            </NavigationViewItem>
                                         </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </StackPanel>
+                                    </NavigationView.MenuItemTemplate>
+                                    <NavigationView.Content>
+                                        <Grid Background="{ThemeResource CardStrokeColorDefaultBrush}">
+                                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                                <controls:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=OneWay}" Toggled="MediaSourceProviderToggleSwitch_Toggled" />
+                                                </controls:SettingsCard>
+
+                                                <controls:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=OneWay}" Toggled="MediaSourceProviderLastFMTrackToggleSwitch_Toggled" />
+                                                </controls:SettingsCard>
+
+                                                <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=OneWay}" />
+                                                        <TextBlock
+                                                            Margin="0,0,14,0"
+                                                            VerticalAlignment="Center"
+                                                            Text=" ms" />
+                                                        <Slider
+                                                            Maximum="1000"
+                                                            Minimum="0"
+                                                            SnapsTo="Ticks"
+                                                            StepFrequency="100"
+                                                            TickFrequency="100"
+                                                            TickPlacement="Outside"
+                                                            ValueChanged="MediaSourceProviderTimelineSyncThresholdSlider_ValueChanged"
+                                                            Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
+                                                    </StackPanel>
+                                                </controls:SettingsCard>
+
+                                                <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=OneWay}" />
+                                                        <TextBlock
+                                                            Margin="0,0,14,0"
+                                                            VerticalAlignment="Center"
+                                                            Text=" ms" />
+                                                        <Slider
+                                                            Maximum="5000"
+                                                            Minimum="-5000"
+                                                            SnapsTo="Ticks"
+                                                            StepFrequency="100"
+                                                            TickFrequency="100"
+                                                            TickPlacement="Outside"
+                                                            ValueChanged="MediaSourceProviderPositionOffsetSlider_ValueChanged"
+                                                            Value="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=TwoWay}" />
+                                                        <Button
+                                                            Margin="6,0,0,0"
+                                                            Click="MediaSourceProviderPositionOffsetResetButton_Click"
+                                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                                  FontSize=12,
+                                                                                  Glyph=&#xE777;}"
+                                                            Style="{StaticResource GhostButtonStyle}" />
+                                                    </StackPanel>
+                                                    <controls:SettingsExpander.Items>
+                                                        <controls:SettingsCard x:Uid="LyricsPagePositionOffsetHint">
+                                                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.ResetPositionOffsetOnSongChanged, Mode=TwoWay}" Toggled="ResetPositionOffsetOnSongChangedToggleSwitch_Toggled" />
+                                                        </controls:SettingsCard>
+                                                    </controls:SettingsExpander.Items>
+                                                </controls:SettingsExpander>
+
+                                                <controls:SettingsCard x:Uid="SettingsPageLyricsSearchProvidersConfig" />
+
+                                                <ListView
+                                                    x:Name="LyricsSearchProvidersListView"
+                                                    Margin="0,-4,0,0"
+                                                    AllowDrop="True"
+                                                    CanDragItems="True"
+                                                    CanReorderItems="True"
+                                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                                                    ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
+                                                    SelectionMode="None">
+                                                    <ListView.OpacityTransition>
+                                                        <ScalarTransition />
+                                                    </ListView.OpacityTransition>
+                                                    <ListView.ItemContainerStyle>
+                                                        <Style TargetType="ListViewItem">
+                                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                            <Setter Property="Margin" Value="0" />
+                                                            <Setter Property="Padding" Value="0" />
+                                                        </Style>
+                                                    </ListView.ItemContainerStyle>
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
+                                                            <controls:SettingsCard Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
+                                                            </controls:SettingsCard>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
+
+                                            </StackPanel>
+                                        </Grid>
+                                    </NavigationView.Content>
+                                </NavigationView>
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Spacing="12">
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                                            ComparisonCondition="NotEqual"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                    <Image MaxWidth="200" Source="/Assets/Leaf.png" />
+                                    <TextBlock
+                                        x:Uid="SettingsPagePlaybackNotFound"
+                                        HorizontalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                </StackPanel>
+                            </Grid>
                         </controls:Case>
 
                         <!--  Media lib  -->
@@ -481,46 +629,6 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <!--  Lyrics source  -->
-                        <controls:Case Value="LyricsLib">
-                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                                <controls:SettingsCard
-                                    x:Name="LyricsSearchProvidersSettingsExpander"
-                                    x:Uid="SettingsPageLyricsSearchProvidersConfig"
-                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xE8F1;}" />
-
-                                <ListView
-                                    x:Name="LyricsSearchProvidersListView"
-                                    Margin="0,-4,0,0"
-                                    AllowDrop="True"
-                                    CanDragItems="True"
-                                    CanReorderItems="True"
-                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
-                                    ItemsSource="{x:Bind ViewModel.LyricsSearchProvidersInfo, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <ListView.OpacityTransition>
-                                        <ScalarTransition />
-                                    </ListView.OpacityTransition>
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                            <Setter Property="Margin" Value="0" />
-                                            <Setter Property="Padding" Value="0" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
-                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
-                                            </controls:SettingsCard>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-
-                            </StackPanel>
-                        </controls:Case>
 
                         <!--  Lyrics style and effect  -->
                         <controls:Case Value="Lyrics">
@@ -780,6 +888,13 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsTranslationSeparator" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF57B;}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBox AcceptsReturn="True" Text="{x:Bind ViewModel.LyricsTranslationSeparator, Mode=TwoWay}" />
+                                        <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
                                 <!--  Effect  -->
 
                                 <TextBlock
@@ -978,6 +1093,41 @@
                             </StackPanel>
                         </controls:Case>
 
+                        <!--  Last.FM  -->
+                        <controls:Case Value="LastFM">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageLastFMManager"
+                                    HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
+                                    IsExpanded="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Button
+                                            x:Uid="SettingsPageLastFMAuth"
+                                            Command="{x:Bind ViewModel.LastFMAuthCommand}"
+                                            IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                        <Button
+                                            x:Uid="SettingsPageLastFMUnAuth"
+                                            Command="{x:Bind ViewModel.LastFMUnAuthCommand}"
+                                            IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                            <HyperlinkButton Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}" NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                            <TextBlock Text="{x:Bind ViewModel.LastFMUser.Playcount, Mode=OneWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                            <TextBlock Text="{x:Bind ViewModel.LastFMUser.Registered.ToLongDateString(), Mode=OneWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                            <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFMRefreshCommand}" />
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+                            </StackPanel>
+                        </controls:Case>
+
                         <!--  About  -->
                         <controls:Case Value="About">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
@@ -1035,25 +1185,6 @@
 
                                 <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />
-                                </controls:SettingsCard>
-
-                                <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
-                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.TimelineSyncThreshold, Mode=OneWay}" />
-                                        <TextBlock
-                                            Margin="0,0,14,0"
-                                            VerticalAlignment="Center"
-                                            Text=" ms" />
-                                        <Slider
-                                            Maximum="1000"
-                                            Minimum="0"
-                                            SnapsTo="Ticks"
-                                            StepFrequency="100"
-                                            TickFrequency="100"
-                                            TickPlacement="Outside"
-                                            Value="{x:Bind ViewModel.TimelineSyncThreshold, Mode=TwoWay}" />
-                                    </StackPanel>
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageLXMusicServer">

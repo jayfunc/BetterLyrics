@@ -1,0 +1,47 @@
+﻿using BetterLyrics.WinUI3.Constants;
+using BetterLyrics.WinUI3.Helper;
+using Microsoft.UI.Xaml.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BetterLyrics.WinUI3.Converter
+{
+    public class MediaSourceProviderToDisplayedNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            if (value is string provider)
+            {
+                return provider switch
+                {
+                    PlayerID.Spotify => PlayerName.Spotify,
+                    PlayerID.AppleMusic => PlayerName.AppleMusic,
+                    PlayerID.iTunes => PlayerName.iTunes,
+                    PlayerID.KugouMusic => PlayerName.KugouMusic,
+                    PlayerID.NetEaseCloudMusic => PlayerName.NetEaseCloudMusic,
+                    PlayerID.QQMusic => PlayerName.QQMusic,
+                    PlayerID.LXMusic => PlayerName.LXMusic,
+                    PlayerID.MediaPlayerWindows11 => PlayerName.MediaPlayerWindows11,
+                    PlayerID.AIMP => PlayerName.AIMP,
+                    PlayerID.Foobar2000 => PlayerName.Foobar2000,
+                    PlayerID.MusicBee => PlayerName.MusicBee,
+                    PlayerID.PotPlayer => PlayerName.PotPlayer,
+                    PlayerID.Chrome => PlayerName.Chrome,
+                    PlayerID.Edge => PlayerName.Edge,
+                    PlayerID.BetterLyrics => PlayerName.BetterLyrics,
+                    PlayerID.BetterLyricsDebug => PlayerName.BetterLyricsDebug,
+                    _ => provider,
+                };
+            }
+            return value?.ToString() ?? "";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
