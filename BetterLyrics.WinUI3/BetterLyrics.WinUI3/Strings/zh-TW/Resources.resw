@@ -285,9 +285,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>關於</value>
   </data>
-  <data name="SettingsPageLyricsLib.Content" xml:space="preserve">
-    <value>歌詞源</value>
-  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>應用外觀</value>
   </data>
@@ -566,13 +563,10 @@
     <value>缓动动画类型</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>播放來源</value>
+    <value>Playback and lyrics sources</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>播放來源</value>
-  </data>
-  <data name="SettingsPageMediaSourceProvidersConfig.Description" xml:space="preserve">
-    <value>為指定媒體源啟用或禁用歌詞顯示</value>
+    <value>Monitor this playback source</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>日誌記錄</value>
@@ -643,8 +637,8 @@
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>未設定翻譯伺服器，請先在設定中進行配置</value>
   </data>
-  <data name="LyricsPagePositionOffsetHint.Text" xml:space="preserve">
-    <value>切換歌曲時重置為 0</value>
+  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
+    <value>Reset to 0 when switching songs</value>
   </data>
   <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
     <value>將優先讀取歌詞內翻譯，若無匹配則向 LibreTranslate 伺服器請求機器翻譯</value>
@@ -918,5 +912,68 @@
   </data>
   <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
     <value>This setting will not affect the dock mode and the dock mode will always remain centered.</value>
+  </data>
+  <data name="SettingsPageLastFM.Content" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <value>Authorize</value>
+  </data>
+  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <value>Revoke authorization</value>
+  </data>
+  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+    <value>Track listening history via Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+    <value>Total playing count</value>
+  </data>
+  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <value>Registration date</value>
+  </data>
+  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
+    <value>Source and translation separator</value>
+  </data>
+  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
+    <value>Immersive mode</value>
+  </data>
+  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
+    <value>Play all</value>
+  </data>
+  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+    <value>No playback source captured</value>
+  </data>
+  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="LastFMAuthFailed" xml:space="preserve">
+    <value>Authorization failed, please try again</value>
+  </data>
+  <data name="LastFMRequestAuthTitle" xml:space="preserve">
+    <value>Grant BetterLyrics permission to access your Last.fm account</value>
+  </data>
+  <data name="LastFMRequestAuthDesc" xml:space="preserve">
+    <value>Please complete the authorization in your browser</value>
+  </data>
+  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
+    <value>I have completed the authorization</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+    <value>Revoke BetterLyrics' permission to access your Last.fm account</value>
+  </data>
+  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+    <value>Please complete the cancellation operation in your browser</value>
+  </data>
+  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+    <value>I have canceled my authorization</value>
   </data>
 </root>
