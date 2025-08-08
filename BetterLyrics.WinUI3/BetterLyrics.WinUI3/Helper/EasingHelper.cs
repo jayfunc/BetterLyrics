@@ -10,67 +10,67 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class EasingHelper
     {
-        public static float EaseInOutSine(float t)
+        public static double EaseInOutSine(double t)
         {
-            return -(MathF.Cos(MathF.PI * t) - 1f) / 2f;
+            return -(Math.Cos(Math.PI * t) - 1f) / 2f;
         }
-        public static float EaseInOutQuad(float t)
+        public static double EaseInOutQuad(double t)
         {
             return t < 0.5f ? 2 * t * t : -1 + (4 - 2 * t) * t;
         }
 
-        public static float EaseInOutCubic(float t)
+        public static double EaseInOutCubic(double t)
         {
-            return t < 0.5f ? 4 * t * t * t : 1 - MathF.Pow(-2 * t + 2, 3) / 2;
+            return t < 0.5f ? 4 * t * t * t : 1 - Math.Pow(-2 * t + 2, 3) / 2;
         }
-        public static float EaseInOutQuart(float t)
+        public static double EaseInOutQuart(double t)
         {
-            return t < 0.5f ? 8 * t * t * t * t : 1 - MathF.Pow(-2 * t + 2, 4) / 2;
-        }
-
-        public static float EaseInOutQuint(float t)
-        {
-            return t < 0.5f ? 16 * t * t * t * t * t : 1 - MathF.Pow(-2 * t + 2, 5) / 2;
+            return t < 0.5f ? 8 * t * t * t * t : 1 - Math.Pow(-2 * t + 2, 4) / 2;
         }
 
-        public static float EaseInOutExpo(float t)
+        public static double EaseInOutQuint(double t)
+        {
+            return t < 0.5f ? 16 * t * t * t * t * t : 1 - Math.Pow(-2 * t + 2, 5) / 2;
+        }
+
+        public static double EaseInOutExpo(double t)
         {
             return t == 0
               ? 0
               : t == 1
               ? 1
-              : t < 0.5 ? MathF.Pow(2, 20 * t - 10) / 2
-              : (2 - MathF.Pow(2, -20 * t + 10)) / 2;
+              : t < 0.5 ? Math.Pow(2, 20 * t - 10) / 2
+              : (2 - Math.Pow(2, -20 * t + 10)) / 2;
         }
 
-        public static float EaseInOutCirc(float t)
+        public static double EaseInOutCirc(double t)
         {
             return t < 0.5f
-              ? (1 - MathF.Sqrt(1 - MathF.Pow(2 * t, 2))) / 2
-              : (MathF.Sqrt(1 - MathF.Pow(-2 * t + 2, 2)) + 1) / 2;
+              ? (1 - Math.Sqrt(1 - Math.Pow(2 * t, 2))) / 2
+              : (Math.Sqrt(1 - Math.Pow(-2 * t + 2, 2)) + 1) / 2;
         }
 
-        public static float EaseInOutBack(float t)
+        public static double EaseInOutBack(double t)
         {
-            float c1 = 1.70158f;
-            float c2 = c1 * 1.525f;
+            double c1 = 1.70158f;
+            double c2 = c1 * 1.525f;
 
             return t < 0.5
-              ? (MathF.Pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2)) / 2
-              : (MathF.Pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;
+              ? (Math.Pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2)) / 2
+              : (Math.Pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;
         }
 
-        public static float EaseInOutElastic(float t)
+        public static double EaseInOutElastic(double t)
         {
             if (t == 0 || t == 1) return t;
-            float p = 0.3f;
-            float s = p / 4;
+            double p = 0.3f;
+            double s = p / 4;
             return t < 0.5f
-              ? -(MathF.Pow(2, 20 * t - 10) * MathF.Sin((20 * t - 11.125f) * (2 * MathF.PI) / p)) / 2
-              : (MathF.Pow(2, -20 * t + 10) * MathF.Sin((20 * t - 11.125f) * (2 * MathF.PI) / p)) / 2 + 1;
+              ? -(Math.Pow(2, 20 * t - 10) * Math.Sin((20 * t - 11.125f) * (2 * Math.PI) / p)) / 2
+              : (Math.Pow(2, -20 * t + 10) * Math.Sin((20 * t - 11.125f) * (2 * Math.PI) / p)) / 2 + 1;
         }
 
-        private static float EaseOutBounce(float t)
+        private static double EaseOutBounce(double t)
         {
             if (t < 4 / 11f)
             {
@@ -90,7 +90,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static float EaseInOutBounce(float t)
+        public static double EaseInOutBounce(double t)
         {
             if (t < 0.5f)
             {
@@ -102,17 +102,17 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static float SmoothStep(float t)
+        public static double SmoothStep(double t)
         {
             return t * t * (3f - 2f * t);
         }
 
-        public static float CubicBezier(float t, float p0, float p1, float p2, float p3)
+        public static double CubicBezier(double t, double p0, double p1, double p2, double p3)
         {
-            float u = 1 - t;
+            double u = 1 - t;
             return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
         }
 
-        public static float Linear(float t) => t;
+        public static double Linear(double t) => t;
     }
 }

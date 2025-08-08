@@ -19,21 +19,21 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private CanvasCommandList? _albumArtBgEffect;
 
-        private OpacityEffect CreateBgImageEffect(CanvasBitmap canvasBitmap, float opacity)
+        private OpacityEffect CreateBgImageEffect(CanvasBitmap canvasBitmap, double opacity)
         {
-            float imageWidth = (float)canvasBitmap.Size.Width;
-            float imageHeight = (float)canvasBitmap.Size.Height;
+            double imageWidth = (double)canvasBitmap.Size.Width;
+            double imageHeight = (double)canvasBitmap.Size.Height;
 
-            float targetSize = MathF.Sqrt(MathF.Pow(_canvasWidth, 2) + MathF.Pow(_canvasHeight, 2));
-            float scaleFactor = targetSize / MathF.Min(imageWidth, imageHeight);
+            double targetSize = Math.Sqrt(Math.Pow(_canvasWidth, 2) + Math.Pow(_canvasHeight, 2));
+            double scaleFactor = targetSize / Math.Min(imageWidth, imageHeight);
 
             // Original source: https://zhuanlan.zhihu.com/p/37178216
-            float gain = _lyricsBgBrightnessTransition.Value;
+            double gain = _lyricsBgBrightnessTransition.Value;
 
-            float whiteX = 1 - 0.5f * gain;
-            float whiteY = 0.5f + 0.5f * gain;
-            float blackX = 0.5f - 0.5f * gain;
-            float blackY = 0 + 0.5f * gain;
+            double whiteX = 1 - 0.5f * gain;
+            double whiteY = 0.5f + 0.5f * gain;
+            double blackX = 0.5f - 0.5f * gain;
+            double blackY = 0 + 0.5f * gain;
 
             return new OpacityEffect
             {
@@ -41,34 +41,34 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     Source = new ScaleEffect
                     {
-                        Scale = new Vector2(scaleFactor),
+                        Scale = new Vector2((float)scaleFactor),
                         Source = canvasBitmap,
                     },
-                    WhitePoint = new Vector2(whiteX, whiteY),
-                    BlackPoint = new Vector2(blackX, blackY),
+                    WhitePoint = new Vector2((float)whiteX, (float)whiteY),
+                    BlackPoint = new Vector2((float)blackX, (float)blackY),
                 },
-                Opacity = opacity,
+                Opacity = (float)opacity,
             };
         }
 
-        private OpacityEffect? CreateFgImageEffect(ICanvasAnimatedControl control, CanvasBitmap canvasBitmap, float opacity)
+        private OpacityEffect? CreateFgImageEffect(ICanvasAnimatedControl control, CanvasBitmap canvasBitmap, double opacity)
         {
             // TODO 最大化/还原时图片大小未跟随改变
             if (opacity == 0) return null;
 
-            float imageWidth = (float)canvasBitmap.Size.Width;
-            float imageHeight = (float)canvasBitmap.Size.Height;
+            double imageWidth = (double)canvasBitmap.Size.Width;
+            double imageHeight = (double)canvasBitmap.Size.Height;
 
-            float scaleFactor = _albumArtSize / Math.Min(imageWidth, imageHeight);
+            double scaleFactor = _albumArtSize / Math.Min(imageWidth, imageHeight);
             if (scaleFactor < 0.01f) return null;
 
-            float cornerRadius = _albumArtCornerRadius / 100f * _albumArtSize / 2;
+            double cornerRadius = _albumArtCornerRadius / 100f * _albumArtSize / 2;
 
             var cornerRadiusMask = new CanvasCommandList(control);
             using var cornerRadiusMaskDs = cornerRadiusMask.CreateDrawingSession();
             cornerRadiusMaskDs.FillRoundedRectangle(
                 new Rect(0, 0, imageWidth * scaleFactor, imageHeight * scaleFactor),
-                cornerRadius, cornerRadius, Colors.White
+                (float)cornerRadius, (float)cornerRadius, Colors.White
             );
 
             return new OpacityEffect
@@ -77,12 +77,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     Source = new ScaleEffect
                     {
-                        Scale = new Vector2(scaleFactor),
+                        Scale = new Vector2((float)scaleFactor),
                         Source = canvasBitmap,
                     },
                     AlphaMask = cornerRadiusMask,
                 },
-                Opacity = opacity,
+                Opacity = (float)opacity,
             };
         }
 

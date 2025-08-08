@@ -976,4 +976,19 @@
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>我已經取消了我的授權</value>
   </data>
+  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>設置管理器</value>
+  </data>
+  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>導入成功後，該程序將自動重新啟動</value>
+  </data>
+  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>導入設置</value>
+  </data>
+  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>導出設置</value>
+  </data>
+  <data name="ImportSettingsFailed" xml:space="preserve">
+    <value>設置文件導入失敗，應用程序設置保持不變</value>
+  </data>
 </root>

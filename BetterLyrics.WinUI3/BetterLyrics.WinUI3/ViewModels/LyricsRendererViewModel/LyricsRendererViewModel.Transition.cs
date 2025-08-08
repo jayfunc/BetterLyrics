@@ -12,7 +12,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
     public partial class LyricsRendererViewModel
     {
-        private readonly ValueTransition<float> _canvasYScrollTransition = new(
+        private readonly ValueTransition<double> _canvasYScrollTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutSine
@@ -30,68 +30,68 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
 
-        private readonly ValueTransition<float> _immersiveBgOpacityTransition = new(
+        private readonly ValueTransition<double> _immersiveBgOpacityTransition = new(
             initialValue: 1f,
             durationSeconds: 0.3f
         );
 
-        private readonly ValueTransition<float> _titleXTransition = new(
+        private readonly ValueTransition<double> _titleXTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutBack
         );
 
-        private readonly ValueTransition<float> _titleYTransition = new(
+        private readonly ValueTransition<double> _titleYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutBack
         );
 
-        private readonly ValueTransition<float> _lyricsXTransition = new(
+        private readonly ValueTransition<double> _lyricsXTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutBack
         );
 
-        private readonly ValueTransition<float> _lyricsYTransition = new(
+        private readonly ValueTransition<double> _lyricsYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutBack
         );
 
-        private readonly ValueTransition<float> _lyricsOpacityTransition = new(
+        private readonly ValueTransition<double> _lyricsOpacityTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f
         );
 
-        private readonly ValueTransition<float> _albumArtBgTransition = new(
+        private readonly ValueTransition<double> _albumArtBgTransition = new(
             initialValue: 0f,
             durationSeconds: 1f
         );
 
-        private readonly ValueTransition<float> _albumArtOpacityTransition = new(
+        private readonly ValueTransition<double> _albumArtOpacityTransition = new(
             initialValue: 0f,
             durationSeconds: 1f
         );
 
-        private readonly ValueTransition<float> _albumArtXTransition = new(
+        private readonly ValueTransition<double> _albumArtXTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutBack
         );
 
-        private readonly ValueTransition<float> _albumArtYTransition = new(
+        private readonly ValueTransition<double> _albumArtYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutBack
         );
 
-        private readonly ValueTransition<float> _songInfoOpacityTransition = new(
+        private readonly ValueTransition<double> _songInfoOpacityTransition = new(
             initialValue: 0f,
             durationSeconds: 1f
         );
 
-        private readonly ValueTransition<float> _lyricsBgBrightnessTransition = new(
+        private readonly ValueTransition<double> _lyricsBgBrightnessTransition = new(
             initialValue: 0f,
             durationSeconds: 1f
         );

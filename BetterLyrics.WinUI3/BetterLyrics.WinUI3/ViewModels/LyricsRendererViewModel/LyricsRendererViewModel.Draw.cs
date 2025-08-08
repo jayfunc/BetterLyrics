@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         _playingLineIndex,
                         out int charStartIndex,
                         out int charLength,
-                        out float charProgress
+                        out double charProgress
                     );
 
                     ds.DrawText(
@@ -102,21 +102,21 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void DrawBackgroundImgae(OpacityEffect effect, CanvasDrawingSession ds, CanvasBitmap canvasBitmap)
         {
-            float imageWidth = (float)canvasBitmap.Size.Width;
-            float imageHeight = (float)canvasBitmap.Size.Height;
+            double imageWidth = (double)canvasBitmap.Size.Width;
+            double imageHeight = (double)canvasBitmap.Size.Height;
 
-            float targetSize = MathF.Sqrt(MathF.Pow(_canvasWidth, 2) + MathF.Pow(_canvasHeight, 2));
-            float scaleFactor = targetSize / MathF.Min(imageWidth, imageHeight);
+            double targetSize = Math.Sqrt(Math.Pow(_canvasWidth, 2) + Math.Pow(_canvasHeight, 2));
+            double scaleFactor = targetSize / Math.Min(imageWidth, imageHeight);
 
-            float x = _canvasWidth / 2 - imageWidth * scaleFactor / 2;
-            float y = _canvasHeight / 2 - imageHeight * scaleFactor / 2;
+            double x = _canvasWidth / 2 - imageWidth * scaleFactor / 2;
+            double y = _canvasHeight / 2 - imageHeight * scaleFactor / 2;
 
-            ds.DrawImage(effect, new Vector2(x, y));
+            ds.DrawImage(effect, new Vector2((float)x, (float)y));
         }
 
         private void DrawForegroundImgae(OpacityEffect effect, CanvasDrawingSession ds)
         {
-            ds.DrawImage(effect, new Vector2(_albumArtXTransition.Value, _albumArtYTransition.Value));
+            ds.DrawImage(effect, new Vector2((float)_albumArtXTransition.Value, (float)_albumArtYTransition.Value));
         }
 
         private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
@@ -126,7 +126,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 return;
             }
 
-            ds.Transform = Matrix3x2.CreateRotation(_rotateAngle, control.Size.ToVector2() * 0.5f);
+            ds.Transform = Matrix3x2.CreateRotation((float)_rotateAngle, control.Size.ToVector2() * 0.5f);
             ds.DrawImage(_albumArtBgEffect);
             ds.Transform = Matrix3x2.Identity;
         }
@@ -158,7 +158,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             ds.DrawImage(new OpacityEffect
             {
                 Source = opacity,
-                Opacity = _albumArtOpacityTransition.Value
+                Opacity = (float)_albumArtOpacityTransition.Value
             });
         }
 
@@ -174,7 +174,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void DrawSingleTitleAndArtist(ICanvasAnimatedControl control, CanvasDrawingSession ds, string? title, string? artist, float opacity)
+        private void DrawSingleTitleAndArtist(ICanvasAnimatedControl control, CanvasDrawingSession ds, string? title, string? artist, double opacity)
         {
             var maxWidth = _lyricsLayoutOrientation switch
             {
@@ -189,19 +189,19 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             using CanvasTextLayout titleLayout = new(
                 control, title ?? string.Empty,
-                _titleTextFormat, maxWidth, _canvasHeight
+                _titleTextFormat, (float)maxWidth, (float)_canvasHeight
             );
             using CanvasTextLayout artistLayout = new(
                 control, artist ?? string.Empty,
-                _artistTextFormat, maxWidth, _canvasHeight
+                _artistTextFormat, (float)maxWidth, (float)_canvasHeight
             );
             ds.DrawTextLayout(
                 titleLayout,
-                new Vector2(_titleXTransition.Value, _titleYTransition.Value),
+                new Vector2((float)_titleXTransition.Value, (float)_titleYTransition.Value),
                 _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 255 * opacity)));
             ds.DrawTextLayout(
                 artistLayout,
-                new Vector2(_titleXTransition.Value, _titleYTransition.Value + (float)titleLayout.LayoutBounds.Height),
+                new Vector2((float)_titleXTransition.Value, (float)(_titleYTransition.Value + titleLayout.LayoutBounds.Height)),
                 _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
         }
 
@@ -224,18 +224,18 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 var textLayout = line.CanvasTextLayout;
                 if (textLayout == null) continue;
 
-                float layoutWidth = (float)textLayout.LayoutBounds.Width;
-                float layoutHeight = (float)textLayout.LayoutBounds.Height;
+                double layoutWidth = (double)textLayout.LayoutBounds.Width;
+                double layoutHeight = (double)textLayout.LayoutBounds.Height;
 
                 if (layoutWidth <= 0 || layoutHeight <= 0) continue;
 
-                float yOffset = _canvasYScrollTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
+                double yOffset = _canvasYScrollTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
 
                 // 组合变换：缩放 -> 旋转 -> 平移
                 ds.Transform =
-                    Matrix3x2.CreateScale(line.ScaleTransition.Value, line.CenterPosition)
-                    * Matrix3x2.CreateRotation(line.AngleTransition.Value, currentPlayingLine.Position)
-                    * Matrix3x2.CreateTranslation(_lyricsXTransition.Value, yOffset);
+                    Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition)
+                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value, currentPlayingLine.Position)
+                    * Matrix3x2.CreateTranslation((float)_lyricsXTransition.Value, (float)yOffset);
 
                 if (line.BackgroundFontEffect == null || line.ForegroundFontEffect == null) continue;
 
@@ -245,171 +245,23 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 // Mock gradient blurred lyrics layer
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
                 // Current line will not be blurred
-                combinedDs.DrawImage(
-                    new OpacityEffect
-                    {
-                        Source = new GaussianBlurEffect
-                        {
-                            Source = line.BackgroundFontEffect,
-                            BlurAmount = line.BlurAmountTransition.Value,
-                            BorderMode = EffectBorderMode.Soft,
-                            Optimization = EffectOptimization.Speed,
-                        },
-                        Opacity = line.OpacityTransition.Value * _lyricsOpacityTransition.Value,
-                    }
-                );
+                combinedDs.DrawImage(line.BackgroundEffect);
 
                 if (line.HighlightOpacityTransition.Value != 0)
                 {
-                    // 再叠加高亮行歌词层（前景歌词层）
-                    using var mask = new CanvasCommandList(control.Device);
-                    using var maskDs = mask.CreateDrawingSession();
-
-                    using var highlightMask = new CanvasCommandList(control.Device);
-                    using var highlightMaskDs = highlightMask.CreateDrawingSession();
-
-                    if (i == _playingLineIndex)
+                    if (line.ForegroundBlurEffect == null || line.ForegroundHighlightEffect == null || line.PlaceholderEffect == null)
                     {
-                        GetLinePlayingProgress(
-                            i,
-                            out int charStartIndex,
-                            out int charLength,
-                            out float charProgress
-                        );
-                        var regions = textLayout.GetCharacterRegions(0, charStartIndex);
-                        var highlightRegion = textLayout
-                            .GetCharacterRegions(charStartIndex, charLength)
-                            .FirstOrDefault();
-                        if (regions.Length > 0)
-                        {
-                            // Draw the mask for the current line
-                            for (int j = 0; j < regions.Length; j++)
-                            {
-                                var region = regions[j];
-                                var rect = new Rect(
-                                    region.LayoutBounds.X,
-                                    region.LayoutBounds.Y + line.Position.Y,
-                                    region.LayoutBounds.Width,
-                                    region.LayoutBounds.Height
-                                );
-                                maskDs.FillRectangle(rect, Color.FromArgb(255, 128, 128, 128));
-                            }
-                        }
-
-                        float highlightTotalWidth = (float)highlightRegion.LayoutBounds.Width;
-                        // Draw the highlight for the current character
-                        float highlightWidth = highlightTotalWidth * charProgress;
-
-                        float fadingWidth = (float)highlightRegion.LayoutBounds.Height / 2;
-
-                        // Rects
-                        var highlightRect = new Rect(
-                            highlightRegion.LayoutBounds.X,
-                            highlightRegion.LayoutBounds.Y + line.Position.Y,
-                            highlightWidth,
-                            highlightRegion.LayoutBounds.Height
-                        );
-
-                        var fadeInRect = new Rect(
-                            highlightRect.Right - fadingWidth,
-                            highlightRegion.LayoutBounds.Y + line.Position.Y,
-                            fadingWidth,
-                            highlightRegion.LayoutBounds.Height
-                        );
-                        var fadeOutRect = new Rect(
-                            highlightRect.Right,
-                            highlightRegion.LayoutBounds.Y + line.Position.Y,
-                            fadingWidth,
-                            highlightRegion.LayoutBounds.Height
-                        );
-
-                        // Brushes
-                        using var fadeInBrush = CreateHorizontalFillBrush(
-                            control,
-                            [(0f, 0f), (1f, 1f)],
-                            (float)highlightRect.Right - fadingWidth,
-                            fadingWidth
-                        );
-                        using var fadeOutBrush = CreateHorizontalFillBrush(
-                            control,
-                            [(0f, 1f), (1f, 0f)],
-                            (float)highlightRect.Right,
-                            fadingWidth
-                        );
-
-                        maskDs.FillRectangle(highlightRect, Color.FromArgb(255, 128, 128, 128));
-                        maskDs.FillRectangle(fadeOutRect, fadeOutBrush);
-
-                        highlightMaskDs.FillRectangle(fadeInRect, fadeInBrush);
-                        highlightMaskDs.FillRectangle(fadeOutRect, fadeOutBrush);
-                    }
-                    else
-                    {
-                        //float height = 0f;
-                        var regions = textLayout.GetCharacterRegions(0, line.OriginalText.Length);
-                        if (regions.Length > 0)
-                        {
-                            //height = (float)regions[^1].LayoutBounds.Bottom - (float)regions[0].LayoutBounds.Top;
-
-                            for (int j = 0; j < regions.Length; j++)
-                            {
-                                var region = regions[j];
-                                var rect = new Rect(
-                                    region.LayoutBounds.X,
-                                    region.LayoutBounds.Y + line.Position.Y,
-                                    region.LayoutBounds.Width,
-                                    region.LayoutBounds.Height
-                                );
-                                maskDs.FillRectangle(rect, Colors.White);
-                            }
-                        }
-
-                        //maskDs.FillRectangle(
-                        //    new Rect(
-                        //        textLayout.LayoutBounds.X,
-                        //        line.Position.Y,
-                        //        textLayout.LayoutBounds.Width,
-                        //        height
-                        //    ),
-                        //    Colors.White
-                        //);
+                        return;
                     }
 
                     using var opacityEffect = new OpacityEffect
                     {
                         Source = new BlendEffect
                         {
-                            Background = _isLyricsGlowEffectEnabled
-                                    ? new GaussianBlurEffect
-                                    {
-                                        Source = new AlphaMaskEffect
-                                        {
-                                            Source = line.ForegroundFontEffect,
-                                            AlphaMask = _lyricsGlowEffectScope switch
-                                            {
-                                                LineRenderingType.CurrentChar => highlightMask,
-                                                LineRenderingType.LineStartToCurrentChar => mask,
-                                                LineRenderingType.CurrentLine => line.ForegroundFontEffect,
-                                                _ => mask,
-                                            },
-                                        },
-                                        BlurAmount = _lyricsGlowEffectAmount,
-                                        Optimization = EffectOptimization.Speed,
-                                    }
-                                    : new CanvasCommandList(control.Device),
-                            Foreground = new AlphaMaskEffect
-                            {
-                                Source = line.ForegroundFontEffect,
-                                AlphaMask = _lyricsHighlightScope switch
-                                {
-                                    LineRenderingType.CurrentChar => highlightMask,
-                                    LineRenderingType.LineStartToCurrentChar => mask,
-                                    LineRenderingType.CurrentLine => line.ForegroundFontEffect,
-                                    _ => mask,
-                                },
-                            },
+                            Background = _isLyricsGlowEffectEnabled ? line.ForegroundBlurEffect : line.PlaceholderEffect,
+                            Foreground = line.ForegroundHighlightEffect,
                         },
-                        Opacity = line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value,
+                        Opacity = (float)(line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value),
                     };
 
                     combinedDs.DrawImage(opacityEffect);
@@ -421,7 +273,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             ds.DrawImage(new DisplacementMapEffect
                             {
                                 Source = combined,
-                                Displacement = mask,
+                                Displacement = line.LineStartToCurrentCharMask,
                                 XChannelSelect = EffectChannelSelect.Red,
                                 YChannelSelect = EffectChannelSelect.Alpha,
                                 Amount = 1f,
@@ -444,65 +296,44 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
-
-                line.DisposeFontEffects();
-                line.DisposeTextGeometry();
             }
         }
 
-        private void FillBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, Color color, float radius, float opacity)
+        private void FillBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, Color color, double radius, double opacity)
         {
             ds.FillRoundedRectangle(
                 new Rect(0, 0, _canvasWidth, _canvasHeight),
-                radius,
-                radius,
+                (float)radius,
+                (float)radius,
                 color.WithAlpha((byte)(opacity * 255))
             );
         }
 
-        private void FillBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasLinearGradientBrush brush, float radius, float opacity)
+        private void FillBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasLinearGradientBrush brush, double radius, double opacity)
         {
             ds.FillRoundedRectangle(
                 new Rect(0, 0, _canvasWidth, _canvasHeight),
-                radius,
-                radius,
+                (float)radius,
+                (float)radius,
                 brush
             );
         }
 
-        private CanvasLinearGradientBrush CreateHorizontalFillBrush(
-            ICanvasAnimatedControl control,
-            List<(float position, float opacity)> stops,
-            float startX,
-            float width
-        )
-        {
-            return new CanvasLinearGradientBrush(control, stops.Select(stops => new CanvasGradientStop
-            {
-                Position = stops.position,
-                Color = Color.FromArgb((byte)(stops.opacity * 255), 128, 128, 128),
-            }).ToArray())
-            {
-                StartPoint = new Vector2(startX, 0),
-                EndPoint = new Vector2(startX + width, 0),
-            };
-        }
-
         private CanvasLinearGradientBrush CreateVerticalFillBrush(
             ICanvasAnimatedControl control,
-            List<(float position, Color color)> stops,
-            float startY,
-            float height
+            List<(double position, Color color)> stops,
+            double startY,
+            double height
         )
         {
             return new CanvasLinearGradientBrush(control, stops.Select(x => new CanvasGradientStop
             {
-                Position = x.position,
+                Position = (float)x.position,
                 Color = x.color,
             }).ToArray())
             {
-                StartPoint = new Vector2(0, startY),
-                EndPoint = new Vector2(0, startY + height),
+                StartPoint = new Vector2(0, (float)startY),
+                EndPoint = new Vector2(0, (float)(startY + height)),
             };
         }
     }

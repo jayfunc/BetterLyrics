@@ -32,24 +32,31 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty]
         public partial ObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
 
+        [ObservableProperty]
+        public partial ObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; }
+
         public MediaSourceProviderInfo() { }
 
         public MediaSourceProviderInfo(string provider)
         {
+            switch (provider)
+            {
+                case Constants.PlayerID.AppleMusic:
+                    TimelineSyncThreshold = 1000;
+                    PositionOffset = 1000;
+                    break;
+                default:
+                    TimelineSyncThreshold = 0;
+                    PositionOffset = 0;
+                    break;
+            }
+
             Provider = provider;
             IsEnabled = true;
             IsLastFMTrackEnabled = false;
-            if (provider == Constants.PlayerID.AppleMusic)
-            {
-                TimelineSyncThreshold = PositionOffset = 1000;
-            }
-            else
-            {
-                TimelineSyncThreshold = 0;
-                PositionOffset = 0;
-            }
             ResetPositionOffsetOnSongChanged = false;
             LyricsSearchProvidersInfo = [.. Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(p, true))];
+            AlbumArtSearchProvidersInfo = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
         }
 
     }

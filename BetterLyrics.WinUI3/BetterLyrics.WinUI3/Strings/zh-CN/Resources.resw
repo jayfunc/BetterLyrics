@@ -976,4 +976,19 @@
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>我已经取消了我的授权</value>
   </data>
+  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>设置管理器</value>
+  </data>
+  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>导入成功后，该程序将自动重新启动</value>
+  </data>
+  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>导入设置</value>
+  </data>
+  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>导出设置</value>
+  </data>
+  <data name="ImportSettingsFailed" xml:space="preserve">
+    <value>设置文件导入失败，应用程序设置保持不变</value>
+  </data>
 </root>

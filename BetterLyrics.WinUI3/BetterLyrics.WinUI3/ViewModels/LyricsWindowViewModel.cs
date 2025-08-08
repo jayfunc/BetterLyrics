@@ -86,7 +86,7 @@ namespace BetterLyrics.WinUI3
         public partial bool IsImmersiveMode { get; set; }
 
         [ObservableProperty]
-        public partial float TopCommandGridOpacity { get; set; }
+        public partial double TopCommandGridOpacity { get; set; }
 
         [ObservableProperty]
         public partial ElementTheme ThemeType { get; set; } = ElementTheme.Default;

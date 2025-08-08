@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.Helper
             return Color.FromArgb(255, fg.R, fg.G, fg.B);
         }
 
-        public static Color GetInterpolatedColor(float progress, Color startColor, Color targetColor)
+        public static Color GetInterpolatedColor(double progress, Color startColor, Color targetColor)
         {
             byte Lerp(byte a, byte b) => (byte)(a + (progress * (b - a)));
             return Color.FromArgb(

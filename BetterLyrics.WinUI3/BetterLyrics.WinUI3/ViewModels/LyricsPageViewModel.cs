@@ -104,10 +104,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsImmersiveMode { get; set; }
 
         [ObservableProperty]
-        public partial float BottomCommandGridOpacity { get; set; }
+        public partial double BottomCommandGridOpacity { get; set; }
 
         [ObservableProperty]
-        public partial float BottomCommandFlyoutTriggerOpacity { get; set; }
+        public partial double BottomCommandFlyoutTriggerOpacity { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]

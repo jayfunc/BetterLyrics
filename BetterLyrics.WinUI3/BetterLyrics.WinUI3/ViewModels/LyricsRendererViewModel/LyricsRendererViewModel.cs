@@ -57,7 +57,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
 
-        private float _albumArtSize = 0f;
+        private double _albumArtSize = 0f;
         private int _albumArtCornerRadius = 0;
 
         private string? _lastSongTitle;
@@ -66,17 +66,17 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private string? _lastSongArtist;
         private string? _songArtist;
 
-        private float _canvasWidth = 0f;
-        private float _canvasHeight = 0f;
+        private double _canvasWidth = 0f;
+        private double _canvasHeight = 0f;
 
-        private float _defaultOpacity;
-        private readonly float _highlightedOpacity = 1.0f;
+        private double _defaultOpacity;
+        private readonly double _highlightedOpacity = 1.0f;
 
-        private readonly float _defaultScale = 0.75f;
-        private readonly float _highlightedScale = 1.0f;
+        private readonly double _defaultScale = 0.75f;
+        private readonly double _highlightedScale = 1.0f;
 
-        private readonly float _coverRotateSpeed = 0.003f;
-        private float _rotateAngle = 0f;
+        private readonly double _coverRotateSpeed = 0.003f;
+        private double _rotateAngle = 0f;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -88,7 +88,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private TextAlignmentType _lyricsAlignmentType;
 
-        private readonly float _lyricsGlowEffectAmount = 8f;
+        private readonly double _lyricsGlowEffectAmount = 8f;
         private int _lyricsBlurAmount;
         private int _lyricsVerticalEdgeOpacity;
 
@@ -100,13 +100,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private int _lyricsStandardFontSize;
         private int _lyricsDockFontSize;
         private int _lyricsDesktopFontSize;
-        private float _lyricsLineSpacingFactor;
+        private double _lyricsLineSpacingFactor;
 
         private LyricsFontColorType _lyricsBgFontColorType;
         private LyricsFontColorType _lyricsFgFontColorType;
         private LyricsFontColorType _lyricsStrokeFontColorType;
 
-        private float _maxLyricsWidth = 0f;
+        private double _maxLyricsWidth = 0f;
 
         private readonly ILyricsSearchService _lyrcsSearchService;
         private readonly ILibWatcherService _libWatcherService;
@@ -115,11 +115,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly ILastFMService _lastFMService;
         private readonly ILogger _logger;
 
-        private readonly float _leftMargin = 36f;
-        private readonly float _middleMargin = 36f;
-        private readonly float _rightMargin = 36f;
-        private readonly float _topMargin = 36f;
-        private readonly float _bottomMargin = 36f;
+        private readonly double _leftMargin = 36f;
+        private readonly double _middleMargin = 36f;
+        private readonly double _rightMargin = 36f;
+        private readonly double _topMargin = 36f;
+        private readonly double _bottomMargin = 36f;
 
         private DockPlacement _dockPlacement;
 
@@ -250,7 +250,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             return GetMaxLyricsLineIndexBoundaries().Item2;
         }
 
-        private void GetLinePlayingProgress(int lineIndex, out int charStartIndex, out int charLength, out float charProgress)
+        private void GetLinePlayingProgress(int lineIndex, out int charStartIndex, out int charLength, out double charProgress)
         {
             charStartIndex = 0;
             charLength = 0;
@@ -265,7 +265,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             else if (nextLine != null) lineEndMs = nextLine.StartMs;
             else lineEndMs = _songDurationMs;
 
-            float now = (float)TotalTime.TotalMilliseconds + (float)_positionOffset.TotalMilliseconds;
+            double now = (double)TotalTime.TotalMilliseconds + (double)_positionOffset.TotalMilliseconds;
 
             // 1. 还没到本句
             if (now < line.StartMs)
@@ -325,11 +325,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 int textLength = line.OriginalText.Length;
                 if (textLength == 0) return;
 
-                float lineProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
+                double lineProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
                 lineProgress = Math.Clamp(lineProgress, 0f, 1f);
 
                 // 计算当前高亮到第几个字
-                float charFloatIndex = lineProgress * textLength;
+                double charFloatIndex = lineProgress * textLength;
                 int charIndex = (int)charFloatIndex;
                 charStartIndex = Math.Clamp(charIndex, 0, textLength - 1);
                 charLength = 1;

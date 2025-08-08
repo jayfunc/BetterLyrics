@@ -10,21 +10,21 @@ namespace BetterLyrics.WinUI3.Helper
         where T : struct
     {
         private T _currentValue;
-        private float _durationSeconds;
+        private double _durationSeconds;
         private EasingType? _easingType;
-        private Func<T, T, float, T> _interpolator;
+        private Func<T, T, double, T> _interpolator;
         private bool _isTransitioning;
-        private float _progress;
+        private double _progress;
         private T _startValue;
         private T _targetValue;
 
-        public float DurationSeconds => _durationSeconds;
+        public double DurationSeconds => _durationSeconds;
 
         public bool IsTransitioning => _isTransitioning;
         public T Value => _currentValue;
         public T TargetValue => _targetValue;
 
-        public ValueTransition(T initialValue, float durationSeconds, Func<T, T, float, T>? interpolator = null, EasingType? easingType = null)
+        public ValueTransition(T initialValue, double durationSeconds, Func<T, T, double, T>? interpolator = null, EasingType? easingType = null)
         {
             _currentValue = initialValue;
             _startValue = initialValue;
@@ -50,7 +50,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public void SetDuration(float seconds)
+        public void SetDuration(double seconds)
         {
             if (seconds <= 0)
                 throw new ArgumentOutOfRangeException(nameof(seconds), "Duration must be positive.");
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (!_isTransitioning) return;
 
-            _progress += (float)(elapsedTime / TimeSpan.FromSeconds(_durationSeconds));
+            _progress += (double)(elapsedTime / TimeSpan.FromSeconds(_durationSeconds));
             if (_progress >= 1f)
             {
                 _progress = 1f;
@@ -115,15 +115,15 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private Func<T, T, float, T> GetInterpolatorByEasingType(EasingType type)
+        private Func<T, T, double, T> GetInterpolatorByEasingType(EasingType type)
         {
-            if (typeof(T) == typeof(float))
+            if (typeof(T) == typeof(double))
             {
                 return (start, end, progress) =>
                 {
-                    float s = (float)(object)start;
-                    float e = (float)(object)end;
-                    float t = progress;
+                    double s = (double)(object)start;
+                    double e = (double)(object)end;
+                    double t = progress;
                     switch (type)
                     {
                         case EasingType.EaseInOutSine:

@@ -11,11 +11,12 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class PathHelper
     {
-        private static string LocalFolder => ApplicationData.Current.LocalFolder.Path;
+        public static string LocalFolder => ApplicationData.Current.LocalFolder.Path;
         public static string CacheFolder => ApplicationData.Current.LocalCacheFolder.Path;
         public static string AssetsFolder => Path.Combine(Package.Current.InstalledPath, "Assets");
 
-        //public static string LanguageProfilePath => Path.Combine(AssetsFolder, "Core14.profile.xml");
+        public static string SettingsDirectory => Path.Combine(LocalFolder, "settings");
+
         public static string LanguageProfilePath => Path.Combine(AssetsFolder, "Wiki82.profile.xml");
         public static string LogoPath => Path.Combine(AssetsFolder, "Logo.ico");
         public static string AIMPLogoPath => Path.Combine(AssetsFolder, "AIMP.png");
@@ -58,6 +59,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void EnsureDirectories()
         {
+            Directory.CreateDirectory(SettingsDirectory);
+
             Directory.CreateDirectory(LogDirectory);
 
             Directory.CreateDirectory(LrcLibLyricsCacheDirectory);
