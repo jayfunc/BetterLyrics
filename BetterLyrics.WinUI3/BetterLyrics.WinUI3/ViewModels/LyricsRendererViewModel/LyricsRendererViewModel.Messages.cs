@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
     public partial class LyricsRendererViewModel
         : IRecipient<PropertyChangedMessage<int>>,
             IRecipient<PropertyChangedMessage<string>>,
-            IRecipient<PropertyChangedMessage<float>>,
+            IRecipient<PropertyChangedMessage<double>>,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<Color>>,
             IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
@@ -173,7 +173,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        public void Receive(PropertyChangedMessage<float> message)
+        public void Receive(PropertyChangedMessage<double> message)
         {
             if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
             {

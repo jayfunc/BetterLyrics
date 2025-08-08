@@ -38,7 +38,6 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
             SelectedTargetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
 
             LocalMediaFolders = [.. _settingsService.LocalMediaFolders];
-            AlbumArtSearchProvidersInfo = [.. _settingsService.AlbumArtSearchProvidersInfo];
 
             Language = _settingsService.Language;
             CoverImageRadius = _settingsService.CoverImageRadius;

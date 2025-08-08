@@ -44,12 +44,6 @@
                     Tag="MediaLib" />
 
                 <NavigationViewItem
-                    x:Uid="SettingsPageAlbumLib"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xE7FA;}"
-                    Tag="AlbumArtLib" />
-
-                <NavigationViewItem
                     x:Uid="SettingsPagePlaybackLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xEA69;}"
@@ -362,38 +356,6 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <controls:Case Value="AlbumArtLib">
-                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                                <controls:SettingsCard
-                                    x:Name="AlbumArtSearchProvidersSettingsExpander"
-                                    x:Uid="SettingsPageAlbumArtSearchProvidersConfig"
-                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xE7FA;}" />
-
-                                <ListView
-                                    x:Name="AlbumArtSearchProvidersListView"
-                                    Margin="0,-4,0,0"
-                                    AllowDrop="True"
-                                    CanDragItems="True"
-                                    CanReorderItems="True"
-                                    DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
-                                    ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
-                                    ItemsSource="{x:Bind ViewModel.AlbumArtSearchProvidersInfo, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <ListView.OpacityTransition>
-                                        <ScalarTransition />
-                                    </ListView.OpacityTransition>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:AlbumArtSearchProviderInfo">
-                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="AlbumArtSearchProviderToggleSwitch_Toggled" />
-                                            </controls:SettingsCard>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </StackPanel>
-                        </controls:Case>
-
                         <!--  Playback and lyrics source  -->
                         <controls:Case Value="PlaybackLib">
                             <Grid>
@@ -445,6 +407,7 @@
                                                     <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=OneWay}" Toggled="MediaSourceProviderLastFMTrackToggleSwitch_Toggled" />
                                                 </controls:SettingsCard>
 
+                                                <!--  时间轴相关配置  -->
                                                 <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
@@ -464,7 +427,6 @@
                                                             Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
                                                     </StackPanel>
                                                 </controls:SettingsCard>
-
                                                 <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
@@ -497,8 +459,32 @@
                                                     </controls:SettingsExpander.Items>
                                                 </controls:SettingsExpander>
 
-                                                <controls:SettingsCard x:Uid="SettingsPageLyricsSearchProvidersConfig" />
+                                                <!--  专辑封面源配置  -->
+                                                <controls:SettingsCard x:Name="AlbumArtSearchProvidersSettingsExpander" x:Uid="SettingsPageAlbumArtSearchProvidersConfig" />
+                                                <ListView
+                                                    x:Name="AlbumArtSearchProvidersListView"
+                                                    Margin="0,-4,0,0"
+                                                    AllowDrop="True"
+                                                    CanDragItems="True"
+                                                    CanReorderItems="True"
+                                                    DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
+                                                    ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                                                    ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo, Mode=OneWay}"
+                                                    SelectionMode="None">
+                                                    <ListView.OpacityTransition>
+                                                        <ScalarTransition />
+                                                    </ListView.OpacityTransition>
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate x:DataType="models:AlbumArtSearchProviderInfo">
+                                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="AlbumArtSearchProviderToggleSwitch_Toggled" />
+                                                            </controls:SettingsCard>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
 
+                                                <!--  歌词源配置  -->
+                                                <controls:SettingsCard x:Uid="SettingsPageLyricsSearchProvidersConfig" />
                                                 <ListView
                                                     x:Name="LyricsSearchProvidersListView"
                                                     Margin="0,-4,0,0"
@@ -520,7 +506,7 @@
                                                     </ListView.ItemContainerStyle>
                                                     <ListView.ItemTemplate>
                                                         <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
-                                                            <controls:SettingsCard Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                            <controls:SettingsCard Padding="64,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
                                                                 <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
                                                             </controls:SettingsCard>
                                                         </DataTemplate>
@@ -1182,6 +1168,22 @@
                                 <controls:SettingsCard x:Uid="SettingsPageCache">
                                     <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
                                 </controls:SettingsCard>
+
+                                <controls:SettingsExpander x:Uid="SettingsPageSettingsManager" IsExpanded="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <Button x:Uid="SettingsPageImportSettingsButton" Command="{x:Bind ViewModel.ImportSettingsCommand}" />
+                                        <Button x:Uid="SettingsPageExportSettingsButton" Command="{x:Bind ViewModel.ExportSettingsCommand}" />
+                                    </StackPanel>
+                                    <controls:SettingsExpander.Items>
+                                        <InfoBar
+                                            x:Uid="SettingsPageImportSettingsInfo"
+                                            BorderThickness="0"
+                                            CornerRadius="0"
+                                            IsClosable="False"
+                                            IsOpen="True"
+                                            Severity="Warning" />
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
 
                                 <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />

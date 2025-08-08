@@ -976,4 +976,19 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>I have canceled my authorization</value>
   </data>
+  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>Settings manager</value>
+  </data>
+  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>The program will automatically restart after the import is successful</value>
+  </data>
+  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>Import settings</value>
+  </data>
+  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>Export settings</value>
+  </data>
+  <data name="ImportSettingsFailed" xml:space="preserve">
+    <value>Settings file import failed, application settings remain unchanged</value>
+  </data>
 </root>

@@ -138,7 +138,7 @@ namespace BetterLyrics.WinUI3.Helper
             return buffer;
         }
 
-        public static float GetAverageLuminance(CanvasBitmap bitmap)
+        public static double GetAverageLuminance(CanvasBitmap bitmap)
         {
             var pixels = bitmap.GetPixelBytes();
             double sum = 0;
@@ -152,7 +152,7 @@ namespace BetterLyrics.WinUI3.Helper
                 double y = 0.299 * r + 0.587 * g + 0.114 * b;
                 sum += y / 255.0;
             }
-            return (float)(sum / (pixels.Length / 4));
+            return (double)(sum / (pixels.Length / 4));
         }
 
         public static byte[] MakeSquareWithThemeColor(byte[] imageBytes)
@@ -185,7 +185,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             using (Image image = Image.Load(imageBytes))
             {
-                var factor = Math.Max((float)size / image.Width, (float)size / image.Height);
+                var factor = Math.Max((double)size / image.Width, (double)size / image.Height);
 
                 int width = (int)(image.Width * factor);
                 int height = (int)(image.Height * factor);

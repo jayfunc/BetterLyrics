@@ -89,10 +89,6 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         public partial ObservableCollection<LocalMediaFolder> LocalMediaFolders { get; set; }
 
         [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial ObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; }
-
-        [ObservableProperty]
         public partial ObservableCollection<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
 
         [ObservableProperty]
@@ -172,7 +168,7 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial float LyricsLineSpacingFactor { get; set; }
+        public partial double LyricsLineSpacingFactor { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]

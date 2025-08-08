@@ -75,9 +75,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         bool IsLyricsFloatAnimationEnabled { get; set; }
 
-        float LyricsLineSpacingFactor { get; set; }
+        double LyricsLineSpacingFactor { get; set; }
 
-        List<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; }
         List<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; }
 
         EasingType LyricsScrollEasingType { get; set; }
@@ -109,5 +108,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         string LastFMSessionKey { get; set; }
 
         string LyricsTranslationSeparator { get; set; }
+
+        bool ImportSettings(string importPath);
+        void ExportSettings(string exportPath);
     }
 }

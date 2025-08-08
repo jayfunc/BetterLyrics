@@ -976,4 +976,19 @@
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>認可をキャンセルしました</value>
   </data>
+  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>設定マネージャー</value>
+  </data>
+  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>インポートが成功した後、プログラムは自動的に再起動します</value>
+  </data>
+  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>設定をインポートします</value>
+  </data>
+  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>エクスポート設定</value>
+  </data>
+  <data name="ImportSettingsFailed" xml:space="preserve">
+    <value>設定ファイルのインポートに失敗し、アプリケーション設定は変更されません</value>
+  </data>
 </root>

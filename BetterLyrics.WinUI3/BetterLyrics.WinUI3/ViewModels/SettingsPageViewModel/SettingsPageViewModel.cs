@@ -36,26 +36,6 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
             MediaSourceProvidersInfo = [.. e.MediaSourceProviersInfo];
         }
 
-        public void OnLyricsSearchProvidersReordered()
-        {
-            _settingsService.MediaSourceProvidersInfo = [.. MediaSourceProvidersInfo];
-            Broadcast(
-                MediaSourceProvidersInfo,
-                MediaSourceProvidersInfo,
-                nameof(MediaSourceProvidersInfo)
-            );
-        }
-
-        public void OnAlbumArtSearchProvidersReordered()
-        {
-            _settingsService.AlbumArtSearchProvidersInfo = [.. AlbumArtSearchProvidersInfo];
-            Broadcast(
-                AlbumArtSearchProvidersInfo,
-                AlbumArtSearchProvidersInfo,
-                nameof(AlbumArtSearchProvidersInfo)
-            );
-        }
-
         public void RemoveFolderAsync(LocalMediaFolder folder)
         {
             LocalMediaFolders.Remove(folder);
@@ -68,16 +48,6 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         {
             _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
             Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
-        }
-
-        public void ToggleAlbumArtSearchProvider(AlbumArtSearchProviderInfo providerInfo)
-        {
-            _settingsService.AlbumArtSearchProvidersInfo = [.. AlbumArtSearchProvidersInfo];
-            Broadcast(
-                AlbumArtSearchProvidersInfo,
-                AlbumArtSearchProvidersInfo,
-                nameof(AlbumArtSearchProvidersInfo)
-            );
         }
 
         public void BroadcastMediaSourceProvidersInfoChanged()
@@ -142,7 +112,7 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         [RelayCommand]
         private async Task SelectAndAddFolderAsync(UIElement sender)
         {
-            var window = Helper.WindowHelper.GetWindowByWindowType<SettingsWindow>();
+            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
             if (window == null) return;
 
             var picker = new Windows.Storage.Pickers.FolderPicker();
@@ -156,6 +126,51 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
             if (folder != null)
             {
                 AddFolderAsync(folder.Path);
+            }
+        }
+
+        [RelayCommand]
+        private async Task ImportSettingsAsync()
+        {
+            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
+            if (window == null) return;
+
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.FileTypeFilter.Add(".json");
+
+            var hwnd = WindowNative.GetWindowHandle(window);
+            InitializeWithWindow.Initialize(picker, hwnd);
+
+            var file = await picker.PickSingleFileAsync();
+
+            var succeed = _settingsService.ImportSettings(file.Path);
+            if (succeed)
+            {
+                WindowHelper.RestartApp();
+            }
+            else
+            {
+                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("ImportSettingsFailed") ?? "");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ExportSettingsAsync()
+        {
+            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
+            if (window == null) return;
+
+            var picker = new Windows.Storage.Pickers.FolderPicker();
+            picker.FileTypeFilter.Add("*");
+
+            var hwnd = WindowNative.GetWindowHandle(window);
+            InitializeWithWindow.Initialize(picker, hwnd);
+
+            var folder = await picker.PickSingleFolderAsync();
+
+            if (folder != null)
+            {
+                _settingsService.ExportSettings(folder.Path);
             }
         }
 

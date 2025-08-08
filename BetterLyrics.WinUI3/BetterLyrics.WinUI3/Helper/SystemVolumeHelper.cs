@@ -38,7 +38,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (_endpointVolume != null)
             {
-                float level = _endpointVolume.GetMasterVolumeLevelScalar();
+                double level = _endpointVolume.GetMasterVolumeLevelScalar();
                 _masterVolume = (int)(level * 100);
             }
 

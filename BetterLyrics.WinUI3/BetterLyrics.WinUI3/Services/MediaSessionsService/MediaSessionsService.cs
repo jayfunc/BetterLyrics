@@ -33,8 +33,7 @@ using WindowsMediaController;
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
-        IRecipient<PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>>>,
-        IRecipient<PropertyChangedMessage<ObservableCollection<AlbumArtSearchProviderInfo>>>
+        IRecipient<PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>>>
     {
         private readonly IAlbumArtSearchService _albumArtSearchService;
         private readonly ILogger<MediaSessionsService> _logger;
@@ -55,7 +54,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private SongInfo? _cachedSongInfo;
         private List<MediaSourceProviderInfo> _mediaSourceProvidersInfo;
         private byte[]? _SMTCAlbumArtBytes = null;
-        private int _targetAlbumArtSize = 400;
+        private int _targetAlbumArtSize = 500;
 
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
         public event EventHandler<TimelineChangedEventArgs>? TimelineChanged;
@@ -328,6 +327,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
 
             byte[]? bytes = await _albumArtSearchService.SearchAsync(
+                SongInfo?.SourceAppUserModelId ?? "",
                 _cachedSongInfo.Title,
                 _cachedSongInfo.Artist,
                 _cachedSongInfo?.Album ?? string.Empty,
@@ -478,22 +478,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 {
                     _mediaSourceProvidersInfo = [.. message.NewValue];
                     MediaManager_OnFocusedSessionChanged(null);
-                }
-            }
-        }
-
-        public async void Receive(PropertyChangedMessage<ObservableCollection<AlbumArtSearchProviderInfo>> message)
-        {
-            if (message.Sender is SettingsPageViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsPageViewModel.AlbumArtSearchProvidersInfo))
-                {
-                    // Album art search providers info changed, re-fetch album art
-                    _logger.LogInformation("Album art search providers info changed, refreshing album art.");
-                    await _albumArtRefreshRunner.RunAsync(async tokne =>
-                    {
-                        await UpdateAlbumArtRelated(tokne);
-                    });
                 }
             }
         }

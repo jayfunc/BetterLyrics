@@ -168,7 +168,7 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         {
             _settingsService.LyricsHighlightScope = value;
         }
-        partial void OnLyricsLineSpacingFactorChanged(float value)
+        partial void OnLyricsLineSpacingFactorChanged(double value)
         {
             _settingsService.LyricsLineSpacingFactor = value;
         }

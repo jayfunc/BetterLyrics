@@ -976,4 +976,19 @@
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>내 승인을 취소했습니다</value>
   </data>
+  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>설정 관리자</value>
+  </data>
+  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>가져 오기가 성공한 후에 프로그램이 자동으로 다시 시작됩니다.</value>
+  </data>
+  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>가져 오기 설정</value>
+  </data>
+  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>내보내기 설정</value>
+  </data>
+  <data name="ImportSettingsFailed" xml:space="preserve">
+    <value>설정 파일 가져 오기 실패, 응용 프로그램 설정은 변경되지 않았습니다</value>
+  </data>
 </root>

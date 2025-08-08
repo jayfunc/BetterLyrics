@@ -9,7 +9,9 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization.Metadata;
 using Windows.Media.Core;
 using Windows.Storage;
 using Windows.UI;
@@ -52,7 +54,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         private const string IsLyricsGlowEffectEnabledKey = "IsLyricsGlowEffectEnabled";
         private const string LanguageKey = "Language";
 
-        private const string LocalMediaFoldersKey = "LocalLyricsFolders";
+        private const string LocalMediaFoldersKey = "LocalLyricsFolders.json";
         private const string LyricsAlignmentTypeKey = "TextAlignmentType";
         private const string SongInfoAlignmentTypeKey = "SongInfoAlignmentType";
         private const string LyricsBlurAmountKey = "LyricsBlurAmount";
@@ -72,10 +74,9 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         private const string LyricsGlowEffectScopeKey = "LyricsGlowEffectScope";
         private const string LyricsHighlightSopeKey = "LyricsHighlightSope";
         private const string LyricsLineSpacingFactorKey = "LyricsLineSpacingFactor";
-        private const string AlbumArtSearchProvidersInfoKey = "AlbumArtSearchProvidersInfo";
         private const string LyricsVerticalEdgeOpacityKey = "LyricsVerticalEdgeOpacity";
 
-        private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo";
+        private const string MediaSourceProvidersInfoKey = "MediaSourceProvidersInfo.json";
 
         // Translation
         private const string IsTranslationEnabledKey = "IsTranslationEnabled";
@@ -124,48 +125,27 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             _localSettings = ApplicationData.Current.LocalSettings;
 
             SetDefault(IsFirstRunKey, true);
-            // Lyrics lib
-            SetDefault(LocalMediaFoldersKey, "[]");
-            SetDefault(
-                AlbumArtSearchProvidersInfoKey,
-                System.Text.Json.JsonSerializer.Serialize(
-                    Enum.GetValues<AlbumArtSearchProvider>()
-                        .Select(p => new AlbumArtSearchProviderInfo(p, true))
-                        .ToList(),
-                    SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
-                )
-            );
-            if (AlbumArtSearchProvidersInfo.Count != Enum.GetValues<AlbumArtSearchProvider>().Length)
-            {
-                AlbumArtSearchProvidersInfo = Enum.GetValues<AlbumArtSearchProvider>()
-                    .Select(p => new AlbumArtSearchProviderInfo(
-                        p,
-                        AlbumArtSearchProvidersInfo
-                            .Where(x => x.Provider == p)
-                            .FirstOrDefault()
-                            ?.IsEnabled ?? true
-                    ))
-                    .ToList();
-            }
 
-            SetDefault(MediaSourceProvidersInfoKey, "[]");
-            var tmp = MediaSourceProvidersInfo;
-            for (int i = 0; i < tmp.Count; i++)
+            SetDefault(LocalMediaFoldersKey, [], SourceGenerationContext.Default.ListLocalMediaFolder);
+
+            SetDefault(MediaSourceProvidersInfoKey, [], SourceGenerationContext.Default.ListMediaSourceProviderInfo);
+            MediaSourceProvidersInfo = MediaSourceProvidersInfo.Select(x => new MediaSourceProviderInfo()
             {
-                var mediaSource = tmp[i];
-                if (mediaSource.LyricsSearchProvidersInfo == null || mediaSource.LyricsSearchProvidersInfo.Count != Enum.GetValues<LyricsSearchProvider>().Length)
-                {
-                    mediaSource.LyricsSearchProvidersInfo = [..Enum.GetValues<LyricsSearchProvider>()
-                        .Select(p => new LyricsSearchProviderInfo(
-                            p,
-                            mediaSource.LyricsSearchProvidersInfo?
-                                .Where(x => x.Provider == p)
-                                .FirstOrDefault()
-                                ?.IsEnabled ?? true
-                        ))];
-                }
-            }
-            MediaSourceProvidersInfo = tmp;
+                IsEnabled = x.IsEnabled,
+                Provider = x.Provider,
+                IsLastFMTrackEnabled = x.IsLastFMTrackEnabled,
+                TimelineSyncThreshold = x.TimelineSyncThreshold,
+                ResetPositionOffsetOnSongChanged = x.ResetPositionOffsetOnSongChanged,
+                PositionOffset = x.PositionOffset,
+                LyricsSearchProvidersInfo = [..Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(
+                    p,
+                    x.LyricsSearchProvidersInfo.Where(x => x.Provider == p).FirstOrDefault()?.IsEnabled ?? true
+                ))],
+                AlbumArtSearchProvidersInfo = [..Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(
+                    p,
+                    x.AlbumArtSearchProvidersInfo.Where(x => x.Provider == p).FirstOrDefault()?.IsEnabled ?? true
+                ))],
+            }).ToList();
 
             // App appearance
             SetDefault(LanguageKey, (int)Language.FollowSystem);
@@ -445,19 +425,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         public List<LocalMediaFolder> LocalMediaFolders
         {
-            get =>
-                System.Text.Json.JsonSerializer.Deserialize(
-                    GetValue<string>(LocalMediaFoldersKey) ?? "[]",
-                    SourceGenerationContext.Default.ListLocalMediaFolder
-                )!;
-            set =>
-                SetValue(
-                    LocalMediaFoldersKey,
-                    System.Text.Json.JsonSerializer.Serialize(
-                        value,
-                        SourceGenerationContext.Default.ListLocalMediaFolder
-                    )
-                );
+            get => GetValue(LocalMediaFoldersKey, SourceGenerationContext.Default.ListLocalMediaFolder)!;
+            set => SetValue(LocalMediaFoldersKey, value, SourceGenerationContext.Default.ListLocalMediaFolder);
         }
 
         public TextAlignmentType LyricsAlignmentType
@@ -556,44 +525,16 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             set => SetValue(LyricsHighlightSopeKey, (int)value);
         }
 
-        public float LyricsLineSpacingFactor
+        public double LyricsLineSpacingFactor
         {
-            get => GetValue<float>(LyricsLineSpacingFactorKey);
+            get => GetValue<double>(LyricsLineSpacingFactorKey);
             set => SetValue(LyricsLineSpacingFactorKey, value);
-        }
-
-        public List<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo
-        {
-            get =>
-                System.Text.Json.JsonSerializer.Deserialize(
-                    GetValue<string>(AlbumArtSearchProvidersInfoKey) ?? "[]",
-                    SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
-                )!;
-            set =>
-                SetValue(
-                    AlbumArtSearchProvidersInfoKey,
-                    System.Text.Json.JsonSerializer.Serialize(
-                        value,
-                        SourceGenerationContext.Default.ListAlbumArtSearchProviderInfo
-                    )
-                );
         }
 
         public List<MediaSourceProviderInfo> MediaSourceProvidersInfo
         {
-            get =>
-                System.Text.Json.JsonSerializer.Deserialize(
-                    GetValue<string>(MediaSourceProvidersInfoKey) ?? "[]",
-                    SourceGenerationContext.Default.ListMediaSourceProviderInfo
-                )!;
-            set =>
-                SetValue(
-                    MediaSourceProvidersInfoKey,
-                    System.Text.Json.JsonSerializer.Serialize(
-                        value,
-                        SourceGenerationContext.Default.ListMediaSourceProviderInfo
-                    )
-                );
+            get => GetValue(MediaSourceProvidersInfoKey, SourceGenerationContext.Default.ListMediaSourceProviderInfo)!;
+            set => SetValue(MediaSourceProvidersInfoKey, value, SourceGenerationContext.Default.ListMediaSourceProviderInfo);
         }
 
         public int LyricsVerticalEdgeOpacity
@@ -682,13 +623,39 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             set => SetValue(LyricsTranslationSeparatorKey, value);
         }
 
-        // Common methods
-
+        /// <summary>
+        /// Container 方式取出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
         private T? GetValue<T>(string key)
         {
             if (_localSettings.Values.TryGetValue(key, out object? value))
             {
+                if (value is float)
+                {
+                    value = Convert.ToDouble(value);
+                }
                 return (T)value;
+            }
+            return default;
+        }
+
+        /// <summary>
+        /// JSON 方式取出
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="jsonTypeInfo"></param>
+        /// <returns></returns>
+        private T? GetValue<T>(string key, JsonTypeInfo<T> jsonTypeInfo)
+        {
+            string targetPath = Path.Combine(PathHelper.SettingsDirectory, key);
+            if (File.Exists(targetPath))
+            {
+                string json = File.ReadAllText(targetPath);
+                return System.Text.Json.JsonSerializer.Deserialize<T>(json, jsonTypeInfo);
             }
             return default;
         }
@@ -697,12 +664,90 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         {
             if (_localSettings.Values.ContainsKey(key) && _localSettings.Values[key] is T)
                 return;
-            _localSettings.Values[key] = value;
+            SetValue(key, value);
+        }
+
+        private void SetDefault<T>(string key, T value, JsonTypeInfo<T> jsonTypeInfo)
+        {
+            string targetPath = Path.Combine(PathHelper.SettingsDirectory, key);
+            if (File.Exists(targetPath))
+                return;
+            SetValue(key, value, jsonTypeInfo);
         }
 
         private void SetValue<T>(string key, T value)
         {
             _localSettings.Values[key] = value;
         }
+
+        private void SetValue<T>(string key, T value, JsonTypeInfo<T> jsonTypeInfo)
+        {
+            string targetPath = Path.Combine(PathHelper.SettingsDirectory, key);
+            string json = System.Text.Json.JsonSerializer.Serialize(value, jsonTypeInfo);
+            File.WriteAllText(targetPath, json);
+        }
+
+        /// <summary>
+        /// Export settings to specific folder
+        /// </summary>
+        /// <param name="exportPath">Target folder path (not file path)</param>
+        public void ExportSettings(string exportPath)
+        {
+            // 收集 LocalSettings
+            var exportData = new Dictionary<string, object>();
+            foreach (var kvp in _localSettings.Values)
+            {
+                exportData[kvp.Key] = kvp.Value;
+            }
+
+            // 收集 SettingsDirectory 下的 JSON 文件
+            var settingsFiles = Directory.GetFiles(PathHelper.SettingsDirectory, "*.json");
+            foreach (var file in settingsFiles)
+            {
+                var key = Path.GetFileName(file);
+                var json = File.ReadAllText(file);
+                exportData[key] = json;
+            }
+
+            // 导出到文件
+            var exportJson = System.Text.Json.JsonSerializer.Serialize(exportData, SourceGenerationContext.Default.DictionaryStringObject);
+            File.WriteAllText(Path.Combine(exportPath, $"BetterLyrics_Settings_Export_{DateTime.Now:yyyyMMdd_HHmmss}.json"), exportJson);
+        }
+
+        /// <summary>
+        /// Indicate a value whether import action is successfullt done
+        /// </summary>
+        /// <param name="importPath"></param>
+        /// <returns></returns>
+        public bool ImportSettings(string importPath)
+        {
+            // TODO 导入有问题
+            if (!File.Exists(importPath))
+                return false;
+
+            var importJson = File.ReadAllText(importPath);
+            var importData = System.Text.Json.JsonSerializer.Deserialize(importJson, SourceGenerationContext.Default.DictionaryStringObject);
+
+            if (importData == null)
+                return false;
+
+            foreach (var kvp in importData)
+            {
+                // 如果是 JSON 文件，则写入 SettingsDirectory
+                if (kvp.Key.EndsWith(".json"))
+                {
+                    var filePath = Path.Combine(PathHelper.SettingsDirectory, kvp.Key);
+                    File.WriteAllText(filePath, kvp.Value?.ToString() ?? "");
+                }
+                else
+                {
+                    // 其他设置写入 LocalSettings
+                    SetValue(kvp.Key, kvp.Value);
+                }
+                return true;
+            }
+            return true;
+        }
+
     }
 }

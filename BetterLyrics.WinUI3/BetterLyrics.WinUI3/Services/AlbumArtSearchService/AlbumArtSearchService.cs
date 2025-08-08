@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static WindowsMediaController.MediaManager;
 
 namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 {
@@ -31,11 +32,11 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             _iTunesHttpClinet = new();
         }
 
-        public async Task<byte[]?> SearchAsync(string title, string artist, string album, byte[]? bytesFromSMTC = null)
+        public async Task<byte[]?> SearchAsync(string mediaSessionId, string title, string artist, string album, byte[]? bytesFromSMTC = null)
         {
             byte[]? result = null;
 
-            foreach (var provider in _settingsService.AlbumArtSearchProvidersInfo)
+            foreach (var provider in _settingsService.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
             {
                 if (!provider.IsEnabled)
                 {
@@ -45,7 +46,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                 switch (provider.Provider)
                 {
                     case AlbumArtSearchProvider.Local:
-                        result = SearchFile(artist, album);
+                        result = SearchFile(artist, title);
                         break;
                     case AlbumArtSearchProvider.SMTC:
                         result = bytesFromSMTC;
@@ -66,7 +67,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             return null;
         }
 
-        private byte[]? SearchFile(string artist, string album)
+        private byte[]? SearchFile(string artist, string title)
         {
             foreach (var folder in _settingsService.LocalMediaFolders)
             {
@@ -74,7 +75,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                 {
                     foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
                     {
-                        if (FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), album, artist))
+                        if (FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                         {
                             Track track = new(file);
                             var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;

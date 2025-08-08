@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.Views
             DragItemsCompletedEventArgs args
         )
         {
-            ViewModel.OnLyricsSearchProvidersReordered();
+            ViewModel.BroadcastMediaSourceProvidersInfoChanged();
         }
 
         private void LyricsSearchProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -99,18 +99,12 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
-            ViewModel.OnAlbumArtSearchProvidersReordered();
+            ViewModel.BroadcastMediaSourceProvidersInfoChanged();
         }
 
         private void AlbumArtSearchProviderToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
-            if (sender is ToggleSwitch toggleSwitch)
-            {
-                if (toggleSwitch.DataContext is AlbumArtSearchProviderInfo providerInfo)
-                {
-                    ViewModel.ToggleAlbumArtSearchProvider(providerInfo);
-                }
-            }
+            ViewModel.BroadcastMediaSourceProvidersInfoChanged();
         }
 
         private void QQGroupButton_Click(object sender, RoutedEventArgs e)
