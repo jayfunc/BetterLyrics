@@ -216,8 +216,8 @@
   <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
     <value>歌词背景</value>
   </data>
-  <data name="SettingsPageDynamicLyricsBackground.Header" xml:space="preserve">
-    <value>动态歌词背景</value>
+  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
+    <value>Lyrics background motion rate</value>
   </data>
   <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
     <value>歌词背景不透明度</value>
@@ -575,7 +575,7 @@
     <value>歌词翻译</value>
   </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>歌词时间轴偏移（毫秒）</value>
+    <value>Lyrics timeline offset</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate translation service</value>
@@ -665,7 +665,13 @@
     <value>歌词滚动动画类型</value>
   </data>
   <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>歌词滚动动画持续时间</value>
+    <value>Lyrics scrolling animation duration (Current line)</value>
+  </data>
+  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation duration (First line)</value>
+  </data>
+  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation duration (Last line)</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>线性</value>
