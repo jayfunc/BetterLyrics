@@ -59,8 +59,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _isDisplayTypeChanged = _displayType != _displayTypeReceived;
             _isPlayingLineChanged = _playingLineIndex != playingLineIndex;
 
-            _canvasWidth = (double)control.Size.Width;
-            _canvasHeight = (double)control.Size.Height;
+            _canvasWidth = control.Size.Width;
+            _canvasHeight = control.Size.Height;
             _displayType = _displayTypeReceived;
             _playingLineIndex = playingLineIndex;
 
@@ -78,11 +78,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _isDebugOverlayEnabledChanged = false;
             }
 
-            if (_isDynamicCoverOverlayEnabled)
-            {
-                _rotateAngle += _coverRotateSpeed;
-                _rotateAngle %= MathF.PI * 2;
-            }
+
+            _rotateAngle += _coverRotateBaseSpeed * _coverOverlaySpeed / 100.0;
+            _rotateAngle %= Math.PI * 2;
 
             if (_isCanvasWidthChanged)
             {
@@ -239,12 +237,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             if (_isLayoutChanged)
             {
                 ReLayout(control);
-                UpdateCanvasYScrollOffset(control, true, false);
             }
-            else
+
+            if (_isLayoutChanged || _isPlayingLineChanged)
             {
-                UpdateCanvasYScrollOffset(control, false, true);
+                UpdateCanvasTargetYScrollOffset();
+                _canvasYScrollTransition.StartTransition(_canvasTargetYScrollOffset, _isLayoutChanged);
             }
+
+            UpdateVisibleLinesBoundary();
 
             UpdateLinesProps(control);
 
@@ -264,6 +265,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _albumArtBgTransition.Update(_elapsedTime);
             _lyricsBgBrightnessTransition.Update(_elapsedTime);
             _songInfoOpacityTransition.Update(_elapsedTime);
+            _canvasYScrollTransition.Update(_elapsedTime);
         }
 
         private void ReLayout(ICanvasAnimatedControl control)
@@ -316,7 +318,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void UpdateCanvasYScrollOffset(ICanvasAnimatedControl control, bool forceScroll, bool withAnimation)
+        private void UpdateCanvasTargetYScrollOffset()
         {
             var (startLineIndex, endLineIndex) = GetMaxLyricsLineIndexBoundaries();
 
@@ -324,26 +326,25 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             // Set _scrollOffsetY
 
-            if ((!_isPlayingLineChanged && forceScroll) || _isPlayingLineChanged)
-            {
-                LyricsLine? currentPlayingLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+            LyricsLine? currentPlayingLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
-                if (currentPlayingLine == null) return;
+            if (currentPlayingLine == null) return;
 
-                var playingTextLayout = currentPlayingLine?.CanvasTextLayout;
+            var playingTextLayout = currentPlayingLine?.CanvasTextLayout;
 
-                if (playingTextLayout == null) return;
+            if (playingTextLayout == null) return;
 
-                double? targetYScrollOffset = (double?)(-currentPlayingLine!.Position.Y + _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines[0].Position.Y - playingTextLayout.LayoutBounds.Height / 2);
+            double? targetYScrollOffset = -currentPlayingLine!.Position.Y + _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines[0].Position.Y - playingTextLayout.LayoutBounds.Height / 2.0;
 
-                if (!targetYScrollOffset.HasValue) return;
+            if (!targetYScrollOffset.HasValue) return;
 
-                _canvasYScrollTransition.StartTransition(targetYScrollOffset.Value, !withAnimation);
-            }
+            _canvasTargetYScrollOffset = targetYScrollOffset.Value;
+        }
 
-            _canvasYScrollTransition.Update(_elapsedTime);
+        private void UpdateVisibleLinesBoundary()
+        {
+            var (startLineIndex, endLineIndex) = GetMaxLyricsLineIndexBoundaries();
 
-            // Update visible line indices
             var lines = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines;
             if (lines == null || lines.Count == 0) return;
 
@@ -519,7 +520,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (currentPlayingLine == null) return;
 
-            for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
+            for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex + 1; i++)
             {
                 var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
 
@@ -543,8 +544,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     line.UpdateForegroundHighlightEffect(control, _lyricsHighlightScope);
                 }
 
-                if (_isLayoutChanged || _isVisibleLinesBoundaryChanged || _isPlayingLineChanged)
+                if (_isLayoutChanged || _isPlayingLineChanged)
                 {
+                    int lineCountDelta = i - _playingLineIndex;
+                    int absoluteLineCountDelta = Math.Abs(lineCountDelta);
                     double distanceFromPlayingLine = Math.Abs(line.Position.Y - currentPlayingLine.Position.Y);
                     double distanceFactor = Math.Clamp(distanceFromPlayingLine / (_canvasHeight / 2), 0, 1);
 
@@ -560,6 +563,24 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
                     line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - _lyricsVerticalEdgeOpacity / 100f));
                     line.HighlightOpacityTransition.StartTransition(i == _playingLineIndex ? 1f : 0f);
+
+                    double yScrollDuration;
+                    if (lineCountDelta < 0)
+                    {
+                        yScrollDuration = _canvasYScrollTransition.DurationSeconds + distanceFactor * (_lyricsScrollTopDuration - _canvasYScrollTransition.DurationSeconds);
+                    }
+                    else if (lineCountDelta == 0)
+                    {
+                        yScrollDuration = _canvasYScrollTransition.DurationSeconds;
+                    }
+                    else
+                    {
+                        yScrollDuration = _canvasYScrollTransition.DurationSeconds + distanceFactor * (_lyricsScrollBottomDuration - _canvasYScrollTransition.DurationSeconds);
+                    }
+
+                    line.YOffsetTransition.SetEasingType(_canvasYScrollTransition.EasingType ?? EasingType.Linear);
+                    line.YOffsetTransition.SetDuration(yScrollDuration);
+                    line.YOffsetTransition.StartTransition(_canvasTargetYScrollOffset, _isLayoutChanged);
                 }
 
                 line.AngleTransition.Update(_elapsedTime);
@@ -567,6 +588,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 line.BlurAmountTransition.Update(_elapsedTime);
                 line.OpacityTransition.Update(_elapsedTime);
                 line.HighlightOpacityTransition.Update(_elapsedTime);
+                line.YOffsetTransition.Update(_elapsedTime);
             }
         }
 

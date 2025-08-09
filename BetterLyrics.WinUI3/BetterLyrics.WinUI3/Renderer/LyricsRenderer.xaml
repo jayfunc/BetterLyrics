@@ -14,7 +14,6 @@
         <canvas:CanvasAnimatedControl
             x:Name="LyricsCanvas"
             Draw="LyricsCanvas_Draw"
-            IsFixedTimeStep="True"
             Update="LyricsCanvas_Update" />
         <Grid
             Margin="36"

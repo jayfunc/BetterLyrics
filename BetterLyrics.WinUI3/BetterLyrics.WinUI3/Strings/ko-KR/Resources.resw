@@ -216,8 +216,8 @@
   <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
     <value>가사 배경</value>
   </data>
-  <data name="SettingsPageDynamicLyricsBackground.Header" xml:space="preserve">
-    <value>역동적 인 가사 배경</value>
+  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
+    <value>가사 배경 모션 속도</value>
   </data>
   <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
     <value>가사 배경 불투명도</value>
@@ -575,7 +575,7 @@
     <value>가사 번역</value>
   </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>가사 타임 라인 오프셋 (밀리초)</value>
+    <value>가사 타임 라인 오프셋</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>libretranslate 번역 서비스</value>
@@ -665,7 +665,13 @@
     <value>가사 스크롤링 애니메이션 유형</value>
   </data>
   <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>가사 스크롤링 애니메이션 지속 시간</value>
+    <value>가사 스크롤 애니메이션 지속 시간 (현재 줄)</value>
+  </data>
+  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+    <value>가사 스크롤 애니메이션 지속 시간 (첫 번째 줄)</value>
+  </data>
+  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+    <value>가사 스크롤 애니메이션 지속 시간 (마지막 줄)</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>선의</value>

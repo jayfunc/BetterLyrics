@@ -31,6 +31,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         private const string CoverImageRadiusKey = "AlbumArtCornerRadius";
         private const string CoverOverlayBlurAmountKey = "CoverOverlayBlurAmount";
         private const string CoverOverlayOpacityKey = "CoverOverlayOpacity";
+        private const string CoverOverlaySpeedKey = "CoverOverlaySpeed";
         private const string IsCoverOverlayEnabledKey = "IsCoverOverlayEnabled";
 
         private const string CoverAcrylicEffectAmountKey = "CoverAcrylicEffectAmount";
@@ -48,7 +49,6 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         private const string AutoLockOnDesktopModeKey = "AutoLockOnDesktopMode";
         private const string IsImmersiveModeKey = "IsImmersiveMode";
 
-        private const string IsDynamicCoverOverlayEnabledKey = "IsDynamicCoverOverlayEnabled";
         private const string IsFanLyricsEnabledKey = "IsFanLyricsEnabled";
         private const string IsFirstRunKey = "IsFirstRun";
         private const string IsLyricsGlowEffectEnabledKey = "IsLyricsGlowEffectEnabled";
@@ -94,6 +94,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         private const string LyricsScrollEasingTypeKey = "LyricsScrollEasingType";
         private const string LyricsScrollDurationKey = "LyricsScrollDuration";
+        private const string LyricsScrollTopDurationKey = "LyricsScrollTopDuration";
+        private const string LyricsScrollBottomDurationKey = "LyricsScrollBottomDuration";
 
         private const string IsLyricsFloatAnimationEnabledKey = "IsLyricsFloatAnimationEnabled";
 
@@ -166,7 +168,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             SetDefault(AutoStartWindowTypeKey, (int)AutoStartWindowType.StandardMode);
             // Album art
             SetDefault(IsCoverOverlayEnabledKey, true);
-            SetDefault(IsDynamicCoverOverlayEnabledKey, true);
+            SetDefault(CoverOverlaySpeedKey, 100); // 100 %
             SetDefault(CoverOverlayOpacityKey, 100); // 100 % = 1.0
             SetDefault(CoverOverlayBlurAmountKey, 100);
             SetDefault(CoverImageRadiusKey, 12); // 12 %
@@ -211,7 +213,9 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             SetDefault(PreferredDisplayTypeKey, (int)LyricsDisplayType.SplitView);
 
             SetDefault(LyricsScrollEasingTypeKey, (int)EasingType.EaseInOutSine);
-            SetDefault(LyricsScrollDurationKey, 500); // 500ms
+            SetDefault(LyricsScrollTopDurationKey, 100); // ms
+            SetDefault(LyricsScrollDurationKey, 500); // ms
+            SetDefault(LyricsScrollBottomDurationKey, 1000); // ms
 
             SetDefault(IsLyricsFloatAnimationEnabledKey, true);
 
@@ -295,6 +299,18 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         {
             get => GetValue<int>(LyricsScrollDurationKey);
             set => SetValue(LyricsScrollDurationKey, value);
+        }
+
+        public int LyricsScrollTopDuration
+        {
+            get => GetValue<int>(LyricsScrollTopDurationKey);
+            set => SetValue(LyricsScrollTopDurationKey, value);
+        }
+
+        public int LyricsScrollBottomDuration
+        {
+            get => GetValue<int>(LyricsScrollBottomDurationKey);
+            set => SetValue(LyricsScrollBottomDurationKey, value);
         }
 
         public LyricsDisplayType DisplayType
@@ -387,10 +403,10 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             set => SetValue(CoverOverlayOpacityKey, value);
         }
 
-        public bool IsDynamicCoverOverlayEnabled
+        public int CoverOverlaySpeed
         {
-            get => GetValue<bool>(IsDynamicCoverOverlayEnabledKey);
-            set => SetValue(IsDynamicCoverOverlayEnabledKey, value);
+            get => GetValue<int>(CoverOverlaySpeedKey);
+            set => SetValue(CoverOverlaySpeedKey, value);
         }
 
         public int CoverAcrylicEffectAmount

@@ -49,6 +49,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private int _drawFrameCount = 0;
         private int _displayedDrawFrameCount = 0;
 
+        private Queue<SoftwareBitmap?> _cachedAlbumArtSwBitmaps = [];
+
         private SoftwareBitmap? _lastAlbumArtSwBitmap = null;
         private SoftwareBitmap? _albumArtSwBitmap = null;
 
@@ -75,8 +77,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly double _defaultScale = 0.75f;
         private readonly double _highlightedScale = 1.0f;
 
-        private readonly double _coverRotateSpeed = 0.003f;
+        private int _coverOverlaySpeed;
+        private readonly double _coverRotateBaseSpeed = 0.003f;
         private double _rotateAngle = 0f;
+
+        private double _lyricsScrollTopDuration;
+        private double _lyricsScrollBottomDuration;
+        private double _canvasTargetYScrollOffset = 0;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -156,7 +163,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private bool _isLyricsWindowLocked = false;
         private bool _isMouseWithinWindow = false;
 
-        private bool _isDynamicCoverOverlayEnabled;
         private bool _isLyricsGlowEffectEnabled;
 
         private bool _isLyricsFloatAnimationEnabled;
@@ -418,13 +424,23 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (e.AlbumArtSwBitmap != _albumArtSwBitmap)
             {
-                //_lastAlbumArtSwBitmap?.Dispose();
-                _lastAlbumArtSwBitmap = null;
+                _cachedAlbumArtSwBitmaps.Append(_albumArtSwBitmap);
+
                 _lastAlbumArtSwBitmap = _albumArtSwBitmap;
 
-                //_albumArtSwBitmap?.Dispose();
-                _albumArtSwBitmap = null;
+                if (_cachedAlbumArtSwBitmaps.Count > 2)
+                {
+                    _cachedAlbumArtSwBitmaps.Dequeue()?.Dispose();
+                }
+
+                _cachedAlbumArtSwBitmaps.Append(e.AlbumArtSwBitmap);
+
                 _albumArtSwBitmap = e.AlbumArtSwBitmap;
+
+                if (_cachedAlbumArtSwBitmaps.Count > 2)
+                {
+                    _cachedAlbumArtSwBitmaps.Dequeue()?.Dispose();
+                }
 
                 _albumArtChanged = true;
 
@@ -432,6 +448,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _albumArtDarkAccentColor = e.AlbumArtDarkAccentColor ?? Colors.Transparent;
 
                 UpdateColorConfig();
+            }
+            else
+            {
+                e.AlbumArtSwBitmap?.Dispose();
             }
         }
 

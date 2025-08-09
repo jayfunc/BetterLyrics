@@ -216,8 +216,8 @@
   <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
     <value>歌詞の背景</value>
   </data>
-  <data name="SettingsPageDynamicLyricsBackground.Header" xml:space="preserve">
-    <value>ダイナミックな歌詞の背景</value>
+  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
+    <value>歌詞の背景モーションレート</value>
   </data>
   <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
     <value>歌詞の背景不透明</value>
@@ -575,7 +575,7 @@
     <value>歌詞翻訳</value>
   </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>歌詞タイムラインオフセット（ミリ秒）</value>
+    <value>歌詞タイムラインオフセット</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>リブレットランレート翻訳サービス</value>
@@ -665,7 +665,13 @@
     <value>歌詞スクロールアニメーションタイプ</value>
   </data>
   <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>歌詞スクロールアニメーションの期間</value>
+    <value>歌詞スクロールアニメーション期間（現在の行）</value>
+  </data>
+  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+    <value>歌詞スクロールアニメーション期間（最初の行）</value>
+  </data>
+  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+    <value>歌詞スクロールアニメーション期間（最終行）</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>リニア</value>

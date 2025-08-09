@@ -229,7 +229,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                 if (layoutWidth <= 0 || layoutHeight <= 0) continue;
 
-                double yOffset = _canvasYScrollTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
+                double yOffset = line.YOffsetTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
 
                 // 组合变换：缩放 -> 旋转 -> 平移
                 ds.Transform =

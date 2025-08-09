@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         int CoverOverlayBlurAmount { get; set; }
         int CoverOverlayOpacity { get; set; }
-        bool IsDynamicCoverOverlayEnabled { get; set; }
+        int CoverOverlaySpeed { get; set; }
         int CoverAcrylicEffectAmount { get; set; }
         bool IsFanLyricsEnabled { get; set; }
         bool IsFirstRun { get; set; }
@@ -81,6 +81,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         EasingType LyricsScrollEasingType { get; set; }
         int LyricsScrollDuration { get; set; }
+        int LyricsScrollTopDuration { get; set; }
+        int LyricsScrollBottomDuration { get; set; }
 
         int LyricsVerticalEdgeOpacity { get; set; }
 

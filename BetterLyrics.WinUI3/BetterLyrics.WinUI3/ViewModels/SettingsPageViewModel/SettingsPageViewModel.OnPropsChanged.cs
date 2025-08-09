@@ -21,6 +21,14 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         {
             _settingsService.LyricsScrollDuration = value;
         }
+        partial void OnLyricsScrollTopDurationChanged(int value)
+        {
+            _settingsService.LyricsScrollTopDuration = value;
+        }
+        partial void OnLyricsScrollBottomDurationChanged(int value)
+        {
+            _settingsService.LyricsScrollBottomDuration = value;
+        }
         partial void OnLyricsBackgroundThemeChanged(ElementTheme value)
         {
             _settingsService.LyricsBackgroundTheme = value;
@@ -69,9 +77,9 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         {
             _settingsService.CoverOverlayOpacity = value;
         }
-        partial void OnIsDynamicCoverOverlayEnabledChanged(bool value)
+        partial void OnCoverOverlaySpeedChanged(int value)
         {
-            _settingsService.IsDynamicCoverOverlayEnabled = value;
+            _settingsService.CoverOverlaySpeed = value;
         }
         partial void OnLanguageChanged(Enums.Language value)
         {
