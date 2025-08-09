@@ -28,27 +28,22 @@ namespace BetterLyrics.WinUI3.Views
             DataContext = Ioc.Default.GetRequiredService<LyricsPageViewModel>();
         }
 
-        private void WelcomeTeachingTip_Closed(TeachingTip sender, TeachingTipClosedEventArgs args)
-        {
-            ViewModel.IsFirstRun = false;
-        }
-
         private void LyricsOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.LyricsOnly;
-            _settingsService.DisplayType = ViewModel.DisplayType;
+            _settingsService.AppSettings.DisplayType = ViewModel.DisplayType;
         }
 
         private void AlbumArtOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.AlbumArtOnly;
-            _settingsService.DisplayType = ViewModel.DisplayType;
+            _settingsService.AppSettings.DisplayType = ViewModel.DisplayType;
         }
 
         private void SplitViewRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.SplitView;
-            _settingsService.DisplayType = ViewModel.DisplayType;
+            _settingsService.AppSettings.DisplayType = ViewModel.DisplayType;
         }
 
         private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)

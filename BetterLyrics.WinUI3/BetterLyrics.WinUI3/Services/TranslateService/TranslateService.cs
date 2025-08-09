@@ -46,12 +46,12 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
                 return ChineseConverter.ConvertToTraditionalChinese(text);
             }
 
-            if (string.IsNullOrEmpty(_settingsService.LibreTranslateServer))
+            if (string.IsNullOrEmpty(_settingsService.AppSettings.LibreTranslateServer))
             {
                 throw new Exception("LibreTranslate server URL is not set in settings.");
             }
 
-            var url = $"{_settingsService.LibreTranslateServer}/translate";
+            var url = $"{_settingsService.AppSettings.LibreTranslateServer}/translate";
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
             [
                 new("q", text),

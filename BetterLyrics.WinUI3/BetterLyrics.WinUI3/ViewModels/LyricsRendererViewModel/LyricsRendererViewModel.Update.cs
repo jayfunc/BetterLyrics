@@ -564,6 +564,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - _lyricsVerticalEdgeOpacity / 100f));
                     line.HighlightOpacityTransition.StartTransition(i == _playingLineIndex ? 1f : 0f);
 
+                    if (line.YOffsetTransition.IsTransitioning)
+                    {
+                        Debug.WriteLine($"Line {i} YOffsetTransition is already transitioning, skipping update.");
+                    }
+
                     double yScrollDuration;
                     if (lineCountDelta < 0)
                     {

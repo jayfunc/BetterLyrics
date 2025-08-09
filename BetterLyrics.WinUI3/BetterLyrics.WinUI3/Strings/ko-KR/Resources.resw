@@ -563,7 +563,7 @@
     <value>애니메이션 유형 완화</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>연극과 가사</value>
+    <value>재생 소스</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>이 재생 소스를 모니터링하십시오</value>
@@ -996,5 +996,8 @@
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>설정 파일 가져 오기 실패, 응용 프로그램 설정은 변경되지 않았습니다</value>
+  </data>
+  <data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>수출 성공</value>
   </data>
 </root>

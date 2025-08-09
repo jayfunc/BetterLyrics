@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             RefreshSongs();
 
-            PlaybackOrder = _settingsService.PlaybackOrder;
+            PlaybackOrder = _settingsService.AppSettings.PlaybackOrder;
 
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
@@ -242,7 +242,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 Task.Run(() =>
                 {
-                    foreach (var folder in _settingsService.LocalMediaFolders)
+                    foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
                     {
                         if (Directory.Exists(folder.Path) && folder.IsEnabled)
                         {
@@ -405,7 +405,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnPlaybackOrderChanged(PlaybackOrder value)
         {
-            _settingsService.PlaybackOrder = value;
+            _settingsService.AppSettings.PlaybackOrder = value;
         }
 
         public void Receive(PropertyChangedMessage<ObservableCollection<LocalMediaFolder>> message)

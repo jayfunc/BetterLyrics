@@ -101,7 +101,7 @@ namespace BetterLyrics.WinUI3.Services
 
         public static string GetUserTargetLanguageCode()
         {
-            return SupportedTargetLanguages[_settingsService.SelectedTargetLanguageIndex].Code;
+            return SupportedTargetLanguages[_settingsService.AppSettings.SelectedTargetLanguageIndex].Code;
         }
 
         public static int GetDefaultTargetLanguageIndex()
