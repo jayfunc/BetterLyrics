@@ -491,7 +491,10 @@
                                                     </ListView.OpacityTransition>
                                                     <ListView.ItemTemplate>
                                                         <DataTemplate x:DataType="models:AlbumArtSearchProviderInfo">
-                                                            <controls:SettingsCard Padding="60,0,48,0" Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                            <controls:SettingsCard Padding="20,0,48,0" Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                                <controls:SettingsCard.HeaderIcon>
+                                                                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                                                </controls:SettingsCard.HeaderIcon>
                                                                 <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="AlbumArtSearchProviderToggleSwitch_Toggled" />
                                                             </controls:SettingsCard>
                                                         </DataTemplate>
@@ -521,7 +524,10 @@
                                                     </ListView.ItemContainerStyle>
                                                     <ListView.ItemTemplate>
                                                         <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
-                                                            <controls:SettingsCard Padding="64,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                            <controls:SettingsCard Padding="20,0,48,0" Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                                <controls:SettingsCard.HeaderIcon>
+                                                                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                                                </controls:SettingsCard.HeaderIcon>
                                                                 <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" Toggled="LyricsSearchProviderToggleSwitch_Toggled" />
                                                             </controls:SettingsCard>
                                                         </DataTemplate>
