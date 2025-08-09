@@ -23,6 +23,7 @@ namespace BetterLyrics.WinUI3.Helper
         public bool IsTransitioning => _isTransitioning;
         public T Value => _currentValue;
         public T TargetValue => _targetValue;
+        public EasingType? EasingType => _easingType;
 
         public ValueTransition(T initialValue, double durationSeconds, Func<T, T, double, T>? interpolator = null, EasingType? easingType = null)
         {
@@ -45,7 +46,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                _easingType = EasingType.Linear;
+                _easingType = Enums.EasingType.Linear;
                 _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
         }
@@ -126,40 +127,40 @@ namespace BetterLyrics.WinUI3.Helper
                     double t = progress;
                     switch (type)
                     {
-                        case EasingType.EaseInOutSine:
+                        case Enums.EasingType.EaseInOutSine:
                             t = EasingHelper.EaseInOutSine(t);
                             break;
-                        case EasingType.EaseInOutQuad:
+                        case Enums.EasingType.EaseInOutQuad:
                             t = EasingHelper.EaseInOutQuad(t);
                             break;
-                        case EasingType.EaseInOutCubic:
+                        case Enums.EasingType.EaseInOutCubic:
                             t = EasingHelper.EaseInOutCubic(t);
                             break;
-                        case EasingType.EaseInOutQuart:
+                        case Enums.EasingType.EaseInOutQuart:
                             t = EasingHelper.EaseInOutQuart(t);
                             break;
-                        case EasingType.EaseInOutQuint:
+                        case Enums.EasingType.EaseInOutQuint:
                             t = EasingHelper.EaseInOutQuint(t);
                             break;
-                        case EasingType.EaseInOutExpo:
+                        case Enums.EasingType.EaseInOutExpo:
                             t = EasingHelper.EaseInOutExpo(t);
                             break;
-                        case EasingType.EaseInOutCirc:
+                        case Enums.EasingType.EaseInOutCirc:
                             t = EasingHelper.EaseInOutCirc(t);
                             break;
-                        case EasingType.EaseInOutBack:
+                        case Enums.EasingType.EaseInOutBack:
                             t = EasingHelper.EaseInOutBack(t);
                             break;
-                        case EasingType.EaseInOutElastic:
+                        case Enums.EasingType.EaseInOutElastic:
                             t = EasingHelper.EaseInOutElastic(t);
                             break;
-                        case EasingType.EaseInOutBounce:
+                        case Enums.EasingType.EaseInOutBounce:
                             t = EasingHelper.EaseInOutBounce(t);
                             break;
-                        case EasingType.SmoothStep:
+                        case Enums.EasingType.SmoothStep:
                             t = EasingHelper.SmoothStep(t);
                             break;
-                        case EasingType.Linear:
+                        case Enums.EasingType.Linear:
                             t = EasingHelper.Linear(t);
                             break;
                         default:

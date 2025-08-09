@@ -71,11 +71,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.IsDynamicCoverOverlayEnabled))
-                {
-                    _isDynamicCoverOverlayEnabled = message.NewValue;
-                }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.IsDebugOverlayEnabled))
+                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.IsDebugOverlayEnabled))
                 {
                     _isDebugOverlayEnabled = message.NewValue;
                     _isDebugOverlayEnabledChanged = true;
@@ -245,12 +241,24 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsScrollDuration))
                 {
-                    _canvasYScrollTransition.SetDuration(message.NewValue / 1000f);
+                    _canvasYScrollTransition.SetDuration(message.NewValue / 1000.0);
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsScrollTopDuration))
+                {
+                    _lyricsScrollTopDuration = message.NewValue / 1000.0;
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsScrollBottomDuration))
+                {
+                    _lyricsScrollBottomDuration = message.NewValue / 1000.0;
                 }
                 else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsBgFontOpacity))
                 {
-                    _defaultOpacity = message.NewValue / 100f;
+                    _defaultOpacity = message.NewValue / 100.0;
                     _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.CoverOverlaySpeed))
+                {
+                    _coverOverlaySpeed = message.NewValue;
                 }
             }
         }

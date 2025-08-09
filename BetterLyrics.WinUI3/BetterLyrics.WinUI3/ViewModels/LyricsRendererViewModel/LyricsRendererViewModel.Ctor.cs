@@ -35,10 +35,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _logger = Ioc.Default.GetRequiredService<ILogger<LyricsRendererViewModel>>();
 
             _albumArtCornerRadius = _settingsService.CoverImageRadius;
-            _isDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
             _albumArtBgOpacity = _settingsService.CoverOverlayOpacity;
             _albumArtBgBlurAmount = _settingsService.CoverOverlayBlurAmount;
             _coverAcrylicEffectAmount = _settingsService.CoverAcrylicEffectAmount;
+            _coverOverlaySpeed = _settingsService.CoverOverlaySpeed;
 
             _lyricsBgFontColorType = _settingsService.LyricsBgFontColorType;
             _lyricsFgFontColorType = _settingsService.LyricsFgFontColorType;
@@ -84,7 +84,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _timelineSyncThreshold = 0;
 
-            _canvasYScrollTransition.SetDuration(_settingsService.LyricsScrollDuration / 1000f);
+            _lyricsScrollTopDuration = _settingsService.LyricsScrollTopDuration / 1000.0;
+            _lyricsScrollBottomDuration = _settingsService.LyricsScrollBottomDuration / 1000.0;
+            _canvasYScrollTransition.SetDuration(_settingsService.LyricsScrollDuration / 1000.0);
             _canvasYScrollTransition.SetEasingType(_settingsService.LyricsScrollEasingType);
             _defaultOpacity = _settingsService.LyricsBgFontOpacity / 100f;
 

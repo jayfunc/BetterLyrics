@@ -45,9 +45,9 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
             AutoStartWindowType = _settingsService.AutoStartWindowType;
             AutoLockOnDesktopMode = _settingsService.AutoLockOnDesktopMode;
 
-            IsDynamicCoverOverlayEnabled = _settingsService.IsDynamicCoverOverlayEnabled;
             CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
             CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
+            CoverOverlaySpeed = _settingsService.CoverOverlaySpeed;
 
             CoverAcrylicEffectAmount = _settingsService.CoverAcrylicEffectAmount;
 
@@ -85,6 +85,8 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
 
             LyricsScrollEasingType = _settingsService.LyricsScrollEasingType;
             LyricsScrollDuration = _settingsService.LyricsScrollDuration;
+            LyricsScrollTopDuration = _settingsService.LyricsScrollTopDuration;
+            LyricsScrollBottomDuration = _settingsService.LyricsScrollBottomDuration;
 
             IsLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
             LockHotKeyIndex = _settingsService.LockHotKeyIndex;

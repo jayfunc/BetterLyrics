@@ -256,8 +256,23 @@
                                     </ComboBox>
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageDynamicLyricsBackground" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE759;}">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsDynamicCoverOverlayEnabled, Mode=TwoWay}" />
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsBackgroundSpeed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC49;}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.CoverOverlaySpeed, Mode=OneWay}" />
+                                        <TextBlock
+                                            Margin="0,0,14,0"
+                                            VerticalAlignment="Center"
+                                            Text=" %" />
+                                        <Slider
+                                            Maximum="100"
+                                            Minimum="0"
+                                            SnapsTo="Ticks"
+                                            StepFrequency="1"
+                                            TickFrequency="1"
+                                            TickPlacement="Outside"
+                                            Value="{x:Bind ViewModel.CoverOverlaySpeed, Mode=TwoWay}" />
+                                    </StackPanel>
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageLyricsBackgroundOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF573;}">
@@ -270,7 +285,7 @@
                                             Text=" %" />
                                         <Slider
                                             Maximum="100"
-                                            Minimum="1"
+                                            Minimum="0"
                                             SnapsTo="Ticks"
                                             StepFrequency="1"
                                             TickFrequency="1"
@@ -980,6 +995,24 @@
                                         <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutBounce" />
                                     </ComboBox>
                                     <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageScrollTopDuration">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.LyricsScrollTopDuration, Mode=OneWay}" />
+                                                <TextBlock
+                                                    Margin="0,0,14,0"
+                                                    VerticalAlignment="Center"
+                                                    Text=" ms" />
+                                                <Slider
+                                                    Maximum="1000"
+                                                    Minimum="50"
+                                                    SnapsTo="Ticks"
+                                                    StepFrequency="50"
+                                                    TickFrequency="50"
+                                                    TickPlacement="Outside"
+                                                    Value="{x:Bind ViewModel.LyricsScrollTopDuration, Mode=TwoWay}" />
+                                            </StackPanel>
+                                        </controls:SettingsCard>
                                         <controls:SettingsCard x:Uid="SettingsPageScrollDuration">
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
@@ -990,12 +1023,30 @@
                                                     Text=" ms" />
                                                 <Slider
                                                     Maximum="1000"
-                                                    Minimum="100"
+                                                    Minimum="50"
                                                     SnapsTo="Ticks"
-                                                    StepFrequency="100"
-                                                    TickFrequency="100"
+                                                    StepFrequency="50"
+                                                    TickFrequency="50"
                                                     TickPlacement="Outside"
                                                     Value="{x:Bind ViewModel.LyricsScrollDuration, Mode=TwoWay}" />
+                                            </StackPanel>
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageScrollBottomDuration">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
+                                                <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.LyricsScrollBottomDuration, Mode=OneWay}" />
+                                                <TextBlock
+                                                    Margin="0,0,14,0"
+                                                    VerticalAlignment="Center"
+                                                    Text=" ms" />
+                                                <Slider
+                                                    Maximum="1000"
+                                                    Minimum="50"
+                                                    SnapsTo="Ticks"
+                                                    StepFrequency="50"
+                                                    TickFrequency="50"
+                                                    TickPlacement="Outside"
+                                                    Value="{x:Bind ViewModel.LyricsScrollBottomDuration, Mode=TwoWay}" />
                                             </StackPanel>
                                         </controls:SettingsCard>
                                     </controls:SettingsExpander.Items>

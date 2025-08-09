@@ -21,30 +21,35 @@ namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsLine
     {
-        private const double _animationDuration = 0.3f;
+        private const double _animationDuration = 0.3;
         public ValueTransition<double> AngleTransition { get; set; } = new(
-            initialValue: 0f,
+            initialValue: 0,
             durationSeconds: _animationDuration,
             easingType: EasingType.EaseInOutSine
         );
         public ValueTransition<double> BlurAmountTransition { get; set; } = new(
-            initialValue: 0f,
+            initialValue: 0,
             durationSeconds: _animationDuration,
             easingType: EasingType.EaseInOutSine
         );
         public ValueTransition<double> HighlightOpacityTransition { get; set; } = new(
-            initialValue: 0f,
+            initialValue: 0,
             durationSeconds: _animationDuration,
             easingType: EasingType.EaseInOutSine
         );
         public ValueTransition<double> OpacityTransition { get; set; } = new(
-            initialValue: 0f,
+            initialValue: 0,
             durationSeconds: _animationDuration,
             easingType: EasingType.EaseInOutSine
         );
         public ValueTransition<double> ScaleTransition { get; set; } = new(
-            initialValue: 0f,
+            initialValue: 0.75,
             durationSeconds: _animationDuration,
+            easingType: EasingType.EaseInOutSine
+        );
+        public ValueTransition<double> YOffsetTransition { get; set; } = new(
+            initialValue: 0,
+            durationSeconds: 0.5,
             easingType: EasingType.EaseInOutSine
         );
 

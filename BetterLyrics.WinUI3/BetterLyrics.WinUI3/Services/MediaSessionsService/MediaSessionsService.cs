@@ -14,6 +14,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using EvtSource;
 using Microsoft.Extensions.Logging;
+using Microsoft.Graphics.Canvas;
 using Microsoft.UI.Dispatching;
 using SixLabors.ImageSharp.PixelFormats;
 using System;

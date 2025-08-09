@@ -76,7 +76,7 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
-        public partial bool IsDynamicCoverOverlayEnabled { get; set; }
+        public partial int CoverOverlaySpeed { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -206,6 +206,14 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial int LyricsScrollDuration { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsScrollTopDuration { get; set; }
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial int LyricsScrollBottomDuration { get; set; }
 
         [ObservableProperty]
         public partial bool IsLXMusicServerTesting { get; set; } = false;
