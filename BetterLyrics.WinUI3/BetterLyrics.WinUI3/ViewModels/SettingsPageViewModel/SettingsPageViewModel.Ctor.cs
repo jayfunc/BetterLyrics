@@ -33,79 +33,79 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
             IsLastFMAuthenticated = _lastFMService.IsAuthenticated;
             LastFMUser = _lastFMService.User;
 
-            IsLibreTranslateEnabled = _settingsService.IsLibreTranslateEnabled;
-            LibreTranslateServer = _settingsService.LibreTranslateServer;
-            SelectedTargetLanguageIndex = _settingsService.SelectedTargetLanguageIndex;
+            IsLibreTranslateEnabled = _settingsService.AppSettings.IsLibreTranslateEnabled;
+            LibreTranslateServer = _settingsService.AppSettings.LibreTranslateServer;
+            SelectedTargetLanguageIndex = _settingsService.AppSettings.SelectedTargetLanguageIndex;
 
-            LocalMediaFolders = [.. _settingsService.LocalMediaFolders];
+            LocalMediaFolders = [.. _settingsService.AppSettings.LocalMediaFolders];
 
-            Language = _settingsService.Language;
-            CoverImageRadius = _settingsService.CoverImageRadius;
+            Language = _settingsService.AppSettings.Language;
+            CoverImageRadius = _settingsService.AppSettings.CoverImageRadius;
 
-            AutoStartWindowType = _settingsService.AutoStartWindowType;
-            AutoLockOnDesktopMode = _settingsService.AutoLockOnDesktopMode;
+            AutoStartWindowType = _settingsService.AppSettings.AutoStartWindowType;
+            AutoLockOnDesktopMode = _settingsService.AppSettings.AutoLockOnDesktopMode;
 
-            CoverOverlayOpacity = _settingsService.CoverOverlayOpacity;
-            CoverOverlayBlurAmount = _settingsService.CoverOverlayBlurAmount;
-            CoverOverlaySpeed = _settingsService.CoverOverlaySpeed;
+            CoverOverlayOpacity = _settingsService.AppSettings.CoverOverlayOpacity;
+            CoverOverlayBlurAmount = _settingsService.AppSettings.CoverOverlayBlurAmount;
+            CoverOverlaySpeed = _settingsService.AppSettings.CoverOverlaySpeed;
 
-            CoverAcrylicEffectAmount = _settingsService.CoverAcrylicEffectAmount;
+            CoverAcrylicEffectAmount = _settingsService.AppSettings.CoverAcrylicEffectAmount;
 
-            LyricsAlignmentType = _settingsService.LyricsAlignmentType;
-            SongInfoAlignmentType = _settingsService.SongInfoAlignmentType;
-            LyricsFontWeight = _settingsService.LyricsFontWeight;
-            LyricsBlurAmount = _settingsService.LyricsBlurAmount;
-            LyricsVerticalEdgeOpacity = _settingsService.LyricsVerticalEdgeOpacity;
-            LyricsLineSpacingFactor = _settingsService.LyricsLineSpacingFactor;
+            LyricsAlignmentType = _settingsService.AppSettings.LyricsAlignmentType;
+            SongInfoAlignmentType = _settingsService.AppSettings.SongInfoAlignmentType;
+            LyricsFontWeight = _settingsService.AppSettings.LyricsFontWeight;
+            LyricsBlurAmount = _settingsService.AppSettings.LyricsBlurAmount;
+            LyricsVerticalEdgeOpacity = _settingsService.AppSettings.LyricsVerticalEdgeOpacity;
+            LyricsLineSpacingFactor = _settingsService.AppSettings.LyricsLineSpacingFactor;
 
             // Font size
-            LyricsStandardFontSize = _settingsService.LyricsStandardFontSize;
-            LyricsDockFontSize = _settingsService.LyricsDockFontSize;
-            LyricsDesktopFontSize = _settingsService.LyricsDesktopFontSize;
+            LyricsStandardFontSize = _settingsService.AppSettings.LyricsStandardFontSize;
+            LyricsDockFontSize = _settingsService.AppSettings.LyricsDockFontSize;
+            LyricsDesktopFontSize = _settingsService.AppSettings.LyricsDesktopFontSize;
 
-            IsLyricsGlowEffectEnabled = _settingsService.IsLyricsGlowEffectEnabled;
-            LyricsGlowEffectScope = _settingsService.LyricsGlowEffectScope;
-            LyricsHighlightScope = _settingsService.LyricsHighlightScope;
-            IsFanLyricsEnabled = _settingsService.IsFanLyricsEnabled;
+            IsLyricsGlowEffectEnabled = _settingsService.AppSettings.IsLyricsGlowEffectEnabled;
+            LyricsGlowEffectScope = _settingsService.AppSettings.LyricsGlowEffectScope;
+            LyricsHighlightScope = _settingsService.AppSettings.LyricsHighlightScope;
+            IsFanLyricsEnabled = _settingsService.AppSettings.IsFanLyricsEnabled;
 
-            LyricsBgFontColorType = _settingsService.LyricsBgFontColorType;
-            LyricsFgFontColorType = _settingsService.LyricsFgFontColorType;
-            LyricsStrokeFontColorType = _settingsService.LyricsStrokeFontColorType;
+            LyricsBgFontColorType = _settingsService.AppSettings.LyricsBgFontColorType;
+            LyricsFgFontColorType = _settingsService.AppSettings.LyricsFgFontColorType;
+            LyricsStrokeFontColorType = _settingsService.AppSettings.LyricsStrokeFontColorType;
 
-            LyricsCustomBgFontColor = _settingsService.LyricsCustomBgFontColor;
-            LyricsCustomFgFontColor = _settingsService.LyricsCustomFgFontColor;
-            LyricsCustomStrokeFontColor = _settingsService.LyricsCustomStrokeFontColor;
+            LyricsCustomBgFontColor = _settingsService.AppSettings.LyricsCustomBgFontColor;
+            LyricsCustomFgFontColor = _settingsService.AppSettings.LyricsCustomFgFontColor;
+            LyricsCustomStrokeFontColor = _settingsService.AppSettings.LyricsCustomStrokeFontColor;
 
-            LyricsFontStrokeWidth = _settingsService.LyricsFontStrokeWidth;
-            LyricsBackgroundTheme = _settingsService.LyricsBackgroundTheme;
-            MediaSourceProvidersInfo = [.. _settingsService.MediaSourceProvidersInfo];
+            LyricsFontStrokeWidth = _settingsService.AppSettings.LyricsFontStrokeWidth;
+            LyricsBackgroundTheme = _settingsService.AppSettings.LyricsBackgroundTheme;
+            MediaSourceProvidersInfo = [.. _settingsService.AppSettings.MediaSourceProvidersInfo];
             SelectedMediaSourceProvider = MediaSourceProvidersInfo.FirstOrDefault();
 
-            IgnoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
+            IgnoreFullscreenWindow = _settingsService.AppSettings.IgnoreFullscreenWindow;
 
-            LyricsScrollEasingType = _settingsService.LyricsScrollEasingType;
-            LyricsScrollDuration = _settingsService.LyricsScrollDuration;
-            LyricsScrollTopDuration = _settingsService.LyricsScrollTopDuration;
-            LyricsScrollBottomDuration = _settingsService.LyricsScrollBottomDuration;
+            LyricsScrollEasingType = _settingsService.AppSettings.LyricsScrollEasingType;
+            LyricsScrollDuration = _settingsService.AppSettings.LyricsScrollDuration;
+            LyricsScrollTopDuration = _settingsService.AppSettings.LyricsScrollTopDuration;
+            LyricsScrollBottomDuration = _settingsService.AppSettings.LyricsScrollBottomDuration;
 
-            IsLyricsFloatAnimationEnabled = _settingsService.IsLyricsFloatAnimationEnabled;
-            LockHotKeyIndex = _settingsService.LockHotKeyIndex;
+            IsLyricsFloatAnimationEnabled = _settingsService.AppSettings.IsLyricsFloatAnimationEnabled;
+            LockHotKeyIndex = _settingsService.AppSettings.LockHotKeyIndex;
 
-            LXMusicServer = _settingsService.LXMusicServer;
-            DockPlacement = _settingsService.DockPlacement;
-            LyricsBgFontOpacity = _settingsService.LyricsBgFontOpacity;
-            HideWindowWhenNotPlaying = _settingsService.HideWindowWhenNotPlaying;
-            DockWindowHeight = _settingsService.DockWindowHeight;
+            LXMusicServer = _settingsService.AppSettings.LXMusicServer;
+            DockPlacement = _settingsService.AppSettings.DockPlacement;
+            LyricsBgFontOpacity = _settingsService.AppSettings.LyricsBgFontOpacity;
+            HideWindowWhenNotPlaying = _settingsService.AppSettings.HideWindowWhenNotPlaying;
+            DockWindowHeight = _settingsService.AppSettings.DockWindowHeight;
 
             SystemFontNames = [.. FontHelper.SystemFontFamilies];
-            SelectedFontFamilyIndex = _settingsService.SelectedFontFamilyIndex;
-            LyricsFontFamily = _settingsService.LyricsFontFamily;
-            IsDragEverywhereEnabled = _settingsService.IsDragEverywhereEnabled;
+            SelectedFontFamilyIndex = _settingsService.AppSettings.SelectedFontFamilyIndex;
+            LyricsFontFamily = _settingsService.AppSettings.LyricsFontFamily;
+            IsDragEverywhereEnabled = _settingsService.AppSettings.IsDragEverywhereEnabled;
 
             MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
-            SelectedDockMonitorDeviceName = _settingsService.DockMonitorDeviceName;
+            SelectedDockMonitorDeviceName = _settingsService.AppSettings.DockMonitorDeviceName;
 
-            LyricsTranslationSeparator = _settingsService.LyricsTranslationSeparator;
+            LyricsTranslationSeparator = _settingsService.AppSettings.LyricsTranslationSeparator;
 
             _mediaSessionsService.MediaSourceProvidersInfoChanged += MediaSessionsService_SessionIdsChanged;
             _mediaSessionsService.SongInfoChanged += MediaSessionsService_SongInfoChanged;

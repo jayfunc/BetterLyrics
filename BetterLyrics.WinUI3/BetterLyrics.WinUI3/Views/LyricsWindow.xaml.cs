@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Views
 
         public void UpdateTitleBarArea()
         {
-            if (_settingsService.IsDragEverywhereEnabled)
+            if (_settingsService.AppSettings.IsDragEverywhereEnabled)
             {
                 SetTitleBar(RootGrid);
             }
@@ -69,15 +69,15 @@ namespace BetterLyrics.WinUI3.Views
 
         public void AutoSelectLyricsMode(AutoStartWindowType? type = null, bool? autoLook = null)
         {
-            type ??= _settingsService.AutoStartWindowType;
+            type ??= _settingsService.AppSettings.AutoStartWindowType;
             switch (type!)
             {
                 case AutoStartWindowType.StandardMode:
                     AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
-                        _settingsService.StandardWindowLeft,
-                        _settingsService.StandardWindowTop,
-                        _settingsService.StandardWindowWidth,
-                        _settingsService.StandardWindowHeight));
+                        _settingsService.AppSettings.StandardWindowLeft,
+                        _settingsService.AppSettings.StandardWindowTop,
+                        _settingsService.AppSettings.StandardWindowWidth,
+                        _settingsService.AppSettings.StandardWindowHeight));
                     break;
                 case AutoStartWindowType.DockMode:
                     DockFlyoutItem.IsChecked = true;
@@ -86,7 +86,7 @@ namespace BetterLyrics.WinUI3.Views
                 case AutoStartWindowType.DesktopMode:
                     DesktopFlyoutItem.IsChecked = true;
                     ViewModel.ToggleDesktopModeCommand.Execute(null);
-                    if (autoLook == null && _settingsService.AutoLockOnDesktopMode)
+                    if (autoLook == null && _settingsService.AppSettings.AutoLockOnDesktopMode)
                     {
                         ViewModel.ToggleLockWindowCommand.Execute(null);
                     }
@@ -120,10 +120,10 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     if (ViewModel.IsDesktopMode)
                     {
-                        _settingsService.DesktopWindowLeft = rect.X;
-                        _settingsService.DesktopWindowTop = rect.Y;
-                        _settingsService.DesktopWindowWidth = size.Width;
-                        _settingsService.DesktopWindowHeight = size.Height;
+                        _settingsService.AppSettings.DesktopWindowLeft = rect.X;
+                        _settingsService.AppSettings.DesktopWindowTop = rect.Y;
+                        _settingsService.AppSettings.DesktopWindowWidth = size.Width;
+                        _settingsService.AppSettings.DesktopWindowHeight = size.Height;
                     }
                     else if (ViewModel.IsDockMode)
                     {
@@ -131,10 +131,10 @@ namespace BetterLyrics.WinUI3.Views
                     }
                     else
                     {
-                        _settingsService.StandardWindowLeft = rect.X;
-                        _settingsService.StandardWindowTop = rect.Y;
-                        _settingsService.StandardWindowWidth = size.Width;
-                        _settingsService.StandardWindowHeight = size.Height;
+                        _settingsService.AppSettings.StandardWindowLeft = rect.X;
+                        _settingsService.AppSettings.StandardWindowTop = rect.Y;
+                        _settingsService.AppSettings.StandardWindowWidth = size.Width;
+                        _settingsService.AppSettings.StandardWindowHeight = size.Height;
                     }
                 }
             }
@@ -189,6 +189,7 @@ namespace BetterLyrics.WinUI3.Views
                     ViewModel.IsImmersiveMode = true;
                     break;
                 case AppWindowPresenterKind.FullScreen:
+
                     AOTFlyoutItem.Visibility =
                     ClickThroughButton.Visibility =
                     DesktopFlyoutItem.Visibility =
@@ -196,6 +197,7 @@ namespace BetterLyrics.WinUI3.Views
                     DockFlyoutItem.Visibility =
                         Visibility.Collapsed;
                     FullScreenFlyoutItem.IsChecked = true;
+                    ViewModel.IsImmersiveMode = true;
                     break;
                 case AppWindowPresenterKind.Overlapped:
                     DockFlyoutItem.Visibility = Visibility.Visible;
@@ -242,7 +244,7 @@ namespace BetterLyrics.WinUI3.Views
                         ClickThroughButton.Visibility = Visibility.Collapsed;
                         AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
 
-                        ViewModel.IsImmersiveMode = _settingsService.IsImmersiveMode;
+                        ViewModel.IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
                     }
                     break;
                 default:

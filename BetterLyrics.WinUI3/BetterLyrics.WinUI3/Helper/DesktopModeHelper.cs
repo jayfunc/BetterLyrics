@@ -68,10 +68,10 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             // 从存储区获取目标宽高和位置
-            int targetWidth = _settingsService.DesktopWindowWidth;
-            int targetHeight = _settingsService.DesktopWindowHeight;
-            int targetX = _settingsService.DesktopWindowLeft;
-            int targetY = _settingsService.DesktopWindowTop;
+            int targetWidth = _settingsService.AppSettings.DesktopWindowWidth;
+            int targetHeight = _settingsService.AppSettings.DesktopWindowHeight;
+            int targetX = _settingsService.AppSettings.DesktopWindowLeft;
+            int targetY = _settingsService.AppSettings.DesktopWindowTop;
 
             // 设置窗口大小和位置
             window.AppWindow.MoveAndResize(

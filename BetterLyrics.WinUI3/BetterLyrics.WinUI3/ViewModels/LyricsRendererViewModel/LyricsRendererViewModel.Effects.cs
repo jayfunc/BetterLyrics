@@ -53,7 +53,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private OpacityEffect? CreateFgImageEffect(ICanvasAnimatedControl control, CanvasBitmap canvasBitmap, double opacity)
         {
-            // TODO 最大化/还原时图片大小未跟随改变
             if (opacity == 0) return null;
 
             double imageWidth = (double)canvasBitmap.Size.Width;

@@ -1225,7 +1225,7 @@
                                         <Button x:Uid="SettingsPageImportSettingsButton" Command="{x:Bind ViewModel.ImportSettingsCommand}" />
                                         <Button x:Uid="SettingsPageExportSettingsButton" Command="{x:Bind ViewModel.ExportSettingsCommand}" />
                                     </StackPanel>
-                                    <controls:SettingsExpander.Items>
+                                    <controls:SettingsExpander.ItemsHeader>
                                         <InfoBar
                                             x:Uid="SettingsPageImportSettingsInfo"
                                             BorderThickness="0"
@@ -1233,7 +1233,7 @@
                                             IsClosable="False"
                                             IsOpen="True"
                                             Severity="Warning" />
-                                    </controls:SettingsExpander.Items>
+                                    </controls:SettingsExpander.ItemsHeader>
                                 </controls:SettingsExpander>
 
                                 <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">

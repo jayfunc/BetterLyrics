@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
         {
             byte[]? result = null;
 
-            foreach (var provider in _settingsService.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
+            foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
             {
                 if (!provider.IsEnabled)
                 {
@@ -69,7 +69,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 
         private byte[]? SearchFile(string artist, string title)
         {
-            foreach (var folder in _settingsService.LocalMediaFolders)
+            foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {

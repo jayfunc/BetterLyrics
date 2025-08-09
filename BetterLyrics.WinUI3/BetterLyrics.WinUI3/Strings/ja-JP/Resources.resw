@@ -563,7 +563,7 @@
     <value>アニメーションタイプを緩和します</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>プレイと歌詞</value>
+    <value>再生ソース</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>この再生ソースを監視します</value>
@@ -996,5 +996,8 @@
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>設定ファイルのインポートに失敗し、アプリケーション設定は変更されません</value>
+  </data>
+  <data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>エクスポートが成功しました</value>
   </data>
 </root>

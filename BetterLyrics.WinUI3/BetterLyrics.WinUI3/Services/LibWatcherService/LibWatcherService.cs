@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Services.LibWatcherService
 
         public LibWatcherService(ISettingsService settingsService) : base(settingsService)
         {
-            UpdateWatchers(_settingsService.LocalMediaFolders);
+            UpdateWatchers(_settingsService.AppSettings.LocalMediaFolders);
         }
 
         public event EventHandler<LibChangedEventArgs>? MusicLibraryFilesChanged;

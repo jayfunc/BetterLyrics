@@ -563,7 +563,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Easing animation type</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Playback and lyrics sources</value>
+    <value>Playback sources</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>Monitor this playback source</value>
@@ -996,5 +996,8 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>Settings file import failed, application settings remain unchanged</value>
+  </data>
+  <data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>Export successful</value>
   </data>
 </root>

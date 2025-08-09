@@ -40,7 +40,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             _settingsService = settingsService;
 
             _client = new LastfmClient(Constants.LastFM.ApiKey, Constants.LastFM.SharedSecret);
-            _client.Session.SessionKey = _settingsService.LastFMSessionKey;
+            _client.Session.SessionKey = _settingsService.AppSettings.LastFMSessionKey;
             UpdateAuthStatusAsync();
         }
 
@@ -49,7 +49,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             try
             {
                 await _client.AuthenticateViaWebAsync();
-                _settingsService.LastFMSessionKey = _client.Session.SessionKey;
+                _settingsService.AppSettings.LastFMSessionKey = _client.Session.SessionKey;
                 await UpdateAuthStatusAsync();
             }
             catch (Exception)
@@ -61,7 +61,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
         public async Task ConfirmUnAuthAsync()
         {
             _client.Session.SessionKey = "";
-            _settingsService.LastFMSessionKey = "";
+            _settingsService.AppSettings.LastFMSessionKey = "";
             await UpdateAuthStatusAsync();
         }
 

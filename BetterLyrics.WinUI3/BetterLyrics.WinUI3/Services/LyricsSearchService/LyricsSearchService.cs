@@ -92,7 +92,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             try
             {
-                foreach (var provider in _settingsService.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.LyricsSearchProvidersInfo ?? [])
+                foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.LyricsSearchProvidersInfo ?? [])
                 {
                     if (!provider.IsEnabled)
                     {
@@ -169,7 +169,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         private async Task<string?> SearchFile(string title, string artist, LyricsFormat format)
         {
-            foreach (var folder in _settingsService.LocalMediaFolders)
+            foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
@@ -191,7 +191,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         private string? SearchEmbedded(string title, string artist)
         {
-            foreach (var folder in _settingsService.LocalMediaFolders)
+            foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {

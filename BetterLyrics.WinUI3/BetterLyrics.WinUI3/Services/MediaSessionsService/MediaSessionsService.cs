@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _albumArtSearchService = albumArtSearchService;
             _logger = Ioc.Default.GetRequiredService<ILogger<MediaSessionsService>>();
 
-            _mediaSourceProvidersInfo = _settingsService.MediaSourceProvidersInfo;
+            _mediaSourceProvidersInfo = _settingsService.AppSettings.MediaSourceProvidersInfo;
             InitMediaManager();
         }
 
@@ -288,7 +288,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 _mediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id));
                 // 在这里就写进设置
                 // 因为 SettingsPageViewModel 可能还没有初始化
-                _settingsService.MediaSourceProvidersInfo = _mediaSourceProvidersInfo;
+                _settingsService.AppSettings.MediaSourceProvidersInfo = _mediaSourceProvidersInfo;
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     MediaSourceProvidersInfoChanged?.Invoke(this, new MediaSourceProvidersInfoEventArgs(_mediaSourceProvidersInfo));
@@ -368,7 +368,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             try
             {
-                _sse = new EventSourceReader(new Uri($"{_settingsService.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
+                _sse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
                 _sse.MessageReceived += Sse_MessageReceived;
                 _sse.Disconnected += Sse_Disconnected;
             }

@@ -49,13 +49,13 @@ namespace BetterLyrics.WinUI3
 
         public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
         {
-            _dockMonitorDeviceName = _settingsService.DockMonitorDeviceName;
-            _ignoreFullscreenWindow = _settingsService.IgnoreFullscreenWindow;
-            _hideWindowWhenNotPlaying = _settingsService.HideWindowWhenNotPlaying;
-            IsImmersiveMode = _settingsService.IsImmersiveMode;
-            _dockPlacement = _settingsService.DockPlacement;
-            _dockWindowHeight = _settingsService.DockWindowHeight;
-            OnIsImmersiveModeChanged(_settingsService.IsImmersiveMode);
+            _dockMonitorDeviceName = _settingsService.AppSettings.DockMonitorDeviceName;
+            _ignoreFullscreenWindow = _settingsService.AppSettings.IgnoreFullscreenWindow;
+            _hideWindowWhenNotPlaying = _settingsService.AppSettings.HideWindowWhenNotPlaying;
+            IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
+            _dockPlacement = _settingsService.AppSettings.DockPlacement;
+            _dockWindowHeight = _settingsService.AppSettings.DockWindowHeight;
+            OnIsImmersiveModeChanged(_settingsService.AppSettings.IsImmersiveMode);
 
             _mediaSessionsService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
         }
@@ -251,12 +251,12 @@ namespace BetterLyrics.WinUI3
         public void UpdateAccentColor(nint hwnd)
         {
             WindowPixelSampleMode mode = IsDesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
-            ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, _settingsService.DockMonitorDeviceName, mode).ToColor();
+            ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, _settingsService.AppSettings.DockMonitorDeviceName, mode).ToColor();
         }
 
         public void InitLockHotKey()
         {
-            UpdateLockHotKey(_settingsService.LockHotKeyIndex);
+            UpdateLockHotKey(_settingsService.AppSettings.LockHotKeyIndex);
         }
 
         [RelayCommand]
@@ -269,7 +269,7 @@ namespace BetterLyrics.WinUI3
             {
                 DesktopModeHelper.SetClickThrough(window, false);
                 IsLyricsWindowLocked = false;
-                IsImmersiveMode = _settingsService.IsImmersiveMode;
+                IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
             }
             else
             {
@@ -327,7 +327,7 @@ namespace BetterLyrics.WinUI3
         [RelayCommand]
         private void OnImmersiveToggleButtonEnabledChanged()
         {
-            _settingsService.IsImmersiveMode = IsImmersiveMode;
+            _settingsService.AppSettings.IsImmersiveMode = IsImmersiveMode;
         }
 
         public void Receive(PropertyChangedMessage<DockPlacement> message)

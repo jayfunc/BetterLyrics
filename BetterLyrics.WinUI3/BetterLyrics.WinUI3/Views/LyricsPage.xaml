@@ -352,13 +352,6 @@
             </Grid.ContextFlyout>
         </Grid>
 
-        <TeachingTip
-            x:Name="WelcomeTeachingTip"
-            x:Uid="MainPageWelcomeTeachingTip"
-            Closed="WelcomeTeachingTip_Closed"
-            IsOpen="{x:Bind ViewModel.IsWelcomeTeachingTipOpen, Mode=OneWay}"
-            Target="{x:Bind RootGrid}" />
-
         <uc:SystemTray />
 
         <VisualStateManager.VisualStateGroups>

@@ -39,14 +39,14 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         public void RemoveFolderAsync(LocalMediaFolder folder)
         {
             LocalMediaFolders.Remove(folder);
-            _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
+            _settingsService.AppSettings.LocalMediaFolders = [.. LocalMediaFolders];
             _libWatcherService.UpdateWatchers([.. LocalMediaFolders]);
             Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
         public void ToggleLocalLyricsFolder()
         {
-            _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
+            _settingsService.AppSettings.LocalMediaFolders = [.. LocalMediaFolders];
             Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
         }
 
@@ -54,7 +54,7 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
         {
             _dispatcherQueueTimer.Debounce(() =>
             {
-                _settingsService.MediaSourceProvidersInfo = [.. MediaSourceProvidersInfo];
+                _settingsService.AppSettings.MediaSourceProvidersInfo = [.. MediaSourceProvidersInfo];
                 Broadcast(
                     MediaSourceProvidersInfo,
                     MediaSourceProvidersInfo,
@@ -85,7 +85,7 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
             else
             {
                 LocalMediaFolders.Add(new LocalMediaFolder(path, true));
-                _settingsService.LocalMediaFolders = [.. LocalMediaFolders];
+                _settingsService.AppSettings.LocalMediaFolders = [.. LocalMediaFolders];
                 _libWatcherService.UpdateWatchers([.. LocalMediaFolders]);
                 Broadcast(LocalMediaFolders, LocalMediaFolders, nameof(LocalMediaFolders));
             }
@@ -171,6 +171,7 @@ namespace BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel
             if (folder != null)
             {
                 _settingsService.ExportSettings(folder.Path);
+                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("ExportSettingsSuccess") ?? "", InfoBarSeverity.Success);
             }
         }
 

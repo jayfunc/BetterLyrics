@@ -40,16 +40,14 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public LyricsPageViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService) : base(settingsService)
         {
-            IsFirstRun = _settingsService.IsFirstRun;
-            IsTranslationEnabled = _settingsService.IsTranslationEnabled;
-            DisplayType = _settingsService.DisplayType;
-            PositionOffset = _settingsService.PositionOffset;
-            IsImmersiveMode = _settingsService.IsImmersiveMode;
-            ShowTranslationOnly = _settingsService.ShowTranslationOnly;
+            IsTranslationEnabled = _settingsService.AppSettings.IsTranslationEnabled;
+            DisplayType = _settingsService.AppSettings.DisplayType;
+            IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
+            ShowTranslationOnly = _settingsService.AppSettings.ShowTranslationOnly;
 
             UpdateHintMessageFontSize();
 
-            LyricsFontFamily = _settingsService.LyricsFontFamily;
+            LyricsFontFamily = _settingsService.AppSettings.LyricsFontFamily;
 
             OnIsImmersiveModeChanged(IsImmersiveMode);
 
@@ -114,17 +112,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial LyricsDisplayType DisplayType { get; set; }
 
         [ObservableProperty]
-        public partial bool IsFirstRun { get; set; }
-
-        [ObservableProperty]
-        public partial bool IsWelcomeTeachingTipOpen { get; set; }
-
-        [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; } = null;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial int PositionOffset { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -147,15 +135,15 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (_isDockMode)
             {
-                HintMessageFontSize = _settingsService.LyricsDockFontSize;
+                HintMessageFontSize = _settingsService.AppSettings.LyricsDockFontSize;
             }
             else if (_isDesktopMode)
             {
-                HintMessageFontSize = _settingsService.LyricsDesktopFontSize;
+                HintMessageFontSize = _settingsService.AppSettings.LyricsDesktopFontSize;
             }
             else
             {
-                HintMessageFontSize = _settingsService.LyricsStandardFontSize;
+                HintMessageFontSize = _settingsService.AppSettings.LyricsStandardFontSize;
             }
         }
 
@@ -172,7 +160,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        DisplayType = _settingsService.DisplayType;
+                        DisplayType = _settingsService.AppSettings.DisplayType;
                     }
                     UpdateHintMessageFontSize();
                 }
@@ -185,7 +173,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        DisplayType = _settingsService.DisplayType;
+                        DisplayType = _settingsService.AppSettings.DisplayType;
                     }
                     UpdateHintMessageFontSize();
                 }
@@ -226,20 +214,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             await _mediaSessionsService.NextAsync();
         }
 
-        partial void OnIsFirstRunChanged(bool value)
-        {
-            IsWelcomeTeachingTipOpen = value;
-            _settingsService.IsFirstRun = false;
-        }
-
         partial void OnIsTranslationEnabledChanged(bool value)
         {
-            _settingsService.IsTranslationEnabled = value;
-        }
-
-        partial void OnPositionOffsetChanged(int value)
-        {
-            _settingsService.PositionOffset = value;
+            _settingsService.AppSettings.IsTranslationEnabled = value;
         }
 
         partial void OnIsImmersiveModeChanged(bool value)
@@ -258,7 +235,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnShowTranslationOnlyChanged(bool value)
         {
-            _settingsService.ShowTranslationOnly = value;
+            _settingsService.AppSettings.ShowTranslationOnly = value;
         }
 
         public void Receive(PropertyChangedMessage<int> message)

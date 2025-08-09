@@ -563,7 +563,7 @@
     <value>缓动动画类型</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>播放与歌词源</value>
+    <value>播放源</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>监听此播放源</value>
@@ -996,5 +996,8 @@
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>设置文件导入失败，应用程序设置保持不变</value>
+  </data>
+  <data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>导出成功</value>
   </data>
 </root>
