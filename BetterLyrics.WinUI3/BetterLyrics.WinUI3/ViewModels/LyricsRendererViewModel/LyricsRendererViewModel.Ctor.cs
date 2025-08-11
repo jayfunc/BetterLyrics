@@ -55,7 +55,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _mediaSessionsService.AlbumArtChangedChanged += PlaybackService_AlbumArtChangedChanged;
             _mediaSessionsService.TimelineChanged += PlaybackService_TimelineChanged;
 
-            _isPlaying = _mediaSessionsService.IsPlaying;
+            IsPlaying = _mediaSessionsService.IsPlaying;
 
             UpdateColorConfig();
         }

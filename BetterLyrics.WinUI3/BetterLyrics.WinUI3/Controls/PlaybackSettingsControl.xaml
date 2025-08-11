@@ -18,31 +18,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <NavigationView
-                VerticalAlignment="Top"
-                Background="Transparent"
-                IsBackButtonVisible="Collapsed"
-                IsBackEnabled="False"
-                IsSettingsVisible="False"
-                MenuItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
-                PaneDisplayMode="Top"
-                SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
-                <NavigationView.MenuItemTemplate>
-                    <DataTemplate x:DataType="models:MediaSourceProviderInfo">
-                        <NavigationViewItem>
-                            <NavigationViewItem.Icon>
-                                <ImageIcon Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
-                            </NavigationViewItem.Icon>
-                            <NavigationViewItem.Content>
-                                <TextBlock
-                                    MaxWidth="200"
-                                    Text="{Binding Provider, Converter={StaticResource MediaSourceProviderToDisplayedNameConverter}, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
-                            </NavigationViewItem.Content>
-                        </NavigationViewItem>
-                    </DataTemplate>
-                </NavigationView.MenuItemTemplate>
-            </NavigationView>
             <ScrollViewer Margin="0,72,0,0" Style="{StaticResource SettingsScrollViewerStyle}">
                 <Grid Style="{StaticResource SettingsGridStyle}">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
@@ -143,6 +118,31 @@
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
+            <ListView
+                VerticalAlignment="Top"
+                ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollMode="Disabled"
+                SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MediaSourceProviderInfo">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <ImageIcon Height="16" Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
+                            <TextBlock
+                                MaxWidth="200"
+                                Text="{Binding Provider, Converter={StaticResource MediaSourceProviderToDisplayedNameConverter}, Mode=OneWay}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <interactivity:Interaction.Behaviors>
                 <interactivity:DataTriggerBehavior
                     Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"

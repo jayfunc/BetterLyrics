@@ -53,6 +53,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.LocalMediaFolders.CollectionChanged += AppSettings_CollectionChanged;
             AppSettings.LocalMediaFolders.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
 
+            AppSettings.Version = MetadataHelper.AppVersion;
+
             EnsureMediaSourceProvidersInfo();
         }
 

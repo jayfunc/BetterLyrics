@@ -27,7 +27,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsLineSpacingFactor { get; set; } = 0.5;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsTranslationSeparator { get; set; } = StringHelper.NewLine;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SelectedFontFamilyIndex { get; set; } = 0;
 
         public LyricsStyleSettings() { }
 

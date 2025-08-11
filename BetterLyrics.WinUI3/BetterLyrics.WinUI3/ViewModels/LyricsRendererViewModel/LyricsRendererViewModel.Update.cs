@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             _elapsedTime = args.Timing.ElapsedTime;
 
-            if (_isPlaying)
+            if (IsPlaying)
             {
                 TotalTime += _elapsedTime;
                 _totalPlayingTime += _elapsedTime;
@@ -305,6 +305,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _lyricsTextFormat.FontSize = _lyricsStyleSettings.LyricsFontSize;
             _lyricsTextFormat.FontWeight = _lyricsStyleSettings.LyricsFontWeight.ToFontWeight();
+            // TODO：FontFamily 无法设置
             _lyricsTextFormat.FontFamily = _artistTextFormat.FontFamily = _titleTextFormat.FontFamily = _lyricsStyleSettings.LyricsFontFamily;
 
             _canvasYScrollTransition.SetDuration(_lyricsEffectSettings.LyricsScrollDuration / 1000.0);

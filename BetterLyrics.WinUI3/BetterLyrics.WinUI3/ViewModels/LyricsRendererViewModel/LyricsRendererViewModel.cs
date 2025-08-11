@@ -132,7 +132,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private bool _isDesktopMode = false;
         private bool _isDockMode = false;
 
-        private bool _isPlaying = true;
+        [ObservableProperty]
+        public partial bool IsPlaying { get; set; } = false;
 
         private bool _isLyricsWindowLocked = false;
         private bool _isMouseWithinWindow = false;
@@ -330,7 +331,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void PlaybackService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
         {
-            _isPlaying = e.IsPlaying;
+            IsPlaying = e.IsPlaying;
         }
 
         private void PlaybackService_TimelineChanged(object? sender, TimelineChangedEventArgs e)
