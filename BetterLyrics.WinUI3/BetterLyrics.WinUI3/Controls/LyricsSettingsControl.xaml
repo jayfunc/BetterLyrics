@@ -29,7 +29,7 @@
                     </controls:SettingsCard>
 
                     <controls:SettingsCard x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
-                        <ComboBox ItemsSource="{x:Bind SystemFontNames, Mode=OneWay}" SelectedIndex="{x:Bind LyricsStyleSettings.SelectedFontFamilyIndex, Mode=TwoWay}">
+                        <ComboBox ItemsSource="{x:Bind SystemFontNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsStyleSettings.LyricsFontFamily, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" />

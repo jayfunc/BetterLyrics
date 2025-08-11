@@ -115,21 +115,18 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    App.DispatcherQueueTimer?.Debounce(() =>
+                    if (ViewModel.IsDesktopMode)
                     {
-                        if (ViewModel.IsDesktopMode)
-                        {
-                            _settingsService.AppSettings.DesktopModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
-                        }
-                        else if (ViewModel.IsDockMode)
-                        {
+                        _settingsService.AppSettings.DesktopModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                    }
+                    else if (ViewModel.IsDockMode)
+                    {
 
-                        }
-                        else
-                        {
-                            _settingsService.AppSettings.StandardModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
-                        }
-                    }, Constants.Time.DebounceTimeout);
+                    }
+                    else
+                    {
+                        _settingsService.AppSettings.StandardModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                    }
                 }
             }
         }
