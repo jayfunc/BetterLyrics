@@ -1,7 +1,9 @@
 ﻿using ATL;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -25,10 +27,11 @@ using Windows.Media.Playback;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class MusicGalleryViewModel : BaseViewModel,
-        IRecipient<PropertyChangedMessage<ObservableCollection<LocalMediaFolder>>>
+    public partial class MusicGalleryViewModel : BaseViewModel
     {
         private readonly ILibWatcherService _libWatcherService;
+        private readonly ISettingsService _settingsService;
+
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
@@ -85,13 +88,18 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
 
-        public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService) : base(settingsService)
+        public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
         {
+            _settingsService = settingsService;
+
             SongsTabInfoList.Add(new SongsTabInfo(App.ResourceLoader!.GetString("MusicGalleryPageAllSongs"), "\uE8A9", false, CommonSongProperty.Title, string.Empty));
 
             RefreshSongs();
 
-            PlaybackOrder = _settingsService.AppSettings.PlaybackOrder;
+            _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
+            _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
+
+            PlaybackOrder = _settingsService.AppSettings.MusicGallerySettings.PlaybackOrder;
 
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
@@ -108,6 +116,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _libWatcherService = libWatcherService;
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
+        }
+
+        private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
+        {
+            RefreshSongs();
+        }
+
+        private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RefreshSongs();
         }
 
         private void MediaPlayer_MediaEnded(MediaPlayer sender, object args)
@@ -264,7 +282,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         IsDataLoading = false;
                     });
                 });
-            }, TimeSpan.FromMilliseconds(100));
+            }, Constants.Time.DebounceTimeout);
         }
 
         public void ApplyPlaylist()
@@ -405,18 +423,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnPlaybackOrderChanged(PlaybackOrder value)
         {
-            _settingsService.AppSettings.PlaybackOrder = value;
-        }
-
-        public void Receive(PropertyChangedMessage<ObservableCollection<LocalMediaFolder>> message)
-        {
-            if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
-            {
-                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LocalMediaFolders))
-                {
-                    RefreshSongs();
-                }
-            }
+            _settingsService.AppSettings.MusicGallerySettings.PlaybackOrder = value;
         }
     }
 }

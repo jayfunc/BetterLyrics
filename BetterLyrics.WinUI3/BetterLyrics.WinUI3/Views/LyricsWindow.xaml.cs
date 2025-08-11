@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
@@ -46,7 +47,7 @@ namespace BetterLyrics.WinUI3.Views
 
         public void UpdateTitleBarArea()
         {
-            if (_settingsService.AppSettings.IsDragEverywhereEnabled)
+            if (_settingsService.AppSettings.GeneralSettings.IsDragEverywhereEnabled)
             {
                 SetTitleBar(RootGrid);
             }
@@ -69,15 +70,11 @@ namespace BetterLyrics.WinUI3.Views
 
         public void AutoSelectLyricsMode(AutoStartWindowType? type = null, bool? autoLook = null)
         {
-            type ??= _settingsService.AppSettings.AutoStartWindowType;
+            type ??= _settingsService.AppSettings.GeneralSettings.AutoStartWindowType;
             switch (type!)
             {
                 case AutoStartWindowType.StandardMode:
-                    AppWindow.MoveAndResize(new Windows.Graphics.RectInt32(
-                        _settingsService.AppSettings.StandardWindowLeft,
-                        _settingsService.AppSettings.StandardWindowTop,
-                        _settingsService.AppSettings.StandardWindowWidth,
-                        _settingsService.AppSettings.StandardWindowHeight));
+                    AppWindow.MoveAndResize(_settingsService.AppSettings.StandardModeSettings.WindowBounds.ToRectInt32());
                     break;
                 case AutoStartWindowType.DockMode:
                     DockFlyoutItem.IsChecked = true;
@@ -86,7 +83,7 @@ namespace BetterLyrics.WinUI3.Views
                 case AutoStartWindowType.DesktopMode:
                     DesktopFlyoutItem.IsChecked = true;
                     ViewModel.ToggleDesktopModeCommand.Execute(null);
-                    if (autoLook == null && _settingsService.AppSettings.AutoLockOnDesktopMode)
+                    if (autoLook == null && _settingsService.AppSettings.DesktopModeSettings.AutoLockOnDesktopMode)
                     {
                         ViewModel.ToggleLockWindowCommand.Execute(null);
                     }
@@ -118,24 +115,21 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    if (ViewModel.IsDesktopMode)
+                    App.DispatcherQueueTimer?.Debounce(() =>
                     {
-                        _settingsService.AppSettings.DesktopWindowLeft = rect.X;
-                        _settingsService.AppSettings.DesktopWindowTop = rect.Y;
-                        _settingsService.AppSettings.DesktopWindowWidth = size.Width;
-                        _settingsService.AppSettings.DesktopWindowHeight = size.Height;
-                    }
-                    else if (ViewModel.IsDockMode)
-                    {
+                        if (ViewModel.IsDesktopMode)
+                        {
+                            _settingsService.AppSettings.DesktopModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                        }
+                        else if (ViewModel.IsDockMode)
+                        {
 
-                    }
-                    else
-                    {
-                        _settingsService.AppSettings.StandardWindowLeft = rect.X;
-                        _settingsService.AppSettings.StandardWindowTop = rect.Y;
-                        _settingsService.AppSettings.StandardWindowWidth = size.Width;
-                        _settingsService.AppSettings.StandardWindowHeight = size.Height;
-                    }
+                        }
+                        else
+                        {
+                            _settingsService.AppSettings.StandardModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                        }
+                    }, Constants.Time.DebounceTimeout);
                 }
             }
         }
@@ -244,7 +238,7 @@ namespace BetterLyrics.WinUI3.Views
                         ClickThroughButton.Visibility = Visibility.Collapsed;
                         AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
 
-                        ViewModel.IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
+                        ViewModel.IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
                     }
                     break;
                 default:

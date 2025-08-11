@@ -4,13 +4,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public partial class LocalMediaFolder : ObservableObject
+    public partial class LocalMediaFolder : ObservableRecipient
     {
-        [ObservableProperty]
-        public partial bool IsEnabled { get; set; }
-
-        [ObservableProperty]
-        public partial string Path { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEnabled { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string Path { get; set; }
 
         public LocalMediaFolder() { }
 

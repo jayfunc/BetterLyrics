@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
@@ -24,30 +25,27 @@ namespace BetterLyrics.WinUI3.ViewModels
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<TimeSpan>>,
-        IRecipient<PropertyChangedMessage<LyricsSearchProvider?>>,
-        IRecipient<PropertyChangedMessage<TranslationSearchProvider?>>
+        IRecipient<PropertyChangedMessage<TimeSpan>>
     {
         private readonly IMediaSessionsService _mediaSessionsService;
+        private readonly ISettingsService _settingsService;
+
         private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
 
         private bool _isDockMode = false;
         private bool _isDesktopMode = false;
 
-        private int _lyricsStandardFontSize = 8;
-        private int _lyricsDockFontSize = 8;
-        private int _lyricsDesktopFontSize = 8;
-
-        public LyricsPageViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService) : base(settingsService)
+        public LyricsPageViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService)
         {
-            IsTranslationEnabled = _settingsService.AppSettings.IsTranslationEnabled;
-            DisplayType = _settingsService.AppSettings.DisplayType;
-            IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
-            ShowTranslationOnly = _settingsService.AppSettings.ShowTranslationOnly;
+            _settingsService = settingsService;
+            IsTranslationEnabled = _settingsService.AppSettings.TranslationSettings.IsTranslationEnabled;
+            DisplayType = _settingsService.AppSettings.GeneralSettings.DisplayType;
+            IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
+            ShowTranslationOnly = _settingsService.AppSettings.TranslationSettings.ShowTranslationOnly;
 
             UpdateHintMessageFontSize();
 
-            LyricsFontFamily = _settingsService.AppSettings.LyricsFontFamily;
+            LyricsFontFamily = _settingsService.AppSettings.StandardLyricsStyleSettings.LyricsFontFamily;
 
             OnIsImmersiveModeChanged(IsImmersiveMode);
 
@@ -125,25 +123,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial bool IsSongPlaying { get; set; }
 
-        [ObservableProperty]
-        public partial LyricsSearchProvider? LyricsSearchProvider { get; set; } = null;
-
-        [ObservableProperty]
-        public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
-
         private void UpdateHintMessageFontSize()
         {
             if (_isDockMode)
             {
-                HintMessageFontSize = _settingsService.AppSettings.LyricsDockFontSize;
+                HintMessageFontSize = _settingsService.AppSettings.DockLyricsStyleSettings.LyricsFontSize;
             }
             else if (_isDesktopMode)
             {
-                HintMessageFontSize = _settingsService.AppSettings.LyricsDesktopFontSize;
+                HintMessageFontSize = _settingsService.AppSettings.DesktopLyricsStyleSettings.LyricsFontSize;
             }
             else
             {
-                HintMessageFontSize = _settingsService.AppSettings.LyricsStandardFontSize;
+                HintMessageFontSize = _settingsService.AppSettings.StandardLyricsStyleSettings.LyricsFontSize;
             }
         }
 
@@ -160,7 +152,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        DisplayType = _settingsService.AppSettings.DisplayType;
+                        DisplayType = _settingsService.AppSettings.GeneralSettings.DisplayType;
                     }
                     UpdateHintMessageFontSize();
                 }
@@ -173,7 +165,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        DisplayType = _settingsService.AppSettings.DisplayType;
+                        DisplayType = _settingsService.AppSettings.GeneralSettings.DisplayType;
                     }
                     UpdateHintMessageFontSize();
                 }
@@ -216,7 +208,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnIsTranslationEnabledChanged(bool value)
         {
-            _settingsService.AppSettings.IsTranslationEnabled = value;
+            _settingsService.AppSettings.TranslationSettings.IsTranslationEnabled = value;
         }
 
         partial void OnIsImmersiveModeChanged(bool value)
@@ -235,22 +227,14 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnShowTranslationOnlyChanged(bool value)
         {
-            _settingsService.AppSettings.ShowTranslationOnly = value;
+            _settingsService.AppSettings.TranslationSettings.ShowTranslationOnly = value;
         }
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
+            if (message.Sender is LyricsStyleSettings)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsStandardFontSize))
-                {
-                    UpdateHintMessageFontSize();
-                }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsDockFontSize))
-                {
-                    UpdateHintMessageFontSize();
-                }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsDesktopFontSize))
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontSize))
                 {
                     UpdateHintMessageFontSize();
                 }
@@ -259,9 +243,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<string> message)
         {
-            if (message.Sender is SettingsPageViewModel.SettingsPageViewModel)
+            if (message.Sender is LyricsStyleSettings)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.SettingsPageViewModel.LyricsFontFamily))
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontFamily))
                 {
                     LyricsFontFamily = message.NewValue;
                 }
@@ -286,28 +270,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                             TimelinePositionSeconds = message.NewValue.TotalSeconds;
                         });
                     }
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsSearchProvider?> message)
-        {
-            if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.LyricsSearchProvider))
-                {
-                    LyricsSearchProvider = message.NewValue;
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<TranslationSearchProvider?> message)
-        {
-            if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.TranslationSearchProvider))
-                {
-                    TranslationSearchProvider = message.NewValue;
                 }
             }
         }

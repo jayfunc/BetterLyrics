@@ -12,7 +12,6 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
-using BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -118,6 +117,12 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ITranslateService, TranslateService>()
                     .AddSingleton<ILastFMService, LastFMService>()
                     // ViewModels
+                    .AddSingleton<AppSettingsControlViewModel>()
+                    .AddSingleton<LyricsBackgroundSettingsControlViewModel>()
+                    .AddSingleton<AlbumArtLayoutSettingsControlViewModel>()
+                    .AddSingleton<PlaybackSettingsControlViewModel>()
+                    .AddSingleton<MediaSettingsControlViewModel>()
+                    .AddSingleton<AllLyricsSettingsControlViewModel>()
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()

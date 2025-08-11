@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -31,19 +32,19 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.LyricsOnly;
-            _settingsService.AppSettings.DisplayType = ViewModel.DisplayType;
+            _settingsService.AppSettings.GeneralSettings.DisplayType = ViewModel.DisplayType;
         }
 
         private void AlbumArtOnlyRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.AlbumArtOnly;
-            _settingsService.AppSettings.DisplayType = ViewModel.DisplayType;
+            _settingsService.AppSettings.GeneralSettings.DisplayType = ViewModel.DisplayType;
         }
 
         private void SplitViewRadioButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DisplayType = LyricsDisplayType.SplitView;
-            _settingsService.AppSettings.DisplayType = ViewModel.DisplayType;
+            _settingsService.AppSettings.GeneralSettings.DisplayType = ViewModel.DisplayType;
         }
 
         private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -69,9 +70,9 @@ namespace BetterLyrics.WinUI3.Views
             DisplayTypeSwitchFlyout.ShowAt(BottomRightCommandStackPanel);
         }
 
-        private void TranslationButton_Click(object sender, RoutedEventArgs e)
+        private void PlaybackSettingsShortcutButton_Click(object sender, RoutedEventArgs e)
         {
-            TranslationFlyout.ShowAt(BottomRightCommandStackPanel);
+            PlaybackSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
         }
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)

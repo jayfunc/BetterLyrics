@@ -1,7 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Models;
-using System.Collections.Generic;
+using BetterLyrics.WinUI3.Models.Settings;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 

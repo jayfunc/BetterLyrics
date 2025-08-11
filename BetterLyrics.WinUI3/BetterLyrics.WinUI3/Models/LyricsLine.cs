@@ -150,7 +150,7 @@ namespace BetterLyrics.WinUI3.Models
             ForegroundFontEffect = null;
         }
 
-        public void RecreateFontEffect(ICanvasAnimatedControl control, bool drawStroke, Color strokeColor, int strokeWidth, Color bgFontColor, Color fgFontColor)
+        public void RecreateFontEffect(ICanvasAnimatedControl control, Color strokeColor, int strokeWidth, Color bgFontColor, Color fgFontColor)
         {
             DisposeFontEffects();
             if (TextGeometry == null)
@@ -161,7 +161,8 @@ namespace BetterLyrics.WinUI3.Models
             using var bgFontEffectDs = BackgroundFontEffect.CreateDrawingSession();
             ForegroundFontEffect = new CanvasCommandList(control);
             using var fgFontEffectDs = ForegroundFontEffect.CreateDrawingSession();
-            if (drawStroke)
+            // 大于 0 才描边，避免不必要的资源浪费
+            if (strokeWidth > 0)
             {
                 bgFontEffectDs.DrawGeometry(TextGeometry, Position, strokeColor, strokeWidth); // 描边
                 fgFontEffectDs.DrawGeometry(TextGeometry, Position, strokeColor, strokeWidth); // 描边

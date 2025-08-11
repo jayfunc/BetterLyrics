@@ -11,8 +11,10 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class SystemTrayViewModel(ISettingsService settingsService) : BaseViewModel(settingsService), IRecipient<PropertyChangedMessage<bool>>
+    public partial class SystemTrayViewModel(ISettingsService settingsService) : BaseViewModel, IRecipient<PropertyChangedMessage<bool>>
     {
+        private readonly ISettingsService _settingsService = settingsService;
+
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial bool IsLyricsWindowLocked { get; set; } = false;

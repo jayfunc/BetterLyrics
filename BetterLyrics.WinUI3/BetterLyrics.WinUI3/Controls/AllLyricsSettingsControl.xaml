@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.AllLyricsSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
+    mc:Ignorable="d">
+
+    <Grid>
+        <controls:SwitchPresenter Margin="0,72,0,0" Value="{Binding SelectedItem.Tag, ElementName=LyricsSettingsSegmentedControl}">
+            <controls:Case Value="Standard">
+                <uc:LyricsSettingsControl LyricsEffectSettings="{x:Bind ViewModel.AppSettings.StandardLyricsEffectSettings, Mode=OneWay}" LyricsStyleSettings="{x:Bind ViewModel.AppSettings.StandardLyricsStyleSettings, Mode=OneWay}" />
+            </controls:Case>
+            <controls:Case Value="Desktop">
+                <uc:LyricsSettingsControl LyricsEffectSettings="{x:Bind ViewModel.AppSettings.DesktopLyricsEffectSettings, Mode=OneWay}" LyricsStyleSettings="{x:Bind ViewModel.AppSettings.DesktopLyricsStyleSettings, Mode=OneWay}" />
+            </controls:Case>
+            <controls:Case Value="Dock">
+                <uc:LyricsSettingsControl LyricsEffectSettings="{x:Bind ViewModel.AppSettings.DockLyricsEffectSettings, Mode=OneWay}" LyricsStyleSettings="{x:Bind ViewModel.AppSettings.DockLyricsStyleSettings, Mode=OneWay}" />
+            </controls:Case>
+        </controls:SwitchPresenter>
+        <controls:Segmented
+            x:Name="LyricsSettingsSegmentedControl"
+            Margin="36,36,36,0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            SelectedIndex="0">
+            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlStandard" Tag="Standard" />
+            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlDesktop" Tag="Desktop" />
+            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlDock" Tag="Dock" />
+        </controls:Segmented>
+    </Grid>
+</UserControl>

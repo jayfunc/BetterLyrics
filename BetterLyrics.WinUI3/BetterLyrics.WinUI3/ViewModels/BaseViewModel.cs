@@ -12,15 +12,13 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private protected readonly DispatcherQueue _dispatcherQueue;
         private protected readonly DispatcherQueueTimer _dispatcherQueueTimer;
-        private protected readonly ISettingsService _settingsService;
 
-        public BaseViewModel(ISettingsService settingsService)
+        public BaseViewModel()
         {
             IsActive = true;
 
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             _dispatcherQueueTimer = _dispatcherQueue.CreateTimer();
-            _settingsService = settingsService;
         }
     }
 }

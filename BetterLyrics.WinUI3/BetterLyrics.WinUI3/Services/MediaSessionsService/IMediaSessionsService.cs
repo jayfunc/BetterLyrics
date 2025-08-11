@@ -21,6 +21,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         Task NextAsync();
         Task ChangePosition(double seconds);
 
+        MediaSourceProviderInfo? GetCurrentMediaSourceProviderInfo();
+
         bool IsPlaying { get; }
         SongInfo? SongInfo { get; }
         TimeSpan Position { get; }

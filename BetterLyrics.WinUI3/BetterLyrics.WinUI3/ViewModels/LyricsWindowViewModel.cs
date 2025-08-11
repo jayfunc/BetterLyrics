@@ -3,11 +3,11 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
-using BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -15,13 +15,8 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
-using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.System;
 using Windows.UI;
@@ -38,7 +33,9 @@ namespace BetterLyrics.WinUI3
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<DockPlacement>>
     {
-        private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+        private readonly IMediaSessionsService _mediaSessionsService;
+        private readonly ISettingsService _settingsService;
+
         private ForegroundWindowWatcher? _windowWatcher = null;
         private bool _ignoreFullscreenWindow;
         private bool _hideWindowWhenNotPlaying;
@@ -47,15 +44,18 @@ namespace BetterLyrics.WinUI3
         private int _dockWindowHeight;
         private string _dockMonitorDeviceName;
 
-        public LyricsWindowViewModel(ISettingsService settingsService) : base(settingsService)
+        public LyricsWindowViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService)
         {
-            _dockMonitorDeviceName = _settingsService.AppSettings.DockMonitorDeviceName;
-            _ignoreFullscreenWindow = _settingsService.AppSettings.IgnoreFullscreenWindow;
-            _hideWindowWhenNotPlaying = _settingsService.AppSettings.HideWindowWhenNotPlaying;
-            IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
-            _dockPlacement = _settingsService.AppSettings.DockPlacement;
-            _dockWindowHeight = _settingsService.AppSettings.DockWindowHeight;
-            OnIsImmersiveModeChanged(_settingsService.AppSettings.IsImmersiveMode);
+            _settingsService = settingsService;
+            _mediaSessionsService = mediaSessionsService;
+
+            _dockMonitorDeviceName = _settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName;
+            _ignoreFullscreenWindow = _settingsService.AppSettings.GeneralSettings.IgnoreFullscreenWindow;
+            _hideWindowWhenNotPlaying = _settingsService.AppSettings.GeneralSettings.HideWindowWhenNotPlaying;
+            IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
+            _dockPlacement = _settingsService.AppSettings.DockModeSettings.DockPlacement;
+            _dockWindowHeight = _settingsService.AppSettings.DockModeSettings.DockWindowHeight;
+            OnIsImmersiveModeChanged(_settingsService.AppSettings.GeneralSettings.IsImmersiveMode);
 
             _mediaSessionsService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
         }
@@ -153,13 +153,13 @@ namespace BetterLyrics.WinUI3
                     }
                 }
             }
-            else if (message.Sender is SettingsPageViewModel)
+            else if (message.Sender is GeneralSettings)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.IgnoreFullscreenWindow))
+                if (message.PropertyName == nameof(GeneralSettings.IgnoreFullscreenWindow))
                 {
                     _ignoreFullscreenWindow = message.NewValue;
                 }
-                else if (message.PropertyName == nameof(SettingsPageViewModel.HideWindowWhenNotPlaying))
+                else if (message.PropertyName == nameof(GeneralSettings.HideWindowWhenNotPlaying))
                 {
                     _hideWindowWhenNotPlaying = message.NewValue;
                     UpdateDockWindow();
@@ -180,19 +180,19 @@ namespace BetterLyrics.WinUI3
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender is SettingsPageViewModel)
+            if (message.Sender is DockModeSettings)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.DockWindowHeight))
+                if (message.PropertyName == nameof(DockModeSettings.DockWindowHeight))
                 {
                     _dockWindowHeight = message.NewValue;
                     UpdateDockWindow();
                 }
-                else if (message.Sender is SettingsPageViewModel)
+            }
+            else if (message.Sender is DesktopModeSettings)
+            {
+                if (message.PropertyName == nameof(DesktopModeSettings.LockHotKeyIndex))
                 {
-                    if (message.PropertyName == nameof(SettingsPageViewModel.LockHotKeyIndex))
-                    {
-                        UpdateLockHotKey(message.NewValue);
-                    }
+                    UpdateLockHotKey(message.NewValue);
                 }
             }
         }
@@ -251,12 +251,12 @@ namespace BetterLyrics.WinUI3
         public void UpdateAccentColor(nint hwnd)
         {
             WindowPixelSampleMode mode = IsDesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
-            ActivatedWindowAccentColor = Helper.ColorHelper.GetAccentColor(hwnd, _settingsService.AppSettings.DockMonitorDeviceName, mode).ToColor();
+            ActivatedWindowAccentColor = ColorHelper.GetAccentColor(hwnd, _settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName, mode).ToColor();
         }
 
         public void InitLockHotKey()
         {
-            UpdateLockHotKey(_settingsService.AppSettings.LockHotKeyIndex);
+            UpdateLockHotKey(_settingsService.AppSettings.DesktopModeSettings.LockHotKeyIndex);
         }
 
         [RelayCommand]
@@ -269,7 +269,7 @@ namespace BetterLyrics.WinUI3
             {
                 DesktopModeHelper.SetClickThrough(window, false);
                 IsLyricsWindowLocked = false;
-                IsImmersiveMode = _settingsService.AppSettings.IsImmersiveMode;
+                IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
             }
             else
             {
@@ -327,14 +327,14 @@ namespace BetterLyrics.WinUI3
         [RelayCommand]
         private void OnImmersiveToggleButtonEnabledChanged()
         {
-            _settingsService.AppSettings.IsImmersiveMode = IsImmersiveMode;
+            _settingsService.AppSettings.GeneralSettings.IsImmersiveMode = IsImmersiveMode;
         }
 
         public void Receive(PropertyChangedMessage<DockPlacement> message)
         {
-            if (message.Sender is SettingsPageViewModel)
+            if (message.Sender is DockModeSettings)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.DockPlacement))
+                if (message.PropertyName == nameof(DockModeSettings.DockPlacement))
                 {
                     _dockPlacement = message.NewValue;
                     UpdateDockWindow();
@@ -344,9 +344,9 @@ namespace BetterLyrics.WinUI3
 
         public void Receive(PropertyChangedMessage<string> message)
         {
-            if (message.Sender is SettingsPageViewModel)
+            if (message.Sender is DockModeSettings)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.SelectedDockMonitorDeviceName))
+                if (message.PropertyName == nameof(DockModeSettings.DockMonitorDeviceName))
                 {
                     _dockMonitorDeviceName = message.NewValue;
                     UpdateDockWindow();
