@@ -1,58 +1,147 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
-using CommunityToolkit.Mvvm.ComponentModel;
+using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using System;
 using System.IO;
 using System.Linq;
+using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService
 {
     // TODO 初始化时从文件读取到对象，后续独写操作先操纵对象，写入用 Debounce 写入文件
     // 新建一个 AppSettings 类
-    public partial class SettingsService : ObservableObject, ISettingsService
+    public partial class SettingsService : BaseViewModel, ISettingsService
     {
-        private readonly DispatcherQueue _dispatcherQueue;
-        private readonly DispatcherQueueTimer _dispatcherQueueTimer;
-
-        [ObservableProperty]
-        public partial AppSettings AppSettings { get; set; }
+        public AppSettings AppSettings { get; set; }
 
         public SettingsService()
         {
-            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-            _dispatcherQueueTimer = _dispatcherQueue.CreateTimer();
-
             AppSettings = ReadAppSettings();
+
             AppSettings.PropertyChanged += AppSettings_PropertyChanged;
 
+            AppSettings.StandardModeSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.DesktopModeSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.DockModeSettings.PropertyChanged += AppSettings_PropertyChanged;
+
+            AppSettings.StandardLyricsStyleSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.DesktopLyricsStyleSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.DockLyricsStyleSettings.PropertyChanged += AppSettings_PropertyChanged;
+
+            AppSettings.StandardLyricsEffectSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.DesktopLyricsEffectSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.DockLyricsEffectSettings.PropertyChanged += AppSettings_PropertyChanged;
+
+            AppSettings.LyricsBackgroundSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.AlbumArtLayoutSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.TranslationSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.GeneralSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.MusicGallerySettings.PropertyChanged += AppSettings_PropertyChanged;
+
+            AppSettings.MediaSourceProvidersInfo.CollectionChanged += AppSettings_CollectionChanged;
+            AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
+
+            AppSettings.LocalMediaFolders.CollectionChanged += AppSettings_CollectionChanged;
+            AppSettings.LocalMediaFolders.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
+
+            EnsureMediaSourceProvidersInfo();
+        }
+
+        private void EnsureMediaSourceProvidersInfo()
+        {
             // 确保当 LyricsSearchProvider 和 AlbumArtSearchProvider 枚举更新时，AppSettings 中的相关信息也能更新
-            AppSettings.MediaSourceProvidersInfo = AppSettings.MediaSourceProvidersInfo.Select(x => new MediaSourceProviderInfo()
+            foreach (var x in AppSettings.MediaSourceProvidersInfo)
             {
-                IsEnabled = x.IsEnabled,
-                Provider = x.Provider,
-                IsLastFMTrackEnabled = x.IsLastFMTrackEnabled,
-                TimelineSyncThreshold = x.TimelineSyncThreshold,
-                ResetPositionOffsetOnSongChanged = x.ResetPositionOffsetOnSongChanged,
-                PositionOffset = x.PositionOffset,
-                LyricsSearchProvidersInfo = [..Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(
-                    p,
-                    x.LyricsSearchProvidersInfo.Where(x => x.Provider == p).FirstOrDefault()?.IsEnabled ?? true
-                ))],
-                AlbumArtSearchProvidersInfo = [..Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(
-                    p,
-                    x.AlbumArtSearchProvidersInfo.Where(x => x.Provider == p).FirstOrDefault()?.IsEnabled ?? true
-                ))],
-            }).ToList();
+                // 更新 LyricsSearchProvidersInfo
+                foreach (var p in Enum.GetValues<LyricsSearchProvider>())
+                {
+                    var item = x.LyricsSearchProvidersInfo.FirstOrDefault(i => i.Provider == p);
+                    if (item == null)
+                    {
+                        x.LyricsSearchProvidersInfo.Add(new LyricsSearchProviderInfo(p, true));
+                    }
+                    // 可根据需要更新 item.IsEnabled
+                }
+                // 移除多余项
+                for (int i = x.LyricsSearchProvidersInfo.Count - 1; i >= 0; i--)
+                {
+                    if (!Enum.IsDefined(typeof(LyricsSearchProvider), x.LyricsSearchProvidersInfo[i].Provider))
+                        x.LyricsSearchProvidersInfo.RemoveAt(i);
+                }
+
+                // 更新 AlbumArtSearchProvidersInfo
+                foreach (var p in Enum.GetValues<AlbumArtSearchProvider>())
+                {
+                    var item = x.AlbumArtSearchProvidersInfo.FirstOrDefault(i => i.Provider == p);
+                    if (item == null)
+                    {
+                        x.AlbumArtSearchProvidersInfo.Add(new AlbumArtSearchProviderInfo(p, true));
+                    }
+                    // 可根据需要更新 item.IsEnabled
+                }
+                for (int i = x.AlbumArtSearchProvidersInfo.Count - 1; i >= 0; i--)
+                {
+                    if (!Enum.IsDefined(typeof(AlbumArtSearchProvider), x.AlbumArtSearchProvidersInfo[i].Provider))
+                        x.AlbumArtSearchProvidersInfo.RemoveAt(i);
+                }
+            }
+        }
+
+        private void AppSettings_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
+        {
+            WriteAppSettingsDebounce();
+        }
+
+        private void AppSettings_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            WriteAppSettingsDebounce();
         }
 
         private void AppSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            switch (e.PropertyName)
+            {
+                case nameof(GeneralSettings.IsDragEverywhereEnabled):
+                    LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+                    lyricsWindow?.UpdateTitleBarArea();
+                    break;
+                case nameof(GeneralSettings.Language):
+                    switch (AppSettings.GeneralSettings.Language)
+                    {
+                        case Enums.Language.FollowSystem:
+                            ApplicationLanguages.PrimaryLanguageOverride = "";
+                            break;
+                        case Enums.Language.English:
+                            ApplicationLanguages.PrimaryLanguageOverride = "en-US";
+                            break;
+                        case Enums.Language.SimplifiedChinese:
+                            ApplicationLanguages.PrimaryLanguageOverride = "zh-CN";
+                            break;
+                        case Enums.Language.TraditionalChinese:
+                            ApplicationLanguages.PrimaryLanguageOverride = "zh-TW";
+                            break;
+                        case Enums.Language.Japanese:
+                            ApplicationLanguages.PrimaryLanguageOverride = "ja-JP";
+                            break;
+                        case Enums.Language.Korean:
+                            ApplicationLanguages.PrimaryLanguageOverride = "ko-KR";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
             WriteAppSettingsDebounce();
         }
 
@@ -107,7 +196,10 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         {
             _dispatcherQueueTimer.Debounce(() =>
             {
-                SaveAppSettings();
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                {
+                    SaveAppSettings();
+                });
             }, Constants.Time.DebounceTimeout);
         }
 
@@ -115,6 +207,5 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         {
             File.WriteAllText(PathHelper.SettingsFilePath, System.Text.Json.JsonSerializer.Serialize(AppSettings, SourceGenerationContext.Default.AppSettings));
         }
-
     }
 }

@@ -37,6 +37,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isAlbumArtCornerRadiusChanged = true;
 
+        private bool _isAlbumArtBgOpacityChanged = false;
+        private bool _isAlbumArtBgBlurAmountChanged = false;
+
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
             _elapsedTime = args.Timing.ElapsedTime;
@@ -79,7 +82,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
 
 
-            _rotateAngle += _coverRotateBaseSpeed * _coverOverlaySpeed / 100.0;
+            _rotateAngle += _coverRotateBaseSpeed * _settingsService.AppSettings.LyricsBackgroundSettings.CoverOverlaySpeed / 100.0;
             _rotateAngle %= Math.PI * 2;
 
             if (_isCanvasWidthChanged)
@@ -221,13 +224,24 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 UpdateCoverAcrylicOverlay(control);
                 UpdateAlbumArtBgEffect(control);
-
                 _isCoverAcrylicEffectAmountChanged = false;
+            }
+
+            if (_isAlbumArtBgOpacityChanged)
+            {
+                UpdateAlbumArtBgEffect(control);
+                _isAlbumArtBgOpacityChanged = false;
+            }
+
+            if (_isAlbumArtBgBlurAmountChanged)
+            {
+                UpdateAlbumArtBgEffect(control);
+                _isAlbumArtBgBlurAmountChanged = false;
             }
 
             _albumArtChanged = false;
 
-            if (_isCanvasWidthChanged || _lyricsXTransition.IsTransitioning)
+            if (_isCanvasHeightChanged || _isCanvasWidthChanged || _lyricsXTransition.IsTransitioning)
             {
                 _maxLyricsWidth = _canvasWidth - _lyricsXTransition.Value - _rightMargin;
                 _maxLyricsWidth = Math.Max(_maxLyricsWidth, 0);
@@ -275,16 +289,26 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_isDockMode)
             {
-                _lyricsTextFormat.FontSize = _lyricsDockFontSize;
+                _lyricsStyleSettings = _settingsService.AppSettings.DockLyricsStyleSettings;
+                _lyricsEffectSettings = _settingsService.AppSettings.DockLyricsEffectSettings;
             }
             else if (_isDesktopMode)
             {
-                _lyricsTextFormat.FontSize = _lyricsDesktopFontSize;
+                _lyricsStyleSettings = _settingsService.AppSettings.DesktopLyricsStyleSettings;
+                _lyricsEffectSettings = _settingsService.AppSettings.DesktopLyricsEffectSettings;
             }
             else
             {
-                _lyricsTextFormat.FontSize = _lyricsStandardFontSize;
+                _lyricsStyleSettings = _settingsService.AppSettings.StandardLyricsStyleSettings;
+                _lyricsEffectSettings = _settingsService.AppSettings.StandardLyricsEffectSettings;
             }
+
+            _lyricsTextFormat.FontSize = _lyricsStyleSettings.LyricsFontSize;
+            _lyricsTextFormat.FontWeight = _lyricsStyleSettings.LyricsFontWeight.ToFontWeight();
+            _lyricsTextFormat.FontFamily = _artistTextFormat.FontFamily = _titleTextFormat.FontFamily = _lyricsStyleSettings.LyricsFontFamily;
+
+            _canvasYScrollTransition.SetDuration(_lyricsEffectSettings.LyricsScrollDuration / 1000.0);
+            _canvasYScrollTransition.SetEasingType(_lyricsEffectSettings.LyricsScrollEasingType);
 
             double y = 0;
 
@@ -301,20 +325,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 line.RecreatePlaceholder(control);
 
                 line.Position = new Vector2(0, (float)y);
-                line.RecreateTextLayout(control, _lyricsTextFormat, _maxLyricsWidth, _canvasHeight, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
-                line.UpdateCenterPosition(_maxLyricsWidth, _isDockMode ? TextAlignmentType.Center : _lyricsAlignmentType);
+                line.RecreateTextLayout(control, _lyricsTextFormat, _maxLyricsWidth, _canvasHeight, _lyricsStyleSettings.LyricsAlignmentType);
+                line.UpdateCenterPosition(_maxLyricsWidth, _lyricsStyleSettings.LyricsAlignmentType);
 
                 line.RecreateTextGeometry();
-                line.RecreateFontEffect(control, _isDesktopMode, _strokeFontColor, _lyricsFontStrokeWidth, _bgFontColor, _fgFontColor);
+                line.RecreateFontEffect(control, _strokeFontColor, _lyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor, _fgFontColor);
                 line.RecreateBackgroundEffect(_lyricsOpacityTransition.Value);
                 line.RecreateCurrentLineMask(control);
-                line.RecreateForegroundBlurEffect(control, _lyricsGlowEffectScope, _lyricsGlowEffectAmount);
-                line.RecreateForegroundHighlightEffect(control, _lyricsHighlightScope);
+                line.RecreateForegroundBlurEffect(control, _lyricsEffectSettings.LyricsGlowEffectScope, _lyricsGlowEffectAmount);
+                line.RecreateForegroundHighlightEffect(control, _lyricsEffectSettings.LyricsHighlightScope);
 
                 y +=
                     (double)line.CanvasTextLayout!.LayoutBounds.Height
                     / line.CanvasTextLayout.LineCount
-                    * (line.CanvasTextLayout.LineCount + _lyricsLineSpacingFactor);
+                    * (line.CanvasTextLayout.LineCount + _lyricsStyleSettings.LyricsLineSpacingFactor);
             }
         }
 
@@ -417,7 +441,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
             else
             {
-                ThemeTypeSent = _lyricsBgTheme;
+                ThemeTypeSent = _settingsService.AppSettings.LyricsBackgroundSettings.LyricsBackgroundTheme;
             }
 
             double brightness;
@@ -464,7 +488,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
             }
 
-            switch (_lyricsBgFontColorType)
+            switch (_lyricsStyleSettings.LyricsBgFontColorType)
             {
                 case LyricsFontColorType.AdaptiveGrayed:
                     _bgFontColor = _adaptiveGrayedFontColor;
@@ -473,13 +497,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _bgFontColor = _adaptiveColoredFontColor ?? _adaptiveGrayedFontColor;
                     break;
                 case LyricsFontColorType.Custom:
-                    _bgFontColor = _customBgFontColor ?? _adaptiveGrayedFontColor;
+                    _bgFontColor = _lyricsStyleSettings.LyricsCustomBgFontColor;
                     break;
                 default:
                     break;
             }
 
-            switch (_lyricsFgFontColorType)
+            switch (_lyricsStyleSettings.LyricsFgFontColorType)
             {
                 case LyricsFontColorType.AdaptiveGrayed:
                     _fgFontColor = _adaptiveGrayedFontColor;
@@ -488,13 +512,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _fgFontColor = _adaptiveColoredFontColor ?? _adaptiveGrayedFontColor;
                     break;
                 case LyricsFontColorType.Custom:
-                    _fgFontColor = _customFgFontColor ?? _adaptiveGrayedFontColor;
+                    _fgFontColor = _lyricsStyleSettings.LyricsCustomFgFontColor;
                     break;
                 default:
                     break;
             }
 
-            switch (_lyricsStrokeFontColorType)
+            switch (_lyricsStyleSettings.LyricsStrokeFontColorType)
             {
                 case LyricsFontColorType.AdaptiveGrayed:
                     _strokeFontColor = grayedEnvironmentalColor.WithBrightness(0.7);
@@ -503,7 +527,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _strokeFontColor = _environmentalColor.WithBrightness(0.7);
                     break;
                 case LyricsFontColorType.Custom:
-                    _strokeFontColor = _customStrokeFontColor ?? _environmentalColor;
+                    _strokeFontColor = _lyricsStyleSettings.LyricsCustomStrokeFontColor;
                     break;
                 default:
                     break;
@@ -540,8 +564,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     line.RecreateCurrentCharMask(control, charStartIndex, charLength, charProgress);
                     line.RecreateLineStartToCurrentCharMask(control, charStartIndex, charLength, charProgress);
 
-                    line.UpdateForegroundBlurEffect(control, _lyricsGlowEffectScope, _lyricsGlowEffectAmount);
-                    line.UpdateForegroundHighlightEffect(control, _lyricsHighlightScope);
+                    line.UpdateForegroundBlurEffect(control, _lyricsEffectSettings.LyricsGlowEffectScope, _lyricsGlowEffectAmount);
+                    line.UpdateForegroundHighlightEffect(control, _lyricsEffectSettings.LyricsHighlightScope);
                 }
 
                 if (_isLayoutChanged || _isPlayingLineChanged)
@@ -551,7 +575,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     double distanceFromPlayingLine = Math.Abs(line.Position.Y - currentPlayingLine.Position.Y);
                     double distanceFactor = Math.Clamp(distanceFromPlayingLine / (_canvasHeight / 2), 0, 1);
 
-                    line.AngleTransition.StartTransition(_isFanLyricsEnabled
+                    line.AngleTransition.StartTransition(_lyricsEffectSettings.IsFanLyricsEnabled
                             ? Math.PI
                                 * (30.0 / 180.0)
                                 * distanceFactor
@@ -559,20 +583,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             : 0
                     );
 
-                    line.BlurAmountTransition.StartTransition(_lyricsBlurAmount * distanceFactor);
+                    line.BlurAmountTransition.StartTransition(_lyricsEffectSettings.LyricsBlurAmount * distanceFactor);
                     line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
-                    line.OpacityTransition.StartTransition(_defaultOpacity - distanceFactor * _defaultOpacity * (1 - _lyricsVerticalEdgeOpacity / 100f));
+                    line.OpacityTransition.StartTransition(_lyricsStyleSettings.LyricsBgFontOpacity / 100.0 - distanceFactor * _lyricsStyleSettings.LyricsBgFontOpacity / 100.0 * (1 - _lyricsEffectSettings.LyricsVerticalEdgeOpacity / 100.0));
                     line.HighlightOpacityTransition.StartTransition(i == _playingLineIndex ? 1f : 0f);
-
-                    if (line.YOffsetTransition.IsTransitioning)
-                    {
-                        Debug.WriteLine($"Line {i} YOffsetTransition is already transitioning, skipping update.");
-                    }
 
                     double yScrollDuration;
                     if (lineCountDelta < 0)
                     {
-                        yScrollDuration = _canvasYScrollTransition.DurationSeconds + distanceFactor * (_lyricsScrollTopDuration - _canvasYScrollTransition.DurationSeconds);
+                        yScrollDuration = _canvasYScrollTransition.DurationSeconds + distanceFactor * (_lyricsEffectSettings.LyricsScrollTopDuration / 1000.0 - _canvasYScrollTransition.DurationSeconds);
                     }
                     else if (lineCountDelta == 0)
                     {
@@ -580,7 +599,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     }
                     else
                     {
-                        yScrollDuration = _canvasYScrollTransition.DurationSeconds + distanceFactor * (_lyricsScrollBottomDuration - _canvasYScrollTransition.DurationSeconds);
+                        yScrollDuration = _canvasYScrollTransition.DurationSeconds + distanceFactor * (_lyricsEffectSettings.LyricsScrollBottomDuration / 1000.0 - _canvasYScrollTransition.DurationSeconds);
                     }
 
                     line.YOffsetTransition.SetEasingType(_canvasYScrollTransition.EasingType ?? EasingType.Linear);
@@ -627,7 +646,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void UpdateCoverAcrylicOverlay(ICanvasAnimatedControl control)
         {
-            if (_coverAcrylicEffectAmount > 0)
+            if (_settingsService.AppSettings.LyricsBackgroundSettings.CoverAcrylicEffectAmount > 0)
             {
                 var ret = ImageHelper.GenerateNoiseBGRA((int)_canvasWidth, (int)_canvasHeight);
                 _coverAcrylicNoiseCanvasBitmap?.Dispose();
@@ -642,25 +661,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private MediaSourceProviderInfo? GetCurrentMediaSourceProviderInfo()
-        {
-            return _mediaSourceProvidersInfo.Where(x => x.Provider == SongInfo?.SourceAppUserModelId)?.FirstOrDefault();
-        }
-
         private void UpdateTimelineSyncThreshold()
         {
-            _timelineSyncThreshold = GetCurrentMediaSourceProviderInfo()?.TimelineSyncThreshold ?? 0;
+            _timelineSyncThreshold = _mediaSessionsService.GetCurrentMediaSourceProviderInfo()?.TimelineSyncThreshold ?? 0;
         }
 
         private void UpdatePositionOffset()
         {
-            var current = GetCurrentMediaSourceProviderInfo();
+            var current = _mediaSessionsService.GetCurrentMediaSourceProviderInfo();
             _positionOffset = TimeSpan.FromMilliseconds(current?.PositionOffset ?? 0);
         }
 
         private void UpdateIsLastFMTrackEnabled()
         {
-            var current = GetCurrentMediaSourceProviderInfo();
+            var current = _mediaSessionsService.GetCurrentMediaSourceProviderInfo();
             _isLastFMTrackEnabled = current?.IsLastFMTrackEnabled ?? false;
         }
     }

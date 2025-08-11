@@ -4,11 +4,13 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.WinUI;
@@ -31,6 +33,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
     public partial class LyricsRendererViewModel : BaseViewModel
     {
+        private LyricsStyleSettings _lyricsStyleSettings;
+        private LyricsEffectSettings _lyricsEffectSettings;
+
         private bool _isLastFMTrackEnabled = false;
         private bool _isLastFMTracked = false;
         private TimeSpan _totalPlayingTime = TimeSpan.Zero;
@@ -60,7 +65,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
 
         private double _albumArtSize = 0f;
-        private int _albumArtCornerRadius = 0;
 
         private string? _lastSongTitle;
         private string? _songTitle;
@@ -71,18 +75,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private double _canvasWidth = 0f;
         private double _canvasHeight = 0f;
 
-        private double _defaultOpacity;
-        private readonly double _highlightedOpacity = 1.0f;
-
         private readonly double _defaultScale = 0.75f;
         private readonly double _highlightedScale = 1.0f;
 
-        private int _coverOverlaySpeed;
         private readonly double _coverRotateBaseSpeed = 0.003f;
         private double _rotateAngle = 0f;
 
-        private double _lyricsScrollTopDuration;
-        private double _lyricsScrollBottomDuration;
         private double _canvasTargetYScrollOffset = 0;
 
         [ObservableProperty]
@@ -93,28 +91,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         [NotifyPropertyChangedRecipients]
         public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
 
-        private TextAlignmentType _lyricsAlignmentType;
-
         private readonly double _lyricsGlowEffectAmount = 8f;
-        private int _lyricsBlurAmount;
-        private int _lyricsVerticalEdgeOpacity;
-
-        private ElementTheme _lyricsBgTheme;
-        private LineRenderingType _lyricsGlowEffectScope;
-        private LineRenderingType _lyricsHighlightScope;
-
-        private int _lyricsFontStrokeWidth;
-        private int _lyricsStandardFontSize;
-        private int _lyricsDockFontSize;
-        private int _lyricsDesktopFontSize;
-        private double _lyricsLineSpacingFactor;
-
-        private LyricsFontColorType _lyricsBgFontColorType;
-        private LyricsFontColorType _lyricsFgFontColorType;
-        private LyricsFontColorType _lyricsStrokeFontColorType;
 
         private double _maxLyricsWidth = 0f;
 
+        private readonly ISettingsService _settingsService;
         private readonly ILyricsSearchService _lyrcsSearchService;
         private readonly ILibWatcherService _libWatcherService;
         private readonly IMediaSessionsService _mediaSessionsService;
@@ -127,8 +108,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly double _rightMargin = 36f;
         private readonly double _topMargin = 36f;
         private readonly double _bottomMargin = 36f;
-
-        private DockPlacement _dockPlacement;
 
         private Color _adaptiveGrayedFontColor = Colors.Transparent;
         private Color? _adaptiveColoredFontColor = null;
@@ -144,10 +123,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private Color _fgFontColor;
         private Color _strokeFontColor;
 
-        private Color? _customBgFontColor;
-        private Color? _customFgFontColor;
-        private Color? _customStrokeFontColor;
-
         private int _playingLineIndex = -1;
 
         private int _startVisibleLineIndex = -1;
@@ -156,35 +131,25 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private bool _isDebugOverlayEnabled = false;
         private bool _isDesktopMode = false;
         private bool _isDockMode = false;
-        private bool _isFanLyricsEnabled = false;
 
         private bool _isPlaying = true;
 
         private bool _isLyricsWindowLocked = false;
         private bool _isMouseWithinWindow = false;
 
-        private bool _isLyricsGlowEffectEnabled;
-
-        private bool _isLyricsFloatAnimationEnabled;
-
         private bool _isLayoutChanged = true;
 
         private int _langIndex = 0;
 
         private List<LyricsData> _lyricsDataArr = [];
-        private bool _isTranslationEnabled;
-        private bool _showTranslationOnly;
-        private int _targetLanguageIndex;
-        private bool _isLibreTranslateEnabled;
-        private string _lyricsTranslationSeparator;
 
-        private List<MediaSourceProviderInfo> _mediaSourceProvidersInfo;
         private int _timelineSyncThreshold = 0;
 
         private CanvasTextFormat _lyricsTextFormat = new()
         {
             HorizontalAlignment = CanvasHorizontalAlignment.Left,
             VerticalAlignment = CanvasVerticalAlignment.Top,
+            FontSize = 12,
         };
         private CanvasTextFormat _titleTextFormat = new()
         {
@@ -217,11 +182,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private LyricsDisplayType _displayType;
 
         private LyricsLayoutOrientation _lyricsLayoutOrientation;
-
-        private int _albumArtBgBlurAmount;
-        private int _albumArtBgOpacity;
-
-        private int _coverAcrylicEffectAmount;
 
         [ObservableProperty]
         public partial bool IsTranslating { get; set; } = false;
@@ -375,7 +335,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void PlaybackService_TimelineChanged(object? sender, TimelineChangedEventArgs e)
         {
-            if (Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds) >= _timelineSyncThreshold)
+            var diff = Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds);
+            if (diff >= _timelineSyncThreshold)
             {
                 TotalTime = e.Position;
                 if (TotalTime.TotalSeconds <= 1)
@@ -383,6 +344,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _totalPlayingTime = TimeSpan.Zero;
                     _isLastFMTracked = false;
                 }
+            }
+            // 大跨度，刷新布局，避免歌词不显示
+            if (diff >= _timelineSyncThreshold + 5000)
+            {
+                _isLayoutChanged = true;
             }
         }
 
@@ -462,7 +428,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _isLayoutChanged = true;
 
             IsTranslating = true;
-            if (_isTranslationEnabled)
+            if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
             {
                 _ = _refreshLyricsRunner.RunAsync(async token =>
                 {
@@ -500,19 +466,19 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr);
                 if (found >= 0)
                 {
-                    if (_showTranslationOnly)
+                    if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
                     {
                         _lyricsDataArr[found].SetDisplayedTextInOriginalText();
                         _langIndex = found;
                     }
                     else
                     {
-                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _lyricsTranslationSeparator, 50);
+                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _lyricsStyleSettings.LyricsTranslationSeparator, 50);
                         _langIndex = 0;
                     }
                     TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
                 }
-                else if (_isLibreTranslateEnabled)
+                else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
                 {
                     string translated = string.Empty;
                     try
@@ -520,7 +486,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
                         if (translated == string.Empty) return;
 
-                        if (_showTranslationOnly)
+                        if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
                         {
                             _lyricsDataArr[^1] = _lyricsDataArr[0].CreateLyricsDataFrom(translated);
                             _lyricsDataArr[^1].SetDisplayedTextInOriginalText();
@@ -528,7 +494,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         }
                         else
                         {
-                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _lyricsTranslationSeparator);
+                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _lyricsStyleSettings.LyricsTranslationSeparator);
                             _langIndex = 0;
                         }
                         TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;

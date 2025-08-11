@@ -297,6 +297,17 @@
                 <Setter Property="Padding" Value="0" />
             </Style>
 
+            <Style
+                x:Key="SettingsScrollViewerStyle"
+                BasedOn="{StaticResource DefaultScrollViewerStyle}"
+                TargetType="ScrollViewer">
+                <Setter Property="Padding" Value="36,0" />
+            </Style>
+
+            <Style x:Key="SettingsGridStyle" TargetType="Grid">
+                <Setter Property="Padding" Value="0,0,0,36" />
+            </Style>
+
             <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="TextFillColorPrimaryBrush" />

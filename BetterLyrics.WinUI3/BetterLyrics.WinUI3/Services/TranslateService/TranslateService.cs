@@ -18,10 +18,12 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
 {
     public class TranslateService : BaseViewModel, ITranslateService
     {
+        private readonly ISettingsService _settingsService;
         private readonly HttpClient _httpClient;
 
-        public TranslateService(ISettingsService settingsService) : base(settingsService)
+        public TranslateService(ISettingsService settingsService)
         {
+            _settingsService = settingsService;
             _httpClient = new HttpClient();
         }
 
@@ -46,12 +48,12 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
                 return ChineseConverter.ConvertToTraditionalChinese(text);
             }
 
-            if (string.IsNullOrEmpty(_settingsService.AppSettings.LibreTranslateServer))
+            if (string.IsNullOrEmpty(_settingsService.AppSettings.TranslationSettings.LibreTranslateServer))
             {
                 throw new Exception("LibreTranslate server URL is not set in settings.");
             }
 
-            var url = $"{_settingsService.AppSettings.LibreTranslateServer}/translate";
+            var url = $"{_settingsService.AppSettings.TranslationSettings.LibreTranslateServer}/translate";
             var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
             [
                 new("q", text),

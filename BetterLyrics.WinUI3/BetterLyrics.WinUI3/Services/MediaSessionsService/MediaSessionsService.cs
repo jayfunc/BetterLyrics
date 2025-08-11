@@ -2,13 +2,14 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.ViewModels.SettingsPageViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -34,10 +35,12 @@ using WindowsMediaController;
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
-        IRecipient<PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>>>
+        IRecipient<PropertyChangedMessage<bool>>,
+        IRecipient<PropertyChangedMessage<FullyObservableCollection<AlbumArtSearchProviderInfo>>>
     {
         private readonly IAlbumArtSearchService _albumArtSearchService;
         private readonly ILogger<MediaSessionsService> _logger;
+        private readonly ISettingsService _settingsService;
 
         private double _lxMusicPositionSeconds = 0;
         private double _lxMusicDurationSeconds = 0;
@@ -53,7 +56,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly LatestOnlyTaskRunner _onAnyMediaPropertyChangedRunner = new();
 
         private SongInfo? _cachedSongInfo;
-        private List<MediaSourceProviderInfo> _mediaSourceProvidersInfo;
         private byte[]? _SMTCAlbumArtBytes = null;
         private int _targetAlbumArtSize = 500;
 
@@ -63,13 +65,30 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         public event EventHandler<AlbumArtChangedEventArgs>? AlbumArtChangedChanged;
         public event EventHandler<MediaSourceProvidersInfoEventArgs>? MediaSourceProvidersInfoChanged;
 
-        public MediaSessionsService(ISettingsService settingsService, IAlbumArtSearchService albumArtSearchService) : base(settingsService)
+        public MediaSessionsService(ISettingsService settingsService, IAlbumArtSearchService albumArtSearchService)
         {
+            _settingsService = settingsService;
             _albumArtSearchService = albumArtSearchService;
             _logger = Ioc.Default.GetRequiredService<ILogger<MediaSessionsService>>();
 
-            _mediaSourceProvidersInfo = _settingsService.AppSettings.MediaSourceProvidersInfo;
+            _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
+
             InitMediaManager();
+        }
+
+        private void MediaSourceProvidersInfo_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(MediaSourceProviderInfo.AlbumArtSearchProvidersInfo):
+                    _ = _albumArtRefreshRunner.RunAsync(async tokne =>
+                    {
+                        await UpdateAlbumArtRelated(tokne);
+                    });
+                    break;
+                default:
+                    break;
+            }
         }
 
         public bool IsPlaying => _cachedIsPlaying;
@@ -78,7 +97,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private bool IsMediaSourceEnabled(string id)
         {
-            return _mediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id)?.IsEnabled ?? true;
+            return _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id)?.IsEnabled ?? true;
         }
 
         private void InitMediaManager()
@@ -94,6 +113,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             Task.Run(() =>
             {
                 MediaManager_OnFocusedSessionChanged(null);
+                _mediaManager.CurrentMediaSessions.ToList().ForEach(x => RecordMediaSourceProviderInfo(x.Value));
             });
         }
 
@@ -138,7 +158,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             var focusedSession = _mediaManager.GetFocusedSession();
 
-            RecordMediaSourceProviderInfo(mediaSession);
+            //RecordMediaSourceProviderInfo(mediaSession);
             if (mediaSession != focusedSession) return;
 
             if (!IsMediaSourceEnabled(mediaSession.Id))
@@ -169,7 +189,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             var focusedSession = _mediaManager.GetFocusedSession();
 
-            RecordMediaSourceProviderInfo(mediaSession);
+            //RecordMediaSourceProviderInfo(mediaSession);
             if (mediaSession != focusedSession) return;
 
             if (!IsMediaSourceEnabled(id))
@@ -204,6 +224,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
             else
             {
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                {
+                    var currentMediaSourceProviderInfo = GetCurrentMediaSourceProviderInfo();
+                    if (currentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
+                    {
+                        currentMediaSourceProviderInfo?.PositionOffset = 0;
+                    }
+                });
+
                 _cachedSongInfo = new SongInfo
                 {
                     Title = mediaProperties.Title,
@@ -282,18 +311,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             var id = mediaSession?.Id;
             if (string.IsNullOrEmpty(id)) return;
 
-            var found = _mediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
-            if (found == null)
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
-                _mediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id));
-                // 在这里就写进设置
-                // 因为 SettingsPageViewModel 可能还没有初始化
-                _settingsService.AppSettings.MediaSourceProvidersInfo = _mediaSourceProvidersInfo;
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
+                if (found == null)
                 {
-                    MediaSourceProvidersInfoChanged?.Invoke(this, new MediaSourceProvidersInfoEventArgs(_mediaSourceProvidersInfo));
-                });
-            }
+                    _settingsService.AppSettings.MediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id));
+                }
+            });
         }
 
         private void SendNullMessages()
@@ -368,7 +393,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             try
             {
-                _sse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
+                _sse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.GeneralSettings.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
                 _sse.MessageReceived += Sse_MessageReceived;
                 _sse.Disconnected += Sse_Disconnected;
             }
@@ -471,16 +496,34 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
-        public void Receive(PropertyChangedMessage<ObservableCollection<MediaSourceProviderInfo>> message)
+        public MediaSourceProviderInfo? GetCurrentMediaSourceProviderInfo()
         {
-            if (message.Sender is SettingsPageViewModel)
+            return _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == _cachedSongInfo?.SourceAppUserModelId)?.FirstOrDefault();
+        }
+
+        public async void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is MediaSourceProviderInfo)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.MediaSourceProvidersInfo))
+                if (message.PropertyName == nameof(MediaSourceProviderInfo.IsEnabled))
                 {
-                    _mediaSourceProvidersInfo = [.. message.NewValue];
                     MediaManager_OnFocusedSessionChanged(null);
                 }
             }
+            else if (message.Sender is AlbumArtSearchProviderInfo)
+            {
+                if (message.PropertyName == nameof(AlbumArtSearchProviderInfo.IsEnabled))
+                {
+                    await _albumArtRefreshRunner.RunAsync(async tokne =>
+                    {
+                        await UpdateAlbumArtRelated(tokne);
+                    });
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<FullyObservableCollection<AlbumArtSearchProviderInfo>> message)
+        {
         }
     }
 }

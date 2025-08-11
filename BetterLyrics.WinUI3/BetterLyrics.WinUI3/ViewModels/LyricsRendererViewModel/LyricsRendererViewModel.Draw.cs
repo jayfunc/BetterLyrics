@@ -35,15 +35,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_isDockMode)
             {
-                FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f, _immersiveBgOpacityTransition.Value * _albumArtBgOpacity / 100f);
+                FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f, _immersiveBgOpacityTransition.Value * _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
             }
             else if (_isDesktopMode)
             {
-                FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f, _immersiveBgOpacityTransition.Value * _albumArtBgOpacity / 100f);
+                FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f, _immersiveBgOpacityTransition.Value * _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
             }
             else
             {
-                FillBackground(control, combinedDs, _albumArtAccentColorTransition.Value, 0f, _albumArtBgOpacity / 100f);
+                FillBackground(control, combinedDs, _albumArtAccentColorTransition.Value, 0f, _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
                 DrawAlbumArtBackground(control, combinedDs);
             }
 
@@ -258,7 +258,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     {
                         Source = new BlendEffect
                         {
-                            Background = _isLyricsGlowEffectEnabled ? line.ForegroundBlurEffect : line.PlaceholderEffect,
+                            Background = _lyricsEffectSettings.IsLyricsGlowEffectEnabled ? line.ForegroundBlurEffect : line.PlaceholderEffect,
                             Foreground = line.ForegroundHighlightEffect,
                         },
                         Opacity = (float)(line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value),
@@ -268,7 +268,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                     if (i == _playingLineIndex)
                     {
-                        if (_isLyricsFloatAnimationEnabled)
+                        if (_lyricsEffectSettings.IsLyricsFloatAnimationEnabled)
                         {
                             ds.DrawImage(new DisplacementMapEffect
                             {

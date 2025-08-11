@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.MediaSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+            <Grid Style="{StaticResource SettingsGridStyle}">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageMusicLib"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE8B7;}"
+                        IsExpanded="True"
+                        ItemsSource="{x:Bind ViewModel.AppSettings.LocalMediaFolders, Mode=OneWay}">
+                        <controls:SettingsExpander.ItemTemplate>
+                            <DataTemplate>
+                                <controls:SettingsCard>
+                                    <controls:SettingsCard.Header>
+                                        <HyperlinkButton
+                                            Click="LocalFolderHyperlinkButton_Click"
+                                            Content="{Binding Path, Mode=OneWay}"
+                                            Tag="{Binding Path, Mode=OneWay}" />
+                                    </controls:SettingsCard.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <HyperlinkButton
+                                            x:Uid="SettingsPageRemovePath"
+                                            Click="SettingsPageRemovePathButton_Click"
+                                            Tag="{Binding}" />
+                                        <ToggleSwitch DataContext="{Binding}" IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+                            </DataTemplate>
+                        </controls:SettingsExpander.ItemTemplate>
+                        <controls:SettingsExpander.ItemsHeader>
+                            <InfoBar
+                                x:Uid="SettingsPageRemoveInfo"
+                                BorderThickness="0"
+                                CornerRadius="0"
+                                IsClosable="False"
+                                IsOpen="True"
+                                Severity="Success">
+
+                                <interactivity:Interaction.Behaviors>
+
+                                    <interactivity:DataTriggerBehavior
+                                        Binding="{x:Bind ViewModel.AppSettings.LocalMediaFolders.Count, Mode=OneWay}"
+                                        ComparisonCondition="Equal"
+                                        Value="0">
+                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                                    </interactivity:DataTriggerBehavior>
+                                    <interactivity:DataTriggerBehavior
+                                        Binding="{x:Bind ViewModel.AppSettings.LocalMediaFolders.Count, Mode=OneWay}"
+                                        ComparisonCondition="NotEqual"
+                                        Value="0">
+                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                                    </interactivity:DataTriggerBehavior>
+
+                                </interactivity:Interaction.Behaviors>
+
+                            </InfoBar>
+                        </controls:SettingsExpander.ItemsHeader>
+                        <controls:SettingsExpander.ItemsFooter>
+                            <controls:SettingsCard x:Uid="SettingsPageAddFolder" Style="{StaticResource DefaultSettingsExpanderItemStyle}">
+                                <Button
+                                    x:Uid="SettingsPageAddFolderButton"
+                                    Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
+                                    CommandParameter="{Binding ElementName=RootGrid}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.ItemsFooter>
+                    </controls:SettingsExpander>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

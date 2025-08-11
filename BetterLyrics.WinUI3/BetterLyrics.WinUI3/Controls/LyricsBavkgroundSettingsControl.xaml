@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.LyricsBavkgroundSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+            <Grid Style="{StaticResource SettingsGridStyle}">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE790;}">
+                        <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind ViewModel.AppSettings.LyricsBackgroundSettings.LyricsBackgroundTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                            <ComboBoxItem x:Uid="SettingsPageLight" />
+                            <ComboBoxItem x:Uid="SettingsPageDark" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsPureColorBgOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF573;}">
+                        <uc:ExtendedSlider
+                            Default="100"
+                            Frequency="1"
+                            Maximum="100"
+                            Minimum="0"
+                            Unit="%"
+                            Value="{x:Bind ViewModel.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBackgroundOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF573;}">
+                        <uc:ExtendedSlider
+                            Default="100"
+                            Frequency="1"
+                            Maximum="100"
+                            Minimum="0"
+                            Unit="%"
+                            Value="{x:Bind ViewModel.AppSettings.LyricsBackgroundSettings.CoverOverlayOpacity, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBackgroundSpeed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC49;}">
+                        <uc:ExtendedSlider
+                            Default="50"
+                            Frequency="1"
+                            Maximum="100"
+                            Minimum="0"
+                            Unit="%"
+                            Value="{x:Bind ViewModel.AppSettings.LyricsBackgroundSettings.CoverOverlaySpeed, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBackgroundBlurAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
+                        <uc:ExtendedSlider
+                            Default="100"
+                            Frequency="1"
+                            Maximum="100"
+                            Minimum="0"
+                            Value="{x:Bind ViewModel.AppSettings.LyricsBackgroundSettings.CoverOverlayBlurAmount, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPageBackgroundAcrylicEffectAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
+                        <uc:ExtendedSlider
+                            Default="0"
+                            Frequency="1"
+                            Maximum="10"
+                            Minimum="0"
+                            Value="{x:Bind ViewModel.AppSettings.LyricsBackgroundSettings.CoverAcrylicEffectAmount, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

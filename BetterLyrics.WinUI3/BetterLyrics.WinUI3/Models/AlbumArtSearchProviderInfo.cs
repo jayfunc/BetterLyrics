@@ -5,13 +5,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public partial class AlbumArtSearchProviderInfo : ObservableObject
+    public partial class AlbumArtSearchProviderInfo : ObservableRecipient
     {
-        [ObservableProperty]
-        public partial bool IsEnabled { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEnabled { get; set; }
 
-        [ObservableProperty]
-        public partial AlbumArtSearchProvider Provider { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial AlbumArtSearchProvider Provider { get; set; }
 
         public AlbumArtSearchProviderInfo() { }
 

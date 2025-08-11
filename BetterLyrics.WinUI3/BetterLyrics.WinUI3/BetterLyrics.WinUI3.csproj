@@ -22,6 +22,14 @@
 	<ItemGroup>
 		<None Remove="Assets\Segoe Fluent Icons.ttf" />
 		<None Remove="Assets\Wiki82.profile.xml" />
+		<None Remove="Controls\AlbumArtLayoutSettingsControl.xaml" />
+		<None Remove="Controls\AllLyricsSettingsControl.xaml" />
+		<None Remove="Controls\AppSettingsControl.xaml" />
+		<None Remove="Controls\ExtendedSlider.xaml" />
+		<None Remove="Controls\LyricsBavkgroundSettingsControl.xaml" />
+		<None Remove="Controls\LyricsSettingsControl.xaml" />
+		<None Remove="Controls\MediaSettingsControl.xaml" />
+		<None Remove="Controls\PlaybackSettingsControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
@@ -176,6 +184,46 @@
 	  <Content Update="Assets\Wiki82.profile.xml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\ExtendedSlider.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\AllLyricsSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\LyricsSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\MediaSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\PlaybackSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\AlbumArtLayoutSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\LyricsBavkgroundSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\AppSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\MusicGalleryWindow.xaml">

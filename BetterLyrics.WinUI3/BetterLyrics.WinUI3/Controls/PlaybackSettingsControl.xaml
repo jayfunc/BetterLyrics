@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.PlaybackSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid ColumnSpacing="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <NavigationView
+                VerticalAlignment="Top"
+                Background="Transparent"
+                IsBackButtonVisible="Collapsed"
+                IsBackEnabled="False"
+                IsSettingsVisible="False"
+                MenuItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
+                PaneDisplayMode="Top"
+                SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
+                <NavigationView.MenuItemTemplate>
+                    <DataTemplate x:DataType="models:MediaSourceProviderInfo">
+                        <NavigationViewItem>
+                            <NavigationViewItem.Icon>
+                                <ImageIcon Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
+                            </NavigationViewItem.Icon>
+                            <NavigationViewItem.Content>
+                                <TextBlock
+                                    MaxWidth="200"
+                                    Text="{Binding Provider, Converter={StaticResource MediaSourceProviderToDisplayedNameConverter}, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+                            </NavigationViewItem.Content>
+                        </NavigationViewItem>
+                    </DataTemplate>
+                </NavigationView.MenuItemTemplate>
+            </NavigationView>
+            <ScrollViewer Margin="0,72,0,0" Style="{StaticResource SettingsScrollViewerStyle}">
+                <Grid Style="{StaticResource SettingsGridStyle}">
+                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                        <controls:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
+                        </controls:SettingsCard>
+
+                        <controls:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
+                        </controls:SettingsCard>
+
+                        <!--  时间轴相关配置  -->
+                        <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold">
+                            <local:ExtendedSlider
+                                x:Uid="SettingsPageLyricsTimelineThresholdReset"
+                                Frequency="100"
+                                Maximum="1000"
+                                Minimum="0"
+                                ResetButtonVisibility="Collapsed"
+                                Unit="ms"
+                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
+                        </controls:SettingsCard>
+                        <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
+                            <local:ExtendedSlider
+                                x:Uid="SettingsPagePositionOffsetReset"
+                                Default="0"
+                                Frequency="100"
+                                Maximum="5000"
+                                Minimum="-5000"
+                                Unit="ms"
+                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=TwoWay}" />
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard x:Uid="LyricsPagePositionOffsetHint">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.ResetPositionOffsetOnSongChanged, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+
+                        <!--  专辑封面源配置  -->
+                        <TextBlock x:Uid="SettingsPageAlbumArtSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <ListView
+                            x:Name="AlbumArtSearchProvidersListView"
+                            AllowDrop="True"
+                            CanDragItems="True"
+                            CanReorderItems="True"
+                            DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
+                            ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                            ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo, Mode=OneWay}"
+                            SelectionMode="None">
+                            <ListView.OpacityTransition>
+                                <ScalarTransition />
+                            </ListView.OpacityTransition>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:AlbumArtSearchProviderInfo">
+                                    <controls:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                        <controls:SettingsCard.HeaderIcon>
+                                            <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                        </controls:SettingsCard.HeaderIcon>
+                                        <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                    </controls:SettingsCard>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!--  歌词源配置  -->
+                        <TextBlock x:Uid="SettingsPageLyricsSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <ListView
+                            x:Name="LyricsSearchProvidersListView"
+                            AllowDrop="True"
+                            CanDragItems="True"
+                            CanReorderItems="True"
+                            DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                            ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
+                            SelectionMode="None">
+                            <ListView.OpacityTransition>
+                                <ScalarTransition />
+                            </ListView.OpacityTransition>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="Padding" Value="0" />
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
+                                    <controls:SettingsCard Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                        <controls:SettingsCard.HeaderIcon>
+                                            <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                        </controls:SettingsCard.HeaderIcon>
+                                        <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                    </controls:SettingsCard>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                    ComparisonCondition="NotEqual"
+                    Value="0">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="0">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                </interactivity:DataTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </Grid>
+        <StackPanel
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="12">
+            <interactivity:Interaction.Behaviors>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="0">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                    ComparisonCondition="NotEqual"
+                    Value="0">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                </interactivity:DataTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <Image MaxWidth="200" Source="/Assets/Leaf.png" />
+            <TextBlock
+                x:Uid="SettingsPagePlaybackNotFound"
+                HorizontalAlignment="Center"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+                <Grid Style="{StaticResource SettingsGridStyle}">
+                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                        <!--  Last.fm  -->
+                        <TextBlock x:Uid="SettingsPageLastFM" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <controls:SettingsExpander
+                            x:Uid="SettingsPageLastFMManager"
+                            HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
+                            IsExpanded="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Button
+                                    x:Uid="SettingsPageLastFMAuth"
+                                    Command="{x:Bind ViewModel.LastFMAuthCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                <Button
+                                    x:Uid="SettingsPageLastFMUnAuth"
+                                    Command="{x:Bind ViewModel.LastFMUnAuthCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}" />
+                            </StackPanel>
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <HyperlinkButton Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}" NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Playcount, Mode=OneWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Registered.ToLongDateString(), Mode=OneWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFMRefreshCommand}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+                        <!--  Lyrics translation  -->
+                        <TextBlock x:Uid="SettingsPageTranslation" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <controls:SettingsExpander
+                            x:Uid="LyricsPageTranslationEnabled"
+                            HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                     Glyph=&#xE774;}"
+                            IsExpanded="True">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=TwoWay}" />
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard x:Uid="SettingsPageTargetLanguage">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.SelectedTargetLanguageIndex, Mode=TwoWay}">
+                                        <ComboBoxItem Content="العربية" Tag="ar" />
+                                        <ComboBoxItem Content="Azərbaycan dili" Tag="az" />
+                                        <ComboBoxItem Content="简体中文" Tag="zh-Hans" />
+                                        <ComboBoxItem Content="繁體中文" Tag="zh-Hant" />
+                                        <ComboBoxItem Content="Čeština" Tag="cs" />
+                                        <ComboBoxItem Content="Dansk" Tag="da" />
+                                        <ComboBoxItem Content="Nederlands" Tag="nl" />
+                                        <ComboBoxItem Content="English" Tag="en" />
+                                        <ComboBoxItem Content="Esperanto" Tag="eo" />
+                                        <ComboBoxItem Content="Suomi" Tag="fi" />
+                                        <ComboBoxItem Content="Français" Tag="fr" />
+                                        <ComboBoxItem Content="Deutsch" Tag="de" />
+                                        <ComboBoxItem Content="Ελληνικά" Tag="el" />
+                                        <ComboBoxItem Content="עברית" Tag="he" />
+                                        <ComboBoxItem Content="हिन्दी" Tag="hi" />
+                                        <ComboBoxItem Content="Magyar" Tag="hu" />
+                                        <ComboBoxItem Content="Bahasa Indonesia" Tag="id" />
+                                        <ComboBoxItem Content="Gaeilge" Tag="ga" />
+                                        <ComboBoxItem Content="Italiano" Tag="it" />
+                                        <ComboBoxItem Content="日本語" Tag="ja" />
+                                        <ComboBoxItem Content="한국어" Tag="ko" />
+                                        <ComboBoxItem Content="فارسی" Tag="fa" />
+                                        <ComboBoxItem Content="Polski" Tag="pl" />
+                                        <ComboBoxItem Content="Português" Tag="pt" />
+                                        <ComboBoxItem Content="Русский" Tag="ru" />
+                                        <ComboBoxItem Content="Slovenčina" Tag="sk" />
+                                        <ComboBoxItem Content="Español" Tag="es" />
+                                        <ComboBoxItem Content="Svenska" Tag="sv" />
+                                        <ComboBoxItem Content="Türkçe" Tag="tr" />
+                                        <ComboBoxItem Content="Українська" Tag="uk" />
+                                        <ComboBoxItem Content="Tiếng Việt" Tag="vi" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageTranslationConfig">
+                                    <controls:SettingsCard.Description>
+                                        <HyperlinkButton Margin="0,6,0,0" NavigateUri="https://github.com/LibreTranslate/LibreTranslate">
+                                            <TextBlock
+                                                x:Uid="SettingsPageTranslationInfoLink"
+                                                FontSize="14"
+                                                TextWrapping="Wrap" />
+                                        </HyperlinkButton>
+                                    </controls:SettingsCard.Description>
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageLibreTranslateServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=OneWay}">
+                                    <StackPanel Orientation="Horizontal" Spacing="12">
+                                        <TextBox
+                                            x:Name="LibreTranslateServerTextBox"
+                                            IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                            PlaceholderText="http://localhost:5000"
+                                            Text="{x:Bind ViewModel.AppSettings.TranslationSettings.LibreTranslateServer, Mode=TwoWay}" />
+                                        <Button
+                                            x:Uid="SettingsPageServerTestButton"
+                                            Command="{x:Bind ViewModel.LibreTranslateServerTestCommand}"
+                                            IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="LyricsPageTranslationOnly" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.ShowTranslationOnly, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+                        <controls:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
+                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                        </controls:SettingsCard>
+                        <controls:SettingsCard x:Uid="LyricsPageTranslationProviderPrefix">
+                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                        </controls:SettingsCard>
+                        <!--  LX music server  -->
+                        <TextBlock x:Uid="SettingsPageLXMusicServer" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <controls:SettingsCard>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBox
+                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                    PlaceholderText="http://127.0.0.1:23330"
+                                    Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}" />
+                                <Button
+                                    x:Uid="SettingsPageServerTestButton"
+                                    Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+</UserControl>

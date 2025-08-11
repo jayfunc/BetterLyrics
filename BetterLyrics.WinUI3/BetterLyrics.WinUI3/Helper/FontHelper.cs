@@ -15,6 +15,6 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string[] SystemFontFamilies => CanvasTextFormat.GetSystemFontFamilies();
 
-        public static string GetUserPreferredFontFamily() => SystemFontFamilies.ElementAtOrDefault(_settingsService.AppSettings.SelectedFontFamilyIndex) ?? "Segoe UI";
+        public static string GetUserPreferredFontFamily() => SystemFontFamilies.ElementAtOrDefault(_settingsService.AppSettings.StandardLyricsStyleSettings.SelectedFontFamilyIndex) ?? "Segoe UI";
     }
 }

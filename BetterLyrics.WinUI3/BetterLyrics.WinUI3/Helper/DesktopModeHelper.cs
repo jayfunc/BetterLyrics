@@ -67,21 +67,8 @@ namespace BetterLyrics.WinUI3.Helper
                 );
             }
 
-            // 从存储区获取目标宽高和位置
-            int targetWidth = _settingsService.AppSettings.DesktopWindowWidth;
-            int targetHeight = _settingsService.AppSettings.DesktopWindowHeight;
-            int targetX = _settingsService.AppSettings.DesktopWindowLeft;
-            int targetY = _settingsService.AppSettings.DesktopWindowTop;
-
             // 设置窗口大小和位置
-            window.AppWindow.MoveAndResize(
-                new Windows.Graphics.RectInt32(
-                    targetX,
-                    targetY,
-                    targetWidth,
-                    targetHeight
-                )
-            );
+            window.AppWindow.MoveAndResize(_settingsService.AppSettings.DesktopModeSettings.WindowBounds.ToRectInt32());
 
             // 记忆原TopMost状态
             if (!_originalTopmostStates.ContainsKey(hwnd))

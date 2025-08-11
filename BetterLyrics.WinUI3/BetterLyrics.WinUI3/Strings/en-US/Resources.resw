@@ -117,270 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>Local media library</value>
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>Local music files</value>
   </data>
-  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
-    <value>Add folders storing music or lyrics</value>
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>Music player</value>
   </data>
-  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
-    <value>Open in file explorer</value>
+  <data name="AllLyricsSettingsControlDesktop.Content" xml:space="preserve">
+    <value>Desktop mode</value>
   </data>
-  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
-    <value>Remove from app</value>
+  <data name="AllLyricsSettingsControlDock.Content" xml:space="preserve">
+    <value>Dock mode</value>
   </data>
-  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
-    <value>You are safe to remove the following items</value>
-  </data>
-  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
-    <value>Original files and folders in this path will not be deleted when removing it from this app</value>
-  </data>
-  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
-    <value>Add a folder</value>
-  </data>
-  <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>Lyrics background theme</value>
-  </data>
-  <data name="SettingsPageLanguage.Header" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>Adaptive to lyrics background (Colored)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>Adaptive to lyrics background (Colored)</value>
-  </data>
-  <data name="SettingsPageLight.Content" xml:space="preserve">
-    <value>Light</value>
-  </data>
-  <data name="SettingsPageDark.Content" xml:space="preserve">
-    <value>Dark</value>
-  </data>
-  <data name="SettingsPageSC.Content" xml:space="preserve">
-    <value>简体中文</value>
-  </data>
-  <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁體中文</value>
-  </data>
-  <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="SettingsPageGitHub.Header" xml:space="preserve">
-    <value>This is an open source app</value>
-  </data>
-  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
-    <value>Open in new window</value>
-  </data>
-  <data name="SettingsPageGitHub.Description" xml:space="preserve">
-    <value>See source code on GitHub</value>
-  </data>
-  <data name="SettingsPageVersion.Text" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
-    <value>None</value>
-  </data>
-  <data name="SettingsPageMica.Content" xml:space="preserve">
-    <value>Mica</value>
-  </data>
-  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
-    <value>Mica Alt</value>
-  </data>
-  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
-    <value>Desktop Acrylic</value>
-  </data>
-  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
-    <value>Acrylic Base</value>
-  </data>
-  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
-    <value>Acrylic Thin</value>
-  </data>
-  <data name="SettingsPageTransparent.Content" xml:space="preserve">
-    <value>Transparent</value>
-  </data>
-  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>Lyrics backdrop</value>
-  </data>
-  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
-    <value>Default</value>
-  </data>
-  <data name="SettingsPageRestart.Content" xml:space="preserve">
-    <value>Restart app to apply change</value>
-  </data>
-  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
-    <value>The path cannot be found on your computer</value>
-  </data>
-  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
-    <value>The folder has been added. Please do not add it again.</value>
-  </data>
-  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
-    <value>Lyrics background</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
-    <value>Lyrics background motion rate</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
-    <value>Lyrics background opacity</value>
-  </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings - BetterLyrics</value>
-  </data>
-  <data name="LyricsPageTitle" xml:space="preserve">
-    <value>BetterLyrics</value>
-  </data>
-  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
-    <value>Alignment</value>
-  </data>
-  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>Center</value>
-  </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>Left</value>
-  </data>
-  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>Right</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
-    <value>Lyrics background blur amount</value>
-  </data>
-  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
-    <value>Blur amount</value>
-  </data>
-  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
-    <value>Adjusting this value will also increase the background blur intensity of the album image.</value>
-  </data>
-  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>Current value: </value>
-  </data>
-  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
-    <value>Significantly higher GPU usage when blur is enabled (&gt; 0)</value>
-  </data>
-  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>Top and bottom edge opacity</value>
-  </data>
-  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
-    <value>Line spacing</value>
-  </data>
-  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
-    <value>x line height</value>
-  </data>
-  <data name="SettingsPageLyricsStandardFontSize.Header" xml:space="preserve">
-    <value>Font size (Standard mode)</value>
-  </data>
-  <data name="SettingsPageLyricsDockFontSize.Header" xml:space="preserve">
-    <value>Font size (Dock mode)</value>
-  </data>
-  <data name="SettingsPageLyricsDesktopFontSize.Header" xml:space="preserve">
-    <value>Font size (Desktop mode)</value>
-  </data>
-  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
-    <value>Lyrics only</value>
-  </data>
-  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Immersive mode</value>
-  </data>
-  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
-    <value>Lyrics background</value>
-  </data>
-  <data name="SettingsPageAbout.Content" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
-    <value>App appearance</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
-    <value>Glow effect</value>
-  </data>
-  <data name="SettingsPageLyricsSearchProvidersConfig.Header" xml:space="preserve">
-    <value>Configure lyrics source</value>
-  </data>
-  <data name="SettingsPageLyricsSearchProvidersConfig.Description" xml:space="preserve">
-    <value>Drag to sort, the lyrics search order will be in the following order</value>
-  </data>
-  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
-    <value>Welcome to BetterLyrics</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>Click on the top-left button to enable immersive mode.
-If you encounter any problems, please go to the Settings page, About tab, and view the FAQ or contact the author for feedback</value>
-  </data>
-  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
-    <value>No music playing now</value>
-  </data>
-  <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>Advanced options</value>
-  </data>
-  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
-    <value>Play test music</value>
-  </data>
-  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>Play "Cut To The Feeling" on "soundcloud.com"</value>
-  </data>
-  <data name="SettingsPageCache.Header" xml:space="preserve">
-    <value>Cache</value>
-  </data>
-  <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>Including log files, network lyrics cache</value>
-  </data>
-  <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>Font color (Non-current playback area)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>Font color (Current playback area)</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>Adaptive to lyrics background (Grayed)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>Adaptive to lyrics background (Grayed)</value>
-  </data>
-  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
-    <value>Album art area style</value>
-  </data>
-  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
-    <value>Corner radius</value>
-  </data>
-  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
-    <value>Title bar size</value>
-  </data>
-  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
-    <value>Compact</value>
-  </data>
-  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
-    <value>Extended</value>
+  <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
+    <value>Standard</value>
   </data>
   <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
     <value>Always on top</value>
   </data>
-  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
-    <value>Full screen</value>
-  </data>
   <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
     <value>Press Esc to exit full screen mode</value>
   </data>
-  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
-    <value>Hover back again to show the toggle button</value>
+  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
+    <value>Full screen</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>Do not show this message again</value>
-  </data>
-  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
-    <value>No local files matched</value>
-  </data>
-  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>Album art only</value>
-  </data>
-  <data name="MainPageSplitView.Content" xml:space="preserve">
-    <value>Split view</value>
-  </data>
-  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Change display type</value>
-  </data>
-  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Switch to desktop lyrics mode</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>Picture-in-picture mode</value>
@@ -388,95 +150,107 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
     <value>Exit picture-in-picture mode</value>
   </data>
-  <data name="LyricsNotFound" xml:space="preserve">
-    <value>Lyrics not found</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>Lyrics effect</value>
+  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
+    <value>Dependencies</value>
   </data>
-  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>Lyrics style</value>
+  <data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>Export successful</value>
   </data>
-  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
-    <value>This folder is already included in the existing folder and does not need to be added again</value>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>Unable to connect to LX Music server, please go to Settings - Advanced options to check if the link is entered correctly</value>
   </data>
-  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>App behavior</value>
+  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>Lock</value>
   </data>
-  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
-    <value>When starting the app</value>
-  </data>
-  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
-    <value>Activate standard mode</value>
-  </data>
-  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>Activate desktop mode</value>
-  </data>
-  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
-    <value>Activate dock mode</value>
-  </data>
-  <data name="SystemTrayPageTitle" xml:space="preserve">
-    <value>System tray - BetterLyrics</value>
-  </data>
-  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
-    <value>Dock mode</value>
-  </data>
-  <data name="SettingsPageAppDock.Text" xml:space="preserve">
-    <value>Dock mode</value>
+  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>Lock</value>
   </data>
   <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
     <value>Desktop mode</value>
   </data>
-  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
-    <value>Desktop mode</value>
+  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
+    <value>Dock mode</value>
   </data>
-  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
-    <value>Font weight</value>
+  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
+    <value>To unlock after locking, go to the system tray to unlock or press</value>
   </data>
-  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
-    <value>Thin</value>
-  </data>
-  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
-    <value>Extra Light</value>
-  </data>
-  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
-    <value>Light</value>
-  </data>
-  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
-    <value>Semi Light</value>
-  </data>
-  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
-    <value>Normal</value>
-  </data>
-  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
-    <value>Semi Bold</value>
-  </data>
-  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
-    <value>Bold</value>
-  </data>
-  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
-    <value>Extra Bold</value>
-  </data>
-  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
-    <value>Black</value>
-  </data>
-  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
-    <value>Extra Black</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
-    <value>Current line</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
-    <value>Current char</value>
+  <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
+    <value>More</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="ImportSettingsFailed" xml:space="preserve">
+    <value>Settings file import failed, application settings remain unchanged</value>
+  </data>
+  <data name="LastFMAuthFailed" xml:space="preserve">
+    <value>Authorization failed, please try again</value>
+  </data>
+  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
+    <value>I have completed the authorization</value>
+  </data>
+  <data name="LastFMRequestAuthDesc" xml:space="preserve">
+    <value>Please complete the authorization in your browser</value>
+  </data>
+  <data name="LastFMRequestAuthTitle" xml:space="preserve">
+    <value>Grant BetterLyrics permission to access your Last.fm account</value>
+  </data>
+  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+    <value>I have canceled my authorization</value>
+  </data>
+  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+    <value>Please complete the cancellation operation in your browser</value>
+  </data>
+  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+    <value>Revoke BetterLyrics' permission to access your Last.fm account</value>
+  </data>
+  <data name="LibreTranslateFailed" xml:space="preserve">
+    <value>Requesting translation from LibreTranslate failed, please check the settings or the native LibreTranslate configuration</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Loading lyrics...</value>
+  </data>
+  <data name="LyricsNotFound" xml:space="preserve">
+    <value>Lyrics not found</value>
+  </data>
+  <data name="LyricsPageDisplayTypeButtonToolTip.Content" xml:space="preserve">
+    <value>Display type</value>
+  </data>
+  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+    <value>Lyrics provider</value>
+  </data>
+  <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
+    <value>Play source shortcut settings</value>
+  </data>
+  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
+    <value>Reset to 0 when switching songs</value>
+  </data>
+  <data name="LyricsPageSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
+    <value>Lyrics timeline offset</value>
+  </data>
+  <data name="LyricsPageTitle" xml:space="preserve">
+    <value>BetterLyrics</value>
+  </data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
+    <value>The translation in the lyrics will be read first. If there is no match, the machine translation will be requested from the LibreTranslate server</value>
+  </data>
+  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>Enable translation</value>
+  </data>
+  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>Show translation only</value>
+  </data>
+  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+    <value>Translation provider</value>
+  </data>
+  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <value>Local .ESLRC files</value>
   </data>
   <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
     <value>Local .LRC files</value>
@@ -484,62 +258,666 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>Local music files</value>
   </data>
-  <data name="SettingsPageJA.Content" xml:space="preserve">
-    <value>日本語</value>
-  </data>
-  <data name="SettingsPageKO.Content" xml:space="preserve">
-    <value>한국어</value>
-  </data>
-  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
-    <value>Local .ESLRC files</value>
-  </data>
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>Local .TTML files</value>
   </data>
-  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
-    <value>This folder contains added folders, please delete these folders to add the folder</value>
+  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
+    <value>Immersive mode</value>
   </data>
-  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
-    <value>Show debug overlay</value>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>Album art only</value>
   </data>
-  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
-    <value>Dependencies</value>
+  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Switch to desktop lyrics mode</value>
   </data>
-  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
-    <value>Lock</value>
+  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Change display type</value>
   </data>
-  <data name="SystemTraySettings.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>Hover back again to show the toggle button</value>
   </data>
-  <data name="SystemTrayExit.Text" xml:space="preserve">
-    <value>Exit</value>
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>Lyrics only</value>
   </data>
-  <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>Unlock the window</value>
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <value>No local files matched</value>
   </data>
-  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
-    <value>Lock</value>
+  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <value>No music playing now</value>
   </data>
-  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>To unlock after locking, go to the system tray to unlock or press</value>
+  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <value>Lyrics timeline offset</value>
   </data>
-  <data name="SettingsPageFan.Header" xml:space="preserve">
-    <value>Fan lyrics</value>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>Split view</value>
   </data>
-  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
-    <value>Custom</value>
+  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
+    <value>Click on the top-left button to enable immersive mode.
+If you encounter any problems, please go to the Settings page, About tab, and view the FAQ or contact the author for feedback</value>
   </data>
-  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
-    <value>Custom</value>
+  <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
+    <value>Welcome to BetterLyrics</value>
   </data>
-  <data name="SettingsPageLyrics.Content" xml:space="preserve">
-    <value>Lyrics style and effect</value>
+  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Immersive mode</value>
+  </data>
+  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+    <value>Add to playlist</value>
+  </data>
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>End of the list</value>
+  </data>
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>Next items</value>
+  </data>
+  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+    <value>Add to play queue</value>
+  </data>
+  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <value>All songs</value>
+  </data>
+  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
+    <value>Clear play queue</value>
+  </data>
+  <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="MusicGalleryPageFileArtist.Text" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
+    <value>File info</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoBitDepth.Text" xml:space="preserve">
+    <value>Bit depth</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoBitrate.Text" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoDuration.Text" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoEncoder.Text" xml:space="preserve">
+    <value>Encoder</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoSampleRate.Text" xml:space="preserve">
+    <value>Sample rate</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="MusicGalleryPageFileInfoYear.Text" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
+    <value>No songs were found in the media library</value>
+  </data>
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>Create a playlist</value>
+  </data>
+  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
+    <value>Play all</value>
+  </data>
+  <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
+    <value>Play queue</value>
+  </data>
+  <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
+    <value>Play queue is empty</value>
+  </data>
+  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
+    <value>List loop</value>
+  </data>
+  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
+    <value>Remove from play queue</value>
+  </data>
+  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
+    <value>Scroll to playing item</value>
+  </data>
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
+    <value>Single loop</value>
+  </data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search songs</value>
+  </data>
+  <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
+    <value>Sort type</value>
+  </data>
+  <data name="MusicGalleryPageTitle" xml:space="preserve">
+    <value>Music gallery - BetterLyrics</value>
+  </data>
+  <data name="SettingsPageAbout.Content" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
+    <value>Acrylic Base</value>
+  </data>
+  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
+    <value>Acrylic Thin</value>
+  </data>
+  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
+    <value>Add a folder</value>
+  </data>
+  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>Album art</value>
+  </data>
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
+    <value>Configure album cover source</value>
+  </data>
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>Album art source</value>
+  </data>
+  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>Corner radius</value>
+  </data>
+  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
+    <value>Album art area style</value>
   </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>App appearance and behavior</value>
   </data>
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <value>App appearance</value>
+  </data>
+  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
+    <value>App behavior</value>
+  </data>
+  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
+    <value>Desktop mode</value>
+  </data>
+  <data name="SettingsPageAppDock.Text" xml:space="preserve">
+    <value>Dock mode</value>
+  </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>Auto-lock when activating desktop mode</value>
+  </data>
+  <data name="SettingsPageAutoStart.Header" xml:space="preserve">
+    <value>Automatic startup</value>
+  </data>
+  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
+    <value>Activate desktop mode</value>
+  </data>
+  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
+    <value>Activate dock mode</value>
+  </data>
+  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
+    <value>Activate standard mode</value>
+  </data>
+  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>When starting the app</value>
+  </data>
+  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
+    <value>Lyrics backdrop</value>
+  </data>
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>Album Background Acrylic Effect Strength!</value>
+  </data>
+  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
+    <value>Lyrics background</value>
+  </data>
+  <data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>Including log files, network lyrics cache</value>
+  </data>
+  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>Cache</value>
+  </data>
+  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+  <data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>Show debug overlay</value>
+  </data>
+  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
+    <value>Desktop Acrylic</value>
+  </data>
+  <data name="SettingsPageDev.Content" xml:space="preserve">
+    <value>Advanced options</value>
+  </data>
+  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+    <value>Discord</value>
+  </data>
+  <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
+    <value>Target monitor</value>
+  </data>
+  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>Dock mode placement</value>
+  </data>
+  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>Window height</value>
+  </data>
+  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+    <value>Easing animation type</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>Ease-in-out back</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>Ease-in-out bounce</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>Ease-in-out circ</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>Ease-in-out cubic</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>Ease-in-out elastic</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>Ease-in-out expo</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>Ease-in-out quad</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>Ease-in-out quart</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>Ease-in-out quint</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>Ease-in-out sine</value>
+  </data>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>Linear</value>
+  </data>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>Smooth step</value>
+  </data>
+  <data name="SettingsPageEN.Content" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>Export settings</value>
+  </data>
+  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>Extended</value>
+  </data>
+  <data name="SettingsPageFan.Header" xml:space="preserve">
+    <value>Fan lyrics</value>
+  </data>
+  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+    <value>Frequently asked questions</value>
+  </data>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>Follow system</value>
+  </data>
+  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
+    <value>Open in new window</value>
+  </data>
+  <data name="SettingsPageGitHub.Description" xml:space="preserve">
+    <value>See source code on GitHub</value>
+  </data>
+  <data name="SettingsPageGitHub.Header" xml:space="preserve">
+    <value>This is an open source app</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
+    <value>Extend the title bar to the entire page so that the window can be dragged in any non-interactive area</value>
+  </data>
+  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
+    <value>Global drag</value>
+  </data>
+  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>Automatically hide the window when no songs are playing in dock mode or desktop mode</value>
+  </data>
+  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>Auto-hide window</value>
+  </data>
+  <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
+    <value>Force this app to appear on top of full-screen apps when docked or desktop mode is enabled</value>
+  </data>
+  <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
+    <value>Always stay on top of fullscreen applications</value>
+  </data>
+  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>Import settings</value>
+  </data>
+  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>The program will automatically restart after the import is successful</value>
+  </data>
+  <data name="SettingsPageJA.Content" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>Join now</value>
+  </data>
+  <data name="SettingsPageKO.Content" xml:space="preserve">
+    <value>한국어</value>
+  </data>
+  <data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsPageLastFM.Text" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <value>Authorize</value>
+  </data>
+  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+    <value>Total playing count</value>
+  </data>
+  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <value>Registration date</value>
+  </data>
+  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+    <value>Track listening history via Last.fm</value>
+  </data>
+  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <value>Revoke authorization</value>
+  </data>
+  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
+    <value>Server address</value>
+  </data>
+  <data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
+    <value>Unlock and lock shortcut keys</value>
+  </data>
+  <data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>Log record</value>
+  </data>
+  <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
+    <value>LX Music Server</value>
+  </data>
+  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+    <value>Lyrics style and effect</value>
+  </data>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>Alignment</value>
+  </data>
+  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <value>Lyrics background</value>
+  </data>
+  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
+    <value>Album background layer ambiguity!</value>
+  </data>
+  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
+    <value>Album background layer opacity!</value>
+  </data>
+  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
+    <value>Album Background Layer Motion Rate!</value>
+  </data>
+  <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
+    <value>Font color (Non-current playback area)</value>
+  </data>
+  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
+    <value>Font opacity (Non-current playback area)</value>
+  </data>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
+    <value>Blur amount</value>
+  </data>
+  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
+    <value>Adjusting this value will also increase the background blur intensity of the album image.</value>
+  </data>
+  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
+    <value>Significantly higher GPU usage when blur is enabled (&gt; 0)</value>
+  </data>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
+    <value>Lyrics effect</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>Extra Black</value>
+  </data>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>Extra Bold</value>
+  </data>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>Extra Light</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
+    <value>Font color (Current playback area)</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>Adaptive to lyrics background (Colored)</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>Adaptive to lyrics background (Grayed)</value>
+  </data>
+  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+    <value>Floating animation</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>Adaptive to lyrics background (Colored)</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>Adaptive to lyrics background (Grayed)</value>
+  </data>
+  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>Lyrics font family</value>
+  </data>
+  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>Font size</value>
+  </data>
+  <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
+    <value>Lyrics stroke width</value>
+  </data>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>Font weight</value>
+  </data>
+  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>Glow effect</value>
+  </data>
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>Highlight scope</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>Line spacing</value>
+  </data>
+  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+    <value>x line height</value>
+  </data>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SettingsPageLyricsPureColorBgOpacity.Header" xml:space="preserve">
+    <value>Solid background layer opacity</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
+    <value>Current char</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
+    <value>Current line</value>
+  </data>
+  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>Current line start to current char</value>
+  </data>
+  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
+    <value>Configure lyrics source</value>
+  </data>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>Semi Bold</value>
+  </data>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>Semi Light</value>
+  </data>
+  <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
+    <value>Lyrics stroke color</value>
+  </data>
+  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
+    <value>Lyrics style</value>
+  </data>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>Thin</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>If the lyrics progress is jittery, try increasing this threshold; changing this value can cause lyrics synchronization to deviate</value>
+  </data>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>Lyrics timeline sync threshold</value>
+  </data>
+  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
+    <value>Source and translation separator</value>
+  </data>
+  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+    <value>Top and bottom edge opacity</value>
+  </data>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>Media library</value>
+  </data>
+  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <value>Monitor this playback source</value>
+  </data>
+  <data name="SettingsPageMica.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
+    <value>Mica Alt</value>
+  </data>
+  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <value>Play test music</value>
+  </data>
+  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <value>Add folders storing music or lyrics</value>
+  </data>
+  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>Local media library</value>
+  </data>
+  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
+    <value>Open in file explorer</value>
+  </data>
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>This folder is already included in the existing folder and does not need to be added again</value>
+  </data>
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>The folder has been added. Please do not add it again.</value>
+  </data>
+  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>This folder contains added folders, please delete these folders to add the folder</value>
+  </data>
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>The path cannot be found on your computer</value>
+  </data>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>Playback sources</value>
+  </data>
+  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+    <value>No playback source captured</value>
+  </data>
+  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+    <value>Play "Cut To The Feeling" on "soundcloud.com"</value>
+  </data>
+  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+    <value>QQ feedback &amp; chat group</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <value>Original files and folders in this path will not be deleted when removing it from this app</value>
+  </data>
+  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <value>You are safe to remove the following items</value>
+  </data>
+  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <value>Remove from app</value>
+  </data>
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>Restart app to apply change</value>
+  </data>
+  <data name="SettingsPageSC.Content" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="SettingsPageScope.Header" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation duration (Last line)</value>
+  </data>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation duration (Current line)</value>
+  </data>
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation type</value>
+  </data>
+  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+    <value>Lyrics scrolling animation duration (First line)</value>
+  </data>
+  <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
+    <value>Test server</value>
+  </data>
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
+    <value>Server test failed</value>
+  </data>
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
+    <value>Server test successful</value>
+  </data>
+  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>Settings manager</value>
+  </data>
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>Current value: </value>
+  </data>
+  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>Song title &amp; artist</value>
   </data>
   <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
     <value>Alignment</value>
@@ -553,451 +931,67 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>Right</value>
   </data>
-  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
-    <value>Album art</value>
-  </data>
-  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>Song title &amp; artist</value>
-  </data>
-  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
-    <value>Easing animation type</value>
-  </data>
-  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Playback sources</value>
-  </data>
-  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>Monitor this playback source</value>
-  </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>Log record</value>
-  </data>
-  <data name="SettingsPageTranslation.Content" xml:space="preserve">
-    <value>Lyrics translation</value>
-  </data>
-  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>Lyrics timeline offset</value>
-  </data>
-  <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>LibreTranslate translation service</value>
-  </data>
-  <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
-    <value>Server address</value>
-  </data>
-  <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
-    <value>Test server</value>
+  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+    <value>Default</value>
   </data>
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
     <value>Target language</value>
   </data>
-  <data name="SettingsPageTranslationInfo.Header" xml:space="preserve">
-    <value>Translation service powered by LibreTranslate</value>
-  </data>
-  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
-    <value>Visit https://github.com/LibreTranslate/LibreTranslate for installation instructions and more information (this software is not affiliated with this translation service in any way)</value>
-  </data>
-  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
-    <value>Server test successful</value>
-  </data>
-  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
-    <value>Server test failed</value>
-  </data>
-  <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
-    <value>Lyrics stroke width (Desktop mode only)</value>
-  </data>
-  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>Follow system</value>
-  </data>
-  <data name="SettingsPageAutoStart.Header" xml:space="preserve">
-    <value>Automatic startup</value>
-  </data>
-  <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
-    <value>Lyrics stroke color (Desktop mode only)</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
-    <value>Always stay on top of fullscreen applications</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
-    <value>Force this app to appear on top of full-screen apps when docked or desktop mode is enabled</value>
-  </data>
-  <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
-    <value>More</value>
-  </data>
-  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>Lyrics timeline offset</value>
-  </data>
-  <data name="LyricsPageTranslationButtonToolTip.Content" xml:space="preserve">
-    <value>Translate</value>
-  </data>
-  <data name="LyricsPageDisplayTypeButtonToolTip.Content" xml:space="preserve">
-    <value>Display type</value>
-  </data>
-  <data name="LyricsPageSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="TranslateServerNotSet" xml:space="preserve">
-    <value>Translate server is not set, please configure it in settings first</value>
-  </data>
-  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
-    <value>Reset to 0 when switching songs</value>
-  </data>
-  <data name="SettingsPageTargetLanguage.Description" xml:space="preserve">
-    <value>The translation in the lyrics will be read first. If there is no match, the machine translation will be requested from the LibreTranslate server</value>
-  </data>
-  <data name="SettingsPageAlbumArtSearchProvidersConfig.Header" xml:space="preserve">
-    <value>Configure album cover source</value>
-  </data>
-  <data name="SettingsPageAlbumArtSearchProvidersConfig.Description" xml:space="preserve">
-    <value>Drag to sort, the album art search order will be in the following order</value>
-  </data>
-  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
-    <value>Album art source</value>
-  </data>
-  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
-    <value>Local music files</value>
-  </data>
-  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
-    <value>Music player</value>
-  </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>Media library</value>
-  </data>
-  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation type</value>
-  </data>
-  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation duration (Current line)</value>
-  </data>
-  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation duration (First line)</value>
-  </data>
-  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation duration (Last line)</value>
-  </data>
-  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
-    <value>Linear</value>
-  </data>
-  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
-    <value>Smooth step</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
-    <value>Ease-in-out sine</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
-    <value>Ease-in-out quad</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
-    <value>Ease-in-out elastic</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
-    <value>Ease-in-out back</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
-    <value>Ease-in-out bounce</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
-    <value>Ease-in-out circ</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
-    <value>Ease-in-out expo</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
-    <value>Ease-in-out quint</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
-    <value>Ease-in-out quart</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
-    <value>Ease-in-out cubic</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>Current line start to current char</value>
-  </data>
-  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>Highlight scope</value>
-  </data>
-  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
-    <value>Lyrics timeline sync threshold</value>
-  </data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
-    <value>If the lyrics progress is jittery, try increasing this threshold; changing this value can cause lyrics synchronization to deviate</value>
-  </data>
-  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
-    <value>QQ feedback &amp; chat group</value>
-  </data>
-  <data name="SettingsPageDiscord.Header" xml:space="preserve">
-    <value>Discord</value>
-  </data>
-  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
-    <value>Join now</value>
-  </data>
-  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
-    <value>Floating animation</value>
-  </data>
-  <data name="SettingsPageScope.Header" xml:space="preserve">
-    <value>Scope</value>
-  </data>
-  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
-    <value>Unlock and lock shortcut keys</value>
-  </data>
-  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
-    <value>LX Music Server</value>
-  </data>
-  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>Dock mode placement</value>
-  </data>
-  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
-    <value>Top</value>
-  </data>
-  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
-    <value>Bottom</value>
-  </data>
-  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
-    <value>Enable translation</value>
-  </data>
-  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
-    <value>Show translation only</value>
-  </data>
-  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
-    <value>Font opacity (Non-current playback area)</value>
-  </data>
-  <data name="SettingsPageFAQ.Header" xml:space="preserve">
-    <value>Frequently asked questions</value>
-  </data>
-  <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>Unable to connect to LX Music server, please go to Settings - Advanced options to check if the link is entered correctly</value>
-  </data>
-  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
-    <value>Auto-hide window</value>
-  </data>
-  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>Automatically hide the window when no songs are playing in dock mode or desktop mode</value>
-  </data>
-  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
-    <value>Window height</value>
-  </data>
-  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>Lyrics font family</value>
-  </data>
-  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
-    <value>Global drag</value>
-  </data>
-  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
-    <value>Extend the title bar to the entire page so that the window can be dragged in any non-interactive area</value>
-  </data>
-  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>Fluid acrylic effect roughness</value>
-  </data>
-  <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>Music gallery - BetterLyrics</value>
-  </data>
-  <data name="LibreTranslateFailed" xml:space="preserve">
-    <value>Requesting translation from LibreTranslate failed, please check the settings or the native LibreTranslate configuration</value>
-  </data>
-  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
-    <value>File info</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoTitle.Text" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="MusicGalleryPageFileArtist.Text" xml:space="preserve">
-    <value>Artist</value>
-  </data>
-  <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoYear.Text" xml:space="preserve">
-    <value>Year</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoDuration.Text" xml:space="preserve">
-    <value>Duration</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoBitrate.Text" xml:space="preserve">
-    <value>Bitrate</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoSampleRate.Text" xml:space="preserve">
-    <value>Sample rate</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoBitDepth.Text" xml:space="preserve">
-    <value>Bit depth</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
-    <value>Format</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoEncoder.Text" xml:space="preserve">
-    <value>Encoder</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
-    <value>Path</value>
-  </data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search songs</value>
-  </data>
-  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
-    <value>Sort type</value>
-  </data>
-  <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
-    <value>Artist</value>
-  </data>
-  <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
-    <value>No songs were found in the media library</value>
-  </data>
-  <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>Play queue</value>
-  </data>
-  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
-    <value>Clear play queue</value>
-  </data>
-  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
-    <value>Scroll to playing item</value>
-  </data>
-  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
-    <value>List loop</value>
-  </data>
-  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
-    <value>Single loop</value>
-  </data>
-  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
-    <value>Random</value>
-  </data>
-  <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
-    <value>Remove from play queue</value>
-  </data>
-  <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>Play queue is empty</value>
-  </data>
-  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
-    <value>Select all</value>
-  </data>
-  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
-    <value>Add to play queue</value>
-  </data>
-  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
-    <value>Next items</value>
-  </data>
-  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
-    <value>End of the list</value>
-  </data>
-  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
-    <value>Add to playlist</value>
-  </data>
-  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>Create a playlist</value>
-  </data>
-  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
-    <value>Open music gallery</value>
-  </data>
-  <data name="TryRunMultipleInstance" xml:space="preserve">
-    <value>BetterLyrics is already running</value>
-  </data>
-  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
-    <value>All songs</value>
+  <data name="SettingsPageTC.Content" xml:space="preserve">
+    <value>繁體中文</value>
   </data>
   <data name="SettingsPageTelegram.Header" xml:space="preserve">
     <value>Telegram</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
-    <value>Lyrics provider</value>
+  <data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>Lyrics background theme</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
-    <value>Translation provider</value>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Settings - BetterLyrics</value>
   </data>
-  <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
-    <value>Target monitor</value>
+  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>Title bar size</value>
   </data>
-  <data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>Resart</value>
+  <data name="SettingsPageTranslation.Text" xml:space="preserve">
+    <value>Lyrics translation</value>
+  </data>
+  <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
+    <value>LibreTranslate translation service</value>
+  </data>
+  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
+    <value>Visit https://github.com/LibreTranslate/LibreTranslate for installation instructions and more information (this software is not affiliated with this translation service in any way)</value>
+  </data>
+  <data name="SettingsPageTransparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>Open music gallery</value>
+  </data>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>System tray - BetterLyrics</value>
   </data>
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>Reset window position</value>
   </data>
-  <data name="SettingsPageLyricsAlignment.Description" xml:space="preserve">
-    <value>This setting will not affect the dock mode and the dock mode will always remain centered.</value>
+  <data name="SystemTrayRestart.Text" xml:space="preserve">
+    <value>Resart</value>
   </data>
-  <data name="SettingsPageLastFM.Content" xml:space="preserve">
-    <value>Last.fm</value>
+  <data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
-  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
-    <value>Last.fm</value>
+  <data name="SystemTrayUnlock.Text" xml:space="preserve">
+    <value>Unlock the window</value>
   </data>
-  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
-    <value>Authorize</value>
+  <data name="TranslateServerNotSet" xml:space="preserve">
+    <value>Translate server is not set, please configure it in settings first</value>
   </data>
-  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
-    <value>Revoke authorization</value>
-  </data>
-  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
-    <value>Track listening history via Last.fm</value>
-  </data>
-  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
-    <value>Username</value>
-  </data>
-  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
-    <value>Total playing count</value>
-  </data>
-  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
-    <value>Registration date</value>
-  </data>
-  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
-    <value>Source and translation separator</value>
-  </data>
-  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
-    <value>Immersive mode</value>
-  </data>
-  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
-    <value>Play all</value>
-  </data>
-  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
-    <value>No playback source captured</value>
-  </data>
-  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="LastFMAuthFailed" xml:space="preserve">
-    <value>Authorization failed, please try again</value>
-  </data>
-  <data name="LastFMRequestAuthTitle" xml:space="preserve">
-    <value>Grant BetterLyrics permission to access your Last.fm account</value>
-  </data>
-  <data name="LastFMRequestAuthDesc" xml:space="preserve">
-    <value>Please complete the authorization in your browser</value>
-  </data>
-  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
-    <value>I have completed the authorization</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
-    <value>Revoke BetterLyrics' permission to access your Last.fm account</value>
-  </data>
-  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
-    <value>Please complete the cancellation operation in your browser</value>
-  </data>
-  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
-    <value>I have canceled my authorization</value>
-  </data>
-  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
-    <value>Settings manager</value>
-  </data>
-  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
-    <value>The program will automatically restart after the import is successful</value>
-  </data>
-  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
-    <value>Import settings</value>
-  </data>
-  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
-    <value>Export settings</value>
-  </data>
-  <data name="ImportSettingsFailed" xml:space="preserve">
-    <value>Settings file import failed, application settings remain unchanged</value>
-  </data>
-  <data name="ExportSettingsSuccess" xml:space="preserve">
-    <value>Export successful</value>
+  <data name="TryRunMultipleInstance" xml:space="preserve">
+    <value>BetterLyrics is already running</value>
   </data>
 </root>

@@ -78,7 +78,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             RegisterAppBar(hwnd, monitorDeviceName, appBarHeight, dockPlacement);
 
-            var monitorInfo = MonitorHelper.GetMonitorInfoExFromDeviceName(_settingsService.AppSettings.DockMonitorDeviceName);
+            var monitorInfo = MonitorHelper.GetMonitorInfoExFromDeviceName(_settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName);
 
             int screenWidth = monitorInfo.rcMonitor.Width;
             int screenHeight = monitorInfo.rcMonitor.Bottom - monitorInfo.rcMonitor.Top;

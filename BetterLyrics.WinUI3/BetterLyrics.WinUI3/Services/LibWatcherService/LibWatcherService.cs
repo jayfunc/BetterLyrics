@@ -14,11 +14,25 @@ namespace BetterLyrics.WinUI3.Services.LibWatcherService
 {
     public class LibWatcherService : BaseViewModel, IDisposable, ILibWatcherService
     {
+        private readonly ISettingsService _settingsService;
         private readonly Dictionary<string, FileSystemWatcher> _watchers = [];
 
-        public LibWatcherService(ISettingsService settingsService) : base(settingsService)
+        public LibWatcherService(ISettingsService settingsService)
         {
-            UpdateWatchers(_settingsService.AppSettings.LocalMediaFolders);
+            _settingsService = settingsService;
+            _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
+            _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
+            UpdateWatchers();
+        }
+
+        private void LocalMediaFolders_ItemPropertyChanged(object? sender, Extensions.ItemPropertyChangedEventArgs e)
+        {
+            UpdateWatchers();
+        }
+
+        private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdateWatchers();
         }
 
         public event EventHandler<LibChangedEventArgs>? MusicLibraryFilesChanged;
@@ -32,8 +46,9 @@ namespace BetterLyrics.WinUI3.Services.LibWatcherService
             _watchers.Clear();
         }
 
-        public void UpdateWatchers(List<LocalMediaFolder> folders)
+        private void UpdateWatchers()
         {
+            var folders = _settingsService.AppSettings.LocalMediaFolders;
             // 移除不再监听的
             foreach (var key in _watchers.Keys.ToList())
             {
