@@ -433,6 +433,9 @@
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>コーナー半径</value>
   </data>
+  <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
+    <value>影がどれだけ広がっているか</value>
+  </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>アルバムエリアスタイル</value>
   </data>

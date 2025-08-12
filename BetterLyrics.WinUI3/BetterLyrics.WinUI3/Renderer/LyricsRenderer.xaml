@@ -14,7 +14,6 @@
         <canvas:CanvasAnimatedControl
             x:Name="LyricsCanvas"
             Draw="LyricsCanvas_Draw"
-            Paused="{x:Bind ViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
             Update="LyricsCanvas_Update" />
         <Grid
             Margin="36"

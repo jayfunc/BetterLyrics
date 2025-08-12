@@ -12,6 +12,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType SongInfoAlignmentType { get; set; } = TextAlignmentType.Left;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverImageRadius { get; set; } = 12; // 12 % of the cover image size
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverImageShadowAmount { get; set; } = 12;
 
         public AlbumArtLayoutSettings() { }
     }

@@ -433,6 +433,9 @@
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>圆角半径</value>
   </data>
+  <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
+    <value>阴影扩散程度</value>
+  </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>专辑区域样式</value>
   </data>

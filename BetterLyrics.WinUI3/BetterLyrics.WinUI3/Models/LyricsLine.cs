@@ -214,9 +214,6 @@ namespace BetterLyrics.WinUI3.Models
             {
                 LineRenderingType.CurrentChar => CurrentCharMask,
                 LineRenderingType.LineStartToCurrentChar => LineStartToCurrentCharMask,
-                // Here, cuz AlphaMask only takes care of alpha channel
-                // so ForegroundFontEffect can be a mask for CurrentLine
-                // And we don't need to create a new mask for CurrentLine
                 LineRenderingType.CurrentLine => CurrentLineMask,
                 _ => PlaceholderEffect
             };
