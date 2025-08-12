@@ -116,7 +116,7 @@ namespace BetterLyrics.WinUI3
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, 0, _dockPlacement);
                     }
-                    window.Minimize();
+                    window.Hide();
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace BetterLyrics.WinUI3
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);
                     }
-                    window.Restore();
+                    window.Show();
                 }
             }
         }

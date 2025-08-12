@@ -150,6 +150,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             opacityDs.DrawImage(new ShadowEffect
             {
                 Source = albumArt,
+                ShadowColor = _grayedEnvironmentalColor,
                 BlurAmount = _settingsService.AppSettings.AlbumArtLayoutSettings.CoverImageShadowAmount,
                 Optimization = EffectOptimization.Speed,
             });
@@ -237,7 +238,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     * Matrix3x2.CreateRotation((float)line.AngleTransition.Value, currentPlayingLine.Position)
                     * Matrix3x2.CreateTranslation((float)_lyricsXTransition.Value, (float)yOffset);
 
-                if (line.BackgroundFontEffect == null || line.ForegroundFontEffect == null) continue;
+                using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, _lyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
+                using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, _lyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
 
                 using var combined = new CanvasCommandList(control.Device);
                 using var combinedDs = combined.CreateDrawingSession();
@@ -245,21 +247,29 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 // Mock gradient blurred lyrics layer
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
                 // Current line will not be blurred
-                combinedDs.DrawImage(line.BackgroundEffect);
+                using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
+                combinedDs.DrawImage(backgroundEffect);
 
                 if (line.HighlightOpacityTransition.Value != 0)
                 {
-                    if (line.ForegroundBlurEffect == null || line.ForegroundHighlightEffect == null || line.PlaceholderEffect == null)
-                    {
-                        return;
-                    }
+                    GetLinePlayingProgress(i, out int charStartIndex, out int charLength, out double charProgress);
+
+                    using var charMask = CanvasHelper.CreateCharMask(control, line, charStartIndex, charLength, charProgress);
+                    using var lineStartToCharMask = CanvasHelper.CreateLineStartToCharMask(control, line, charStartIndex, charLength, charProgress);
+                    using var lineMask = CanvasHelper.CreateLineMask(control, line);
+
+                    var blurEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask, _lyricsEffectSettings.LyricsGlowEffectScope);
+                    var highlightEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask, _lyricsEffectSettings.LyricsHighlightScope);
+
+                    using var foregroundBlurEffect = CanvasHelper.CreateForegroundBlurEffect(foregroundFontEffect, blurEffectMask, _lyricsGlowEffectAmount);
+                    using var foregroundHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, highlightEffectMask);
 
                     using var opacityEffect = new OpacityEffect
                     {
                         Source = new BlendEffect
                         {
-                            Background = _lyricsEffectSettings.IsLyricsGlowEffectEnabled ? line.ForegroundBlurEffect : line.PlaceholderEffect,
-                            Foreground = line.ForegroundHighlightEffect,
+                            Background = _lyricsEffectSettings.IsLyricsGlowEffectEnabled ? foregroundBlurEffect : new CanvasCommandList(control),
+                            Foreground = foregroundHighlightEffect,
                         },
                         Opacity = (float)(line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value),
                     };
@@ -268,12 +278,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                     if (i == _playingLineIndex)
                     {
-                        if (_lyricsEffectSettings.IsLyricsFloatAnimationEnabled && line.LineStartToCurrentCharMask != null)
+                        if (_lyricsEffectSettings.IsLyricsFloatAnimationEnabled)
                         {
                             ds.DrawImage(new DisplacementMapEffect
                             {
                                 Source = combined,
-                                Displacement = line.LineStartToCurrentCharMask,
+                                Displacement = lineStartToCharMask,
                                 XChannelSelect = EffectChannelSelect.Red,
                                 YChannelSelect = EffectChannelSelect.Alpha,
                                 Amount = 1f,
