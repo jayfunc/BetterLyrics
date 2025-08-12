@@ -562,6 +562,9 @@
   <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
+    <value>Exit the program when you close the lyrics window</value>
+  </data>
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>Export settings</value>
   </data>
@@ -972,6 +975,9 @@
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>退出程序</value>
+  </data>
+  <data name="SystemTrayLyrics.Text" xml:space="preserve">
+    <value>Open the lyrics window</value>
   </data>
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>Open music gallery</value>
