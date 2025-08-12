@@ -115,6 +115,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private Color _albumArtLightAccentColor = Colors.Transparent;
         private Color _albumArtDarkAccentColor = Colors.Transparent;
         private Color _environmentalColor = Colors.Transparent;
+        private Color _grayedEnvironmentalColor = Colors.Transparent;
 
         private Color _lightColor = Colors.White;
         private Color _darkColor = Colors.Black;
