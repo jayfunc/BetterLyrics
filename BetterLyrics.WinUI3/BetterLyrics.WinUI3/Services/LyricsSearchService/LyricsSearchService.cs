@@ -197,9 +197,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 {
                     foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
                     {
-                        if (FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        try
                         {
-                            try
+                            Track track = new(file);
+                            if (track.Artist == artist && track.Title == title)
                             {
                                 var plain = TagLib.File.Create(file).Tag.Lyrics;
                                 if (plain != null && plain != string.Empty)
@@ -207,12 +208,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                                     return plain;
                                 }
                             }
-                            catch (Exception) { }
                         }
+                        catch (Exception) { }
                     }
                 }
             }
-
             return null;
         }
 

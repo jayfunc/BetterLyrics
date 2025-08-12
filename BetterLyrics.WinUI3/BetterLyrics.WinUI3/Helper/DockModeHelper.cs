@@ -24,6 +24,11 @@ namespace BetterLyrics.WinUI3.Helper
         private static readonly Dictionary<IntPtr, RECT> _originalPositions = [];
         private static readonly Dictionary<IntPtr, WindowStyle> _originalWindowStyle = [];
 
+        public static bool IsEnabled(IntPtr hwnd)
+        {
+            return _registered.Contains(hwnd);
+        }
+
         public static void Disable(Window window)
         {
             IntPtr hwnd = WindowNative.GetWindowHandle(window);

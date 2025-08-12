@@ -72,15 +72,19 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                 {
                     foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
                     {
-                        if (FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        try
                         {
                             Track track = new(file);
-                            var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
-                            if (bytes != null)
+                            if (track.Artist == artist && track.Title == title)
                             {
-                                return bytes;
+                                var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
+                                if (bytes != null)
+                                {
+                                    return bytes;
+                                }
                             }
                         }
+                        catch (Exception) { }
                     }
                 }
             }

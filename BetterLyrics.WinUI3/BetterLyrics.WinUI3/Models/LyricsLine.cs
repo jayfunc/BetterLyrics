@@ -118,10 +118,15 @@ namespace BetterLyrics.WinUI3.Models
             };
         }
 
-        public void RecreateTextLayout(ICanvasAnimatedControl control, CanvasTextFormat textFormat, double maxWidth, double maxHeight, TextAlignmentType type)
+        public void DisposeTextLayout()
         {
             CanvasTextLayout?.Dispose();
             CanvasTextLayout = null;
+        }
+
+        public void RecreateTextLayout(ICanvasAnimatedControl control, CanvasTextFormat textFormat, double maxWidth, double maxHeight, TextAlignmentType type)
+        {
+            DisposeTextLayout();
             CanvasTextLayout = new CanvasTextLayout(control, DisplayedText, textFormat, (float)maxWidth, (float)maxHeight);
             CanvasTextLayout.HorizontalAlignment = type.ToCanvasHorizontalAlignment();
         }
@@ -220,6 +225,12 @@ namespace BetterLyrics.WinUI3.Models
             return result ?? PlaceholderEffect!;
         }
 
+        public void DisposeForegroundBlurEffect()
+        {
+            ForegroundBlurEffect?.Dispose();
+            ForegroundBlurEffect = null;
+        }
+
         /// <summary>
         /// 销毁并重新创建辉光效果层
         /// 仅需在布局重构 (Relayout) 时调用
@@ -228,8 +239,7 @@ namespace BetterLyrics.WinUI3.Models
         /// <param name="glowEffectAmount">_lyricsGlowEffectAmount</param>
         public void RecreateForegroundBlurEffect(ICanvasAnimatedControl control, LineRenderingType lineRenderingType, double glowEffectAmount)
         {
-            ForegroundBlurEffect?.Dispose();
-            ForegroundBlurEffect = null;
+            DisposeForegroundBlurEffect();
             if (ForegroundFontEffect == null)
             {
                 return;
@@ -278,6 +288,12 @@ namespace BetterLyrics.WinUI3.Models
             alphaMaskEffect.AlphaMask = mask;
         }
 
+        public void DisposeForegroundHighlightEffect()
+        {
+            ForegroundHighlightEffect?.Dispose();
+            ForegroundHighlightEffect = null;
+        }
+
         /// <summary>
         /// 销毁并重新创建高亮效果层
         /// 仅需在布局重构 (Relayout) 时调用
@@ -286,9 +302,7 @@ namespace BetterLyrics.WinUI3.Models
         /// <param name="lineRenderingType"></param>
         public void RecreateForegroundHighlightEffect(ICanvasAnimatedControl control, LineRenderingType lineRenderingType)
         {
-            ForegroundHighlightEffect?.Dispose();
-            ForegroundHighlightEffect = null;
-
+            DisposeForegroundHighlightEffect();
             if (ForegroundFontEffect == null)
             {
                 return;
@@ -334,6 +348,12 @@ namespace BetterLyrics.WinUI3.Models
             ForegroundHighlightEffect.AlphaMask = mask;
         }
 
+        public void DisposeCurrentCharMask()
+        {
+            CurrentCharMask?.Dispose();
+            CurrentCharMask = null;
+        }
+
         /// <summary>
         /// 仅当前播放行需要调用此方法（每次 Update 都调用一次）
         /// </summary>
@@ -344,15 +364,14 @@ namespace BetterLyrics.WinUI3.Models
         /// <param name="charProgress"></param>
         public void RecreateCurrentCharMask(ICanvasAnimatedControl control, int charStartIndex, int charLength, double charProgress)
         {
-            CurrentCharMask?.Dispose();
-            CurrentCharMask = null;
-            CurrentCharMask = new CanvasCommandList(control);
+            DisposeCurrentCharMask();
 
             if (CanvasTextLayout == null)
             {
                 return;
             }
 
+            CurrentCharMask = new CanvasCommandList(control);
             using var ds = CurrentCharMask.CreateDrawingSession();
 
             var highlightRegion = CanvasTextLayout
@@ -404,6 +423,12 @@ namespace BetterLyrics.WinUI3.Models
             ds.FillRectangle(fadeOutRect, fadeOutBrush);
         }
 
+        public void DisposeLineStartToCurrentCharMask()
+        {
+            LineStartToCurrentCharMask?.Dispose();
+            LineStartToCurrentCharMask = null;
+        }
+
         /// <summary>
         /// 仅当前播放行需要调用此方法（每次 Update 都调用一次）
         /// </summary>
@@ -414,15 +439,14 @@ namespace BetterLyrics.WinUI3.Models
         /// <param name="charProgress"></param>
         public void RecreateLineStartToCurrentCharMask(ICanvasAnimatedControl control, int charStartIndex, int charLength, double charProgress)
         {
-            LineStartToCurrentCharMask?.Dispose();
-            LineStartToCurrentCharMask = null;
-            LineStartToCurrentCharMask = new CanvasCommandList(control);
+            DisposeLineStartToCurrentCharMask();
 
             if (CanvasTextLayout == null)
             {
                 return;
             }
 
+            LineStartToCurrentCharMask = new CanvasCommandList(control);
             using var ds = LineStartToCurrentCharMask.CreateDrawingSession();
 
             var regions = CanvasTextLayout.GetCharacterRegions(0, charStartIndex);
@@ -484,6 +508,12 @@ namespace BetterLyrics.WinUI3.Models
             ds.FillRectangle(fadeOutRect, fadeOutBrush);
         }
 
+        public void DisposeCurrentLineMask()
+        {
+            CurrentLineMask?.Dispose();
+            CurrentLineMask = null;
+        }
+
         /// <summary>
         /// 重建当前行遮罩
         /// 仅需在布局重构 (Relayout) 时调用
@@ -491,8 +521,7 @@ namespace BetterLyrics.WinUI3.Models
         /// <param name="control"></param>
         public void RecreateCurrentLineMask(ICanvasAnimatedControl control)
         {
-            CurrentLineMask?.Dispose();
-            CurrentLineMask = null;
+            DisposeCurrentLineMask();
 
             if (CanvasTextLayout == null)
             {
@@ -519,10 +548,15 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
-        public void RecreatePlaceholder(ICanvasAnimatedControl control)
+        public void DisposePlaceholder()
         {
             PlaceholderEffect?.Dispose();
             PlaceholderEffect = null;
+        }
+
+        public void RecreatePlaceholder(ICanvasAnimatedControl control)
+        {
+            DisposePlaceholder();
             PlaceholderEffect = new CanvasCommandList(control);
         }
     }

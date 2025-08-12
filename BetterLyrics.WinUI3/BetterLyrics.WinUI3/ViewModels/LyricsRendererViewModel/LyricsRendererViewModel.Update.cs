@@ -261,7 +261,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             UpdateVisibleLinesBoundary();
 
-            UpdateLinesProps(control);
+            UpdateAllLinesProps(control);
+            UpdateVisibleLinesProps(control);
 
             _isLayoutChanged = false;
 
@@ -537,7 +538,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _isLayoutChanged = true;
         }
 
-        private void UpdateLinesProps(ICanvasAnimatedControl control)
+        private void UpdateVisibleLinesProps(ICanvasAnimatedControl control)
         {
             var currentPlayingLine = _lyricsDataArr
                 .ElementAtOrDefault(_langIndex)
@@ -614,6 +615,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 line.OpacityTransition.Update(_elapsedTime);
                 line.HighlightOpacityTransition.Update(_elapsedTime);
                 line.YOffsetTransition.Update(_elapsedTime);
+            }
+        }
+
+        private void UpdateAllLinesProps(ICanvasAnimatedControl control)
+        {
+            for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
+            {
+                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
+                if (line == null) continue;
             }
         }
 

@@ -62,7 +62,7 @@ namespace BetterLyrics.WinUI3
 
         private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
         {
-            UpdateDockWindow();
+            UpdateDockOrDesktopWindow();
         }
 
         [ObservableProperty]
@@ -101,7 +101,7 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty]
         public partial string LockHotKey { get; set; } = "";
 
-        private void UpdateDockWindow()
+        private void UpdateDockOrDesktopWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
@@ -116,7 +116,7 @@ namespace BetterLyrics.WinUI3
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, 0, _dockPlacement);
                     }
-                    window.Hide();
+                    window.Minimize();
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace BetterLyrics.WinUI3
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);
                     }
-                    window.Show();
+                    window.Restore();
                 }
             }
         }
@@ -162,7 +162,7 @@ namespace BetterLyrics.WinUI3
                 else if (message.PropertyName == nameof(GeneralSettings.HideWindowWhenNotPlaying))
                 {
                     _hideWindowWhenNotPlaying = message.NewValue;
-                    UpdateDockWindow();
+                    UpdateDockOrDesktopWindow();
                 }
             }
         }
@@ -185,7 +185,7 @@ namespace BetterLyrics.WinUI3
                 if (message.PropertyName == nameof(DockModeSettings.DockWindowHeight))
                 {
                     _dockWindowHeight = message.NewValue;
-                    UpdateDockWindow();
+                    UpdateDockOrDesktopWindow();
                 }
             }
             else if (message.Sender is DesktopModeSettings)
@@ -278,7 +278,7 @@ namespace BetterLyrics.WinUI3
                 IsImmersiveMode = true;
             }
 
-            UpdateDockWindow();
+            UpdateDockOrDesktopWindow();
         }
 
         [RelayCommand]
@@ -321,7 +321,7 @@ namespace BetterLyrics.WinUI3
                 DockModeHelper.Disable(window);
             }
 
-            UpdateDockWindow();
+            UpdateDockOrDesktopWindow();
         }
 
         [RelayCommand]
@@ -337,7 +337,7 @@ namespace BetterLyrics.WinUI3
                 if (message.PropertyName == nameof(DockModeSettings.DockPlacement))
                 {
                     _dockPlacement = message.NewValue;
-                    UpdateDockWindow();
+                    UpdateDockOrDesktopWindow();
                 }
             }
         }
@@ -349,7 +349,7 @@ namespace BetterLyrics.WinUI3
                 if (message.PropertyName == nameof(DockModeSettings.DockMonitorDeviceName))
                 {
                     _dockMonitorDeviceName = message.NewValue;
-                    UpdateDockWindow();
+                    UpdateDockOrDesktopWindow();
                 }
             }
         }
