@@ -28,8 +28,8 @@
                 x:Uid="MainPageNoMusicPlaying"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontFamily="{x:Bind ViewModel.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.HintMessageFontSize, Mode=OneWay}" />
+                FontFamily="{x:Bind ViewModel.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
+                FontSize="{x:Bind ViewModel.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -230,6 +230,7 @@
                             <Button.ContextFlyout>
                                 <Flyout
                                     x:Name="PlaybackSettingsFlyout"
+                                    Closed="PlaybackSettingsFlyout_Closed"
                                     Placement="Right"
                                     ShouldConstrainToRootBounds="False">
                                     <Flyout.FlyoutPresenterStyle>
@@ -242,7 +243,6 @@
                                             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
                                         </Style>
                                     </Flyout.FlyoutPresenterStyle>
-                                    <uc:PlaybackSettingsControl MaxWidth="850" MaxHeight="500" />
                                 </Flyout>
                             </Button.ContextFlyout>
                         </Button>

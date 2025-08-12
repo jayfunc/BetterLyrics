@@ -268,7 +268,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                     if (i == _playingLineIndex)
                     {
-                        if (_lyricsEffectSettings.IsLyricsFloatAnimationEnabled)
+                        if (_lyricsEffectSettings.IsLyricsFloatAnimationEnabled && line.LineStartToCurrentCharMask != null)
                         {
                             ds.DrawImage(new DisplacementMapEffect
                             {

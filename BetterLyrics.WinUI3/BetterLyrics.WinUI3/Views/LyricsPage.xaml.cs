@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
@@ -72,6 +73,11 @@ namespace BetterLyrics.WinUI3.Views
 
         private void PlaybackSettingsShortcutButton_Click(object sender, RoutedEventArgs e)
         {
+            PlaybackSettingsFlyout.Content = new PlaybackSettingsControl
+            {
+                MaxHeight = 500,
+                MaxWidth = 850,
+            };
             PlaybackSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
         }
 
@@ -130,6 +136,11 @@ namespace BetterLyrics.WinUI3.Views
         private void TimelineSliderOverlay_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             _mediaSessionsService.ChangePosition(TimelineSlider.Value);
+        }
+
+        private void PlaybackSettingsFlyout_Closed(object sender, object e)
+        {
+            PlaybackSettingsFlyout.Content = null;
         }
     }
 }
