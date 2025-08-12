@@ -36,23 +36,7 @@ namespace BetterLyrics.WinUI3.Models
 
                 if (transLine != null)
                 {
-                    if (translationData.LanguageCode?.StartsWith("zh") == true)
-                    {
-                        string tmp = "";
-                        if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hant")
-                        {
-                            tmp = ChineseConverter.ConvertToTraditionalChinese(transLine.OriginalText);
-                        }
-                        else if (LanguageHelper.GetUserTargetLanguageCode() == "zh-Hans")
-                        {
-                            tmp = ChineseConverter.ConvertToSimplifiedChinese(transLine.OriginalText);
-                        }
-                        line.DisplayedText = $"{line.OriginalText}{separator}{tmp}";
-                    }
-                    else
-                    {
-                        line.DisplayedText = $"{line.OriginalText}{separator}{transLine.OriginalText}";
-                    }
+                    line.DisplayedText = $"{line.OriginalText}{separator}{transLine.OriginalText}";
                 }
                 else
                 {

@@ -431,7 +431,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IsTranslating = true;
             if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
             {
-                _ = _refreshLyricsRunner.RunAsync(async token =>
+                _refreshLyricsRunner.RunAsync(async token =>
                 {
                     await SetDisplayedAlongWithTranslationsAsync(token);
                     IsTranslating = false;
@@ -450,7 +450,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private async Task SetDisplayedAlongWithTranslationsAsync(CancellationToken token)
         {
             _logger.LogInformation("Showing translation for lyrics...");
-            string targetLangCode = LanguageHelper.GetUserTargetLanguageCode();
+            string targetLangCode = LanguageHelper.SupportedTargetLanguages[_settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
             string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
             if (originalText == null) return;
 

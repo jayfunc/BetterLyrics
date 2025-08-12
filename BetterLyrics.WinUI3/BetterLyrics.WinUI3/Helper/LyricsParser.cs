@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
+using Lyricify.Lyrics.Helpers.General;
 using Lyricify.Lyrics.Models;
 using System;
 using System.Collections.Generic;
@@ -47,8 +48,55 @@ namespace BetterLyrics.WinUI3.Helper
                         break;
                 }
             }
+            FillChineseLyricsData();
             _lyricsDataArr.Add(new LyricsData()); // 为机翻预留
             return _lyricsDataArr;
+        }
+
+        private void FillChineseLyricsData()
+        {
+            var simplifiedChinese = _lyricsDataArr.Where(x => x.LanguageCode == "zh-Hans").FirstOrDefault();
+            var traditionalChinese = _lyricsDataArr.Where(x => x.LanguageCode == "zh-Hant").FirstOrDefault();
+            if (simplifiedChinese != null && traditionalChinese == null)
+            {
+                // 如果没有繁体中文歌词，则将简体中文歌词转换为繁体中文
+                _lyricsDataArr.Add(new LyricsData
+                {
+                    LyricsLines = simplifiedChinese.LyricsLines.Select(line => new LyricsLine
+                    {
+                        StartMs = line.StartMs,
+                        EndMs = line.EndMs,
+                        OriginalText = ChineseConverter.ConvertToTraditionalChinese(line.OriginalText),
+                        LyricsChars = line.LyricsChars.Select(c => new LyricsChar
+                        {
+                            StartMs = c.StartMs,
+                            EndMs = c.EndMs,
+                            Text = ChineseConverter.ConvertToTraditionalChinese(c.Text),
+                            StartIndex = c.StartIndex
+                        }).ToList()
+                    }).ToList()
+                });
+            }
+            else if (traditionalChinese != null && simplifiedChinese == null)
+            {
+                // 如果没有简体中文歌词，则将繁体中文歌词转换为简体中文
+                _lyricsDataArr.Add(new LyricsData
+                {
+                    LyricsLines = traditionalChinese.LyricsLines.Select(line => new LyricsLine
+                    {
+                        StartMs = line.StartMs,
+                        EndMs = line.EndMs,
+                        OriginalText = ChineseConverter.ConvertToSimplifiedChinese(line.OriginalText),
+                        LyricsChars = line.LyricsChars.Select(c => new LyricsChar
+                        {
+                            StartMs = c.StartMs,
+                            EndMs = c.EndMs,
+                            Text = ChineseConverter.ConvertToSimplifiedChinese(c.Text),
+                            StartIndex = c.StartIndex
+                        }).ToList()
+                    }).ToList()
+                });
+            }
         }
 
         private void ParseLrc(string raw)

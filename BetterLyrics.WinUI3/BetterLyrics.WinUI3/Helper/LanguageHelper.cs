@@ -16,7 +16,6 @@ namespace BetterLyrics.WinUI3.Services
     {
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
-        private static readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         public static List<Models.LanguageInfo> SupportedTargetLanguages =>
         [
@@ -69,7 +68,7 @@ namespace BetterLyrics.WinUI3.Services
                 "simple" => "en",
                 "zh_classical" => "zh-Hant",
                 "zh_yue" => "zh-Hant",
-                "zh" => "zh-Hans",
+                "zh" => text == ChineseConverter.ConvertToSimplifiedChinese(text) ? "zh-Hans" : "zh-Hant",
                 _ => code
             };
             return code;
@@ -97,11 +96,6 @@ namespace BetterLyrics.WinUI3.Services
                 "ko" => "kr",
                 _ => "us"
             };
-        }
-
-        public static string GetUserTargetLanguageCode()
-        {
-            return SupportedTargetLanguages[_settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
         }
 
         public static int GetDefaultTargetLanguageIndex()

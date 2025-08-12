@@ -147,10 +147,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             using var opacity = new CanvasCommandList(control.Device);
             using var opacityDs = opacity.CreateDrawingSession();
-            opacityDs.DrawImage(new GaussianBlurEffect
+            opacityDs.DrawImage(new ShadowEffect
             {
                 Source = albumArt,
-                BlurAmount = 12f,
+                BlurAmount = _settingsService.AppSettings.AlbumArtLayoutSettings.CoverImageShadowAmount,
                 Optimization = EffectOptimization.Speed,
             });
             opacityDs.DrawImage(albumArt);

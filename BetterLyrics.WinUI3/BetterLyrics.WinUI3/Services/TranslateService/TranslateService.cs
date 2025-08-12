@@ -3,8 +3,6 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
-using Lyricify.Lyrics.Helpers.General;
-using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +37,6 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
             {
                 return text; // No translation needed
             }
-            else if (originalLangCode == "zh-Hant" && targetLangCode == "zh-Hans")
-            {
-                return ChineseConverter.ConvertToSimplifiedChinese(text);
-            }
-            else if (originalLangCode == "zh-Hans" && targetLangCode == "zh-Hant")
-            {
-                return ChineseConverter.ConvertToTraditionalChinese(text);
-            }
 
             if (string.IsNullOrEmpty(_settingsService.AppSettings.TranslationSettings.LibreTranslateServer))
             {
@@ -72,12 +62,12 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
 
         public int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr)
         {
-            string targetLangCode = LanguageHelper.GetUserTargetLanguageCode().Substring(0, 2);
+            string targetLangCode = LanguageHelper.SupportedTargetLanguages[_settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
             if (lyricsDataArr.Count > 1)
             {
                 for (int i = 1; i < lyricsDataArr.Count; i++)
                 {
-                    if (lyricsDataArr[i].LanguageCode?.Substring(0, 2) == targetLangCode)
+                    if (lyricsDataArr[i].LanguageCode == targetLangCode)
                     {
                         return i; // Translation lyrics data found
                     }
