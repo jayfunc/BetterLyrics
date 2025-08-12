@@ -25,32 +25,32 @@ namespace BetterLyrics.WinUI3.Models
         public ValueTransition<double> AngleTransition { get; set; } = new(
             initialValue: 0,
             durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutSine
+            easingType: EasingType.EaseInOutQuad
         );
         public ValueTransition<double> BlurAmountTransition { get; set; } = new(
             initialValue: 0,
             durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutSine
+            easingType: EasingType.EaseInOutQuad
         );
         public ValueTransition<double> HighlightOpacityTransition { get; set; } = new(
             initialValue: 0,
             durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutSine
+            easingType: EasingType.EaseInOutQuad
         );
         public ValueTransition<double> OpacityTransition { get; set; } = new(
             initialValue: 0,
             durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutSine
+            easingType: EasingType.EaseInOutQuad
         );
         public ValueTransition<double> ScaleTransition { get; set; } = new(
             initialValue: 0.75,
             durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutSine
+            easingType: EasingType.EaseInOutQuad
         );
         public ValueTransition<double> YOffsetTransition { get; set; } = new(
             initialValue: 0,
             durationSeconds: 0.5,
-            easingType: EasingType.EaseInOutSine
+            easingType: EasingType.EaseInOutQuad
         );
 
         public CanvasTextLayout? CanvasTextLayout { get; private set; }

@@ -9,13 +9,14 @@ namespace BetterLyrics.WinUI3.Models.Settings
     public partial class AppSettings : ObservableRecipient
     {
         public string Version { get; set; } = Helper.MetadataHelper.AppVersion;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsStyleSettings StandardLyricsStyleSettings { get; set; } = new LyricsStyleSettings(32, TextAlignmentType.Left, 0);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsStyleSettings DesktopLyricsStyleSettings { get; set; } = new LyricsStyleSettings(28, TextAlignmentType.Center, 2);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsStyleSettings DockLyricsStyleSettings { get; set; } = new LyricsStyleSettings(16, TextAlignmentType.Center, 0);
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings StandardLyricsEffectSettings { get; set; } = new LyricsEffectSettings(100, 500, 1000, EasingType.EaseInOutSine);
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings DesktopLyricsEffectSettings { get; set; } = new LyricsEffectSettings(500, 500, 500, EasingType.EaseInOutSine);
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings DockLyricsEffectSettings { get; set; } = new LyricsEffectSettings(500, 500, 500, EasingType.EaseInOutSine);
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings StandardLyricsEffectSettings { get; set; } = new LyricsEffectSettings(100, 500, 1000, EasingType.EaseInOutQuad);
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings DesktopLyricsEffectSettings { get; set; } = new LyricsEffectSettings(500, 500, 500, EasingType.EaseInOutQuad);
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings DockLyricsEffectSettings { get; set; } = new LyricsEffectSettings(500, 500, 500, EasingType.EaseInOutQuad);
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial StandardModeSettings StandardModeSettings { get; set; } = new StandardModeSettings();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DesktopModeSettings DesktopModeSettings { get; set; } = new DesktopModeSettings();
