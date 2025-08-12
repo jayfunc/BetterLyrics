@@ -433,6 +433,9 @@
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>코너 반경</value>
   </data>
+  <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
+    <value>How much the shadows are spreading</value>
+  </data>
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>앨범 영역 스타일</value>
   </data>
