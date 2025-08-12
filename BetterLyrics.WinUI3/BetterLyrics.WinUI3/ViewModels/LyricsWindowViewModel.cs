@@ -254,6 +254,18 @@ namespace BetterLyrics.WinUI3
             ActivatedWindowAccentColor = ColorHelper.GetAccentColor(hwnd, _settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName, mode).ToColor();
         }
 
+        public void ExitOrClose()
+        {
+            if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
+            {
+                WindowHelper.ExitApp();
+            }
+            else
+            {
+                WindowHelper.CloseWindow<LyricsWindow>();
+            }
+        }
+
         public void InitLockHotKey()
         {
             UpdateLockHotKey(_settingsService.AppSettings.DesktopModeSettings.LockHotKeyIndex);

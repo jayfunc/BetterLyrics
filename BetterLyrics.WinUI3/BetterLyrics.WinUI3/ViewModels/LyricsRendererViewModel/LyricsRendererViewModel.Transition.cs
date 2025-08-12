@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly ValueTransition<double> _canvasYScrollTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutSine
+            easingType: EasingType.EaseInOutQuad
         );
 
         private readonly ValueTransition<Color> _immersiveBgColorTransition = new(
@@ -38,25 +38,25 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly ValueTransition<double> _titleXTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutBack
+            easingType: EasingType.EaseInOutQuad
         );
 
         private readonly ValueTransition<double> _titleYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutBack
+            easingType: EasingType.EaseInOutQuad
         );
 
         private readonly ValueTransition<double> _lyricsXTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutBack
+            easingType: EasingType.EaseInOutQuad
         );
 
         private readonly ValueTransition<double> _lyricsYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutBack
+            easingType: EasingType.EaseInOutQuad
         );
 
         private readonly ValueTransition<double> _lyricsOpacityTransition = new(
@@ -77,13 +77,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly ValueTransition<double> _albumArtXTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutBack
+            easingType: EasingType.EaseInOutQuad
         );
 
         private readonly ValueTransition<double> _albumArtYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutBack
+            easingType: EasingType.EaseInOutQuad
         );
 
         private readonly ValueTransition<double> _songInfoOpacityTransition = new(

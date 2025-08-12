@@ -562,6 +562,9 @@
   <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
+    <value>가사 창을 닫으면 프로그램을 종료하세요</value>
+  </data>
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>내보내기 설정</value>
   </data>
@@ -972,6 +975,9 @@
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>프로그램을 종료하십시오</value>
+  </data>
+  <data name="SystemTrayLyrics.Text" xml:space="preserve">
+    <value>가사 창을 여세요</value>
   </data>
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>오픈 음악 갤러리</value>

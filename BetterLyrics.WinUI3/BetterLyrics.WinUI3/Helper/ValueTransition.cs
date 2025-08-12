@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                _easingType = Enums.EasingType.Linear;
+                _easingType = Enums.EasingType.EaseInOutQuad;
                 _interpolator = GetInterpolatorByEasingType(_easingType.Value);
             }
         }

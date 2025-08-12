@@ -71,7 +71,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private static void OpenLyricsWindow()
+        private static void OpenLyrics()
         {
             WindowHelper.OpenWindow<LyricsWindow>();
         }

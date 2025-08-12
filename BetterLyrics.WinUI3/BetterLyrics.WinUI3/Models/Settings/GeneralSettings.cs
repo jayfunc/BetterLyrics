@@ -18,6 +18,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDragEverywhereEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType DisplayType { get; set; } = LyricsDisplayType.SplitView;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsImmersiveMode { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = true;
 
         public GeneralSettings() { }
     }

@@ -18,6 +18,10 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void CloseWindow<T>()
         {
+            if (typeof(T) == typeof(LyricsWindow))
+            {
+                EnsureDockModeReleased();
+            }
             var window = _activeWindows.Find(w => w is T);
             if (window is Window w)
             {
@@ -64,6 +68,13 @@ namespace BetterLyrics.WinUI3.Helper
             var castedWindow = (Window)window;
             castedWindow.Restore();
             castedWindow.Activate();
+
+            if (typeof(T) == typeof(LyricsWindow))
+            {
+                var lyricsWindow = (LyricsWindow)window;
+                lyricsWindow.ViewModel.InitLockHotKey();
+                lyricsWindow.AutoSelectLyricsMode();
+            }
         }
 
         public static void RestartApp(string args = "")
@@ -88,12 +99,17 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void ExitApp()
         {
-            LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            EnsureDockModeReleased();
+            Environment.Exit(0);
+        }
+
+        private static void EnsureDockModeReleased()
+        {
+            LyricsWindow? lyricsWindow = GetWindowByWindowType<LyricsWindow>();
             if (lyricsWindow != null)
             {
                 DockModeHelper.Disable(lyricsWindow);
             }
-            Environment.Exit(0);
         }
 
         private static void TrackWindow(object window)
