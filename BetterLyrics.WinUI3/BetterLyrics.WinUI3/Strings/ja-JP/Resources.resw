@@ -439,6 +439,9 @@
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>アルバムエリアスタイル</value>
   </data>
+  <data name="SettingsPageAmount.Header" xml:space="preserve">
+    <value>Amount</value>
+  </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>アプリの外観と動作</value>
   </data>
@@ -769,6 +772,9 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>ライト</value>
   </data>
+  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
+    <value>Play area edge gradient</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>ライン間隔</value>
   </data>
@@ -804,6 +810,9 @@
   </data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
     <value>半光</value>
+  </data>
+  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
+    <value>Shadows</value>
   </data>
   <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
     <value>Lyrics stroke color</value>
