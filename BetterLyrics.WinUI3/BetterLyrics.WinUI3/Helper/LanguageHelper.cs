@@ -5,6 +5,7 @@ using Lyricify.Lyrics.Helpers.General;
 using NTextCat;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using TinyPinyin;

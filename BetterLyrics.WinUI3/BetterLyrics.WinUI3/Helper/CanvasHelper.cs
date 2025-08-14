@@ -44,17 +44,28 @@ namespace BetterLyrics.WinUI3.Helper
         /// <param name="lyricsLayerOpacity">_lyricsOpacityTransition.Value</param>
         public static OpacityEffect CreateBackgroundEffect(LyricsLine lyricsLine, CanvasCommandList backgroundFontEffect, double lyricsLayerOpacity)
         {
-            return new OpacityEffect
+            if (lyricsLine.BlurAmountTransition.Value == 0)
             {
-                Source = new GaussianBlurEffect
+                return new OpacityEffect
                 {
                     Source = backgroundFontEffect,
-                    BlurAmount = (float)lyricsLine.BlurAmountTransition.Value,
-                    BorderMode = EffectBorderMode.Soft,
-                    Optimization = EffectOptimization.Speed,
-                },
-                Opacity = (float)(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity),
-            };
+                    Opacity = (float)(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity),
+                };
+            }
+            else
+            {
+                return new OpacityEffect
+                {
+                    Source = new GaussianBlurEffect
+                    {
+                        Source = backgroundFontEffect,
+                        BlurAmount = (float)lyricsLine.BlurAmountTransition.Value,
+                        BorderMode = EffectBorderMode.Soft,
+                        Optimization = EffectOptimization.Speed,
+                    },
+                    Opacity = (float)(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity),
+                };
+            }
         }
 
         public static CanvasCommandList CreateFontEffect(LyricsLine lyricsLine, ICanvasAnimatedControl control, Color strokeColor, int strokeWidth, Color fontColor)
@@ -89,14 +100,6 @@ namespace BetterLyrics.WinUI3.Helper
             };
         }
 
-        /// <summary>
-        /// 仅当前播放行需要调用此方法（每次 Update 都调用一次）
-        /// </summary>
-        /// <param name="control"></param>
-        /// <param name="playingLineIndex"></param>
-        /// <param name="charStartIndex"></param>
-        /// <param name="charLength"></param>
-        /// <param name="charProgress"></param>
         public static CanvasCommandList CreateCharMask(ICanvasAnimatedControl control, LyricsLine lyricsLine, int charStartIndex, int charLength, double charProgress)
         {
             var mask = new CanvasCommandList(control);
@@ -156,15 +159,7 @@ namespace BetterLyrics.WinUI3.Helper
             return mask;
         }
 
-        /// <summary>
-        /// 仅当前播放行需要调用此方法（每次 Update 都调用一次）
-        /// </summary>
-        /// <param name="control"></param>
-        /// <param name="playingLineIndex"></param>
-        /// <param name="charStartIndex"></param>
-        /// <param name="charLength"></param>
-        /// <param name="charProgress"></param>
-        public static CanvasCommandList CreateLineStartToCharMask(ICanvasAnimatedControl control, LyricsLine lyricsLine, int charStartIndex, int charLength, double charProgress)
+        public static CanvasCommandList CreateLineStartToCharMask(ICanvasAnimatedControl control, LyricsLine lyricsLine, int charStartIndex, int charLength, double charProgress, bool fade)
         {
             var mask = new CanvasCommandList(control);
 
@@ -215,32 +210,29 @@ namespace BetterLyrics.WinUI3.Helper
                 fadingWidth,
                 highlightRegion.LayoutBounds.Height
             );
-            var fadeOutRect = new Rect(
-                highlightRect.Right,
-                highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
-                fadingWidth,
-                highlightRegion.LayoutBounds.Height
-            );
-
-            // Brushes
-            using var fadeOutBrush = CanvasHelper.CreateHorizontalFillBrush(
-                control,
-                [(0f, 1f), (1f, 0f)],
-                (double)highlightRect.Right,
-                fadingWidth
-            );
 
             ds.FillRectangle(highlightRect, Color.FromArgb(255, 128, 128, 128));
-            ds.FillRectangle(fadeOutRect, fadeOutBrush);
+
+            if (fade)
+            {
+                var fadeOutRect = new Rect(
+                    highlightRect.Right,
+                    highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
+                    fadingWidth,
+                    highlightRegion.LayoutBounds.Height
+                );
+                using var fadeOutBrush = CreateHorizontalFillBrush(
+                    control,
+                    [(0f, 1f), (1f, 0f)],
+                    (double)highlightRect.Right,
+                    fadingWidth
+                );
+                ds.FillRectangle(fadeOutRect, fadeOutBrush);
+            }
 
             return mask;
         }
 
-        /// <summary>
-        /// 创建行遮罩
-        /// 仅需在布局重构 (Relayout) 时调用
-        /// </summary>
-        /// <param name="control"></param>
         public static CanvasCommandList CreateLineMask(ICanvasAnimatedControl control, LyricsLine lyricsLine)
         {
             var mask = new CanvasCommandList(control);
@@ -272,7 +264,6 @@ namespace BetterLyrics.WinUI3.Helper
 
         /// <summary>
         /// 创建高亮效果层
-        /// 仅需在布局重构 (Relayout) 时调用
         /// </summary>
         /// <param name="control"></param>
         /// <param name="lineRenderingType"></param>
@@ -282,6 +273,21 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 Source = foregroundFontEffect,
                 AlphaMask = mask,
+            };
+        }
+
+        public static ShadowEffect CreateForegroundShadowEffect(CanvasCommandList foregroundFontEffect, IGraphicsEffectSource mask, Color shadowColor, double shadowAmount)
+        {
+            return new ShadowEffect
+            {
+                Source = new AlphaMaskEffect
+                {
+                    Source = foregroundFontEffect,
+                    AlphaMask = mask,
+                },
+                ShadowColor = shadowColor,
+                BlurAmount = (float)shadowAmount,
+                Optimization = EffectOptimization.Speed,
             };
         }
 

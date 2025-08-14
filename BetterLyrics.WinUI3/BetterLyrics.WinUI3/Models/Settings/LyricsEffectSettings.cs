@@ -11,18 +11,31 @@ namespace BetterLyrics.WinUI3.Models.Settings
     public partial class LyricsEffectSettings : ObservableRecipient
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBlurAmount { get; set; } = 5;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsLineFadeEnabled { get; set; } = false;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LineRenderingType LyricsGlowEffectScope { get; set; } = LineRenderingType.CurrentChar;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsGlowEffectAmount { get; set; } = 8;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsShadowEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LineRenderingType LyricsShadowScope { get; set; } = LineRenderingType.LineStartToCurrentChar;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsShadowAmount { get; set; } = 8;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LineRenderingType LyricsHighlightScope { get; set; } = LineRenderingType.LineStartToCurrentChar;
+        
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFloatAnimationEnabled { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFloatAmount { get; set; } = 1;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial EasingType LyricsScrollEasingType { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScrollDuration { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScrollTopDuration { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScrollBottomDuration { get; set; }
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsVerticalEdgeOpacity { get; set; } = 0; // 0% opacity
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFanLyricsEnabled { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial EasingType LyricsScrollEasingType { get; set; }
 
-        public LyricsEffectSettings(int lyricsScrollTopDuration, int lyricsScrollDuration, int lyricsScrollBottomDuration, EasingType lyricsScrollEasingType) 
+        public LyricsEffectSettings(int lyricsScrollTopDuration, int lyricsScrollDuration, int lyricsScrollBottomDuration, EasingType lyricsScrollEasingType)
         {
             LyricsScrollTopDuration = lyricsScrollTopDuration;
             LyricsScrollDuration = lyricsScrollDuration;

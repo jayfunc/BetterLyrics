@@ -11,13 +11,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
     public partial class LyricsRendererViewModel
     {
-        private OpacityEffect? _lastBgImageEffect;
-        private OpacityEffect? _bgImageEffect;
-
-        private OpacityEffect? _lastFgImageEffect;
-        private OpacityEffect? _fgImageEffect;
-
-        private CanvasCommandList? _albumArtBgEffect;
+        private OpacityEffect? _albumArtBgEffect;
+        private CanvasCommandList? _albumArtEffect;
 
         private OpacityEffect CreateBgImageEffect(CanvasBitmap canvasBitmap, double opacity)
         {
@@ -85,21 +80,42 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             };
         }
 
-        private void UpdateAlbumArtBgEffect(ICanvasAnimatedControl control)
+        private void DisposeAlbumArtBgEffect()
         {
             _albumArtBgEffect?.Dispose();
             _albumArtBgEffect = null;
+        }
+
+        /// <summary>
+        /// 更新专辑封面背景效果
+        /// <para>应该在以下任意条件满足时调用此函数：</para>
+        /// <para><seealso cref="_isCanvasWidthChanged"/> == true</para>
+        /// <para><seealso cref="_isCanvasHeightChanged"/> == true</para>
+        /// <para><seealso cref="_albumArtChanged"/> == true</para>
+        /// <para><seealso cref="_isAlbumArtBgBlurAmountChanged"/> == true</para>
+        /// <para><seealso cref="_isCoverAcrylicEffectAmountChanged"/> == true</para>
+        /// <para><seealso cref="_isAlbumArtBgOpacityChanged"/> == true</para>
+        /// <para><seealso cref="_albumArtBgTransition"/> 正在变化</para>
+        /// <para><seealso cref="_albumArtAccentColorTransition"/> 正在变化</para>
+        /// 如果上述条件均不满足，需调用 <seealso cref="UpdateAlbumArtBgRenderTarget"/> 来更新渲染缓存
+        /// </summary>
+        /// <param name="control"></param>
+        private void UpdateAlbumArtBgEffect(ICanvasAnimatedControl control)
+        {
+            DisposeAlbumArtBgEffect();
 
             using var overlappedCovers = new CanvasCommandList(control);
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
 
-            if (_lastBgImageEffect != null && !_lastBgImageEffect.IsDisposed() && _lastAlbumArtCanvasBitmap != null)
+            if (_lastAlbumArtCanvasBitmap != null)
             {
-                DrawBackgroundImgae(_lastBgImageEffect, overlappedCoversDs, _lastAlbumArtCanvasBitmap);
+                using var lastBgImageEffect = CreateBgImageEffect(_lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+                DrawBackgroundImgae(lastBgImageEffect, overlappedCoversDs, _lastAlbumArtCanvasBitmap);
             }
-            if (_bgImageEffect != null && !_bgImageEffect.IsDisposed() && _albumArtCanvasBitmap != null)
+            if (_albumArtCanvasBitmap != null)
             {
-                DrawBackgroundImgae(_bgImageEffect, overlappedCoversDs, _albumArtCanvasBitmap);
+                using var bgImageEffect = CreateBgImageEffect(_albumArtCanvasBitmap, _albumArtBgTransition.Value);
+                DrawBackgroundImgae(bgImageEffect, overlappedCoversDs, _albumArtCanvasBitmap);
             }
 
             using var blurredCover = new GaussianBlurEffect
@@ -110,7 +126,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 Optimization = EffectOptimization.Speed,
             };
 
-            using var combined = new CanvasCommandList(control);
+            var combined = new CanvasCommandList(control);
             using var combinedDs = combined.CreateDrawingSession();
 
             if (_settingsService.AppSettings.LyricsBackgroundSettings.CoverAcrylicEffectAmount > 0 && _coverAcrylicNoiseCanvasBitmap != null)
@@ -132,53 +148,103 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 combinedDs.DrawImage(blurredCover);
             }
 
-            _albumArtBgEffect = new CanvasCommandList(control);
-            using var albumArtBgDs = _albumArtBgEffect.CreateDrawingSession();
-            albumArtBgDs.DrawImage(new OpacityEffect
+            _albumArtBgEffect = new OpacityEffect
             {
                 Opacity = _settingsService.AppSettings.LyricsBackgroundSettings.CoverOverlayOpacity / 100f,
                 Source = combined,
+            };
+        }
+
+        private void DisposeAlbumArtBgRenderTarget()
+        {
+            _albumArtBgRenderTarget?.Dispose();
+            _albumArtBgRenderTarget = null;
+        }
+
+        private void UpdateAlbumArtBgRenderTarget(ICanvasAnimatedControl control)
+        {
+            DisposeAlbumArtBgRenderTarget();
+
+            double targetSize = Math.Sqrt(Math.Pow(_canvasWidth, 2) + Math.Pow(_canvasHeight, 2));
+
+            _albumArtBgRenderTarget = new CanvasRenderTarget(control, (float)targetSize, (float)targetSize);
+            using var ds = _albumArtBgRenderTarget.CreateDrawingSession();
+
+            float offsetX = -(float)(_canvasWidth - targetSize) / 2;
+            float offsetY = -(float)(_canvasHeight - targetSize) / 2;
+
+            ds.DrawImage(_albumArtBgEffect, new Vector2(offsetX, offsetY));
+        }
+
+        private void DisposeAlbumArtEffect()
+        {
+            _albumArtEffect?.Dispose();
+            _albumArtEffect = null;
+        }
+
+        /// <summary>
+        /// 更新专辑封面效果
+        /// <para>应该在以下任意条件满足时调用此函数：</para>
+        /// <para><seealso cref="_isCanvasWidthChanged"/> == true</para>
+        /// <para><seealso cref="_isCanvasHeightChanged"/> == true</para>
+        /// <para><seealso cref="_albumArtChanged"/> == true</para>
+        /// <para><seealso cref="_isAlbumArtShadowAmountChanged"/> == true</para>
+        /// <para><seealso cref="_albumArtBgTransition"/> 正在变化</para>
+        /// <para><seealso cref="_albumArtAccentColorTransition"/> 正在变化</para>
+        /// 如果上述条件均不满足，需调用 <seealso cref="UpdateAlbumArtRenderTarget"/> 来更新渲染缓存
+        /// </summary>
+        /// <param name="control"></param>
+        private void UpdateAlbumArtEffect(ICanvasAnimatedControl control)
+        {
+            DisposeAlbumArtEffect();
+
+            using var overlappedCovers = new CanvasCommandList(control);
+            using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
+
+            if (_lastAlbumArtCanvasBitmap != null)
+            {
+                using var lastFgImageEffect = CreateFgImageEffect(control, _lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
+                if (lastFgImageEffect != null)
+                {
+                    overlappedCoversDs.DrawImage(lastFgImageEffect);
+                }
+            }
+            if (_albumArtCanvasBitmap != null)
+            {
+                using var fgImageEffect = CreateFgImageEffect(control, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
+                if (fgImageEffect != null)
+                {
+                    overlappedCoversDs.DrawImage(fgImageEffect);
+                }
+            }
+
+            _albumArtEffect = new CanvasCommandList(control);
+            using var combinedDs = _albumArtEffect.CreateDrawingSession();
+            combinedDs.DrawImage(new ShadowEffect
+            {
+                Source = overlappedCovers,
+                ShadowColor = _albumArtAccentColorTransition.Value,
+                BlurAmount = _settingsService.AppSettings.AlbumArtLayoutSettings.CoverImageShadowAmount,
+                Optimization = EffectOptimization.Speed,
             });
+            combinedDs.DrawImage(overlappedCovers);
         }
 
-        private void UpdateLastBgImageEffect()
+        private void DisposeAlbumArtRenderTarget()
         {
-            _lastBgImageEffect?.Dispose();
-            _lastBgImageEffect = null;
-            if (_lastAlbumArtCanvasBitmap != null)
-            {
-                _lastBgImageEffect = CreateBgImageEffect(_lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
-            }
+            _albumArtRenderTarget?.Dispose();
+            _albumArtRenderTarget = null;
         }
 
-        private void UpdateBgImageEffect()
+        private void UpdateAlbumArtRenderTarget(ICanvasAnimatedControl control)
         {
-            _bgImageEffect?.Dispose();
-            _bgImageEffect = null;
-            if (_albumArtCanvasBitmap != null)
-            {
-                _bgImageEffect = CreateBgImageEffect(_albumArtCanvasBitmap, _albumArtBgTransition.Value);
-            }
-        }
+            DisposeAlbumArtRenderTarget();
 
-        private void UpdateLastFgImageEffect(ICanvasAnimatedControl control)
-        {
-            _lastFgImageEffect?.Dispose();
-            _lastFgImageEffect = null;
-            if (_lastAlbumArtCanvasBitmap != null)
-            {
-                _lastFgImageEffect = CreateFgImageEffect(control, _lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
-            }
-        }
+            _albumArtRenderTarget = new CanvasRenderTarget(control, (float)_canvasWidth, (float)_canvasHeight);
+            using var ds = _albumArtRenderTarget.CreateDrawingSession();
 
-        private void UpdateFgImageEffect(ICanvasAnimatedControl control)
-        {
-            _fgImageEffect?.Dispose();
-            _fgImageEffect = null;
-            if (_albumArtCanvasBitmap != null)
-            {
-                _fgImageEffect = CreateFgImageEffect(control, _albumArtCanvasBitmap, _albumArtBgTransition.Value);
-            }
+            // 给一个偏移，是为了避免绘制时从原点开始，这样会造成阴影被裁切
+            ds.DrawImage(_albumArtEffect, control.Size.ToVector2() / 2 - new Vector2((float)_albumArtSize, (float)_albumArtSize) / 2);
         }
     }
 }
