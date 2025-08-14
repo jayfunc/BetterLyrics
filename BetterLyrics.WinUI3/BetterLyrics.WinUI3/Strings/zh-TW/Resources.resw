@@ -439,6 +439,9 @@
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>專輯區域樣式</value>
   </data>
+  <data name="SettingsPageAmount.Header" xml:space="preserve">
+    <value>Amount</value>
+  </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>應用外觀與行為</value>
   </data>
@@ -769,6 +772,9 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>細體</value>
   </data>
+  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
+    <value>Play area edge gradient</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>行間距</value>
   </data>
@@ -804,6 +810,9 @@
   </data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
     <value>次細</value>
+  </data>
+  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
+    <value>Shadows</value>
   </data>
   <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
     <value>Lyrics stroke color</value>
