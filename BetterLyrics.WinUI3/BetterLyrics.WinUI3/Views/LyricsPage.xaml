@@ -21,6 +21,7 @@
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
+        <!--<Image Source="/Assets/Cover.jpg" />-->
 
         <!--  No music playing placeholder  -->
         <Grid x:Name="NoMusicPlayingGrid" Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">

@@ -163,6 +163,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isAlbumArtCornerRadiusChanged = true;
                 }
+                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.CoverImageShadowAmount))
+                {
+                    _isAlbumArtShadowAmountChanged = true;
+                }
             }
             else if (message.Sender is LyricsBackgroundSettings)
             {

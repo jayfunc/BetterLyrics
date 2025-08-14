@@ -54,7 +54,7 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsBgFontOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE799;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBgFontOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB42;}">
                         <local:ExtendedSlider
                             Default="30"
                             Frequency="1"
@@ -195,7 +195,7 @@
                             Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsTranslationSeparator" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF57B;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsTranslationSeparator" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF464;}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <TextBox AcceptsReturn="True" Text="{x:Bind LyricsStyleSettings.LyricsTranslationSeparator, Mode=TwoWay}" />
                             <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
@@ -209,7 +209,7 @@
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                         Text="Effect" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsVerticalEdgeOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF573;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsVerticalEdgeOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB42;}">
                         <local:ExtendedSlider
                             x:Uid="SettingsPageLyricsVerticalEdgeOpacitySlider"
                             Default="0"
@@ -220,7 +220,7 @@
                             Value="{x:Bind LyricsEffectSettings.LyricsVerticalEdgeOpacity, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF207;}">
                         <local:ExtendedSlider
                             x:Uid="SettingsPageLyricsBlurAmountExtendedSlider"
                             Default="5"
@@ -230,6 +230,11 @@
                             Value="{x:Bind LyricsEffectSettings.LyricsBlurAmount, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsLineFade" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED3A;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsLineFadeEnabled, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <!--  高亮  -->
                     <controls:SettingsCard x:Uid="SettingsPageLyricsHighlightScope" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E6;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsHighlightScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
@@ -238,6 +243,33 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
+                    <!--  阴影  -->
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageLyricsShadow"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xF5EF;}"
+                        IsExpanded="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageScope" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=OneWay}">
+                                <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsShadowScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="8"
+                                    Frequency="1"
+                                    Maximum="20"
+                                    Minimum="1"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsShadowAmount, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
+                    <!--  辉光效果  -->
                     <controls:SettingsExpander
                         x:Uid="SettingsPageLyricsGlowEffect"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -252,13 +284,37 @@
                                     <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
                                 </ComboBox>
                             </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="8"
+                                    Frequency="1"
+                                    Maximum="20"
+                                    Minimum="1"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsGlowEffectAmount, Mode=TwoWay}" />
+                            </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8C5;}">
+                    <!--  浮动动画  -->
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageLyricsFloatAnimation"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE8C5;}"
+                        IsExpanded="True">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationEnabled, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="1"
+                                    Frequency="1"
+                                    Maximum="4"
+                                    Minimum="1"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsFloatAmount, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
+                    <!--  扇形歌词  -->
                     <controls:SettingsCard x:Uid="SettingsPageFan" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEBC5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>

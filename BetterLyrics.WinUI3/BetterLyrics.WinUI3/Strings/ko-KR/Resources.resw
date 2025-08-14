@@ -439,6 +439,9 @@
   <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
     <value>앨범 영역 스타일</value>
   </data>
+  <data name="SettingsPageAmount.Header" xml:space="preserve">
+    <value>금액</value>
+  </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>앱 외관과 행동</value>
   </data>
@@ -769,6 +772,9 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>빛</value>
   </data>
+  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
+    <value>플레이 영역 에지 그라데이션</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>라인 간격</value>
   </data>
@@ -804,6 +810,9 @@
   </data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
     <value>반 빛</value>
+  </data>
+  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
+    <value>그림자</value>
   </data>
   <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
     <value>가사 스트로크 컬러</value>

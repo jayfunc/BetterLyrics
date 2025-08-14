@@ -62,6 +62,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private CanvasBitmap? _lastAlbumArtCanvasBitmap = null;
         private CanvasBitmap? _albumArtCanvasBitmap = null;
 
+        private CanvasRenderTarget? _albumArtBgRenderTarget;
+        private CanvasRenderTarget? _albumArtRenderTarget;
+
         private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
 
         private double _albumArtSize = 0f;
@@ -90,8 +93,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
-
-        private readonly double _lyricsGlowEffectAmount = 8f;
 
         private double _maxLyricsWidth = 0f;
 
@@ -432,7 +433,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IsTranslating = true;
             if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
             {
-                _refreshLyricsRunner.RunAsync(async token =>
+                _ = _refreshLyricsRunner.RunAsync(async token =>
                 {
                     await SetDisplayedAlongWithTranslationsAsync(token);
                     IsTranslating = false;
@@ -452,10 +453,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             _logger.LogInformation("Showing translation for lyrics...");
             string targetLangCode = LanguageHelper.SupportedTargetLanguages[_settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
+            _logger.LogInformation("Target language code: {TargetLangCode}", targetLangCode);
             string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
             if (originalText == null) return;
 
             string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
+            _logger.LogInformation("Original language code: {OriginalLangCode}", originalLangCode ?? "null");
 
             if (originalLangCode == targetLangCode)
             {
@@ -468,6 +471,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr);
                 if (found >= 0)
                 {
+                    _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
                     if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
                     {
                         _lyricsDataArr[found].SetDisplayedTextInOriginalText();
@@ -482,6 +486,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
                 else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
                 {
+                    _logger.LogInformation("LibreTranslate is enabled, trying to translate lyrics...");
                     string translated = string.Empty;
                     try
                     {
@@ -523,6 +528,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (SongInfo != null)
             {
+                _logger.LogInformation("Searching lyrics for: Title={Title}, Artist={Artist}, Album={Album}, DurationMs={DurationMs}",
+                    SongInfo.Title, SongInfo.Artist, SongInfo.Album, SongInfo.DurationMs);
                 (lyricsRaw, lyricsSearchProvider) = await _lyrcsSearchService.SearchAsync(
                     SongInfo.SourceAppUserModelId ?? "",
                     SongInfo.Title,
@@ -531,8 +538,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     SongInfo.DurationMs ?? 0,
                     token
                 );
+                _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsRaw != null, lyricsSearchProvider?.ToString() ?? "null");
                 LyricsSearchProvider = lyricsSearchProvider;
-                _logger.LogInformation("Lyrics search result: {LyricsRaw}", lyricsRaw ?? "null");
                 token.ThrowIfCancellationRequested();
                 _lyricsDataArr = new LyricsParser().Parse(lyricsRaw, (int?)SongInfo?.DurationMs);
                 FillTranslationFromCache(LyricsSearchProvider);

@@ -57,7 +57,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private SongInfo? _cachedSongInfo;
         private byte[]? _SMTCAlbumArtBytes = null;
-        private int _targetAlbumArtSize = 500;
 
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
         public event EventHandler<TimelineChangedEventArgs>? TimelineChanged;
@@ -363,11 +362,10 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             if (bytes == null)
             {
-                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(_targetAlbumArtSize, _targetAlbumArtSize);
+                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(500, 500);
                 token.ThrowIfCancellationRequested();
             }
 
-            bytes = ImageHelper.Resize(bytes, _targetAlbumArtSize);
             bytes = ImageHelper.MakeSquareWithThemeColor(bytes);
 
             using var stream = new InMemoryRandomAccessStream();
