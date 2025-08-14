@@ -644,13 +644,13 @@
     <value>Registration date</value>
   </data>
   <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
-    <value>Track listening history via Last.fm</value>
+    <value>通过 Last.fm 跟踪收听记录</value>
   </data>
   <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
-    <value>Revoke authorization</value>
+    <value>撤销授权</value>
   </data>
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
-    <value>Username</value>
+    <value>用户名</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>服务器地址</value>
@@ -665,7 +665,7 @@
     <value>日志记录</value>
   </data>
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
-    <value>LX Music Server</value>
+    <value>LX 音乐服务器</value>
   </data>
   <data name="SettingsPageLyrics.Content" xml:space="preserve">
     <value>歌词样式与动效</value>
