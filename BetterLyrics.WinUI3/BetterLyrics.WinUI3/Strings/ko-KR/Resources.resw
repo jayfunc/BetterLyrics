@@ -583,8 +583,14 @@
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>자주 묻는 질문</value>
   </data>
+  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <value>Fixed time step rendering</value>
+  </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>시스템을 따르십시오</value>
+  </data>
+  <data name="SettingsPageFPS.Header" xml:space="preserve">
+    <value>Rendering frame rate</value>
   </data>
   <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
     <value>새 창에서 열립니다</value>
