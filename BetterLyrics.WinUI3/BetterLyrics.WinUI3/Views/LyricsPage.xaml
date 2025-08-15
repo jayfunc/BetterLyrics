@@ -219,6 +219,34 @@
                             </Button.DataContext>
                         </Button>-->
 
+                        <Button
+                            Click="LyricsSettingsShortcutButton_Click"
+                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                  Glyph=&#xEDC6;}"
+                            Style="{StaticResource GhostButtonStyle}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="LyricsPageLyricsSettingsButtonToolTip" />
+                            </ToolTipService.ToolTip>
+                            <Button.ContextFlyout>
+                                <Flyout
+                                    x:Name="LyricsSettingsFlyout"
+                                    Closed="LyricsSettingsFlyout_Closed"
+                                    Placement="Right"
+                                    ShouldConstrainToRootBounds="False">
+                                    <Flyout.FlyoutPresenterStyle>
+                                        <Style TargetType="FlyoutPresenter">
+                                            <Setter Property="MinWidth" Value="850" />
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="CornerRadius" Value="12" />
+                                            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
+                                            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                                            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+                                        </Style>
+                                    </Flyout.FlyoutPresenterStyle>
+                                </Flyout>
+                            </Button.ContextFlyout>
+                        </Button>
+
                         <!--  Lyrics & Translation  -->
                         <Button
                             Click="PlaybackSettingsShortcutButton_Click"

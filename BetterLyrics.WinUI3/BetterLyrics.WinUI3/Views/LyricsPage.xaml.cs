@@ -142,5 +142,20 @@ namespace BetterLyrics.WinUI3.Views
         {
             PlaybackSettingsFlyout.Content = null;
         }
+
+        private void LyricsSettingsFlyout_Closed(object sender, object e)
+        {
+            LyricsSettingsFlyout.Content = null;
+        }
+
+        private void LyricsSettingsShortcutButton_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsSettingsFlyout.Content = new AllLyricsSettingsControl
+            {
+                MaxHeight = 500,
+                MaxWidth = 850,
+            };
+            LyricsSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
+        }
     }
 }

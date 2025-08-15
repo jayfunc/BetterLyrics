@@ -222,6 +222,9 @@
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌詞來源</value>
   </data>
+  <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>歌詞樣式與效果快捷設置</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>播放源快捷設置</value>
   </data>

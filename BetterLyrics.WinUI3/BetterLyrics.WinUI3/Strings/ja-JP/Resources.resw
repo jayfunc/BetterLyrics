@@ -222,6 +222,9 @@
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌詞プロバイダー</value>
   </data>
+  <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>歌詞スタイルと効果クイック設定</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>再生ソースクイック設定</value>
   </data>

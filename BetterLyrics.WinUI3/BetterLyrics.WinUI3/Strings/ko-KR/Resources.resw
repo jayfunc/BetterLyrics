@@ -222,6 +222,9 @@
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>가사 제공자</value>
   </data>
+  <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>가사 스타일과 효과 빠른 설정</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>재생 소스 빠른 설정</value>
   </data>
