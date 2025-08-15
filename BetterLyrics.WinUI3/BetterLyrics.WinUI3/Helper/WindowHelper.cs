@@ -64,16 +64,30 @@ namespace BetterLyrics.WinUI3.Helper
                     throw new ArgumentException("Unsupported window type", nameof(T));
                 }
                 TrackWindow(window);
-            }
-            var castedWindow = (Window)window;
-            castedWindow.Restore();
-            castedWindow.Activate();
+                var castedWindow = (Window)window;
+                castedWindow.Restore();
+                castedWindow.Activate();
 
-            if (typeof(T) == typeof(LyricsWindow))
+                if (typeof(T) == typeof(LyricsWindow))
+                {
+                    var lyricsWindow = (LyricsWindow)window;
+                    lyricsWindow.ViewModel.InitLockHotKey();
+                    lyricsWindow.AutoSelectLyricsMode();
+                }
+            }
+            else
             {
-                var lyricsWindow = (LyricsWindow)window;
-                lyricsWindow.ViewModel.InitLockHotKey();
-                lyricsWindow.AutoSelectLyricsMode();
+                var castedWindow = (Window)window;
+                if (typeof(T) == typeof(LyricsWindow))
+                {
+                    var lyricsWindow = (LyricsWindow)window;
+                    lyricsWindow.Show();
+                }
+                else
+                {
+                    castedWindow.Restore();
+                    castedWindow.Activate();
+                }
             }
         }
 
