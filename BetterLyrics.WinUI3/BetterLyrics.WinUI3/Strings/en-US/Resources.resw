@@ -222,6 +222,9 @@
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>
+  <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>Lyrics style and effect quick settings</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>Play source shortcut settings</value>
   </data>
