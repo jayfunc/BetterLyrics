@@ -25,5 +25,11 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             ViewModel.Update(sender, args);
         }
+
+        private void LyricsCanvas_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            LyricsCanvas.RemoveFromVisualTree();
+            LyricsCanvas = null;
+        }
     }
 }

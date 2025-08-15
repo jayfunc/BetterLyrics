@@ -24,10 +24,7 @@
                 AreOpenCloseAnimationsEnabled="True"
                 LightDismissOverlayMode="On"
                 ShowMode="TransientWithDismissOnPointerMoveAway">
-                <MenuFlyoutItem
-                    x:Uid="SystemTrayLyrics"
-                    Command="{x:Bind ViewModel.OpenLyricsCommand}"
-                    Visibility="Collapsed" />
+                <MenuFlyoutItem x:Uid="SystemTrayLyrics" Command="{x:Bind ViewModel.OpenLyricsCommand}" />
                 <MenuFlyoutItem x:Uid="SystemTrayMusicGallery" Command="{x:Bind ViewModel.OpenMusicGalleryCommand}" />
                 <MenuFlyoutItem x:Uid="SystemTraySettings" Command="{x:Bind ViewModel.OpenSettingsCommand}" />
                 <MenuFlyoutItem x:Uid="SystemTrayResetWindowPosition" Command="{x:Bind ViewModel.ResetWindowPositionCommand}" />
