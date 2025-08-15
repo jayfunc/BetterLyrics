@@ -27,6 +27,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TranslationSettings TranslationSettings { get; set; } = new TranslationSettings();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial GeneralSettings GeneralSettings { get; set; } = new GeneralSettings();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial MusicGallerySettings MusicGallerySettings { get; set; } = new MusicGallerySettings();
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial AdvancedSettings AdvancedSettings { get; set; } = new AdvancedSettings();
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LocalMediaFolder> LocalMediaFolders { get; set; } = [];
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<MediaSourceProviderInfo> MediaSourceProvidersInfo { get; set; } = [];

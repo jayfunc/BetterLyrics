@@ -583,8 +583,14 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>Frequently asked questions</value>
   </data>
+  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <value>Fixed time step rendering</value>
+  </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>Follow system</value>
+  </data>
+  <data name="SettingsPageFPS.Header" xml:space="preserve">
+    <value>Rendering frame rate</value>
   </data>
   <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
     <value>Open in new window</value>

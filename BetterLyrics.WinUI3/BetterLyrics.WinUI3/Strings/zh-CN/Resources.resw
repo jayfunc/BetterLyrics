@@ -583,8 +583,14 @@
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>常见问题与解答</value>
   </data>
+  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <value>固定时间步长渲染</value>
+  </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>跟随系统</value>
+  </data>
+  <data name="SettingsPageFPS.Header" xml:space="preserve">
+    <value>渲染帧率</value>
   </data>
   <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
     <value>在新窗口中打开</value>

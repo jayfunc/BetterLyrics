@@ -46,6 +46,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.TranslationSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.GeneralSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.MusicGallerySettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.AdvancedSettings.PropertyChanged += AppSettings_PropertyChanged;
 
             AppSettings.MediaSourceProvidersInfo.CollectionChanged += AppSettings_CollectionChanged;
             AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += AppSettings_ItemPropertyChanged;

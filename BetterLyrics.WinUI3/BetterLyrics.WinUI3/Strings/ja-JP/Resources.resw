@@ -583,8 +583,14 @@
   <data name="SettingsPageFAQ.Header" xml:space="preserve">
     <value>よくある質問</value>
   </data>
+  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <value>固定時間ステップレンダリング</value>
+  </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>システムをフォローします</value>
+  </data>
+  <data name="SettingsPageFPS.Header" xml:space="preserve">
+    <value>レンダリングフレームレート</value>
   </data>
   <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
     <value>新しいウィンドウで開きます</value>

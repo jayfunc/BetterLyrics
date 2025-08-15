@@ -33,6 +33,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
     public partial class LyricsRendererViewModel : BaseViewModel
     {
+        [ObservableProperty]
+        public partial AppSettings AppSettings { get; set; }
+
         private LyricsStyleSettings _lyricsStyleSettings;
         private LyricsEffectSettings _lyricsEffectSettings;
 
