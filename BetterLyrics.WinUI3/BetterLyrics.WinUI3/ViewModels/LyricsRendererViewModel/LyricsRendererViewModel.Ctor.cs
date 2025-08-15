@@ -35,6 +35,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _logger = Ioc.Default.GetRequiredService<ILogger<LyricsRendererViewModel>>();
 
+            AppSettings = _settingsService.AppSettings;
+
             _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
             _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
             _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;

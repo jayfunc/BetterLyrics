@@ -53,6 +53,8 @@
             <converter:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
             <converter:MediaSourceProviderToLogoUriConverter x:Key="MediaSourceProviderToLogoUriConverter" />
             <converter:MediaSourceProviderToDisplayedNameConverter x:Key="MediaSourceProviderToDisplayedNameConverter" />
+            <converter:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
+
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
             <converters:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />

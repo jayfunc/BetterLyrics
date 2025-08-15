@@ -197,6 +197,19 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
+                                <controls:SettingsCard x:Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.IsFixedTimeStep, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageFPS" Visibility="Collapsed">
+                                    <uc:ExtendedSlider
+                                        Default="60"
+                                        Frequency="10"
+                                        Maximum="240"
+                                        Minimum="30"
+                                        Value="{x:Bind ViewModel.AppSettings.AdvancedSettings.FPS, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>
