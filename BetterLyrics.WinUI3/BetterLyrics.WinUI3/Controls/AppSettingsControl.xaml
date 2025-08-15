@@ -70,11 +70,7 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsDragEverywhereEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard
-                        x:Uid="SettingsPageExitOnLyricsWindowClosed"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xE7E8;}"
-                        Visibility="Collapsed">
+                    <controls:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E8;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
