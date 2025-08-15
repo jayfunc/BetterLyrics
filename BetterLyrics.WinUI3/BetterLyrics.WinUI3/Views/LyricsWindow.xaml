@@ -86,34 +86,47 @@
                                 <ToggleMenuFlyoutItem
                                     x:Name="AOTFlyoutItem"
                                     x:Uid="BaseWindowAOTFlyoutItem"
-                                    Click="AOTFlyoutItem_Click" />
+                                    Click="AOTFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xE718;}" />
                                 <ToggleMenuFlyoutItem
                                     x:Name="FullScreenFlyoutItem"
                                     x:Uid="BaseWindowFullScreenFlyoutItem"
-                                    Click="FullScreenFlyoutItem_Click" />
+                                    Click="FullScreenFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xE740;}" />
+                                <MenuFlyoutSeparator />
                                 <ToggleMenuFlyoutItem
                                     x:Name="DockFlyoutItem"
                                     x:Uid="HostWindowDockFlyoutItem"
                                     Click="DockFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xE66A;}"
                                     IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
                                 <ToggleMenuFlyoutItem
                                     x:Name="DesktopFlyoutItem"
                                     x:Uid="HostWindowDesktopFlyoutItem"
                                     Click="DesktopFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xE66C;}"
                                     IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=OneWay}" />
                                 <ToggleMenuFlyoutItem
                                     x:Name="MiniFlyoutItem"
                                     x:Uid="BaseWindowMiniFlyoutItem"
-                                    Click="MiniFlyoutItem_Click" />
+                                    Click="MiniFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xEE49;}" />
+                                <MenuFlyoutSeparator />
                                 <MenuFlyoutItem
                                     x:Name="MusicGalleryFlyoutItem"
                                     x:Uid="SystemTrayMusicGallery"
-                                    Click="MusicGalleryMenuFlyoutItem_Click" />
+                                    Click="MusicGalleryMenuFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xEA69;}" />
                                 <MenuFlyoutItem
                                     x:Name="SettingsFlyoutItem"
                                     x:Uid="SystemTraySettings"
-                                    Click="SettingsMenuFlyoutItem_Click" />
-                                <MenuFlyoutItem x:Uid="SystemTrayExit" Click="ExitAppMenuFlyoutItem_Click" />
+                                    Click="SettingsMenuFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xE713;}" />
+                                <MenuFlyoutSeparator />
+                                <MenuFlyoutItem
+                                    x:Uid="SystemTrayExit"
+                                    Click="ExitAppMenuFlyoutItem_Click"
+                                    Icon="{ui:FontIcon Glyph=&#xE7E8;}" />
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>

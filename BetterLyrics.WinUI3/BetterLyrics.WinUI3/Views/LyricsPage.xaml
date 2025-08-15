@@ -231,19 +231,9 @@
                                 <Flyout
                                     x:Name="LyricsSettingsFlyout"
                                     Closed="LyricsSettingsFlyout_Closed"
+                                    FlyoutPresenterStyle="{StaticResource FlyoutPageStyle}"
                                     Placement="Right"
-                                    ShouldConstrainToRootBounds="False">
-                                    <Flyout.FlyoutPresenterStyle>
-                                        <Style TargetType="FlyoutPresenter">
-                                            <Setter Property="MinWidth" Value="850" />
-                                            <Setter Property="Padding" Value="0" />
-                                            <Setter Property="CornerRadius" Value="12" />
-                                            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
-                                            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
-                                            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
-                                        </Style>
-                                    </Flyout.FlyoutPresenterStyle>
-                                </Flyout>
+                                    ShouldConstrainToRootBounds="False" />
                             </Button.ContextFlyout>
                         </Button>
 
@@ -260,19 +250,9 @@
                                 <Flyout
                                     x:Name="PlaybackSettingsFlyout"
                                     Closed="PlaybackSettingsFlyout_Closed"
+                                    FlyoutPresenterStyle="{StaticResource FlyoutPageStyle}"
                                     Placement="Right"
-                                    ShouldConstrainToRootBounds="False">
-                                    <Flyout.FlyoutPresenterStyle>
-                                        <Style TargetType="FlyoutPresenter">
-                                            <Setter Property="MinWidth" Value="850" />
-                                            <Setter Property="Padding" Value="0" />
-                                            <Setter Property="CornerRadius" Value="12" />
-                                            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
-                                            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
-                                            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
-                                        </Style>
-                                    </Flyout.FlyoutPresenterStyle>
-                                </Flyout>
+                                    ShouldConstrainToRootBounds="False" />
                             </Button.ContextFlyout>
                         </Button>
 
