@@ -308,6 +308,18 @@
                 <Setter Property="Padding" Value="0,0,0,36" />
             </Style>
 
+            <Style
+                x:Key="FlyoutPageStyle"
+                BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+                TargetType="FlyoutPresenter">
+                <Setter Property="Opacity" Value="0.9" />
+                <Setter Property="MinWidth" Value="850" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
+                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+            </Style>
+
             <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
             <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="TextFillColorPrimaryBrush" />
