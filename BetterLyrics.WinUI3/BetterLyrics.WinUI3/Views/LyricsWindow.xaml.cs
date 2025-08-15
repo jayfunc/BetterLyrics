@@ -43,6 +43,7 @@ namespace BetterLyrics.WinUI3.Views
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             ViewModel.ExitOrClose();
+            args.Cancel = true;
         }
 
         public void UpdateTitleBarArea()

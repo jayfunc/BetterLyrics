@@ -262,7 +262,8 @@ namespace BetterLyrics.WinUI3
             }
             else
             {
-                WindowHelper.CloseWindow<LyricsWindow>();
+                var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+                window?.Hide();
             }
         }
 
