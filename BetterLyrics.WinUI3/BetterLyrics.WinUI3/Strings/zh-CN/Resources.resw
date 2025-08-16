@@ -219,9 +219,6 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>未找到歌词</value>
   </data>
-  <data name="LyricsPageDisplayTypeButtonToolTip.Content" xml:space="preserve">
-    <value>显示类型</value>
-  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>
@@ -275,9 +272,6 @@
   </data>
   <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
     <value>切换到桌面歌词模式</value>
-  </data>
-  <data name="MainPageDisplayTypeSwitcher.ToolTipService.ToolTip" xml:space="preserve">
-    <value>切换显示模式</value>
   </data>
   <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>再次悬停以显示切换按钮</value>
@@ -463,6 +457,12 @@
   <data name="SettingsPageAppDock.Text" xml:space="preserve">
     <value>停靠模式</value>
   </data>
+  <data name="SettingsPageAppPictureInPicture.Text" xml:space="preserve">
+    <value>Picture-in-picture mode</value>
+  </data>
+  <data name="SettingsPageAppStandard.Text" xml:space="preserve">
+    <value>Standard</value>
+  </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>启动桌面模式时随即锁定窗口</value>
   </data>
@@ -513,6 +513,9 @@
   </data>
   <data name="SettingsPageDiscord.Header" xml:space="preserve">
     <value>Discord</value>
+  </data>
+  <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
+    <value>Lyrics album layout mode</value>
   </data>
   <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
     <value>Target monitor</value>
