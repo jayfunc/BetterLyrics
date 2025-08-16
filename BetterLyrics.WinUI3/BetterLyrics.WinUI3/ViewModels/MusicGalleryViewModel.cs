@@ -35,6 +35,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
+
         // All songs
         private List<Track> _tracks = [];
         // Songs in current playlist
@@ -251,6 +252,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             RefreshSongs();
         }
 
+        public void CancelRefreshSongs()
+        {
+        }
+
         public void RefreshSongs()
         {
             _dispatcherQueueTimer.Debounce(() =>
@@ -264,11 +269,24 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         if (Directory.Exists(folder.Path) && folder.IsEnabled)
                         {
-                            foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
+                            try
                             {
-                                Track track = new(file);
-                                if (track.Duration <= 0) continue;
-                                _tracks.Add(track);
+                                foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
+                                {
+                                    try
+                                    {
+                                        Track track = new(file);
+                                        if (track.Duration <= 0) continue;
+                                        _tracks.Add(track);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            {
                             }
                         }
                     }

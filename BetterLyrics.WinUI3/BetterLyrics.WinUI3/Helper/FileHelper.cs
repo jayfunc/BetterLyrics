@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Enums;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Ude;
@@ -77,6 +78,5 @@ namespace BetterLyrics.WinUI3.Helper
             return normFileName == normQ1 + normQ2
                 || normFileName == normQ2 + normQ1;
         }
-
     }
 }

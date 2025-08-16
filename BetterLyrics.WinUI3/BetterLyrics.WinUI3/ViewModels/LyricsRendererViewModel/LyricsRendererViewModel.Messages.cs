@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IRecipient<PropertyChangedMessage<double>>,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<Color>>,
+            IRecipient<PropertyChangedMessage<LyricsWindowMode>>,
             IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
             IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
             IRecipient<PropertyChangedMessage<TextAlignmentType>>,
@@ -70,21 +71,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
             else if (message.Sender is LyricsWindowViewModel)
             {
-                if (message.PropertyName == nameof(LyricsWindowViewModel.IsDockMode))
-                {
-                    _isDockMode = message.NewValue;
-                    UpdateColorConfig();
-                    UpdateImmersiveBackgroundOpacity();
-                    _isLayoutChanged = true;
-                }
-                else if (message.PropertyName == nameof(LyricsWindowViewModel.IsDesktopMode))
-                {
-                    _isDesktopMode = message.NewValue;
-                    UpdateColorConfig();
-                    UpdateImmersiveBackgroundOpacity();
-                    _isLayoutChanged = true;
-                }
-                else if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
+                if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
                 {
                     _isLyricsWindowLocked = message.NewValue;
                     UpdateImmersiveBackgroundOpacity();
@@ -281,7 +268,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
         {
-            _displayTypeReceived = message.NewValue;
+            if (message.Sender is LiveStates)
+            {
+                if (message.PropertyName == nameof(LiveStates.CurrentLyricsDisplayType))
+                {
+                    _isDisplayTypeChanged = true;
+                }
+            }
         }
 
         public void Receive(PropertyChangedMessage<LyricsFontColorType> message)
@@ -347,6 +340,19 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsTranslationSeparator))
                 {
                     UpdateTranslations();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsWindowMode> message)
+        {
+            if (message.Sender is LiveStates)
+            {
+                if (message.PropertyName == nameof(LiveStates.CurrentLyricsWindowMode))
+                {
+                    UpdateColorConfig();
+                    UpdateImmersiveBackgroundOpacity();
+                    _isLayoutChanged = true;
                 }
             }
         }

@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -22,7 +23,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             ILyricsSearchService musicSearchService,
             ILibWatcherService libWatcherService,
             ITranslateService libreTranslateService,
-            ILastFMService lastFMService
+            ILastFMService lastFMService,
+            ILiveStatesService liveStatesService
             )
         {
             _settingsService = settingsService;
@@ -30,6 +32,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _mediaSessionsService = mediaSessionsService;
             _libWatcherService = libWatcherService;
             _translateService = libreTranslateService;
+            _liveStatesService = liveStatesService;
 
             _lastFMService = lastFMService;
 
@@ -41,14 +44,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
             _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
 
-            _lyricsStyleSettings = _settingsService.AppSettings.StandardLyricsStyleSettings;
-            _lyricsEffectSettings = _settingsService.AppSettings.StandardLyricsEffectSettings;
-
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.AppSettings.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
 
             _timelineSyncThreshold = 0;
-
-            _displayType = _displayTypeReceived = _settingsService.AppSettings.GeneralSettings.DisplayType;
 
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
 

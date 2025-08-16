@@ -10,13 +10,12 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class GeneralSettings : ObservableRecipient
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial AutoStartWindowType AutoStartWindowType { get; set; } = AutoStartWindowType.StandardMode;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowMode AutoStartWindowType { get; set; } = LyricsWindowMode.StandardMode;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Language Language { get; set; } = Language.FollowSystem;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IgnoreFullscreenWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LXMusicServer { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool HideWindowWhenNotPlaying { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDragEverywhereEnabled { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType DisplayType { get; set; } = LyricsDisplayType.SplitView;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsImmersiveMode { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = true;
 

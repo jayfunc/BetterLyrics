@@ -8,6 +8,7 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -35,9 +36,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
     {
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
-
-        private LyricsStyleSettings _lyricsStyleSettings;
-        private LyricsEffectSettings _lyricsEffectSettings;
 
         private bool _isLastFMTrackEnabled = false;
         private bool _isLastFMTracked = false;
@@ -105,6 +103,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly IMediaSessionsService _mediaSessionsService;
         private readonly ITranslateService _translateService;
         private readonly ILastFMService _lastFMService;
+        private readonly ILiveStatesService _liveStatesService;
         private readonly ILogger _logger;
 
         private readonly double _leftMargin = 36f;
@@ -134,8 +133,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private int _endVisibleLineIndex = -1;
 
         private bool _isDebugOverlayEnabled = false;
-        private bool _isDesktopMode = false;
-        private bool _isDockMode = false;
 
         [ObservableProperty]
         public partial bool IsPlaying { get; set; } = false;
@@ -183,9 +180,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private LatestOnlyTaskRunner _refreshLyricsRunner = new();
         private LatestOnlyTaskRunner _showTranslationsRunner = new();
-
-        private LyricsDisplayType _displayTypeReceived;
-        private LyricsDisplayType _displayType;
 
         private LyricsLayoutOrientation _lyricsLayoutOrientation;
 
@@ -482,7 +476,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     }
                     else
                     {
-                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _lyricsStyleSettings.LyricsTranslationSeparator, 50);
+                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsTranslationSeparator, 50);
                         _langIndex = 0;
                     }
                     TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
@@ -504,7 +498,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         }
                         else
                         {
-                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _lyricsStyleSettings.LyricsTranslationSeparator);
+                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsTranslationSeparator);
                             _langIndex = 0;
                         }
                         TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;

@@ -14,6 +14,7 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:templateselector="using:BetterLyrics.WinUI3.TemplateSelector"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Unloaded="Page_Unloaded"
     mc:Ignorable="d">
     <Page.Resources>
         <CollectionViewSource

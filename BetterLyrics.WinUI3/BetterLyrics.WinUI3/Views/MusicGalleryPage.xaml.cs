@@ -177,5 +177,10 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.PlayingSongIndex = ViewModel.PlayingSongIndex + 1;
             ViewModel.PlayTrackAt(ViewModel.PlayingSongIndex);
         }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CancelRefreshSongs();
+        }
     }
 }

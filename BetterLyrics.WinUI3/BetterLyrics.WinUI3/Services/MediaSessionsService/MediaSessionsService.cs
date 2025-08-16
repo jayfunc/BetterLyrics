@@ -71,8 +71,26 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _logger = Ioc.Default.GetRequiredService<ILogger<MediaSessionsService>>();
 
             _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
+            _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
+            _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
 
             InitMediaManager();
+        }
+
+        private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
+        {
+            _ = _albumArtRefreshRunner.RunAsync(async token =>
+            {
+                await UpdateAlbumArtRelated(token);
+            });
+        }
+
+        private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            _ = _albumArtRefreshRunner.RunAsync(async token =>
+            {
+                await UpdateAlbumArtRelated(token);
+            });
         }
 
         private void MediaSourceProvidersInfo_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)

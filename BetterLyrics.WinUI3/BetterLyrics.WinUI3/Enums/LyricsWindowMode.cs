@@ -2,10 +2,11 @@
 
 namespace BetterLyrics.WinUI3.Enums
 {
-    public enum AutoStartWindowType
+    public enum LyricsWindowMode
     {
         StandardMode,
         DockMode,
         DesktopMode,
+        PictureInPictureMode,
     }
 }

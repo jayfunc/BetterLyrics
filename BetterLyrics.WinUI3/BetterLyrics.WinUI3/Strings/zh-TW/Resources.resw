@@ -129,6 +129,9 @@
   <data name="AllLyricsSettingsControlDock.Content" xml:space="preserve">
     <value>停靠模式</value>
   </data>
+  <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
+    <value>畫中畫模式</value>
+  </data>
   <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
     <value>標準模式</value>
   </data>
