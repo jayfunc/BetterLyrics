@@ -29,8 +29,8 @@
                 x:Uid="MainPageNoMusicPlaying"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontFamily="{x:Bind ViewModel.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
+                FontFamily="{x:Bind ViewModel.LiveStates.CurrentLyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
+                FontSize="{x:Bind ViewModel.LiveStates.CurrentLyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -275,10 +275,10 @@
                                             <Setter Property="CornerRadius" Value="8" />
                                         </Style>
                                     </Flyout.FlyoutPresenterStyle>
-                                    <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.DisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <RadioButton x:Uid="MainPageAlbumArtOnly" Click="AlbumArtOnlyRadioButton_Click" />
-                                        <RadioButton x:Uid="MainPageLyriscOnly" Click="LyricsOnlyRadioButton_Click" />
-                                        <RadioButton x:Uid="MainPageSplitView" Click="SplitViewRadioButton_Click" />
+                                    <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.LiveStates.CurrentLyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <RadioButton x:Uid="MainPageAlbumArtOnly" />
+                                        <RadioButton x:Uid="MainPageLyriscOnly" />
+                                        <RadioButton x:Uid="MainPageSplitView" />
                                     </RadioButtons>
                                 </Flyout>
                             </Button.ContextFlyout>

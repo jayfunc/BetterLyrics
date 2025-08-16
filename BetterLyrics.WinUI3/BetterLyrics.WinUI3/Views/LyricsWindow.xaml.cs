@@ -69,19 +69,19 @@ namespace BetterLyrics.WinUI3.Views
 
         public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
 
-        public void AutoSelectLyricsMode(AutoStartWindowType? type = null, bool? autoLook = null)
+        public void AutoSelectLyricsMode(LyricsWindowMode? type = null, bool? autoLook = null)
         {
             type ??= _settingsService.AppSettings.GeneralSettings.AutoStartWindowType;
             switch (type!)
             {
-                case AutoStartWindowType.StandardMode:
+                case LyricsWindowMode.StandardMode:
                     AppWindow.MoveAndResize(_settingsService.AppSettings.StandardModeSettings.WindowBounds.ToRectInt32());
                     break;
-                case AutoStartWindowType.DockMode:
+                case LyricsWindowMode.DockMode:
                     DockFlyoutItem.IsChecked = true;
                     ViewModel.ToggleDockModeCommand.Execute(null);
                     break;
-                case AutoStartWindowType.DesktopMode:
+                case LyricsWindowMode.DesktopMode:
                     DesktopFlyoutItem.IsChecked = true;
                     ViewModel.ToggleDesktopModeCommand.Execute(null);
                     if (autoLook == null && _settingsService.AppSettings.DesktopModeSettings.AutoLockOnDesktopMode)
@@ -116,11 +116,11 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    if (ViewModel.IsDesktopMode)
+                    if (ViewModel.LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
                     {
                         _settingsService.AppSettings.DesktopModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
                     }
-                    else if (ViewModel.IsDockMode)
+                    else if (ViewModel.LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
                     {
 
                     }

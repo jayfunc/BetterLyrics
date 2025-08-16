@@ -32,14 +32,17 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.StandardModeSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.DesktopModeSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.DockModeSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.PictureInPictureModeSettings.PropertyChanged += AppSettings_PropertyChanged;
 
             AppSettings.StandardLyricsStyleSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.DesktopLyricsStyleSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.DockLyricsStyleSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.PictureInPictureLyricsStyleSettings.PropertyChanged += AppSettings_PropertyChanged;
 
             AppSettings.StandardLyricsEffectSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.DesktopLyricsEffectSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.DockLyricsEffectSettings.PropertyChanged += AppSettings_PropertyChanged;
+            AppSettings.PictureInPictureLyricsEffectSettings.PropertyChanged += AppSettings_PropertyChanged;
 
             AppSettings.LyricsBackgroundSettings.PropertyChanged += AppSettings_PropertyChanged;
             AppSettings.AlbumArtLayoutSettings.PropertyChanged += AppSettings_PropertyChanged;

@@ -173,16 +173,22 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
-                    foreach (var file in Directory.GetFiles(folder.Path, $"*{format.ToFileExtension()}", SearchOption.AllDirectories))
+                    try
                     {
-                        if (FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        foreach (var file in Directory.GetFiles(folder.Path, $"*{format.ToFileExtension()}", SearchOption.AllDirectories))
                         {
-                            string? raw = await File.ReadAllTextAsync(file, FileHelper.GetEncoding(file));
-                            if (raw != null)
+                            if (FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                             {
-                                return raw;
+                                string? raw = await File.ReadAllTextAsync(file, FileHelper.GetEncoding(file));
+                                if (raw != null)
+                                {
+                                    return raw;
+                                }
                             }
                         }
+                    }
+                    catch (Exception)
+                    {
                     }
                 }
             }
@@ -195,23 +201,29 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
-                    foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
+                    try
                     {
-                        var track = new Track(file);
-                        if ((track.Title == title && track.Artist == artist) || FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
+                        foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
                         {
-                            try
+                            var track = new Track(file);
+                            if ((track.Title == title && track.Artist == artist) || FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                             {
-                                var plain = TagLib.File.Create(file).Tag.Lyrics;
-                                if (!plain.IsNullOrEmpty())
+                                try
                                 {
-                                    return plain;
+                                    var plain = TagLib.File.Create(file).Tag.Lyrics;
+                                    if (!plain.IsNullOrEmpty())
+                                    {
+                                        return plain;
+                                    }
+                                }
+                                catch (Exception)
+                                {
                                 }
                             }
-                            catch (Exception)
-                            {
-                            }
                         }
+                    }
+                    catch (Exception)
+                    {
                     }
                 }
             }

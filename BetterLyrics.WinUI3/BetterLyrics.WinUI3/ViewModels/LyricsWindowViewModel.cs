@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -35,6 +36,7 @@ namespace BetterLyrics.WinUI3
     {
         private readonly IMediaSessionsService _mediaSessionsService;
         private readonly ISettingsService _settingsService;
+        private readonly ILiveStatesService _liveStatesService;
 
         private ForegroundWindowWatcher? _windowWatcher = null;
         private bool _ignoreFullscreenWindow;
@@ -44,10 +46,13 @@ namespace BetterLyrics.WinUI3
         private int _dockWindowHeight;
         private string _dockMonitorDeviceName;
 
-        public LyricsWindowViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService)
+        public LyricsWindowViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
         {
             _settingsService = settingsService;
             _mediaSessionsService = mediaSessionsService;
+            _liveStatesService = liveStatesService;
+
+            LiveStates = _liveStatesService.LiveStates;
 
             _dockMonitorDeviceName = _settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName;
             _ignoreFullscreenWindow = _settingsService.AppSettings.GeneralSettings.IgnoreFullscreenWindow;
@@ -66,16 +71,11 @@ namespace BetterLyrics.WinUI3
         }
 
         [ObservableProperty]
+        public partial LiveStates LiveStates { get; set; }
+
+        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial Color ActivatedWindowAccentColor { get; set; }
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsDesktopMode { get; set; } = false;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsDockMode { get; set; } = false;
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
@@ -108,11 +108,11 @@ namespace BetterLyrics.WinUI3
 
             var hwnd = WindowNative.GetWindowHandle(window);
 
-            if (IsDockMode || IsDesktopMode)
+            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode || LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
             {
                 if (_hideWindowWhenNotPlaying && !_mediaSessionsService.IsPlaying)
                 {
-                    if (IsDockMode)
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, 0, _dockPlacement);
                     }
@@ -120,7 +120,7 @@ namespace BetterLyrics.WinUI3
                 }
                 else
                 {
-                    if (IsDockMode)
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);
                     }
@@ -209,7 +209,7 @@ namespace BetterLyrics.WinUI3
                 (uint)(hotKeyIndex + (int)VirtualKey.A),
                 () =>
                 {
-                    if (IsDesktopMode)
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
                     {
                         ToggleLockWindowCommand.Execute(null);
                     }
@@ -230,7 +230,7 @@ namespace BetterLyrics.WinUI3
                 {
                     _dispatcherQueueTimer.Debounce(() =>
                     {
-                        if ((IsDockMode || IsDesktopMode) && _ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
+                        if ((LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode || LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode) && _ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
                         {
                             presenter.IsAlwaysOnTop = true;
                         }
@@ -250,7 +250,7 @@ namespace BetterLyrics.WinUI3
 
         public void UpdateAccentColor(nint hwnd)
         {
-            WindowPixelSampleMode mode = IsDesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
+            WindowPixelSampleMode mode = LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
             ActivatedWindowAccentColor = ColorHelper.GetAccentColor(hwnd, _settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName, mode).ToColor();
         }
 
@@ -302,8 +302,8 @@ namespace BetterLyrics.WinUI3
 
             StopWatchWindowColorChange();
 
-            IsDesktopMode = !IsDesktopMode;
-            if (IsDesktopMode)
+            LiveStates.ToggleLyricsWindowMode(LyricsWindowMode.DesktopMode);
+            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
             {
                 DesktopModeHelper.Enable(window);
                 StartWatchWindowColorChange();
@@ -322,8 +322,8 @@ namespace BetterLyrics.WinUI3
 
             StopWatchWindowColorChange();
 
-            IsDockMode = !IsDockMode;
-            if (IsDockMode)
+            LiveStates.ToggleLyricsWindowMode(LyricsWindowMode.DockMode);
+            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
             {
                 window.Restore();
                 DockModeHelper.Enable(window, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);

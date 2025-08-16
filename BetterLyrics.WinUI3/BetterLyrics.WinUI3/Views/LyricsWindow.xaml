@@ -98,14 +98,14 @@
                                     x:Name="DockFlyoutItem"
                                     x:Uid="HostWindowDockFlyoutItem"
                                     Click="DockFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE66A;}"
-                                    IsChecked="{x:Bind ViewModel.IsDockMode, Mode=OneWay}" />
+                                    Icon="{ui:FontIcon Glyph=&#xE66A;}">
+                                </ToggleMenuFlyoutItem>
                                 <ToggleMenuFlyoutItem
                                     x:Name="DesktopFlyoutItem"
                                     x:Uid="HostWindowDesktopFlyoutItem"
                                     Click="DesktopFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE66C;}"
-                                    IsChecked="{x:Bind ViewModel.IsDesktopMode, Mode=OneWay}" />
+                                    Icon="{ui:FontIcon Glyph=&#xE66C;}">
+                                </ToggleMenuFlyoutItem>
                                 <ToggleMenuFlyoutItem
                                     x:Name="MiniFlyoutItem"
                                     x:Uid="BaseWindowMiniFlyoutItem"

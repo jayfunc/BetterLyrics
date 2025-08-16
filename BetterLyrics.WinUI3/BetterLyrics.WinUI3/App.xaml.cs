@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -102,6 +103,7 @@ namespace BetterLyrics.WinUI3
                         loggingBuilder.AddSerilog();
                     })
                     // Services
+                    .AddSingleton<ILiveStatesService, LiveStatesService>()
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IMediaSessionsService, MediaSessionsService>()
                     .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()

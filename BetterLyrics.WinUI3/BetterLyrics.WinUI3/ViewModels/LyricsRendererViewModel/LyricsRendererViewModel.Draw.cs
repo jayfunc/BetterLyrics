@@ -33,18 +33,23 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             using var combined = new CanvasCommandList(control);
             using var combinedDs = combined.CreateDrawingSession();
 
-            if (_isDockMode)
+            switch (_liveStatesService.LiveStates.CurrentLyricsWindowMode)
             {
-                FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f, _immersiveBgOpacityTransition.Value * _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
-            }
-            else if (_isDesktopMode)
-            {
-                FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f, _immersiveBgOpacityTransition.Value * _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
-            }
-            else
-            {
-                FillBackground(control, combinedDs, _albumArtAccentColorTransition.Value, 0f, _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100.0);
-                DrawAlbumArtBackground(control, combinedDs);
+                case LyricsWindowMode.DockMode:
+                    FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f,
+                        _immersiveBgOpacityTransition.Value * _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
+                    break;
+                case LyricsWindowMode.DesktopMode:
+                    FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f,
+                        _immersiveBgOpacityTransition.Value * _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
+                    break;
+                case LyricsWindowMode.StandardMode:
+                case LyricsWindowMode.PictureInPictureMode:
+                    FillBackground(control, combinedDs, _albumArtAccentColorTransition.Value, 0f, _settingsService.AppSettings.LyricsBackgroundSettings.PureColorOverlayOpacity / 100.0);
+                    DrawAlbumArtBackground(control, combinedDs);
+                    break;
+                default:
+                    break;
             }
 
             combinedDs.DrawImage(blurredLyrics);
@@ -237,7 +242,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 // Mock gradient blurred lyrics layer
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
                 // Current line will not be blurred
-                using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, _lyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
+                using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, 
+                    _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
                 using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
                 combinedDs.DrawImage(backgroundEffect);
 
@@ -247,26 +253,33 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     GetLinePlayingProgress(i, out int charStartIndex, out int charLength, out double charProgress);
 
                     using var charMask = CanvasHelper.CreateCharMask(control, line, charStartIndex, charLength, charProgress);
-                    using var lineStartToCharMask = CanvasHelper.CreateLineStartToCharMask(control, line, charStartIndex, charLength, charProgress, _lyricsEffectSettings.IsLyricsLineFadeEnabled);
+                    using var lineStartToCharMask = CanvasHelper.CreateLineStartToCharMask(control, line, charStartIndex, charLength, charProgress,
+                        _liveStatesService.LiveStates.CurrentLyricsEffectSettings.IsLyricsLineFadeEnabled);
                     using var lineMask = CanvasHelper.CreateLineMask(control, line);
 
-                    using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, _lyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
+                    using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, 
+                        _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
 
                     using var effectLayer = new CanvasCommandList(control);
                     using var effectLayerDs = effectLayer.CreateDrawingSession();
-                    if (_lyricsEffectSettings.IsLyricsShadowEnabled)
+                    if (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.IsLyricsShadowEnabled)
                     {
-                        var shadowEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask, _lyricsEffectSettings.LyricsShadowScope);
-                        using var foregroundShadowEffect = CanvasHelper.CreateForegroundShadowEffect(foregroundFontEffect, shadowEffectMask, _albumArtAccentColorTransition.Value, _lyricsEffectSettings.LyricsShadowAmount);
+                        var shadowEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask, 
+                            _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsShadowScope);
+                        using var foregroundShadowEffect = CanvasHelper.CreateForegroundShadowEffect(foregroundFontEffect, shadowEffectMask, 
+                            _albumArtAccentColorTransition.Value, _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsShadowAmount);
                         effectLayerDs.DrawImage(foregroundShadowEffect);
                     }
-                    if (_lyricsEffectSettings.IsLyricsGlowEffectEnabled)
+                    if (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.IsLyricsGlowEffectEnabled)
                     {
-                        var blurEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask, _lyricsEffectSettings.LyricsGlowEffectScope);
-                        using var foregroundBlurEffect = CanvasHelper.CreateForegroundBlurEffect(foregroundFontEffect, blurEffectMask, _lyricsEffectSettings.LyricsGlowEffectAmount);
+                        var blurEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
+                            _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsGlowEffectScope);
+                        using var foregroundBlurEffect = CanvasHelper.CreateForegroundBlurEffect(foregroundFontEffect, blurEffectMask,
+                            _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsGlowEffectAmount);
                         effectLayerDs.DrawImage(foregroundBlurEffect);
                     }
-                    var highlightEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask, _lyricsEffectSettings.LyricsHighlightScope);
+                    var highlightEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
+                        _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsHighlightScope);
                     using var foregroundHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, highlightEffectMask);
                     effectLayerDs.DrawImage(foregroundHighlightEffect);
 
@@ -278,7 +291,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                     if (i == _playingLineIndex)
                     {
-                        if (_lyricsEffectSettings.IsLyricsFloatAnimationEnabled)
+                        if (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.IsLyricsFloatAnimationEnabled)
                         {
                             ds.DrawImage(new DisplacementMapEffect
                             {
@@ -286,7 +299,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                                 Displacement = lineStartToCharMask,
                                 XChannelSelect = EffectChannelSelect.Red,
                                 YChannelSelect = EffectChannelSelect.Alpha,
-                                Amount = _lyricsEffectSettings.LyricsFloatAmount,
+                                Amount = _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsFloatAmount,
                             });
                         }
                         else

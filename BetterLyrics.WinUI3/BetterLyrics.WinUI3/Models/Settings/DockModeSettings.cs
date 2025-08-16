@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
-    public partial class DockModeSettings : ObservableRecipient
+    public partial class DockModeSettings : BaseModeSettings
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DockPlacement DockPlacement { get; set; } = DockPlacement.Top;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int DockWindowHeight { get; set; } = 64;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string DockMonitorDeviceName { get; set; } = MonitorHelper.GetPrimaryMonitorDeviceName();
     
-        public DockModeSettings() { }
+        public DockModeSettings()
+        {
+            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
+        }
     }
 }

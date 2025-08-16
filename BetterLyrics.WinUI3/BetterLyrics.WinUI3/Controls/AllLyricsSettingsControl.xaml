@@ -21,16 +21,20 @@
             <controls:Case Value="Dock">
                 <uc:LyricsSettingsControl LyricsEffectSettings="{x:Bind ViewModel.AppSettings.DockLyricsEffectSettings, Mode=OneWay}" LyricsStyleSettings="{x:Bind ViewModel.AppSettings.DockLyricsStyleSettings, Mode=OneWay}" />
             </controls:Case>
+            <controls:Case Value="PictureInPicture">
+                <uc:LyricsSettingsControl LyricsEffectSettings="{x:Bind ViewModel.AppSettings.PictureInPictureLyricsEffectSettings, Mode=OneWay}" LyricsStyleSettings="{x:Bind ViewModel.AppSettings.PictureInPictureLyricsStyleSettings, Mode=OneWay}" />
+            </controls:Case>
         </controls:SwitchPresenter>
         <controls:Segmented
             x:Name="LyricsSettingsSegmentedControl"
             Margin="36,36,36,0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
-            SelectedIndex="0">
+            SelectedIndex="{x:Bind ViewModel.SelectedTabIndex, Mode=OneWay}">
             <controls:SegmentedItem x:Uid="AllLyricsSettingsControlStandard" Tag="Standard" />
-            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlDesktop" Tag="Desktop" />
             <controls:SegmentedItem x:Uid="AllLyricsSettingsControlDock" Tag="Dock" />
+            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlDesktop" Tag="Desktop" />
+            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlPictureInPicture" Tag="PictureInPicture" />
         </controls:Segmented>
     </Grid>
 </UserControl>
