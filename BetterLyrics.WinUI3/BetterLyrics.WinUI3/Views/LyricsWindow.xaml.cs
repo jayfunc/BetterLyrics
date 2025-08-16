@@ -153,6 +153,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void MiniFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
+            ViewModel.TogglePictureInPictureModeCommand.Execute(null);
             if (MiniFlyoutItem.IsChecked)
             {
                 AppWindow.SetPresenter(AppWindowPresenterKind.CompactOverlay);

@@ -48,11 +48,6 @@ namespace BetterLyrics.WinUI3.Views
             e.Handled = true;
         }
 
-        private void DisplayTypeSwitchButton_Click(object sender, RoutedEventArgs e)
-        {
-            DisplayTypeSwitchFlyout.ShowAt(BottomRightCommandStackPanel);
-        }
-
         private void PlaybackSettingsShortcutButton_Click(object sender, RoutedEventArgs e)
         {
             PlaybackSettingsFlyout.Content = new PlaybackSettingsControl

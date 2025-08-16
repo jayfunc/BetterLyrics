@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 namespace BetterLyrics.WinUI3.Services.LiveStatesService
 {
     public class LiveStatesService : BaseViewModel, ILiveStatesService,
-        IRecipient<PropertyChangedMessage<LyricsWindowMode>>
+        IRecipient<PropertyChangedMessage<LyricsWindowMode>>,
+        IRecipient<PropertyChangedMessage<LyricsDisplayType>>
     {
         private readonly ISettingsService _settingsService;
 
@@ -57,6 +58,50 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                             break;
                         default:
                             break;
+                    }
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
+        {
+            if (message.Sender is StandardModeSettings)
+            {
+                if (message.PropertyName == nameof(StandardModeSettings.LyricsDisplayType))
+                {
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    {
+                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
+                    }
+                }
+            }
+            else if (message.Sender is DockModeSettings)
+            {
+                if (message.PropertyName == nameof(DockModeSettings.LyricsDisplayType))
+                {
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
+                    {
+                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
+                    }
+                }
+            }
+            else if (message.Sender is DesktopModeSettings)
+            {
+                if (message.PropertyName == nameof(DesktopModeSettings.LyricsDisplayType))
+                {
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
+                    {
+                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
+                    }
+                }
+            }
+            else if (message.Sender is PictureInPictureModeSettings)
+            {
+                if (message.PropertyName == nameof(PictureInPictureModeSettings.LyricsDisplayType))
+                {
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.PictureInPictureMode)
+                    {
+                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
                     }
                 }
             }

@@ -256,34 +256,6 @@
                             </Button.ContextFlyout>
                         </Button>
 
-                        <!--  Display type  -->
-                        <Button
-                            x:Name="DisplayTypeSwitchButton"
-                            x:Uid="MainPageDisplayTypeSwitcher"
-                            Click="DisplayTypeSwitchButton_Click"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  Glyph=&#xF246;}"
-                            Style="{StaticResource GhostButtonStyle}">
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Name="PresentationTypeToolTip" x:Uid="LyricsPageDisplayTypeButtonToolTip" />
-                            </ToolTipService.ToolTip>
-                            <Button.ContextFlyout>
-                                <Flyout x:Name="DisplayTypeSwitchFlyout" ShouldConstrainToRootBounds="false">
-                                    <Flyout.FlyoutPresenterStyle>
-                                        <Style TargetType="FlyoutPresenter">
-                                            <Setter Property="Padding" Value="12,2,12,8" />
-                                            <Setter Property="CornerRadius" Value="8" />
-                                        </Style>
-                                    </Flyout.FlyoutPresenterStyle>
-                                    <RadioButtons MaxColumns="1" SelectedIndex="{x:Bind ViewModel.LiveStates.CurrentLyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <RadioButton x:Uid="MainPageAlbumArtOnly" />
-                                        <RadioButton x:Uid="MainPageLyriscOnly" />
-                                        <RadioButton x:Uid="MainPageSplitView" />
-                                    </RadioButtons>
-                                </Flyout>
-                            </Button.ContextFlyout>
-                        </Button>
-
                         <!--  Settings  -->
                         <Button
                             x:Name="SettingsButton"
