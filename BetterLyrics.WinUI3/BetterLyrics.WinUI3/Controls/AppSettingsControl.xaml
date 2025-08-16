@@ -74,9 +74,29 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <!--  Standard mode  -->
+
+                    <TextBlock x:Uid="SettingsPageAppStandard" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.StandardModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
+                            <ComboBoxItem x:Uid="MainPageLyriscOnly" />
+                            <ComboBoxItem x:Uid="MainPageSplitView" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
                     <!--  Desktop mode  -->
 
                     <TextBlock x:Uid="SettingsPageAppDesktop" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DesktopModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
+                            <ComboBoxItem x:Uid="MainPageLyriscOnly" />
+                            <ComboBoxItem x:Uid="MainPageSplitView" />
+                        </ComboBox>
+                    </controls:SettingsCard>
 
                     <controls:SettingsCard x:Uid="SettingsPageAutoLock" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE755;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.DesktopModeSettings.AutoLockOnDesktopMode, Mode=TwoWay}" />
@@ -123,6 +143,14 @@
 
                     <TextBlock x:Uid="SettingsPageAppDock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DockModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
+                            <ComboBoxItem x:Uid="MainPageLyriscOnly" />
+                            <ComboBoxItem x:Uid="MainPageSplitView" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
                     <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.AppSettings.DockModeSettings.DockMonitorDeviceName, Mode=TwoWay}" />
@@ -149,6 +177,18 @@
                         <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DockModeSettings.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
                             <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <!--  Picture in picture mode  -->
+
+                    <TextBlock x:Uid="SettingsPageAppPictureInPicture" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.PictureInPictureModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
+                            <ComboBoxItem x:Uid="MainPageLyriscOnly" />
+                            <ComboBoxItem x:Uid="MainPageSplitView" />
                         </ComboBox>
                     </controls:SettingsCard>
 

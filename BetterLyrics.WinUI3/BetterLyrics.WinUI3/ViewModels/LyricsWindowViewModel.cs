@@ -338,6 +338,12 @@ namespace BetterLyrics.WinUI3
         }
 
         [RelayCommand]
+        private void TogglePictureInPictureMode()
+        {
+            LiveStates.ToggleLyricsWindowMode(LyricsWindowMode.PictureInPictureMode);
+        }
+
+        [RelayCommand]
         private void OnImmersiveToggleButtonEnabledChanged()
         {
             _settingsService.AppSettings.GeneralSettings.IsImmersiveMode = IsImmersiveMode;
