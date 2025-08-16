@@ -304,8 +304,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     ds.DrawImage(combined);
                 }
 
-                //ds.DrawText((line.HighlightOpacityTransition.Value >= 0.01).ToString(), line.Position, Colors.Red);
-
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
             }
