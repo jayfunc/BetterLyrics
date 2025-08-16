@@ -129,6 +129,9 @@
   <data name="AllLyricsSettingsControlDock.Content" xml:space="preserve">
     <value>Dock mode</value>
   </data>
+  <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
+    <value>Picture-in-picture mode</value>
+  </data>
   <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
     <value>Standard</value>
   </data>
