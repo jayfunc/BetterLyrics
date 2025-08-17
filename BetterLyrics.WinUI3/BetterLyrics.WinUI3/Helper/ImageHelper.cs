@@ -177,7 +177,7 @@ namespace BetterLyrics.WinUI3.Helper
             square.Mutate(ctx => ctx.DrawImage(image, new Point(offsetX, offsetY), 1f));
 
             using var ms = new MemoryStream();
-            square.Save(ms, new JpegEncoder());
+            square.Save(ms, new PngEncoder());
             return ms.ToArray();
         }
 
