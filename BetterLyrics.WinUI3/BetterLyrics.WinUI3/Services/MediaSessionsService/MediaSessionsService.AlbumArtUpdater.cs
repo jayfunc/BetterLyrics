@@ -15,6 +15,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
     public partial class MediaSessionsService : IMediaSessionsService
     {
+        private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
+
         public event EventHandler<AlbumArtChangedEventArgs>? AlbumArtChanged;
 
         private void UpdateAlbumArt()
@@ -57,10 +59,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 var albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
                 var albumArtDarkAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, true).FirstOrDefault();
 
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                {
-                    AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, albumArtLightAccentColor, albumArtDarkAccentColor));
-                });
+                AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, albumArtLightAccentColor, albumArtDarkAccentColor));
             });
         }
     }

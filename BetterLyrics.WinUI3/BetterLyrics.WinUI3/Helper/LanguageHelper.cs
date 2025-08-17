@@ -58,6 +58,11 @@ namespace BetterLyrics.WinUI3.Services
             _identifier = _factory.Load(PathHelper.LanguageProfilePath);
         }
 
+        private static string SimplifiedChineseOrTraditionalChinese(string text)
+        {
+            return text == ChineseConverter.ConvertToSimplifiedChinese(text) ? "zh-Hans" : "zh-Hant";
+        }
+
         public static string? DetectLanguageCode(string? text)
         {
             if (text == null) return null;
@@ -69,7 +74,7 @@ namespace BetterLyrics.WinUI3.Services
                 "simple" => "en",
                 "zh_classical" => "zh-Hant",
                 "zh_yue" => "zh-Hant",
-                "zh" => text == ChineseConverter.ConvertToSimplifiedChinese(text) ? "zh-Hans" : "zh-Hant",
+                "zh" => "zh-Hans",
                 _ => code
             };
             return code;
