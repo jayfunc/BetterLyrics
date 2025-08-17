@@ -32,34 +32,41 @@
                 <MenuFlyoutItem
                     x:Uid="SystemTrayLyrics"
                     Command="{x:Bind ViewModel.OpenLyricsCommand}"
-                    Icon="{ui:FontIcon Glyph=&#xE90B;}" />
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE90B;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayMusicGallery"
                     Command="{x:Bind ViewModel.OpenMusicGalleryCommand}"
-                    Icon="{ui:FontIcon Glyph=&#xEA69;}" />
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xEA69;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTraySettings"
                     Command="{x:Bind ViewModel.OpenSettingsCommand}"
-                    Icon="{ui:FontIcon Glyph=&#xE713;}" />
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE713;}" />
                 <MenuFlyoutSeparator />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayResetWindowPosition"
                     Command="{x:Bind ViewModel.ResetWindowPositionCommand}"
-                    Icon="{ui:FontIcon Glyph=&#xE923;}" />
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE923;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayUnlock"
                     Command="{x:Bind ViewModel.UnlockWindowCommand}"
-                    Icon="{ui:FontIcon Glyph=&#xE785;}"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE785;}"
                     Visibility="{x:Bind ViewModel.IsLyricsWindowLocked, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                 <MenuFlyoutSeparator />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayRestart"
                     Command="{x:Bind ViewModel.RestartAppCommand}"
-                    Icon="{ui:FontIcon Glyph=&#xE777;}" />
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE777;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayExit"
                     Command="{x:Bind ViewModel.ExitAppCommand}"
-                    Icon="{ui:FontIcon Glyph=&#xE7E8;}" />
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE7E8;}" />
             </MenuFlyout>
         </tb:TaskbarIcon.ContextFlyout>
     </tb:TaskbarIcon>

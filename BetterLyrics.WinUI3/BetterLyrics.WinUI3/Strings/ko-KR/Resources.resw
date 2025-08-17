@@ -178,7 +178,7 @@
     <value>도크 모드</value>
   </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>잠금 잠금을 해제하려면 시스템 트레이로 이동하여 잠금을 해제하거나 누릅니다.</value>
+    <value>잠금</value>
   </data>
   <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
     <value>더</value>
@@ -871,6 +871,12 @@
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>로컬 미디어 라이브러리</value>
   </data>
+  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
+    <value>실시간으로 파일 변경을 듣습니다</value>
+  </data>
+  <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+    <value>다음 트랙 바로 가기 키</value>
+  </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>없음</value>
   </data>
@@ -895,8 +901,17 @@
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>재생 소스가 캡처되지 않았습니다</value>
   </data>
+  <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
+    <value>놀다</value>
+  </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com"에서 "Fut to the Feeling"을 재생하십시오.</value>
+  </data>
+  <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+    <value>바로 가기를 재생하고 일시 중지합니다</value>
+  </data>
+  <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+    <value>이전 트랙의 바로 가기 키</value>
   </data>
   <data name="SettingsPageQQGroup.Header" xml:space="preserve">
     <value>QQ 피드백 및 채팅 그룹</value>
@@ -981,6 +996,9 @@
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
     <value>제목 바 크기</value>
+  </data>
+  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
+    <value>바로 가기 키를 자르고 잘라냅니다</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>가사 번역</value>

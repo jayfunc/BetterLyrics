@@ -72,7 +72,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                AppSettings.LocalMediaFolders.Add(new LocalMediaFolder(path, true));
+                AppSettings.LocalMediaFolders.Add(new LocalMediaFolder(path));
             }
         }
 

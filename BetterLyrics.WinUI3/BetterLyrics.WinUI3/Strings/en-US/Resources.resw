@@ -178,7 +178,7 @@
     <value>Dock mode</value>
   </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>To unlock after locking, go to the system tray to unlock or press</value>
+    <value>Lock</value>
   </data>
   <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
     <value>More</value>
@@ -871,6 +871,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>Local media library</value>
   </data>
+  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
+    <value>Listen to file changes in real time</value>
+  </data>
+  <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+    <value>Next track shortcut keys</value>
+  </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>None</value>
   </data>
@@ -895,8 +901,17 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>No playback source captured</value>
   </data>
+  <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Play "Cut To The Feeling" on "soundcloud.com"</value>
+  </data>
+  <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+    <value>Play and Pause Shortcuts</value>
+  </data>
+  <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+    <value>Shortcut keys for the previous track</value>
   </data>
   <data name="SettingsPageQQGroup.Header" xml:space="preserve">
     <value>QQ feedback &amp; chat group</value>
@@ -981,6 +996,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
     <value>Title bar size</value>
+  </data>
+  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
+    <value>Switch in and cut out shortcut keys</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>Lyrics translation</value>

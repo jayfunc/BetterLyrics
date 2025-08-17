@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using BetterLyrics.WinUI3.Enums;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,24 +14,70 @@ namespace BetterLyrics.WinUI3.Helper
     public class GlobalHotKeyHelper
     {
         private static Dictionary<int, Action> _hotKeyActions = [];
-        private static int _nextId = 0;
 
-        public static void RegisterHotKey(Window window, User32.HotKeyModifiers modifiers, uint key, Action action)
+        /// <summary>
+        /// Register a global hotkey for a specific window type
+        /// </summary>
+        /// <typeparam name="T">Target window type</typeparam>
+        /// <param name="id"></param>
+        /// <param name="keys"></param>
+        /// <param name="action"></param>
+        public static void RegisterHotKey<T>(ShortcutID id, List<string> keys, Action action)
         {
+            if (keys.Count == 0) return;
+
+            var window = WindowHelper.GetWindowByWindowType<T>();
+            if (window == null) return;
+
             HWND hwnd = WindowNative.GetWindowHandle(window);
-            int id = _nextId++;
-            User32.RegisterHotKey(hwnd, id, modifiers, key);
-            _hotKeyActions[id] = action;
+            User32.HotKeyModifiers modifiers = User32.HotKeyModifiers.MOD_NONE;
+            VirtualKey key = VirtualKey.None;
+            foreach (var item in keys)
+            {
+                if (item == "Ctrl")
+                {
+                    modifiers |= User32.HotKeyModifiers.MOD_CONTROL;
+                }
+                else if (item == "Shift")
+                {
+                    modifiers |= User32.HotKeyModifiers.MOD_SHIFT;
+                }
+                else if (item == "Alt")
+                {
+                    modifiers |= User32.HotKeyModifiers.MOD_ALT;
+                }
+                else if (item == "Win")
+                {
+                    modifiers |= User32.HotKeyModifiers.MOD_WIN;
+                }
+                else
+                {
+                    key = (VirtualKey)Enum.Parse(typeof(VirtualKey), item, true);
+                }
+            }
+            User32.RegisterHotKey(hwnd, (int)id, modifiers, (uint)key);
+            _hotKeyActions[(int)id] = action;
         }
 
-        public static void UnregisterAllHotKeys(Window window)
+        public static void UnregisterHotKey<T>(ShortcutID id)
         {
+            var window = WindowHelper.GetWindowByWindowType<T>();
+            if (window == null) return;
+
             HWND hwnd = WindowNative.GetWindowHandle(window);
-            foreach (var id in _hotKeyActions.Keys.ToList())
-            {
-                User32.UnregisterHotKey(hwnd, id);
-                _hotKeyActions.Remove(id);
-            }
+            User32.UnregisterHotKey(hwnd, (int)id);
+            _hotKeyActions.Remove((int)id);
+        }
+
+        public static void UpdateHotKey<T>(ShortcutID id, List<string> keys, Action action)
+        {
+            UnregisterHotKey<T>(id);
+            RegisterHotKey<T>(id, keys, action);
+        }
+
+        public static bool TryInvokeAction(ShortcutID id)
+        {
+            return TryInvokeAction((int)id);
         }
 
         public static bool TryInvokeAction(int id)

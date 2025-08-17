@@ -30,6 +30,7 @@
 		<None Remove="Controls\LyricsSettingsControl.xaml" />
 		<None Remove="Controls\MediaSettingsControl.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
+		<None Remove="Controls\ShortcutTextBox.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
@@ -58,7 +59,6 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
-		<PackageReference Include="DevWinUI.Controls" Version="8.9.1" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
@@ -185,6 +185,11 @@
 	  <Content Update="Assets\Wiki82.profile.xml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\ShortcutTextBox.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\ExtendedSlider.xaml">

@@ -18,6 +18,8 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using System.Collections.Generic;
 using Vanara.PInvoke;
 using Windows.System;
 using Windows.UI;
@@ -29,6 +31,7 @@ namespace BetterLyrics.WinUI3
     public partial class LyricsWindowViewModel
         : BaseWindowViewModel,
             IRecipient<PropertyChangedMessage<int>>,
+            IRecipient<PropertyChangedMessage<List<string>>>,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<string>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>,
@@ -52,6 +55,7 @@ namespace BetterLyrics.WinUI3
             _mediaSessionsService = mediaSessionsService;
             _liveStatesService = liveStatesService;
 
+            AppSettings = _settingsService.AppSettings;
             LiveStates = _liveStatesService.LiveStates;
 
             _dockMonitorDeviceName = _settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName;
@@ -69,6 +73,9 @@ namespace BetterLyrics.WinUI3
         {
             UpdateDockOrDesktopWindow();
         }
+
+        [ObservableProperty]
+        public partial AppSettings AppSettings { get; set; }
 
         [ObservableProperty]
         public partial LiveStates LiveStates { get; set; }
@@ -98,8 +105,18 @@ namespace BetterLyrics.WinUI3
         [NotifyPropertyChangedRecipients]
         public partial bool IsMouseWithinWindow { get; set; } = false;
 
-        [ObservableProperty]
-        public partial string LockHotKey { get; set; } = "";
+        [ObservableProperty] public partial Visibility AOTFlyoutItemVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility FullScreenFlyoutItemVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility LockButtonVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility DesktopFlyoutItemVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility PIPFlyoutItemVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility DockFlyoutItemVisibility { get; set; } = Visibility.Visible;
+
+        [ObservableProperty] public partial bool IsAOTFlyoutItemChecked { get; set; } = false;
+        [ObservableProperty] public partial bool IsFullScreenFlyoutItemChecked { get; set; } = false;
+        [ObservableProperty] public partial bool IsDesktopFlyoutItemChecked { get; set; } = false;
+        [ObservableProperty] public partial bool IsPIPFlyoutItemChecked { get; set; } = false;
+        [ObservableProperty] public partial bool IsDockFlyoutItemChecked { get; set; } = false;
 
         private void UpdateDockOrDesktopWindow()
         {
@@ -188,34 +205,129 @@ namespace BetterLyrics.WinUI3
                     UpdateDockOrDesktopWindow();
                 }
             }
-            else if (message.Sender is DesktopModeSettings)
-            {
-                if (message.PropertyName == nameof(DesktopModeSettings.LockHotKeyIndex))
-                {
-                    UpdateLockHotKey(message.NewValue);
-                }
-            }
         }
 
-        private void UpdateLockHotKey(int hotKeyIndex)
+        public void InitShortcuts()
         {
-            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-            if (window == null) return;
+            UpdateDesktopLockShortcut();
+            UpdateDesktopToggleShortcut();
+            UpdateDockToggleShortcut();
+            UpdatePictureInPictureToggleShortcut();
+        }
 
-            GlobalHotKeyHelper.UnregisterAllHotKeys(window);
-            GlobalHotKeyHelper.RegisterHotKey(
-                window,
-                User32.HotKeyModifiers.MOD_CONTROL | User32.HotKeyModifiers.MOD_ALT,
-                (uint)(hotKeyIndex + (int)VirtualKey.A),
+        private void UpdateDesktopLockShortcut()
+        {
+            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.DesktopLock);
+            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.DesktopLock,
+                _settingsService.AppSettings.DesktopModeSettings.LockShortcut,
                 () =>
                 {
                     if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
                     {
-                        ToggleLockWindowCommand.Execute(null);
+                        ToggleLockWindow();
                     }
                 }
             );
-            LockHotKey = ((VirtualKey)(hotKeyIndex + (int)VirtualKey.A)).ToString();
+        }
+
+        private void UpdateDesktopToggleShortcut()
+        {
+            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.DesktopToggle);
+            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.DesktopToggle,
+                _settingsService.AppSettings.DesktopModeSettings.ToggleShortcut,
+                () =>
+                {
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode ||
+                        LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    {
+                        ToggleDesktopMode();
+                    }
+                }
+            );
+        }
+
+        private void UpdateDockToggleShortcut()
+        {
+            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.DockToggle);
+            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.DockToggle,
+                _settingsService.AppSettings.DockModeSettings.ToggleShortcut,
+                () =>
+                {
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode ||
+                        LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    {
+                        ToggleDockMode();
+                    }
+                }
+            );
+        }
+
+        private void UpdatePictureInPictureToggleShortcut()
+        {
+            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.PictureInPictureToggle);
+            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.PictureInPictureToggle,
+                _settingsService.AppSettings.PictureInPictureModeSettings.ToggleShortcut,
+                () =>
+                {
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.PictureInPictureMode ||
+                        LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    {
+                        TogglePictureInPictureMode();
+                    }
+                }
+            );
+        }
+
+        private void SetFullscreenTitleBarControlsStatus()
+        {
+            AOTFlyoutItemVisibility = LockButtonVisibility = DesktopFlyoutItemVisibility = PIPFlyoutItemVisibility = DockFlyoutItemVisibility = Visibility.Collapsed;
+            IsFullScreenFlyoutItemChecked = true;
+            IsImmersiveMode = true;
+        }
+
+        private void SetPIPModeTitleBarControlsStatus()
+        {
+            AOTFlyoutItemVisibility = DesktopFlyoutItemVisibility = FullScreenFlyoutItemVisibility = DockFlyoutItemVisibility = LockButtonVisibility = Visibility.Collapsed;
+            IsImmersiveMode = true;
+            IsPIPFlyoutItemChecked = true;
+        }
+
+        private void SetDockModeTitleBarControlsStatus()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+            var overlappedPresenter = (OverlappedPresenter)window.AppWindow.Presenter;
+
+            overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = false;
+            AOTFlyoutItemVisibility = DesktopFlyoutItemVisibility = LockButtonVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
+            IsImmersiveMode = true;
+            IsDockFlyoutItemChecked = true;
+        }
+
+        private void SetDesktopModeTitleBarControlsStatus()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+            var overlappedPresenter = (OverlappedPresenter)window.AppWindow.Presenter;
+
+            overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = false;
+            DockFlyoutItemVisibility = AOTFlyoutItemVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
+            LockButtonVisibility = Visibility.Visible;
+            IsDesktopFlyoutItemChecked = true;
+        }
+
+        public void SetStandardModeTitleBarControlsStatus()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+            var overlappedPresenter = (OverlappedPresenter)window.AppWindow.Presenter;
+
+            overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = true;
+            AOTFlyoutItemVisibility = DesktopFlyoutItemVisibility = DockFlyoutItemVisibility = PIPFlyoutItemVisibility = FullScreenFlyoutItemVisibility = Visibility.Visible;
+            LockButtonVisibility = Visibility.Collapsed;
+            IsFullScreenFlyoutItemChecked = IsDesktopFlyoutItemChecked = IsDockFlyoutItemChecked = IsPIPFlyoutItemChecked = false;
+            IsAOTFlyoutItemChecked = overlappedPresenter.IsAlwaysOnTop;
+            IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
         }
 
         public void StartWatchWindowColorChange()
@@ -267,13 +379,7 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        public void InitLockHotKey()
-        {
-            UpdateLockHotKey(_settingsService.AppSettings.DesktopModeSettings.LockHotKeyIndex);
-        }
-
-        [RelayCommand]
-        private void ToggleLockWindow()
+        public void ToggleLockWindow()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
@@ -294,8 +400,7 @@ namespace BetterLyrics.WinUI3
             UpdateDockOrDesktopWindow();
         }
 
-        [RelayCommand]
-        private void ToggleDesktopMode()
+        public void ToggleDesktopMode()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
@@ -307,15 +412,24 @@ namespace BetterLyrics.WinUI3
             {
                 DesktopModeHelper.Enable(window);
                 StartWatchWindowColorChange();
+                if (_settingsService.AppSettings.DesktopModeSettings.AutoLockOnDesktopMode)
+                {
+                    ToggleLockWindow();
+                }
+                SetDesktopModeTitleBarControlsStatus();
             }
             else
             {
+                if (IsLyricsWindowLocked)
+                {
+                    ToggleLockWindow();
+                }
                 DesktopModeHelper.Disable(window);
+                SetStandardModeTitleBarControlsStatus();
             }
         }
 
-        [RelayCommand]
-        private void ToggleDockMode()
+        public void ToggleDockMode()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
@@ -328,19 +442,65 @@ namespace BetterLyrics.WinUI3
                 window.Restore();
                 DockModeHelper.Enable(window, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);
                 StartWatchWindowColorChange();
+                SetDockModeTitleBarControlsStatus();
             }
             else
             {
                 DockModeHelper.Disable(window);
+                SetStandardModeTitleBarControlsStatus();
             }
 
             UpdateDockOrDesktopWindow();
         }
 
-        [RelayCommand]
-        private void TogglePictureInPictureMode()
+        public void TogglePictureInPictureMode()
         {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
             LiveStates.ToggleLyricsWindowMode(LyricsWindowMode.PictureInPictureMode);
+            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.PictureInPictureMode)
+            {
+                window.AppWindow.SetPresenter(AppWindowPresenterKind.CompactOverlay);
+                SetPIPModeTitleBarControlsStatus();
+            }
+            else
+            {
+                window.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+                SetStandardModeTitleBarControlsStatus();
+            }
+        }
+
+        public void ToggleAlwaysOnTop()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            if (window.AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.IsAlwaysOnTop = !presenter.IsAlwaysOnTop;
+                IsAOTFlyoutItemChecked = presenter.IsAlwaysOnTop;
+            }
+        }
+
+        public void ToggleFullscreen()
+        {
+            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            switch (window.AppWindow.Presenter.Kind)
+            {
+                case AppWindowPresenterKind.FullScreen:
+                    window.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+                    SetStandardModeTitleBarControlsStatus();
+                    break;
+                case AppWindowPresenterKind.Overlapped:
+                    window.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                    SetFullscreenTitleBarControlsStatus();
+                    break;
+                default:
+                    break;
+            }
         }
 
         [RelayCommand]
@@ -369,6 +529,38 @@ namespace BetterLyrics.WinUI3
                 {
                     _dockMonitorDeviceName = message.NewValue;
                     UpdateDockOrDesktopWindow();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<List<string>> message)
+        {
+            if (message.Sender is DesktopModeSettings)
+            {
+                if (message.PropertyName == nameof(DesktopModeSettings.LockShortcut))
+                {
+                    UpdateDesktopLockShortcut();
+                }
+            }
+            else if (message.Sender is DockModeSettings)
+            {
+                if (message.PropertyName == nameof(DockModeSettings.ToggleShortcut))
+                {
+                    UpdateDockToggleShortcut();
+                }
+            }
+            else if (message.Sender is PictureInPictureModeSettings)
+            {
+                if (message.PropertyName == nameof(PictureInPictureModeSettings.ToggleShortcut))
+                {
+                    UpdatePictureInPictureToggleShortcut();
+                }
+            }
+            else if (message.Sender is DesktopModeSettings)
+            {
+                if (message.PropertyName == nameof(DesktopModeSettings.ToggleShortcut))
+                {
+                    UpdateDesktopToggleShortcut();
                 }
             }
         }

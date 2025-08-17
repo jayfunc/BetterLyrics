@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.ShortcutTextBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <TextBox
+                x:Name="TextBox"
+                IsReadOnly="True"
+                KeyDown="TextBox_KeyDown"
+                Loaded="TextBox_Loaded" />
+            <Button
+                Margin="3,0,0,0"
+                HorizontalAlignment="Right"
+                Click="ClearButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      FontSize=12,
+                                      Glyph=&#xE894;}"
+                Style="{StaticResource GhostButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

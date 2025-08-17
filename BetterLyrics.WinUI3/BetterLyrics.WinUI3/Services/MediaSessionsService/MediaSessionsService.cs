@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -36,6 +37,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
         IRecipient<PropertyChangedMessage<bool>>,
+        IRecipient<PropertyChangedMessage<List<string>>>,
         IRecipient<PropertyChangedMessage<FullyObservableCollection<AlbumArtSearchProviderInfo>>>
     {
         private readonly IAlbumArtSearchService _albumArtSearchService;
@@ -52,8 +54,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private readonly MediaManager _mediaManager = new();
 
-        private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
-        private readonly LatestOnlyTaskRunner _onAnyMediaPropertyChangedRunner = new();
+        private readonly BackgroundTaskRunner _albumArtRefreshRunner = new();
+        private readonly BackgroundTaskRunner _onAnyMediaPropertyChangedRunner = new();
 
         private SongInfo? _cachedSongInfo;
         private byte[]? _SMTCAlbumArtBytes = null;
@@ -75,22 +77,55 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
 
             InitMediaManager();
+            InitPlaybackShortcuts();
+        }
+
+        private void InitPlaybackShortcuts()
+        {
+            UpdatePlayOrPauseSongShortcut();
+            UpdatePreviousSongShortcut();
+            UpdateNextSongShortcut();
+        }
+
+        private void UpdatePlayOrPauseSongShortcut()
+        {
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, () =>
+            {
+                if (_cachedIsPlaying)
+                {
+                    _ = PauseAsync();
+                }
+                else
+                {
+                    _ = PlayAsync();
+                }
+            });
+        }
+
+        private void UpdatePreviousSongShortcut()
+        {
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
+            {
+                _ = PreviousAsync();
+            });
+        }
+
+        private void UpdateNextSongShortcut()
+        {
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
+            {
+                _ = NextAsync();
+            });
         }
 
         private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
         {
-            _ = _albumArtRefreshRunner.RunAsync(async token =>
-            {
-                await UpdateAlbumArtRelated(token);
-            });
+            UpdateAlbumArtRelated();
         }
 
         private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            _ = _albumArtRefreshRunner.RunAsync(async token =>
-            {
-                await UpdateAlbumArtRelated(token);
-            });
+            UpdateAlbumArtRelated();
         }
 
         private void MediaSourceProvidersInfo_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
@@ -98,10 +133,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             switch (e.PropertyName)
             {
                 case nameof(MediaSourceProviderInfo.AlbumArtSearchProvidersInfo):
-                    _ = _albumArtRefreshRunner.RunAsync(async tokne =>
-                    {
-                        await UpdateAlbumArtRelated(tokne);
-                    });
+                    UpdateAlbumArtRelated();
                     break;
                 default:
                     break;
@@ -213,7 +245,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 _cachedSongInfo = null;
 
-                _onAnyMediaPropertyChangedRunner.RunAsync(async token =>
+                _onAnyMediaPropertyChangedRunner.Run(async token =>
                 {
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties.Title, mediaProperties.Artist, mediaProperties.AlbumTitle);
@@ -225,10 +257,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                     _SMTCAlbumArtBytes = null;
 
-                    await _albumArtRefreshRunner.RunAsync(async tokne =>
-                    {
-                        await UpdateAlbumArtRelated(tokne);
-                    });
+                    UpdateAlbumArtRelated();
 
                     if (!token.IsCancellationRequested)
                     {
@@ -237,7 +266,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
                         });
                     }
-                }).ConfigureAwait(false);
+                });
             }
             else
             {
@@ -261,7 +290,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                 _cachedSongInfo.Duration = (int)(_cachedSongInfo.DurationMs / 1000f);
 
-                _onAnyMediaPropertyChangedRunner.RunAsync(async token =>
+                _onAnyMediaPropertyChangedRunner.Run(async token =>
                 {
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties.Title, mediaProperties.Artist, mediaProperties.AlbumTitle);
@@ -284,10 +313,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         _SMTCAlbumArtBytes = null;
                     }
 
-                    await _albumArtRefreshRunner.RunAsync(async tokne =>
-                    {
-                        await UpdateAlbumArtRelated(tokne);
-                    });
+                    UpdateAlbumArtRelated();
 
                     if (!token.IsCancellationRequested)
                     {
@@ -296,7 +322,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
                         });
                     }
-                }).ConfigureAwait(false);
+                });
             }
         }
 
@@ -361,47 +387,51 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             MediaManager_OnAnyPlaybackStateChanged(focusedSession, focusedSession.ControlSession.GetPlaybackInfo());
         }
 
-        private async Task UpdateAlbumArtRelated(CancellationToken token)
+        private void UpdateAlbumArtRelated()
         {
-            if (_cachedSongInfo == null)
+            _albumArtRefreshRunner.Run(async (token) =>
             {
-                _logger.LogWarning("Cached song info is null, cannot update album art.");
-                return;
-            }
+                if (_cachedSongInfo == null)
+                {
+                    _logger.LogWarning("Cached song info is null, cannot update album art.");
+                    return;
+                }
 
-            byte[]? bytes = await _albumArtSearchService.SearchAsync(
-                SongInfo?.SourceAppUserModelId ?? "",
-                _cachedSongInfo.Title,
-                _cachedSongInfo.Artist,
-                _cachedSongInfo?.Album ?? string.Empty,
-                _SMTCAlbumArtBytes
-            );
-            token.ThrowIfCancellationRequested();
-
-            if (bytes == null)
-            {
-                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(500, 500);
+                byte[]? bytes = await _albumArtSearchService.SearchAsync(
+                    SongInfo?.SourceAppUserModelId ?? "",
+                    _cachedSongInfo.Title,
+                    _cachedSongInfo.Artist,
+                    _cachedSongInfo?.Album ?? string.Empty,
+                    _SMTCAlbumArtBytes
+                );
                 token.ThrowIfCancellationRequested();
-            }
 
-            bytes = ImageHelper.MakeSquareWithThemeColor(bytes);
+                if (bytes == null)
+                {
+                    bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(500, 500);
+                    token.ThrowIfCancellationRequested();
+                }
 
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(bytes.AsBuffer());
-            token.ThrowIfCancellationRequested();
+                bytes = ImageHelper.MakeSquareWithThemeColor(bytes);
 
-            var decoder = await BitmapDecoder.CreateAsync(stream);
-            token.ThrowIfCancellationRequested();
+                using var stream = new InMemoryRandomAccessStream();
+                await stream.WriteAsync(bytes.AsBuffer());
+                token.ThrowIfCancellationRequested();
 
-            var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
-            token.ThrowIfCancellationRequested();
+                var decoder = await BitmapDecoder.CreateAsync(stream);
+                token.ThrowIfCancellationRequested();
 
-            var albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
-            var albumArtDarkAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, true).FirstOrDefault();
+                var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
+                token.ThrowIfCancellationRequested();
 
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-            {
-                AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, albumArtLightAccentColor, albumArtDarkAccentColor));
+                var albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
+                var albumArtDarkAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, true).FirstOrDefault();
+
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                {
+                    AlbumArtChangedChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, albumArtLightAccentColor, albumArtDarkAccentColor));
+                });
+
             });
         }
 
@@ -517,7 +547,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             return _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == _cachedSongInfo?.SourceAppUserModelId)?.FirstOrDefault();
         }
 
-        public async void Receive(PropertyChangedMessage<bool> message)
+        public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is MediaSourceProviderInfo)
             {
@@ -530,16 +560,32 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 if (message.PropertyName == nameof(AlbumArtSearchProviderInfo.IsEnabled))
                 {
-                    await _albumArtRefreshRunner.RunAsync(async tokne =>
-                    {
-                        await UpdateAlbumArtRelated(tokne);
-                    });
+                    UpdateAlbumArtRelated();
                 }
             }
         }
 
         public void Receive(PropertyChangedMessage<FullyObservableCollection<AlbumArtSearchProviderInfo>> message)
         {
+        }
+
+        public void Receive(PropertyChangedMessage<List<string>> message)
+        {
+            if (message.Sender is GeneralSettings)
+            {
+                if (message.PropertyName == nameof(GeneralSettings.PlayOrPauseShortcut))
+                {
+                    UpdatePlayOrPauseSongShortcut();
+                }
+                else if (message.PropertyName == nameof(GeneralSettings.PreviousSongShortcut))
+                {
+                    UpdatePreviousSongShortcut();
+                }
+                else if (message.PropertyName == nameof(GeneralSettings.NextSongShortcut))
+                {
+                    UpdateNextSongShortcut();
+                }
+            }
         }
     }
 }

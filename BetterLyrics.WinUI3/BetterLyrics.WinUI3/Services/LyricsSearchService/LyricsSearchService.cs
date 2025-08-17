@@ -3,6 +3,7 @@
 using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Providers.Web.Kugou;
@@ -175,7 +176,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 {
                     try
                     {
-                        foreach (var file in Directory.GetFiles(folder.Path, $"*{format.ToFileExtension()}", SearchOption.AllDirectories))
+                        foreach (var file in DirectoryHelper.GetAllFiles(folder.Path, $"*{format.ToFileExtension()}"))
                         {
                             if (FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                             {
@@ -201,29 +202,20 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
-                    try
+                    foreach (var file in DirectoryHelper.GetAllFiles(folder.Path))
                     {
-                        foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
+                        if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
                         {
                             var track = new Track(file);
                             if ((track.Title == title && track.Artist == artist) || FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist))
                             {
-                                try
+                                var plain = TagLib.File.Create(file).Tag.Lyrics;
+                                if (!plain.IsNullOrEmpty())
                                 {
-                                    var plain = TagLib.File.Create(file).Tag.Lyrics;
-                                    if (!plain.IsNullOrEmpty())
-                                    {
-                                        return plain;
-                                    }
-                                }
-                                catch (Exception)
-                                {
+                                    return plain;
                                 }
                             }
                         }
-                    }
-                    catch (Exception)
-                    {
                     }
                 }
             }

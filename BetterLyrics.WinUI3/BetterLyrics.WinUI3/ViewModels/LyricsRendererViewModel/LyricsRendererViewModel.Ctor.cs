@@ -64,7 +64,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             // Music lib changed, re-fetch lyrics
             _logger.LogInformation("Local lyrics folders changed, refreshing lyrics.");
-            _ = _refreshLyricsRunner.RunAsync(async tokne =>
+            _refreshLyricsRunner.Run(async tokne =>
             {
                 await RefreshLyricsAsync(tokne);
             });
@@ -74,7 +74,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             // Music lib changed, re-fetch lyrics
             _logger.LogInformation("Local lyrics folders changed, refreshing lyrics.");
-            _ = _refreshLyricsRunner.RunAsync(async tokne =>
+            _refreshLyricsRunner.Run(async tokne =>
             {
                 await RefreshLyricsAsync(tokne);
             });
@@ -86,7 +86,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 case nameof(MediaSourceProviderInfo.LyricsSearchProvidersInfo):
                     _logger.LogInformation("MediaSourceProviderInfo.LyricsSearchProvidersInfo changed, refreshing lyrics.");
-                    _ = _refreshLyricsRunner.RunAsync(async token =>
+                    _refreshLyricsRunner.Run(async token =>
                     {
                         await RefreshLyricsAsync(token);
                     });

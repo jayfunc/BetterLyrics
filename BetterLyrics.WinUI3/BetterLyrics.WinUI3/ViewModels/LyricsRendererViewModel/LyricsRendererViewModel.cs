@@ -178,8 +178,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             FontWeight = FontWeights.ExtraBlack,
         };
 
-        private LatestOnlyTaskRunner _refreshLyricsRunner = new();
-        private LatestOnlyTaskRunner _showTranslationsRunner = new();
+        private BackgroundTaskRunner _refreshLyricsRunner = new();
+        private BackgroundTaskRunner _showTranslationsRunner = new();
 
         private LyricsLayoutOrientation _lyricsLayoutOrientation;
 
@@ -322,7 +322,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private void LibWatcherService_MusicLibraryFilesChanged(object? sender, LibChangedEventArgs e)
         {
             _logger.LogInformation("Music library files changed: {ChangeType} {FilePath}, refreshing lyrics...", e.ChangeType, e.FilePath);
-            _ = _refreshLyricsRunner.RunAsync(async token =>
+            _refreshLyricsRunner.Run(async token =>
             {
                 await RefreshLyricsAsync(token);
             });
@@ -374,7 +374,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _songInfoOpacityTransition.StartTransition(1f);
 
                 _logger.LogInformation("Song info changed: Title={Title}, Artist={Artist}, refreshing lyrics...", _songTitle, _songArtist);
-                _ = _refreshLyricsRunner.RunAsync(async token =>
+                _refreshLyricsRunner.Run(async token =>
                 {
                     await RefreshLyricsAsync(token);
                 });
@@ -430,7 +430,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IsTranslating = true;
             if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
             {
-                _ = _refreshLyricsRunner.RunAsync(async token =>
+                _refreshLyricsRunner.Run(async token =>
                 {
                     await SetDisplayedAlongWithTranslationsAsync(token);
                     IsTranslating = false;
