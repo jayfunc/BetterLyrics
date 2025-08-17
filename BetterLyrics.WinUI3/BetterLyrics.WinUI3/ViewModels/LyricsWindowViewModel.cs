@@ -120,6 +120,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateDockOrDesktopWindow()
         {
+
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
@@ -137,7 +138,7 @@ namespace BetterLyrics.WinUI3
                 }
                 else
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
+                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);
                     }

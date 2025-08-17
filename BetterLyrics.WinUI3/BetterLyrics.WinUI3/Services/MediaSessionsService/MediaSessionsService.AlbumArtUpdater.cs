@@ -51,7 +51,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 var decoder = await BitmapDecoder.CreateAsync(stream);
                 token.ThrowIfCancellationRequested();
 
-                var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
+                var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba16, BitmapAlphaMode.Premultiplied);
                 token.ThrowIfCancellationRequested();
 
                 var albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
