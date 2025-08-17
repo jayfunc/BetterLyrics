@@ -10,7 +10,7 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
 {
     public interface ITranslateService
     {
-        Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken? token);
+        Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken token);
 
         int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr);
     }

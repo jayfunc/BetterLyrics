@@ -40,8 +40,8 @@ namespace BetterLyrics.WinUI3.Models
                     PositionOffset = 1000;
                     break;
                 default:
-                    // 设置 100 以防不必要的重复同步
-                    TimelineSyncThreshold = 100;
+                    // 设置 300 以防不必要的重复同步
+                    TimelineSyncThreshold = 300;
                     PositionOffset = 0;
                     break;
             }

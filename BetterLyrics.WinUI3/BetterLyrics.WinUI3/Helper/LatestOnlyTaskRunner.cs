@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class BackgroundTaskRunner
+    public class LatestOnlyTaskRunner
     {
         private CancellationTokenSource? _cts;
 
-        public void Run(Func<CancellationToken, Task> taskFactory)
+        public async Task RunAsync(Func<CancellationToken, Task> taskFactory)
         {
             _cts?.Cancel();
             _cts?.Dispose();
@@ -19,19 +19,16 @@ namespace BetterLyrics.WinUI3.Helper
             _cts = new CancellationTokenSource();
             var token = _cts.Token;
 
-            _ = Task.Run(async () =>
+            try
             {
-                try
-                {
-                    await taskFactory(token);
-                }
-                catch (OperationCanceledException)
-                {
-                }
-                catch (Exception)
-                {
-                }
-            }, token);
+                await taskFactory(token);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

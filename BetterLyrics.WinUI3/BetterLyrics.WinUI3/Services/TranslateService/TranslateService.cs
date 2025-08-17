@@ -25,7 +25,7 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken? token)
+        public async Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken token)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -49,12 +49,10 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
                 new("q", text),
                 new("source", originalLangCode),
                 new("target", targetLangCode),
-            ]));
-            token?.ThrowIfCancellationRequested();
+            ]), token);
 
             response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
-            token?.ThrowIfCancellationRequested();
+            var json = await response.Content.ReadAsStringAsync(token);
 
             var result = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.TranslateResponse);
             return result?.TranslatedText ?? string.Empty;
