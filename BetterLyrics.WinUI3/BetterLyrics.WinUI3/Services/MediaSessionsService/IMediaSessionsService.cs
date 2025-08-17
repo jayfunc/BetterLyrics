@@ -1,10 +1,11 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Events;
+using BetterLyrics.WinUI3.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BetterLyrics.WinUI3.Events;
-using BetterLyrics.WinUI3.Models;
 using TagLib.Riff;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
@@ -29,6 +30,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         bool IsPlaying { get; }
         SongInfo? SongInfo { get; }
         TimeSpan Position { get; }
-        LyricsData? CurrentLyricsData { get; }
+
+        LyricsSearchProvider? LyricsSearchProvider { get; }
+        TranslationSearchProvider? TranslationSearchProvider { get; }
     }
 }

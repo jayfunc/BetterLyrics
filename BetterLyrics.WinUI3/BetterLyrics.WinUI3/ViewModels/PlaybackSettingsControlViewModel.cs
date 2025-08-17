@@ -80,6 +80,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsLastFMAuthenticated = _lastFMService.IsAuthenticated;
             LastFMUser = _lastFMService.User;
 
+            LyricsSearchProvider = _mediaSessionsService.LyricsSearchProvider;
+            TranslationSearchProvider = _mediaSessionsService.TranslationSearchProvider;
+
             SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
         }
 

@@ -336,9 +336,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             double y = 0;
 
             // Init Positions
-            for (int i = 0; i < _mediaSessionsService.CurrentLyricsData?.LyricsLines.Count; i++)
+            for (int i = 0; i < _currentLyricsData?.LyricsLines.Count; i++)
             {
-                var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i);
+                var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(i);
 
                 if (line == null)
                 {
@@ -366,7 +366,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             // Set _scrollOffsetY
 
-            LyricsLine? currentPlayingLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+            LyricsLine? currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
             if (currentPlayingLine == null) return;
 
@@ -374,7 +374,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (playingTextLayout == null) return;
 
-            double? targetYScrollOffset = -currentPlayingLine!.Position.Y + _mediaSessionsService.CurrentLyricsData?.LyricsLines[0].Position.Y - playingTextLayout.LayoutBounds.Height / 2.0;
+            double? targetYScrollOffset = -currentPlayingLine!.Position.Y + _currentLyricsData?.LyricsLines[0].Position.Y - playingTextLayout.LayoutBounds.Height / 2.0;
 
             if (!targetYScrollOffset.HasValue) return;
 
@@ -385,7 +385,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             var (startLineIndex, endLineIndex) = GetMaxLyricsLineIndexBoundaries();
 
-            var lines = _mediaSessionsService.CurrentLyricsData?.LyricsLines;
+            var lines = _currentLyricsData?.LyricsLines;
             if (lines == null || lines.Count == 0) return;
 
             double offset = _canvasYScrollTransition.Value + _canvasHeight / 2;
@@ -555,13 +555,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void UpdateVisibleLinesProps(ICanvasAnimatedControl control)
         {
-            var currentPlayingLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+            var currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
             if (currentPlayingLine == null) return;
 
             for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex + 1; i++)
             {
-                var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i);
+                var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(i);
 
                 if (line == null) continue;
 

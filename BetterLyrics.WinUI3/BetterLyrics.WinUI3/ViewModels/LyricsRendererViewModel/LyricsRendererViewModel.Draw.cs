@@ -63,7 +63,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 _drawFrameCount++;
 
-                var currentPlayingLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+                var currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
                 if (currentPlayingLine != null)
                 {
@@ -203,7 +203,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void DrawBlurredLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            var currentPlayingLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+            var currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
             if (currentPlayingLine == null)
             {
@@ -212,7 +212,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
             {
-                var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i);
+                var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(i);
                 if (line == null) continue;
 
                 var textLayout = line.CanvasTextLayout;

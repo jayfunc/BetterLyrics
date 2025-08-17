@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private int _langIndex = 0;
         private List<LyricsData> _lyricsDataArr = [];
 
-        public LyricsData? CurrentLyricsData => _lyricsDataArr.ElementAtOrDefault(_langIndex);
+        private LyricsData? CurrentLyricsData => _lyricsDataArr.ElementAtOrDefault(_langIndex);
 
         public event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
 
@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             TranslationSearchProvider = null;
             _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs());
+            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
             IsTranslating = true;
 
             if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
@@ -43,22 +43,16 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 _showTranslationsRunner.RunAsync(async token =>
                 {
                     await SetDisplayedAlongWithTranslationsAsync(token);
-                    _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                    {
-                        IsTranslating = false;
-                        LyricsChanged?.Invoke(this, new LyricsChangedEventArgs());
-                    });
+                    IsTranslating = false;
+                    LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
                 });
             }
             else
             {
-                _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                {
-                    _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
-                    _langIndex = 0;
-                    IsTranslating = false;
-                    LyricsChanged?.Invoke(this, new LyricsChangedEventArgs());
-                });
+                _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
+                _langIndex = 0;
+                IsTranslating = false;
+                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
             }
         }
 
@@ -136,16 +130,17 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             LyricsSearchProvider = null;
             _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
 
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs());
+            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
 
             string? lyricsRaw = null;
-            LyricsSearchProvider = null;
+            LyricsSearchProvider? lyricsSearchProvider = null;
+            LyricsSearchProvider = lyricsSearchProvider;
 
             if (SongInfo != null)
             {
                 _logger.LogInformation("Searching lyrics for: Title={Title}, Artist={Artist}, Album={Album}, DurationMs={DurationMs}",
                     SongInfo.Title, SongInfo.Artist, SongInfo.Album, SongInfo.DurationMs);
-                (lyricsRaw, LyricsSearchProvider) = await _lyrcsSearchService.SearchAsync(
+                (lyricsRaw, lyricsSearchProvider) = await _lyrcsSearchService.SearchAsync(
                     SongInfo.SourceAppUserModelId ?? "",
                     SongInfo.Title,
                     SongInfo.Artist,
@@ -153,6 +148,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     SongInfo.DurationMs ?? 0,
                     token
                 );
+                LyricsSearchProvider = lyricsSearchProvider;
                 _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsRaw != null, LyricsSearchProvider?.ToString() ?? "null");
                 token.ThrowIfCancellationRequested();
 
@@ -168,7 +164,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             // This ensures that original lyrics are always shown while waiting for translations
             _lyricsDataArr[0].SetDisplayedTextInOriginalText();
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs());
+            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
 
             UpdateTranslations();
         }

@@ -56,8 +56,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private int _drawFrameCount = 0;
         private int _displayedDrawFrameCount = 0;
 
-        private Queue<SoftwareBitmap?> _cachedAlbumArtSwBitmaps = [];
-
         private SoftwareBitmap? _lastAlbumArtSwBitmap = null;
         private SoftwareBitmap? _albumArtSwBitmap = null;
 
@@ -121,6 +119,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private int _startVisibleLineIndex = -1;
         private int _endVisibleLineIndex = -1;
+
+        private LyricsData? _currentLyricsData;
 
         private bool _isDebugOverlayEnabled = false;
 
@@ -206,19 +206,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void MediaSessionsService_LyricsChanged(object? sender, LyricsChangedEventArgs e)
         {
+            _currentLyricsData = e.LyricsData;
             _isLayoutChanged = true;
         }
 
         private int GetCurrentPlayingLineIndex()
         {
             var totalMs = TotalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
-            if (totalMs < _mediaSessionsService.CurrentLyricsData?.LyricsLines.FirstOrDefault()?.StartMs) return 0;
+            if (totalMs < _currentLyricsData?.LyricsLines.FirstOrDefault()?.StartMs) return 0;
 
-            for (int i = 0; i < _mediaSessionsService.CurrentLyricsData?.LyricsLines.Count; i++)
+            for (int i = 0; i < _currentLyricsData?.LyricsLines.Count; i++)
             {
-                var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i);
+                var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(i);
                 if (line == null) continue;
-                var nextLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i + 1);
+                var nextLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(i + 1);
                 if (nextLine != null && line.StartMs <= totalMs && totalMs < nextLine.StartMs)
                 {
                     return i;
@@ -238,9 +239,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             charLength = 0;
             charProgress = 0f;
 
-            var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(lineIndex);
+            var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(lineIndex);
             if (line == null) return;
-            var nextLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(lineIndex + 1);
+            var nextLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(lineIndex + 1);
 
             int lineEndMs;
             if (line.EndMs != null) lineEndMs = line.EndMs.Value;
@@ -325,14 +326,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (
                 SongInfo == null
-                || _mediaSessionsService.CurrentLyricsData == null
-                || _mediaSessionsService.CurrentLyricsData.LyricsLines.Count == 0
+                || _currentLyricsData == null
+                || _currentLyricsData.LyricsLines.Count == 0
             )
             {
                 return new Tuple<int, int>(-1, -1);
             }
 
-            return new Tuple<int, int>(0, _mediaSessionsService.CurrentLyricsData.LyricsLines.Count - 1);
+            return new Tuple<int, int>(0, _currentLyricsData.LyricsLines.Count - 1);
         }
 
         private void MediaSessionsService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
@@ -390,37 +391,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void MediaSessionsService_AlbumArtChangedChanged(object? sender, AlbumArtChangedEventArgs e)
         {
-            if (e.AlbumArtSwBitmap != _albumArtSwBitmap)
-            {
-                _cachedAlbumArtSwBitmaps.Append(_albumArtSwBitmap);
+            _lastAlbumArtSwBitmap = _albumArtSwBitmap;
+            _albumArtSwBitmap = e.AlbumArtSwBitmap;
 
-                _lastAlbumArtSwBitmap = _albumArtSwBitmap;
+            _albumArtChanged = true;
 
-                if (_cachedAlbumArtSwBitmaps.Count > 2)
-                {
-                    _cachedAlbumArtSwBitmaps.Dequeue()?.Dispose();
-                }
+            _albumArtLightAccentColor = e.AlbumArtLightAccentColor ?? Colors.Transparent;
+            _albumArtDarkAccentColor = e.AlbumArtDarkAccentColor ?? Colors.Transparent;
 
-                _cachedAlbumArtSwBitmaps.Append(e.AlbumArtSwBitmap);
-
-                _albumArtSwBitmap = e.AlbumArtSwBitmap;
-
-                if (_cachedAlbumArtSwBitmaps.Count > 2)
-                {
-                    _cachedAlbumArtSwBitmaps.Dequeue()?.Dispose();
-                }
-
-                _albumArtChanged = true;
-
-                _albumArtLightAccentColor = e.AlbumArtLightAccentColor ?? Colors.Transparent;
-                _albumArtDarkAccentColor = e.AlbumArtDarkAccentColor ?? Colors.Transparent;
-
-                UpdateColorConfig();
-            }
-            else
-            {
-                e.AlbumArtSwBitmap?.Dispose();
-            }
+            UpdateColorConfig();
         }
     }
 }
