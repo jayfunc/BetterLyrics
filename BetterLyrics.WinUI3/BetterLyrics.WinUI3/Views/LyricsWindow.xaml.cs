@@ -69,25 +69,20 @@ namespace BetterLyrics.WinUI3.Views
 
         public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
 
-        public void AutoSelectLyricsMode(LyricsWindowMode? type = null, bool? autoLook = null)
+        public void AutoSelectLyricsMode(LyricsWindowMode? type = null)
         {
             type ??= _settingsService.AppSettings.GeneralSettings.AutoStartWindowType;
             switch (type!)
             {
                 case LyricsWindowMode.StandardMode:
                     AppWindow.MoveAndResize(_settingsService.AppSettings.StandardModeSettings.WindowBounds.ToRectInt32());
+                    ViewModel.SetStandardModeTitleBarControlsStatus();
                     break;
                 case LyricsWindowMode.DockMode:
-                    DockFlyoutItem.IsChecked = true;
-                    ViewModel.ToggleDockModeCommand.Execute(null);
+                    ViewModel.ToggleDockMode();
                     break;
                 case LyricsWindowMode.DesktopMode:
-                    DesktopFlyoutItem.IsChecked = true;
-                    ViewModel.ToggleDesktopModeCommand.Execute(null);
-                    if (autoLook == null && _settingsService.AppSettings.DesktopModeSettings.AutoLockOnDesktopMode)
-                    {
-                        ViewModel.ToggleLockWindowCommand.Execute(null);
-                    }
+                    ViewModel.ToggleDesktopMode();
                     break;
                 default:
                     break;
@@ -96,15 +91,11 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AOTFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            var overlappedPresenter = (OverlappedPresenter)AppWindow.Presenter;
-            overlappedPresenter.IsAlwaysOnTop = !overlappedPresenter.IsAlwaysOnTop;
+            ViewModel.ToggleAlwaysOnTop();
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
-            if (args.DidPresenterChange)
-                UpdateTitleBarWindowButtonsVisibility();
-
             if (args.DidPositionChange || args.DidSizeChange)
             {
                 var size = AppWindow.Size;
@@ -120,10 +111,7 @@ namespace BetterLyrics.WinUI3.Views
                     {
                         _settingsService.AppSettings.DesktopModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
                     }
-                    else if (ViewModel.LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
-                    {
-
-                    }
+                    else if (ViewModel.LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode) { }
                     else
                     {
                         _settingsService.AppSettings.StandardModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
@@ -134,115 +122,18 @@ namespace BetterLyrics.WinUI3.Views
 
         private void FullScreenFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            switch (AppWindow.Presenter.Kind)
-            {
-                case AppWindowPresenterKind.Default:
-                    break;
-                case AppWindowPresenterKind.CompactOverlay:
-                    break;
-                case AppWindowPresenterKind.FullScreen:
-                    AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
-                    break;
-                case AppWindowPresenterKind.Overlapped:
-                    AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-                    break;
-                default:
-                    break;
-            }
+
+            ViewModel.ToggleFullscreen();
         }
 
-        private void MiniFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void PIPFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.TogglePictureInPictureModeCommand.Execute(null);
-            if (MiniFlyoutItem.IsChecked)
-            {
-                AppWindow.SetPresenter(AppWindowPresenterKind.CompactOverlay);
-            }
-            else
-            {
-                AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
-            }
+            ViewModel.TogglePictureInPictureMode();
         }
 
         private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             WindowHelper.OpenWindow<SettingsWindow>();
-        }
-
-        private void UpdateTitleBarWindowButtonsVisibility()
-        {
-            switch (AppWindow.Presenter.Kind)
-            {
-                case AppWindowPresenterKind.Default:
-                    break;
-                case AppWindowPresenterKind.CompactOverlay:
-                    AOTFlyoutItem.Visibility = DesktopFlyoutItem.Visibility = FullScreenFlyoutItem.Visibility = DockFlyoutItem.Visibility =
-                    ClickThroughButton.Visibility = Visibility.Collapsed;
-
-                    ViewModel.IsImmersiveMode = true;
-                    break;
-                case AppWindowPresenterKind.FullScreen:
-
-                    AOTFlyoutItem.Visibility =
-                    ClickThroughButton.Visibility =
-                    DesktopFlyoutItem.Visibility =
-                    MiniFlyoutItem.Visibility =
-                    DockFlyoutItem.Visibility =
-                        Visibility.Collapsed;
-                    FullScreenFlyoutItem.IsChecked = true;
-                    ViewModel.IsImmersiveMode = true;
-                    break;
-                case AppWindowPresenterKind.Overlapped:
-                    DockFlyoutItem.Visibility = Visibility.Visible;
-                    var overlappedPresenter = (OverlappedPresenter)AppWindow.Presenter;
-                    if (DockFlyoutItem.IsChecked)
-                    {
-                        overlappedPresenter.IsMinimizable =
-                        overlappedPresenter.IsMaximizable = false;
-
-                        AOTFlyoutItem.Visibility =
-                        DesktopFlyoutItem.Visibility =
-                        ClickThroughButton.Visibility =
-                        FullScreenFlyoutItem.Visibility =
-                        MiniFlyoutItem.Visibility =
-                            Visibility.Collapsed;
-
-                        ViewModel.IsImmersiveMode = true;
-                    }
-                    else if (DesktopFlyoutItem.IsChecked)
-                    {
-                        overlappedPresenter.IsMinimizable =
-                        overlappedPresenter.IsMaximizable = false;
-
-                        DockFlyoutItem.Visibility =
-                        AOTFlyoutItem.Visibility =
-                        FullScreenFlyoutItem.Visibility =
-                        MiniFlyoutItem.Visibility =
-                            Visibility.Collapsed;
-
-                        ClickThroughButton.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        overlappedPresenter.IsMinimizable =
-                        overlappedPresenter.IsMaximizable = true;
-
-                        AOTFlyoutItem.Visibility =
-                        DesktopFlyoutItem.Visibility =
-                        DockFlyoutItem.Visibility =
-                        MiniFlyoutItem.Visibility =
-                        FullScreenFlyoutItem.Visibility =
-                            Visibility.Visible;
-                        FullScreenFlyoutItem.IsChecked = false;
-                        ClickThroughButton.Visibility = Visibility.Collapsed;
-                        AOTFlyoutItem.IsChecked = overlappedPresenter.IsAlwaysOnTop;
-
-                        ViewModel.IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
-                    }
-                    break;
-                default:
-                    break;
-            }
         }
 
         private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -279,18 +170,17 @@ namespace BetterLyrics.WinUI3.Views
 
         private void ClickThroughButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ToggleLockWindowCommand.Execute(null);
+            ViewModel.ToggleLockWindow();
         }
 
         private void DockFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ToggleDockModeCommand.Execute(null);
+            ViewModel.ToggleDockMode();
         }
 
         private void DesktopFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.ToggleDesktopModeCommand.Execute(null);
-            UpdateTitleBarWindowButtonsVisibility();
+            ViewModel.ToggleDesktopMode();
         }
 
         private void MusicGalleryMenuFlyoutItem_Click(object sender, RoutedEventArgs e)

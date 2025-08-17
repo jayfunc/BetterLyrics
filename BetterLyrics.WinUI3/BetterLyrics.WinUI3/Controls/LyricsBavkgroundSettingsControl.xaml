@@ -55,7 +55,7 @@
                             Value="{x:Bind ViewModel.AppSettings.LyricsBackgroundSettings.CoverOverlaySpeed, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsBackgroundBlurAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF207;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBackgroundBlurAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
                         <uc:ExtendedSlider
                             Default="100"
                             Frequency="1"

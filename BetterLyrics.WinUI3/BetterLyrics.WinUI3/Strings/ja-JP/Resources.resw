@@ -178,7 +178,7 @@
     <value>ドックモード</value>
   </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>ロック後にロックを解除するには、システムトレイに移動してロックを解除または押します</value>
+    <value>ロック</value>
   </data>
   <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
     <value>もっと</value>
@@ -871,6 +871,12 @@
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>地元のメディア図書館</value>
   </data>
+  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
+    <value>ファイルの変更をリアルタイムで聞いてください</value>
+  </data>
+  <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+    <value>次のトラックショートカットキー</value>
+  </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>なし</value>
   </data>
@@ -895,8 +901,17 @@
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>キャプチャされた再生ソースはありません</value>
   </data>
+  <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
+    <value>遊ぶ</value>
+  </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>「SoundCloud.com」で「Cut to the Feeling」を再生する</value>
+  </data>
+  <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+    <value>ショートカットを再生して一時停止します</value>
+  </data>
+  <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+    <value>前のトラックのショートカットキー</value>
   </data>
   <data name="SettingsPageQQGroup.Header" xml:space="preserve">
     <value>QQフィードバック＆チャットグループ</value>
@@ -981,6 +996,9 @@
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
     <value>タイトルバーサイズ</value>
+  </data>
+  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
+    <value>ショートカットキーを切り込んで切り取ります</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>歌詞翻訳</value>

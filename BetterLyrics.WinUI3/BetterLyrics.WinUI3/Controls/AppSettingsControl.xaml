@@ -90,6 +90,10 @@
 
                     <TextBlock x:Uid="SettingsPageAppDesktop" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <controls:SettingsCard x:Uid="SettingsPageToggleHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.DesktopModeSettings.ToggleShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
                     <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
                         <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DesktopModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
@@ -103,45 +107,16 @@
                     </controls:SettingsCard>
 
                     <controls:SettingsCard x:Uid="SettingsPageLockHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBlock
-                                Margin="0,0,0,2"
-                                VerticalAlignment="Center"
-                                Text="Ctrl + Alt + " />
-                            <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DesktopModeSettings.LockHotKeyIndex, Mode=TwoWay}">
-                                <ComboBoxItem Content="A" />
-                                <ComboBoxItem Content="B" />
-                                <ComboBoxItem Content="C" />
-                                <ComboBoxItem Content="D" />
-                                <ComboBoxItem Content="E" />
-                                <ComboBoxItem Content="F" />
-                                <ComboBoxItem Content="G" />
-                                <ComboBoxItem Content="H" />
-                                <ComboBoxItem Content="I" />
-                                <ComboBoxItem Content="J" />
-                                <ComboBoxItem Content="K" />
-                                <ComboBoxItem Content="L" />
-                                <ComboBoxItem Content="M" />
-                                <ComboBoxItem Content="N" />
-                                <ComboBoxItem Content="O" />
-                                <ComboBoxItem Content="P" />
-                                <ComboBoxItem Content="Q" />
-                                <ComboBoxItem Content="R" />
-                                <ComboBoxItem Content="S" />
-                                <ComboBoxItem Content="T" />
-                                <ComboBoxItem Content="U" />
-                                <ComboBoxItem Content="V" />
-                                <ComboBoxItem Content="W" />
-                                <ComboBoxItem Content="X" />
-                                <ComboBoxItem Content="Y" />
-                                <ComboBoxItem Content="Z" />
-                            </ComboBox>
-                        </StackPanel>
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.DesktopModeSettings.LockShortcut, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
                     <!--  Dock mode  -->
 
                     <TextBlock x:Uid="SettingsPageAppDock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="SettingsPageToggleHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.DockModeSettings.ToggleShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
                     <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
                         <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DockModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
@@ -184,12 +159,32 @@
 
                     <TextBlock x:Uid="SettingsPageAppPictureInPicture" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <controls:SettingsCard x:Uid="SettingsPageToggleHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.PictureInPictureModeSettings.ToggleShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
                     <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
                         <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.PictureInPictureModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
                             <ComboBoxItem x:Uid="MainPageLyriscOnly" />
                             <ComboBoxItem x:Uid="MainPageSplitView" />
                         </ComboBox>
+                    </controls:SettingsCard>
+
+                    <!--  Playback shortcut  -->
+
+                    <TextBlock x:Uid="SettingsPagePlaybackShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
                 </StackPanel>

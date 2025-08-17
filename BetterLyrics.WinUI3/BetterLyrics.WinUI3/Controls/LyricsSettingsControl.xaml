@@ -220,7 +220,7 @@
                             Value="{x:Bind LyricsEffectSettings.LyricsVerticalEdgeOpacity, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF207;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBlurAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
                         <local:ExtendedSlider
                             x:Uid="SettingsPageLyricsBlurAmountExtendedSlider"
                             Default="5"

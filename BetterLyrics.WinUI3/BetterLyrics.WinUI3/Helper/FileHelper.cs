@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Ude;
 
@@ -78,5 +79,14 @@ namespace BetterLyrics.WinUI3.Helper
             return normFileName == normQ1 + normQ2
                 || normFileName == normQ2 + normQ1;
         }
+
+        public static readonly string[] MusicExtensions = {
+            ".mp3", ".aac", ".m4a", ".ogg", ".opus", ".wma", ".amr",
+            ".flac", ".alac", ".ape", ".wv", ".tak",
+            ".wav", ".aiff", ".aif", ".pcm", ".cda", ".dsf", ".dff", ".au", ".snd",
+            ".mid", ".midi", ".mod", ".xm", ".it", ".s3m"
+        };
+
+        public static string MusicSearchPattern => string.Join("|", MusicExtensions.Select(x => $"*{x}"));
     }
 }

@@ -18,6 +18,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDragEverywhereEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsImmersiveMode { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> PlayOrPauseShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "P" };
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> NextSongShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "Right" };
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> PreviousSongShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "Left" };
 
         public GeneralSettings() { }
     }

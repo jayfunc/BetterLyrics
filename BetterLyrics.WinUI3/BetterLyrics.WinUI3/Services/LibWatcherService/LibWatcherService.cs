@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.Services.LibWatcherService
             // 移除不再监听的
             foreach (var key in _watchers.Keys.ToList())
             {
-                if (!folders.Any(x => x.Path == key && x.IsEnabled))
+                if (!folders.Any(x => x.Path == key && x.IsEnabled && x.IsRealTimeWatchEnabled))
                 {
                     _watchers[key].Dispose();
                     _watchers.Remove(key);
@@ -62,11 +62,7 @@ namespace BetterLyrics.WinUI3.Services.LibWatcherService
             // 添加新的监听
             foreach (var folder in folders)
             {
-                if (
-                    !_watchers.ContainsKey(folder.Path)
-                    && Directory.Exists(folder.Path)
-                    && folder.IsEnabled
-                )
+                if (!_watchers.ContainsKey(folder.Path) && Directory.Exists(folder.Path) && folder.IsEnabled && folder.IsRealTimeWatchEnabled)
                 {
                     var watcher = new FileSystemWatcher(folder.Path)
                     {

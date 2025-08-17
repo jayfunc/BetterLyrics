@@ -10,10 +10,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!--  Merged dictionaries here  -->
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.SettingsControls/SettingsExpander/SettingsExpander.xaml" />
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
-                <!--  Other merged dictionaries here  -->
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Theme  -->
@@ -54,6 +54,7 @@
             <converter:MediaSourceProviderToLogoUriConverter x:Key="MediaSourceProviderToLogoUriConverter" />
             <converter:MediaSourceProviderToDisplayedNameConverter x:Key="MediaSourceProviderToDisplayedNameConverter" />
             <converter:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
+            <converter:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

@@ -1,6 +1,7 @@
 ﻿using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -33,34 +34,41 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
         {
             byte[]? result = null;
 
-            foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
+            try
             {
-                if (!provider.IsEnabled)
+                foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
                 {
-                    continue;
-                }
+                    if (!provider.IsEnabled)
+                    {
+                        continue;
+                    }
 
-                switch (provider.Provider)
-                {
-                    case AlbumArtSearchProvider.Local:
-                        result = SearchFile(artist, title);
-                        break;
-                    case AlbumArtSearchProvider.SMTC:
-                        result = bytesFromSMTC;
-                        break;
-                    case AlbumArtSearchProvider.iTunes:
-                        foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
-                        {
-                            result = await SearchiTunesAsync(artist, album, title, countryCode);
-                            if (result != null) break;
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                    switch (provider.Provider)
+                    {
+                        case AlbumArtSearchProvider.Local:
+                            result = SearchFile(artist, title);
+                            break;
+                        case AlbumArtSearchProvider.SMTC:
+                            result = bytesFromSMTC;
+                            break;
+                        case AlbumArtSearchProvider.iTunes:
+                            foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
+                            {
+                                result = await SearchiTunesAsync(artist, album, title, countryCode);
+                                if (result != null) break;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
 
-                if (result != null) return result;
+                    if (result != null) return result;
+                }
             }
+            catch (Exception)
+            {
+            }
+
             return null;
         }
 
@@ -70,9 +78,9 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             {
                 if (Directory.Exists(folder.Path) && folder.IsEnabled)
                 {
-                    try
+                    foreach (var file in DirectoryHelper.GetAllFiles(folder.Path))
                     {
-                        foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
+                        if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
                         {
                             Track track = new(file);
                             if ((track.Title == title && track.Artist == artist) || FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), artist, title))
@@ -84,9 +92,6 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                                 }
                             }
                         }
-                    }
-                    catch (Exception)
-                    {
                     }
                 }
             }

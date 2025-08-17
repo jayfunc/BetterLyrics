@@ -94,7 +94,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 if (message.PropertyName == nameof(LyricsSearchProviderInfo.IsEnabled))
                 {
                     _logger.LogInformation("LyricsSearchProviderInfo.IsEnabled changed, refreshing lyrics.");
-                    _ = _refreshLyricsRunner.RunAsync(async token =>
+                    _refreshLyricsRunner.Run(async token =>
                     {
                         await RefreshLyricsAsync(token);
                     });

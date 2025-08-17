@@ -48,7 +48,8 @@
                     <Button
                         x:Name="ClickThroughButton"
                         Click="ClickThroughButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="{x:Bind ViewModel.LockButtonVisibility, Mode=OneWay}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
@@ -58,15 +59,6 @@
                                 <ToolTip.Content>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock x:Uid="HostWindowLockToolTip" />
-                                        <TextBlock
-                                            Margin="6,0"
-                                            VerticalAlignment="Center"
-                                            Opacity="0.7"
-                                            Text="Ctrl + Alt + " />
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Opacity="0.7"
-                                            Text="{x:Bind ViewModel.LockHotKey, Mode=OneWay}" />
                                     </StackPanel>
                                 </ToolTip.Content>
                             </ToolTip>
@@ -87,46 +79,62 @@
                                     x:Name="AOTFlyoutItem"
                                     x:Uid="BaseWindowAOTFlyoutItem"
                                     Click="AOTFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE718;}" />
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xE718;}"
+                                    IsChecked="{x:Bind ViewModel.IsAOTFlyoutItemChecked, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.AOTFlyoutItemVisibility, Mode=OneWay}" />
                                 <ToggleMenuFlyoutItem
                                     x:Name="FullScreenFlyoutItem"
                                     x:Uid="BaseWindowFullScreenFlyoutItem"
                                     Click="FullScreenFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE740;}" />
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xE740;}"
+                                    IsChecked="{x:Bind ViewModel.IsFullScreenFlyoutItemChecked, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.FullScreenFlyoutItemVisibility, Mode=OneWay}" />
                                 <MenuFlyoutSeparator />
                                 <ToggleMenuFlyoutItem
                                     x:Name="DockFlyoutItem"
                                     x:Uid="HostWindowDockFlyoutItem"
                                     Click="DockFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE66A;}">
-                                </ToggleMenuFlyoutItem>
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xE7B5;}"
+                                    IsChecked="{x:Bind ViewModel.IsDockFlyoutItemChecked, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.DockFlyoutItemVisibility, Mode=OneWay}" />
                                 <ToggleMenuFlyoutItem
                                     x:Name="DesktopFlyoutItem"
                                     x:Uid="HostWindowDesktopFlyoutItem"
                                     Click="DesktopFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE66C;}">
-                                </ToggleMenuFlyoutItem>
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xE75A;}"
+                                    IsChecked="{x:Bind ViewModel.IsDesktopFlyoutItemChecked, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.DesktopFlyoutItemVisibility, Mode=OneWay}" />
                                 <ToggleMenuFlyoutItem
-                                    x:Name="MiniFlyoutItem"
+                                    x:Name="PIPFlyoutItem"
                                     x:Uid="BaseWindowMiniFlyoutItem"
-                                    Click="MiniFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xEE49;}" />
+                                    Click="PIPFlyoutItem_Click"
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xEE49;}"
+                                    IsChecked="{x:Bind ViewModel.IsPIPFlyoutItemChecked, Mode=OneWay}"
+                                    Visibility="{x:Bind ViewModel.PIPFlyoutItemVisibility, Mode=OneWay}" />
                                 <MenuFlyoutSeparator />
                                 <MenuFlyoutItem
                                     x:Name="MusicGalleryFlyoutItem"
                                     x:Uid="SystemTrayMusicGallery"
                                     Click="MusicGalleryMenuFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xEA69;}" />
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xEA69;}" />
                                 <MenuFlyoutItem
                                     x:Name="SettingsFlyoutItem"
                                     x:Uid="SystemTraySettings"
                                     Click="SettingsMenuFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE713;}" />
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xE713;}" />
                                 <MenuFlyoutSeparator />
                                 <MenuFlyoutItem
                                     x:Uid="SystemTrayExit"
                                     Click="ExitAppMenuFlyoutItem_Click"
-                                    Icon="{ui:FontIcon Glyph=&#xE7E8;}" />
+                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                       Glyph=&#xE7E8;}" />
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>

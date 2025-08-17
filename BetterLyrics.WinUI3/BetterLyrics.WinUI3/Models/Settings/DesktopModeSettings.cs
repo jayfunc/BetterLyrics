@@ -13,7 +13,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 400, 200);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoLockOnDesktopMode { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LockHotKeyIndex { get; set; } = 'U' - 'A'; // Default to 'U' key
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> LockShortcut { get; set; } = new List<string>() { "Ctrl", "Alt", "U" };
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> ToggleShortcut { get; set; } = new List<string>() { "Ctrl", "Alt", "D" };
 
         public DesktopModeSettings()
         {

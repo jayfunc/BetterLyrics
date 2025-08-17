@@ -178,7 +178,7 @@
     <value>停靠模式</value>
   </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>锁定后解锁，请转到系统托盘解锁或按下</value>
+    <value>锁定</value>
   </data>
   <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
     <value>更多</value>
@@ -871,6 +871,12 @@
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>本地媒体库</value>
   </data>
+  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
+    <value>实时监听文件变化</value>
+  </data>
+  <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+    <value>下一首曲目快捷键</value>
+  </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>无</value>
   </data>
@@ -895,8 +901,17 @@
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>没有捕获的播放源</value>
   </data>
+  <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
+    <value>播放</value>
+  </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>在 “soundcloud.com” 上播放 “Cut to the Feeling”</value>
+  </data>
+  <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+    <value>播放与暂停快捷键</value>
+  </data>
+  <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+    <value>上一首曲目快捷键</value>
   </data>
   <data name="SettingsPageQQGroup.Header" xml:space="preserve">
     <value>QQ 反馈交流群</value>
@@ -981,6 +996,9 @@
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
     <value>标题栏大小</value>
+  </data>
+  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
+    <value>切入与切出快捷键</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>歌词翻译</value>

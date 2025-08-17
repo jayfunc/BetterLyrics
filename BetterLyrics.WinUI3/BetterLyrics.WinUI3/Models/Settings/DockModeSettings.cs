@@ -14,7 +14,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DockPlacement DockPlacement { get; set; } = DockPlacement.Top;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int DockWindowHeight { get; set; } = 64;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string DockMonitorDeviceName { get; set; } = MonitorHelper.GetPrimaryMonitorDeviceName();
-    
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> ToggleShortcut { get; set; } = new List<string> { "Ctrl", "Shift", "D" };
+
         public DockModeSettings()
         {
             LyricsDisplayType = LyricsDisplayType.LyricsOnly;

@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services;
@@ -265,30 +266,26 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 Task.Run(() =>
                 {
-                    foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
+                    try
                     {
-                        if (Directory.Exists(folder.Path) && folder.IsEnabled)
+                        foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
                         {
-                            try
+                            if (Directory.Exists(folder.Path) && folder.IsEnabled)
                             {
-                                foreach (var file in Directory.GetFiles(folder.Path, $"*.*", SearchOption.AllDirectories))
+                                foreach (var file in DirectoryHelper.GetAllFiles(folder.Path))
                                 {
-                                    try
+                                    if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
                                     {
                                         Track track = new(file);
                                         if (track.Duration <= 0) continue;
                                         _tracks.Add(track);
                                     }
-                                    catch (Exception)
-                                    {
-                                        continue;
-                                    }
                                 }
                             }
-                            catch (Exception)
-                            {
-                            }
                         }
+                    }
+                    catch (Exception)
+                    {
                     }
 
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>

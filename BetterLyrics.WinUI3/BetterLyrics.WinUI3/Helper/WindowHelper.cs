@@ -71,7 +71,7 @@ namespace BetterLyrics.WinUI3.Helper
                 if (typeof(T) == typeof(LyricsWindow))
                 {
                     var lyricsWindow = (LyricsWindow)window;
-                    lyricsWindow.ViewModel.InitLockHotKey();
+                    lyricsWindow.ViewModel.InitShortcuts();
                     lyricsWindow.AutoSelectLyricsMode();
                 }
             }
