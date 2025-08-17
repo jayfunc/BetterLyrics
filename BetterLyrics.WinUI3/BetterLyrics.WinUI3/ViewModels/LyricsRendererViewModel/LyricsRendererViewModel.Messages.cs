@@ -53,22 +53,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                 }
             }
-            else if (message.Sender is TranslationSettings)
-            {
-                if (message.PropertyName == nameof(TranslationSettings.IsLibreTranslateEnabled))
-                {
-                    UpdateTranslations();
-                }
-                else if (message.PropertyName == nameof(TranslationSettings.IsTranslationEnabled))
-                {
-                    _logger.LogInformation("Translation enabled state changed: {IsEnabled}", _settingsService.AppSettings.TranslationSettings.IsTranslationEnabled);
-                    UpdateTranslations();
-                }
-                else if (message.PropertyName == nameof(TranslationSettings.ShowTranslationOnly))
-                {
-                    UpdateTranslations();
-                }
-            }
             else if (message.Sender is LyricsWindowViewModel)
             {
                 if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
@@ -89,18 +73,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     UpdateIsLastFMTrackEnabled();
                 }
             }
-            if (message.Sender is LyricsSearchProviderInfo)
-            {
-                if (message.PropertyName == nameof(LyricsSearchProviderInfo.IsEnabled))
-                {
-                    _logger.LogInformation("LyricsSearchProviderInfo.IsEnabled changed, refreshing lyrics.");
-                    _refreshLyricsRunner.Run(async token =>
-                    {
-                        await RefreshLyricsAsync(token);
-                    });
-                }
-            }
-
         }
 
         public void Receive(PropertyChangedMessage<Color> message)
@@ -209,14 +181,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsBgFontOpacity))
                 {
                     _isLayoutChanged = true;
-                }
-            }
-            else if (message.Sender is TranslationSettings)
-            {
-                if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageIndex))
-                {
-                    _logger.LogInformation("Target language index changed: {Index}", _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex);
-                    UpdateTranslations();
                 }
             }
             else if (message.Sender is MediaSourceProviderInfo)
@@ -336,10 +300,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontFamily))
                 {
                     _isLayoutChanged = true;
-                }
-                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsTranslationSeparator))
-                {
-                    UpdateTranslations();
                 }
             }
         }

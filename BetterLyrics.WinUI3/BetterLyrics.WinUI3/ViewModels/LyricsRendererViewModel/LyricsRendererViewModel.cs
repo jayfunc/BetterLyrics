@@ -14,6 +14,7 @@ using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
@@ -87,21 +88,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private double _canvasTargetYScrollOffset = 0;
 
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial LyricsSearchProvider? LyricsSearchProvider { get; set; } = null;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
-
         private double _maxLyricsWidth = 0f;
 
         private readonly ISettingsService _settingsService;
-        private readonly ILyricsSearchService _lyrcsSearchService;
-        private readonly ILibWatcherService _libWatcherService;
         private readonly IMediaSessionsService _mediaSessionsService;
-        private readonly ITranslateService _translateService;
         private readonly ILastFMService _lastFMService;
         private readonly ILiveStatesService _liveStatesService;
         private readonly ILogger _logger;
@@ -142,10 +132,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isLayoutChanged = true;
 
-        private int _langIndex = 0;
-
-        private List<LyricsData> _lyricsDataArr = [];
-
         private int _timelineSyncThreshold = 0;
 
         private CanvasTextFormat _lyricsTextFormat = new()
@@ -178,13 +164,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             FontWeight = FontWeights.ExtraBlack,
         };
 
-        private BackgroundTaskRunner _refreshLyricsRunner = new();
-        private BackgroundTaskRunner _showTranslationsRunner = new();
-
         private LyricsLayoutOrientation _lyricsLayoutOrientation;
-
-        [ObservableProperty]
-        public partial bool IsTranslating { get; set; } = false;
 
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; }
@@ -193,16 +173,52 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         [NotifyPropertyChangedRecipients]
         public partial ElementTheme ThemeTypeSent { get; set; }
 
+        public LyricsRendererViewModel(
+            ISettingsService settingsService,
+            IMediaSessionsService mediaSessionsService,
+            ILastFMService lastFMService,
+            ILiveStatesService liveStatesService)
+        {
+            _settingsService = settingsService;
+            _mediaSessionsService = mediaSessionsService;
+            _liveStatesService = liveStatesService;
+
+            _lastFMService = lastFMService;
+
+            _logger = Ioc.Default.GetRequiredService<ILogger<LyricsRendererViewModel>>();
+
+            AppSettings = _settingsService.AppSettings;
+
+            _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.AppSettings.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
+
+            _timelineSyncThreshold = 0;
+
+            _mediaSessionsService.IsPlayingChanged += MediaSessionsService_IsPlayingChanged;
+            _mediaSessionsService.SongInfoChanged += MediaSessionsService_SongInfoChanged;
+            _mediaSessionsService.AlbumArtChanged += MediaSessionsService_AlbumArtChangedChanged;
+            _mediaSessionsService.LyricsChanged += MediaSessionsService_LyricsChanged;
+            _mediaSessionsService.TimelineChanged += MediaSessionsService_TimelineChanged;
+
+            IsPlaying = _mediaSessionsService.IsPlaying;
+
+            UpdateColorConfig();
+        }
+
+        private void MediaSessionsService_LyricsChanged(object? sender, LyricsChangedEventArgs e)
+        {
+            _isLayoutChanged = true;
+        }
+
         private int GetCurrentPlayingLineIndex()
         {
             var totalMs = TotalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
-            if (totalMs < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.FirstOrDefault()?.StartMs) return 0;
+            if (totalMs < _mediaSessionsService.CurrentLyricsData?.LyricsLines.FirstOrDefault()?.StartMs) return 0;
 
-            for (int i = 0; i < _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.Count; i++)
+            for (int i = 0; i < _mediaSessionsService.CurrentLyricsData?.LyricsLines.Count; i++)
             {
-                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
+                var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i);
                 if (line == null) continue;
-                var nextLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i + 1);
+                var nextLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i + 1);
                 if (nextLine != null && line.StartMs <= totalMs && totalMs < nextLine.StartMs)
                 {
                     return i;
@@ -222,9 +238,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             charLength = 0;
             charProgress = 0f;
 
-            var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(lineIndex);
+            var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(lineIndex);
             if (line == null) return;
-            var nextLine = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(lineIndex + 1);
+            var nextLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(lineIndex + 1);
 
             int lineEndMs;
             if (line.EndMs != null) lineEndMs = line.EndMs.Value;
@@ -309,31 +325,22 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (
                 SongInfo == null
-                || _lyricsDataArr.ElementAtOrDefault(_langIndex) == null
-                || _lyricsDataArr[_langIndex].LyricsLines.Count == 0
+                || _mediaSessionsService.CurrentLyricsData == null
+                || _mediaSessionsService.CurrentLyricsData.LyricsLines.Count == 0
             )
             {
                 return new Tuple<int, int>(-1, -1);
             }
 
-            return new Tuple<int, int>(0, _lyricsDataArr[_langIndex].LyricsLines.Count - 1);
+            return new Tuple<int, int>(0, _mediaSessionsService.CurrentLyricsData.LyricsLines.Count - 1);
         }
 
-        private void LibWatcherService_MusicLibraryFilesChanged(object? sender, LibChangedEventArgs e)
-        {
-            _logger.LogInformation("Music library files changed: {ChangeType} {FilePath}, refreshing lyrics...", e.ChangeType, e.FilePath);
-            _refreshLyricsRunner.Run(async token =>
-            {
-                await RefreshLyricsAsync(token);
-            });
-        }
-
-        private void PlaybackService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
+        private void MediaSessionsService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
         {
             IsPlaying = e.IsPlaying;
         }
 
-        private void PlaybackService_TimelineChanged(object? sender, TimelineChangedEventArgs e)
+        private void MediaSessionsService_TimelineChanged(object? sender, TimelineChangedEventArgs e)
         {
             var diff = Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds);
             if (diff >= _timelineSyncThreshold)
@@ -352,7 +359,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void PlaybackService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
+        private void MediaSessionsService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
         {
             SongInfo = e.SongInfo;
 
@@ -373,11 +380,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _songInfoOpacityTransition.Reset(0f);
                 _songInfoOpacityTransition.StartTransition(1f);
 
-                _logger.LogInformation("Song info changed: Title={Title}, Artist={Artist}, refreshing lyrics...", _songTitle, _songArtist);
-                _refreshLyricsRunner.Run(async token =>
-                {
-                    await RefreshLyricsAsync(token);
-                });
                 TotalTime = TimeSpan.Zero;
 
                 // 处理 Last.fm 追踪
@@ -386,7 +388,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void PlaybackService_AlbumArtChangedChanged(object? sender, AlbumArtChangedEventArgs e)
+        private void MediaSessionsService_AlbumArtChangedChanged(object? sender, AlbumArtChangedEventArgs e)
         {
             if (e.AlbumArtSwBitmap != _albumArtSwBitmap)
             {
@@ -418,212 +420,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             else
             {
                 e.AlbumArtSwBitmap?.Dispose();
-            }
-        }
-
-        private void UpdateTranslations()
-        {
-            _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-            {
-                TranslationSearchProvider = null;
-                _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
-                _isLayoutChanged = true;
-                IsTranslating = true;
-            });
-
-            if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
-            {
-                _showTranslationsRunner.Run(async token =>
-                {
-                    await SetDisplayedAlongWithTranslationsAsync(token);
-                    _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                    {
-                        IsTranslating = false;
-                        _isLayoutChanged = true;
-                    });
-                });
-            }
-            else
-            {
-                _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                {
-                    _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
-                    _langIndex = 0;
-                    IsTranslating = false;
-                    _isLayoutChanged = true;
-                });
-            }
-        }
-
-        private async Task SetDisplayedAlongWithTranslationsAsync(CancellationToken token)
-        {
-            _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, async () =>
-            {
-                _logger.LogInformation("Showing translation for lyrics...");
-                string targetLangCode = LanguageHelper.SupportedTargetLanguages[_settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
-                _logger.LogInformation("Target language code: {TargetLangCode}", targetLangCode);
-                string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
-                if (originalText == null) return;
-
-                string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
-                _logger.LogInformation("Original language code: {OriginalLangCode}", originalLangCode ?? "null");
-
-                if (originalLangCode == targetLangCode)
-                {
-                    _logger.LogInformation("Original lyrics already in target language: {TargetLangCode}", targetLangCode);
-
-                    _lyricsDataArr[0].SetDisplayedTextInOriginalText();
-                }
-                else
-                {
-                    // Try get translation from itself first
-                    int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr);
-                    if (found >= 0)
-                    {
-                        _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
-                        if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
-                        {
-                            _lyricsDataArr[found].SetDisplayedTextInOriginalText();
-                            _langIndex = found;
-                        }
-                        else
-                        {
-                            _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsTranslationSeparator, 50);
-                            _langIndex = 0;
-                            TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
-                        }
-                    }
-                    else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
-                    {
-                        _logger.LogInformation("LibreTranslate is enabled, trying to translate lyrics...");
-                        string translated = string.Empty;
-                        try
-                        {
-                            translated = await _translateService.TranslateTextAsync(originalText, targetLangCode, token);
-                            token.ThrowIfCancellationRequested();
-                            if (translated == string.Empty) return;
-
-                            if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
-                            {
-                                _lyricsDataArr[^1] = _lyricsDataArr[0].CreateLyricsDataFrom(translated);
-                                _lyricsDataArr[^1].SetDisplayedTextInOriginalText();
-                                _langIndex = _lyricsDataArr.Count - 1;
-                            }
-                            else
-                            {
-                                _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsTranslationSeparator);
-                                _langIndex = 0;
-                            }
-                            TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;
-                        }
-                        catch (Exception)
-                        {
-                            App.Current.LyricsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("LibreTranslateFailed")!, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
-                        }
-                    }
-                }
-            });
-        }
-
-        private async Task RefreshLyricsAsync(CancellationToken token)
-        {
-            _logger.LogInformation("Refreshing lyrics...");
-
-            _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-            {
-                LyricsSearchProvider = null;
-                _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
-                _isLayoutChanged = true;
-            });
-
-            string? lyricsRaw = null;
-            LyricsSearchProvider? lyricsSearchProvider = null;
-
-            if (SongInfo != null)
-            {
-                _logger.LogInformation("Searching lyrics for: Title={Title}, Artist={Artist}, Album={Album}, DurationMs={DurationMs}",
-                    SongInfo.Title, SongInfo.Artist, SongInfo.Album, SongInfo.DurationMs);
-                (lyricsRaw, lyricsSearchProvider) = await _lyrcsSearchService.SearchAsync(
-                    SongInfo.SourceAppUserModelId ?? "",
-                    SongInfo.Title,
-                    SongInfo.Artist,
-                    SongInfo.Album ?? "",
-                    SongInfo.DurationMs ?? 0,
-                    token
-                );
-                _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsRaw != null, lyricsSearchProvider?.ToString() ?? "null");
-                token.ThrowIfCancellationRequested();
-
-                _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-                {
-                    LyricsSearchProvider = lyricsSearchProvider;
-                    _lyricsDataArr = new LyricsParser().Parse(lyricsRaw, (int?)SongInfo?.DurationMs);
-                    FillTranslationFromCache(LyricsSearchProvider);
-                });
-            }
-            else
-            {
-                _logger.LogWarning("SongInfo is null, cannot search lyrics.");
-            }
-
-            _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _lyricsDataArr.Count);
-
-            _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
-            {
-                // This ensures that original lyrics are always shown while waiting for translations
-                _lyricsDataArr[0].SetDisplayedTextInOriginalText();
-                _isLayoutChanged = true;
-            });
-
-            UpdateTranslations();
-        }
-
-        private void FillTranslationFromCache(LyricsSearchProvider? provider)
-        {
-            string? translationRaw = null;
-            switch (provider)
-            {
-                case Enums.LyricsSearchProvider.QQ:
-                    translationRaw = Helper.FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, Helper.PathHelper.QQTranslationCacheDirectory);
-                    break;
-                case Enums.LyricsSearchProvider.Kugou:
-                    break;
-                case Enums.LyricsSearchProvider.Netease:
-                    translationRaw = Helper.FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, Helper.PathHelper.NeteaseTranslationCacheDirectory);
-                    break;
-                case Enums.LyricsSearchProvider.LrcLib:
-                    break;
-                case Enums.LyricsSearchProvider.AmllTtmlDb:
-                    break;
-                case Enums.LyricsSearchProvider.LocalMusicFile:
-                    break;
-                case Enums.LyricsSearchProvider.LocalLrcFile:
-                    break;
-                case Enums.LyricsSearchProvider.LocalEslrcFile:
-                    break;
-                case Enums.LyricsSearchProvider.LocalTtmlFile:
-                    break;
-                default:
-                    break;
-            }
-            if (translationRaw != null)
-            {
-                var translationData = new LyricsParser().Parse(translationRaw, (int?)SongInfo?.DurationMs);
-                if (provider == Enums.LyricsSearchProvider.QQ)
-                {
-                    foreach (var data in translationData)
-                    {
-                        foreach (var item in data.LyricsLines)
-                        {
-                            if (item.OriginalText == "//")
-                            {
-                                item.OriginalText = "";
-                            }
-                        }
-                    }
-                }
-
-                _lyricsDataArr = _lyricsDataArr.Concat(translationData).ToList();
             }
         }
     }

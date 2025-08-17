@@ -16,15 +16,5 @@
             x:Name="LyricsCanvas"
             Draw="LyricsCanvas_Draw"
             Update="LyricsCanvas_Update" />
-        <Grid
-            Margin="36"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Visibility="{x:Bind ViewModel.IsTranslating, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-            <FontIcon
-                x:Name="RotatingIcon"
-                FontFamily="{StaticResource IconFontFamily}"
-                Glyph="&#xE8C1;" />
-        </Grid>
     </Grid>
 </UserControl>

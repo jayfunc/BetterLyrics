@@ -63,9 +63,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 _drawFrameCount++;
 
-                var currentPlayingLine = _lyricsDataArr
-                    .ElementAtOrDefault(_langIndex)
-                    ?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+                var currentPlayingLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
                 if (currentPlayingLine != null)
                 {
@@ -87,7 +85,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             $"Visible lines: [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n" +
                             $"Total line count: {GetMaxLyricsLineIndexBoundaries().Item2 + 1}\n" +
                             $"Cur time: {TotalTime + _positionOffset}\n" +
-                            $"Lang size: {_lyricsDataArr.Count}\n" +
                             $"Song duration: {TimeSpan.FromMilliseconds(SongInfo?.DurationMs ?? 0)}\n" +
                             $"Y offset: {_canvasYScrollTransition.Value}",
                         new Vector2(10, 40),
@@ -206,9 +203,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void DrawBlurredLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            var currentPlayingLine = _lyricsDataArr
-                .ElementAtOrDefault(_langIndex)
-                ?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+            var currentPlayingLine = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
             if (currentPlayingLine == null)
             {
@@ -217,7 +212,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
             {
-                var line = _lyricsDataArr.ElementAtOrDefault(_langIndex)?.LyricsLines.ElementAtOrDefault(i);
+                var line = _mediaSessionsService.CurrentLyricsData?.LyricsLines.ElementAtOrDefault(i);
                 if (line == null) continue;
 
                 var textLayout = line.CanvasTextLayout;
@@ -242,7 +237,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 // Mock gradient blurred lyrics layer
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
                 // Current line will not be blurred
-                using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, 
+                using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
                     _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
                 using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
                 combinedDs.DrawImage(backgroundEffect);
@@ -257,16 +252,16 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         _liveStatesService.LiveStates.CurrentLyricsEffectSettings.IsLyricsLineFadeEnabled);
                     using var lineMask = CanvasHelper.CreateLineMask(control, line);
 
-                    using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, 
+                    using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
                         _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
 
                     using var effectLayer = new CanvasCommandList(control);
                     using var effectLayerDs = effectLayer.CreateDrawingSession();
                     if (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.IsLyricsShadowEnabled)
                     {
-                        var shadowEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask, 
+                        var shadowEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
                             _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsShadowScope);
-                        using var foregroundShadowEffect = CanvasHelper.CreateForegroundShadowEffect(foregroundFontEffect, shadowEffectMask, 
+                        using var foregroundShadowEffect = CanvasHelper.CreateForegroundShadowEffect(foregroundFontEffect, shadowEffectMask,
                             _albumArtAccentColorTransition.Value, _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsShadowAmount);
                         effectLayerDs.DrawImage(foregroundShadowEffect);
                     }

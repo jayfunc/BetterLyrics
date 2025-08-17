@@ -121,7 +121,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 try
                 {
                     string targetLangCode = LanguageHelper.SupportedTargetLanguages[AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
-                    string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, null);
+                    string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, new System.Threading.CancellationToken());
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
                         App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), InfoBarSeverity.Success);
@@ -183,9 +183,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<LyricsSearchProvider?> message)
         {
-            if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
+            if (message.Sender is MediaSessionsService)
             {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.LyricsSearchProvider))
+                if (message.PropertyName == nameof(MediaSessionsService.LyricsSearchProvider))
                 {
                     LyricsSearchProvider = message.NewValue;
                 }
@@ -194,9 +194,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<TranslationSearchProvider?> message)
         {
-            if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
+            if (message.Sender is MediaSessionsService)
             {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.TranslationSearchProvider))
+                if (message.PropertyName == nameof(MediaSessionsService.TranslationSearchProvider))
                 {
                     TranslationSearchProvider = message.NewValue;
                 }
