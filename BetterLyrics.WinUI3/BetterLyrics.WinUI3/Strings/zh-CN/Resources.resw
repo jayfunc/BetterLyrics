@@ -779,7 +779,7 @@
     <value>辉光效果</value>
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>高亮显示范围</value>
+    <value>Original highlight range</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>靠左</value>
@@ -843,6 +843,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>歌词时间轴同步阈值</value>
+  </data>
+  <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
+    <value>Translation Highlight</value>
   </data>
   <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
     <value>Source and translation separator</value>
