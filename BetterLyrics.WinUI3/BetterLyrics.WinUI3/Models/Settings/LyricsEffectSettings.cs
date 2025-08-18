@@ -23,7 +23,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsShadowAmount { get; set; } = 8;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LineRenderingType LyricsHighlightScope { get; set; } = LineRenderingType.LineStartToCurrentChar;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsHighlightAmount { get; set; } = 100; // 100% 是上界
         
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsTranslationHighlightAmount { get; set; } = 60; // 100% 是上界
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFloatAnimationEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFloatAmount { get; set; } = 1;
 

@@ -779,7 +779,7 @@
     <value>글로우 효과</value>
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>하이라이트 범위</value>
+    <value>원래 하이라이트 범위</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>왼쪽</value>
@@ -843,6 +843,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>가사 타임 라인 동기화 임계 값</value>
+  </data>
+  <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
+    <value>번역 하이라이트</value>
   </data>
   <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
     <value>소스 및 번역 분리기</value>
