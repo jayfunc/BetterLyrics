@@ -163,7 +163,7 @@ BetterLyrics
 
 ## 演示
 
-在 B 站觀看我們的介紹影片（2025 年 7 月 7 日上傳）：[點此觀看](https://www.bilibili.com/video/BV1zjGjzfEXh)
+在 B 站觀看我們的介紹影片（2025 年 8 月 18 日上傳）：[點此觀看](https://www.bilibili.com/video/BV1yLYtzQEME/)
 
 ## 立即體驗
 

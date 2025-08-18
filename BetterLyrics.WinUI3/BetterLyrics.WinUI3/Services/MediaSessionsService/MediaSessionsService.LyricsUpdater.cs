@@ -17,7 +17,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     public partial class MediaSessionsService : IMediaSessionsService
     {
         private LatestOnlyTaskRunner _refreshLyricsRunner = new();
-        private LatestOnlyTaskRunner _showTranslationsRunner = new();
+        private LatestOnlyTaskRunner _refreshTranslationRunner = new();
 
         private int _langIndex = 0;
         private List<LyricsData> _lyricsDataArr = [];
@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         [ObservableProperty] public partial bool IsTranslating { get; set; } = false;
 
-        private void UpdateTranslations()
+        private async Task RefreshTranslationAsync(CancellationToken token)
         {
             TranslationSearchProvider = null;
             _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
@@ -41,20 +41,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
             {
-                _showTranslationsRunner.RunAsync(async token =>
-                {
-                    await SetDisplayedAlongWithTranslationsAsync(token);
-                    IsTranslating = false;
-                    LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
-                });
+                await SetDisplayedAlongWithTranslationsAsync(token);
             }
             else
             {
                 _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
                 _langIndex = 0;
-                IsTranslating = false;
-                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
             }
+            IsTranslating = false;
+            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
         }
 
         private async Task SetDisplayedAlongWithTranslationsAsync(CancellationToken token)
@@ -222,6 +217,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private void UpdateLyrics()
         {
             _refreshLyricsRunner.RunAsync(RefreshLyricsAsync);
+        }
+
+        private void UpdateTranslations()
+        {
+            _refreshTranslationRunner.RunAsync(RefreshTranslationAsync);
         }
     }
 }

@@ -163,7 +163,7 @@ WinUI 3와 Win2D로 제작된 동적 가사 디스플레이 도구 — 로컬 �
 
 ## 데모
 
-Bilibili에서 소개 영상을 시청하세요(2025년 7월 7일 업로드): [여기서 보기](https://www.bilibili.com/video/BV1zjGjzfEXh)
+Bilibili에서 소개 영상을 시청하세요(2025년 8월 18일 업로드): [여기서 보기](https://www.bilibili.com/video/BV1yLYtzQEME/)
 
 ## 지금 사용해보세요
 

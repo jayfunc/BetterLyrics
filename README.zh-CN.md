@@ -167,7 +167,7 @@ BetterLyrics
 
 ## 演示
 
-在 B 站观看我们的介绍视频（2025 年 7 月 7 日上传）：[点此观看](https://www.bilibili.com/video/BV1zjGjzfEXh)
+在 B 站观看我们的介绍视频（2025 年 8 月 18 日上传）：[点此观看](https://www.bilibili.com/video/BV1yLYtzQEME/)
 
 ## 立即体验
 
