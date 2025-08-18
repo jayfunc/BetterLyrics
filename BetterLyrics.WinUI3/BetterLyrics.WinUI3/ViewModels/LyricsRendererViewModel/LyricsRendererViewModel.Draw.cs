@@ -234,9 +234,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 using var combined = new CanvasCommandList(control);
                 using var combinedDs = combined.CreateDrawingSession();
 
-                // Mock gradient blurred lyrics layer
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
-                // Current line will not be blurred
                 using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
                     _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
                 using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
@@ -253,10 +251,17 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     using var lineMask = CanvasHelper.CreateLineMask(control, line);
 
                     using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
-                        _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
+                        _liveStatesService.LiveStates.CurrentLyricsStyleSettings.LyricsFontStrokeWidth, _fgFontColor);
 
                     using var effectLayer = new CanvasCommandList(control);
                     using var effectLayerDs = effectLayer.CreateDrawingSession();
+                    if (line.OriginalText != line.DisplayedText && _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsTranslationHighlightAmount != 0)
+                    {
+                        using var translationHighlightMask = CanvasHelper.CreateTranslationHighlightMask(control, line);
+                        using var foregroundTranslationHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, translationHighlightMask,
+                            _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsTranslationHighlightAmount / 100.0);
+                        effectLayerDs.DrawImage(foregroundTranslationHighlightEffect);
+                    }
                     if (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.IsLyricsShadowEnabled)
                     {
                         var shadowEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
@@ -273,10 +278,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsGlowEffectAmount);
                         effectLayerDs.DrawImage(foregroundBlurEffect);
                     }
-                    var highlightEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
-                        _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsHighlightScope);
-                    using var foregroundHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, highlightEffectMask);
-                    effectLayerDs.DrawImage(foregroundHighlightEffect);
+                    if (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsHighlightAmount != 0)
+                    {
+                        var highlightEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
+                            _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsHighlightScope);
+                        using var foregroundHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, highlightEffectMask,
+                            _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsHighlightAmount / 100.0);
+                        effectLayerDs.DrawImage(foregroundHighlightEffect);
+                    }
 
                     combinedDs.DrawImage(new OpacityEffect
                     {

@@ -262,17 +262,50 @@ namespace BetterLyrics.WinUI3.Helper
             return mask;
         }
 
+        public static CanvasCommandList CreateTranslationHighlightMask(ICanvasAnimatedControl control, LyricsLine lyricsLine)
+        {
+            var mask = new CanvasCommandList(control);
+            using var ds = mask.CreateDrawingSession();
+
+            if (lyricsLine.CanvasTextLayout == null)
+            {
+                return mask;
+            }
+
+            var regions = lyricsLine.CanvasTextLayout.GetCharacterRegions(lyricsLine.OriginalText.Length, lyricsLine.DisplayedText.Length - lyricsLine.OriginalText.Length);
+            if (regions.Length > 0)
+            {
+                for (int j = 0; j < regions.Length; j++)
+                {
+                    var region = regions[j];
+                    var rect = new Rect(
+                        region.LayoutBounds.X,
+                        region.LayoutBounds.Y + lyricsLine.Position.Y,
+                        region.LayoutBounds.Width,
+                        region.LayoutBounds.Height
+                    );
+                    ds.FillRectangle(rect, Colors.White);
+                }
+            }
+
+            return mask;
+        }
+
         /// <summary>
         /// 创建高亮效果层
         /// </summary>
         /// <param name="control"></param>
         /// <param name="lineRenderingType"></param>
-        public static AlphaMaskEffect CreateForegroundHighlightEffect(CanvasCommandList foregroundFontEffect, IGraphicsEffectSource mask)
+        public static OpacityEffect CreateForegroundHighlightEffect(CanvasCommandList foregroundFontEffect, IGraphicsEffectSource mask, double opacity)
         {
-            return new AlphaMaskEffect
+            return new OpacityEffect
             {
-                Source = foregroundFontEffect,
-                AlphaMask = mask,
+                Source = new AlphaMaskEffect
+                {
+                    Source = foregroundFontEffect,
+                    AlphaMask = mask,
+                },
+                Opacity = (float)opacity,
             };
         }
 
@@ -288,6 +321,19 @@ namespace BetterLyrics.WinUI3.Helper
                 ShadowColor = shadowColor,
                 BlurAmount = (float)shadowAmount,
                 Optimization = EffectOptimization.Speed,
+            };
+        }
+
+        public static OpacityEffect CreateForegroundTranslationEffect(CanvasCommandList foregroundFontEffect, IGraphicsEffectSource mask, double opacity)
+        {
+            return new OpacityEffect
+            {
+                Source = new AlphaMaskEffect
+                {
+                    Source = foregroundFontEffect,
+                    AlphaMask = mask,
+                },
+                Opacity = (float)opacity,
             };
         }
 

@@ -234,14 +234,46 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsLineFadeEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <!--  高亮  -->
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsHighlightScope" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E6;}">
+                    <!--  译文高亮  -->
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageLyricsTranslationHighlight"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE7E6;}"
+                        IsExpanded="True">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount">
+                                <local:ExtendedSlider
+                                    Default="60"
+                                    Frequency="5"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsTranslationHighlightAmount, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
+                    <!--  原文高亮  -->
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageLyricsHighlightScope"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE7E6;}"
+                        IsExpanded="True">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsHighlightScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
                             <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
                             <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
                         </ComboBox>
-                    </controls:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount">
+                                <local:ExtendedSlider
+                                    Default="100"
+                                    Frequency="5"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsHighlightAmount, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  阴影  -->
                     <controls:SettingsExpander
