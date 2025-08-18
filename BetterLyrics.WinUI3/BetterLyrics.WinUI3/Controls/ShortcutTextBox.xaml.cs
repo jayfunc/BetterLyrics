@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Helper;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -90,6 +91,23 @@ namespace BetterLyrics.WinUI3.Controls
         {
             Shortcut = [];
             UpdateTextBox();
+        }
+
+        private void CheckButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool registered = GlobalHotKeyHelper.IsHotKeyRegistered(Shortcut);
+            if (registered)
+            {
+                App.Current.SettingsWindowNotificationPanel?.Notify(
+                     App.ResourceLoader!.GetString("SettingsPageShortcutRegSuccessInfo"),
+                     InfoBarSeverity.Success);
+            }
+            else
+            {
+                App.Current.SettingsWindowNotificationPanel?.Notify(
+                    App.ResourceLoader!.GetString("SettingsPageShortcutRegFailInfo"),
+                    InfoBarSeverity.Error);
+            }
         }
     }
 }

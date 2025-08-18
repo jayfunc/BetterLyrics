@@ -20,11 +20,11 @@ using Windows.Foundation.Collections;
 
 namespace BetterLyrics.WinUI3.Controls
 {
-    public sealed partial class LyricsBavkgroundSettingsControl : UserControl
+    public sealed partial class LyricsBackgroundSettingsControl : UserControl
     {
         public LyricsBackgroundSettingsControlViewModel ViewModel => (LyricsBackgroundSettingsControlViewModel)DataContext;
 
-        public LyricsBavkgroundSettingsControl()
+        public LyricsBackgroundSettingsControl()
         {
             InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<LyricsBackgroundSettingsControlViewModel>();

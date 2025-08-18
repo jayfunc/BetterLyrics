@@ -589,25 +589,31 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     line.HighlightOpacityTransition.StartTransition(i == _playingLineIndex ? 1f : 0f);
 
                     double yScrollDuration;
+                    double yScrollDelay;
+
                     if (lineCountDelta < 0)
                     {
                         yScrollDuration =
                             _canvasYScrollTransition.DurationSeconds +
                             distanceFactor * (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsScrollTopDuration / 1000.0 - _canvasYScrollTransition.DurationSeconds);
+                        yScrollDelay = distanceFactor * _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsScrollTopDelay / 1000.0;
                     }
                     else if (lineCountDelta == 0)
                     {
                         yScrollDuration = _canvasYScrollTransition.DurationSeconds;
+                        yScrollDelay = 0;
                     }
                     else
                     {
                         yScrollDuration =
                             _canvasYScrollTransition.DurationSeconds +
                             distanceFactor * (_liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsScrollBottomDuration / 1000.0 - _canvasYScrollTransition.DurationSeconds);
+                        yScrollDelay = distanceFactor * _liveStatesService.LiveStates.CurrentLyricsEffectSettings.LyricsScrollBottomDelay / 1000.0;
                     }
 
                     line.YOffsetTransition.SetEasingType(_canvasYScrollTransition.EasingType ?? EasingType.Linear);
                     line.YOffsetTransition.SetDuration(yScrollDuration);
+                    line.YOffsetTransition.SetDelay(yScrollDelay);
                     line.YOffsetTransition.StartTransition(_canvasTargetYScrollOffset, _isLayoutChanged);
                 }
 

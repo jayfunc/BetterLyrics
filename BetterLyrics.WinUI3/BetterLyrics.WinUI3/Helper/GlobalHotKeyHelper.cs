@@ -13,7 +13,8 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class GlobalHotKeyHelper
     {
-        private static Dictionary<int, Action> _hotKeyActions = [];
+        private static Dictionary<int, Action> _actions = [];
+        private static Dictionary<int, List<string>> _keys = [];
 
         /// <summary>
         /// Register a global hotkey for a specific window type
@@ -22,7 +23,7 @@ namespace BetterLyrics.WinUI3.Helper
         /// <param name="id"></param>
         /// <param name="keys"></param>
         /// <param name="action"></param>
-        public static void RegisterHotKey<T>(ShortcutID id, List<string> keys, Action action)
+        private static void RegisterHotKey<T>(ShortcutID id, List<string> keys, Action action)
         {
             if (keys.Count == 0) return;
 
@@ -55,24 +56,39 @@ namespace BetterLyrics.WinUI3.Helper
                     key = (VirtualKey)Enum.Parse(typeof(VirtualKey), item, true);
                 }
             }
-            User32.RegisterHotKey(hwnd, (int)id, modifiers, (uint)key);
-            _hotKeyActions[(int)id] = action;
+            bool success = User32.RegisterHotKey(hwnd, (int)id, modifiers, (uint)key);
+            if (success)
+            {
+                _actions[(int)id] = action;
+                _keys[(int)id] = keys;
+            }
         }
 
-        public static void UnregisterHotKey<T>(ShortcutID id)
+        private static void UnregisterHotKey<T>(ShortcutID id)
         {
             var window = WindowHelper.GetWindowByWindowType<T>();
             if (window == null) return;
 
             HWND hwnd = WindowNative.GetWindowHandle(window);
             User32.UnregisterHotKey(hwnd, (int)id);
-            _hotKeyActions.Remove((int)id);
+            _actions.Remove((int)id);
+            _keys.Remove((int)id);
         }
 
         public static void UpdateHotKey<T>(ShortcutID id, List<string> keys, Action action)
         {
             UnregisterHotKey<T>(id);
             RegisterHotKey<T>(id, keys, action);
+        }
+
+        public static bool IsHotKeyRegistered(ShortcutID id)
+        {
+            return _actions.ContainsKey((int)id);
+        }
+
+        public static bool IsHotKeyRegistered(List<string> keys)
+        {
+            return _keys.ContainsValue(keys);
         }
 
         public static bool TryInvokeAction(ShortcutID id)
@@ -82,7 +98,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static bool TryInvokeAction(int id)
         {
-            if (_hotKeyActions.TryGetValue(id, out var action))
+            if (_actions.TryGetValue(id, out var action))
             {
                 action?.Invoke();
                 return true;

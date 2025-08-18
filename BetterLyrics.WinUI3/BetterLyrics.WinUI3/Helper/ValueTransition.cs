@@ -1,7 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using System;
-using System.Diagnostics;
 using BetterLyrics.WinUI3.Enums;
 
 namespace BetterLyrics.WinUI3.Helper
@@ -11,6 +10,8 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private T _currentValue;
         private double _durationSeconds;
+        private double _delaySeconds;
+        private double _delayRemaining;
         private EasingType? _easingType;
         private Func<T, T, double, T> _interpolator;
         private bool _isTransitioning;
@@ -19,18 +20,21 @@ namespace BetterLyrics.WinUI3.Helper
         private T _targetValue;
 
         public double DurationSeconds => _durationSeconds;
+        public double DelaySeconds => _delaySeconds;
 
         public bool IsTransitioning => _isTransitioning;
         public T Value => _currentValue;
         public T TargetValue => _targetValue;
         public EasingType? EasingType => _easingType;
 
-        public ValueTransition(T initialValue, double durationSeconds, Func<T, T, double, T>? interpolator = null, EasingType? easingType = null)
+        public ValueTransition(T initialValue, double durationSeconds, Func<T, T, double, T>? interpolator = null, EasingType? easingType = null, double delaySeconds = 0)
         {
             _currentValue = initialValue;
             _startValue = initialValue;
             _targetValue = initialValue;
             _durationSeconds = durationSeconds;
+            _delaySeconds = delaySeconds;
+            _delayRemaining = 0;
             _progress = 1f;
             _isTransitioning = false;
 
@@ -58,12 +62,18 @@ namespace BetterLyrics.WinUI3.Helper
             _durationSeconds = seconds;
         }
 
+        public void SetDelay(double seconds)
+        {
+            _delaySeconds = seconds;
+        }
+
         private void JumpTo(T value)
         {
             _currentValue = value;
             _startValue = value;
             _targetValue = value;
             _progress = 1f;
+            _delayRemaining = 0;
             _isTransitioning = false;
         }
 
@@ -73,6 +83,7 @@ namespace BetterLyrics.WinUI3.Helper
             _startValue = value;
             _targetValue = value;
             _progress = 0f;
+            _delayRemaining = 0;
             _isTransitioning = false;
         }
 
@@ -89,6 +100,7 @@ namespace BetterLyrics.WinUI3.Helper
                 _startValue = _currentValue;
                 _targetValue = targetValue;
                 _progress = 0f;
+                _delayRemaining = _delaySeconds;
                 _isTransitioning = true;
             }
         }
@@ -103,7 +115,24 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (!_isTransitioning) return;
 
-            _progress += (double)(elapsedTime / TimeSpan.FromSeconds(_durationSeconds));
+            if (_delayRemaining > 0)
+            {
+                double consume = Math.Min(_delayRemaining, elapsedTime.TotalSeconds);
+                _delayRemaining -= consume;
+                if (_delayRemaining > 0)
+                    return;
+                elapsedTime = TimeSpan.FromSeconds(elapsedTime.TotalSeconds - consume);
+            }
+
+            if (_durationSeconds <= 0)
+            {
+                _progress = 1f;
+            }
+            else
+            {
+                _progress += elapsedTime.TotalSeconds / _durationSeconds;
+            }
+
             if (_progress >= 1f)
             {
                 _progress = 1f;

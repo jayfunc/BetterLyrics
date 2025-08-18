@@ -150,9 +150,6 @@
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>사진 인당 모드</value>
   </data>
-  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
-    <value>Picture-in-Picture 모드 종료</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>취소</value>
   </data>
@@ -477,6 +474,9 @@
   </data>
   <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
     <value>표준 모드를 ​​활성화합니다</value>
+  </data>
+  <data name="SettingsPageAutoStartPIPLyrics.Content" xml:space="preserve">
+    <value>Picture-in-Picture 모드를 시작하십시오</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>앱을 시작할 때</value>
@@ -934,17 +934,23 @@
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>범위</value>
   </data>
+  <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+    <value>테일 라인 지연</value>
+  </data>
   <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
-    <value>가사 스크롤 애니메이션 지속 시간 (마지막 줄)</value>
+    <value>최종 라인 기간</value>
   </data>
   <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>가사 스크롤 애니메이션 지속 시간 (현재 줄)</value>
+    <value>현재 라인 기간</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
     <value>가사 스크롤링 애니메이션 유형</value>
   </data>
+  <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+    <value>첫 번째 줄 지연</value>
+  </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
-    <value>가사 스크롤 애니메이션 지속 시간 (첫 번째 줄)</value>
+    <value>첫 번째 줄의 기간</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>테스트 서버</value>
@@ -957,6 +963,12 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>설정 관리자</value>
+  </data>
+  <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+    <value>이 핫키는 성공적으로 등록되지 않았습니다</value>
+  </data>
+  <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+    <value>이 핫키는 성공적으로 등록되었습니다</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>현재 가치 : </value>

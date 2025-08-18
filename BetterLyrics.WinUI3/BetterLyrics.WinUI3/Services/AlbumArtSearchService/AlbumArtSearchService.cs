@@ -32,6 +32,11 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 
         public async Task<byte[]?> SearchAsync(string mediaSessionId, string title, string artist, string album, byte[]? bytesFromSMTC = null)
         {
+            return await Task.Run(async () => await SearchAsyncCore(mediaSessionId, title, artist, album, bytesFromSMTC));
+        }
+
+        public async Task<byte[]?> SearchAsyncCore(string mediaSessionId, string title, string artist, string album, byte[]? bytesFromSMTC = null)
+        {
             byte[]? result = null;
 
             try

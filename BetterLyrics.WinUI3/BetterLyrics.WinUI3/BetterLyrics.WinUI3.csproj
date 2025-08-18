@@ -26,7 +26,6 @@
 		<None Remove="Controls\AllLyricsSettingsControl.xaml" />
 		<None Remove="Controls\AppSettingsControl.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
-		<None Remove="Controls\LyricsBavkgroundSettingsControl.xaml" />
 		<None Remove="Controls\LyricsSettingsControl.xaml" />
 		<None Remove="Controls\MediaSettingsControl.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
@@ -61,6 +60,7 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
+		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
@@ -86,11 +86,6 @@
 		<PackageReference Include="Vanara.PInvoke.User32" Version="4.1.6" />
 		<PackageReference Include="WinUIEx" Version="2.6.0" />
 		<PackageReference Include="z440.atl.core" Version="7.2.0" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Reference Include="Hqub.Lastfm">
-	    <HintPath>..\..\..\Last.fm\src\Hqub.Lastfm\bin\Release\netstandard2.0\Hqub.Lastfm.dll</HintPath>
-	  </Reference>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Rendering\InAppLyricsRenderer.xaml">
@@ -222,7 +217,7 @@
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsBavkgroundSettingsControl.xaml">
+	  <Page Update="Controls\LyricsBackgroundSettingsControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

@@ -319,6 +319,7 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <!--  滚动动画  -->
                     <controls:SettingsExpander
                         x:Uid="SettingsPageScrollEasing"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -341,7 +342,6 @@
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageScrollTopDuration">
                                 <local:ExtendedSlider
-                                    x:Uid="SettingsPageLyricsScrollTopDurationExtendedSlider"
                                     Default="500"
                                     Frequency="50"
                                     Maximum="1000"
@@ -351,7 +351,6 @@
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageScrollDuration">
                                 <local:ExtendedSlider
-                                    x:Uid="SettingsPageLyricsScrollDurationExtendedSlider"
                                     Default="500"
                                     Frequency="50"
                                     Maximum="1000"
@@ -361,13 +360,30 @@
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageScrollBottomDuration">
                                 <local:ExtendedSlider
-                                    x:Uid="SettingsPageLyricsScrollBottomDurationExtendedSlider"
                                     Default="500"
                                     Frequency="50"
                                     Maximum="1000"
                                     Minimum="50"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollBottomDuration, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageScrollTopDelay">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Frequency="50"
+                                    Maximum="2000"
+                                    Minimum="0"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsScrollTopDelay, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageScrollBottomDelay">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Frequency="50"
+                                    Maximum="2000"
+                                    Minimum="0"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsScrollBottomDelay, Mode=TwoWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
