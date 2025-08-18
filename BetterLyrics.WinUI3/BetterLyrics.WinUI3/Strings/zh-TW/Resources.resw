@@ -150,9 +150,6 @@
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>畫中畫模式</value>
   </data>
-  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
-    <value>退出畫中畫模式</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -477,6 +474,9 @@
   </data>
   <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
     <value>啟動標準模式</value>
+  </data>
+  <data name="SettingsPageAutoStartPIPLyrics.Content" xml:space="preserve">
+    <value>Start Picture-in-Picture Mode</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>啟動應用程式時</value>
@@ -934,17 +934,23 @@
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>範圍</value>
   </data>
+  <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+    <value>Tail line delay</value>
+  </data>
   <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation duration (Last line)</value>
+    <value>Final line duration</value>
   </data>
   <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation duration (Current line)</value>
+    <value>Current line duration</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
     <value>歌詞滾動動畫類型</value>
   </data>
+  <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+    <value>First line delay</value>
+  </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation duration (First line)</value>
+    <value>The duration of the first line</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>測試服務器</value>
@@ -957,6 +963,12 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>Settings manager</value>
+  </data>
+  <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+    <value>This hotkey was not successfully registered</value>
+  </data>
+  <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+    <value>This hotkey has been successfully registered</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>目前值： </value>
