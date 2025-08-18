@@ -163,7 +163,7 @@ WinUI 3とWin2Dで構築された動的歌詞表示ツール — ローカル再
 
 ## デモ
 
-Bilibiliで紹介動画を見る（2025年7月7日アップロード）：[こちら](https://www.bilibili.com/video/BV1zjGjzfEXh)
+Bilibiliで紹介動画を見る（2025年8月18日アップロード）：[こちら](https://www.bilibili.com/video/BV1yLYtzQEME/)
 
 ## 今すぐ試す
 

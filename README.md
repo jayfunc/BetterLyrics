@@ -163,7 +163,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ## Demonstration
 
-Watch our introduction video (uploaded on 7 July 2025) on Bilibili [here](https://www.bilibili.com/video/BV1zjGjzfEXh).
+Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https://www.bilibili.com/video/BV1yLYtzQEME/).
 
 ## Try it now
 
