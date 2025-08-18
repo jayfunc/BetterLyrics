@@ -55,6 +55,7 @@
                             <ComboBoxItem x:Uid="SettingsPageAutoStartInAppLyrics" />
                             <ComboBoxItem x:Uid="SettingsPageAutoStartDockLyrics" />
                             <ComboBoxItem x:Uid="SettingsPageAutoStartDesktopLyrics" />
+                            <ComboBoxItem x:Uid="SettingsPageAutoStartPIPLyrics" />
                         </ComboBox>
                     </controls:SettingsCard>
 

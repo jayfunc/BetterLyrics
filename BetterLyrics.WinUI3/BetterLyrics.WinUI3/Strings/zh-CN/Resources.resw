@@ -150,9 +150,6 @@
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>画中画模式</value>
   </data>
-  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
-    <value>退出画中画模式</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -477,6 +474,9 @@
   </data>
   <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
     <value>启动标准模式</value>
+  </data>
+  <data name="SettingsPageAutoStartPIPLyrics.Content" xml:space="preserve">
+    <value>启动画中画模式</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>启动应用时</value>
@@ -934,17 +934,23 @@
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>范围</value>
   </data>
+  <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+    <value>尾行延时</value>
+  </data>
   <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
-    <value>歌词滚动动画持续时间（最后一行）</value>
+    <value>尾行持续时间</value>
   </data>
   <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>歌词滚动动画持续时间（当前行）</value>
+    <value>当前行持续时间</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
     <value>歌词滚动动画类型</value>
   </data>
+  <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+    <value>首行延时</value>
+  </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
-    <value>歌词滚动动画持续时间（第一行）</value>
+    <value>首行持续时间</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>测试服务器</value>
@@ -957,6 +963,12 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>设置管理器</value>
+  </data>
+  <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+    <value>该热键未成功注册</value>
+  </data>
+  <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+    <value>该热键已成功注册</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>当前值： </value>

@@ -24,6 +24,14 @@
                                       FontSize=12,
                                       Glyph=&#xE894;}"
                 Style="{StaticResource GhostButtonStyle}" />
+            <Button
+                Margin="3,0,0,0"
+                HorizontalAlignment="Right"
+                Click="CheckButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      FontSize=12,
+                                      Glyph=&#xE721;}"
+                Style="{StaticResource GhostButtonStyle}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.Views
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly WindowMessageMonitor _wmm;
+        private bool _autoSelectLyricsModeOnRunning = true;
 
         public LyricsWindow()
         {
@@ -75,8 +76,17 @@ namespace BetterLyrics.WinUI3.Views
             switch (type!)
             {
                 case LyricsWindowMode.StandardMode:
-                    AppWindow.MoveAndResize(_settingsService.AppSettings.StandardModeSettings.WindowBounds.ToRectInt32());
                     ViewModel.SetStandardModeTitleBarControlsStatus();
+                    if (_settingsService.AppSettings.StandardModeSettings.IsMaximized)
+                    {
+                        // 记忆中最大化时避免设置窗口大小以便退出最大化后
+                        // 不会四周都紧贴屏幕边缘影响操作
+                        this.Maximize();
+                    }
+                    else
+                    {
+                        AppWindow.MoveAndResize(_settingsService.AppSettings.StandardModeSettings.WindowBounds.ToRectInt32());
+                    }
                     break;
                 case LyricsWindowMode.DockMode:
                     ViewModel.ToggleDockMode();
@@ -84,9 +94,13 @@ namespace BetterLyrics.WinUI3.Views
                 case LyricsWindowMode.DesktopMode:
                     ViewModel.ToggleDesktopMode();
                     break;
+                case LyricsWindowMode.PictureInPictureMode:
+                    ViewModel.TogglePictureInPictureMode();
+                    break;
                 default:
                     break;
             }
+            _autoSelectLyricsModeOnRunning = false;
         }
 
         private void AOTFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -96,6 +110,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
+            if (_autoSelectLyricsModeOnRunning) return;
+
             if (args.DidPositionChange || args.DidSizeChange)
             {
                 var size = AppWindow.Size;
@@ -107,14 +123,28 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    if (ViewModel.LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
+                    switch (ViewModel.LiveStates.CurrentLyricsWindowMode)
                     {
-                        _settingsService.AppSettings.DesktopModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
-                    }
-                    else if (ViewModel.LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode) { }
-                    else
-                    {
-                        _settingsService.AppSettings.StandardModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                        case LyricsWindowMode.StandardMode:
+                            if (AppWindow.Presenter is OverlappedPresenter overlappedPresenter)
+                            {
+                                _settingsService.AppSettings.StandardModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                                _settingsService.AppSettings.StandardModeSettings.IsMaximized = overlappedPresenter.State == OverlappedPresenterState.Maximized;
+                            }
+                            break;
+                        case LyricsWindowMode.DockMode:
+                            break;
+                        case LyricsWindowMode.DesktopMode:
+                            _settingsService.AppSettings.DesktopModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                            break;
+                        case LyricsWindowMode.PictureInPictureMode:
+                            if (AppWindow.Presenter is CompactOverlayPresenter compactOverlayPresenter)
+                            {
+                                _settingsService.AppSettings.PictureInPictureModeSettings.WindowPosition = new Windows.Foundation.Point(rect.X, rect.Y);
+                            }
+                            break;
+                        default:
+                            break;
                     }
                 }
             }

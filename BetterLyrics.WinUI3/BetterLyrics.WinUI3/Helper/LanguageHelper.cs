@@ -72,9 +72,9 @@ namespace BetterLyrics.WinUI3.Services
             code = code switch
             {
                 "simple" => "en",
-                "zh_classical" => "zh-Hant",
-                "zh_yue" => "zh-Hant",
-                "zh" => "zh-Hans",
+                "zh_classical" => SimplifiedChineseOrTraditionalChinese(text),
+                "zh_yue" => SimplifiedChineseOrTraditionalChinese(text),
+                "zh" => SimplifiedChineseOrTraditionalChinese(text),
                 _ => code
             };
             return code;

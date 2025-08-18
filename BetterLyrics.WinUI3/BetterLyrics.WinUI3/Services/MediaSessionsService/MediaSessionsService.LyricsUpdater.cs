@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
@@ -220,10 +221,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void UpdateLyrics()
         {
-            _refreshLyricsRunner.RunAsync(async token =>
-            {
-                await RefreshLyricsAsync(token);
-            });
+            _refreshLyricsRunner.RunAsync(RefreshLyricsAsync);
         }
     }
 }

@@ -201,26 +201,29 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties timelineProperties)
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            if (!_mediaManager.IsStarted) return;
+            if (mediaSession == null) return;
+
+            var focusedSession = _mediaManager.GetFocusedSession();
+
+            if (mediaSession != focusedSession) return;
+
+            if (!IsMediaSourceEnabled(mediaSession.Id))
             {
-                if (!_mediaManager.IsStarted) return;
-                if (mediaSession == null) return;
-
-                var focusedSession = _mediaManager.GetFocusedSession();
-
-                if (mediaSession != focusedSession) return;
-
-                if (!IsMediaSourceEnabled(mediaSession.Id))
+                _cachedPosition = TimeSpan.Zero;
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
-                    _cachedPosition = TimeSpan.Zero;
                     TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(_cachedPosition, TimeSpan.Zero));
-                }
-                else
+                });
+            }
+            else
+            {
+                _cachedPosition = timelineProperties.Position;
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
-                    _cachedPosition = timelineProperties.Position;
                     TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(_cachedPosition, timelineProperties.EndTime));
-                }
-            });
+                });
+            }
         }
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)

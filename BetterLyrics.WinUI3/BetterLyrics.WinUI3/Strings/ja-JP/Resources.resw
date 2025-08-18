@@ -150,9 +150,6 @@
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>ピクチャーインピクチャーモード</value>
   </data>
-  <data name="BaseWindowUnMiniFlyoutItem.Text" xml:space="preserve">
-    <value>ピクチャーインピクチャーモードを終了します</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
@@ -477,6 +474,9 @@
   </data>
   <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
     <value>標準モードをアクティブにします</value>
+  </data>
+  <data name="SettingsPageAutoStartPIPLyrics.Content" xml:space="preserve">
+    <value>ピクチャーインピクチャーモードを開始します</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>アプリを起動するとき</value>
@@ -934,17 +934,23 @@
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>範囲</value>
   </data>
+  <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+    <value>テールラインの遅延</value>
+  </data>
   <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
-    <value>歌詞スクロールアニメーション期間（最終行）</value>
+    <value>最終ライン期間</value>
   </data>
   <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>歌詞スクロールアニメーション期間（現在の行）</value>
+    <value>現在のライン期間</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
     <value>歌詞スクロールアニメーションタイプ</value>
   </data>
+  <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+    <value>最初の行の遅延</value>
+  </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
-    <value>歌詞スクロールアニメーション期間（最初の行）</value>
+    <value>最初の行の期間</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>テストサーバー</value>
@@ -957,6 +963,12 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>設定マネージャー</value>
+  </data>
+  <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+    <value>このホットキーは正常に登録されていません</value>
+  </data>
+  <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+    <value>このホットキーは正常に登録されています</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>現在の値： </value>

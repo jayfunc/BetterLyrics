@@ -167,6 +167,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isLayoutChanged = true;
                 }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollTopDelay))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollBottomDelay))
+                {
+                    _isLayoutChanged = true;
+                }
             }
             else if (message.Sender is LyricsStyleSettings)
             {

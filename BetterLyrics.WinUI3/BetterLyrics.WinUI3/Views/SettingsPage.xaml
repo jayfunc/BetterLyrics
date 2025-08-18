@@ -89,7 +89,7 @@
 
                 <!--  Lyrics background  -->
                 <controls:Case Value="Background">
-                    <uc:LyricsBavkgroundSettingsControl />
+                    <uc:LyricsBackgroundSettingsControl />
                 </controls:Case>
 
                 <!--  Album art area style  -->

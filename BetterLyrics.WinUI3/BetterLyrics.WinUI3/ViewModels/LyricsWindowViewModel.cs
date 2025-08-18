@@ -218,8 +218,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateDesktopLockShortcut()
         {
-            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.DesktopLock);
-            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.DesktopLock,
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.DesktopLock,
                 _settingsService.AppSettings.DesktopModeSettings.LockShortcut,
                 () =>
                 {
@@ -233,8 +232,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateDesktopToggleShortcut()
         {
-            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.DesktopToggle);
-            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.DesktopToggle,
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.DesktopToggle,
                 _settingsService.AppSettings.DesktopModeSettings.ToggleShortcut,
                 () =>
                 {
@@ -249,8 +247,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateDockToggleShortcut()
         {
-            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.DockToggle);
-            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.DockToggle,
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.DockToggle,
                 _settingsService.AppSettings.DockModeSettings.ToggleShortcut,
                 () =>
                 {
@@ -265,8 +262,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdatePictureInPictureToggleShortcut()
         {
-            GlobalHotKeyHelper.UnregisterHotKey<LyricsWindow>(ShortcutID.PictureInPictureToggle);
-            GlobalHotKeyHelper.RegisterHotKey<LyricsWindow>(ShortcutID.PictureInPictureToggle,
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.PictureInPictureToggle,
                 _settingsService.AppSettings.PictureInPictureModeSettings.ToggleShortcut,
                 () =>
                 {
@@ -463,6 +459,7 @@ namespace BetterLyrics.WinUI3
             if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.PictureInPictureMode)
             {
                 window.AppWindow.SetPresenter(AppWindowPresenterKind.CompactOverlay);
+                window.AppWindow.Move(AppSettings.PictureInPictureModeSettings.WindowPosition.ToPointInt32());
                 SetPIPModeTitleBarControlsStatus();
             }
             else

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <UserControl
-    x:Class="BetterLyrics.WinUI3.Controls.LyricsBavkgroundSettingsControl"
+    x:Class="BetterLyrics.WinUI3.Controls.LyricsBackgroundSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"

@@ -89,6 +89,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         public async Task<(string?, LyricsSearchProvider?)> SearchAsync(string mediaSessionId, string title, string artist, string album, double durationMs, CancellationToken token)
         {
+            return await Task.Run(async () => await SearchAsyncCore(mediaSessionId, title, artist, album, durationMs, token), token);
+        }
+
+        private async Task<(string?, LyricsSearchProvider?)> SearchAsyncCore(string mediaSessionId, string title, string artist, string album, double durationMs, CancellationToken token)
+        {
             _logger.LogInformation("Searching img for: {Title} - {Artist} (Album: {Album}, Duration: {DurationMs}ms)", title, artist, album, durationMs);
 
             try
