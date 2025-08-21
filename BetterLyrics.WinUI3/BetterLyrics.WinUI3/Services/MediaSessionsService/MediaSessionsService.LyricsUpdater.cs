@@ -22,7 +22,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private int _langIndex = 0;
         private List<LyricsData> _lyricsDataArr = [];
 
-        private LyricsData? CurrentLyricsData => _lyricsDataArr.ElementAtOrDefault(_langIndex);
+        public LyricsData? CurrentLyricsData => _lyricsDataArr.ElementAtOrDefault(_langIndex);
 
         public event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
 

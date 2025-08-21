@@ -30,6 +30,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         bool IsPlaying { get; }
         SongInfo? SongInfo { get; }
         TimeSpan Position { get; }
+        LyricsData? CurrentLyricsData { get; }
 
         LyricsSearchProvider? LyricsSearchProvider { get; }
         TranslationSearchProvider? TranslationSearchProvider { get; }

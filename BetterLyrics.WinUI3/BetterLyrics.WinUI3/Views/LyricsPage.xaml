@@ -300,10 +300,36 @@
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
                     Value="{x:Bind ViewModel.TimelinePositionSeconds, Mode=OneWay}" />
                 <Grid
+                    x:Name="TimelineSliderLyricsLineInfo"
+                    Margin="0,-48,0,0"
+                    Padding="8,4"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="{ThemeResource SolidBackgroundFillColorQuarternaryBrush}"
+                    CornerRadius="6"
+                    Opacity="{x:Bind ViewModel.TimelineSliderThumbOpacity, Mode=OneWay}">
+                    <Grid.OpacityTransition>
+                        <ScalarTransition />
+                    </Grid.OpacityTransition>
+                    <Grid.TranslationTransition>
+                        <Vector3Transition />
+                    </Grid.TranslationTransition>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock
+                            Margin="0,0,0,2"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.StartMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}, Mode=OneWay}" />
+                        <TextBlock Margin="0,0,0,2" Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.DisplayedText, Mode=OneWay}" />
+                    </StackPanel>
+                </Grid>
+                <Grid
                     Height="32"
                     Margin="0,-32,0,0"
                     VerticalAlignment="Top"
                     Background="Transparent"
+                    PointerEntered="TimelineSliderOverlay_PointerEntered"
+                    PointerExited="TimelineSliderOverlay_PointerExited"
+                    PointerMoved="TimelineSliderOverlay_PointerMoved"
                     PointerPressed="TimelineSliderOverlay_PointerPressed" />
             </Grid>
 

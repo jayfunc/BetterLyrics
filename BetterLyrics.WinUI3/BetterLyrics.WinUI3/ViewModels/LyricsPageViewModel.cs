@@ -102,6 +102,15 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial bool IsSongPlaying { get; set; }
 
+        [ObservableProperty]
+        public partial float TimelineSliderThumbOpacity { get; set; } = 0f;
+
+        [ObservableProperty]
+        public partial LyricsLine? TimelineSliderThumbLyricsLine { get; set; }
+
+        [ObservableProperty]
+        public partial double TimelineSliderThumbSeconds { get; set; } = 0;
+
         public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is LyricsWindowViewModel)
@@ -155,6 +164,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 BottomCommandGridOpacity = 1f;
                 BottomCommandFlyoutTriggerOpacity = 1f;
             }
+        }
+
+        partial void OnTimelineSliderThumbSecondsChanged(double value)
+        {
+            TimelineSliderThumbLyricsLine = _mediaSessionsService.CurrentLyricsData?.GetLyricsLine(value);
         }
 
         //partial void OnVolumeChanged(int value)
