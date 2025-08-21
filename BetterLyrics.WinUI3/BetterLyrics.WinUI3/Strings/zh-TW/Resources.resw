@@ -219,6 +219,9 @@
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>
+  <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
+    <value>Manually search lyrics</value>
+  </data>
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>Lyrics style and effect quick settings</value>
   </data>
@@ -248,6 +251,42 @@
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>Translation provider</value>
+  </data>
+  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
+    <value>* Save changes take effect immediately, after which the track lyrics will be retrieved with mapping information and target lyrics; marking as pure music will directly return to pure music placeholder lyrics. Reset to retrieve by original data.</value>
+  </data>
+  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
+    <value>Lyrics preview</value>
+  </data>
+  <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
+    <value>mapped as</value>
+  </data>
+  <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
+    <value>Mark as pure music</value>
+  </data>
+  <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="LyricsSearchControlReset.Content" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <value>Song info mapping</value>
+  </data>
+  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+    <value>Target lyrics search provider</value>
+  </data>
+  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+    <value>Title</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
     <value>本地 .ESLRC 文件</value>
@@ -485,7 +524,7 @@
     <value>歌詞背景材質</value>
   </data>
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>Album Background Acrylic Effect Strength!</value>
+    <value>Album Background Acrylic Effect Strength</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
     <value>歌詞背景</value>
@@ -695,13 +734,13 @@
     <value>歌詞背景</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
-    <value>Album background layer ambiguity!</value>
+    <value>Album background layer ambiguity</value>
   </data>
   <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
-    <value>Album background layer opacity!</value>
+    <value>Album background layer opacity</value>
   </data>
   <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
-    <value>Album Background Layer Motion Rate!</value>
+    <value>Album Background Layer Motion Rate</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>字體顏色（非當前播放區域）</value>
@@ -837,6 +876,9 @@
   </data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
     <value>極細</value>
+  </data>
+  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>Lyrics timeline sync</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>當歌詞進度抖動時，請嘗試增加該閾值；更改此值會導致歌詞同步偏差</value>
