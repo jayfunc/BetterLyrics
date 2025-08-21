@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -151,6 +152,34 @@ namespace BetterLyrics.WinUI3.Views
             var pos = e.GetCurrentPoint(grid).Position;
             var ratio = pos.X / grid.ActualWidth;
             _mediaSessionsService.ChangePosition(TimelineSlider.Maximum * ratio);
+        }
+
+        private void TimelineSliderOverlay_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            float targetX;
+            var grid = (Grid)sender;
+            var pos = e.GetCurrentPoint(grid).Position;
+            var ratio = pos.X / grid.ActualWidth;
+            ViewModel.TimelineSliderThumbSeconds = TimelineSlider.Maximum * ratio;
+            if (pos.X + TimelineSliderLyricsLineInfo.ActualWidth > grid.ActualWidth)
+            {
+                targetX = (float)(grid.ActualWidth - TimelineSliderLyricsLineInfo.ActualWidth);
+            }
+            else
+            {
+                targetX = (float)pos.X;
+            }
+            TimelineSliderLyricsLineInfo.Translation = new Vector3(targetX, 0, 0);
+        }
+
+        private void TimelineSliderOverlay_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ViewModel.TimelineSliderThumbOpacity = 0.7f;
+        }
+
+        private void TimelineSliderOverlay_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            ViewModel.TimelineSliderThumbOpacity = 0f;
         }
     }
 }

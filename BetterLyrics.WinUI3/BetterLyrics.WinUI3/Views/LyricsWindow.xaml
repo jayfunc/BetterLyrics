@@ -25,6 +25,7 @@
         <!--  Top command  -->
         <Grid
             x:Name="TopCommandGrid"
+            Margin="6"
             VerticalAlignment="Top"
             Background="Transparent"
             Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}"

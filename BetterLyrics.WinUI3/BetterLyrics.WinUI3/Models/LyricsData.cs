@@ -120,5 +120,18 @@ namespace BetterLyrics.WinUI3.Models
                 },
             ]);
         }
+
+        public LyricsLine? GetLyricsLine(double sec)
+        {
+            for (int i = 0; i < LyricsLines.Count; i++)
+            {
+                var line = LyricsLines[i];
+                if (line.StartMs > sec * 1000)
+                {
+                    return LyricsLines.ElementAtOrDefault(i - 1);
+                }
+            }
+            return null;
+        }
     }
 }

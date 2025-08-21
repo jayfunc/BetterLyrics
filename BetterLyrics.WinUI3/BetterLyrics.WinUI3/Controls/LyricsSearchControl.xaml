@@ -145,7 +145,7 @@
                     Visibility="{x:Bind ViewModel.IsSearching, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
             </Grid>
             <Grid Grid.Column="1">
-                <ListView SelectedItem="{x:Bind ViewModel.SelectedLyricsLine, Mode=TwoWay}" ItemsSource="{x:Bind ViewModel.LyricsData.LyricsLines, Mode=OneWay}">
+                <ListView ItemsSource="{x:Bind ViewModel.LyricsData.LyricsLines, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedLyricsLine, Mode=TwoWay}">
                     <interactivity:Interaction.Behaviors>
                         <interactivity:DataTriggerBehavior
                             Binding="{x:Bind ViewModel.LyricsData, Mode=OneWay}"
@@ -203,7 +203,7 @@
                     x:Uid="LyricsSearchControlHelp"
                     Margin="0,0,24,0"
                     FontSize="12"
-                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     RelativePanel.LeftOf="Reset"
                     TextWrapping="Wrap" />

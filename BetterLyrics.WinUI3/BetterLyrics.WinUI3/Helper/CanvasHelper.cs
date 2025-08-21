@@ -74,9 +74,17 @@ namespace BetterLyrics.WinUI3.Helper
             using var ds = list.CreateDrawingSession();
             if (strokeWidth > 0)
             {
+                if (lyricsLine.TextGeometry == null)
+                {
+                    return list;
+                }
                 ds.DrawGeometry(lyricsLine.TextGeometry, lyricsLine.Position, strokeColor, strokeWidth); // 描边
             }
-            ds.FillGeometry(lyricsLine.TextGeometry, lyricsLine.Position, fontColor); // 填充
+            if (lyricsLine.CanvasTextLayout == null)
+            {
+                return list;
+            }
+            ds.DrawTextLayout(lyricsLine.CanvasTextLayout, lyricsLine.Position, fontColor); // 绘制文本（填充）
             return list;
         }
 

@@ -354,7 +354,7 @@
                                     <StackPanel>
                                         <TextBlock Text="{Binding Track.Title}" TextWrapping="Wrap" />
                                         <TextBlock
-                                            Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Text="{Binding Track.Artist}"
                                             TextWrapping="Wrap" />
                                     </StackPanel>
