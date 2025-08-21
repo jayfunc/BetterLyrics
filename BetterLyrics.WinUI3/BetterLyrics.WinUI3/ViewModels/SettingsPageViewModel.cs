@@ -80,14 +80,17 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             var file = await picker.PickSingleFileAsync();
 
-            var succeed = _settingsService.ImportSettings(file.Path);
-            if (succeed)
+            if (file != null)
             {
-                WindowHelper.RestartApp();
-            }
-            else
-            {
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("ImportSettingsFailed") ?? "");
+                var succeed = _settingsService.ImportSettings(file.Path);
+                if (succeed)
+                {
+                    WindowHelper.RestartApp();
+                }
+                else
+                {
+                    App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("ImportSettingsFailed") ?? "");
+                }
             }
         }
 

@@ -196,7 +196,7 @@
     <value>ブラウザの承認を完了してください</value>
   </data>
   <data name="LastFMRequestAuthTitle" xml:space="preserve">
-    <value>BetterLyricsにLast.fmアカウントへのアクセスを許可してください！</value>
+    <value>BetterLyricsにLast.fmアカウントへのアクセスを許可してください</value>
   </data>
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>認可をキャンセルしました</value>
@@ -205,7 +205,7 @@
     <value>ブラウザでキャンセル操作を完了してください</value>
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
-    <value>Last.fmアカウントへのBetterLyricsアクセスを取り消します！</value>
+    <value>Last.fmアカウントへのBetterLyricsアクセスを取り消します</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>リブレットランスレートからの翻訳のリクエストが失敗しました。設定またはネイティブリブレットランレート構成を確認してください</value>
@@ -218,6 +218,9 @@
   </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌詞プロバイダー</value>
+  </data>
+  <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
+    <value>手動で歌詞を検索します</value>
   </data>
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>歌詞スタイルと効果クイック設定</value>
@@ -248,6 +251,42 @@
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻訳プロバイダー</value>
+  </data>
+  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+    <value>アーティスト</value>
+  </data>
+  <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
+    <value>*保存変更はすぐに有効になります。その後、トラックの歌詞がマッピング情報とターゲット歌詞で取得されます。純粋な音楽としてのマーキングは、純粋な音楽プレースホルダーの歌詞に直接戻ります。元のデータで取得するためにリセット。</value>
+  </data>
+  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
+    <value>歌詞プレビュー</value>
+  </data>
+  <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
+    <value>としてマッピングされました</value>
+  </data>
+  <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
+    <value>純粋な音楽としてマークしてください</value>
+  </data>
+  <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
+    <value>見つかりませんでした</value>
+  </data>
+  <data name="LyricsSearchControlReset.Content" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
+    <value>変更を保存</value>
+  </data>
+  <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
+    <value>検索する</value>
+  </data>
+  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <value>曲情報マッピング</value>
+  </data>
+  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+    <value>ターゲット歌詞検索プロバイダー</value>
+  </data>
+  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+    <value>タイトル</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
     <value>ローカル.ESLRCファイル</value>
@@ -485,7 +524,7 @@
     <value>歌詞の背景素材</value>
   </data>
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>アルバムの背景アクリル効果の強さ！</value>
+    <value>アルバムの背景アクリル効果の強さ</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
     <value>歌詞の背景</value>
@@ -695,13 +734,13 @@
     <value>歌詞の背景</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
-    <value>アルバムの背景レイヤーの曖昧さ！</value>
+    <value>アルバムの背景レイヤーの曖昧さ</value>
   </data>
   <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
-    <value>アルバムの背景レイヤーの不透明度！</value>
+    <value>アルバムの背景レイヤーの不透明度</value>
   </data>
   <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
-    <value>アルバムの背景レイヤーのモーションレート！</value>
+    <value>アルバムの背景レイヤーのモーションレート</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>フォントカラー（非電流再生エリア）</value>
@@ -843,6 +882,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>歌詞タイムライン同期しきい値</value>
+  </data>
+  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>歌詞のタイムラインを同期</value>
   </data>
   <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
     <value>翻訳ハイライト</value>
@@ -1058,6 +1100,6 @@
     <value>翻訳サーバーは設定されていません。最初に設定で構成してください</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
-    <value>BetterLyrics はすでに実行されています！</value>
+    <value>BetterLyrics はすでに実行されています</value>
   </data>
 </root>

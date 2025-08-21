@@ -237,7 +237,25 @@
                             </Button.ContextFlyout>
                         </Button>
 
-                        <!--  Lyrics & Translation  -->
+                        <Button
+                            Click="LyricsSearchShortcutButton_Click"
+                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                  Glyph=&#xE721;}"
+                            Style="{StaticResource GhostButtonStyle}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="LyricsPageLyricsSearchButtonToolTip" />
+                            </ToolTipService.ToolTip>
+                            <Button.ContextFlyout>
+                                <Flyout
+                                    x:Name="LyricsSearchFlyout"
+                                    Closed="LyricsSearchFlyout_Closed"
+                                    FlyoutPresenterStyle="{StaticResource FlyoutPageStyle}"
+                                    Placement="Right"
+                                    ShouldConstrainToRootBounds="False" />
+                            </Button.ContextFlyout>
+                        </Button>
+
+                        <!--  Playback shortcut settings  -->
                         <Button
                             Click="PlaybackSettingsShortcutButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},

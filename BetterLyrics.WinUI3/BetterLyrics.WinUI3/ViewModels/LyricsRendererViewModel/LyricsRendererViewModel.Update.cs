@@ -673,7 +673,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void UpdateTimelineSyncThreshold()
         {
-            _timelineSyncThreshold = _mediaSessionsService.GetCurrentMediaSourceProviderInfo()?.TimelineSyncThreshold ?? 0;
+            var current = _mediaSessionsService.GetCurrentMediaSourceProviderInfo();
+            _timelineSyncThreshold = current?.TimelineSyncThreshold ?? 0;
         }
 
         private void UpdatePositionOffset()

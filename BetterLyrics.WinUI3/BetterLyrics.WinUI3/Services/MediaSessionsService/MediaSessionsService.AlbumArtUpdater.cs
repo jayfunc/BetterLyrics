@@ -33,14 +33,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 return;
             }
 
-            byte[]? bytes = await _albumArtSearchService.SearchAsync(
+            byte[]? bytes = await Task.Run(async () => await _albumArtSearchService.SearchAsync(
                 SongInfo?.SourceAppUserModelId ?? "",
                 _cachedSongInfo.Title,
                 _cachedSongInfo.Artist,
                 _cachedSongInfo?.Album ?? string.Empty,
-                _SMTCAlbumArtBytes
-            );
-            token.ThrowIfCancellationRequested();
+                _SMTCAlbumArtBytes,
+                token
+            ), token);
+            if (token.IsCancellationRequested) return;
 
             if (bytes == null)
             {

@@ -67,5 +67,16 @@ namespace BetterLyrics.WinUI3.Enums
                 _ => ".*",
             };
         }
+
+        public static LyricsSearchProvider? ToLyricsSearchProvider(this LyricsFormat format)
+        {
+            return format switch
+            {
+                LyricsFormat.Lrc => LyricsSearchProvider.LocalLrcFile,
+                LyricsFormat.Eslrc => LyricsSearchProvider.LocalEslrcFile,
+                LyricsFormat.Ttml => LyricsSearchProvider.LocalTtmlFile,
+                _ => null,
+            };
+        }
     }
 }

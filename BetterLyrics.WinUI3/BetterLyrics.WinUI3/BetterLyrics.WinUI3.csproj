@@ -26,6 +26,7 @@
 		<None Remove="Controls\AllLyricsSettingsControl.xaml" />
 		<None Remove="Controls\AppSettingsControl.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
+		<None Remove="Controls\LyricsSearchControl.xaml" />
 		<None Remove="Controls\LyricsSettingsControl.xaml" />
 		<None Remove="Controls\MediaSettingsControl.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
@@ -117,6 +118,9 @@
 	  <Content Update="Assets\Edge.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Update="Assets\Empty.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="Assets\EmptyBox.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
@@ -156,6 +160,9 @@
 	  <Content Update="Assets\NetEaseCloudMusic.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Update="Assets\Page.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="Assets\PotPlayer.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
@@ -180,6 +187,11 @@
 	  <Content Update="Assets\Wiki82.profile.xml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\LyricsSearchControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\ShortcutTextBox.xaml">
