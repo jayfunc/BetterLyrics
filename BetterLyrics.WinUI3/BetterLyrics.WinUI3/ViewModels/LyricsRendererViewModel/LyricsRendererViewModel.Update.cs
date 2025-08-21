@@ -93,7 +93,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_isCanvasWidthChanged)
             {
-                if (_canvasWidth < 450)
+                if (_canvasWidth < 500)
                 {
                     _lyricsLayoutOrientation = LyricsLayoutOrientation.Vertical;
                 }

@@ -252,14 +252,11 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>번역 제공자</value>
   </data>
-  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
     <value>아티스트</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* 변경 사항 저장 변경은 즉시 적용되며, 그 후 트랙 가사는 맵핑 정보와 대상 가사로 검색됩니다. 순수한 음악으로 표시하면 순수한 음악 자리 표시 자 가사로 직접 돌아갑니다. 원래 데이터로 검색하도록 재설정하십시오.</value>
-  </data>
-  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
-    <value>가사 미리보기</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>로 매핑됨</value>
@@ -279,13 +276,13 @@
   <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>검색</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+  <data name="LyricsSearchControlSongInfoMapping.Header" xml:space="preserve">
     <value>노래 정보 매핑</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>가사 검색 공급자를 타겟팅하십시오</value>
   </data>
-  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>제목</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
@@ -877,14 +874,14 @@
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
     <value>얇은</value>
   </data>
+  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>가사 타임라인 동기화</value>
+  </data>
   <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>가사 진행 상황이 불안하다면이 임계 값을 높이십시오. 이 값을 변경하면 가사가 동기화 될 수 있습니다</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>가사 타임 라인 동기화 임계 값</value>
-  </data>
-  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
-    <value>가사 타임라인 동기화</value>
   </data>
   <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
     <value>번역 하이라이트</value>

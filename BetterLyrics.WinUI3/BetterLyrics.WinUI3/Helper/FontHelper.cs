@@ -11,6 +11,6 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class FontHelper
     {
-        public static string[] SystemFontFamilies => CanvasTextFormat.GetSystemFontFamilies();
+        public static string[] SystemFontFamilies => CanvasTextFormat.GetSystemFontFamilies().Order().ToArray();
     }
 }

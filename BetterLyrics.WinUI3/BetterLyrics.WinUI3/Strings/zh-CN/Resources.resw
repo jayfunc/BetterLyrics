@@ -252,14 +252,11 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻译来源</value>
   </data>
-  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
     <value>艺术家</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* 保存更改立即生效，此后将以映射信息和目标歌词源检索该曲目歌词；标记为纯音乐将直接返回纯音乐占位歌词。重置以按原始数据检索。</value>
-  </data>
-  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
-    <value>歌词预览</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>映射为</value>
@@ -279,13 +276,13 @@
   <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>搜索</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+  <data name="LyricsSearchControlSongInfoMapping.Header" xml:space="preserve">
     <value>歌曲信息映射</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>目标歌词搜索提供商</value>
   </data>
-  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>标题</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
@@ -877,14 +874,14 @@
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
     <value>极细</value>
   </data>
+  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>歌词时间轴同步</value>
+  </data>
   <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>当歌词进度抖动时，请尝试增加该阈值；更改此值会导致歌词同步有偏差</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>歌词时间轴同步阈值</value>
-  </data>
-  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
-    <value>歌词时间轴同步</value>
   </data>
   <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
     <value>翻译高亮</value>

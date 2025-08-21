@@ -252,14 +252,11 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻譯來源</value>
   </data>
-  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
     <value>藝術家</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* 保存更改立即生效，此後將以映射信息和目標歌詞源檢索該曲目歌詞；標記為純音樂將直接返回純音樂佔位歌詞。重置以按原始數據檢索。</value>
-  </data>
-  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
-    <value>歌詞預覽</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>映射爲</value>
@@ -279,13 +276,13 @@
   <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>搜索</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+  <data name="LyricsSearchControlSongInfoMapping.Header" xml:space="preserve">
     <value>歌曲信息映射</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>目標歌詞搜尋提供者</value>
   </data>
-  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>標題</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">

@@ -252,14 +252,11 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻訳プロバイダー</value>
   </data>
-  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
     <value>アーティスト</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>*保存変更はすぐに有効になります。その後、トラックの歌詞がマッピング情報とターゲット歌詞で取得されます。純粋な音楽としてのマーキングは、純粋な音楽プレースホルダーの歌詞に直接戻ります。元のデータで取得するためにリセット。</value>
-  </data>
-  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
-    <value>歌詞プレビュー</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>としてマッピングされました</value>
@@ -279,13 +276,13 @@
   <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>検索する</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+  <data name="LyricsSearchControlSongInfoMapping.Header" xml:space="preserve">
     <value>曲情報マッピング</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>ターゲット歌詞検索プロバイダー</value>
   </data>
-  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>タイトル</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
@@ -877,14 +874,14 @@
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
     <value>薄い</value>
   </data>
+  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>歌詞のタイムラインを同期</value>
+  </data>
   <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>歌詞の進行が不安定な場合は、このしきい値を増やしてみてください。この値を変更すると、歌詞の同期が逸脱する可能性があります</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>歌詞タイムライン同期しきい値</value>
-  </data>
-  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
-    <value>歌詞のタイムラインを同期</value>
   </data>
   <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
     <value>翻訳ハイライト</value>
