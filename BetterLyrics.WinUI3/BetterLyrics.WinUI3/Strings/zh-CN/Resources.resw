@@ -252,14 +252,11 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>Translation provider</value>
   </data>
-  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
     <value>Artist</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* Save changes take effect immediately, after which the track lyrics will be retrieved with mapping information and target lyrics; marking as pure music will directly return to pure music placeholder lyrics. Reset to retrieve by original data.</value>
-  </data>
-  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
-    <value>Lyrics preview</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>mapped as</value>
@@ -279,13 +276,13 @@
   <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+  <data name="LyricsSearchControlSongInfoMapping.Header" xml:space="preserve">
     <value>Song info mapping</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>Target lyrics search provider</value>
   </data>
-  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>Title</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
