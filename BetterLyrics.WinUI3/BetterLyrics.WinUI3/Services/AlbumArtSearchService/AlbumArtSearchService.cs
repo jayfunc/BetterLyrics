@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
@@ -30,12 +31,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             _iTunesHttpClinet = new();
         }
 
-        public async Task<byte[]?> SearchAsync(string mediaSessionId, string title, string artist, string album, byte[]? bytesFromSMTC = null)
-        {
-            return await Task.Run(async () => await SearchAsyncCore(mediaSessionId, title, artist, album, bytesFromSMTC));
-        }
-
-        public async Task<byte[]?> SearchAsyncCore(string mediaSessionId, string title, string artist, string album, byte[]? bytesFromSMTC = null)
+        public async Task<byte[]?> SearchAsync(string mediaSessionId, string title, string artist, string album, byte[]? bytesFromSMTC, CancellationToken token)
         {
             byte[]? result = null;
 
@@ -60,6 +56,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                             foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
                             {
                                 result = await SearchiTunesAsync(artist, album, title, countryCode);
+                                if (token.IsCancellationRequested) return result;
                                 if (result != null) break;
                             }
                             break;

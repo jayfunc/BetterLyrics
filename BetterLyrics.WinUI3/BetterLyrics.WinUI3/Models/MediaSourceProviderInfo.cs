@@ -12,23 +12,29 @@ namespace BetterLyrics.WinUI3.Models
 {
     public partial class MediaSourceProviderInfo : ObservableRecipient
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEnabled { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEnabled { get; set; } = true;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string Provider { get; set; }
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLastFMTrackEnabled { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLastFMTrackEnabled { get; set; } = false;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsTimelineSyncEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TimelineSyncThreshold { get; set; }
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PositionOffset { get; set; }
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ResetPositionOffsetOnSongChanged { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ResetPositionOffsetOnSongChanged { get; set; } = false;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; } = [.. Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(p, true))];
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
-        public MediaSourceProviderInfo() { }
+        public MediaSourceProviderInfo()
+        {
+            Provider = string.Empty;
+            TimelineSyncThreshold = 0;
+            PositionOffset = 0;
+        }
 
         public MediaSourceProviderInfo(string provider) : base()
         {
@@ -47,11 +53,6 @@ namespace BetterLyrics.WinUI3.Models
             }
 
             Provider = provider;
-            IsEnabled = true;
-            IsLastFMTrackEnabled = false;
-            ResetPositionOffsetOnSongChanged = false;
-            LyricsSearchProvidersInfo = [.. Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(p, true))];
-            AlbumArtSearchProvidersInfo = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
         }
 
         partial void OnAlbumArtSearchProvidersInfoChanged(FullyObservableCollection<AlbumArtSearchProviderInfo> oldValue, FullyObservableCollection<AlbumArtSearchProviderInfo> newValue)

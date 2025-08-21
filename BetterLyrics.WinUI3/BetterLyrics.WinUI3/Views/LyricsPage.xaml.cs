@@ -134,5 +134,20 @@ namespace BetterLyrics.WinUI3.Views
             };
             LyricsSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
         }
+
+        private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsSearchFlyout.Content = new LyricsSearchControl
+            {
+                MaxHeight = 500,
+                MaxWidth = 850,
+            };
+            LyricsSearchFlyout.ShowAt(BottomRightCommandStackPanel);
+        }
+
+        private void LyricsSearchFlyout_Closed(object sender, object e)
+        {
+            LyricsSearchFlyout.Content = null;
+        }
     }
 }

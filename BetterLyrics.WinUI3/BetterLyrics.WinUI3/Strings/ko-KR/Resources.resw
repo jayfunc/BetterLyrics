@@ -196,7 +196,7 @@
     <value>브라우저에서 승인을 완료하십시오</value>
   </data>
   <data name="LastFMRequestAuthTitle" xml:space="preserve">
-    <value>Last.fm 계정에 BetterLyrics 액세스 권한을 부여하세요!</value>
+    <value>Last.fm 계정에 BetterLyrics 액세스 권한을 부여하세요</value>
   </data>
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>내 승인을 취소했습니다</value>
@@ -205,7 +205,7 @@
     <value>브라우저에서 취소 작업을 완료하십시오</value>
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
-    <value>Last.fm 계정에 대한 BetterLyrics 액세스를 취소하십시오!</value>
+    <value>Last.fm 계정에 대한 BetterLyrics 액세스를 취소하십시오</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate에서 번역 요청 실패, 설정 또는 기본 LibreTranslate 구성을 확인하십시오.</value>
@@ -218,6 +218,9 @@
   </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>가사 제공자</value>
+  </data>
+  <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
+    <value>가사를 수동으로 검색합니다</value>
   </data>
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>가사 스타일과 효과 빠른 설정</value>
@@ -248,6 +251,42 @@
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>번역 제공자</value>
+  </data>
+  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+    <value>아티스트</value>
+  </data>
+  <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
+    <value>* 변경 사항 저장 변경은 즉시 적용되며, 그 후 트랙 가사는 맵핑 정보와 대상 가사로 검색됩니다. 순수한 음악으로 표시하면 순수한 음악 자리 표시 자 가사로 직접 돌아갑니다. 원래 데이터로 검색하도록 재설정하십시오.</value>
+  </data>
+  <data name="LyricsSearchControlLyricsPreview.Text" xml:space="preserve">
+    <value>가사 미리보기</value>
+  </data>
+  <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
+    <value>로 매핑됨</value>
+  </data>
+  <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
+    <value>순수한 음악으로 표시하세요</value>
+  </data>
+  <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
+    <value>찾을 수 없음</value>
+  </data>
+  <data name="LyricsSearchControlReset.Content" xml:space="preserve">
+    <value>재설정</value>
+  </data>
+  <data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
+    <value>변경 사항 저장</value>
+  </data>
+  <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
+    <value>검색</value>
+  </data>
+  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <value>노래 정보 매핑</value>
+  </data>
+  <data name="LyricsSearchControlTargetSearchProvider.Text" xml:space="preserve">
+    <value>가사 검색 공급자를 타겟팅하십시오</value>
+  </data>
+  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+    <value>제목</value>
   </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
     <value>로컬 .ESLRC 파일</value>
@@ -485,7 +524,7 @@
     <value>가사 배경 자료</value>
   </data>
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>앨범 배경 아크릴 효과 강도!</value>
+    <value>앨범 배경 아크릴 효과 강도</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
     <value>가사 배경</value>
@@ -695,13 +734,13 @@
     <value>가사 배경</value>
   </data>
   <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
-    <value>앨범 배경 레이어 모호성!</value>
+    <value>앨범 배경 레이어 모호성</value>
   </data>
   <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
-    <value>앨범 배경 레이어 불투명도!</value>
+    <value>앨범 배경 레이어 불투명도</value>
   </data>
   <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
-    <value>앨범 배경 레이어 모션 속도!</value>
+    <value>앨범 배경 레이어 모션 속도</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>글꼴 색상 (비 전류 재생 영역)</value>
@@ -843,6 +882,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>가사 타임 라인 동기화 임계 값</value>
+  </data>
+  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>가사 타임라인 동기화</value>
   </data>
   <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
     <value>번역 하이라이트</value>

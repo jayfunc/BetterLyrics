@@ -31,16 +31,20 @@
                         </controls:SettingsCard>
 
                         <!--  时间轴相关配置  -->
-                        <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold">
-                            <local:ExtendedSlider
-                                x:Uid="SettingsPageLyricsTimelineThresholdReset"
-                                Frequency="100"
-                                Maximum="1000"
-                                Minimum="0"
-                                ResetButtonVisibility="Collapsed"
-                                Unit="ms"
-                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
-                        </controls:SettingsCard>
+                        <controls:SettingsExpander x:Uid="SettingsPageLyricsTimeline" IsExpanded="True">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=TwoWay}" />
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
+                                    <local:ExtendedSlider
+                                        Frequency="100"
+                                        Maximum="1000"
+                                        Minimum="0"
+                                        ResetButtonVisibility="Collapsed"
+                                        Unit="ms"
+                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
                         <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
                             <local:ExtendedSlider
                                 x:Uid="SettingsPagePositionOffsetReset"

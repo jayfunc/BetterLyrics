@@ -51,10 +51,13 @@
             <converter:TranslationSearchProviderToDisplayNameConverter x:Key="TranslationSearchProviderToDisplayNameConverter" />
             <converter:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
             <converter:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
+            <converter:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
             <converter:MediaSourceProviderToLogoUriConverter x:Key="MediaSourceProviderToLogoUriConverter" />
             <converter:MediaSourceProviderToDisplayedNameConverter x:Key="MediaSourceProviderToDisplayedNameConverter" />
             <converter:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
             <converter:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
+            <converter:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
+            <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
