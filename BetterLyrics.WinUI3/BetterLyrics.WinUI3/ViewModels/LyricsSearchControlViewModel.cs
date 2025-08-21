@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -22,6 +23,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ILyricsSearchService _lyricsSearchService;
         private readonly IMediaSessionsService _mediaSessionsService;
         private readonly ISettingsService _settingsService;
+
         private LatestOnlyTaskRunner _lyricsSearchRunner = new();
 
         [ObservableProperty]
@@ -35,6 +37,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial LyricsData? LyricsData { get; set; }
+
+        [ObservableProperty]
+        public partial LyricsLine? SelectedLyricsLine { get; set; }
 
         [ObservableProperty]
         public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
@@ -63,6 +68,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void InitMappedSongSearchQuery()
         {
             LyricsSearchResults.Clear();
+            LyricsData = null;
             if (_mediaSessionsService.SongInfo != null)
             {
                 var found = GetMappedSongSearchQueryFromSettings();
@@ -148,6 +154,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             SelectedLyricsSearchResult = null;
         }
 
+        [RelayCommand]
+        private void ResetMappedTitle()
+        {
+            MappedSongSearchQuery?.MappedTitle = MappedSongSearchQuery?.OriginalTitle ?? string.Empty;
+        }
+
+        [RelayCommand]
+        private void ResetMappedArtist()
+        {
+            MappedSongSearchQuery?.MappedArtist = MappedSongSearchQuery?.OriginalArtist ?? string.Empty;
+        }
+
         partial void OnSelectedLyricsSearchResultChanged(LyricsSearchResult? value)
         {
             MappedSongSearchQuery?.LyricsSearchProvider = value?.Provider;
@@ -161,6 +179,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 LyricsData = null;
             }
+        }
+
+        partial void OnSelectedLyricsLineChanged(LyricsLine? value)
+        {
+            if (value?.StartMs == null)
+            {
+                return;
+            }
+            _mediaSessionsService.ChangePosition(value.StartMs / 1000.0);
         }
     }
 }

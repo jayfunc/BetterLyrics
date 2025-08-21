@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width < 450 || e.NewSize.Height < 100)
+            if (e.NewSize.Width < 500 || e.NewSize.Height < 100)
             {
                 if (BottomCommandGrid.Children.Count != 0)
                 {
@@ -110,11 +110,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void TimelineSliderOverlay_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            _mediaSessionsService.ChangePosition(TimelineSlider.Value);
-        }
-
         private void PlaybackSettingsFlyout_Closed(object sender, object e)
         {
             PlaybackSettingsFlyout.Content = null;
@@ -148,6 +143,14 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsSearchFlyout_Closed(object sender, object e)
         {
             LyricsSearchFlyout.Content = null;
+        }
+
+        private void TimelineSliderOverlay_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var grid = (Grid)sender;
+            var pos = e.GetCurrentPoint(grid).Position;
+            var ratio = pos.X / grid.ActualWidth;
+            _mediaSessionsService.ChangePosition(TimelineSlider.Maximum * ratio);
         }
     }
 }

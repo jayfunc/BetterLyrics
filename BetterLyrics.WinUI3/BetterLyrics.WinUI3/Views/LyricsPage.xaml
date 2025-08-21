@@ -297,9 +297,14 @@
                     Maximum="{x:Bind ViewModel.SongDurationSeconds, Mode=OneWay}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
-                    Tapped="TimelineSliderOverlay_Tapped"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
                     Value="{x:Bind ViewModel.TimelinePositionSeconds, Mode=OneWay}" />
+                <Grid
+                    Height="32"
+                    Margin="0,-32,0,0"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    PointerPressed="TimelineSliderOverlay_PointerPressed" />
             </Grid>
 
         </Grid>
@@ -333,7 +338,7 @@
                 <Flyout x:Name="BottomCommandFlyout" ShouldConstrainToRootBounds="False">
                     <Flyout.FlyoutPresenterStyle>
                         <Style TargetType="FlyoutPresenter">
-                            <Setter Property="MinWidth" Value="450" />
+                            <Setter Property="MinWidth" Value="500" />
                             <Setter Property="MinHeight" Value="100" />
                             <Setter Property="CornerRadius" Value="12" />
                         </Style>
