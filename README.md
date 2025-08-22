@@ -1,4 +1,4 @@
-[_Click here to view frequently asked questions (FAQ)_](#faq)
+[_Click here to view frequently asked questions (FAQ)_](https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md)
 
 ![](Promotion/banner.png)
 
@@ -9,12 +9,6 @@
 <h2 align=center>
 BetterLyrics
 </h2>
-
-<div align=center>
-
-[![](https://img.shields.io/badge/zh--CN-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-CN.md) [![Static Badge](https://img.shields.io/badge/zh--TW-%E7%B9%81%E9%AB%94%E4%B8%AD%E6%96%87-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.zh-TW.md) [![Static Badge](https://img.shields.io/badge/ja-%E6%97%A5%E6%9C%AC%E8%AA%9E-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ja.md) [![Static Badge](https://img.shields.io/badge/ko-%ED%95%9C%EA%B5%AD%EC%9D%B8-blue)](https://github.com/jayfunc/BetterLyrics/blob/dev/README.ko.md)
-
-</div>
 
 <div align=center>
 
@@ -56,9 +50,9 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - [.eslrc](https://github.com/ESLyric/release) files
     - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
   - Online lyrics providers
-    - QQ Music
-    - 网易云音乐 NetEase Cloud Music
-    - 酷狗音乐 Kugou Music
+    - QQ 音乐
+    - 网易云音乐
+    - 酷狗音乐
     - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
     - [LRCLIB](https://lrclib.net/)
 - 🎶 **Multiple Music Players Supported**
@@ -79,13 +73,6 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
     </details>
 
-  - <details><summary>⚠️ Apple Music</summary>
-
-    - Make sure you have set timeline threshold to around 600 ms in settings (Go to "Settings" - "Advanced option" to change), otherwise, the lyrics will be moving forward and afterward constantly.
-    - ⚠️ Please note that you need additional settings to stop from seeing shaking lyrics (see FAQ at the end of this document for more information)
-
-    </details>
-
   - <details><summary>⚠️ foobar2000</summary>
 
     - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
@@ -93,6 +80,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
     </details>
 
+  - Apple Music
   - Spotify
   - QQ Music
   - PotPlayer
@@ -229,47 +217,3 @@ Click the [link](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd83
 ## Any issues and PRs are welcomed
 
 If you find a bug please file it in issues or if you have any ideas feel free to share it here.
-
----
-
-## FAQ
-
-### I couldn't see any button in dock mode
-
-It is important to note that when you enter "Docked Mode", the action buttons are hidden. Hover your mouse over the top to access the "Immerse", "More", and "Close" buttons.
-
-![alt text](FAQ/image-10.png)
-
-Hover the mouse slightly above the bottom edge of the window to display the white control floating window at the bottom
-
-![alt text](FAQ/image-11.png)
-
-Tap the "little white bar" to display the bottom control bar in floating window form (including current playback progress view, timeline offset adjustment; previous song, pause/play, next song; translation, layout, settings)
-
-![alt text](FAQ/image-12.png)
-
-### How can I lock the window in desktop mode
-
-![alt text](FAQ/image-6.png)
-
-Hover you mouse on the top, click on the lock icon and you're good to go! Or, alternatively, press `Ctrl + Alt + U`.
-
-### How can I unlock the window in desktop mode
-
-![alt text](FAQ/image-7.png)
-
-It's in the system tray, right-click on the icon and you'll see "Unlock the window". Or, alternatively, press `Ctrl + Alt + U`.
-
-### There's a delay in lyrics timeline
-
-Hover you mouse on the very bottom of the app,
-
-![alt text](FAQ/image.png)
-
-And then click on the first icon button (Lyrics timeline offset), here you can adjust the offset freely.
-
-### The lyrics jump back and forth frequently (e.g. Apple Music)
-
-![alt text](FAQ/image-2.png)
-
-Go to "Advanced options" section, increase the threshold value (marked with the bigger red rectangle) until the lyrics is working properly.
