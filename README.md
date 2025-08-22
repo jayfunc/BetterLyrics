@@ -236,3 +236,13 @@ You can donate via:
   ![](Donate/WeChatReward.png)
   
   </details>
+
+## ⚠️ Disclaimer
+
+This project is provided "as is" without warranty of any kind.
+
+All lyrics, fonts, icons, and other third-party resources are the property of their respective copyright holders. 
+The author of this project does not claim ownership of such resources.
+
+This project is non-commercial and should not be used to infringe any rights. 
+Users are responsible for ensuring their own use complies with applicable laws and licenses.
