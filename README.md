@@ -163,7 +163,7 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 
 **Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version)
 
-☕ If you find it useful, please consider purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
+☕ If you find it useful, please consider [donating](#donations) or purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
 
 > When there's a stable version built, Microsoft Store will be the first channel to get updated.
 
@@ -217,3 +217,22 @@ Click the [link](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd83
 ## Any issues and PRs are welcomed
 
 If you find a bug please file it in issues or if you have any ideas feel free to share it here.
+
+## Donations
+
+If you like this project, please consider supporting it by donating. Your support will help keep the project alive and encourage further development.
+
+You can donate via:
+- [PayPal](https://paypal.me/zhefangpay)
+- [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
+- <details><summary>支付宝</summary>
+    
+  ![](Donate/Alipay.jpg)
+  
+  </detais>
+
+- <details><summary>微信</summary>
+    
+  ![](Donate/WeChatReward.png)
+  
+  </details>
