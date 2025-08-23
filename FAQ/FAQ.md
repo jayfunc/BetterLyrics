@@ -1,5 +1,5 @@
 ### Where I can find the logs?
-C:\Users\%USERNAME%\AppData\Local\Packages\37412.BetterLyrics_c8mj3v9sysxb4\LocalCache\logs
+`C:\Users\%USERNAME%\AppData\Local\Packages\37412.BetterLyrics_rd1g0rsrrtxw8\LocalCache\logs`
 
 ### How to install ".msixbundle" package?
 [See this doc](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md)
