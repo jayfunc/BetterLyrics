@@ -16,6 +16,7 @@ namespace BetterLyrics.WinUI3.Constants
         public const string PotPlayer = "PotPlayer";
         public const string Spotify = "Spotify";
         public const string AppleMusic = "Apple Music";
+        public const string AppleMusicAlternative = "Apple Music";
         public const string NetEaseCloudMusic = "网易云音乐";
         public const string KugouMusic = "酷狗音乐";
         public const string QQMusic = "QQ 音乐";

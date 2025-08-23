@@ -15,6 +15,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IgnoreFullscreenWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LXMusicServer { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool HideWindowWhenNotPlaying { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> ShowOrHideLyricsWindowShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "H" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDragEverywhereEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsImmersiveMode { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = true;

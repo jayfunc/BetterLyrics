@@ -73,6 +73,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     UpdateIsLastFMTrackEnabled();
                 }
             }
+            else if (message.Sender is LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.IsDynamicLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
         }
 
         public void Receive(PropertyChangedMessage<Color> message)
@@ -242,7 +249,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (message.Sender is LiveStates)
             {
-                if (message.PropertyName == nameof(LiveStates.CurrentLyricsDisplayType))
+                if (message.PropertyName == nameof(LiveStates.LyricsDisplayType))
                 {
                     _isDisplayTypeChanged = true;
                 }
@@ -316,7 +323,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (message.Sender is LiveStates)
             {
-                if (message.PropertyName == nameof(LiveStates.CurrentLyricsWindowMode))
+                if (message.PropertyName == nameof(LiveStates.LyricsWindowMode))
                 {
                     UpdateColorConfig();
                     UpdateImmersiveBackgroundOpacity();

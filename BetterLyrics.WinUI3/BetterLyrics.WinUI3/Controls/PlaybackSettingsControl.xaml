@@ -231,12 +231,11 @@
                             IsExpanded="True">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=TwoWay}" />
                             <controls:SettingsExpander.Items>
-                                <controls:SettingsCard x:Uid="SettingsPageTargetLanguage">
+                                <controls:SettingsCard x:Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                         <ComboBoxItem Content="العربية" Tag="ar" />
                                         <ComboBoxItem Content="Azərbaycan dili" Tag="az" />
-                                        <ComboBoxItem Content="简体中文" Tag="zh-Hans" />
-                                        <ComboBoxItem Content="繁體中文" Tag="zh-Hant" />
+                                        <ComboBoxItem Content="中文" Tag="zh" />
                                         <ComboBoxItem Content="Čeština" Tag="cs" />
                                         <ComboBoxItem Content="Dansk" Tag="da" />
                                         <ComboBoxItem Content="Nederlands" Tag="nl" />
@@ -266,7 +265,7 @@
                                         <ComboBoxItem Content="Tiếng Việt" Tag="vi" />
                                     </ComboBox>
                                 </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="SettingsPageTranslationConfig">
+                                <controls:SettingsCard x:Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <controls:SettingsCard.Description>
                                         <HyperlinkButton Margin="0,6,0,0" NavigateUri="https://github.com/LibreTranslate/LibreTranslate">
                                             <TextBlock
@@ -295,6 +294,29 @@
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
+                        <!--  Lyrics phonetic  -->
+                        <controls:SettingsExpander
+                            x:Uid="SettingsPageChinese"
+                            IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}"
+                            IsExpanded="True">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=TwoWay}" />
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard>
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.ChineseRomanization, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
+                                        <ComboBoxItem x:Uid="SettingsPagePinyin" />
+                                        <ComboBoxItem x:Uid="SettingsPageJyutping" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+                        <controls:SettingsCard x:Uid="SettingsPageJapanese" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
+                        </controls:SettingsCard>
+                        <!--  中文简体繁体偏好  -->
+                        <controls:SettingsCard x:Uid="SettingsPageChinesePreference">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTraditionalChineseEnabled, Mode=TwoWay}" />
+                        </controls:SettingsCard>
+                        <!--  Provider info  -->
                         <controls:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
                             <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
                         </controls:SettingsCard>

@@ -73,6 +73,7 @@ namespace BetterLyrics.WinUI3.Helper
                     var lyricsWindow = (LyricsWindow)window;
                     lyricsWindow.ViewModel.InitShortcuts();
                     lyricsWindow.AutoSelectLyricsMode();
+                    lyricsWindow.ViewModel.SetIsAlwaysOnTop();
                 }
             }
             else

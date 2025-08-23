@@ -18,6 +18,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,16 +43,69 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial object NavViewSelectedItemTag { get; set; } = "App";
 
+        [ObservableProperty]
+        public partial ObservableCollection<LibInfo> Libs { get; set; }
+
         public SettingsPageViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
             AppSettings = _settingsService.AppSettings;
+
+            Libs =
+            [
+                new LibInfo { Name = "3v.EvtSource" },
+                new LibInfo { Name = "ColorThief.ImageSharp" },
+                new LibInfo { Name = "CommunityToolkit.Labs.WinUI.MarqueeText" },
+                new LibInfo { Name = "CommunityToolkit.Labs.WinUI.OpacityMaskView" },
+                new LibInfo { Name = "CommunityToolkit.Labs.WinUI.Shimmer" },
+                new LibInfo { Name = "CommunityToolkit.Mvvm" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Behaviors" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Controls.MetadataControl" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Controls.Primitives" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Controls.Segmented" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Controls.SettingsControls" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Controls.Sizers" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Converters" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Extensions" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Helpers" },
+                new LibInfo { Name = "CommunityToolkit.WinUI.Media" },
+                new LibInfo { Name = "csharp-pinyin" },
+                new LibInfo { Name = "Dubya.WindowsMediaController" },
+                new LibInfo { Name = "H.NotifyIcon.WinUI"},
+                new LibInfo { Name = "Hqub.Last.fm"},
+                new LibInfo { Name = "Lyricify.Lyrics.Helper-NativeAot"},
+                new LibInfo { Name = "Microsoft.Extensions.DependencyInjection"},
+                new LibInfo { Name = "Microsoft.Extensions.Logging"},
+                new LibInfo { Name = "Microsoft.Graphics.Win2D"},
+                new LibInfo { Name = "Microsoft.Windows.SDK.BuildTools"},
+                new LibInfo { Name = "Microsoft.WindowsAppSDK"},
+                new LibInfo { Name = "Nito.AsyncEx"},
+                new LibInfo { Name = "Nito.AsyncEx.Tasks"},
+                new LibInfo { Name = "NTextCat"},
+                new LibInfo { Name = "RomajiConverter.Core"},
+                new LibInfo { Name = "Serilog.Extensions.Logging"},
+                new LibInfo { Name = "Serilog.Sinks.File"},
+                new LibInfo { Name = "ShadowViewer.Controls.Notification"},
+                new LibInfo { Name = "SixLabors.ImageSharp" },
+                new LibInfo { Name = "System.Drawing.Common"},
+                new LibInfo { Name = "System.Text.Encoding.CodePages"},
+                new LibInfo { Name = "TagLibSharp" },
+                new LibInfo { Name = "TinyPinyin.Net"},
+                new LibInfo { Name = "Ude.NetStandard"},
+                new LibInfo { Name = "Vanara.PInvoke.CoreAudio"},
+                new LibInfo { Name = "Vanara.PInvoke.DwmApi"},
+                new LibInfo { Name = "Vanara.PInvoke.Gdi32"},
+                new LibInfo { Name = "Vanara.PInvoke.Shell32"},
+                new LibInfo { Name = "Vanara.PInvoke.User32"},
+                new LibInfo { Name = "WinUIEx"   },
+                new LibInfo { Name = "z440.atl.core" },
+            ];
         }
 
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.GithubUrl));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.GitHubUrl));
         }
 
         [RelayCommand]

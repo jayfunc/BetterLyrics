@@ -105,14 +105,12 @@ namespace BetterLyrics.WinUI3
         [NotifyPropertyChangedRecipients]
         public partial bool IsMouseWithinWindow { get; set; } = false;
 
-        [ObservableProperty] public partial Visibility AOTFlyoutItemVisibility { get; set; } = Visibility.Visible;
         [ObservableProperty] public partial Visibility FullScreenFlyoutItemVisibility { get; set; } = Visibility.Visible;
         [ObservableProperty] public partial Visibility LockButtonVisibility { get; set; } = Visibility.Visible;
         [ObservableProperty] public partial Visibility DesktopFlyoutItemVisibility { get; set; } = Visibility.Visible;
         [ObservableProperty] public partial Visibility PIPFlyoutItemVisibility { get; set; } = Visibility.Visible;
         [ObservableProperty] public partial Visibility DockFlyoutItemVisibility { get; set; } = Visibility.Visible;
 
-        [ObservableProperty] public partial bool IsAOTFlyoutItemChecked { get; set; } = false;
         [ObservableProperty] public partial bool IsFullScreenFlyoutItemChecked { get; set; } = false;
         [ObservableProperty] public partial bool IsDesktopFlyoutItemChecked { get; set; } = false;
         [ObservableProperty] public partial bool IsPIPFlyoutItemChecked { get; set; } = false;
@@ -126,11 +124,11 @@ namespace BetterLyrics.WinUI3
 
             var hwnd = WindowNative.GetWindowHandle(window);
 
-            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode || LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
+            if (LiveStates.LyricsWindowMode == LyricsWindowMode.DockMode || LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode)
             {
                 if (_hideWindowWhenNotPlaying && !_mediaSessionsService.IsPlaying)
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DockMode)
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, 0, _dockPlacement);
                     }
@@ -138,7 +136,7 @@ namespace BetterLyrics.WinUI3
                 }
                 else
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DockMode)
                     {
                         DockModeHelper.UpdateAppBarHeight(hwnd, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);
                     }
@@ -176,11 +174,19 @@ namespace BetterLyrics.WinUI3
                 if (message.PropertyName == nameof(GeneralSettings.IgnoreFullscreenWindow))
                 {
                     _ignoreFullscreenWindow = message.NewValue;
+                    SetIsAlwaysOnTop();
                 }
                 else if (message.PropertyName == nameof(GeneralSettings.HideWindowWhenNotPlaying))
                 {
                     _hideWindowWhenNotPlaying = message.NewValue;
                     UpdateDockOrDesktopWindow();
+                }
+            }
+            else if (message.Sender is LiveStates)
+            {
+                if (message.PropertyName == nameof(LiveStates.IsAlwaysOnTop))
+                {
+                    SetIsAlwaysOnTop();
                 }
             }
         }
@@ -210,19 +216,40 @@ namespace BetterLyrics.WinUI3
 
         public void InitShortcuts()
         {
-            UpdateDesktopLockShortcut();
+            UpdateDesktopLockUnlockShortcut();
             UpdateDesktopToggleShortcut();
             UpdateDockToggleShortcut();
             UpdatePictureInPictureToggleShortcut();
+            UpdateLyricsWindowShowHideShortcut();
         }
 
-        private void UpdateDesktopLockShortcut()
+        private void UpdateLyricsWindowShowHideShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.DesktopLock,
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.LyricsWindowShowOrHide,
+                _settingsService.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut,
+                () =>
+                {
+                    var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+                    if (window == null) return;
+                    if (window.Visible)
+                    {
+                        window.Hide();
+                    }
+                    else
+                    {
+                        WindowHelper.OpenWindow<LyricsWindow>();
+                    }
+                }
+            );
+        }
+
+        private void UpdateDesktopLockUnlockShortcut()
+        {
+            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.DesktopLockOrUnlock,
                 _settingsService.AppSettings.DesktopModeSettings.LockShortcut,
                 () =>
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode)
                     {
                         ToggleLockWindow();
                     }
@@ -236,8 +263,8 @@ namespace BetterLyrics.WinUI3
                 _settingsService.AppSettings.DesktopModeSettings.ToggleShortcut,
                 () =>
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode ||
-                        LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode ||
+                        LiveStates.LyricsWindowMode == LyricsWindowMode.StandardMode)
                     {
                         ToggleDesktopMode();
                     }
@@ -251,8 +278,8 @@ namespace BetterLyrics.WinUI3
                 _settingsService.AppSettings.DockModeSettings.ToggleShortcut,
                 () =>
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode ||
-                        LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DockMode ||
+                        LiveStates.LyricsWindowMode == LyricsWindowMode.StandardMode)
                     {
                         ToggleDockMode();
                     }
@@ -266,8 +293,8 @@ namespace BetterLyrics.WinUI3
                 _settingsService.AppSettings.PictureInPictureModeSettings.ToggleShortcut,
                 () =>
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.PictureInPictureMode ||
-                        LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.PictureInPictureMode ||
+                        LiveStates.LyricsWindowMode == LyricsWindowMode.StandardMode)
                     {
                         TogglePictureInPictureMode();
                     }
@@ -277,14 +304,14 @@ namespace BetterLyrics.WinUI3
 
         private void SetFullscreenTitleBarControlsStatus()
         {
-            AOTFlyoutItemVisibility = LockButtonVisibility = DesktopFlyoutItemVisibility = PIPFlyoutItemVisibility = DockFlyoutItemVisibility = Visibility.Collapsed;
+            LockButtonVisibility = DesktopFlyoutItemVisibility = PIPFlyoutItemVisibility = DockFlyoutItemVisibility = Visibility.Collapsed;
             IsFullScreenFlyoutItemChecked = true;
             IsImmersiveMode = true;
         }
 
         private void SetPIPModeTitleBarControlsStatus()
         {
-            AOTFlyoutItemVisibility = DesktopFlyoutItemVisibility = FullScreenFlyoutItemVisibility = DockFlyoutItemVisibility = LockButtonVisibility = Visibility.Collapsed;
+            DesktopFlyoutItemVisibility = FullScreenFlyoutItemVisibility = DockFlyoutItemVisibility = LockButtonVisibility = Visibility.Collapsed;
             IsImmersiveMode = true;
             IsPIPFlyoutItemChecked = true;
         }
@@ -296,7 +323,7 @@ namespace BetterLyrics.WinUI3
             var overlappedPresenter = (OverlappedPresenter)window.AppWindow.Presenter;
 
             overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = false;
-            AOTFlyoutItemVisibility = DesktopFlyoutItemVisibility = LockButtonVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
+            DesktopFlyoutItemVisibility = LockButtonVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
             IsImmersiveMode = true;
             IsDockFlyoutItemChecked = true;
         }
@@ -308,7 +335,7 @@ namespace BetterLyrics.WinUI3
             var overlappedPresenter = (OverlappedPresenter)window.AppWindow.Presenter;
 
             overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = false;
-            DockFlyoutItemVisibility = AOTFlyoutItemVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
+            DockFlyoutItemVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
             LockButtonVisibility = Visibility.Visible;
             IsDesktopFlyoutItemChecked = true;
         }
@@ -320,10 +347,9 @@ namespace BetterLyrics.WinUI3
             var overlappedPresenter = (OverlappedPresenter)window.AppWindow.Presenter;
 
             overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = true;
-            AOTFlyoutItemVisibility = DesktopFlyoutItemVisibility = DockFlyoutItemVisibility = PIPFlyoutItemVisibility = FullScreenFlyoutItemVisibility = Visibility.Visible;
+            DesktopFlyoutItemVisibility = DockFlyoutItemVisibility = PIPFlyoutItemVisibility = FullScreenFlyoutItemVisibility = Visibility.Visible;
             LockButtonVisibility = Visibility.Collapsed;
             IsFullScreenFlyoutItemChecked = IsDesktopFlyoutItemChecked = IsDockFlyoutItemChecked = IsPIPFlyoutItemChecked = false;
-            IsAOTFlyoutItemChecked = overlappedPresenter.IsAlwaysOnTop;
             IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
         }
 
@@ -339,7 +365,7 @@ namespace BetterLyrics.WinUI3
                 {
                     _dispatcherQueueTimer.Debounce(() =>
                     {
-                        if ((LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode || LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode) && _ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
+                        if ((LiveStates.LyricsWindowMode == LyricsWindowMode.DockMode || LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode) && _ignoreFullscreenWindow && window.AppWindow.Presenter is OverlappedPresenter presenter)
                         {
                             presenter.IsAlwaysOnTop = true;
                         }
@@ -359,7 +385,7 @@ namespace BetterLyrics.WinUI3
 
         public void UpdateAccentColor(nint hwnd)
         {
-            WindowPixelSampleMode mode = LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
+            WindowPixelSampleMode mode = LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode ? WindowPixelSampleMode.WindowEdge : _dockPlacement.ToWindowPixelSampleMode();
             ActivatedWindowAccentColor = ColorHelper.GetAccentColor(hwnd, _settingsService.AppSettings.DockModeSettings.DockMonitorDeviceName, mode).ToColor();
         }
 
@@ -405,7 +431,7 @@ namespace BetterLyrics.WinUI3
             StopWatchWindowColorChange();
 
             LiveStates.ToggleLyricsWindowMode(LyricsWindowMode.DesktopMode);
-            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
+            if (LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode)
             {
                 DesktopModeHelper.Enable(window);
                 StartWatchWindowColorChange();
@@ -424,6 +450,7 @@ namespace BetterLyrics.WinUI3
                 DesktopModeHelper.Disable(window);
                 SetStandardModeTitleBarControlsStatus();
             }
+            SetIsAlwaysOnTop();
         }
 
         public void ToggleDockMode()
@@ -434,7 +461,7 @@ namespace BetterLyrics.WinUI3
             StopWatchWindowColorChange();
 
             LiveStates.ToggleLyricsWindowMode(LyricsWindowMode.DockMode);
-            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
+            if (LiveStates.LyricsWindowMode == LyricsWindowMode.DockMode)
             {
                 window.Restore();
                 DockModeHelper.Enable(window, _dockMonitorDeviceName, _dockWindowHeight, _dockPlacement);
@@ -448,6 +475,7 @@ namespace BetterLyrics.WinUI3
             }
 
             UpdateDockOrDesktopWindow();
+            SetIsAlwaysOnTop();
         }
 
         public void TogglePictureInPictureMode()
@@ -456,7 +484,7 @@ namespace BetterLyrics.WinUI3
             if (window == null) return;
 
             LiveStates.ToggleLyricsWindowMode(LyricsWindowMode.PictureInPictureMode);
-            if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.PictureInPictureMode)
+            if (LiveStates.LyricsWindowMode == LyricsWindowMode.PictureInPictureMode)
             {
                 window.AppWindow.SetPresenter(AppWindowPresenterKind.CompactOverlay);
                 window.AppWindow.Move(AppSettings.PictureInPictureModeSettings.WindowPosition.ToPointInt32());
@@ -467,17 +495,17 @@ namespace BetterLyrics.WinUI3
                 window.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
                 SetStandardModeTitleBarControlsStatus();
             }
+            SetIsAlwaysOnTop();
         }
 
-        public void ToggleAlwaysOnTop()
+        public void SetIsAlwaysOnTop()
         {
             var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
             if (window.AppWindow.Presenter is OverlappedPresenter presenter)
             {
-                presenter.IsAlwaysOnTop = !presenter.IsAlwaysOnTop;
-                IsAOTFlyoutItemChecked = presenter.IsAlwaysOnTop;
+                presenter.IsAlwaysOnTop = _liveStatesService.LiveStates.IsAlwaysOnTop;
             }
         }
 
@@ -537,7 +565,7 @@ namespace BetterLyrics.WinUI3
             {
                 if (message.PropertyName == nameof(DesktopModeSettings.LockShortcut))
                 {
-                    UpdateDesktopLockShortcut();
+                    UpdateDesktopLockUnlockShortcut();
                 }
             }
             else if (message.Sender is DockModeSettings)
@@ -559,6 +587,13 @@ namespace BetterLyrics.WinUI3
                 if (message.PropertyName == nameof(DesktopModeSettings.ToggleShortcut))
                 {
                     UpdateDesktopToggleShortcut();
+                }
+            }
+            else if (message.Sender is GeneralSettings)
+            {
+                if (message.PropertyName == nameof(GeneralSettings.ShowOrHideLyricsWindowShortcut))
+                {
+                    UpdateLyricsWindowShowHideShortcut();
                 }
             }
         }

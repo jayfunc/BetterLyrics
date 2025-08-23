@@ -135,8 +135,8 @@
   <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
     <value>標準モード</value>
   </data>
-  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
-    <value>常にトップ</value>
+  <data name="AppSettingsControlGeneral.Content" xml:space="preserve">
+    <value>一般的な</value>
   </data>
   <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
     <value>ESCを押して、フルスクリーンモードを終了します</value>
@@ -439,6 +439,18 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音楽ギャラリー - BetterLyrics</value>
   </data>
+  <data name="SetingsPageDonation.Text" xml:space="preserve">
+    <value>寄付</value>
+  </data>
+  <data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <value>フィードバック</value>
+  </data>
+  <data name="SetingsPageRef.Text" xml:space="preserve">
+    <value>使用されているライブラリ</value>
+  </data>
+  <data name="SetingsPageThanks.Text" xml:space="preserve">
+    <value>このプロジェクトが気に入っている場合は、寄付してサポートすることを検討してください。あなたのサポートは、プロジェクトを生かし続け、さらなる開発を促進するのに役立ちます。</value>
+  </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>について</value>
   </data>
@@ -475,6 +487,9 @@
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>量</value>
   </data>
+  <data name="SettingsPageAOT.Header" xml:space="preserve">
+    <value>常にトップ</value>
+  </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>アプリの外観と動作</value>
   </data>
@@ -483,18 +498,6 @@
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>アプリの動作</value>
-  </data>
-  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
-    <value>デスクトップモード</value>
-  </data>
-  <data name="SettingsPageAppDock.Text" xml:space="preserve">
-    <value>ドックモード</value>
-  </data>
-  <data name="SettingsPageAppPictureInPicture.Text" xml:space="preserve">
-    <value>ピクチャーインピクチャーモード</value>
-  </data>
-  <data name="SettingsPageAppStandard.Text" xml:space="preserve">
-    <value>標準モード</value>
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>デスクトップモードをアクティブにするときの自動ロック</value>
@@ -532,6 +535,12 @@
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>キャッシュ</value>
   </data>
+  <data name="SettingsPageChinese.Header" xml:space="preserve">
+    <value>中国の発音</value>
+  </data>
+  <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+    <value>中国人を伝統的な中国人に変換します</value>
+  </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>コンパクト</value>
   </data>
@@ -547,7 +556,10 @@
   <data name="SettingsPageDev.Content" xml:space="preserve">
     <value>高度なオプション</value>
   </data>
-  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+    <value>このプロジェクトは、いかなる種類の保証もなく現状のまま提供されています。すべての歌詞、フォント、アイコン、およびその他のサードパーティのリソースは、それぞれの著作権所有者の財産です。このプロジェクトの作成者は、そのようなリソースの所有権を主張していません。このプロジェクトは非営利的であり、いかなる権利も侵害するために使用すべきではありません。ユーザーは、自らの使用が適用される法律およびライセンスに準拠していることを確認する責任があります。</value>
+  </data>
+  <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
@@ -567,6 +579,9 @@
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>窓の高さ</value>
+  </data>
+  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
+    <value>自動調整</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>アニメーションタイプを緩和します</value>
@@ -622,7 +637,7 @@
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>ファンの歌詞</value>
   </data>
-  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+  <data name="SettingsPageFAQ.Content" xml:space="preserve">
     <value>よくある質問</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
@@ -634,15 +649,6 @@
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>レンダリングフレームレート</value>
   </data>
-  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
-    <value>新しいウィンドウで開きます</value>
-  </data>
-  <data name="SettingsPageGitHub.Description" xml:space="preserve">
-    <value>GitHubのソースコードを参照してください</value>
-  </data>
-  <data name="SettingsPageGitHub.Header" xml:space="preserve">
-    <value>これはオープンソースアプリです</value>
-  </data>
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>タイトルバーをページ全体に拡張して、ウィンドウを非対話領域でドラッグできるようにします</value>
   </data>
@@ -650,10 +656,10 @@
     <value>グローバルドラッグ</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>ドックモードやデスクトップモードで再生されている曲がないときにウィンドウを自動的に非表示にする</value>
+    <value>ドッキングモードまたはデスクトップモードでは、曲が再生されていない場合、ウィンドウは自動的に非表示になります。それ以外の場合、ウィンドウが自動的に表示されます。</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
-    <value>自動ハイドウィンドウ</value>
+    <value>Windowsを自動的に非表示/表示します</value>
   </data>
   <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
     <value>このアプリは、ドッキングまたはデスクトップモードが有効になっているときにフルスクリーンアプリの上に表示されます</value>
@@ -670,8 +676,14 @@
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="SettingsPageJapanese.Header" xml:space="preserve">
+    <value>日本の注釈</value>
+  </data>
   <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
     <value>今すぐ参加してください</value>
+  </data>
+  <data name="SettingsPageJyutping.Content" xml:space="preserve">
+    <value>広東語のピンイン</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
@@ -937,6 +949,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>パスはコンピューターでは見つかりません</value>
   </data>
+  <data name="SettingsPagePinyin.Content" xml:space="preserve">
+    <value>マンダリンのピンイン</value>
+  </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
     <value>再生ソース</value>
   </data>
@@ -955,7 +970,7 @@
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>前のトラックのショートカットキー</value>
   </data>
-  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQフィードバック＆チャットグループ</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
@@ -969,6 +984,9 @@
   </data>
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>変更を適用するためのアプリを再起動します</value>
+  </data>
+  <data name="SettingsPageRomaji.Header" xml:space="preserve">
+    <value>日本の注釈</value>
   </data>
   <data name="SettingsPageSC.Content" xml:space="preserve">
     <value>简体中文</value>
@@ -1012,6 +1030,9 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>このホットキーは正常に登録されています</value>
   </data>
+  <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+    <value>歌詞ウィンドウディスプレイとショートカットキーを非表示にします</value>
+  </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>現在の値： </value>
   </data>
@@ -1039,7 +1060,7 @@
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
-  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+  <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">

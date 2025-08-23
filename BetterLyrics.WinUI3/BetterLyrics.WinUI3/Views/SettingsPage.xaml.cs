@@ -29,20 +29,5 @@ namespace BetterLyrics.WinUI3.Views
         {
             ViewModel.NavViewSelectedItemTag = (args.SelectedItem as NavigationViewItem)!.Tag;
         }
-
-        private void QQGroupButton_Click(object sender, RoutedEventArgs e)
-        {
-            Launcher.LaunchUriAsync(new Uri(Constants.Link.QQGroupUrl));
-        }
-
-        private void DiscodGroupButton_Click(object sender, RoutedEventArgs e)
-        {
-            Launcher.LaunchUriAsync(new Uri(Constants.Link.DiscordUrl));
-        }
-
-        private void TelegramGroupButton_Click(object sender, RoutedEventArgs e)
-        {
-            Launcher.LaunchUriAsync(new Uri(Constants.Link.TelegramUrl));
-        }
     }
 }

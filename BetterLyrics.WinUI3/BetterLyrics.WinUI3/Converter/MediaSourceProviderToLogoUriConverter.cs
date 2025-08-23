@@ -19,6 +19,7 @@ namespace BetterLyrics.WinUI3.Converter
                 {
                     PlayerID.Spotify => PathHelper.SpotifyLogoPath,
                     PlayerID.AppleMusic => PathHelper.AppleMusicLogoPath,
+                    PlayerID.AppleMusicAlternative => PathHelper.AppleMusicLogoPath,
                     PlayerID.iTunes  => PathHelper.iTunesLogoPath,
                     PlayerID.KugouMusic => PathHelper.KugouMusicLogoPath,
                     PlayerID.NetEaseCloudMusic => PathHelper.NetEaseCloudMusicLogoPath,

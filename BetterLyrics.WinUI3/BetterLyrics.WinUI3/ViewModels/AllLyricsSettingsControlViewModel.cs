@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (message.Sender is LiveStates)
             {
-                if (message.PropertyName == nameof(LiveStates.CurrentLyricsWindowMode))
+                if (message.PropertyName == nameof(LiveStates.LyricsWindowMode))
                 {
                     SelectedTabIndex = (int)message.NewValue;
                 }

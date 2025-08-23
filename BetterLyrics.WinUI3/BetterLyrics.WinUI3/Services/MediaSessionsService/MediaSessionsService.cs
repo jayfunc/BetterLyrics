@@ -44,6 +44,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<LyricsWindowMode>>,
+        IRecipient<PropertyChangedMessage<ChineseRomanization>>,
         IRecipient<PropertyChangedMessage<List<string>>>
     {
         private readonly IAlbumArtSearchService _albumArtSearchService;
@@ -320,14 +321,31 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         currentMediaSourceProviderInfo?.PositionOffset = 0;
                     }
 
-                    _cachedSongInfo = new SongInfo
+                    if (id == Constants.PlayerID.AppleMusic || id == Constants.PlayerID.AppleMusicAlternative)
                     {
-                        Title = mediaProperties.Title,
-                        Artist = mediaProperties.Artist,
-                        Album = mediaProperties.AlbumTitle,
-                        DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
-                        SourceAppUserModelId = id,
-                    };
+                        string fixedArtist = mediaProperties.Artist.Split(" — ").FirstOrDefault() ?? mediaProperties.Artist;
+                        string fixedAlbum = mediaProperties.Artist.Split(" — ").LastOrDefault() ?? mediaProperties.AlbumTitle;
+
+                        _cachedSongInfo = new SongInfo
+                        {
+                            Title = mediaProperties.Title,
+                            Artist = fixedArtist,
+                            Album = fixedAlbum,
+                            DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
+                            SourceAppUserModelId = id,
+                        };
+                    }
+                    else
+                    {
+                        _cachedSongInfo = new SongInfo
+                        {
+                            Title = mediaProperties.Title,
+                            Artist = mediaProperties.Artist,
+                            Album = mediaProperties.AlbumTitle,
+                            DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
+                            SourceAppUserModelId = id,
+                        };
+                    }
 
                     _cachedSongInfo.Duration = (int)(_cachedSongInfo.DurationMs / 1000f);
 
@@ -579,6 +597,18 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 {
                     UpdateTranslations();
                 }
+                else if (message.PropertyName == nameof(TranslationSettings.IsChineseRomanizationEnabled))
+                {
+                    UpdateTranslations();
+                }
+                else if (message.PropertyName == nameof(TranslationSettings.IsJapaneseRomanizationEnabled))
+                {
+                    UpdateTranslations();
+                }
+                else if (message.PropertyName == nameof(TranslationSettings.IsTraditionalChineseEnabled))
+                {
+                    UpdateLyrics();
+                }
             }
         }
 
@@ -628,7 +658,18 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             if (message.Sender is LiveStates)
             {
-                if (message.PropertyName == nameof(LiveStates.CurrentLyricsWindowMode))
+                if (message.PropertyName == nameof(LiveStates.LyricsWindowMode))
+                {
+                    UpdateTranslations();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<ChineseRomanization> message)
+        {
+            if (message.Sender is TranslationSettings)
+            {
+                if (message.PropertyName == nameof(TranslationSettings.ChineseRomanization))
                 {
                     UpdateTranslations();
                 }

@@ -11,28 +11,30 @@ namespace BetterLyrics.WinUI3.Models
 {
     public partial class LiveStates : ObservableRecipient
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowMode CurrentLyricsWindowMode { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType CurrentLyricsDisplayType { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsStyleSettings CurrentLyricsStyleSettings { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings CurrentLyricsEffectSettings { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowMode LyricsWindowMode { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType LyricsDisplayType { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTop { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsStyleSettings LyricsStyleSettings { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings LyricsEffectSettings { get; set; }
 
         public LiveStates(AppSettings appSettings)
         {
-            CurrentLyricsWindowMode = LyricsWindowMode.StandardMode;
-            CurrentLyricsDisplayType = appSettings.StandardModeSettings.LyricsDisplayType;
-            CurrentLyricsStyleSettings = appSettings.StandardLyricsStyleSettings;
-            CurrentLyricsEffectSettings = appSettings.StandardLyricsEffectSettings;
+            LyricsWindowMode = LyricsWindowMode.StandardMode;
+            LyricsDisplayType = appSettings.StandardModeSettings.LyricsDisplayType;
+            LyricsStyleSettings = appSettings.StandardLyricsStyleSettings;
+            LyricsEffectSettings = appSettings.StandardLyricsEffectSettings;
+            IsAlwaysOnTop = false;
         }
 
         public void ToggleLyricsWindowMode(LyricsWindowMode mode)
         {
-            if (CurrentLyricsWindowMode == mode)
+            if (LyricsWindowMode == mode)
             {
-                CurrentLyricsWindowMode = LyricsWindowMode.StandardMode;
+                LyricsWindowMode = LyricsWindowMode.StandardMode;
             }
             else
             {
-                CurrentLyricsWindowMode = mode;
+                LyricsWindowMode = mode;
             }
         }
     }

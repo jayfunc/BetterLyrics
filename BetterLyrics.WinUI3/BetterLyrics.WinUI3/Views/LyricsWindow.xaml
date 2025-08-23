@@ -77,14 +77,6 @@
                         <Button.Flyout>
                             <MenuFlyout>
                                 <ToggleMenuFlyoutItem
-                                    x:Name="AOTFlyoutItem"
-                                    x:Uid="BaseWindowAOTFlyoutItem"
-                                    Click="AOTFlyoutItem_Click"
-                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                       Glyph=&#xE718;}"
-                                    IsChecked="{x:Bind ViewModel.IsAOTFlyoutItemChecked, Mode=OneWay}"
-                                    Visibility="{x:Bind ViewModel.AOTFlyoutItemVisibility, Mode=OneWay}" />
-                                <ToggleMenuFlyoutItem
                                     x:Name="FullScreenFlyoutItem"
                                     x:Uid="BaseWindowFullScreenFlyoutItem"
                                     Click="FullScreenFlyoutItem_Click"

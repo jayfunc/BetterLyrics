@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using Windows.Globalization.Fonts;
 using LyricsData = BetterLyrics.WinUI3.Models.LyricsData;
 
 namespace BetterLyrics.WinUI3.Helper
@@ -48,50 +47,67 @@ namespace BetterLyrics.WinUI3.Helper
                         break;
                 }
             }
-            FillChineseLyricsData();
+            FillRomanizationLyricsData();
             _lyricsDataArr.Add(new LyricsData()); // 为机翻预留
             return _lyricsDataArr;
         }
 
-        private void FillChineseLyricsData()
+        private void FillRomanizationLyricsData()
         {
-            var simplifiedChinese = _lyricsDataArr.Where(x => x.LanguageCode == "zh-Hans").FirstOrDefault();
-            var traditionalChinese = _lyricsDataArr.Where(x => x.LanguageCode == "zh-Hant").FirstOrDefault();
-            if (simplifiedChinese != null && traditionalChinese == null)
+            var chinese = _lyricsDataArr.Where(x => x.LanguageCode == "zh").FirstOrDefault();
+            if (chinese != null)
             {
-                // 如果没有繁体中文歌词，则将简体中文歌词转换为繁体中文
                 _lyricsDataArr.Add(new LyricsData
                 {
-                    LyricsLines = simplifiedChinese.LyricsLines.Select(line => new LyricsLine
+                    LanguageCode = "pinyin",
+                    LyricsLines = chinese.LyricsLines.Select(line => new LyricsLine
                     {
                         StartMs = line.StartMs,
                         EndMs = line.EndMs,
-                        OriginalText = ChineseConverter.ConvertToTraditionalChinese(line.OriginalText),
+                        OriginalText = Pinyin.Pinyin.Instance.HanziToPinyin(line.OriginalText).ToStr(),
                         LyricsChars = line.LyricsChars.Select(c => new LyricsChar
                         {
                             StartMs = c.StartMs,
                             EndMs = c.EndMs,
-                            Text = ChineseConverter.ConvertToTraditionalChinese(c.Text),
+                            Text = Pinyin.Pinyin.Instance.HanziToPinyin(c.Text).ToStr(),
+                            StartIndex = c.StartIndex
+                        }).ToList()
+                    }).ToList()
+                });
+                _lyricsDataArr.Add(new LyricsData
+                {
+                    LanguageCode = "jyutping",
+                    LyricsLines = chinese.LyricsLines.Select(line => new LyricsLine
+                    {
+                        StartMs = line.StartMs,
+                        EndMs = line.EndMs,
+                        OriginalText = Pinyin.Jyutping.Instance.HanziToPinyin(line.OriginalText).ToStr(),
+                        LyricsChars = line.LyricsChars.Select(c => new LyricsChar
+                        {
+                            StartMs = c.StartMs,
+                            EndMs = c.EndMs,
+                            Text = Pinyin.Jyutping.Instance.HanziToPinyin(c.Text).ToStr(),
                             StartIndex = c.StartIndex
                         }).ToList()
                     }).ToList()
                 });
             }
-            else if (traditionalChinese != null && simplifiedChinese == null)
+            var japanese = _lyricsDataArr.Where(x => x.LanguageCode == "ja").FirstOrDefault();
+            if (japanese != null)
             {
-                // 如果没有简体中文歌词，则将繁体中文歌词转换为简体中文
                 _lyricsDataArr.Add(new LyricsData
                 {
-                    LyricsLines = traditionalChinese.LyricsLines.Select(line => new LyricsLine
+                    LanguageCode = "romaji",
+                    LyricsLines = japanese.LyricsLines.Select(line => new LyricsLine
                     {
                         StartMs = line.StartMs,
                         EndMs = line.EndMs,
-                        OriginalText = ChineseConverter.ConvertToSimplifiedChinese(line.OriginalText),
+                        OriginalText = LanguageHelper.ToRomaji(line.OriginalText),
                         LyricsChars = line.LyricsChars.Select(c => new LyricsChar
                         {
                             StartMs = c.StartMs,
                             EndMs = c.EndMs,
-                            Text = ChineseConverter.ConvertToSimplifiedChinese(c.Text),
+                            Text = LanguageHelper.ToRomaji(c.Text),
                             StartIndex = c.StartIndex
                         }).ToList()
                     }).ToList()

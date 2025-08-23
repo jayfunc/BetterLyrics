@@ -40,7 +40,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             _lrcLibHttpClient = new();
             _lrcLibHttpClient.DefaultRequestHeaders.Add(
                 "User-Agent",
-                $"{Constants.App.AppName} {MetadataHelper.AppVersion} ({Constants.Link.GithubUrl})"
+                $"{Constants.App.AppName} {MetadataHelper.AppVersion} ({Constants.Link.GitHubUrl})"
             );
             _amllTtmlDbHttpClient = new();
         }

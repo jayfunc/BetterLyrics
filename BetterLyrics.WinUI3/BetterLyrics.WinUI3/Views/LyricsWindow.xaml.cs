@@ -103,11 +103,6 @@ namespace BetterLyrics.WinUI3.Views
             _autoSelectLyricsModeOnRunning = false;
         }
 
-        private void AOTFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.ToggleAlwaysOnTop();
-        }
-
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
             if (_autoSelectLyricsModeOnRunning) return;
@@ -123,7 +118,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    switch (ViewModel.LiveStates.CurrentLyricsWindowMode)
+                    switch (ViewModel.LiveStates.LyricsWindowMode)
                     {
                         case LyricsWindowMode.StandardMode:
                             if (AppWindow.Presenter is OverlappedPresenter overlappedPresenter)

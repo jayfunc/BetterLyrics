@@ -135,8 +135,8 @@
   <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
     <value>표준 모드</value>
   </data>
-  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
-    <value>항상 위에</value>
+  <data name="AppSettingsControlGeneral.Content" xml:space="preserve">
+    <value>일반적인</value>
   </data>
   <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
     <value>ESC를 눌러 전체 화면 모드를 종료하십시오</value>
@@ -439,6 +439,18 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리 - BetterLyrics</value>
   </data>
+  <data name="SetingsPageDonation.Text" xml:space="preserve">
+    <value>기부</value>
+  </data>
+  <data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <value>피드백</value>
+  </data>
+  <data name="SetingsPageRef.Text" xml:space="preserve">
+    <value>사용 된 라이브러리</value>
+  </data>
+  <data name="SetingsPageThanks.Text" xml:space="preserve">
+    <value>이 프로젝트가 마음에 들면 기부하여 지원을 고려하십시오. 귀하의 지원은 프로젝트를 계속 유지하고 추가 개발을 장려하는 데 도움이 될 것입니다.</value>
+  </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>에 대한</value>
   </data>
@@ -475,6 +487,9 @@
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>금액</value>
   </data>
+  <data name="SettingsPageAOT.Header" xml:space="preserve">
+    <value>항상 위에</value>
+  </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>앱 외관과 행동</value>
   </data>
@@ -483,18 +498,6 @@
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>앱 동작</value>
-  </data>
-  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
-    <value>데스크탑 모드</value>
-  </data>
-  <data name="SettingsPageAppDock.Text" xml:space="preserve">
-    <value>도크 모드</value>
-  </data>
-  <data name="SettingsPageAppPictureInPicture.Text" xml:space="preserve">
-    <value>사진 인당 모드</value>
-  </data>
-  <data name="SettingsPageAppStandard.Text" xml:space="preserve">
-    <value>표준 모드</value>
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>데스크탑 모드를 활성화 할 때 자동 잠금</value>
@@ -532,6 +535,12 @@
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>은닉처</value>
   </data>
+  <data name="SettingsPageChinese.Header" xml:space="preserve">
+    <value>화음</value>
+  </data>
+  <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+    <value>중국어를 전통적인 중국어로 전환합니다</value>
+  </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>콤팩트</value>
   </data>
@@ -547,7 +556,10 @@
   <data name="SettingsPageDev.Content" xml:space="preserve">
     <value>고급 옵션</value>
   </data>
-  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+    <value>이 프로젝트는 어떠한 종류의 보증도 없이 그대로 제공됩니다. 모든 가사, 글꼴, 아이콘 및 기타 제3자 리소스는 해당 저작권 소유자의 재산입니다. 이 프로젝트의 저자는 그러한 자원의 소유권을 주장하지 않습니다. 이 프로젝트는 비상업적이기 때문에 어떠한 권리도 침해해서는 안 됩니다. 사용자는 자신의 사용이 관련 법률 및 라이센스를 준수하는지 확인할 책임이 있습니다.</value>
+  </data>
+  <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
@@ -567,6 +579,9 @@
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>창 높이</value>
+  </data>
+  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
+    <value>자동 조정</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>애니메이션 유형 완화</value>
@@ -622,7 +637,7 @@
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>팬 가사</value>
   </data>
-  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+  <data name="SettingsPageFAQ.Content" xml:space="preserve">
     <value>자주 묻는 질문</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
@@ -634,15 +649,6 @@
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>렌더링 프레임 속도</value>
   </data>
-  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
-    <value>새 창에서 열립니다</value>
-  </data>
-  <data name="SettingsPageGitHub.Description" xml:space="preserve">
-    <value>GitHub의 소스 코드를 참조하십시오</value>
-  </data>
-  <data name="SettingsPageGitHub.Header" xml:space="preserve">
-    <value>이것은 오픈 소스 앱입니다</value>
-  </data>
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>비 중과 영역에서 창을 드래그 할 수 있도록 제목 표시 줄을 전체 페이지로 확장하십시오.</value>
   </data>
@@ -650,10 +656,10 @@
     <value>글로벌 드래그</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>도크 모드 또는 데스크탑 모드에서 재생되지 않을 때는 창을 자동으로 숨기고 있습니다</value>
+    <value>도킹 모드 또는 데스크탑 모드에서는 노래가 재생되지 않으면 창이 자동으로 숨겨집니다. 그렇지 않으면 창이 자동으로 표시됩니다.</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
-    <value>자동 가죽 창</value>
+    <value>Windows를 자동으로 숨기고 표시합니다</value>
   </data>
   <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
     <value>도킹 또는 데스크탑 모드가 활성화 될 때이 앱이 전체 화면 앱 위에 나타나도록 강요</value>
@@ -670,8 +676,14 @@
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="SettingsPageJapanese.Header" xml:space="preserve">
+    <value>일본 주석</value>
+  </data>
   <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
     <value>지금 가입하십시오</value>
+  </data>
+  <data name="SettingsPageJyutping.Content" xml:space="preserve">
+    <value>광동어 Pinyin</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
@@ -937,6 +949,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>경로는 컴퓨터에서 찾을 수 없습니다</value>
   </data>
+  <data name="SettingsPagePinyin.Content" xml:space="preserve">
+    <value>만다린의 피니 인</value>
+  </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
     <value>재생 소스</value>
   </data>
@@ -955,7 +970,7 @@
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>이전 트랙의 바로 가기 키</value>
   </data>
-  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ 피드백 및 채팅 그룹</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
@@ -969,6 +984,9 @@
   </data>
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>변경 사항을 적용하려면 앱을 다시 시작하십시오</value>
+  </data>
+  <data name="SettingsPageRomaji.Header" xml:space="preserve">
+    <value>일본 주석</value>
   </data>
   <data name="SettingsPageSC.Content" xml:space="preserve">
     <value>简体中文</value>
@@ -1012,6 +1030,9 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>이 핫키는 성공적으로 등록되었습니다</value>
   </data>
+  <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+    <value>가사 창 디스플레이 및 바로 가기 키 숨기기</value>
+  </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>현재 가치 : </value>
   </data>
@@ -1039,7 +1060,7 @@
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
-  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+  <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
