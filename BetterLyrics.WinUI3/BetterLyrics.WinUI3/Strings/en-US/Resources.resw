@@ -135,8 +135,8 @@
   <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
     <value>Standard</value>
   </data>
-  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
-    <value>Always on top</value>
+  <data name="AppSettingsControlGeneral.Content" xml:space="preserve">
+    <value>General</value>
   </data>
   <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
     <value>Press Esc to exit full screen mode</value>
@@ -439,6 +439,18 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Music gallery - BetterLyrics</value>
   </data>
+  <data name="SetingsPageDonation.Text" xml:space="preserve">
+    <value>Donation</value>
+  </data>
+  <data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="SetingsPageRef.Text" xml:space="preserve">
+    <value>Library used</value>
+  </data>
+  <data name="SetingsPageThanks.Text" xml:space="preserve">
+    <value>If you like this project, please consider supporting it by donating. Your support will help keep the project alive and encourage further development.</value>
+  </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>About</value>
   </data>
@@ -475,6 +487,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>Amount</value>
   </data>
+  <data name="SettingsPageAOT.Header" xml:space="preserve">
+    <value>Always on top</value>
+  </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>App appearance and behavior</value>
   </data>
@@ -483,18 +498,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>App behavior</value>
-  </data>
-  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
-    <value>Desktop mode</value>
-  </data>
-  <data name="SettingsPageAppDock.Text" xml:space="preserve">
-    <value>Dock mode</value>
-  </data>
-  <data name="SettingsPageAppPictureInPicture.Text" xml:space="preserve">
-    <value>Picture-in-picture mode</value>
-  </data>
-  <data name="SettingsPageAppStandard.Text" xml:space="preserve">
-    <value>Standard</value>
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>Auto-lock when activating desktop mode</value>
@@ -532,6 +535,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>Cache</value>
   </data>
+  <data name="SettingsPageChinese.Header" xml:space="preserve">
+    <value>Chinese pronunciation</value>
+  </data>
+  <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+    <value>Convert Chinese to Traditional Chinese</value>
+  </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>Compact</value>
   </data>
@@ -547,7 +556,10 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageDev.Content" xml:space="preserve">
     <value>Advanced options</value>
   </data>
-  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+    <value>This project is provided as is without warranty of any kind. All lyrics, fonts, icons, and other third-party resources are the property of their respective copyright holders. The author of this project does not claim ownership of such resources.  This project is non-commercial and should not be used to infringe any rights. Users are responsible for ensuring their own use complies with applicable laws and licenses.</value>
+  </data>
+  <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
@@ -567,6 +579,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>Window height</value>
+  </data>
+  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
+    <value>Automatic adjustment</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>Easing animation type</value>
@@ -622,7 +637,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>Fan lyrics</value>
   </data>
-  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+  <data name="SettingsPageFAQ.Content" xml:space="preserve">
     <value>Frequently asked questions</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
@@ -634,15 +649,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>Rendering frame rate</value>
   </data>
-  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
-    <value>Open in new window</value>
-  </data>
-  <data name="SettingsPageGitHub.Description" xml:space="preserve">
-    <value>See source code on GitHub</value>
-  </data>
-  <data name="SettingsPageGitHub.Header" xml:space="preserve">
-    <value>This is an open source app</value>
-  </data>
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>Extend the title bar to the entire page so that the window can be dragged in any non-interactive area</value>
   </data>
@@ -650,10 +656,10 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Global drag</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>Automatically hide the window when no songs are playing in dock mode or desktop mode</value>
+    <value>In docking mode or desktop mode, when no song is playing, the window will be automatically hidden; otherwise, the window will be automatically displayed.</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
-    <value>Auto-hide window</value>
+    <value>Automatically hide/show windows</value>
   </data>
   <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
     <value>Force this app to appear on top of full-screen apps when docked or desktop mode is enabled</value>
@@ -670,8 +676,14 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="SettingsPageJapanese.Header" xml:space="preserve">
+    <value>Japanese annotation</value>
+  </data>
   <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
     <value>Join now</value>
+  </data>
+  <data name="SettingsPageJyutping.Content" xml:space="preserve">
+    <value>Cantonese pinyin</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
@@ -937,6 +949,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>The path cannot be found on your computer</value>
   </data>
+  <data name="SettingsPagePinyin.Content" xml:space="preserve">
+    <value>Pinyin of Mandarin</value>
+  </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
     <value>Playback sources</value>
   </data>
@@ -955,7 +970,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>Shortcut keys for the previous track</value>
   </data>
-  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ feedback &amp; chat group</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
@@ -969,6 +984,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>Restart app to apply change</value>
+  </data>
+  <data name="SettingsPageRomaji.Header" xml:space="preserve">
+    <value>Japanese annotation</value>
   </data>
   <data name="SettingsPageSC.Content" xml:space="preserve">
     <value>简体中文</value>
@@ -1012,6 +1030,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>This hotkey has been successfully registered</value>
   </data>
+  <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+    <value>Lyrics window display and hide shortcut keys</value>
+  </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>Current value: </value>
   </data>
@@ -1039,7 +1060,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
-  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+  <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">

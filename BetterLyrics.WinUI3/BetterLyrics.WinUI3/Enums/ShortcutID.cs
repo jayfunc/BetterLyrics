@@ -8,7 +8,8 @@ namespace BetterLyrics.WinUI3.Enums
 {
     public enum ShortcutID
     {
-        DesktopLock,
+        LyricsWindowShowOrHide,
+        DesktopLockOrUnlock,
         DesktopToggle,
         DockToggle,
         PictureInPictureToggle,

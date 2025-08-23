@@ -135,8 +135,8 @@
   <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
     <value>标准模式</value>
   </data>
-  <data name="BaseWindowAOTFlyoutItem.Text" xml:space="preserve">
-    <value>将应用置于顶层</value>
+  <data name="AppSettingsControlGeneral.Content" xml:space="preserve">
+    <value>通用</value>
   </data>
   <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
     <value>按 Esc 退出全屏模式</value>
@@ -439,6 +439,18 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音乐库 - BetterLyrics</value>
   </data>
+  <data name="SetingsPageDonation.Text" xml:space="preserve">
+    <value>捐贈</value>
+  </data>
+  <data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="SetingsPageRef.Text" xml:space="preserve">
+    <value>使用的库</value>
+  </data>
+  <data name="SetingsPageThanks.Text" xml:space="preserve">
+    <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的生命并鼓励进一步的发展。</value>
+  </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>关于</value>
   </data>
@@ -475,6 +487,9 @@
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>量</value>
   </data>
+  <data name="SettingsPageAOT.Header" xml:space="preserve">
+    <value>将应用置于顶层</value>
+  </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>应用外观与行为</value>
   </data>
@@ -483,18 +498,6 @@
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>应用行为</value>
-  </data>
-  <data name="SettingsPageAppDesktop.Text" xml:space="preserve">
-    <value>桌面模式</value>
-  </data>
-  <data name="SettingsPageAppDock.Text" xml:space="preserve">
-    <value>停靠模式</value>
-  </data>
-  <data name="SettingsPageAppPictureInPicture.Text" xml:space="preserve">
-    <value>画中画模式</value>
-  </data>
-  <data name="SettingsPageAppStandard.Text" xml:space="preserve">
-    <value>标准模式</value>
   </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>启动桌面模式时随即锁定窗口</value>
@@ -532,6 +535,12 @@
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>缓存</value>
   </data>
+  <data name="SettingsPageChinese.Header" xml:space="preserve">
+    <value>中文注音</value>
+  </data>
+  <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+    <value>中文转换为繁体</value>
+  </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>紧凑</value>
   </data>
@@ -547,7 +556,10 @@
   <data name="SettingsPageDev.Content" xml:space="preserve">
     <value>高级选项</value>
   </data>
-  <data name="SettingsPageDiscord.Header" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+    <value>本项目按原样提供，不提供任何形式的保证。所有歌词、字体、图标和其他第三方资源均为其各自版权所有者的财产。本项目的作者不主张此类资源的所有权。本项目为非商业性项目，不得用于侵犯任何权利。用户有责任确保自己的使用符合适用的法律和许可。</value>
+  </data>
+  <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
@@ -567,6 +579,9 @@
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>窗口高度</value>
+  </data>
+  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
+    <value>自动调整</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>缓动动画类型</value>
@@ -622,7 +637,7 @@
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>扇形歌词</value>
   </data>
-  <data name="SettingsPageFAQ.Header" xml:space="preserve">
+  <data name="SettingsPageFAQ.Content" xml:space="preserve">
     <value>常见问题与解答</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
@@ -634,15 +649,6 @@
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>渲染帧率</value>
   </data>
-  <data name="SettingsPageGitHub.ActionIconToolTip" xml:space="preserve">
-    <value>在新窗口中打开</value>
-  </data>
-  <data name="SettingsPageGitHub.Description" xml:space="preserve">
-    <value>在 GitHub 上查看源代码</value>
-  </data>
-  <data name="SettingsPageGitHub.Header" xml:space="preserve">
-    <value>此应用已开源</value>
-  </data>
   <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
     <value>将标题栏扩展至整个页面使得在任意非交互区域均可拖拽窗口</value>
   </data>
@@ -650,10 +656,10 @@
     <value>全局拖拽</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>停靠模式或桌面模式下，无歌曲正在播放时，自动隐藏窗口</value>
+    <value>停靠模式或桌面模式下，无歌曲正在播放时，自动隐藏窗口；反之自动显示窗口</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
-    <value>自动隐藏窗口</value>
+    <value>自动隐藏/显示窗口</value>
   </data>
   <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
     <value>当启用停靠模式或桌面模式时强制将本应用显示在全屏应用的上方</value>
@@ -670,8 +676,14 @@
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="SettingsPageJapanese.Header" xml:space="preserve">
+    <value>日语注音</value>
+  </data>
   <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
     <value>立即加入</value>
+  </data>
+  <data name="SettingsPageJyutping.Content" xml:space="preserve">
+    <value>广东话拼音</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
@@ -937,6 +949,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>无法在您的计算机中找到该路径</value>
   </data>
+  <data name="SettingsPagePinyin.Content" xml:space="preserve">
+    <value>普通话拼音</value>
+  </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
     <value>播放源</value>
   </data>
@@ -955,7 +970,7 @@
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>上一首曲目快捷键</value>
   </data>
-  <data name="SettingsPageQQGroup.Header" xml:space="preserve">
+  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ 反馈交流群</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
@@ -969,6 +984,9 @@
   </data>
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>重启应用以应用更改</value>
+  </data>
+  <data name="SettingsPageRomaji.Header" xml:space="preserve">
+    <value>日语注音</value>
   </data>
   <data name="SettingsPageSC.Content" xml:space="preserve">
     <value>简体中文</value>
@@ -1012,6 +1030,9 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>该热键已成功注册</value>
   </data>
+  <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+    <value>歌词窗口显示和隐藏快捷键</value>
+  </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>当前值： </value>
   </data>
@@ -1039,7 +1060,7 @@
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
-  <data name="SettingsPageTelegram.Header" xml:space="preserve">
+  <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">

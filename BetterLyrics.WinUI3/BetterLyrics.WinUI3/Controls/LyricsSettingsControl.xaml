@@ -175,14 +175,25 @@
                         </interactivity:Interaction.Behaviors>
                     </ColorPicker>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
-                        <local:ExtendedSlider
-                            Frequency="2"
-                            Maximum="96"
-                            Minimum="12"
-                            ResetButtonVisibility="Collapsed"
-                            Value="{x:Bind LyricsStyleSettings.LyricsFontSize, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageLyricsFontSize"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE8E9;}"
+                        IsExpanded="True">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageDynamicLyricsFontSize">
+                                <ToggleSwitch IsOn="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Frequency="2"
+                                    Maximum="96"
+                                    Minimum="12"
+                                    ResetButtonVisibility="Collapsed"
+                                    Value="{x:Bind LyricsStyleSettings.LyricsFontSize, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <controls:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF579;}">
                         <local:ExtendedSlider

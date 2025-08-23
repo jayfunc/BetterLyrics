@@ -12,6 +12,6 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
     {
         Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken token);
 
-        int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr);
+        int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr, string targetLangCode);
     }
 }

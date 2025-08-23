@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
 using Lyricify.Lyrics.Helpers.General;
 using System;
@@ -13,7 +14,12 @@ namespace BetterLyrics.WinUI3.Models
     public class LyricsData
     {
         public List<LyricsLine> LyricsLines { get; set; }
-        public string? LanguageCode => LanguageHelper.DetectLanguageCode(WrappedOriginalText);
+        private string? _languageCode;
+        public string? LanguageCode
+        {
+            get => _languageCode ?? LanguageHelper.DetectLanguageCode(WrappedOriginalText);
+            set => _languageCode = value;
+        }
         public string WrappedOriginalText => string.Join(StringHelper.NewLine, LyricsLines.Select(line => line.OriginalText));
 
         public LyricsData()

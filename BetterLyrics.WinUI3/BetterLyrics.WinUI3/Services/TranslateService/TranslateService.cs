@@ -58,9 +58,8 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
             return result?.TranslatedText ?? string.Empty;
         }
 
-        public int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr)
+        public int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr, string targetLangCode)
         {
-            string targetLangCode = LanguageHelper.SupportedTargetLanguages[_settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
             if (lyricsDataArr.Count > 1)
             {
                 for (int i = 1; i < lyricsDataArr.Count; i++)

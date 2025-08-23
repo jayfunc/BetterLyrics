@@ -15,7 +15,8 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
 {
     public class LiveStatesService : BaseViewModel, ILiveStatesService,
         IRecipient<PropertyChangedMessage<LyricsWindowMode>>,
-        IRecipient<PropertyChangedMessage<LyricsDisplayType>>
+        IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
+        IRecipient<PropertyChangedMessage<bool>>
     {
         private readonly ISettingsService _settingsService;
 
@@ -32,29 +33,33 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
         {
             if (message.Sender is LiveStates)
             {
-                if (message.PropertyName == nameof(LiveStates.CurrentLyricsWindowMode))
+                if (message.PropertyName == nameof(LiveStates.LyricsWindowMode))
                 {
                     switch (message.NewValue)
                     {
                         case LyricsWindowMode.StandardMode:
-                            LiveStates.CurrentLyricsStyleSettings = _settingsService.AppSettings.StandardLyricsStyleSettings;
-                            LiveStates.CurrentLyricsEffectSettings = _settingsService.AppSettings.StandardLyricsEffectSettings;
-                            LiveStates.CurrentLyricsDisplayType = _settingsService.AppSettings.StandardModeSettings.LyricsDisplayType;
+                            LiveStates.LyricsStyleSettings = _settingsService.AppSettings.StandardLyricsStyleSettings;
+                            LiveStates.LyricsEffectSettings = _settingsService.AppSettings.StandardLyricsEffectSettings;
+                            LiveStates.LyricsDisplayType = _settingsService.AppSettings.StandardModeSettings.LyricsDisplayType;
+                            LiveStates.IsAlwaysOnTop = _settingsService.AppSettings.StandardModeSettings.IsAlwaysOnTop;
                             break;
                         case LyricsWindowMode.DockMode:
-                            LiveStates.CurrentLyricsStyleSettings = _settingsService.AppSettings.DockLyricsStyleSettings;
-                            LiveStates.CurrentLyricsEffectSettings = _settingsService.AppSettings.DockLyricsEffectSettings;
-                            LiveStates.CurrentLyricsDisplayType = _settingsService.AppSettings.DockModeSettings.LyricsDisplayType;
+                            LiveStates.LyricsStyleSettings = _settingsService.AppSettings.DockLyricsStyleSettings;
+                            LiveStates.LyricsEffectSettings = _settingsService.AppSettings.DockLyricsEffectSettings;
+                            LiveStates.LyricsDisplayType = _settingsService.AppSettings.DockModeSettings.LyricsDisplayType;
+                            LiveStates.IsAlwaysOnTop = true;
                             break;
                         case LyricsWindowMode.DesktopMode:
-                            LiveStates.CurrentLyricsStyleSettings = _settingsService.AppSettings.DesktopLyricsStyleSettings;
-                            LiveStates.CurrentLyricsEffectSettings = _settingsService.AppSettings.DesktopLyricsEffectSettings;
-                            LiveStates.CurrentLyricsDisplayType = _settingsService.AppSettings.DesktopModeSettings.LyricsDisplayType;
+                            LiveStates.LyricsStyleSettings = _settingsService.AppSettings.DesktopLyricsStyleSettings;
+                            LiveStates.LyricsEffectSettings = _settingsService.AppSettings.DesktopLyricsEffectSettings;
+                            LiveStates.LyricsDisplayType = _settingsService.AppSettings.DesktopModeSettings.LyricsDisplayType;
+                            LiveStates.IsAlwaysOnTop = _settingsService.AppSettings.DesktopModeSettings.IsAlwaysOnTop;
                             break;
                         case LyricsWindowMode.PictureInPictureMode:
-                            LiveStates.CurrentLyricsStyleSettings = _settingsService.AppSettings.PictureInPictureLyricsStyleSettings;
-                            LiveStates.CurrentLyricsEffectSettings = _settingsService.AppSettings.PictureInPictureLyricsEffectSettings;
-                            LiveStates.CurrentLyricsDisplayType = _settingsService.AppSettings.PictureInPictureModeSettings.LyricsDisplayType;
+                            LiveStates.LyricsStyleSettings = _settingsService.AppSettings.PictureInPictureLyricsStyleSettings;
+                            LiveStates.LyricsEffectSettings = _settingsService.AppSettings.PictureInPictureLyricsEffectSettings;
+                            LiveStates.LyricsDisplayType = _settingsService.AppSettings.PictureInPictureModeSettings.LyricsDisplayType;
+                            // IsAlwaysOnTop 由系统托管
                             break;
                         default:
                             break;
@@ -69,9 +74,9 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             {
                 if (message.PropertyName == nameof(StandardModeSettings.LyricsDisplayType))
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.StandardMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.StandardMode)
                     {
-                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
+                        LiveStates.LyricsDisplayType = message.NewValue;
                     }
                 }
             }
@@ -79,9 +84,9 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             {
                 if (message.PropertyName == nameof(DockModeSettings.LyricsDisplayType))
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DockMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DockMode)
                     {
-                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
+                        LiveStates.LyricsDisplayType = message.NewValue;
                     }
                 }
             }
@@ -89,9 +94,9 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             {
                 if (message.PropertyName == nameof(DesktopModeSettings.LyricsDisplayType))
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.DesktopMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode)
                     {
-                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
+                        LiveStates.LyricsDisplayType = message.NewValue;
                     }
                 }
             }
@@ -99,9 +104,33 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             {
                 if (message.PropertyName == nameof(PictureInPictureModeSettings.LyricsDisplayType))
                 {
-                    if (LiveStates.CurrentLyricsWindowMode == LyricsWindowMode.PictureInPictureMode)
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.PictureInPictureMode)
                     {
-                        LiveStates.CurrentLyricsDisplayType = message.NewValue;
+                        LiveStates.LyricsDisplayType = message.NewValue;
+                    }
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is StandardModeSettings)
+            {
+                if (message.PropertyName == nameof(StandardModeSettings.IsAlwaysOnTop))
+                {
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.StandardMode)
+                    {
+                        LiveStates.IsAlwaysOnTop = message.NewValue;
+                    }
+                }
+            }
+            else if (message.Sender is DesktopModeSettings)
+            {
+                if (message.PropertyName == nameof(DesktopModeSettings.IsAlwaysOnTop))
+                {
+                    if (LiveStates.LyricsWindowMode == LyricsWindowMode.DesktopMode)
+                    {
+                        LiveStates.IsAlwaysOnTop = message.NewValue;
                     }
                 }
             }

@@ -22,8 +22,7 @@ namespace BetterLyrics.WinUI3.Services
         [
             new Models.LanguageInfo("ar", "العربية"),
             new Models.LanguageInfo("az", "Azərbaycan dili"),
-            new Models.LanguageInfo("zh-Hans", "简体中文"),
-            new Models.LanguageInfo("zh-Hant", "繁體中文"),
+            new Models.LanguageInfo("zh", "中文"),
             new Models.LanguageInfo("cs", "Čeština"),
             new Models.LanguageInfo("da", "Dansk"),
             new Models.LanguageInfo("nl", "Nederlands"),
@@ -56,11 +55,7 @@ namespace BetterLyrics.WinUI3.Services
         static LanguageHelper()
         {
             _identifier = _factory.Load(PathHelper.LanguageProfilePath);
-        }
-
-        private static string SimplifiedChineseOrTraditionalChinese(string text)
-        {
-            return text == ChineseConverter.ConvertToSimplifiedChinese(text) ? "zh-Hans" : "zh-Hant";
+            RomajiConverter.Core.Helpers.RomajiHelper.Init();
         }
 
         public static string? DetectLanguageCode(string? text)
@@ -72,9 +67,8 @@ namespace BetterLyrics.WinUI3.Services
             code = code switch
             {
                 "simple" => "en",
-                "zh_classical" => SimplifiedChineseOrTraditionalChinese(text),
-                "zh_yue" => SimplifiedChineseOrTraditionalChinese(text),
-                "zh" => SimplifiedChineseOrTraditionalChinese(text),
+                "zh_classical" => "zh",
+                "zh_yue" => "zh",
                 _ => code
             };
             return code;
@@ -86,21 +80,6 @@ namespace BetterLyrics.WinUI3.Services
             {
                 "zh" or "ja" or "ko" => true,
                 _ => false
-            };
-        }
-
-        public static string ConvertToCountryCode(string? languageCode)
-        {
-            if (languageCode == null) return "us";
-
-            return languageCode switch
-            {
-                "zh" => "cn",
-                "zh-Hans" => "cn",
-                "zh-Hant" => "tw",
-                "ja" => "jp",
-                "ko" => "kr",
-                _ => "us"
             };
         }
 
@@ -124,6 +103,11 @@ namespace BetterLyrics.WinUI3.Services
             }
 
             return "#";
+        }
+
+        public static string ToRomaji(string text)
+        {
+            return string.Join(" ", RomajiConverter.Core.Helpers.RomajiHelper.SentenceToRomaji(text).Select(x=>x.Romaji));
         }
     }
 }

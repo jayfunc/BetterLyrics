@@ -17,6 +17,7 @@ namespace BetterLyrics.WinUI3.Constants
         public const string PotPlayer = "PotPlayerMini64.exe";
         public const string Spotify = "Spotify.exe";
         public const string AppleMusic = "AppleInc.AppleMusicWin_nzyj5cx40ttqa!App";
+        public const string AppleMusicAlternative = "AppleMusic.exe";
         public const string NetEaseCloudMusic = "cloudmusic.exe";
         public const string KugouMusic = "kugou";
         public const string QQMusic = "QQMusic.exe";

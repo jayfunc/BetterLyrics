@@ -29,8 +29,8 @@
                 x:Uid="MainPageNoMusicPlaying"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontFamily="{x:Bind ViewModel.LiveStates.CurrentLyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.LiveStates.CurrentLyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
+                FontFamily="{x:Bind ViewModel.LiveStates.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
+                FontSize="{x:Bind ViewModel.LiveStates.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>

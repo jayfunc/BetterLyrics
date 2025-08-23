@@ -59,6 +59,7 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
+		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
 		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
@@ -71,6 +72,7 @@
 		<PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
 		<PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
+		<PackageReference Include="RomajiConverter.Core" Version="1.0.9" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.3-dev-02320" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="ShadowViewer.Controls.Notification" Version="1.2.1" />
@@ -110,9 +112,6 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Chrome.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Discord.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Edge.png">
@@ -166,9 +165,6 @@
 	  <Content Update="Assets\PotPlayer.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="Assets\QQ.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
 	  <Content Update="Assets\QQMusic.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
@@ -179,9 +175,6 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Spotify.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Telegram.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Wiki82.profile.xml">
