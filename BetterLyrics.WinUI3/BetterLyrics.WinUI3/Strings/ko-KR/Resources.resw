@@ -499,6 +499,9 @@
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>앱 동작</value>
   </data>
+  <data name="SettingsPageApply.Content" xml:space="preserve">
+    <value>Apply</value>
+  </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>데스크탑 모드를 활성화 할 때 자동 잠금</value>
   </data>
@@ -544,11 +547,17 @@
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>콤팩트</value>
   </data>
+  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
+    <value>Current lyrics window status</value>
+  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>어두운</value>
   </data>
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>디버그 오버레이를 표시하십시오</value>
+  </data>
+  <data name="SettingsPageDelete.Content" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
     <value>데스크탑 아크릴</value>
@@ -904,6 +913,9 @@
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>상단 및 하단 가장자리 불투명도</value>
   </data>
+  <data name="SettingsPageLyricsWindowManager.Header" xml:space="preserve">
+    <value>Lyrics window manager</value>
+  </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>미디어 라이브러리</value>
   </data>
@@ -972,6 +984,12 @@
   </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ feedback &amp; chat group</value>
+  </data>
+  <data name="SettingsPageRecord.Content" xml:space="preserve">
+    <value>Record</value>
+  </data>
+  <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <value>Recorded window status</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>이 경로의 원본 파일과 폴더는이 앱에서 제거 할 때 삭제되지 않습니다.</value>
