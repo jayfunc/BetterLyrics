@@ -499,6 +499,9 @@
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>アプリの動作</value>
   </data>
+  <data name="SettingsPageApply.Content" xml:space="preserve">
+    <value>適用する</value>
+  </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>デスクトップモードをアクティブにするときの自動ロック</value>
   </data>
@@ -544,11 +547,17 @@
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>コンパクト</value>
   </data>
+  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
+    <value>現在の歌詞ウィンドウステータス</value>
+  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>暗い</value>
   </data>
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>デバッグオーバーレイを表示します</value>
+  </data>
+  <data name="SettingsPageDelete.Content" xml:space="preserve">
+    <value>消去</value>
   </data>
   <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
     <value>デスクトップアクリル</value>
@@ -904,6 +913,9 @@
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>上端と下端の不透明度</value>
   </data>
+  <data name="SettingsPageLyricsWindowManager.Header" xml:space="preserve">
+    <value>歌詞ウィンドウマネージャー</value>
+  </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>メディアライブラリ</value>
   </data>
@@ -972,6 +984,12 @@
   </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQフィードバック＆チャットグループ</value>
+  </data>
+  <data name="SettingsPageRecord.Content" xml:space="preserve">
+    <value>記録</value>
+  </data>
+  <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <value>記録されたウィンドウステータス</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>このパスの元のファイルとフォルダーは、このアプリから削除するときに削除されません</value>

@@ -58,6 +58,7 @@
             <converter:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
             <converter:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
             <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <converter:RectToMarginConverter x:Key="RectToMarginConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

@@ -62,6 +62,124 @@
                                 </ComboBox>
                             </controls:SettingsCard>
 
+                            <controls:SettingsExpander
+                                x:Name="LyricsWindowManagerExpander"
+                                x:Uid="SettingsPageLyricsWindowManager"
+                                HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                         Glyph=&#xE61F;}"
+                                IsExpanded="True" />
+
+                            <Grid
+                                Margin="0,-20,0,0"
+                                Padding="60,16"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="4"
+                                Visibility="{Binding ElementName=LyricsWindowManagerExpander, Path=IsExpanded, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <StackPanel Spacing="16">
+                                    <TextBlock x:Uid="SettingsPageCurrentLyricsWindowStatus" />
+                                    <StackPanel HorizontalAlignment="Left" Spacing="4">
+                                        <Grid
+                                            Width="{x:Bind ViewModel.LiveStates.DemoLyricsWindowMonitorBounds.Width, Mode=OneWay}"
+                                            Height="{x:Bind ViewModel.LiveStates.DemoLyricsWindowMonitorBounds.Height, Mode=OneWay}"
+                                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+                                            <Grid
+                                                Width="{x:Bind ViewModel.LiveStates.DemoLyricsWindowBounds.Width, Mode=OneWay}"
+                                                Height="{x:Bind ViewModel.LiveStates.DemoLyricsWindowBounds.Height, Mode=OneWay}"
+                                                Margin="{x:Bind ViewModel.LiveStates.DemoLyricsWindowBounds, Converter={StaticResource RectToMarginConverter}, Mode=OneWay}"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Top"
+                                                Background="{ThemeResource AccentFillColorDefaultBrush}"
+                                                CornerRadius="4" />
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontWeight="ExtraBlack"
+                                                Opacity="0.7"
+                                                Text="{x:Bind ViewModel.LiveStates.LyricsWindowMonitorName, Mode=OneWay}"
+                                                TextWrapping="Wrap" />
+                                        </Grid>
+                                        <Grid>
+                                            <Button
+                                                x:Uid="SettingsPageRecord"
+                                                HorizontalAlignment="Stretch"
+                                                Command="{x:Bind ViewModel.RecordCurrentWindowBoundsCommand}"
+                                                Style="{StaticResource AccentButtonStyle}" />
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel
+                                Margin="0,-3,0,0"
+                                Padding="60,16"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="4"
+                                Spacing="16"
+                                Visibility="{Binding ElementName=LyricsWindowManagerExpander, Path=IsExpanded, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock x:Uid="SettingsPageRecordedWindowStatus" />
+                                <GridView
+                                    Margin="-2"
+                                    CornerRadius="4"
+                                    ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
+                                    SelectionMode="None">
+                                    <GridView.ItemContainerStyle>
+                                        <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                            <Setter Property="Margin" Value="5,5,5,5" />
+                                        </Style>
+                                    </GridView.ItemContainerStyle>
+                                    <GridView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <ItemsWrapGrid Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </GridView.ItemsPanel>
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <StackPanel Spacing="4">
+                                                    <Grid
+                                                        Width="{Binding DemoMonitorBounds.Width}"
+                                                        Height="{Binding DemoMonitorBounds.Height}"
+                                                        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+                                                        <Grid
+                                                            Width="{Binding DemoWindowBounds.Width}"
+                                                            Height="{Binding DemoWindowBounds.Height}"
+                                                            Margin="{Binding DemoWindowBounds, Converter={StaticResource RectToMarginConverter}}"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Top"
+                                                            Background="{ThemeResource AccentFillColorDefaultBrush}"
+                                                            CornerRadius="4" />
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            FontWeight="ExtraBlack"
+                                                            Opacity="0.7"
+                                                            Text="{Binding MonitorDeviceName}"
+                                                            TextWrapping="Wrap" />
+                                                    </Grid>
+                                                    <Grid ColumnSpacing="4">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button
+                                                            x:Uid="SettingsPageDelete"
+                                                            Grid.Column="0"
+                                                            HorizontalAlignment="Stretch"
+                                                            Click="DeleteWindowBoundsRecordButton_Click" />
+                                                        <Button
+                                                            x:Uid="SettingsPageApply"
+                                                            Grid.Column="1"
+                                                            HorizontalAlignment="Stretch"
+                                                            Click="ApplyWindowBoundsRecordButton_Click"
+                                                            Style="{StaticResource AccentButtonStyle}" />
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                            </StackPanel>
+
                             <controls:SettingsCard x:Uid="SettingsPageIgnoreFullscreenWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE967;}">
                                 <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreFullscreenWindow, Mode=TwoWay}" />
                             </controls:SettingsCard>

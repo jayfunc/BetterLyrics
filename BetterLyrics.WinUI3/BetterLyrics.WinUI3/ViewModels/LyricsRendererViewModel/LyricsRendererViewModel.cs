@@ -190,6 +190,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             AppSettings = _settingsService.AppSettings;
 
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.AppSettings.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
+            UpdateSongInfoFontSize();
+
 
             _timelineSyncThreshold = 0;
 

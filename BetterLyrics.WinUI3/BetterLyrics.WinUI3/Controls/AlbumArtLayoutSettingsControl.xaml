@@ -46,6 +46,15 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
+                        <local:ExtendedSlider
+                            Default="18"
+                            Frequency="2"
+                            Maximum="48"
+                            Minimum="12"
+                            Value="{x:Bind ViewModel.AppSettings.AlbumArtLayoutSettings.SongInfoFontSize, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>

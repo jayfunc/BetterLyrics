@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
@@ -19,6 +20,7 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class LyricsWindow : Window
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
         private readonly WindowMessageMonitor _wmm;
         private bool _autoSelectLyricsModeOnRunning = true;
 
@@ -101,6 +103,11 @@ namespace BetterLyrics.WinUI3.Views
                     break;
             }
             _autoSelectLyricsModeOnRunning = false;
+
+            var size = AppWindow.Size;
+            var rect = AppWindow.Position;
+
+            _liveStatesService.LiveStates.LyricsWindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -111,6 +118,8 @@ namespace BetterLyrics.WinUI3.Views
             {
                 var size = AppWindow.Size;
                 var rect = AppWindow.Position;
+
+                _liveStatesService.LiveStates.LyricsWindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
 
                 if (rect.X < 0 && rect.Y < 0 && rect.X + size.Width < 0 && rect.Y + size.Height < 0)
                 {
