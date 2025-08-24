@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
+using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -59,6 +61,15 @@ namespace BetterLyrics.WinUI3.Helper
         {
             var primaryMonitorInfo = GetPrimaryMonitorInfoEx();
             return primaryMonitorInfo.szDevice;
+        }
+
+        public static User32.MONITORINFOEX GetMonitorInfoExFromWindow(Window window)
+        {
+            var hwnd = WindowNative.GetWindowHandle(window);
+            var hMonitor = User32.MonitorFromWindow(hwnd, User32.MonitorFlags.MONITOR_DEFAULTTONEAREST);
+            User32.MONITORINFOEX monitorInfoEx = new() { cbSize = (uint)Marshal.SizeOf<User32.MONITORINFOEX>() };
+            User32.GetMonitorInfo(hMonitor, ref monitorInfoEx);
+            return monitorInfoEx;
         }
     }
 }

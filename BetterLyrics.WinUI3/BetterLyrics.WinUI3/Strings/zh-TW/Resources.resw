@@ -499,6 +499,9 @@
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>應用行為</value>
   </data>
+  <data name="SettingsPageApply.Content" xml:space="preserve">
+    <value>應用</value>
+  </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>啟動桌面模式時隨即鎖定窗口</value>
   </data>
@@ -544,11 +547,17 @@
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>緊湊</value>
   </data>
+  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
+    <value>當前歌詞窗口狀態</value>
+  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>深色</value>
   </data>
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>顯示調試覆蓋層</value>
+  </data>
+  <data name="SettingsPageDelete.Content" xml:space="preserve">
+    <value>刪除</value>
   </data>
   <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
     <value>亞克力（桌面）</value>
@@ -904,6 +913,9 @@
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>上下邊緣不透明度</value>
   </data>
+  <data name="SettingsPageLyricsWindowManager.Header" xml:space="preserve">
+    <value>歌詞視窗管理</value>
+  </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>媒體庫</value>
   </data>
@@ -972,6 +984,12 @@
   </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ 回饋交流群</value>
+  </data>
+  <data name="SettingsPageRecord.Content" xml:space="preserve">
+    <value>記錄</value>
+  </data>
+  <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <value>記錄的窗口狀態</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>路徑中的原始檔案和資料夾不會被刪除</value>

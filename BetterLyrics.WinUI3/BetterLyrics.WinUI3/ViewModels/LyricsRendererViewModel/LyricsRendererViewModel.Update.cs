@@ -328,7 +328,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_liveStatesService.LiveStates.LyricsStyleSettings.IsDynamicLyricsFontSize)
             {
-                _lyricsTextFormat.FontSize = (float)Math.Max(12, Math.Min(_canvasHeight, _canvasWidth) / 10);
+                _lyricsTextFormat.FontSize = (float)Math.Clamp(Math.Min(_canvasHeight, _canvasWidth) / 10, 12, 72);
             }
             else
             {
@@ -694,6 +694,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             var current = _mediaSessionsService.GetCurrentMediaSourceProviderInfo();
             _isLastFMTrackEnabled = current?.IsLastFMTrackEnabled ?? false;
+        }
+
+        private void UpdateSongInfoFontSize()
+        {
+            _titleTextFormat.FontSize = _settingsService.AppSettings.AlbumArtLayoutSettings.SongInfoFontSize;
+            _artistTextFormat.FontSize = _settingsService.AppSettings.AlbumArtLayoutSettings.SongInfoFontSize - 2;
         }
     }
 }

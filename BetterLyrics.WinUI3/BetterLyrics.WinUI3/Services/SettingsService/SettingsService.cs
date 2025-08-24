@@ -60,6 +60,9 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.MappedSongSearchQueries.CollectionChanged += AppSettings_CollectionChanged;
             AppSettings.MappedSongSearchQueries.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
 
+            AppSettings.WindowBoundsRecords.CollectionChanged += AppSettings_CollectionChanged;
+            AppSettings.WindowBoundsRecords.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
+
             AppSettings.Version = MetadataHelper.AppVersion;
 
             EnsureMediaSourceProvidersInfo();

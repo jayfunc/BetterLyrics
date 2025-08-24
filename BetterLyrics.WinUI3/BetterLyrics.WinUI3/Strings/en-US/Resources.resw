@@ -499,6 +499,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>App behavior</value>
   </data>
+  <data name="SettingsPageApply.Content" xml:space="preserve">
+    <value>Apply</value>
+  </data>
   <data name="SettingsPageAutoLock.Header" xml:space="preserve">
     <value>Auto-lock when activating desktop mode</value>
   </data>
@@ -544,11 +547,17 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>Compact</value>
   </data>
+  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
+    <value>Current lyrics window status</value>
+  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>Dark</value>
   </data>
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>Show debug overlay</value>
+  </data>
+  <data name="SettingsPageDelete.Content" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
     <value>Desktop Acrylic</value>
@@ -904,6 +913,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>Top and bottom edge opacity</value>
   </data>
+  <data name="SettingsPageLyricsWindowManager.Header" xml:space="preserve">
+    <value>Lyrics window manager</value>
+  </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>Media library</value>
   </data>
@@ -972,6 +984,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ feedback &amp; chat group</value>
+  </data>
+  <data name="SettingsPageRecord.Content" xml:space="preserve">
+    <value>Record</value>
+  </data>
+  <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <value>Recorded window status</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>Original files and folders in this path will not be deleted when removing it from this app</value>
