@@ -13,61 +13,61 @@
 
     <Grid Padding="16" RowSpacing="6">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,0,6">
-            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                <controls:SettingsExpander x:Uid="LyricsSearchControlSongInfoMapping" IsExpanded="True">
-                    <controls:SettingsExpander.Items>
-                        <controls:SettingsCard x:Uid="LyricsSearchControlTitle" Description="{x:Bind ViewModel.MappedSongSearchQuery.OriginalTitle, Mode=OneWay}">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <TextBlock x:Uid="LyricsSearchControlMappedAs" VerticalAlignment="Center" />
-                                <TextBox Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedTitle, Mode=TwoWay}" TextWrapping="Wrap" />
-                                <Button
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.ResetMappedTitleCommand}"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                          FontSize=12,
-                                                          Glyph=&#xE777;}"
-                                    Style="{StaticResource GhostButtonStyle}" />
-                            </StackPanel>
-                        </controls:SettingsCard>
-                        <controls:SettingsCard x:Uid="LyricsSearchControlArtist" Description="{x:Bind ViewModel.MappedSongSearchQuery.OriginalArtist, Mode=OneWay}">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <TextBlock x:Uid="LyricsSearchControlMappedAs" VerticalAlignment="Center" />
-                                <TextBox Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedArtist, Mode=TwoWay}" TextWrapping="Wrap" />
-                                <Button
-                                    VerticalAlignment="Center"
-                                    Command="{x:Bind ViewModel.ResetMappedArtistCommand}"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                          FontSize=12,
-                                                          Glyph=&#xE777;}"
-                                    Style="{StaticResource GhostButtonStyle}" />
-                            </StackPanel>
-                        </controls:SettingsCard>
-                        <controls:SettingsCard>
-                            <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-                    </controls:SettingsExpander.Items>
-                </controls:SettingsExpander>
-
-                <controls:SettingsCard x:Uid="LyricsSearchControlTargetSearchProvider">
-                    <Button
-                        x:Uid="LyricsSearchControlSearch"
-                        Command="{x:Bind ViewModel.SearchCommand}"
-                        Style="{StaticResource AccentButtonStyle}" />
-                </controls:SettingsCard>
-            </StackPanel>
-        </Grid>
-        <!--  结果列表及原始歌词文件展示区域  -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" RowSpacing="12">
+            <Grid Grid.Column="0">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                    <controls:SettingsExpander x:Uid="LyricsSearchControlSongInfoMapping" IsExpanded="True">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="LyricsSearchControlTitle" Description="{x:Bind ViewModel.MappedSongSearchQuery.OriginalTitle, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock x:Uid="LyricsSearchControlMappedAs" VerticalAlignment="Center" />
+                                    <TextBox Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedTitle, Mode=TwoWay}" TextWrapping="Wrap" />
+                                    <Button
+                                        VerticalAlignment="Center"
+                                        Command="{x:Bind ViewModel.ResetMappedTitleCommand}"
+                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                              FontSize=12,
+                                                              Glyph=&#xE777;}"
+                                        Style="{StaticResource GhostButtonStyle}" />
+                                </StackPanel>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="LyricsSearchControlArtist" Description="{x:Bind ViewModel.MappedSongSearchQuery.OriginalArtist, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock x:Uid="LyricsSearchControlMappedAs" VerticalAlignment="Center" />
+                                    <TextBox Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedArtist, Mode=TwoWay}" TextWrapping="Wrap" />
+                                    <Button
+                                        VerticalAlignment="Center"
+                                        Command="{x:Bind ViewModel.ResetMappedArtistCommand}"
+                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                              FontSize=12,
+                                                              Glyph=&#xE777;}"
+                                        Style="{StaticResource GhostButtonStyle}" />
+                                </StackPanel>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard>
+                                <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
+                    <controls:SettingsCard x:Uid="LyricsSearchControlTargetSearchProvider">
+                        <Button
+                            x:Uid="LyricsSearchControlSearch"
+                            Command="{x:Bind ViewModel.SearchCommand}"
+                            Style="{StaticResource AccentButtonStyle}" />
+                    </controls:SettingsCard>
+
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1">
                 <ListView ItemsSource="{x:Bind ViewModel.LyricsSearchResults, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedLyricsSearchResult, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -144,7 +144,7 @@
                     ShowPaused="False"
                     Visibility="{x:Bind ViewModel.IsSearching, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="2">
                 <ListView ItemsSource="{x:Bind ViewModel.LyricsData.LyricsLines, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedLyricsLine, Mode=TwoWay}">
                     <interactivity:Interaction.Behaviors>
                         <interactivity:DataTriggerBehavior
@@ -197,7 +197,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <RelativePanel>
                 <TextBlock
                     x:Uid="LyricsSearchControlHelp"

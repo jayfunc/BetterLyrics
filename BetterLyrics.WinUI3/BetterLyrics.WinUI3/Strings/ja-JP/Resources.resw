@@ -285,6 +285,9 @@
   <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>タイトル</value>
   </data>
+  <data name="LyricsSearchPageTitle" xml:space="preserve">
+    <value>歌詞検索 - BetterLyrics</value>
+  </data>
   <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
     <value>ローカル.ESLRCファイル</value>
   </data>
