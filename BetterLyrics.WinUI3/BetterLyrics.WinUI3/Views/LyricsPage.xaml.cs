@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -133,17 +134,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
         {
-            LyricsSearchFlyout.Content = new LyricsSearchControl
-            {
-                MaxHeight = 500,
-                MaxWidth = 850,
-            };
-            LyricsSearchFlyout.ShowAt(BottomRightCommandStackPanel);
-        }
-
-        private void LyricsSearchFlyout_Closed(object sender, object e)
-        {
-            LyricsSearchFlyout.Content = null;
+            WindowHelper.OpenWindow<LyricsSearchWindow>();
         }
 
         private void TimelineSliderOverlay_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)

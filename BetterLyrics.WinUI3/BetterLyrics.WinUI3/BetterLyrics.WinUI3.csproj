@@ -32,6 +32,7 @@
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
 		<None Remove="Controls\ShortcutTextBox.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
+		<None Remove="Views\LyricsSearchWindow.xaml" />
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
 		<None Remove="Views\SettingsWindow.xaml" />
@@ -180,6 +181,11 @@
 	  <Content Update="Assets\Wiki82.profile.xml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\LyricsSearchWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\LyricsSearchControl.xaml">

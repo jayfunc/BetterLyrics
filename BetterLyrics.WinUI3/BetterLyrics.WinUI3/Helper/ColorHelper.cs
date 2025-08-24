@@ -94,6 +94,11 @@ namespace BetterLyrics.WinUI3.Helper
             return Color.FromArgb(alpha, color.R, color.G, color.B);
         }
 
+        public static Color WithOpacity(this Color color, float opacity)
+        {
+            return Color.FromArgb((byte)(opacity * 255), color.R, color.G, color.B);
+        }
+
         public static Color WithBrightness(this Color color, double brightness)
         {
             // 确保亮度因子在合理范围内

@@ -59,6 +59,10 @@ namespace BetterLyrics.WinUI3.Helper
                 {
                     window = new MusicGalleryWindow();
                 }
+                else if (typeof(T) == typeof(LyricsSearchWindow))
+                {
+                    window = new LyricsSearchWindow();
+                }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));

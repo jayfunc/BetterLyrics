@@ -60,16 +60,16 @@ namespace BetterLyrics.WinUI3.Models
             var mointor = MonitorHelper.GetMonitorInfoExFromWindow(lyricsWindow);
             LyricsWindowMonitorName = mointor.szDevice;
             LyricsWindowMonitorBounds = new Rect(
-                mointor.rcWork.Left,
-                mointor.rcWork.Top,
-                mointor.rcWork.Width,
-                mointor.rcWork.Height
+                mointor.rcMonitor.Left,
+                mointor.rcMonitor.Top,
+                mointor.rcMonitor.Width,
+                mointor.rcMonitor.Height
             );
             DemoLyricsWindowMonitorBounds = new Rect(
-                mointor.rcWork.Left * factor,
-                mointor.rcWork.Top * factor,
-                mointor.rcWork.Width * factor,
-                mointor.rcWork.Height * factor
+                mointor.rcMonitor.Left * factor,
+                mointor.rcMonitor.Top * factor,
+                mointor.rcMonitor.Width * factor,
+                mointor.rcMonitor.Height * factor
             );
         }
     }
