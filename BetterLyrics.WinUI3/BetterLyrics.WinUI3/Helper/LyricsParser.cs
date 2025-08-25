@@ -246,10 +246,11 @@ namespace BetterLyrics.WinUI3.Helper
                     int pStartMs = ParseTtmlTime(pBegin);
                     int pEndMs = ParseTtmlTime(pEnd);
 
-                    // 只获取一级span，且排除ttm:role="x-bg"的span
+                    // 只获取一级span，且排除 ttm:role="x-bg" 的 span 和 ttm:role="x-roman"
                     var spans = p.Elements()
                         .Where(s => s.Name.LocalName == "span" &&
-                                    s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value != "x-bg")
+                                    s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value != "x-bg" &&
+                                    s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value != "x-roman")
                         .ToList();
 
                     // 原文和翻译分离
