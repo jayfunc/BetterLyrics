@@ -1,4 +1,4 @@
-# How to install ".msixbundle" package
+# How to install ".msixbundle" test package
 
 ## Pre-steps
 
