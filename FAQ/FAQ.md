@@ -1,7 +1,7 @@
 ### Where I can find the logs?
 `C:\Users\%USERNAME%\AppData\Local\Packages\37412.BetterLyrics_rd1g0rsrrtxw8\LocalCache\logs`
 
-### How to install ".msixbundle" package?
+### How to install ".msixbundle" **test** package?
 [See this doc](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md)
 
 ### Lyrics are moving back and forth constantly, how to fix it?
