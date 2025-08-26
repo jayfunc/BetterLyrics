@@ -208,7 +208,8 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 
 Cannot find your language?
 Don't worry! Start translating and become one of the contributors! 😆
-Click the [link](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866) to translate this app into your language via Crowdin now!
+
+Clone this project and navigate to `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Strings\` then open any `.resw` file to start contributing!
 
 ## Star history
 
