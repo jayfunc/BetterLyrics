@@ -161,17 +161,17 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-**Easiest** way to get it. **Unlimited** free trail or purchase (there is **no difference** between free and paid version)
+**Unlimited** free trail or purchase (there is **no difference** between free and paid version)
 
 ☕ If you find it useful, please consider [donating](#donations) or purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
 
-> When there's a stable version built, Microsoft Store will be the first channel to get updated.
+### Unable to download from the Microsoft Store?
 
-### Google Drive
-
-Or get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases) page for the link)
-
-> Please note you are downloading ".zip" file, for guide on how to install it, please kindly follow [this doc](How2Install/How2Install.md).
+1. Visit https://store.rg-adguard.net/
+2. Type https://apps.microsoft.com/detail/9p1wcd1p597r in the link input area
+3. Select Retail from the drop-down list
+4. Click the check mark
+5. Select the largest installation package in the resulting list to download and install
 
 ## 💖 Many thanks to
 
@@ -208,7 +208,8 @@ Or get it from Google Drive (see [release](https://github.com/jayfunc/BetterLyri
 
 Cannot find your language?
 Don't worry! Start translating and become one of the contributors! 😆
-Click the [link](https://crowdin.com/project/betterlyrics/invite?h=d767e4f2dbd832d8fcdb6f7e5a198b402502866) to translate this app into your language via Crowdin now!
+
+Fork this project and navigate to `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Strings\` then open any `.resw` file to start contributing!
 
 ## Star history
 
