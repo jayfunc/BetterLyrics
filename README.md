@@ -209,7 +209,7 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 Cannot find your language?
 Don't worry! Start translating and become one of the contributors! 😆
 
-Clone this project and navigate to `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Strings\` then open any `.resw` file to start contributing!
+Fork this project and navigate to `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Strings\` then open any `.resw` file to start contributing!
 
 ## Star history
 
