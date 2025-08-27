@@ -49,12 +49,6 @@ namespace BetterLyrics.WinUI3.Models
         partial void OnLyricsWindowBoundsChanged(Rect value)
         {
             double factor = 0.1;
-            DemoLyricsWindowBounds = new Rect(
-                value.X * factor,
-                value.Y * factor,
-                value.Width * factor,
-                value.Height * factor
-            );
             var lyricsWindow = WindowHelper.GetWindowByWindowType<Views.LyricsWindow>();
             if (lyricsWindow == null) return;
             var mointor = MonitorHelper.GetMonitorInfoExFromWindow(lyricsWindow);
@@ -64,6 +58,12 @@ namespace BetterLyrics.WinUI3.Models
                 mointor.rcMonitor.Top,
                 mointor.rcMonitor.Width,
                 mointor.rcMonitor.Height
+            );
+            DemoLyricsWindowBounds = new Rect(
+                (value.X - mointor.rcMonitor.Left) * factor,
+                (value.Y - mointor.rcMonitor.Top) * factor,
+                value.Width * factor,
+                value.Height * factor
             );
             DemoLyricsWindowMonitorBounds = new Rect(
                 mointor.rcMonitor.Left * factor,
