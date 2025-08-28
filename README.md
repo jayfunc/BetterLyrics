@@ -59,8 +59,9 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
   - <details><summary>⚠️ 网易云音乐</summary>
 
-    - Please install the [BetterNCM plugin](https://microblock.cc/betterncm) first. If a downgrade guide pops up after the installation, please follow the guide to complete the downgrade of NetEase Cloud Music (downgrade to 2.10.13);
-    - After that, please install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed, enjoy it!
+    - Please be sure that that your Netease Cloud Music is at 3.1.4 version
+    - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
+    - After that, install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed, enjoy it!
     - ⚠️ Please note that there is issues with timeline due to plugin issue
 
     </details>
@@ -68,7 +69,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
   - <details><summary>⚠️ 酷狗音乐</summary>
 
     - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
-    - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change.
+    - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change
     - ⚠️ Please note that there is issues with timeline due to Kugou itself
 
     </details>
