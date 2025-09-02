@@ -179,6 +179,10 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 
 Download from https://drive.google.com/file/d/15FiqmSVG3_SZ9Y-_2ZS_qbFvogbNp5Y5/view?usp=sharing and follow the instruction [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md)
 
+## Build
+
+Replace `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`
+
 ## 💖 Many thanks to
 
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
