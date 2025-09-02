@@ -175,6 +175,10 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 4. Click the check mark
 5. Select the largest installation package in the resulting list to download and install
 
+### Unable to launch the app?
+
+Download from https://drive.google.com/file/d/15FiqmSVG3_SZ9Y-_2ZS_qbFvogbNp5Y5/view?usp=sharing and follow the instruction [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md)
+
 ## 💖 Many thanks to
 
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
