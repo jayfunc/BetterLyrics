@@ -56,7 +56,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
 
+        [ObservableProperty]
+        public partial int SelectedTargetLanguageIndex { get; set; }
 
+        [ObservableProperty]
+        public partial string AppleMusicMediaUserToken { get; set; }
 
         public PlaybackSettingsControlViewModel(
             ISettingsService settingsService,
@@ -76,6 +80,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             AppSettings = _settingsService.AppSettings;
             AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
+
+            AppleMusicMediaUserToken = PasswordVaultHelper.Get(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey) ?? "";
+
+            SelectedTargetLanguageIndex = LanguageHelper.SupportedTargetLanguages.ToList().FindIndex(x => x.Code == AppSettings.TranslationSettings.SelectedTargetLanguageCode);
 
             IsLastFMAuthenticated = _lastFMService.IsAuthenticated;
             LastFMUser = _lastFMService.User;
@@ -123,8 +131,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 try
                 {
-                    string targetLangCode = LanguageHelper.SupportedTargetLanguages[AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
-                    string result = await _libreTranslateService.TranslateTextAsync("Hello, world!", targetLangCode, new System.Threading.CancellationToken());
+                    string result = await _libreTranslateService.TranslateTextAsync(
+                        "Hello, world!", AppSettings.TranslationSettings.SelectedTargetLanguageCode, new System.Threading.CancellationToken());
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
                         App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), InfoBarSeverity.Success);
@@ -184,6 +192,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             });
         }
 
+        [RelayCommand]
+        private void SaveAppleMusicMediaUserToken()
+        {
+            PasswordVaultHelper.Save(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey, AppleMusicMediaUserToken);
+            _mediaSessionsService.UpdateLyrics();
+        }
+
         public void Receive(PropertyChangedMessage<LyricsSearchProvider?> message)
         {
             if (message.Sender is MediaSessionsService)
@@ -204,6 +219,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                     TranslationSearchProvider = message.NewValue;
                 }
             }
+        }
+
+        partial void OnSelectedTargetLanguageIndexChanged(int value)
+        {
+            AppSettings.TranslationSettings.SelectedTargetLanguageCode = LanguageHelper.SupportedTargetLanguages[value].Code;
         }
     }
 }

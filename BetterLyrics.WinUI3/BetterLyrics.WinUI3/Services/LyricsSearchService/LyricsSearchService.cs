@@ -28,6 +28,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
     {
         private readonly HttpClient _amllTtmlDbHttpClient;
         private readonly HttpClient _lrcLibHttpClient;
+        private readonly AppleMusic _appleMusic;
 
         private readonly ISettingsService _settingsService;
         private readonly ILogger _logger;
@@ -43,6 +44,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 $"{Constants.App.AppName} {MetadataHelper.AppVersion} ({Constants.Link.GitHubUrl})"
             );
             _amllTtmlDbHttpClient = new();
+            _appleMusic = new AppleMusic();
         }
 
         private static bool IsAmllTtmlDbIndexInvalid()
@@ -208,6 +210,9 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                             break;
                         case LyricsSearchProvider.AmllTtmlDb:
                             lyricsSearchResult = await SearchAmllTtmlDbAsync(title, artist);
+                            break;
+                        case LyricsSearchProvider.AppleMusic:
+                            lyricsSearchResult = await SearchAppleMusicAsync(title, artist, album, (int)durationMs);
                             break;
                         default:
                             break;
@@ -508,12 +513,45 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 string? original = null;
                 if (response?.Candidates.FirstOrDefault() is SearchLyricsResponse.Candidate candidate)
                 {
-                    original = Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyrics(candidate.Id, candidate.AccessKey);
+                    original = await Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyricsAsync(candidate.Id, candidate.AccessKey);
+                    if (candidate.TransId != null)
+                    {
+                        string? translated = await Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyricsAsync(candidate.TransId, candidate.AccessKey);
+                        if (!string.IsNullOrEmpty(translated))
+                        {
+                            FileHelper.WriteLyricsCache(
+                                title,
+                                artist,
+                                translated,
+                                LyricsFormat.Lrc,
+                                PathHelper.KugouTranslationCacheDirectory
+                            );
+                        }
+                    }
                 }
 
                 lyricsSearchResult.Raw = original;
                 lyricsSearchResult.Title = kugouResult.Title;
                 lyricsSearchResult.Artist = kugouResult.Artists.Join(" | ");
+            }
+
+            return lyricsSearchResult;
+        }
+
+        private async Task<LyricsSearchResult> SearchAppleMusicAsync(string title, string artist, string album, int durationMs)
+        {
+            var lyricsSearchResult = new LyricsSearchResult
+            {
+                Provider = LyricsSearchProvider.AppleMusic,
+            };
+
+            if (await _appleMusic.InitAsync())
+            {
+                var raw = await _appleMusic.GetLyricsAsync(title, artist);
+                _logger.LogInformation("Apple Music lyrics search result for {Title} - {Artist}: {Raw}", title, artist, raw ?? "null");
+                lyricsSearchResult.Raw = raw;
+                lyricsSearchResult.Title = title;
+                lyricsSearchResult.Artist = artist;
             }
 
             return lyricsSearchResult;

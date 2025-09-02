@@ -7,7 +7,6 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
-using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
@@ -20,19 +19,12 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using EvtSource;
 using Microsoft.Extensions.Logging;
-using Microsoft.Graphics.Canvas;
 using Microsoft.UI.Dispatching;
-using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
@@ -40,7 +32,6 @@ using WindowsMediaController;
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
-        IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<LyricsWindowMode>>,
@@ -631,18 +622,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
-        public void Receive(PropertyChangedMessage<int> message)
-        {
-            if (message.Sender is TranslationSettings)
-            {
-                if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageIndex))
-                {
-                    _logger.LogInformation("Target language index changed: {Index}", _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex);
-                    UpdateTranslations();
-                }
-            }
-        }
-
         public void Receive(PropertyChangedMessage<string> message)
         {
             if (message.Sender is LyricsStyleSettings)
@@ -652,6 +631,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     UpdateTranslations();
                 }
             }
+            else if (message.Sender is TranslationSettings)
+            {
+                if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageCode))
+                {
+                    _logger.LogInformation("Target language code changed: {code}", _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
+                    UpdateTranslations();
+                }
+            }
+
         }
 
         public void Receive(PropertyChangedMessage<LyricsWindowMode> message)

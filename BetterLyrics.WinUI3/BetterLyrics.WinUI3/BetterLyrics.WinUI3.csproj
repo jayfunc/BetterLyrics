@@ -81,7 +81,6 @@
 		<PackageReference Include="System.Drawing.Common" Version="9.0.8" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.8" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
-		<PackageReference Include="TinyPinyin.Net" Version="1.0.2" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
 		<PackageReference Include="Vanara.PInvoke.CoreAudio" Version="4.1.6" />
 		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.1.6" />

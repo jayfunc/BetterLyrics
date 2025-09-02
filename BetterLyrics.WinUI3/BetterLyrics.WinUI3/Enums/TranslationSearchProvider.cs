@@ -13,6 +13,7 @@ namespace BetterLyrics.WinUI3.Enums
         Netease,
         LrcLib,
         AmllTtmlDb,
+        AppleMusic,
         LocalMusicFile,
         LocalLrcFile,
         LocalEslrcFile,

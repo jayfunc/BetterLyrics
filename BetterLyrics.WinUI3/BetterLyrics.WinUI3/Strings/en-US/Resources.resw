@@ -448,9 +448,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>Feedback</value>
   </data>
-  <data name="SetingsPageRef.Text" xml:space="preserve">
-    <value>Library used</value>
-  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>If you like this project, please consider supporting it by donating. Your support will help keep the project alive and encourage further development.</value>
   </data>

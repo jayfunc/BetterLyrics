@@ -3,7 +3,6 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
-using Lyricify.Lyrics.Helpers.General;
 using Lyricify.Lyrics.Models;
 using System;
 using System.Collections.Generic;

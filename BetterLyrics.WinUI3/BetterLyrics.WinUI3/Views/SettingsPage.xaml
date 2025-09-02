@@ -220,32 +220,6 @@
                                     </controls:SettingsExpander.ItemsHeader>
                                 </controls:SettingsExpander>
 
-                                <TextBlock x:Uid="SetingsPageRef" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                                <ListView
-                                    Padding="0,6"
-                                    Background="{ThemeResource CardBackgroundFillColorDefault}"
-                                    CornerRadius="4"
-                                    ItemsSource="{x:Bind ViewModel.Libs, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <RelativePanel Padding="42,0">
-                                                <HyperlinkButton
-                                                    Margin="-12,0,0,0"
-                                                    Content="{Binding Name}"
-                                                    NavigateUri="{Binding Url}"
-                                                    RelativePanel.AlignLeftWithPanel="True"
-                                                    RelativePanel.AlignVerticalCenterWithPanel="True" />
-                                                <TextBlock
-                                                    RelativePanel.AlignRightWithPanel="True"
-                                                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                                                    Text="{Binding Version}" />
-                                            </RelativePanel>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>
