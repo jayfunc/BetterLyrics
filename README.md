@@ -55,6 +55,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - 酷狗音乐
     - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
     - [LRCLIB](https://lrclib.net/)
+    - Apple Music
 - 🎶 **Multiple Music Players Supported**
 
   - <details><summary>⚠️ 网易云音乐</summary>
@@ -180,6 +181,8 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
   - Provide lyrics fetch, decryption, and parse for QQ, Netease, Kugou sources
 - [lrclib](https://github.com/tranxuanthang/lrclib)
   - LRCLIB lyrics API provider
+[Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics)
+  - Apple Music lyrics fetch using Python
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
   - Used for extracting pictures in music files
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
