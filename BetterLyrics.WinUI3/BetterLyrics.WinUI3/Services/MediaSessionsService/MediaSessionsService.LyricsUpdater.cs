@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private async Task SetDisplayedAlongWithTranslationsAsync(CancellationToken token)
         {
             _logger.LogInformation("Showing translation for lyrics...");
-            string targetLangCode = LanguageHelper.SupportedTargetLanguages[_settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageIndex].Code;
+            string targetLangCode = _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode;
             _logger.LogInformation("Target language code: {TargetLangCode}", targetLangCode);
             string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
             if (originalText == null) return;
@@ -208,6 +208,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
                     break;
                 case Enums.LyricsSearchProvider.Kugou:
+                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
                     break;
                 case Enums.LyricsSearchProvider.Netease:
                     translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
@@ -248,12 +249,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
-        private void UpdateLyrics()
+        public void UpdateLyrics()
         {
             _refreshLyricsRunner.RunAsync(RefreshLyricsAsync);
         }
 
-        private void UpdateTranslations()
+        public void UpdateTranslations()
         {
             _refreshTranslationRunner.RunAsync(RefreshTranslationAsync);
         }

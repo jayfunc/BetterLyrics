@@ -15,6 +15,7 @@ namespace BetterLyrics.WinUI3.Enums
         LocalLrcFile,
         LocalEslrcFile,
         LocalTtmlFile,
+        AppleMusic,
     }
 
     public static class LyricsSearchProviderExtensions
@@ -28,6 +29,7 @@ namespace BetterLyrics.WinUI3.Enums
                 LyricsSearchProvider.Netease => PathHelper.NeteaseLyricsCacheDirectory,
                 LyricsSearchProvider.Kugou => PathHelper.KugouLyricsCacheDirectory,
                 LyricsSearchProvider.AmllTtmlDb => PathHelper.AmllTtmlDbLyricsCacheDirectory,
+                LyricsSearchProvider.AppleMusic => PathHelper.AppleMusicCacheDirectory,
                 _ => throw new System.ArgumentOutOfRangeException(nameof(provider)),
             };
         }
@@ -41,6 +43,7 @@ namespace BetterLyrics.WinUI3.Enums
                 LyricsSearchProvider.Kugou => LyricsFormat.Krc,
                 LyricsSearchProvider.Netease => LyricsFormat.Lrc,
                 LyricsSearchProvider.AmllTtmlDb => LyricsFormat.Ttml,
+                LyricsSearchProvider.AppleMusic => LyricsFormat.Ttml,
                 LyricsSearchProvider.LocalLrcFile => LyricsFormat.Lrc,
                 LyricsSearchProvider.LocalEslrcFile => LyricsFormat.Eslrc,
                 LyricsSearchProvider.LocalTtmlFile => LyricsFormat.Ttml,
@@ -71,6 +74,7 @@ namespace BetterLyrics.WinUI3.Enums
                 LyricsSearchProvider.Kugou => TranslationSearchProvider.Kugou,
                 LyricsSearchProvider.Netease => TranslationSearchProvider.Netease,
                 LyricsSearchProvider.AmllTtmlDb => TranslationSearchProvider.AmllTtmlDb,
+                LyricsSearchProvider.AppleMusic => TranslationSearchProvider.AppleMusic,
                 LyricsSearchProvider.LocalMusicFile => TranslationSearchProvider.LocalMusicFile,
                 LyricsSearchProvider.LocalLrcFile => TranslationSearchProvider.LocalLrcFile,
                 LyricsSearchProvider.LocalEslrcFile => TranslationSearchProvider.LocalEslrcFile,

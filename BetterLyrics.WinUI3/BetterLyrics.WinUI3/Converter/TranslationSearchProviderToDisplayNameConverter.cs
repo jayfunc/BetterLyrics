@@ -19,6 +19,7 @@ namespace BetterLyrics.WinUI3.Converter
                     TranslationSearchProvider.Netease => "网易云音乐",
                     TranslationSearchProvider.Kugou => "酷狗音乐",
                     TranslationSearchProvider.AmllTtmlDb => "amll-ttml-db",
+                    TranslationSearchProvider.AppleMusic => "Apple Music",
                     TranslationSearchProvider.LocalLrcFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalLrcFile"),
                     TranslationSearchProvider.LocalMusicFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalMusicFile"),
                     TranslationSearchProvider.LocalEslrcFile => App.ResourceLoader!.GetString("LyricsSearchProviderEslrcFile"),

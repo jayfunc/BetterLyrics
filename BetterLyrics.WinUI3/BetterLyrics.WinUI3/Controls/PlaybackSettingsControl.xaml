@@ -232,37 +232,56 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=TwoWay}" />
                             <controls:SettingsExpander.Items>
                                 <controls:SettingsCard x:Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
-                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.SelectedTargetLanguageIndex, Mode=TwoWay}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                         <ComboBoxItem Content="العربية" Tag="ar" />
                                         <ComboBoxItem Content="Azərbaycan dili" Tag="az" />
-                                        <ComboBoxItem Content="中文" Tag="zh" />
+                                        <ComboBoxItem Content="Български" Tag="bg" />
+                                        <ComboBoxItem Content="বাংলা" Tag="bn" />
+                                        <ComboBoxItem Content="Català" Tag="ca" />
                                         <ComboBoxItem Content="Čeština" Tag="cs" />
                                         <ComboBoxItem Content="Dansk" Tag="da" />
-                                        <ComboBoxItem Content="Nederlands" Tag="nl" />
-                                        <ComboBoxItem Content="English" Tag="en" />
-                                        <ComboBoxItem Content="Esperanto" Tag="eo" />
-                                        <ComboBoxItem Content="Suomi" Tag="fi" />
-                                        <ComboBoxItem Content="Français" Tag="fr" />
                                         <ComboBoxItem Content="Deutsch" Tag="de" />
                                         <ComboBoxItem Content="Ελληνικά" Tag="el" />
+                                        <ComboBoxItem Content="English" Tag="en" />
+                                        <ComboBoxItem Content="Esperanto" Tag="eo" />
+                                        <ComboBoxItem Content="Español" Tag="es" />
+                                        <ComboBoxItem Content="Eesti" Tag="et" />
+                                        <ComboBoxItem Content="Euskara" Tag="eu" />
+                                        <ComboBoxItem Content="فارسی" Tag="fa" />
+                                        <ComboBoxItem Content="Suomi" Tag="fi" />
+                                        <ComboBoxItem Content="Français" Tag="fr" />
+                                        <ComboBoxItem Content="Gaeilge" Tag="ga" />
+                                        <ComboBoxItem Content="Galego" Tag="gl" />
                                         <ComboBoxItem Content="עברית" Tag="he" />
                                         <ComboBoxItem Content="हिन्दी" Tag="hi" />
                                         <ComboBoxItem Content="Magyar" Tag="hu" />
                                         <ComboBoxItem Content="Bahasa Indonesia" Tag="id" />
-                                        <ComboBoxItem Content="Gaeilge" Tag="ga" />
                                         <ComboBoxItem Content="Italiano" Tag="it" />
                                         <ComboBoxItem Content="日本語" Tag="ja" />
                                         <ComboBoxItem Content="한국어" Tag="ko" />
-                                        <ComboBoxItem Content="فارسی" Tag="fa" />
+                                        <ComboBoxItem Content="Кыргызча" Tag="ky" />
+                                        <ComboBoxItem Content="Lietuvių" Tag="lt" />
+                                        <ComboBoxItem Content="Latviešu" Tag="lv" />
+                                        <ComboBoxItem Content="Bahasa Melayu" Tag="ms" />
+                                        <ComboBoxItem Content="Norsk bokmål" Tag="nb" />
+                                        <ComboBoxItem Content="Nederlands" Tag="nl" />
+                                        <ComboBoxItem Content="Português (Brasil)" Tag="pt-BR" />
                                         <ComboBoxItem Content="Polski" Tag="pl" />
                                         <ComboBoxItem Content="Português" Tag="pt" />
+                                        <ComboBoxItem Content="Română" Tag="ro" />
                                         <ComboBoxItem Content="Русский" Tag="ru" />
                                         <ComboBoxItem Content="Slovenčina" Tag="sk" />
-                                        <ComboBoxItem Content="Español" Tag="es" />
+                                        <ComboBoxItem Content="Slovenščina" Tag="sl" />
+                                        <ComboBoxItem Content="Shqip" Tag="sq" />
+                                        <ComboBoxItem Content="Српски" Tag="sr" />
                                         <ComboBoxItem Content="Svenska" Tag="sv" />
+                                        <ComboBoxItem Content="ไทย" Tag="th" />
+                                        <ComboBoxItem Content="Filipino" Tag="tl" />
                                         <ComboBoxItem Content="Türkçe" Tag="tr" />
                                         <ComboBoxItem Content="Українська" Tag="uk" />
+                                        <ComboBoxItem Content="اردو" Tag="ur" />
                                         <ComboBoxItem Content="Tiếng Việt" Tag="vi" />
+                                        <ComboBoxItem Content="中文" Tag="zh" />
                                     </ComboBox>
                                 </controls:SettingsCard>
                                 <controls:SettingsCard x:Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
@@ -335,6 +354,26 @@
                                     x:Uid="SettingsPageServerTestButton"
                                     Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
                                     IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                            </StackPanel>
+                        </controls:SettingsCard>
+                        <!--  Apple Music token  -->
+                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="media-user-token (for Apple Muisc)" />
+                        <controls:SettingsCard
+                            Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                            Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                            Header="Use at your own risk">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBox
+                                    MaxWidth="250"
+                                    PlaceholderText="media-user-token"
+                                    Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
+                                    TextWrapping="Wrap" />
+                                <Button
+                                    Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"
+                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                          FontSize=12,
+                                                          Glyph=&#xE8FB;}"
+                                    Style="{StaticResource GhostButtonStyle}" />
                             </StackPanel>
                         </controls:SettingsCard>
                     </StackPanel>

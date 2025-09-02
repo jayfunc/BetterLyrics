@@ -448,9 +448,6 @@
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>フィードバック</value>
   </data>
-  <data name="SetingsPageRef.Text" xml:space="preserve">
-    <value>使用されているライブラリ</value>
-  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>このプロジェクトが気に入っている場合は、寄付してサポートすることを検討してください。あなたのサポートは、プロジェクトを生かし続け、さらなる開発を促進するのに役立ちます。</value>
   </data>

@@ -27,6 +27,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         MediaSourceProviderInfo? GetCurrentMediaSourceProviderInfo();
 
+        void UpdateLyrics();
+        void UpdateTranslations();
+
         bool IsPlaying { get; }
         SongInfo? SongInfo { get; }
         TimeSpan Position { get; }

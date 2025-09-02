@@ -1,14 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Lyricify.Lyrics.Helpers.General;
 using NTextCat;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using TinyPinyin;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services
@@ -18,38 +11,77 @@ namespace BetterLyrics.WinUI3.Services
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
 
-        public static List<Models.LanguageInfo> SupportedTargetLanguages =>
+        public static List<Models.LanguageInfo> SupportedTargetLanguages { get; set; } =
         [
             new Models.LanguageInfo("ar", "العربية"),
             new Models.LanguageInfo("az", "Azərbaycan dili"),
-            new Models.LanguageInfo("zh", "中文"),
+
+            new Models.LanguageInfo("bg", "Български"),
+            new Models.LanguageInfo("bn", "বাংলা"),
+
+            new Models.LanguageInfo("ca", "Català"),
             new Models.LanguageInfo("cs", "Čeština"),
+
             new Models.LanguageInfo("da", "Dansk"),
-            new Models.LanguageInfo("nl", "Nederlands"),
+            new Models.LanguageInfo("de", "Deutsch"),
+
+            new Models.LanguageInfo("el", "Ελληνικά"),
             new Models.LanguageInfo("en", "English"),
             new Models.LanguageInfo("eo", "Esperanto"),
+            new Models.LanguageInfo("es", "Español"),
+            new Models.LanguageInfo("et", "Eesti"),
+            new Models.LanguageInfo("eu", "Euskara"),
+
+            new Models.LanguageInfo("fa", "فارسی"),
             new Models.LanguageInfo("fi", "Suomi"),
             new Models.LanguageInfo("fr", "Français"),
-            new Models.LanguageInfo("de", "Deutsch"),
-            new Models.LanguageInfo("el", "Ελληνικά"),
+
+            new Models.LanguageInfo("ga", "Gaeilge"),
+            new Models.LanguageInfo("gl", "Galego"),
+
             new Models.LanguageInfo("he", "עברית"),
             new Models.LanguageInfo("hi", "हिन्दी"),
             new Models.LanguageInfo("hu", "Magyar"),
+
             new Models.LanguageInfo("id", "Bahasa Indonesia"),
-            new Models.LanguageInfo("ga", "Gaeilge"),
             new Models.LanguageInfo("it", "Italiano"),
+
             new Models.LanguageInfo("ja", "日本語"),
+
             new Models.LanguageInfo("ko", "한국어"),
-            new Models.LanguageInfo("fa", "فارسی"),
+            new Models.LanguageInfo("ky", "Кыргызча"),
+
+            new Models.LanguageInfo("lt", "Lietuvių"),
+            new Models.LanguageInfo("lv", "Latviešu"),
+
+            new Models.LanguageInfo("ms", "Bahasa Melayu"),
+
+            new Models.LanguageInfo("nb", "Norsk bokmål"),
+            new Models.LanguageInfo("nl", "Nederlands"),
+
+            new Models.LanguageInfo("pt-BR", "Português (Brasil)"),
             new Models.LanguageInfo("pl", "Polski"),
             new Models.LanguageInfo("pt", "Português"),
+
+            new Models.LanguageInfo("ro", "Română"),
             new Models.LanguageInfo("ru", "Русский"),
+
             new Models.LanguageInfo("sk", "Slovenčina"),
-            new Models.LanguageInfo("es", "Español"),
+            new Models.LanguageInfo("sl", "Slovenščina"),
+            new Models.LanguageInfo("sq", "Shqip"),
+            new Models.LanguageInfo("sr", "Српски"),
             new Models.LanguageInfo("sv", "Svenska"),
+
+            new Models.LanguageInfo("th", "ไทย"),
+            new Models.LanguageInfo("tl", "Filipino"),
             new Models.LanguageInfo("tr", "Türkçe"),
+
             new Models.LanguageInfo("uk", "Українська"),
+            new Models.LanguageInfo("ur", "اردو"),
+
             new Models.LanguageInfo("vi", "Tiếng Việt"),
+
+            new Models.LanguageInfo("zh", "中文"),
         ];
 
         static LanguageHelper()
@@ -83,11 +115,17 @@ namespace BetterLyrics.WinUI3.Services
             };
         }
 
-        public static int GetDefaultTargetLanguageIndex()
+        public static string GetDefaultTargetLanguageCode()
         {
-            int found = SupportedTargetLanguages.FindIndex(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.Code) == true);
-            if (found == -1) found = 7; // 默认使用英语
-            return found;
+            var found = SupportedTargetLanguages.Find(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.Code) == true);
+            if (found == null)
+            {
+                return "en";
+            }
+            else
+            {
+                return found.Code;
+            }
         }
 
         public static string GetOrderChar(string text)
@@ -97,9 +135,9 @@ namespace BetterLyrics.WinUI3.Services
             if (char.IsLetter(c) && c < 128)
                 return char.ToUpper(c).ToString();
 
-            if (PinyinHelper.IsChinese(c))
+            if (Pinyin.Pinyin.Instance.IsHanzi(c.ToString()))
             {
-                return PinyinHelper.GetPinyinInitials($"{c}");
+                return Pinyin.Pinyin.Instance.HanziToPinyin(c.ToString(), Pinyin.ManTone.Style.NORMAL).ToStr().ToUpper().FirstOrDefault().ToString();
             }
 
             return "#";
@@ -107,7 +145,7 @@ namespace BetterLyrics.WinUI3.Services
 
         public static string ToRomaji(string text)
         {
-            return string.Join(" ", RomajiConverter.Core.Helpers.RomajiHelper.SentenceToRomaji(text).Select(x=>x.Romaji));
+            return string.Join(" ", RomajiConverter.Core.Helpers.RomajiHelper.SentenceToRomaji(text).Select(x => x.Romaji));
         }
     }
 }
