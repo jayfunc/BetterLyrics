@@ -173,13 +173,13 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 2. Type https://apps.microsoft.com/detail/9p1wcd1p597r in the link input area
 3. Select Retail from the drop-down list
 4. Click the check mark
-5. Select the largest installation package in the resulting list to download and install
+5. Select the largest installation package in the resulting list to download and install. If you fail to install, try to install dependencies packages first.
 
-### Unable to launch the app? (May not be the latest version)
+### Unable to launch the app?
 
 If you are using third-party modified Windows, you are probably can not launch the app.
 
-To solve this issue, please try to download from [Google Drive (v1.0.71.0)](https://drive.google.com/file/d/15FiqmSVG3_SZ9Y-_2ZS_qbFvogbNp5Y5/view?usp=sharing) and follow the instruction [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md).
+To solve this issue, please try to download from [Google Drive (v1.0.71.0)](https://drive.google.com/file/d/15FiqmSVG3_SZ9Y-_2ZS_qbFvogbNp5Y5/view?usp=sharing) (may not be the latest version) and follow the instruction [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md).
 
 ## Build
 
