@@ -48,6 +48,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private double _lxMusicPositionSeconds = 0;
         private double _lxMusicDurationSeconds = 0;
+        private byte[]? _lxMusicAlbumArtBytes = null;
 
         private bool _cachedIsPlaying = false;
         private TimeSpan _cachedPosition = TimeSpan.Zero;
@@ -352,7 +353,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         StopSSE();
                     }
 
-                    if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
+                    if (id == Constants.PlayerID.LXMusic && _lxMusicAlbumArtBytes != null)
+                    {
+                        _SMTCAlbumArtBytes = _lxMusicAlbumArtBytes;
+                    }
+                    else if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
                     {
                         _SMTCAlbumArtBytes = await ImageHelper.ToByteArrayAsync(streamReference);
                     }
@@ -456,6 +461,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void StartSSE()
         {
+            if (_sse != null)
+            {
+                return;
+            }
+
             try
             {
                 _sse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.GeneralSettings.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
@@ -495,7 +505,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void Sse_MessageReceived(object sender, EventSourceMessageEventArgs e)
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
                 if (_cachedSongInfo?.SourceAppUserModelId == Constants.PlayerID.LXMusic)
                 {
@@ -514,6 +524,19 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         if (IsMediaSourceTimelineSyncEnabled(Constants.PlayerID.LXMusic))
                         {
                             TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(TimeSpan.FromSeconds(_lxMusicPositionSeconds), TimeSpan.FromSeconds(_lxMusicDurationSeconds)));
+                        }
+                    }
+                    else if (data.ValueKind == JsonValueKind.String)
+                    {
+                        if (e.Event == "picUrl")
+                        {
+                            string? picUrl = data.GetString();
+                            if (picUrl != null)
+                            {
+                                _lxMusicAlbumArtBytes = await ImageHelper.DownloadImageAsByteArrayAsync(picUrl);
+                                _SMTCAlbumArtBytes = _lxMusicAlbumArtBytes;
+                                UpdateAlbumArt();
+                            }
                         }
                     }
                 }
