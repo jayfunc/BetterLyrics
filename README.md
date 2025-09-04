@@ -55,6 +55,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - 酷狗音乐
     - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
     - [LRCLIB](https://lrclib.net/)
+    - Apple Music
 - 🎶 **Multiple Music Players Supported**
 
   - <details><summary>⚠️ 网易云音乐</summary>
@@ -156,7 +157,7 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 
 ## Try it now
 
-### Microsoft Store
+### Microsoft Store (Latest version)
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
@@ -166,13 +167,23 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 
 ☕ If you find it useful, please consider [donating](#donations) or purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
 
-### Unable to download from the Microsoft Store?
+### Unable to download from the MS Store? (Alternative way to download from MS Store, latest version too)
 
 1. Visit https://store.rg-adguard.net/
 2. Type https://apps.microsoft.com/detail/9p1wcd1p597r in the link input area
 3. Select Retail from the drop-down list
 4. Click the check mark
-5. Select the largest installation package in the resulting list to download and install
+5. Select the largest installation package in the resulting list to download and install. If you fail to install, try to install dependencies packages first.
+
+### Unable to launch the app?
+
+If you are using third-party modified Windows, you are probably can not launch the app.
+
+To solve this issue, please try to download from [Google Drive (v1.0.71.0)](https://drive.google.com/file/d/15FiqmSVG3_SZ9Y-_2ZS_qbFvogbNp5Y5/view?usp=sharing) (may not be the latest version) and follow the instruction [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md).
+
+## Build
+
+Before you build, make sure that you have already replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`
 
 ## 💖 Many thanks to
 
@@ -180,6 +191,8 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
   - Provide lyrics fetch, decryption, and parse for QQ, Netease, Kugou sources
 - [lrclib](https://github.com/tranxuanthang/lrclib)
   - LRCLIB lyrics API provider
+- [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics)
+  - Apple Music lyrics fetch using Python
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
   - Used for extracting pictures in music files
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
