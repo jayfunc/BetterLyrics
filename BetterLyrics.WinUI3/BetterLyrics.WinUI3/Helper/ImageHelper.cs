@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -218,6 +219,12 @@ namespace BetterLyrics.WinUI3.Helper
                 pixelData[i * 4 + 3] = 255;  // A
             }
             return pixelData;
+        }
+
+        public static async Task<byte[]> DownloadImageAsByteArrayAsync(string url)
+        {
+            using var httpClient = new HttpClient();
+            return await httpClient.GetByteArrayAsync(url);
         }
     }
 }
