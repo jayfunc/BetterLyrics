@@ -55,7 +55,11 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - 酷狗音乐
     - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
     - [LRCLIB](https://lrclib.net/)
-    - Apple Music
+    - <details><summary>⚠️ Apple Music (additional config needed)</summary>
+
+  		- Open the Apple Music web app and the Developer Tools window. Refresh the page. Return to the Developer Tools window, select Fetch/XHR, select a request, find the Media-User-Token header in the request header, and copy its value.
+		- Open BetterLyrics and go to the Playback Source settings. Enter the copied value in the Media-User-Token (for Apple Music) setting and click the checkbox.
+ 
 - 🎶 **Multiple Music Players Supported**
 
   - <details><summary>⚠️ 网易云音乐</summary>
