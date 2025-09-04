@@ -533,7 +533,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             string? picUrl = data.GetString();
                             if (picUrl != null)
                             {
-                                _lxMusicAlbumArtBytes = await ImageHelper.DownloadImageAsByteArrayAsync(picUrl);
+                                _logger.LogInformation("LX Music Album Art URL: {url}", picUrl);
+                                _lxMusicAlbumArtBytes = await ImageHelper.GetImageBytesFromUrlAsync(picUrl);
                                 _SMTCAlbumArtBytes = _lxMusicAlbumArtBytes;
                                 UpdateAlbumArt();
                             }

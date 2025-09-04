@@ -12,13 +12,13 @@
 	<Identity
 	  Name="37412.BetterLyrics"
 	  Publisher="CN=E1428B0E-DC1D-4EA4-ACB1-4556569D5BA9"
-	  Version="1.0.72.0" />
+	  Version="1.0.73.0" />
 
 	<mp:PhoneIdentity PhoneProductId="ca4a4830-fc19-40d9-b823-53e2bff3d816" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
 	<Properties>
 		<DisplayName>BetterLyrics</DisplayName>
-		<PublisherDisplayName>founchoo</PublisherDisplayName>
+		<PublisherDisplayName>Zhe Fang</PublisherDisplayName>
 		<Logo>Images\StoreLogo.png</Logo>
 	</Properties>
 

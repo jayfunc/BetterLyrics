@@ -226,5 +226,62 @@ namespace BetterLyrics.WinUI3.Helper
             using var httpClient = new HttpClient();
             return await httpClient.GetByteArrayAsync(url);
         }
+
+        public static byte[]? DataUrlToByteArray(string dataUrl)
+        {
+            const string base64Marker = ";base64,";
+            int base64Index = dataUrl.IndexOf(base64Marker, StringComparison.OrdinalIgnoreCase);
+            if (base64Index >= 0)
+            {
+                string base64Data = dataUrl.Substring(base64Index + base64Marker.Length);
+                return Convert.FromBase64String(base64Data);
+            }
+            else
+            {
+                // 非 base64，直接取逗号后内容并解码
+                int commaIndex = dataUrl.IndexOf(',');
+                if (commaIndex >= 0)
+                {
+                    string rawData = dataUrl.Substring(commaIndex + 1);
+                    return System.Text.Encoding.UTF8.GetBytes(Uri.UnescapeDataString(rawData));
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public static async Task<byte[]?> GetImageBytesFromUrlAsync(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return null;
+            }
+
+            try
+            {
+                if (url.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+                {
+                    // data URL，直接解析
+                    return DataUrlToByteArray(url);
+                }
+                else if (Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
+                         (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                {
+                    // 普通网络图片，下载
+                    return await DownloadImageAsByteArrayAsync(url);
+                }
+                else
+                {
+                    // 其他类型暂不支持
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
