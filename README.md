@@ -95,7 +95,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
   - <details><summary>LX Music</summary>
 
     - Please make sure you have enabled "Open API" in LX Music settings page
-    - Then open BetterLyrics, go to settings, go to "Advanced options", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
+    - Then open BetterLyrics, go to settings, go to "Playback sources", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
 
     </details>
 
