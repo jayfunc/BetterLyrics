@@ -23,7 +23,7 @@ BetterLyrics
 </div>
 
 <h4 align="center">
-Your dynamic lyrics display tool built with WinUI 3 and Win2D — works with local playback and other players
+Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with local playback and other players
 </h3>
 
 ## 🎉 This project was featured by SSPAI!
@@ -32,17 +32,15 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ## 🔈 Feedback and chat group
 
-- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\QQ.png" height="20"> QQ](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388)
-- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Discord.png" height="12"> Discord](https://discord.gg/5yAQPnyCKv)
-- [<img src="BetterLyrics.WinUI3\BetterLyrics.WinUI3\Assets\Telegram.png" height="16"> Telegram](https://t.me/+svhSLZ7awPsxNGY1)
+[QQ 群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) | [Discord Server](https://discord.gg/5yAQPnyCKv) | [Telegram Group](https://t.me/+svhSLZ7awPsxNGY1)
 
 ## 🌟 Highlighted features
 
 - 🌠 **Pleasing User Interface**
   - Fluent animations and effects
 - ↔️ **Strong Lyrics Translation**
-  - Offline machine translation (supporting 30 languages)
-  - Auto reading local lyrics files for embedded translation
+  - Offline machine translation (supporting 30+ languages)
+  - Auto-reading local lyrics files for embedded translation
 - 🧩 **Various Lyrics Source**
   - Local storage
     - Music files (with embedded lyrics)
@@ -64,18 +62,18 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
   - <details><summary>⚠️ 网易云音乐</summary>
 
-    - Please be sure that that your Netease Cloud Music is at 3.1.4 version
+    - Please be sure that your Netease Cloud Music is at version 3.1.4
     - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
-    - After that, install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed, enjoy it!
-    - ⚠️ Please note that there is issues with timeline due to plugin issue
+    - After that, install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed. Enjoy it!
+    - ⚠️ Please note that there are issues with the timeline due to a plugin issue
 
     </details>
 
   - <details><summary>⚠️ 酷狗音乐</summary>
 
     - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
-    - No timeline information broadcasted, which means when you change timeline position in Kugou Music, BetterLyrics has no way to detect this change
-    - ⚠️ Please note that there is issues with timeline due to Kugou itself
+    - No timeline information broadcast, which means when you change the timeline position in Kugou Music, BetterLyrics has no way to detect this change
+    - ⚠️ Please note that there are issues with the timeline due to Kugou itself
 
     </details>
 
@@ -119,7 +117,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
-    - Enjoy an immersive listening journey with rich lyrics animations and beautifully dynamic backgrounds
+    - Enjoy an immersive listening journey with rich lyrics, animations and beautifully dynamic backgrounds
   - **Dock Mode**
     - A smart animated lyrics bar docked to your screen edge
   - **Desktop Mode**
@@ -127,7 +125,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 - 🧠 **Smart Behaviors**
   - Auto hide when music paused
 
-> This project is still under development, bugs and unexpected behaviors may be existed in the latest branch.
+> This project is still under development, bugs and unexpected behaviours may exist in the latest branch.
 
 ## Screenshots
 
@@ -177,13 +175,13 @@ Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https:
 2. Type https://apps.microsoft.com/detail/9p1wcd1p597r in the link input area
 3. Select Retail from the drop-down list
 4. Click the check mark
-5. Select the largest installation package in the resulting list to download and install. If you fail to install, try to install dependencies packages first.
+5. Select the largest installation package in the resulting list to download and install. If you fail to install, try to install the dependency packages first.
 
 ### Unable to launch the app?
 
-If you are using third-party modified Windows, you are probably can not launch the app.
+If you are using a third-party modified Windows, you probably can not launch the app.
 
-To solve this issue, please try to download from [Google Drive (v1.0.73.0)](https://drive.google.com/file/d/1WOeacPf3JR54GZTZqnnfhyls4KyARlYA/view?usp=drive_link) (may not be the latest version) and follow the instruction [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md).
+To solve this issue, please try to download from [Google Drive (v1.0.73.0)](https://drive.google.com/file/d/1WOeacPf3JR54GZTZqnnfhyls4KyARlYA/view?usp=drive_link) (may not be the latest version) and follow the instructions [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md).
 
 ## Build
 
@@ -192,17 +190,17 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 ## 💖 Many thanks to
 
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
-  - Provide lyrics fetch, decryption, and parse for QQ, Netease, Kugou sources
+  - Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources
 - [lrclib](https://github.com/tranxuanthang/lrclib)
   - LRCLIB lyrics API provider
 - [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics)
   - Apple Music lyrics fetch using Python
 - [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
-  - Used for extracting pictures in music files
+  - Used for extracting pictures from music files
 - [WinUIEx](https://github.com/dotMorten/WinUIEx)
-  - Provide easy ways to access Win32 API regarding windowing
+  - Provide easy ways to access the Win32 API regarding windowing
 - [TagLib#](https://github.com/mono/taglib-sharp)
-  - Used for reading original lyrics content
+  - Used for reading the original lyrics content
 - [Vanara](https://github.com/dahall/Vanara)
   - Win32 API wrapper
 - [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
@@ -233,9 +231,9 @@ Fork this project and navigate to `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics
 
 [![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
 
-## Any issues and PRs are welcomed
+## Any issues and PRs are welcome
 
-If you find a bug please file it in issues or if you have any ideas feel free to share it here.
+If you find a bug, please file it in issues, or if you have any ideas, feel free to share them here.
 
 ## Donations
 
