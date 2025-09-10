@@ -64,7 +64,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
     - Please be sure that your Netease Cloud Music is at version 3.1.4
     - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
-    - After that, install the InfLink plugin in PluginMarket. After the installation is complete, please restart NetEase Cloud Music. At this point, all preparatory operations have been completed. Enjoy it!
+    - After that, install the InfLink plugin in PluginMarket. After the installation is complete, please restart 网易云音乐. At this point, all preparatory operations have been completed. Enjoy it!
     - ⚠️ Please note that there are issues with the timeline due to a plugin issue
 
     </details>
@@ -80,15 +80,21 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
   - <details><summary>⚠️ foobar2000</summary>
 
     - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
-    - ⚠️ Please note that there is issues with timeline due to plugin issue
+    - ⚠️ Please note that there are issues with the timeline due to a plugin issue
 
     </details>
 
   - Apple Music
   - Spotify
-  - QQ 音乐
   - PotPlayer
   - Media Player (System)
+
+  - <details><summary>QQ 音乐</summary>
+
+    - Please keep it at the latest version
+    - Then open Settings in QQ 音乐, enable "Show System Media Transport Controls (SMTC)".
+
+    </details>
 
   - <details><summary>LX Music</summary>
 
