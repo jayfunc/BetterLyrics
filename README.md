@@ -42,12 +42,12 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
   - Offline machine translation (supporting 30+ languages)
   - Auto-reading local lyrics files for embedded translation
 - 🧩 **Various Lyrics Source**
-  - Local storage
+  - 💾 Local storage
     - Music files (with embedded lyrics)
     - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) files (with both core format and enhanced format)
     - [.eslrc](https://github.com/ESLyric/release) files
     - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
-  - Online lyrics providers
+  - ☁️ Online lyrics providers
     - QQ 音乐
     - 网易云音乐
     - 酷狗音乐
@@ -56,7 +56,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - <details><summary>⚠️ Apple Music (additional config needed)</summary>
 
   		- Open the Apple Music web app and the Developer Tools window. Refresh the page. Return to the Developer Tools window, select Fetch/XHR, select a request, find the Media-User-Token header in the request header, and copy its value.
-		- Open BetterLyrics and go to the Playback Source settings. Enter the copied value in the Media-User-Token (for Apple Music) setting and click the checkbox.
+		- Open BetterLyrics and go to the Playback Source settings. Enter the copied value in the Media-User-Token (for Apple Music) setting and click the accept icon on the right-hand side.
  
 - 🎶 **Multiple Music Players Supported**
 
