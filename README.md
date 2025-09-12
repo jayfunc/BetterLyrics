@@ -137,31 +137,23 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ### Standard mode
 
-![alt text](Screenshots/image.png)
-
-![alt text](Screenshots/glow-float.gif)
-
-![alt text](Screenshots/fan.png)
-
-![alt text](Screenshots/lyrics-only.png)
-
-![alt text](Screenshots/album-art-only.png)
+![alt text](Screenshots/std.png)
 
 ### Standard mode (narrow)
 
 ![alt text](Screenshots/std-narrow.png)
 
+### Standard mode (fullscreen)
+
+![alt text](Screenshots/std-fullscreen.png)
+
 ### Dock mode
 
-![alt text](Screenshots/dock-1.png)
-
-![alt text](Screenshots/dock-2.png)
+![alt text](Screenshots/dock.png)
 
 ### Desktop mode
 
-![alt text](Screenshots/desktop-1.png)
-
-![alt text](Screenshots/desktop-2.png)
+![alt text](Screenshots/desktop.png)
 
 ## Demonstration
 
