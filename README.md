@@ -147,6 +147,10 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ![alt text](Screenshots/album-art-only.png)
 
+### Standard mode (narrow)
+
+![alt text](Screenshots/std-narrow.png)
+
 ### Dock mode
 
 ![alt text](Screenshots/dock-1.png)
