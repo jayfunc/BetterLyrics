@@ -62,7 +62,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
   - <details><summary>⚠️ 网易云音乐</summary>
 
-    - Please be sure that your Netease Cloud Music is at version 3.1.4
+    - Please be sure that your Netease Cloud Music is at version 3.1.4 [x64](https://d1.music.126.net/dmusic/NeteaseCloudMusic_Music_official_3.1.4.203507_64.exe) | [x86](https://d1.music.126.net/dmusic/NeteaseCloudMusic_Music_official_3.1.4.203507_32.exe)
     - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
     - After that, install the InfLink plugin in PluginMarket. After the installation is complete, please restart 网易云音乐. At this point, all preparatory operations have been completed. Enjoy it!
     - ⚠️ Please note that there are issues with the timeline due to a plugin issue
