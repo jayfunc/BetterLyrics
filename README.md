@@ -62,7 +62,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
   - <details><summary>网易云音乐</summary>
 
-    - Please make sure that you have latest version of 网易云音乐 installed on your PC.
+    - Please make sure that you have latest version (3.1.20+) of 网易云音乐 installed on your PC.
     - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
     - After that, install the [InfLink-rs](https://github.com/apoint123/inflink-rs) plugin in PluginMarket. After the installation is complete, please restart 网易云音乐. At this point, all preparatory operations have been completed. Enjoy it!
 
