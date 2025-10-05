@@ -60,17 +60,17 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
  
 - 🎶 **Multiple Music Players Supported**
 
-  - <details><summary>⚠️ 网易云音乐</summary>
+  - <details><summary>网易云音乐</summary>
 
+    - Please make sure that you have latest version of 网易云音乐 installed on your PC.
     - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
     - After that, install the [InfLink-rs](https://github.com/apoint123/inflink-rs) plugin in PluginMarket. After the installation is complete, please restart 网易云音乐. At this point, all preparatory operations have been completed. Enjoy it!
-    - ⚠️ Please note that there are issues with the timeline due to a plugin issue
 
     </details>
 
   - <details><summary>⚠️ 酷狗音乐</summary>
 
-    - Please make sure that the Kugou Music setting "Support system playback controls, such as lock screen interface" is turned on
+    - Please make sure that the 酷狗音乐 setting "Support system playback controls, such as lock screen interface" is turned on
     - No timeline information broadcast, which means when you change the timeline position in Kugou Music, BetterLyrics has no way to detect this change
     - ⚠️ Please note that there are issues with the timeline due to Kugou itself
 
