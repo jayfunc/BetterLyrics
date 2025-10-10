@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
 
             byte[]? bytes = await Task.Run(async () => await _albumArtSearchService.SearchAsync(
-                SongInfo?.SourceAppUserModelId ?? "",
+                SongInfo?.PlayerId ?? "",
                 _cachedSongInfo.Title,
                 _cachedSongInfo.Artist,
                 _cachedSongInfo?.Album ?? string.Empty,

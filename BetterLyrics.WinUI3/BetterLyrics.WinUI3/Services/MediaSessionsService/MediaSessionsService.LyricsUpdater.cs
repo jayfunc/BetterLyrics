@@ -156,11 +156,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     SongInfo.Title, SongInfo.Artist, SongInfo.Album, SongInfo.DurationMs);
 
                 var lyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
-                    SongInfo.SourceAppUserModelId ?? "",
+                    SongInfo.PlayerId ?? "",
                     SongInfo.Title,
                     SongInfo.Artist,
                     SongInfo.Album ?? "",
                     SongInfo.DurationMs ?? 0,
+                    SongInfo.SongId,
                     token
                 ), token);
                 if (token.IsCancellationRequested) return;

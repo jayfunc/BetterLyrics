@@ -21,10 +21,13 @@ namespace BetterLyrics.WinUI3.Models
         public partial double? DurationMs { get; set; }
 
         [ObservableProperty]
-        public partial string? SourceAppUserModelId { get; set; } = null;
+        public partial string? PlayerId { get; set; } = null;
 
         [ObservableProperty]
         public partial string Title { get; set; }
+
+        [ObservableProperty]
+        public partial string? SongId { get; set; } = null;
 
         public SongInfo() { }
     }

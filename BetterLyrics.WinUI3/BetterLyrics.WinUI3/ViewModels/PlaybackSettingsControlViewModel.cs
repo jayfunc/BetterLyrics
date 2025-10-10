@@ -111,7 +111,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void MediaSessionsService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
         {
-            var current = AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == e.SongInfo?.SourceAppUserModelId)?.FirstOrDefault();
+            var current = AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == e.SongInfo?.PlayerId)?.FirstOrDefault();
             if (_mediaSessionsService.Position.TotalSeconds <= 1 && current?.ResetPositionOffsetOnSongChanged == true)
             {
                 current.PositionOffset = 0;
