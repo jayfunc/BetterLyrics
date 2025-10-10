@@ -284,21 +284,21 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 if (!_mediaManager.IsStarted) return;
                 if (mediaSession == null) return;
 
-                string id = mediaSession.Id;
+                string sessionId = mediaSession.Id;
 
                 var desiredSession = GetCurrentSession();
 
                 //RecordMediaSourceProviderInfo(mediaSession);
                 if (mediaSession != desiredSession) return;
 
-                if (!IsMediaSourceEnabled(id))
+                if (!IsMediaSourceEnabled(sessionId))
                 {
                     _cachedSongInfo = null;
 
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties.Title, mediaProperties.Artist, mediaProperties.AlbumTitle);
 
-                    if (id == Constants.PlayerID.LXMusic)
+                    if (sessionId == Constants.PlayerID.LXMusic)
                     {
                         StopSSE();
                     }
@@ -313,38 +313,39 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         currentMediaSourceProviderInfo?.PositionOffset = 0;
                     }
 
-                    if (id == Constants.PlayerID.AppleMusic || id == Constants.PlayerID.AppleMusicAlternative)
-                    {
-                        string fixedArtist = mediaProperties.Artist.Split(" — ").FirstOrDefault() ?? mediaProperties.Artist;
-                        string fixedAlbum = mediaProperties.Artist.Split(" — ").LastOrDefault() ?? mediaProperties.AlbumTitle;
+                    string fixedArtist = mediaProperties.Artist;
+                    string fixedAlbum = mediaProperties.AlbumTitle;
+                    string? songId = null;
 
-                        _cachedSongInfo = new SongInfo
-                        {
-                            Title = mediaProperties.Title,
-                            Artist = fixedArtist,
-                            Album = fixedAlbum,
-                            DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
-                            SourceAppUserModelId = id,
-                        };
-                    }
-                    else
+                    if (sessionId == Constants.PlayerID.AppleMusic || sessionId == Constants.PlayerID.AppleMusicAlternative)
                     {
-                        _cachedSongInfo = new SongInfo
+                        fixedArtist = mediaProperties.Artist.Split(" — ").FirstOrDefault() ?? mediaProperties.Artist;
+                        fixedAlbum = mediaProperties.Artist.Split(" — ").LastOrDefault() ?? mediaProperties.AlbumTitle;
+                    }
+                    else if (sessionId == Constants.PlayerID.NetEaseCloudMusic)
+                    {
+                        songId = mediaProperties.Genres.FirstOrDefault()?.Replace("NCM-", "");
+                        if (songId != null && songId.Length != 10)
                         {
-                            Title = mediaProperties.Title,
-                            Artist = mediaProperties.Artist,
-                            Album = mediaProperties.AlbumTitle,
-                            DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
-                            SourceAppUserModelId = id,
-                        };
+                            songId = null;
+                        }
                     }
 
+                    _cachedSongInfo = new SongInfo
+                    {
+                        Title = mediaProperties.Title,
+                        Artist = fixedArtist,
+                        Album = fixedAlbum,
+                        DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
+                        PlayerId = sessionId,
+                        SongId = songId
+                    };
                     _cachedSongInfo.Duration = (int)(_cachedSongInfo.DurationMs / 1000f);
 
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties.Title, mediaProperties.Artist, mediaProperties.AlbumTitle);
 
-                    if (id == Constants.PlayerID.LXMusic)
+                    if (sessionId == Constants.PlayerID.LXMusic)
                     {
                         StartSSE();
                     }
@@ -353,7 +354,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         StopSSE();
                     }
 
-                    if (id == Constants.PlayerID.LXMusic && _lxMusicAlbumArtBytes != null)
+                    if (sessionId == Constants.PlayerID.LXMusic && _lxMusicAlbumArtBytes != null)
                     {
                         _SMTCAlbumArtBytes = _lxMusicAlbumArtBytes;
                     }
@@ -507,7 +508,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
-                if (_cachedSongInfo?.SourceAppUserModelId == Constants.PlayerID.LXMusic)
+                if (_cachedSongInfo?.PlayerId == Constants.PlayerID.LXMusic)
                 {
                     var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
                     if (data.ValueKind == JsonValueKind.Number)

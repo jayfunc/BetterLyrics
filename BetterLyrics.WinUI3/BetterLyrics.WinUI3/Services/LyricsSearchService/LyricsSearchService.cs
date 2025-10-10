@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
         }
 
-        public async Task<LyricsSearchResult> SearchSmartlyAsync(string mediaSessionId, string title, string artist, string album, double durationMs, CancellationToken token)
+        public async Task<LyricsSearchResult> SearchSmartlyAsync(string mediaSessionId, string title, string artist, string album, double durationMs, string? songId, CancellationToken token)
         {
             var lyricsSearchResult = new LyricsSearchResult();
 
@@ -123,7 +123,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 var targetProvider = found.LyricsSearchProvider;
                 if (targetProvider != null)
                 {
-                    return await SearchSingleAsync(targetProvider.Value, overridenTitle, overridenArtist, album, durationMs, token);
+                    return await SearchSingleAsync(targetProvider.Value, overridenTitle, overridenArtist, album, durationMs, songId, token);
                 }
             }
 
@@ -134,7 +134,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     continue;
                 }
 
-                lyricsSearchResult = await SearchSingleAsync(provider.Provider, overridenTitle, overridenArtist, album, durationMs, token);
+                lyricsSearchResult = await SearchSingleAsync(provider.Provider, overridenTitle, overridenArtist, album, durationMs, null, token);
 
                 if (lyricsSearchResult.IsFound)
                 {
@@ -151,13 +151,13 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             var results = new List<LyricsSearchResult>();
             foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
-                var searchResult = await SearchSingleAsync(provider, title, artist, album, durationMs, token);
+                var searchResult = await SearchSingleAsync(provider, title, artist, album, durationMs, null, token);
                 results.Add(searchResult);
             }
             return results;
         }
 
-        private async Task<LyricsSearchResult> SearchSingleAsync(LyricsSearchProvider provider, string title, string artist, string album, double durationMs, CancellationToken token)
+        private async Task<LyricsSearchResult> SearchSingleAsync(LyricsSearchProvider provider, string title, string artist, string album, double durationMs, string? songId, CancellationToken token)
         {
             var lyricsSearchResult = new LyricsSearchResult
             {
@@ -200,13 +200,13 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                             lyricsSearchResult = await SearchLrcLibAsync(title, artist, album, (int)(durationMs / 1000));
                             break;
                         case LyricsSearchProvider.QQ:
-                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(title, artist, album, (int)durationMs, Searchers.QQMusic);
+                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(title, artist, album, (int)durationMs, songId, Searchers.QQMusic);
                             break;
                         case LyricsSearchProvider.Kugou:
-                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(title, artist, album, (int)durationMs, Searchers.Kugou);
+                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(title, artist, album, (int)durationMs, songId, Searchers.Kugou);
                             break;
                         case LyricsSearchProvider.Netease:
-                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(title, artist, album, (int)durationMs, Searchers.Netease);
+                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(title, artist, album, (int)durationMs, songId, Searchers.Netease);
                             break;
                         case LyricsSearchProvider.AmllTtmlDb:
                             lyricsSearchResult = await SearchAmllTtmlDbAsync(title, artist);
@@ -436,7 +436,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private static async Task<LyricsSearchResult> SearchQQNeteaseKugouAsync(string title, string artist, string album, int durationMs, Searchers searchers)
+        private static async Task<LyricsSearchResult> SearchQQNeteaseKugouAsync(string title, string artist, string album, int durationMs, string? songId, Searchers searchers)
         {
             var lyricsSearchResult = new LyricsSearchResult();
 
@@ -457,15 +457,23 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     break;
             }
 
-            var result = await SearchersHelper.GetSearcher(searchers).SearchForResult(
-                new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
-                {
-                    DurationMs = durationMs,
-                    Album = album,
-                    Artists = [artist],
-                    Title = title,
-                }
-            );
+            ISearchResult? result;
+            if (searchers == Searchers.Netease && songId != null)
+            {
+                result = new NeteaseSearchResult(title, [artist], album, null, durationMs, songId);
+            }
+            else
+            {
+                result = await SearchersHelper.GetSearcher(searchers).SearchForResult(
+                    new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
+                    {
+                        DurationMs = durationMs,
+                        Album = album,
+                        Artists = [artist],
+                        Title = title,
+                    }
+                );
+            }
 
             if (result is QQMusicSearchResult qqResult)
             {
