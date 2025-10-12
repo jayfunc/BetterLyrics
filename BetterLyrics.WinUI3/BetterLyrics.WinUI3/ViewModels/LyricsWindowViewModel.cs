@@ -110,6 +110,10 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty] public partial Visibility DesktopFlyoutItemVisibility { get; set; } = Visibility.Visible;
         [ObservableProperty] public partial Visibility PIPFlyoutItemVisibility { get; set; } = Visibility.Visible;
         [ObservableProperty] public partial Visibility DockFlyoutItemVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility MinimiseButtonVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility MaximiseButtonVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility RestoreButtonVisibility { get; set; } = Visibility.Visible;
+        [ObservableProperty] public partial Visibility CloseButtonVisibility { get; set; } = Visibility.Visible;
 
         [ObservableProperty] public partial bool IsFullScreenFlyoutItemChecked { get; set; } = false;
         [ObservableProperty] public partial bool IsDesktopFlyoutItemChecked { get; set; } = false;
@@ -305,6 +309,8 @@ namespace BetterLyrics.WinUI3
         private void SetFullscreenTitleBarControlsStatus()
         {
             LockButtonVisibility = DesktopFlyoutItemVisibility = PIPFlyoutItemVisibility = DockFlyoutItemVisibility = Visibility.Collapsed;
+            MinimiseButtonVisibility = MaximiseButtonVisibility = RestoreButtonVisibility = Visibility.Collapsed;
+            CloseButtonVisibility = Visibility.Visible;
             IsFullScreenFlyoutItemChecked = true;
             IsImmersiveMode = true;
         }
@@ -312,6 +318,8 @@ namespace BetterLyrics.WinUI3
         private void SetPIPModeTitleBarControlsStatus()
         {
             DesktopFlyoutItemVisibility = FullScreenFlyoutItemVisibility = DockFlyoutItemVisibility = LockButtonVisibility = Visibility.Collapsed;
+            MinimiseButtonVisibility = MaximiseButtonVisibility = RestoreButtonVisibility = Visibility.Collapsed;
+            CloseButtonVisibility = Visibility.Visible;
             IsImmersiveMode = true;
             IsPIPFlyoutItemChecked = true;
         }
@@ -324,6 +332,8 @@ namespace BetterLyrics.WinUI3
 
             overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = false;
             DesktopFlyoutItemVisibility = LockButtonVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
+            MinimiseButtonVisibility = MaximiseButtonVisibility = RestoreButtonVisibility = Visibility.Collapsed;
+            CloseButtonVisibility = Visibility.Visible;
             IsImmersiveMode = true;
             IsDockFlyoutItemChecked = true;
         }
@@ -337,6 +347,8 @@ namespace BetterLyrics.WinUI3
             overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = false;
             DockFlyoutItemVisibility = FullScreenFlyoutItemVisibility = PIPFlyoutItemVisibility = Visibility.Collapsed;
             LockButtonVisibility = Visibility.Visible;
+            MinimiseButtonVisibility = MaximiseButtonVisibility = RestoreButtonVisibility = Visibility.Collapsed;
+            CloseButtonVisibility = Visibility.Visible;
             IsDesktopFlyoutItemChecked = true;
         }
 
@@ -349,6 +361,8 @@ namespace BetterLyrics.WinUI3
             overlappedPresenter.IsMinimizable = overlappedPresenter.IsMaximizable = true;
             DesktopFlyoutItemVisibility = DockFlyoutItemVisibility = PIPFlyoutItemVisibility = FullScreenFlyoutItemVisibility = Visibility.Visible;
             LockButtonVisibility = Visibility.Collapsed;
+            MinimiseButtonVisibility = MaximiseButtonVisibility = CloseButtonVisibility = Visibility.Visible;
+            RestoreButtonVisibility = Visibility.Collapsed;
             IsFullScreenFlyoutItemChecked = IsDesktopFlyoutItemChecked = IsDockFlyoutItemChecked = IsPIPFlyoutItemChecked = false;
             IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
         }

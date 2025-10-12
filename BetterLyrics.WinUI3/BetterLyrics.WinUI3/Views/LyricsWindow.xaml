@@ -123,11 +123,6 @@
                                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                        Glyph=&#xE713;}" />
                                 <MenuFlyoutSeparator />
-                                <MenuFlyoutItem
-                                    x:Uid="SystemTrayExit"
-                                    Click="ExitAppMenuFlyoutItem_Click"
-                                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                       Glyph=&#xE7E8;}" />
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>
@@ -145,6 +140,7 @@
                             FontSize="{x:Bind ViewModel.TitleBarFontSize}"
                             Glyph="&#xED1A;" />
                     </ToggleButton>
+
                 </StackPanel>
             </Grid>
 
@@ -156,6 +152,52 @@
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
+
+                    <!--  Window Minimise  -->
+                    <Button
+                        x:Name="MinimiseButton"
+                        Click="MinimiseButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="{x:Bind ViewModel.MinimiseButtonVisibility, Mode=OneWay}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE654;" />
+                    </Button>
+                    <!--  Window Maximise  -->
+                    <Button
+                        x:Name="MaximiseButton"
+                        Click="MaximiseButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="{x:Bind ViewModel.MaximiseButtonVisibility, Mode=OneWay}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE655;" />
+                    </Button>
+                    <!--  Window Restore  -->
+                    <Button
+                        x:Name="RestoreButton"
+                        Click="RestoreButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="{x:Bind ViewModel.RestoreButtonVisibility, Mode=OneWay}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE656;" />
+                    </Button>
+                    <!--  Window Close  -->
+                    <Button
+                        x:Name="CloseButton"
+                        Click="CloseButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}"
+                        Visibility="{x:Bind ViewModel.CloseButtonVisibility, Mode=OneWay}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE653;" />
+                    </Button>
+
                 </StackPanel>
             </Grid>
 
