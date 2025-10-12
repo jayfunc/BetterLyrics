@@ -33,6 +33,7 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.Changed += AppWindow_Changed;
 
             ExtendsContentIntoTitleBar = true;
+            AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
             UpdateTitleBarArea();
 
             Title = App.ResourceLoader!.GetString("LyricsPageTitle");
@@ -134,6 +135,8 @@ namespace BetterLyrics.WinUI3.Views
                             {
                                 _settingsService.AppSettings.StandardModeSettings.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
                                 _settingsService.AppSettings.StandardModeSettings.IsMaximized = overlappedPresenter.State == OverlappedPresenterState.Maximized;
+                                ViewModel.MaximiseButtonVisibility = _settingsService.AppSettings.StandardModeSettings.IsMaximized ? Visibility.Collapsed : Visibility.Visible;
+                                ViewModel.RestoreButtonVisibility = _settingsService.AppSettings.StandardModeSettings.IsMaximized ? Visibility.Visible : Visibility.Collapsed;
                             }
                             break;
                         case LyricsWindowMode.DockMode:
@@ -222,14 +225,38 @@ namespace BetterLyrics.WinUI3.Views
             WindowHelper.OpenWindow<MusicGalleryWindow>();
         }
 
-        private void ExitAppMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHelper.ExitApp();
-        }
-
         private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
         {
             App.Current.LyricsWindowNotificationPanel = TipContainerCenter;
+        }
+
+        private void MinimiseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.Minimize();
+            }
+        }
+
+        private void MaximiseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.Maximize();
+            }
+        }
+
+        private void RestoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.Restore();
+            }
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ExitOrClose();
         }
     }
 }
