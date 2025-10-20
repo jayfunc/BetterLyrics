@@ -123,26 +123,11 @@
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>Music player</value>
   </data>
-  <data name="AllLyricsSettingsControlDesktop.Content" xml:space="preserve">
-    <value>Desktop mode</value>
-  </data>
-  <data name="AllLyricsSettingsControlDock.Content" xml:space="preserve">
-    <value>Dock mode</value>
-  </data>
   <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
     <value>Picture-in-picture mode</value>
   </data>
-  <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
-    <value>Standard</value>
-  </data>
-  <data name="AppSettingsControlGeneral.Content" xml:space="preserve">
+  <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>General</value>
-  </data>
-  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
-    <value>Press Esc to exit full screen mode</value>
-  </data>
-  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
-    <value>Full screen</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>Do not show this message again</value>
@@ -153,8 +138,17 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="DemoWindowControlDefault.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
   <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
     <value>Dependencies</value>
+  </data>
+  <data name="DesktopMode" xml:space="preserve">
+    <value>Desktop mode (transparent)</value>
+  </data>
+  <data name="DockedMode" xml:space="preserve">
+    <value>Docked mode</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>Export successful</value>
@@ -162,23 +156,20 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>Unable to connect to LX Music server, please go to Settings - Advanced options to check if the link is entered correctly</value>
   </data>
+  <data name="FullscreenMode" xml:space="preserve">
+    <value>Fullscreen mode</value>
+  </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>Lock</value>
   </data>
   <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
     <value>Lock</value>
   </data>
-  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
-    <value>Desktop mode</value>
-  </data>
-  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
-    <value>Dock mode</value>
-  </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
     <value>Lock</value>
   </data>
-  <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
-    <value>More</value>
+  <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
+    <value>Music gallery</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>Settings</value>
@@ -223,7 +214,7 @@
     <value>Manually search lyrics</value>
   </data>
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>Lyrics style and effect quick settings</value>
+    <value>Lyrics Window Management Shortcut Settings</value>
   </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>Play source shortcut settings</value>
@@ -303,11 +294,17 @@
   <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
     <value>Immersive mode</value>
   </data>
-  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>Album art only</value>
+  <data name="LyricsWindowSettingsControlCurrentLyricsWindowConfig.Text" xml:space="preserve">
+    <value>Current lyrics window config</value>
   </data>
-  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Switch to desktop lyrics mode</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
+    <value>Lyrics window mode</value>
+  </data>
+  <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
+    <value>Set as default</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>Album art area only</value>
   </data>
   <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>Hover back again to show the toggle button</value>
@@ -442,6 +439,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Music gallery - BetterLyrics</value>
   </data>
+  <data name="NarrowMode" xml:space="preserve">
+    <value>Narrow mode</value>
+  </data>
+  <data name="PictureInPictureMode" xml:space="preserve">
+    <value>Picture-in-picture mode</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>Donation</value>
   </data>
@@ -460,17 +463,32 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
     <value>Acrylic Thin</value>
   </data>
+  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
+    <value>At the same time, set the pure color layer opacity and the album art layer opacity in the lyrics background to 0 to get the correct effect</value>
+  </data>
+  <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
+    <value>Adapt to environmental color</value>
+  </data>
   <data name="SettingsPageAddFolder.Header" xml:space="preserve">
     <value>Add a folder</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Advanced options</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>Album art</value>
   </data>
+  <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
+    <value>Album art layer</value>
+  </data>
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>Configure album cover source</value>
+  </data>
+  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
+    <value>Album art size</value>
   </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>Album art source</value>
@@ -481,14 +499,14 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
     <value>How much the shadows are spreading</value>
   </data>
-  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
+  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>Album art area style</value>
   </data>
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>Amount</value>
   </data>
   <data name="SettingsPageAOT.Header" xml:space="preserve">
-    <value>Always on top</value>
+    <value>Bring the lyrics window to the top</value>
   </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>App appearance and behavior</value>
@@ -497,28 +515,16 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>App appearance</value>
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>App behavior</value>
+    <value>General behavior</value>
   </data>
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>Apply</value>
   </data>
-  <data name="SettingsPageAutoLock.Header" xml:space="preserve">
-    <value>Auto-lock when activating desktop mode</value>
+  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
+    <value>Automatic resizing</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Automatic startup</value>
-  </data>
-  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>Activate desktop mode</value>
-  </data>
-  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
-    <value>Activate dock mode</value>
-  </data>
-  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
-    <value>Activate standard mode</value>
-  </data>
-  <data name="SettingsPageAutoStartPIPLyrics.Content" xml:space="preserve">
-    <value>Start Picture-in-Picture Mode</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>When starting the app</value>
@@ -529,8 +535,17 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
     <value>Album Background Acrylic Effect Strength</value>
   </data>
-  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Lyrics background</value>
+  </data>
+  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>Blur amount</value>
+  </data>
+  <data name="SettingsPageBorderless.Header" xml:space="preserve">
+    <value>Borderless window</value>
+  </data>
+  <data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
+    <value>Borderless lyrics window shortcut</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Including log files, network lyrics cache</value>
@@ -544,8 +559,26 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>Convert Chinese to Traditional Chinese</value>
   </data>
+  <data name="SettingsPageClickThrough.Header" xml:space="preserve">
+    <value>Click-through</value>
+  </data>
+  <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
+    <value>Click-through shortcut keys</value>
+  </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>Compact</value>
+  </data>
+  <data name="SettingsPageConfigName.Description" xml:space="preserve">
+    <value>Naming the recorded window states can help you distinguish them better</value>
+  </data>
+  <data name="SettingsPageConfigName.Header" xml:space="preserve">
+    <value>Configuration name</value>
+  </data>
+  <data name="SettingsPageCreateFromCurrent.Content" xml:space="preserve">
+    <value>Create from the current lyrics window status</value>
+  </data>
+  <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
+    <value>Create from templates</value>
   </data>
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>Current lyrics window status</value>
@@ -556,29 +589,29 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>Show debug overlay</value>
   </data>
-  <data name="SettingsPageDelete.Content" xml:space="preserve">
+  <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
-    <value>Desktop Acrylic</value>
+  <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
+    <value>Desktop mode (transparent)</value>
   </data>
-  <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>Advanced options</value>
-  </data>
-  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>This project is provided as is without warranty of any kind. All lyrics, fonts, icons, and other third-party resources are the property of their respective copyright holders. The author of this project does not claim ownership of such resources.  This project is non-commercial and should not be used to infringe any rights. Users are responsible for ensuring their own use complies with applicable laws and licenses.</value>
   </data>
   <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>Lyrics album layout mode</value>
+    <value>Layout mode</value>
+  </data>
+  <data name="SettingsPageDockedMode.Text" xml:space="preserve">
+    <value>Docked mode</value>
   </data>
   <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
     <value>Target monitor</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>Dock mode placement</value>
+    <value>Work area placement</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>Bottom</value>
@@ -588,6 +621,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>Window height</value>
+  </data>
+  <data name="SettingsPageDragArea.Header" xml:space="preserve">
+    <value>Draggable area</value>
   </data>
   <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
     <value>Automatic adjustment</value>
@@ -634,6 +670,21 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
+    <value>Environmental color sampe mode</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
+    <value>Above the window</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
+    <value>Below the window</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
+    <value>Window edges</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
+    <value>Inside the window</value>
+  </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>Exit the program when you close the lyrics window</value>
   </data>
@@ -652,29 +703,29 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
     <value>Fixed time step rendering</value>
   </data>
+  <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
+    <value>Fluid layer</value>
+  </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>Follow system</value>
+  </data>
+  <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
+    <value>Keep the lyrics window on top by polling</value>
+  </data>
+  <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
+    <value>Force on top</value>
   </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>Rendering frame rate</value>
   </data>
-  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
-    <value>Extend the title bar to the entire page so that the window can be dragged in any non-interactive area</value>
-  </data>
-  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
-    <value>Global drag</value>
+  <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
+    <value>Fullscreen mode</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>In docking mode or desktop mode, when no song is playing, the window will be automatically hidden; otherwise, the window will be automatically displayed.</value>
+    <value>Automatically hide/show lyric window when music is not playing</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Automatically hide/show windows</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
-    <value>Force this app to appear on top of full-screen apps when docked or desktop mode is enabled</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
-    <value>Always stay on top of fullscreen applications</value>
   </data>
   <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
     <value>Import settings</value>
@@ -727,14 +778,23 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
+    <value>Layout orientation</value>
+  </data>
+  <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+  <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>Server address</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>Light</value>
   </data>
-  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
-    <value>Unlock and lock shortcut keys</value>
+  <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
+    <value>Enable monitoring for new playback sources</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>Log record</value>
@@ -742,7 +802,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX Music Server</value>
   </data>
-  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+  <data name="SettingsPageLyrics.Text" xml:space="preserve">
     <value>Lyrics style and effect</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
@@ -750,15 +810,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
     <value>Lyrics background</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
-    <value>Album background layer ambiguity</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
-    <value>Album background layer opacity</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
-    <value>Album Background Layer Motion Rate</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>Font color (Non-current playback area)</value>
@@ -859,9 +910,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>Normal</value>
   </data>
-  <data name="SettingsPageLyricsPureColorBgOpacity.Header" xml:space="preserve">
-    <value>Solid background layer opacity</value>
-  </data>
   <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>Current char</value>
   </data>
@@ -913,8 +961,14 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>Top and bottom edge opacity</value>
   </data>
-  <data name="SettingsPageLyricsWindowManager.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
     <value>Lyrics window manager</value>
+  </data>
+  <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
+    <value>Lyrics window manager</value>
+  </data>
+  <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
+    <value>Lyrics window status switcher shortcut</value>
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>Media library</value>
@@ -940,13 +994,19 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
     <value>Listen to file changes in real time</value>
   </data>
+  <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
+    <value>Narrow mode</value>
+  </data>
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>Next track shortcut keys</value>
   </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>None</value>
   </data>
-  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
+  <data name="SettingsPageOpacity.Header" xml:space="preserve">
+    <value>Opacity</value>
+  </data>
+  <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>Open in file explorer</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
@@ -982,8 +1042,14 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>Shortcut keys for the previous track</value>
   </data>
+  <data name="SettingsPagePureLayer.Header" xml:space="preserve">
+    <value>Pure color layer</value>
+  </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ feedback &amp; chat group</value>
+  </data>
+  <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
+    <value>Realtime status</value>
   </data>
   <data name="SettingsPageRecord.Content" xml:space="preserve">
     <value>Record</value>
@@ -1039,6 +1105,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>Server test successful</value>
   </data>
+  <data name="SettingsPageSettings.Header" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>Settings manager</value>
   </data>
@@ -1048,8 +1117,20 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>This hotkey has been successfully registered</value>
   </data>
+  <data name="SettingsPageShowArtists.Header" xml:space="preserve">
+    <value>Show artists</value>
+  </data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
     <value>Lyrics window display and hide shortcut keys</value>
+  </data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
+    <value>e.g. Alt + Tab, Taskbar</value>
+  </data>
+  <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
+    <value>Show in system environment</value>
+  </data>
+  <data name="SettingsPageShowTitle.Header" xml:space="preserve">
+    <value>Show title</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>Current value: </value>
@@ -1069,6 +1150,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>Right</value>
   </data>
+  <data name="SettingsPageSpeed.Header" xml:space="preserve">
+    <value>Motion rate</value>
+  </data>
+  <data name="SettingsPageStandardMode.Text" xml:space="preserve">
+    <value>Standard mode</value>
+  </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>Default</value>
   </data>
@@ -1086,6 +1173,15 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Settings - BetterLyrics</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
+    <value>The whole window</value>
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
     <value>Title bar size</value>
@@ -1108,6 +1204,18 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>Version</value>
   </data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve">
+    <value>As a separate work area docked to the upper/lower edge of the screen</value>
+  </data>
+  <data name="SettingsPageWorkArea.Header" xml:space="preserve">
+    <value>As work area</value>
+  </data>
+  <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
+    <value>Work area height</value>
+  </data>
+  <data name="StandardMode" xml:space="preserve">
+    <value>Standard mode</value>
+  </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
@@ -1128,9 +1236,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>Unlock the window</value>
   </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>Translate server is not set, please configure it in settings first</value>

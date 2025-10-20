@@ -50,12 +50,6 @@
                     Command="{x:Bind ViewModel.ResetWindowPositionCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE923;}" />
-                <MenuFlyoutItem
-                    x:Uid="SystemTrayUnlock"
-                    Command="{x:Bind ViewModel.UnlockWindowCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xE785;}"
-                    Visibility="{x:Bind ViewModel.IsLyricsWindowLocked, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                 <MenuFlyoutSeparator />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayRestart"

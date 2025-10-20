@@ -17,7 +17,6 @@ namespace BetterLyrics.WinUI3.Helper
         private readonly List<User32.HWINEVENTHOOK> _hooks = new();
         private HWND _currentForeground = HWND.NULL;
         private readonly IntPtr _selfHwnd;
-        private readonly ThrottleHelper _winEventProcThrottle = new(TimeSpan.FromSeconds(1));
 
         public delegate void WindowChangedHandler(HWND hwnd);
         private readonly WindowChangedHandler _onWindowChanged;
@@ -73,7 +72,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             _hooks.Clear();
 
-            _timer.Stop();
+            //_timer.Stop();
         }
 
         private void Timer_Tick(object? sender, object e)

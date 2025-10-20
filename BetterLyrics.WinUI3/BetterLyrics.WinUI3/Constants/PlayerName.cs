@@ -25,5 +25,8 @@ namespace BetterLyrics.WinUI3.Constants
         public const string Edge = "Microsoft Edge";
         public const string BetterLyrics = "BetterLyrics";
         public const string BetterLyricsDebug = "BetterLyrics (Debug)";
+        public const string SaltPlayerForWindows = "Salt Player for Windows";
+        public const string MoeKoeMusic = "MoeKoe Music";
+        public const string Listen1 = "Listen 1";
     }
 }

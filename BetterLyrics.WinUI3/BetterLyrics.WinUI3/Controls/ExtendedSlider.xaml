@@ -24,7 +24,7 @@
             SnapsTo="Ticks"
             StepFrequency="{x:Bind Frequency, Mode=OneWay}"
             TickFrequency="{x:Bind Frequency, Mode=OneWay}"
-            TickPlacement="Outside"
+            TickPlacement="None"
             Value="{x:Bind Value, Mode=TwoWay}" />
         <Button
             Margin="3,0,0,0"

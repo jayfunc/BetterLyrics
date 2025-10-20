@@ -1,12 +1,19 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Services.LiveStatesService;
+using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using WinRT.Interop;
 using WinUIEx;
 
@@ -15,6 +22,22 @@ namespace BetterLyrics.WinUI3.Helper
     public static class WindowHelper
     {
         private static List<object> _activeWindows = [];
+        private static List<object> _workAreas = [];
+
+        private static readonly Dictionary<HWND, WindowStyle> _defaultWindowStyle = [];
+        private static readonly Dictionary<HWND, ExtendedWindowStyle> _defaultExtendedWindowStyle = [];
+
+        private static readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
+        private static readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+
+        public static void HideWindow<T>()
+        {
+            var window = _activeWindows.Find(w => w is T);
+            if (window is Window w)
+            {
+                w.Hide();
+            }
+        }
 
         public static void CloseWindow<T>()
         {
@@ -41,7 +64,8 @@ namespace BetterLyrics.WinUI3.Helper
             }
             return default;
         }
-        public static void OpenWindow<T>()
+
+        public static void OpenOrShowWindow<T>()
         {
             var window = _activeWindows.Find(w => w is T);
             if (window == null)
@@ -63,6 +87,10 @@ namespace BetterLyrics.WinUI3.Helper
                 {
                     window = new LyricsSearchWindow();
                 }
+                else if (typeof(T) == typeof(LyricsWindowSwitchWindow))
+                {
+                    window = new LyricsWindowSwitchWindow();
+                }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));
@@ -74,10 +102,14 @@ namespace BetterLyrics.WinUI3.Helper
 
                 if (typeof(T) == typeof(LyricsWindow))
                 {
+                    var hwnd = WindowNative.GetWindowHandle(castedWindow);
+                    _defaultWindowStyle.Add(hwnd, castedWindow.GetWindowStyle());
+                    _defaultExtendedWindowStyle.Add(hwnd, castedWindow.GetExtendedWindowStyle());
+
                     var lyricsWindow = (LyricsWindow)window;
                     lyricsWindow.ViewModel.InitShortcuts();
-                    lyricsWindow.AutoSelectLyricsMode();
-                    lyricsWindow.ViewModel.SetIsAlwaysOnTop();
+                    lyricsWindow.ViewModel.InitFgWindowWatcher();
+                    lyricsWindow.ViewModel.RefreshLyricsWindowStatus();
                 }
             }
             else
@@ -124,11 +156,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         private static void EnsureDockModeReleased()
         {
-            LyricsWindow? lyricsWindow = GetWindowByWindowType<LyricsWindow>();
-            if (lyricsWindow != null)
-            {
-                DockModeHelper.Disable(lyricsWindow);
-            }
+            SetIsWorkArea<LyricsWindow>(false);
         }
 
         private static void TrackWindow(object window)
@@ -146,7 +174,255 @@ namespace BetterLyrics.WinUI3.Helper
             if (_activeWindows.Contains(sender))
             {
                 _activeWindows.Remove(sender);
+
+                var hwnd = WindowNative.GetWindowHandle(sender);
+                _defaultWindowStyle.Remove(hwnd);
+                _defaultExtendedWindowStyle.Remove(hwnd);
             }
         }
+
+        public static void SetIsClickThrough<T>(bool enable)
+        {
+            Window? window = GetWindowByWindowType<T>() as Window;
+            if (window == null) return;
+
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            if (enable)
+            {
+                window.SetExtendedWindowStyle(_defaultExtendedWindowStyle[hwnd] | ExtendedWindowStyle.Transparent | ExtendedWindowStyle.Layered);
+            }
+            else
+            {
+                window.SetExtendedWindowStyle(_defaultExtendedWindowStyle[hwnd]);
+            }
+        }
+
+        public static void SetIsWorkArea<T>(bool enable)
+        {
+            Window? window = GetWindowByWindowType<T>() as Window;
+            if (window == null) return;
+
+            if (enable)
+            {
+                EnableWorkArea(window);
+            }
+            else
+            {
+                DisableWorkArea(window);
+            }
+        }
+
+        public static void SetIsBorderless<T>(bool enable)
+        {
+            var window = GetWindowByWindowType<T>() as Window;
+            if (window == null) return;
+
+            var hwnd = WindowNative.GetWindowHandle(window);
+
+            if (enable)
+            {
+                window.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
+            }
+            else
+            {
+                window.SetWindowStyle(_defaultWindowStyle[hwnd]);
+            }
+        }
+
+        public static void SetIsShowInSwitchers<T>(bool enable)
+        {
+            var window = GetWindowByWindowType<T>() as Window;
+            if (window == null) return;
+
+            window.AppWindow.IsShownInSwitchers = enable;
+        }
+
+        public static void SetIsAlwaysOnTop<T>(bool enable)
+        {
+            var window = GetWindowByWindowType<T>() as Window;
+            if (window == null) return;
+
+            if (window.AppWindow.Presenter is OverlappedPresenter presenter)
+            {
+                presenter.IsAlwaysOnTop = enable;
+            }
+        }
+
+        public static void MoveAndResize<T>(Rect rect)
+        {
+            var window = GetWindowByWindowType<T>() as Window;
+            if (window == null) return;
+
+            window.AppWindow.MoveAndResize(rect.ToRectInt32());
+        }
+
+        public static void SetTitleBarArea<T>(TitleBarArea titleBarArea)
+        {
+            if (typeof(T) == typeof(LyricsWindow))
+            {
+                LyricsWindow? lyricsWindow = GetWindowByWindowType<LyricsWindow>();
+                lyricsWindow?.SetTitleBarArea(titleBarArea);
+            }
+            else
+            {
+                throw new Exception($"Unsupported window type: {typeof(T).FullName}");
+            }
+        }
+
+        private static void DisableWorkArea(Window window)
+        {
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            if (!_workAreas.Contains(hwnd)) return;
+
+            UnregisterWorkArea(hwnd);
+        }
+
+        private static void EnableWorkArea(Window window)
+        {
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            if (_workAreas.Contains(hwnd)) return;
+
+            RegisterWorkArea(hwnd);
+
+            double y = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ?
+                _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top :
+                _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
+
+            User32.SetWindowPos(
+                hwnd,
+                IntPtr.Zero,
+                (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
+                (int)y,
+                (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Width,
+                (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight,
+                User32.SetWindowPosFlags.SWP_SHOWWINDOW
+            );
+        }
+
+        private static void RegisterWorkArea(IntPtr hwnd)
+        {
+            if (_workAreas.Contains(hwnd)) return;
+
+            var uEdge = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
+
+            double top = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top : _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
+            double bottom = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight : _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom;
+
+            Shell32.APPBARDATA abd = new()
+            {
+                cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+                hWnd = hwnd,
+                uEdge = uEdge,
+                rc = new RECT
+                {
+                    Left = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
+                    Top = (int)top,
+                    Right = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Right,
+                    Bottom = (int)bottom,
+                },
+            };
+
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_NEW, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
+
+            _workAreas.Add(hwnd);
+        }
+
+        private static void UnregisterWorkArea(IntPtr hwnd)
+        {
+            if (!_workAreas.Contains(hwnd))
+                return;
+
+            Shell32.APPBARDATA abd = new()
+            {
+                cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+                hWnd = hwnd
+            };
+
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
+
+            _workAreas.Remove(hwnd);
+        }
+
+        public static void UpdateWorkAreaHeight<T>()
+        {
+            var window = GetWindowByWindowType<T>() as Window;
+            if (window == null) return;
+
+            var hwnd = WindowNative.GetWindowHandle(window);
+
+            App.DispatcherQueueTimer?.Debounce(() =>
+            {
+                if (!_workAreas.Contains(hwnd))
+                    return;
+
+                var uEdge = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
+
+                double top = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ?
+                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top :
+                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
+
+                double bottom = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ?
+                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight :
+                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom;
+
+                Shell32.APPBARDATA abd = new()
+                {
+                    cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+                    hWnd = hwnd,
+                    uEdge = uEdge,
+                    rc = new RECT
+                    {
+                        Left = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
+                        Top = (int)top,
+                        Right = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Right,
+                        Bottom = (int)bottom,
+                    },
+                };
+
+                Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
+                Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
+
+                // 同步窗口实际高度和位置
+                User32.SetWindowPos(
+                     hwnd,
+                     IntPtr.Zero,
+                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
+                     (int)top,
+                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Width,
+                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight,
+                     User32.SetWindowPosFlags.SWP_SHOWWINDOW
+                 );
+
+            }, TimeSpan.FromMilliseconds(100));
+        }
+
+        public static void SetLyricsWindowVisibilityByPlayingStatus()
+        {
+            var window = GetWindowByWindowType<LyricsWindow>();
+            if (window == null) return;
+
+            if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && !_mediaSessionsService.IsPlaying)
+            {
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
+                {
+                    SetIsWorkArea<LyricsWindow>(false);
+                }
+                HideWindow<LyricsWindow>();
+            }
+            else if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.IsPlaying)
+            {
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
+                {
+                    SetIsWorkArea<LyricsWindow>(true);
+                }
+                OpenOrShowWindow<LyricsWindow>();
+            }
+        }
+
     }
 }

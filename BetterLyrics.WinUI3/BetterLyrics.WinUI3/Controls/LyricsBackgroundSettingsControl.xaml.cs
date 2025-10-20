@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -22,12 +23,18 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class LyricsBackgroundSettingsControl : UserControl
     {
-        public LyricsBackgroundSettingsControlViewModel ViewModel => (LyricsBackgroundSettingsControlViewModel)DataContext;
+        public static readonly DependencyProperty LyricsBackgroundSettingsProperty =
+            DependencyProperty.Register(nameof(LyricsBackgroundSettings), typeof(LyricsBackgroundSettings), typeof(LyricsBackgroundSettingsControl), new PropertyMetadata(default));
+
+        public LyricsBackgroundSettings LyricsBackgroundSettings
+        {
+            get => (LyricsBackgroundSettings)GetValue(LyricsBackgroundSettingsProperty);
+            set => SetValue(LyricsBackgroundSettingsProperty, value);
+        }
 
         public LyricsBackgroundSettingsControl()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<LyricsBackgroundSettingsControlViewModel>();
         }
     }
 }

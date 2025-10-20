@@ -191,37 +191,16 @@
             <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                 <Grid Style="{StaticResource SettingsGridStyle}">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                        <!--  Last.fm  -->
-                        <TextBlock x:Uid="SettingsPageLastFM" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <controls:SettingsExpander
-                            x:Uid="SettingsPageLastFMManager"
-                            HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
-                            IsExpanded="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <Button
-                                    x:Uid="SettingsPageLastFMAuth"
-                                    Command="{x:Bind ViewModel.LastFMAuthCommand}"
-                                    IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-                                <Button
-                                    x:Uid="SettingsPageLastFMUnAuth"
-                                    Command="{x:Bind ViewModel.LastFMUnAuthCommand}"
-                                    IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}" />
-                            </StackPanel>
-                            <controls:SettingsExpander.Items>
-                                <controls:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <HyperlinkButton Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}" NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
-                                </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Playcount, Mode=OneWay}" />
-                                </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Registered.ToLongDateString(), Mode=OneWay}" />
-                                </controls:SettingsCard>
-                                <controls:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFMRefreshCommand}" />
-                                </controls:SettingsCard>
-                            </controls:SettingsExpander.Items>
-                        </controls:SettingsExpander>
+
+                        <!--  Provider info  -->
+                        <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <controls:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
+                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                        </controls:SettingsCard>
+                        <controls:SettingsCard x:Uid="LyricsPageTranslationProviderPrefix">
+                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                        </controls:SettingsCard>
+
                         <!--  Lyrics translation  -->
                         <TextBlock x:Uid="SettingsPageTranslation" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <controls:SettingsExpander
@@ -313,6 +292,7 @@
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
+
                         <!--  Lyrics phonetic  -->
                         <controls:SettingsExpander
                             x:Uid="SettingsPageChinese"
@@ -331,17 +311,44 @@
                         <controls:SettingsCard x:Uid="SettingsPageJapanese" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
                         </controls:SettingsCard>
+
                         <!--  中文简体繁体偏好  -->
                         <controls:SettingsCard x:Uid="SettingsPageChinesePreference">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTraditionalChineseEnabled, Mode=TwoWay}" />
                         </controls:SettingsCard>
-                        <!--  Provider info  -->
-                        <controls:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
-                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
-                        </controls:SettingsCard>
-                        <controls:SettingsCard x:Uid="LyricsPageTranslationProviderPrefix">
-                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
-                        </controls:SettingsCard>
+
+                        <!--  Last.fm  -->
+                        <TextBlock x:Uid="SettingsPageLastFM" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <controls:SettingsExpander
+                            x:Uid="SettingsPageLastFMManager"
+                            HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
+                            IsExpanded="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Button
+                                    x:Uid="SettingsPageLastFMAuth"
+                                    Command="{x:Bind ViewModel.LastFMAuthCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                <Button
+                                    x:Uid="SettingsPageLastFMUnAuth"
+                                    Command="{x:Bind ViewModel.LastFMUnAuthCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}" />
+                            </StackPanel>
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <HyperlinkButton Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}" NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Playcount, Mode=OneWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Registered.ToLongDateString(), Mode=OneWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                    <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFMRefreshCommand}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+
                         <!--  LX music server  -->
                         <TextBlock x:Uid="SettingsPageLXMusicServer" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <controls:SettingsCard>
@@ -356,6 +363,7 @@
                                     IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
                             </StackPanel>
                         </controls:SettingsCard>
+
                         <!--  Apple Music token  -->
                         <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="media-user-token (for Apple Muisc)" />
                         <controls:SettingsCard
@@ -376,6 +384,7 @@
                                     Style="{StaticResource GhostButtonStyle}" />
                             </StackPanel>
                         </controls:SettingsCard>
+
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

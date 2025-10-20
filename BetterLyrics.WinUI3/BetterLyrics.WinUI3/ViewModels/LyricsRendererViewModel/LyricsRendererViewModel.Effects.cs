@@ -56,7 +56,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             double scaleFactor = _albumArtSize / Math.Min(imageWidth, imageHeight);
             if (scaleFactor < 0.01f) return null;
 
-            double cornerRadius = _settingsService.AppSettings.AlbumArtLayoutSettings.CoverImageRadius / 100f * _albumArtSize / 2;
+            double cornerRadius = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius / 100f * _albumArtSize / 2;
 
             var cornerRadiusMask = new CanvasCommandList(control);
             using var cornerRadiusMaskDs = cornerRadiusMask.CreateDrawingSession();
@@ -120,7 +120,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             using var blurredCover = new GaussianBlurEffect
             {
-                BlurAmount = _settingsService.AppSettings.LyricsBackgroundSettings.CoverOverlayBlurAmount,
+                BlurAmount = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlayBlurAmount,
                 Source = overlappedCovers,
                 BorderMode = EffectBorderMode.Soft,
                 Optimization = EffectOptimization.Speed,
@@ -129,7 +129,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             var combined = new CanvasCommandList(control);
             using var combinedDs = combined.CreateDrawingSession();
 
-            if (_settingsService.AppSettings.LyricsBackgroundSettings.CoverAcrylicEffectAmount > 0 && _coverAcrylicNoiseCanvasBitmap != null)
+            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverAcrylicEffectAmount > 0 && _coverAcrylicNoiseCanvasBitmap != null)
             {
                 // 应用亚克力噪点效果
                 combinedDs.DrawImage(new BlendEffect
@@ -139,7 +139,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     Foreground = new OpacityEffect
                     {
                         Source = _coverAcrylicNoiseCanvasBitmap,
-                        Opacity = _settingsService.AppSettings.LyricsBackgroundSettings.CoverAcrylicEffectAmount / 100f,
+                        Opacity = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverAcrylicEffectAmount / 100f,
                     },
                 });
             }
@@ -150,7 +150,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _albumArtBgEffect = new OpacityEffect
             {
-                Opacity = _settingsService.AppSettings.LyricsBackgroundSettings.CoverOverlayOpacity / 100f,
+                Opacity = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlayOpacity / 100f,
                 Source = combined,
             };
         }
@@ -224,7 +224,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 Source = overlappedCovers,
                 ShadowColor = _albumArtAccentColorTransition.Value,
-                BlurAmount = _settingsService.AppSettings.AlbumArtLayoutSettings.CoverImageShadowAmount,
+                BlurAmount = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount,
                 Optimization = EffectOptimization.Speed,
             });
             combinedDs.DrawImage(overlappedCovers);

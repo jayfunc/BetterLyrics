@@ -123,26 +123,11 @@
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>音楽プレーヤー</value>
   </data>
-  <data name="AllLyricsSettingsControlDesktop.Content" xml:space="preserve">
-    <value>デスクトップモード</value>
-  </data>
-  <data name="AllLyricsSettingsControlDock.Content" xml:space="preserve">
-    <value>ドックモード</value>
-  </data>
   <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
     <value>ピクチャーインピクチャーモード</value>
   </data>
-  <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
-    <value>標準モード</value>
-  </data>
-  <data name="AppSettingsControlGeneral.Content" xml:space="preserve">
+  <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>一般的な</value>
-  </data>
-  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
-    <value>ESCを押して、フルスクリーンモードを終了します</value>
-  </data>
-  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
-    <value>全画面表示</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>このメッセージを二度と見せないでください</value>
@@ -153,8 +138,17 @@
   <data name="Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
+  <data name="DemoWindowControlDefault.Text" xml:space="preserve">
+    <value>デフォルト</value>
+  </data>
   <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
     <value>依存関係</value>
+  </data>
+  <data name="DesktopMode" xml:space="preserve">
+    <value>デスクトップモード（透明） </value>
+  </data>
+  <data name="DockedMode" xml:space="preserve">
+    <value>ドック式</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>エクスポートが成功しました</value>
@@ -168,17 +162,11 @@
   <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
     <value>ロック</value>
   </data>
-  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
-    <value>デスクトップモード</value>
-  </data>
-  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
-    <value>ドックモード</value>
-  </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
     <value>ロック</value>
   </data>
-  <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
-    <value>もっと</value>
+  <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
+    <value>ミュージックギャラリー</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>設定</value>
@@ -223,7 +211,7 @@
     <value>手動で歌詞を検索します</value>
   </data>
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>歌詞スタイルと効果クイック設定</value>
+    <value>歌詞ウィンドウ管理ショートカット設定</value>
   </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>再生ソースクイック設定</value>
@@ -303,11 +291,17 @@
   <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
     <value>没入モード</value>
   </data>
-  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>アルバムアートのみ</value>
+  <data name="LyricsWindowSettingsControlCurrentLyricsWindowConfig.Text" xml:space="preserve">
+    <value>現在の歌詞ウィンドウ設定</value>
   </data>
-  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>デスクトップ歌詞モードに切り替えます</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
+    <value>歌詞ウィンドウモード</value>
+  </data>
+  <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
+    <value>既定のブラウザーに設定する</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>アルバムアートエリアのみ</value>
   </data>
   <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>再びホバリングして、トグルボタンを表示します</value>
@@ -442,6 +436,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音楽ギャラリー - BetterLyrics</value>
   </data>
+  <data name="PictureInPictureMode" xml:space="preserve">
+    <value>ピクチャーインピクチャーモード</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>寄付</value>
   </data>
@@ -460,17 +457,32 @@
   <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
     <value>アクリル薄い</value>
   </data>
+  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
+    <value>同時に、歌詞の背景のピュアカラーレイヤーの不透明度とアルバムアートレイヤーの不透明度を0に設定して、正しい効果を得ます</value>
+  </data>
+  <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
+    <value>環境の色に適応しましょう</value>
+  </data>
   <data name="SettingsPageAddFolder.Header" xml:space="preserve">
     <value>フォルダーを追加します</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>追加</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>高度なオプション</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>アルバムアート</value>
   </data>
+  <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
+    <value>アルバムアートレイヤー</value>
+  </data>
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>アルバムカバーソースを構成します</value>
+  </data>
+  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
+    <value>アルバムアートサイズ</value>
   </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>アルバムアートソース</value>
@@ -481,14 +493,14 @@
   <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
     <value>影がどれだけ広がっているか</value>
   </data>
-  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
+  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>アルバムエリアスタイル</value>
   </data>
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>量</value>
   </data>
   <data name="SettingsPageAOT.Header" xml:space="preserve">
-    <value>常にトップ</value>
+    <value>歌詞ウィンドウを一番上に表示します</value>
   </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>アプリの外観と動作</value>
@@ -497,28 +509,16 @@
     <value>アプリの外観</value>
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>アプリの動作</value>
+    <value>一般的な行動</value>
   </data>
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>適用する</value>
   </data>
-  <data name="SettingsPageAutoLock.Header" xml:space="preserve">
-    <value>デスクトップモードをアクティブにするときの自動ロック</value>
+  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
+    <value>自動サイズ変更</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動起動</value>
-  </data>
-  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>デスクトップモードを開始します</value>
-  </data>
-  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
-    <value>ドックモードをアクティブにします</value>
-  </data>
-  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
-    <value>標準モードをアクティブにします</value>
-  </data>
-  <data name="SettingsPageAutoStartPIPLyrics.Content" xml:space="preserve">
-    <value>ピクチャーインピクチャーモードを開始します</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>アプリを起動するとき</value>
@@ -529,8 +529,17 @@
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
     <value>アルバムの背景アクリル効果の強さ</value>
   </data>
-  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌詞の背景</value>
+  </data>
+  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>ぼやけの量</value>
+  </data>
+  <data name="SettingsPageBorderless.Header" xml:space="preserve">
+    <value>ボーダーレスウィンドウ</value>
+  </data>
+  <data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
+    <value>ボーダーレス歌詞ウィンドウショートカット</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>ログファイル、ネットワーク歌詞キャッシュを含む</value>
@@ -544,8 +553,26 @@
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>中国人を伝統的な中国人に変換します</value>
   </data>
+  <data name="SettingsPageClickThrough.Header" xml:space="preserve">
+    <value>クリックスルー</value>
+  </data>
+  <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
+    <value>クリックスルーショートカットキー</value>
+  </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>コンパクト</value>
+  </data>
+  <data name="SettingsPageConfigName.Description" xml:space="preserve">
+    <value>記録されたウィンドウの状態に名前を付けると、それらをよりよく区別するのに役立ちます</value>
+  </data>
+  <data name="SettingsPageConfigName.Header" xml:space="preserve">
+    <value>設定名</value>
+  </data>
+  <data name="SettingsPageCreateFromCurrent.Content" xml:space="preserve">
+    <value>現在の歌詞ウィンドウのステータスから作成</value>
+  </data>
+  <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
+    <value>テンプレートから作成</value>
   </data>
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>現在の歌詞ウィンドウステータス</value>
@@ -556,29 +583,29 @@
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>デバッグオーバーレイを表示します</value>
   </data>
-  <data name="SettingsPageDelete.Content" xml:space="preserve">
+  <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>消去</value>
   </data>
-  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
-    <value>デスクトップアクリル</value>
+  <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
+    <value>デスクトップモード（透明） </value>
   </data>
-  <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>高度なオプション</value>
-  </data>
-  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>このプロジェクトは、いかなる種類の保証もなく現状のまま提供されています。すべての歌詞、フォント、アイコン、およびその他のサードパーティのリソースは、それぞれの著作権所有者の財産です。このプロジェクトの作成者は、そのようなリソースの所有権を主張していません。このプロジェクトは非営利的であり、いかなる権利も侵害するために使用すべきではありません。ユーザーは、自らの使用が適用される法律およびライセンスに準拠していることを確認する責任があります。</value>
   </data>
   <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>歌詞アルバムレイアウトモード</value>
+    <value>レイアウトモード</value>
+  </data>
+  <data name="SettingsPageDockedMode.Text" xml:space="preserve">
+    <value>ドック式</value>
   </data>
   <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
     <value>ターゲットモニター</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>ドックモード配置</value>
+    <value>作業エリアの配置</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>底</value>
@@ -588,6 +615,9 @@
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>窓の高さ</value>
+  </data>
+  <data name="SettingsPageDragArea.Header" xml:space="preserve">
+    <value>ドラッグ可能</value>
   </data>
   <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
     <value>自動調整</value>
@@ -634,6 +664,21 @@
   <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
+    <value>環境カラーサンプモード</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
+    <value>窓の上</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
+    <value>窓の下</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
+    <value>ウィンドウエッジ</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
+    <value>窓の中だ</value>
+  </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>歌詞ウィンドウを閉じてプログラムを終了してください</value>
   </data>
@@ -652,29 +697,32 @@
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
     <value>固定時間ステップレンダリング</value>
   </data>
+  <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
+    <value>流体層</value>
+  </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>システムをフォローします</value>
+  </data>
+  <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
+    <value>ポーリングで歌詞ウィンドウを一番上に保ちましょう</value>
+  </data>
+  <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
+    <value>強制的に上に</value>
   </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>レンダリングフレームレート</value>
   </data>
-  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
-    <value>タイトルバーをページ全体に拡張して、ウィンドウを非対話領域でドラッグできるようにします</value>
+  <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
+    <value>フルスクリーンモード</value>
   </data>
-  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
-    <value>グローバルドラッグ</value>
+  <data name="FullscreenMode" xml:space="preserve">
+    <value>フルスクリーンモード</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>ドッキングモードまたはデスクトップモードでは、曲が再生されていない場合、ウィンドウは自動的に非表示になります。それ以外の場合、ウィンドウが自動的に表示されます。</value>
+    <value>音楽が再生されていないときに、自動的に歌詞ウィンドウを非表示/表示します</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Windowsを自動的に非表示/表示します</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
-    <value>このアプリは、ドッキングまたはデスクトップモードが有効になっているときにフルスクリーンアプリの上に表示されます</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
-    <value>常にフルスクリーンアプリケーションを常に把握してください</value>
   </data>
   <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
     <value>設定をインポートします</value>
@@ -727,14 +775,23 @@
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
     <value>ユーザー名</value>
   </data>
+  <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
+    <value>レイアウトの向き</value>
+  </data>
+  <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
+    <value>水平方向</value>
+  </data>
+  <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
+    <value>垂直方向</value>
+  </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>サーバーアドレス</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>ライト</value>
   </data>
-  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
-    <value>ショートカットキーのロックを解除およびロックします</value>
+  <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
+    <value>新しい再生ソースの監視を有効にします</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>ログレコード</value>
@@ -742,7 +799,7 @@
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX Music Server</value>
   </data>
-  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+  <data name="SettingsPageLyrics.Text" xml:space="preserve">
     <value>歌詞のスタイルと効果</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
@@ -750,15 +807,6 @@
   </data>
   <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
     <value>歌詞の背景</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
-    <value>アルバムの背景レイヤーの曖昧さ</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
-    <value>アルバムの背景レイヤーの不透明度</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
-    <value>アルバムの背景レイヤーのモーションレート</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>フォントカラー（非電流再生エリア）</value>
@@ -859,9 +907,6 @@
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>普通</value>
   </data>
-  <data name="SettingsPageLyricsPureColorBgOpacity.Header" xml:space="preserve">
-    <value>無地の背景レイヤーの不透明度</value>
-  </data>
   <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>現在の文字</value>
   </data>
@@ -913,8 +958,14 @@
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>上端と下端の不透明度</value>
   </data>
-  <data name="SettingsPageLyricsWindowManager.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
     <value>歌詞ウィンドウマネージャー</value>
+  </data>
+  <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
+    <value>歌詞ウィンドウマネージャー</value>
+  </data>
+  <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
+    <value>歌詞ウィンドウステータススイッチャーショートカット</value>
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>メディアライブラリ</value>
@@ -940,13 +991,19 @@
   <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
     <value>ファイルの変更をリアルタイムで聞いてください</value>
   </data>
+  <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
+    <value>狭い</value>
+  </data>
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>次のトラックショートカットキー</value>
   </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>なし</value>
   </data>
-  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
+  <data name="SettingsPageOpacity.Header" xml:space="preserve">
+    <value>不透明度</value>
+  </data>
+  <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>ファイルエクスプローラーで開きます</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
@@ -982,8 +1039,14 @@
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>前のトラックのショートカットキー</value>
   </data>
+  <data name="SettingsPagePureLayer.Header" xml:space="preserve">
+    <value>ピュアカラーレイヤー</value>
+  </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQフィードバック＆チャットグループ</value>
+  </data>
+  <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
+    <value>リアルタイムステータス</value>
   </data>
   <data name="SettingsPageRecord.Content" xml:space="preserve">
     <value>記録</value>
@@ -1039,6 +1102,9 @@
   <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>サーバーテストが成功しました</value>
   </data>
+  <data name="SettingsPageSettings.Header" xml:space="preserve">
+    <value>設定</value>
+  </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>設定マネージャー</value>
   </data>
@@ -1048,8 +1114,20 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>このホットキーは正常に登録されています</value>
   </data>
+  <data name="SettingsPageShowArtists.Header" xml:space="preserve">
+    <value>アーティスト</value>
+  </data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
     <value>歌詞ウィンドウディスプレイとショートカットキーを非表示にします</value>
+  </data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
+    <value>例：Alt + Tab、タスクバー</value>
+  </data>
+  <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
+    <value>システム環境に表示します</value>
+  </data>
+  <data name="SettingsPageShowTitle.Header" xml:space="preserve">
+    <value>タイトルを表示</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>現在の値： </value>
@@ -1069,6 +1147,12 @@
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>右</value>
   </data>
+  <data name="SettingsPageSpeed.Header" xml:space="preserve">
+    <value>モーション</value>
+  </data>
+  <data name="SettingsPageStandardMode.Text" xml:space="preserve">
+    <value>標準モード</value>
+  </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>デフォルト</value>
   </data>
@@ -1086,6 +1170,15 @@
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>設定 - BetterLyrics</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
+    <value>トップ</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
+    <value>窓全体</value>
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
     <value>タイトルバーサイズ</value>
@@ -1108,6 +1201,18 @@
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>バージョン</value>
   </data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve">
+    <value>画面の上下端にドッキングされた別の作業エリアとして</value>
+  </data>
+  <data name="SettingsPageWorkArea.Header" xml:space="preserve">
+    <value>kawasan kerja</value>
+  </data>
+  <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
+    <value>作業エリアの高さ</value>
+  </data>
+  <data name="StandardMode" xml:space="preserve">
+    <value>標準モード</value>
+  </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>プログラムを終了します</value>
   </data>
@@ -1129,13 +1234,13 @@
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>設定を開く</value>
   </data>
-  <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>ウィンドウのロックを解除します</value>
-  </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>翻訳サーバーは設定されていません。最初に設定で構成してください</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics はすでに実行されています</value>
+  </data>
+  <data name="NarrowMode" xml:space="preserve">
+    <value>狭い</value>
   </data>
 </root>

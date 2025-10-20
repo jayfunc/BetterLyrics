@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
-    public partial class LyricsEffectSettings : ObservableRecipient
+    public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBlurAmount { get; set; } = 5;
 
@@ -46,6 +46,30 @@ namespace BetterLyrics.WinUI3.Models.Settings
             LyricsScrollDuration = lyricsScrollDuration;
             LyricsScrollBottomDuration = lyricsScrollBottomDuration;
             LyricsScrollEasingType = lyricsScrollEasingType;
+        }
+
+        public object Clone()
+        {
+            return new LyricsEffectSettings(this.LyricsScrollTopDuration, this.LyricsScrollDuration, this.LyricsScrollBottomDuration, this.LyricsScrollEasingType)
+            {
+                LyricsBlurAmount = this.LyricsBlurAmount,
+                IsLyricsLineFadeEnabled = this.IsLyricsLineFadeEnabled,
+                IsLyricsGlowEffectEnabled = this.IsLyricsGlowEffectEnabled,
+                LyricsGlowEffectScope = this.LyricsGlowEffectScope,
+                LyricsGlowEffectAmount = this.LyricsGlowEffectAmount,
+                IsLyricsShadowEnabled = this.IsLyricsShadowEnabled,
+                LyricsShadowScope = this.LyricsShadowScope,
+                LyricsShadowAmount = this.LyricsShadowAmount,
+                LyricsHighlightScope = this.LyricsHighlightScope,
+                LyricsHighlightAmount = this.LyricsHighlightAmount,
+                LyricsTranslationHighlightAmount = this.LyricsTranslationHighlightAmount,
+                IsLyricsFloatAnimationEnabled = this.IsLyricsFloatAnimationEnabled,
+                LyricsFloatAmount = this.LyricsFloatAmount,
+                LyricsScrollTopDelay = this.LyricsScrollTopDelay,
+                LyricsScrollBottomDelay = this.LyricsScrollBottomDelay,
+                LyricsVerticalEdgeOpacity = this.LyricsVerticalEdgeOpacity,
+                IsFanLyricsEnabled = this.IsFanLyricsEnabled
+            };
         }
     }
 }

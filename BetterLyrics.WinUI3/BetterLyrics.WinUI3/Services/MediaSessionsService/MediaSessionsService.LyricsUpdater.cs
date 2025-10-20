@@ -105,7 +105,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     }
                     else
                     {
-                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
                         _langIndex = 0;
                         TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
                     }
@@ -128,7 +128,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         }
                         else
                         {
-                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _liveStatesService.LiveStates.LyricsStyleSettings.LyricsTranslationSeparator);
+                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
                             _langIndex = 0;
                         }
                         TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;

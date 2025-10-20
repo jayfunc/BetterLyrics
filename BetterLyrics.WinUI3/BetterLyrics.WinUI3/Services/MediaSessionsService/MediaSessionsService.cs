@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<LyricsWindowMode>>,
+        IRecipient<PropertyChangedMessage<LyricsWindowStatus>>,
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
         IRecipient<PropertyChangedMessage<List<string>>>
     {
@@ -431,7 +431,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
                 if (found == null)
                 {
-                    _settingsService.AppSettings.MediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id));
+                    _settingsService.AppSettings.MediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id, _settingsService.AppSettings.GeneralSettings.ListenOnNewPlaybackSource));
                 }
             });
         }
@@ -667,11 +667,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         }
 
-        public void Receive(PropertyChangedMessage<LyricsWindowMode> message)
+        public void Receive(PropertyChangedMessage<LyricsWindowStatus> message)
         {
             if (message.Sender is LiveStates)
             {
-                if (message.PropertyName == nameof(LiveStates.LyricsWindowMode))
+                if (message.PropertyName == nameof(LiveStates.LyricsWindowStatus))
                 {
                     UpdateTranslations();
                 }

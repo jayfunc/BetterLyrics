@@ -49,33 +49,5 @@ namespace BetterLyrics.WinUI3.Controls
         {
             AutoStartupToggleSwitch.Toggled -= AutoStartupToggleSwitch_Toggled;
         }
-
-        private void DeleteWindowBoundsRecordButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button)
-            {
-                var data = button.DataContext as WindowBoundsRecord;
-                if (data != null)
-                {
-                    ViewModel.AppSettings.WindowBoundsRecords.Remove(data);
-                }
-            }
-        }
-
-        private void ApplyWindowBoundsRecordButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button)
-            {
-                var data = button.DataContext as WindowBoundsRecord;
-                if (data != null)
-                {
-                    var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-                    if (lyricsWindow != null)
-                    {
-                        lyricsWindow.AppWindow.MoveAndResize(data.WindowBounds.ToRectInt32());
-                    }
-                }
-            }
-        }
     }
 }

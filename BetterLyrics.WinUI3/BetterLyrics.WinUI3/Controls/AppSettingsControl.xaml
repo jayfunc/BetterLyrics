@@ -11,375 +11,87 @@
     mc:Ignorable="d">
 
     <Grid>
-        <controls:SwitchPresenter Margin="0,72,0,0" Value="{Binding SelectedItem.Tag, ElementName=SegmentedControl}">
+        <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+            <Grid Style="{StaticResource SettingsGridStyle}">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-            <controls:Case Value="General">
-                <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                    <Grid Style="{StaticResource SettingsGridStyle}">
-                        <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                    <!--  App appearance  -->
 
-                            <!--  App appearance  -->
+                    <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                            <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                            <controls:SettingsExpander
-                                x:Uid="SettingsPageLanguage"
-                                HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                         Glyph=&#xF2B7;}"
-                                IsExpanded="True">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.Language, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageSystemLanguage" />
-                                    <ComboBoxItem x:Uid="SettingsPageEN" />
-                                    <ComboBoxItem x:Uid="SettingsPageSC" />
-                                    <ComboBoxItem x:Uid="SettingsPageTC" />
-                                    <ComboBoxItem x:Uid="SettingsPageJA" />
-                                    <ComboBoxItem x:Uid="SettingsPageKO" />
-                                </ComboBox>
-                                <controls:SettingsExpander.Items>
-                                    <controls:SettingsCard>
-                                        <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
-                                    </controls:SettingsCard>
-                                </controls:SettingsExpander.Items>
-                            </controls:SettingsExpander>
-
-                            <!--  App behavior  -->
-
-                            <TextBlock x:Uid="SettingsPageAppBehavior" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                            <controls:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF71C;}">
-                                <ToggleSwitch
-                                    x:Name="AutoStartupToggleSwitch"
-                                    Loaded="AutoStartupToggleSwitch_Loaded"
-                                    Unloaded="AutoStartupToggleSwitch_Unloaded" />
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageLanguage"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xF2B7;}"
+                        IsExpanded="True">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.Language, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageSystemLanguage" />
+                            <ComboBoxItem x:Uid="SettingsPageEN" />
+                            <ComboBoxItem x:Uid="SettingsPageSC" />
+                            <ComboBoxItem x:Uid="SettingsPageTC" />
+                            <ComboBoxItem x:Uid="SettingsPageJA" />
+                            <ComboBoxItem x:Uid="SettingsPageKO" />
+                        </ComboBox>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard>
+                                <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
                             </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
-                            <controls:SettingsCard x:Uid="SettingsPageAutoStartWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE736;}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.AutoStartWindowType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageAutoStartInAppLyrics" />
-                                    <ComboBoxItem x:Uid="SettingsPageAutoStartDockLyrics" />
-                                    <ComboBoxItem x:Uid="SettingsPageAutoStartDesktopLyrics" />
-                                    <ComboBoxItem x:Uid="SettingsPageAutoStartPIPLyrics" />
-                                </ComboBox>
-                            </controls:SettingsCard>
+                    <!--  App behavior  -->
 
-                            <controls:SettingsExpander
-                                x:Name="LyricsWindowManagerExpander"
-                                x:Uid="SettingsPageLyricsWindowManager"
-                                HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                         Glyph=&#xE61F;}"
-                                IsExpanded="True" />
+                    <TextBlock x:Uid="SettingsPageAppBehavior" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                            <Grid
-                                Margin="0,-20,0,0"
-                                Padding="60,16"
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                CornerRadius="4"
-                                Visibility="{Binding ElementName=LyricsWindowManagerExpander, Path=IsExpanded, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <StackPanel Spacing="16">
-                                    <TextBlock x:Uid="SettingsPageCurrentLyricsWindowStatus" />
-                                    <StackPanel HorizontalAlignment="Left" Spacing="4">
-                                        <Grid
-                                            Width="{x:Bind ViewModel.LiveStates.DemoLyricsWindowMonitorBounds.Width, Mode=OneWay}"
-                                            Height="{x:Bind ViewModel.LiveStates.DemoLyricsWindowMonitorBounds.Height, Mode=OneWay}"
-                                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
-                                            <Grid
-                                                Width="{x:Bind ViewModel.LiveStates.DemoLyricsWindowBounds.Width, Mode=OneWay}"
-                                                Height="{x:Bind ViewModel.LiveStates.DemoLyricsWindowBounds.Height, Mode=OneWay}"
-                                                Margin="{x:Bind ViewModel.LiveStates.DemoLyricsWindowBounds, Converter={StaticResource RectToMarginConverter}, Mode=OneWay}"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Top"
-                                                Background="{ThemeResource AccentFillColorDefaultBrush}"
-                                                CornerRadius="4" />
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                FontWeight="ExtraBlack"
-                                                Opacity="0.7"
-                                                Text="{x:Bind ViewModel.LiveStates.LyricsWindowMonitorName, Mode=OneWay}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-                                        <Grid>
-                                            <Button
-                                                x:Uid="SettingsPageRecord"
-                                                HorizontalAlignment="Stretch"
-                                                Command="{x:Bind ViewModel.RecordCurrentWindowBoundsCommand}"
-                                                Style="{StaticResource AccentButtonStyle}" />
-                                        </Grid>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
+                    <controls:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF71C;}">
+                        <ToggleSwitch
+                            x:Name="AutoStartupToggleSwitch"
+                            Loaded="AutoStartupToggleSwitch_Loaded"
+                            Unloaded="AutoStartupToggleSwitch_Unloaded" />
+                    </controls:SettingsCard>
 
-                            <StackPanel
-                                Margin="0,-3,0,0"
-                                Padding="60,16"
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                CornerRadius="4"
-                                Spacing="16"
-                                Visibility="{Binding ElementName=LyricsWindowManagerExpander, Path=IsExpanded, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <TextBlock x:Uid="SettingsPageRecordedWindowStatus" />
-                                <GridView
-                                    Margin="-2"
-                                    CornerRadius="4"
-                                    ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <GridView.ItemContainerStyle>
-                                        <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
-                                            <Setter Property="Margin" Value="5,5,5,5" />
-                                        </Style>
-                                    </GridView.ItemContainerStyle>
-                                    <GridView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <ItemsWrapGrid Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </GridView.ItemsPanel>
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <StackPanel Spacing="4">
-                                                    <Grid
-                                                        Width="{Binding DemoMonitorBounds.Width}"
-                                                        Height="{Binding DemoMonitorBounds.Height}"
-                                                        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
-                                                        <Grid
-                                                            Width="{Binding DemoWindowBounds.Width}"
-                                                            Height="{Binding DemoWindowBounds.Height}"
-                                                            Margin="{Binding DemoWindowBounds, Converter={StaticResource RectToMarginConverter}}"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Top"
-                                                            Background="{ThemeResource AccentFillColorDefaultBrush}"
-                                                            CornerRadius="4" />
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            FontWeight="ExtraBlack"
-                                                            Opacity="0.7"
-                                                            Text="{Binding MonitorDeviceName}"
-                                                            TextWrapping="Wrap" />
-                                                    </Grid>
-                                                    <Grid ColumnSpacing="4">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="*" />
-                                                        </Grid.ColumnDefinitions>
-                                                        <Button
-                                                            x:Uid="SettingsPageDelete"
-                                                            Grid.Column="0"
-                                                            HorizontalAlignment="Stretch"
-                                                            Click="DeleteWindowBoundsRecordButton_Click" />
-                                                        <Button
-                                                            x:Uid="SettingsPageApply"
-                                                            Grid.Column="1"
-                                                            HorizontalAlignment="Stretch"
-                                                            Click="ApplyWindowBoundsRecordButton_Click"
-                                                            Style="{StaticResource AccentButtonStyle}" />
-                                                    </Grid>
-                                                </StackPanel>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
-                            </StackPanel>
+                    <controls:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E8;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageIgnoreFullscreenWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE967;}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreFullscreenWindow, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageListenNewSession" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF270;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED1A;}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.HideWindowWhenNotPlaying, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageBorderlessHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.BorderlessShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageGlobalDrag" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C2;}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsDragEverywhereEnabled, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageClickThroughHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ClickThroughShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E8;}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <!--  Playback shortcut  -->
+                    <!--  Playback shortcut  -->
 
-                            <TextBlock x:Uid="SettingsPagePlaybackShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="SettingsPagePlaybackShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                            <controls:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
-
-            </controls:Case>
-
-            <controls:Case Value="Standard">
-                <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                    <Grid Style="{StaticResource SettingsGridStyle}">
-                        <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                            <!--  Standard mode  -->
-
-                            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                            <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.StandardModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
-                                    <ComboBoxItem x:Uid="MainPageLyriscOnly" />
-                                    <ComboBoxItem x:Uid="MainPageSplitView" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageAOT" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE718;}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.StandardModeSettings.IsAlwaysOnTop, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
-            </controls:Case>
-
-            <controls:Case Value="Desktop">
-                <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                    <Grid Style="{StaticResource SettingsGridStyle}">
-                        <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                            <!--  Desktop mode  -->
-
-                            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                            <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DesktopModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
-                                    <ComboBoxItem x:Uid="MainPageLyriscOnly" />
-                                    <ComboBoxItem x:Uid="MainPageSplitView" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageAOT" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE718;}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.DesktopModeSettings.IsAlwaysOnTop, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageToggleHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.DesktopModeSettings.ToggleShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageAutoLock" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE755;}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.DesktopModeSettings.AutoLockOnDesktopMode, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageLockHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.DesktopModeSettings.LockShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
-            </controls:Case>
-
-            <controls:Case Value="Dock">
-                <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                    <Grid Style="{StaticResource SettingsGridStyle}">
-                        <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                            <!--  Dock mode  -->
-
-                            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                            <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DockModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
-                                    <ComboBoxItem x:Uid="MainPageLyriscOnly" />
-                                    <ComboBoxItem x:Uid="MainPageSplitView" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageToggleHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.DockModeSettings.ToggleShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.AppSettings.DockModeSettings.DockMonitorDeviceName, Mode=TwoWay}" />
-                                    <Button
-                                        Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
-                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                              FontSize=12,
-                                                              Glyph=&#xE72C;}"
-                                        Style="{StaticResource GhostButtonStyle}" />
-                                </StackPanel>
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageDockWindowHeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED5E;}">
-                                <local:ExtendedSlider
-                                    Default="64"
-                                    Frequency="1"
-                                    Maximum="200"
-                                    Minimum="64"
-                                    Unit="px"
-                                    Value="{x:Bind ViewModel.AppSettings.DockModeSettings.DockWindowHeight, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageDockPlacement" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DockModeSettings.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
-                                    <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
-            </controls:Case>
-
-            <controls:Case Value="PictureInPicture">
-                <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                    <Grid Style="{StaticResource SettingsGridStyle}">
-                        <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                            <!--  Picture in picture mode  -->
-
-                            <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                            <controls:SettingsCard x:Uid="SettingsPageDisplayTypeSwitcher" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF246;}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.PictureInPictureModeSettings.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
-                                    <ComboBoxItem x:Uid="MainPageLyriscOnly" />
-                                    <ComboBoxItem x:Uid="MainPageSplitView" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPageToggleHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
-                                <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.PictureInPictureModeSettings.ToggleShortcut, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                        </StackPanel>
-                    </Grid>
-                </ScrollViewer>
-            </controls:Case>
-
-        </controls:SwitchPresenter>
-        <controls:Segmented
-            x:Name="SegmentedControl"
-            Margin="36,36,36,0"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Top"
-            SelectedIndex="0">
-            <controls:SegmentedItem x:Uid="AppSettingsControlGeneral" Tag="General" />
-            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlStandard" Tag="Standard" />
-            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlDock" Tag="Dock" />
-            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlDesktop" Tag="Desktop" />
-            <controls:SegmentedItem x:Uid="AllLyricsSettingsControlPictureInPicture" Tag="PictureInPicture" />
-        </controls:Segmented>
-
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>

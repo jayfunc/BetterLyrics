@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -22,11 +23,18 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class AlbumArtLayoutSettingsControl : UserControl
     {
-        public AlbumArtLayoutSettingsControlViewModel ViewModel => (AlbumArtLayoutSettingsControlViewModel)DataContext;
+        public static readonly DependencyProperty AlbumArtLayoutSettingsProperty =
+            DependencyProperty.Register(nameof(AlbumArtLayoutSettings), typeof(AlbumArtLayoutSettings), typeof(AlbumArtLayoutSettingsControl), new PropertyMetadata(default));
+
+        public AlbumArtLayoutSettings AlbumArtLayoutSettings
+        {
+            get => (AlbumArtLayoutSettings)GetValue(AlbumArtLayoutSettingsProperty);
+            set => SetValue(AlbumArtLayoutSettingsProperty, value);
+        }
+
         public AlbumArtLayoutSettingsControl()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<AlbumArtLayoutSettingsControlViewModel>();
         }
     }
 }

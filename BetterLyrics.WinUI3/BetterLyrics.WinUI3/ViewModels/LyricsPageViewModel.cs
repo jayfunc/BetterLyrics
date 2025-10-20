@@ -125,7 +125,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static void OpenSettingsWindow()
         {
-            WindowHelper.OpenWindow<SettingsWindow>();
+            WindowHelper.OpenOrShowWindow<SettingsWindow>();
         }
 
         [RelayCommand]

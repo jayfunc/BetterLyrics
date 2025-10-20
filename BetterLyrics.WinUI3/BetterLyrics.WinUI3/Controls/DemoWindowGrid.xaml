@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.DemoWindowGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid
+        Width="{x:Bind LyricsWindowStatus.DemoMonitorBounds.Width, Mode=OneWay}"
+        Height="{x:Bind LyricsWindowStatus.DemoMonitorBounds.Height, Mode=OneWay}"
+        Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+        CornerRadius="4">
+        <Grid
+            Width="{x:Bind LyricsWindowStatus.DemoWindowBounds.Width, Mode=OneWay}"
+            Height="{x:Bind LyricsWindowStatus.DemoWindowBounds.Height, Mode=OneWay}"
+            Margin="{x:Bind LyricsWindowStatus.DemoWindowBounds, Converter={StaticResource RectToMarginConverter}, Mode=OneWay}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource AccentFillColorDefaultBrush}"
+            CornerRadius="4">
+            <interactivity:Interaction.Behaviors>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind LyricsWindowStatus.IsBorderless, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="True">
+                    <interactivity:ChangePropertyAction PropertyName="BorderThickness" Value="0" />
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind LyricsWindowStatus.IsBorderless, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="False">
+                    <interactivity:ChangePropertyAction PropertyName="BorderThickness" Value="1" />
+                </interactivity:DataTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+        </Grid>
+        <!--  Is default  -->
+        <Grid
+            Margin="4"
+            Padding="6,3"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+            CornerRadius="4"
+            Opacity="0.7"
+            Visibility="{x:Bind LyricsWindowStatus.IsDefault, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            <TextBlock
+                x:Uid="DemoWindowControlDefault"
+                FontSize="12"
+                TextWrapping="Wrap" />
+        </Grid>
+        <!--  Is always on top  -->
+        <Grid
+            Margin="4"
+            Padding="6,3"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+            CornerRadius="4"
+            Opacity="0.7"
+            Visibility="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            <FontIcon
+                FontFamily="{StaticResource IconFontFamily}"
+                FontSize="12"
+                Glyph="&#xE718;" />
+            <FontIcon
+                FontFamily="{StaticResource IconFontFamily}"
+                FontSize="12"
+                Glyph="&#xE841;"
+                Visibility="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPolling, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+        </Grid>
+        <!--  Moniter name  -->
+        <Grid
+            Margin="4"
+            Padding="6,3"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+            CornerRadius="4"
+            Opacity="0.7">
+            <TextBlock
+                FontSize="12"
+                Text="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=OneWay}"
+                TextWrapping="Wrap" />
+        </Grid>
+        <!--  Config name  -->
+        <Grid
+            Padding="6,3"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            CornerRadius="4"
+            Opacity="0.7">
+            <TextBlock
+                FontWeight="ExtraBlack"
+                Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}"
+                TextWrapping="Wrap" />
+        </Grid>
+    </Grid>
+
+</UserControl>

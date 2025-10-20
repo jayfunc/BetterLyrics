@@ -123,26 +123,11 @@
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>음악 플레이어</value>
   </data>
-  <data name="AllLyricsSettingsControlDesktop.Content" xml:space="preserve">
-    <value>데스크탑 모드</value>
-  </data>
-  <data name="AllLyricsSettingsControlDock.Content" xml:space="preserve">
-    <value>도크 모드</value>
-  </data>
   <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
     <value>사진 인당 모드</value>
   </data>
-  <data name="AllLyricsSettingsControlStandard.Content" xml:space="preserve">
-    <value>표준 모드</value>
-  </data>
-  <data name="AppSettingsControlGeneral.Content" xml:space="preserve">
+  <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>일반적인</value>
-  </data>
-  <data name="BaseWindowEnterFullScreenHint" xml:space="preserve">
-    <value>ESC를 눌러 전체 화면 모드를 종료하십시오</value>
-  </data>
-  <data name="BaseWindowFullScreenFlyoutItem.Text" xml:space="preserve">
-    <value>전체 화면</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>이 메시지를 다시 표시하지 마십시오</value>
@@ -153,8 +138,17 @@
   <data name="Cancel" xml:space="preserve">
     <value>취소</value>
   </data>
+  <data name="DemoWindowControlDefault.Text" xml:space="preserve">
+    <value>기본</value>
+  </data>
   <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
     <value>의존성</value>
+  </data>
+  <data name="DesktopMode" xml:space="preserve">
+    <value>데스크톱 모드 (투명)</value>
+  </data>
+  <data name="DockedMode" xml:space="preserve">
+    <value>도킹 모드</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>수출 성공</value>
@@ -168,17 +162,11 @@
   <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
     <value>잠금</value>
   </data>
-  <data name="HostWindowDesktopFlyoutItem.Text" xml:space="preserve">
-    <value>데스크탑 모드</value>
-  </data>
-  <data name="HostWindowDockFlyoutItem.Text" xml:space="preserve">
-    <value>도크 모드</value>
-  </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
     <value>잠금</value>
   </data>
-  <data name="HostWindowMoreButtonToolTip.Content" xml:space="preserve">
-    <value>더</value>
+  <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
+    <value>음악 갤러리</value>
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>설정</value>
@@ -223,7 +211,7 @@
     <value>가사를 수동으로 검색합니다</value>
   </data>
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>가사 스타일과 효과 빠른 설정</value>
+    <value>가사 창 관리 바로 가기 설정</value>
   </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>재생 소스 빠른 설정</value>
@@ -303,11 +291,17 @@
   <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
     <value>몰입 형 모드</value>
   </data>
-  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>앨범 아트 만</value>
+  <data name="LyricsWindowSettingsControlCurrentLyricsWindowConfig.Text" xml:space="preserve">
+    <value>현재 가사 창 구성</value>
   </data>
-  <data name="MainPageDesktopLyricsToggler.ToolTipService.ToolTip" xml:space="preserve">
-    <value>데스크탑 가사 모드로 전환하십시오</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
+    <value>가사 창 모드</value>
+  </data>
+  <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
+    <value>기본 값으로 설정</value>
+  </data>
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>앨범 아트 영역만</value>
   </data>
   <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>토글 버튼을 표시하려면 다시 다시 가져옵니다</value>
@@ -442,6 +436,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리 - BetterLyrics</value>
   </data>
+  <data name="PictureInPictureMode" xml:space="preserve">
+    <value>사진 인당 모드</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>기부</value>
   </data>
@@ -460,17 +457,32 @@
   <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
     <value>아크릴 얇은</value>
   </data>
+  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
+    <value>동시에 가사 배경의 순수 컬러 레이어 불투명도와 앨범 아트 레이어 불투명도를 0으로 설정하면 정확한 효과를 얻을 수 있습니다</value>
+  </data>
+  <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
+    <value>환경 색상에 적응하세요</value>
+  </data>
   <data name="SettingsPageAddFolder.Header" xml:space="preserve">
     <value>폴더를 추가하십시오</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>추가하다</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>고급 옵션</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>앨범 아트</value>
   </data>
+  <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
+    <value>앨범 아트 레이어</value>
+  </data>
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>앨범 표지 소스를 구성합니다</value>
+  </data>
+  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
+    <value>앨범아트</value>
   </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>앨범 아트 소스</value>
@@ -481,14 +493,14 @@
   <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
     <value>그림자가 얼마나 퍼져나가는지</value>
   </data>
-  <data name="SettingsPageAlbumStyle.Content" xml:space="preserve">
+  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>앨범 영역 스타일</value>
   </data>
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>금액</value>
   </data>
   <data name="SettingsPageAOT.Header" xml:space="preserve">
-    <value>항상 위에</value>
+    <value>가사 창을 맨 위로 가져옵니다</value>
   </data>
   <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>앱 외관과 행동</value>
@@ -497,28 +509,16 @@
     <value>앱 모양</value>
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>앱 동작</value>
+    <value>일반적인 행동</value>
   </data>
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>적용하다</value>
   </data>
-  <data name="SettingsPageAutoLock.Header" xml:space="preserve">
-    <value>데스크탑 모드를 활성화 할 때 자동 잠금</value>
+  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
+    <value>자동 크기 조정</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>자동 시작</value>
-  </data>
-  <data name="SettingsPageAutoStartDesktopLyrics.Content" xml:space="preserve">
-    <value>데스크탑 모드를 시작하십시오</value>
-  </data>
-  <data name="SettingsPageAutoStartDockLyrics.Content" xml:space="preserve">
-    <value>도크 모드를 활성화하십시오</value>
-  </data>
-  <data name="SettingsPageAutoStartInAppLyrics.Content" xml:space="preserve">
-    <value>표준 모드를 ​​활성화합니다</value>
-  </data>
-  <data name="SettingsPageAutoStartPIPLyrics.Content" xml:space="preserve">
-    <value>Picture-in-Picture 모드를 시작하십시오</value>
   </data>
   <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>앱을 시작할 때</value>
@@ -529,8 +529,17 @@
   <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
     <value>앨범 배경 아크릴 효과 강도</value>
   </data>
-  <data name="SettingsPageBackgroundOverlay.Content" xml:space="preserve">
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>가사 배경</value>
+  </data>
+  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>흐림 금액</value>
+  </data>
+  <data name="SettingsPageBorderless.Header" xml:space="preserve">
+    <value>창문</value>
+  </data>
+  <data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
+    <value>테두리 없는 가사 창 단축키</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>로그 파일, 네트워크 가사 캐시 포함</value>
@@ -544,8 +553,26 @@
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>중국어를 전통적인 중국어로 전환합니다</value>
   </data>
+  <data name="SettingsPageClickThrough.Header" xml:space="preserve">
+    <value>클릭률</value>
+  </data>
+  <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
+    <value>바로 가기 키를 클릭하세요</value>
+  </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>콤팩트</value>
+  </data>
+  <data name="SettingsPageConfigName.Description" xml:space="preserve">
+    <value>녹화된 창 상태에 이름을 지정하면 더 잘 구별할 수 있습니다</value>
+  </data>
+  <data name="SettingsPageConfigName.Header" xml:space="preserve">
+    <value>환경 설정</value>
+  </data>
+  <data name="SettingsPageCreateFromCurrent.Content" xml:space="preserve">
+    <value>현재 가사 창 상태에서 만들기</value>
+  </data>
+  <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
+    <value>템플릿에서 만들기</value>
   </data>
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>현재 가사 창 상태</value>
@@ -556,29 +583,29 @@
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>디버그 오버레이를 표시하십시오</value>
   </data>
-  <data name="SettingsPageDelete.Content" xml:space="preserve">
+  <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>삭제</value>
   </data>
-  <data name="SettingsPageDesktopAcrylic.Content" xml:space="preserve">
-    <value>데스크탑 아크릴</value>
+  <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
+    <value>데스크톱 모드 (투명)</value>
   </data>
-  <data name="SettingsPageDev.Content" xml:space="preserve">
-    <value>고급 옵션</value>
-  </data>
-  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>이 프로젝트는 어떠한 종류의 보증도 없이 그대로 제공됩니다. 모든 가사, 글꼴, 아이콘 및 기타 제3자 리소스는 해당 저작권 소유자의 재산입니다. 이 프로젝트의 저자는 그러한 자원의 소유권을 주장하지 않습니다. 이 프로젝트는 비상업적이기 때문에 어떠한 권리도 침해해서는 안 됩니다. 사용자는 자신의 사용이 관련 법률 및 라이센스를 준수하는지 확인할 책임이 있습니다.</value>
   </data>
   <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>가사 앨범 레이아웃 모드</value>
+    <value>레이아웃 모드</value>
+  </data>
+  <data name="SettingsPageDockedMode.Text" xml:space="preserve">
+    <value>도킹 모드</value>
   </data>
   <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
     <value>대상 모니터</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>도크 모드 배치</value>
+    <value>작업 영역 배치</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>맨 아래</value>
@@ -588,6 +615,9 @@
   </data>
   <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
     <value>창 높이</value>
+  </data>
+  <data name="SettingsPageDragArea.Header" xml:space="preserve">
+    <value>드래그 가능</value>
   </data>
   <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
     <value>자동 조정</value>
@@ -634,6 +664,21 @@
   <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
+    <value>환경 컬러 삼페 모드</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
+    <value>창문 너머</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
+    <value>창문 아래</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
+    <value>창 가장자리</value>
+  </data>
+  <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
+    <value>창문 안쪽</value>
+  </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>가사 창을 닫으면 프로그램을 종료하세요</value>
   </data>
@@ -652,29 +697,32 @@
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
     <value>고정 시간 단계 렌더링</value>
   </data>
+  <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
+    <value>유체 층</value>
+  </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>시스템을 따르십시오</value>
+  </data>
+  <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
+    <value>투표를 통해 가사 창을 맨 위에 두세요</value>
+  </data>
+  <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
+    <value>꼭대기에 강제로</value>
   </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>렌더링 프레임 속도</value>
   </data>
-  <data name="SettingsPageGlobalDrag.Description" xml:space="preserve">
-    <value>비 중과 영역에서 창을 드래그 할 수 있도록 제목 표시 줄을 전체 페이지로 확장하십시오.</value>
+  <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
+    <value>전체화면 모드</value>
   </data>
-  <data name="SettingsPageGlobalDrag.Header" xml:space="preserve">
-    <value>글로벌 드래그</value>
+  <data name="FullscreenMode" xml:space="preserve">
+    <value>전체화면 모드</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>도킹 모드 또는 데스크탑 모드에서는 노래가 재생되지 않으면 창이 자동으로 숨겨집니다. 그렇지 않으면 창이 자동으로 표시됩니다.</value>
+    <value>음악이 재생되지 않을 때 자동으로 가사 창 숨기기/표시</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Windows를 자동으로 숨기고 표시합니다</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Description" xml:space="preserve">
-    <value>도킹 또는 데스크탑 모드가 활성화 될 때이 앱이 전체 화면 앱 위에 나타나도록 강요</value>
-  </data>
-  <data name="SettingsPageIgnoreFullscreenWindow.Header" xml:space="preserve">
-    <value>항상 전체 화면 응용 프로그램 위에 머물러 있습니다</value>
   </data>
   <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
     <value>가져 오기 설정</value>
@@ -727,14 +775,23 @@
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
     <value>사용자 이름</value>
   </data>
+  <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
+    <value>레이아웃 방향</value>
+  </data>
+  <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
+    <value>수평</value>
+  </data>
+  <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
+    <value>세로</value>
+  </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>서버 주소</value>
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>빛</value>
   </data>
-  <data name="SettingsPageLockHotKey.Header" xml:space="preserve">
-    <value>바로 가기 키를 잠금 해제하고 잠그십시오</value>
+  <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
+    <value>새로운 재생 소스에 대한 모니터링을 활성화하십시오</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>로그 레코드</value>
@@ -742,7 +799,7 @@
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX 음악 서버</value>
   </data>
-  <data name="SettingsPageLyrics.Content" xml:space="preserve">
+  <data name="SettingsPageLyrics.Text" xml:space="preserve">
     <value>가사 스타일과 효과</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
@@ -750,15 +807,6 @@
   </data>
   <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
     <value>가사 배경</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundBlurAmount.Header" xml:space="preserve">
-    <value>앨범 배경 레이어 모호성</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundOpacity.Header" xml:space="preserve">
-    <value>앨범 배경 레이어 불투명도</value>
-  </data>
-  <data name="SettingsPageLyricsBackgroundSpeed.Header" xml:space="preserve">
-    <value>앨범 배경 레이어 모션 속도</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>글꼴 색상 (비 전류 재생 영역)</value>
@@ -859,9 +907,6 @@
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>정상</value>
   </data>
-  <data name="SettingsPageLyricsPureColorBgOpacity.Header" xml:space="preserve">
-    <value>단단한 배경 레이어 불투명도</value>
-  </data>
   <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
     <value>현재 숯</value>
   </data>
@@ -913,8 +958,14 @@
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>상단 및 하단 가장자리 불투명도</value>
   </data>
-  <data name="SettingsPageLyricsWindowManager.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
     <value>가사 창 관리자</value>
+  </data>
+  <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
+    <value>가사 창 관리자</value>
+  </data>
+  <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
+    <value>가사 창 상태 전환기 바로 가기</value>
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>미디어 라이브러리</value>
@@ -940,13 +991,19 @@
   <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
     <value>실시간으로 파일 변경을 듣습니다</value>
   </data>
+  <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
+    <value>협폭 조명</value>
+  </data>
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>다음 트랙 바로 가기 키</value>
   </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>없음</value>
   </data>
-  <data name="SettingsPageOpenLogFolderButton.Content" xml:space="preserve">
+  <data name="SettingsPageOpacity.Header" xml:space="preserve">
+    <value>투명도</value>
+  </data>
+  <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>파일 탐색기에서 열립니다</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
@@ -982,8 +1039,14 @@
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>이전 트랙의 바로 가기 키</value>
   </data>
+  <data name="SettingsPagePureLayer.Header" xml:space="preserve">
+    <value>순수한 컬러 레이어</value>
+  </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ 피드백 및 채팅 그룹</value>
+  </data>
+  <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
+    <value>실시간 상태</value>
   </data>
   <data name="SettingsPageRecord.Content" xml:space="preserve">
     <value>기록</value>
@@ -1039,6 +1102,9 @@
   <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>서버 테스트 성공</value>
   </data>
+  <data name="SettingsPageSettings.Header" xml:space="preserve">
+    <value>설정</value>
+  </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>설정 관리자</value>
   </data>
@@ -1048,8 +1114,20 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>이 핫키는 성공적으로 등록되었습니다</value>
   </data>
+  <data name="SettingsPageShowArtists.Header" xml:space="preserve">
+    <value>예술가</value>
+  </data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
     <value>가사 창 디스플레이 및 바로 가기 키 숨기기</value>
+  </data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
+    <value>예: Alt + Tab, 작업 표시줄</value>
+  </data>
+  <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
+    <value>시스템 환경에서 보여주세요</value>
+  </data>
+  <data name="SettingsPageShowTitle.Header" xml:space="preserve">
+    <value>제목 표시</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>현재 가치 : </value>
@@ -1069,6 +1147,12 @@
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>오른쪽</value>
   </data>
+  <data name="SettingsPageSpeed.Header" xml:space="preserve">
+    <value>모션</value>
+  </data>
+  <data name="SettingsPageStandardMode.Text" xml:space="preserve">
+    <value>표준 모드</value>
+  </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>기본</value>
   </data>
@@ -1086,6 +1170,15 @@
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>설정 - BetterLyrics</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
+    <value>없음</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
+    <value>맨 위</value>
+  </data>
+  <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
+    <value>창문 전체</value>
   </data>
   <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
     <value>제목 바 크기</value>
@@ -1108,6 +1201,18 @@
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>버전</value>
   </data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve">
+    <value>화면의 상단/하단 가장자리에 고정된 별도의 작업 영역으로</value>
+  </data>
+  <data name="SettingsPageWorkArea.Header" xml:space="preserve">
+    <value>작업 구역</value>
+  </data>
+  <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
+    <value>작업 영역 높이</value>
+  </data>
+  <data name="StandardMode" xml:space="preserve">
+    <value>표준 모드</value>
+  </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>프로그램을 종료하십시오</value>
   </data>
@@ -1129,13 +1234,13 @@
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>열기 설정</value>
   </data>
-  <data name="SystemTrayUnlock.Text" xml:space="preserve">
-    <value>창을 잠금 해제하십시오</value>
-  </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>번역 서버가 설정되지 않았습니다. 먼저 설정으로 구성하십시오.</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics 가 이미 실행 중입니다</value>
+  </data>
+  <data name="NarrowMode" xml:space="preserve">
+    <value>협폭 조명</value>
   </data>
 </root>

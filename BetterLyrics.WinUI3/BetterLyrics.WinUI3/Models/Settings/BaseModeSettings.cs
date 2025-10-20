@@ -10,6 +10,5 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class BaseModeSettings : ObservableRecipient
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType LyricsDisplayType { get; set; }
     }
 }

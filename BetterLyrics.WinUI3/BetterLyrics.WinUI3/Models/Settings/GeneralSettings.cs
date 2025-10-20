@@ -10,15 +10,15 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class GeneralSettings : ObservableRecipient
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowMode AutoStartWindowType { get; set; } = LyricsWindowMode.StandardMode;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Language Language { get; set; } = Language.FollowSystem;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IgnoreFullscreenWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LXMusicServer { get; set; } = string.Empty;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool HideWindowWhenNotPlaying { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> ShowOrHideLyricsWindowShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "H" };
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDragEverywhereEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsImmersiveMode { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ListenOnNewPlaybackSource { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> BorderlessShortcut { get; set; } = new List<string>() { "Ctrl", "Alt", "B" };
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> ClickThroughShortcut { get; set; } = new List<string>() { "Ctrl", "Alt", "C" };
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> LyricsWindowSwitchShortcut { get; set; } = new List<string>() { "Ctrl", "Alt", "S" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> PlayOrPauseShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "P" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> NextSongShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "Right" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> PreviousSongShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "Left" };

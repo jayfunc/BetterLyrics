@@ -30,6 +30,10 @@ namespace BetterLyrics.WinUI3.Converter
                     PlayerID.Edge => PathHelper.EdgeLogoPath,
                     PlayerID.BetterLyrics => PathHelper.LogoPath,
                     PlayerID.BetterLyricsDebug => PathHelper.LogoPath,
+                    PlayerID.SaltPlayerForWindows => PathHelper.SaltPlayerForWindowsLogoPath,
+                    PlayerID.MoeKoeMusic => PathHelper.MoeKoeMusicLogoPath,
+                    PlayerID.MoeKoeMusicAlternative => PathHelper.MoeKoeMusicLogoPath,
+                    PlayerID.Listen1 => PathHelper.Listen1LogoPath,
                     _ => PathHelper.UnknownPlayerLogoPath,
                 };
             }

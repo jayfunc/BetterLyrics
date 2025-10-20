@@ -62,10 +62,10 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             albumArtSwBitmap = SoftwareBitmap.Copy(albumArtSwBitmap);
             token.ThrowIfCancellationRequested();
 
-            var albumArtLightAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, false).FirstOrDefault();
-            var albumArtDarkAccentColor = ImageHelper.GetAccentColorsFromByte(bytes, 1, true).FirstOrDefault();
+            var albumArtLightAccentColors = ImageHelper.GetAccentColorsFromByte(bytes, 4, false);
+            var albumArtDarkAccentColors = ImageHelper.GetAccentColorsFromByte(bytes, 4, true);
 
-            AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, albumArtLightAccentColor, albumArtDarkAccentColor));
+            AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, albumArtLightAccentColors, albumArtDarkAccentColors));
         }
     }
 }
