@@ -1,7 +1,9 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,63 +16,11 @@ namespace BetterLyrics.WinUI3.Models
 {
     public partial class LiveStates : ObservableRecipient
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowMode LyricsWindowMode { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType LyricsDisplayType { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTop { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsStyleSettings LyricsStyleSettings { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectSettings LyricsEffectSettings { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect LyricsWindowBounds { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect LyricsWindowMonitorBounds { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect DemoLyricsWindowBounds { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect DemoLyricsWindowMonitorBounds { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsWindowMonitorName { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowStatus LyricsWindowStatus { get; set; }
 
-        public LiveStates(AppSettings appSettings)
+        public LiveStates()
         {
-            LyricsWindowMode = LyricsWindowMode.StandardMode;
-            LyricsDisplayType = appSettings.StandardModeSettings.LyricsDisplayType;
-            LyricsStyleSettings = appSettings.StandardLyricsStyleSettings;
-            LyricsEffectSettings = appSettings.StandardLyricsEffectSettings;
-            IsAlwaysOnTop = false;
-        }
-
-        public void ToggleLyricsWindowMode(LyricsWindowMode mode)
-        {
-            if (LyricsWindowMode == mode)
-            {
-                LyricsWindowMode = LyricsWindowMode.StandardMode;
-            }
-            else
-            {
-                LyricsWindowMode = mode;
-            }
-        }
-
-        partial void OnLyricsWindowBoundsChanged(Rect value)
-        {
-            double factor = 0.1;
-            var lyricsWindow = WindowHelper.GetWindowByWindowType<Views.LyricsWindow>();
-            if (lyricsWindow == null) return;
-            var mointor = MonitorHelper.GetMonitorInfoExFromWindow(lyricsWindow);
-            LyricsWindowMonitorName = mointor.szDevice;
-            LyricsWindowMonitorBounds = new Rect(
-                mointor.rcMonitor.Left,
-                mointor.rcMonitor.Top,
-                mointor.rcMonitor.Width,
-                mointor.rcMonitor.Height
-            );
-            DemoLyricsWindowBounds = new Rect(
-                (value.X - mointor.rcMonitor.Left) * factor,
-                (value.Y - mointor.rcMonitor.Top) * factor,
-                value.Width * factor,
-                value.Height * factor
-            );
-            DemoLyricsWindowMonitorBounds = new Rect(
-                mointor.rcMonitor.Left * factor,
-                mointor.rcMonitor.Top * factor,
-                mointor.rcMonitor.Width * factor,
-                mointor.rcMonitor.Height * factor
-            );
+            LyricsWindowStatus = new LyricsWindowStatus();
         }
     }
 }

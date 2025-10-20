@@ -2,7 +2,11 @@
 
 using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.UI.Xaml.Controls;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
@@ -30,6 +34,11 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             LyricsCanvas.RemoveFromVisualTree();
             LyricsCanvas = null;
+        }
+
+        private async void LyricsCanvas_CreateResources(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
+        {
+            await ViewModel.CreateResourcesAsync();
         }
     }
 }

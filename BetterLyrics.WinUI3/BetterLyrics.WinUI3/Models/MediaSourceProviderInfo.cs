@@ -36,8 +36,9 @@ namespace BetterLyrics.WinUI3.Models
             PositionOffset = 0;
         }
 
-        public MediaSourceProviderInfo(string provider) : base()
+        public MediaSourceProviderInfo(string provider, bool isEnable = true) : base()
         {
+            IsEnabled = isEnable;
             switch (provider)
             {
                 case Constants.PlayerID.AppleMusic:

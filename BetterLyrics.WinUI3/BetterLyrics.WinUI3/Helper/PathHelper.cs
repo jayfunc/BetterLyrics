@@ -34,6 +34,10 @@ namespace BetterLyrics.WinUI3.Helper
         public static string PotPlayerLogoPath => Path.Combine(AssetsFolder, "PotPlayer.png");
         public static string ChromeLogoPath => Path.Combine(AssetsFolder, "Chrome.png");
         public static string EdgeLogoPath => Path.Combine(AssetsFolder, "Edge.png");
+        public static string SaltPlayerForWindowsLogoPath => Path.Combine(AssetsFolder, "SaltPlayerForWindows.png");
+        public static string MoeKoeMusicLogoPath => Path.Combine(AssetsFolder, "MoeKoeMusic.png");
+        public static string Listen1LogoPath => Path.Combine(AssetsFolder, "Listen1.png");
+
         public static string UnknownPlayerLogoPath => Path.Combine(AssetsFolder, "Question.png");
 
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");

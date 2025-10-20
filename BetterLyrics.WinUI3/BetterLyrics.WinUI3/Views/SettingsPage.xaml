@@ -33,10 +33,11 @@
                     Tag="App" />
 
                 <NavigationViewItem
-                    x:Uid="SettingsPageAlbumStyle"
+                    x:Uid="SettingsPageLyricsWindowMgr"
+                    Content="Lyrics window manager"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xE93C;}"
-                    Tag="AlbumArtStyle" />
+                                       Glyph=&#xE61F;}"
+                    Tag="LyricsWindowMgr" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPageMediaLib"
@@ -51,28 +52,10 @@
                     Tag="PlaybackLib" />
 
                 <NavigationViewItem
-                    x:Uid="SettingsPageBackgroundOverlay"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xF5EF;}"
-                    Tag="Background" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPageLyrics"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xEDC6;}"
-                    Tag="Lyrics" />
-
-                <NavigationViewItem
                     x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE946;}"
                     Tag="About" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPageDev"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xEC7A;}"
-                    Tag="Dev" />
 
             </NavigationView.MenuItems>
 
@@ -88,14 +71,9 @@
                     <uc:AppSettingsControl />
                 </controls:Case>
 
-                <!--  Lyrics background  -->
-                <controls:Case Value="Background">
-                    <uc:LyricsBackgroundSettingsControl />
-                </controls:Case>
-
-                <!--  Album art area style  -->
-                <controls:Case Value="AlbumArtStyle">
-                    <uc:AlbumArtLayoutSettingsControl />
+                <!--  Lyrics window manager  -->
+                <controls:Case Value="LyricsWindowMgr">
+                    <uc:LyricsWindowSettingsControl />
                 </controls:Case>
 
                 <!--  Playback sources  -->
@@ -108,11 +86,6 @@
                     <uc:MediaSettingsControl />
                 </controls:Case>
 
-                <!--  Lyrics style and effect  -->
-                <controls:Case Value="Lyrics">
-                    <uc:AllLyricsSettingsControl />
-                </controls:Case>
-
                 <!--  About  -->
                 <controls:Case Value="About">
                     <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
@@ -121,12 +94,24 @@
 
                                 <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                                <controls:SettingsExpander
-                                    Header="BetterLyrics"
-                                    HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}"
-                                    IsExpanded="True">
+                                <controls:SettingsExpander HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}" IsExpanded="True">
+                                    <controls:SettingsExpander.Header>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock Text="BetterLyrics" />
+                                        </StackPanel>
+                                    </controls:SettingsExpander.Header>
                                     <controls:SettingsExpander.Description>
-                                        <HyperlinkButton Content="by Zhe Fang" NavigateUri="https://github.com/jayfunc" />
+                                        <StackPanel
+                                            Margin="0,2,0,0"
+                                            Orientation="Horizontal"
+                                            Spacing="2">
+                                            <TextBlock Text="©" />
+                                            <HyperlinkButton
+                                                Margin="0,-1,0,0"
+                                                Content="Zhe Fang"
+                                                NavigateUri="https://github.com/jayfunc" />
+                                            <TextBlock Text="2025" />
+                                        </StackPanel>
                                     </controls:SettingsExpander.Description>
                                     <RichTextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
                                         <Paragraph>
@@ -206,39 +191,25 @@
                                     </controls:SettingsExpander.Items>
                                     <controls:SettingsExpander.ItemsHeader>
                                         <InfoBar
+                                            x:Uid="SettingsPageDisclaimer"
                                             BorderThickness="0"
                                             CornerRadius="0"
                                             IsClosable="False"
                                             IsOpen="True"
-                                            Severity="Warning">
-                                            <TextBlock
-                                                x:Uid="SettingsPageDisclaimer"
-                                                Margin="12"
-                                                Foreground="{ThemeResource SystemFillColorCautionBrush}"
-                                                TextWrapping="Wrap" />
-                                        </InfoBar>
+                                            Severity="Warning" />
                                     </controls:SettingsExpander.ItemsHeader>
                                 </controls:SettingsExpander>
-
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
-                </controls:Case>
-
-                <!--  Dev  -->
-                <controls:Case Value="Dev">
-                    <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                        <Grid Style="{StaticResource SettingsGridStyle}">
-                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                                <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                                 <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
                                     <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
                                 </controls:SettingsCard>
 
                                 <controls:SettingsCard x:Uid="SettingsPageCache">
-                                    <Button x:Uid="SettingsPageOpenLogFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
+                                    <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageSettings">
+                                    <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenSettingsFolderCommand}" />
                                 </controls:SettingsCard>
 
                                 <controls:SettingsExpander x:Uid="SettingsPageSettingsManager" IsExpanded="True">

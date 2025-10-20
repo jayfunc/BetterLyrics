@@ -84,7 +84,7 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            WindowHelper.OpenWindow<LyricsWindow>();
+            WindowHelper.OpenOrShowWindow<LyricsWindow>();
         }
 
         private static void ConfigureServices()
@@ -113,12 +113,11 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILastFMService, LastFMService>()
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
-                    .AddSingleton<LyricsBackgroundSettingsControlViewModel>()
-                    .AddSingleton<AlbumArtLayoutSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()
                     .AddSingleton<MediaSettingsControlViewModel>()
-                    .AddSingleton<AllLyricsSettingsControlViewModel>()
                     .AddSingleton<LyricsSearchControlViewModel>()
+                    .AddSingleton<LyricsWindowSettingsControlViewModel>()
+                    .AddSingleton<LyricsWindowSwitchControlViewModel>()
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()

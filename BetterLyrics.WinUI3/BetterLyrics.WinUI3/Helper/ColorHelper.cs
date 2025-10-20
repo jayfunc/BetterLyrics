@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Numerics;
 using Vanara.PInvoke;
 using Windows.UI;
 
@@ -109,6 +110,11 @@ namespace BetterLyrics.WinUI3.Helper
             double s = hsl.S;
 
             return CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(h, s, brightness);
+        }
+
+        public static Vector3 ToVector3RGB(this Color color)
+        {
+            return new Vector3((float)color.R / 0xff, (float)color.G / 0xff, (float)color.B / 0xff);
         }
 
         public static System.Drawing.Color GetAccentColor(IntPtr myHwnd, string monitorDeviceName, WindowPixelSampleMode mode)
@@ -247,6 +253,5 @@ namespace BetterLyrics.WinUI3.Helper
             if (count == 0) return System.Drawing.Color.Transparent;
             return System.Drawing.Color.FromArgb((int)(r / count), (int)(g / count), (int)(b / count));
         }
-
     }
 }

@@ -1,4 +1,6 @@
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -20,13 +22,24 @@ using Windows.Foundation.Collections;
 
 namespace BetterLyrics.WinUI3.Controls
 {
-    public sealed partial class AllLyricsSettingsControl : UserControl
+    public sealed partial class LyricsWindowSwitchControl : UserControl
     {
-        public AllLyricsSettingsControlViewModel ViewModel => (AllLyricsSettingsControlViewModel)DataContext;
-        public AllLyricsSettingsControl()
+        public LyricsWindowSwitchControlViewModel ViewModel => (LyricsWindowSwitchControlViewModel)DataContext;
+
+        public LyricsWindowSwitchControl()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<AllLyricsSettingsControlViewModel>();
+            DataContext = Ioc.Default.GetRequiredService<LyricsWindowSwitchControlViewModel>();
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            WindowHelper.HideWindow<LyricsWindowSwitchWindow>();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.HideWindow<LyricsWindowSwitchWindow>();
         }
     }
 }

@@ -33,6 +33,10 @@ namespace BetterLyrics.WinUI3.Converter
                     PlayerID.Edge => PlayerName.Edge,
                     PlayerID.BetterLyrics => PlayerName.BetterLyrics,
                     PlayerID.BetterLyricsDebug => PlayerName.BetterLyricsDebug,
+                    PlayerID.SaltPlayerForWindows => PlayerName.SaltPlayerForWindows,
+                    PlayerID.MoeKoeMusic => PlayerName.MoeKoeMusic,
+                    PlayerID.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
+                    PlayerID.Listen1 => PlayerName.Listen1,
                     _ => provider,
                 };
             }

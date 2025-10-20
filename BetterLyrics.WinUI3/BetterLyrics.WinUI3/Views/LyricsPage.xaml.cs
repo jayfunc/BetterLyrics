@@ -124,7 +124,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsSettingsShortcutButton_Click(object sender, RoutedEventArgs e)
         {
-            LyricsSettingsFlyout.Content = new AllLyricsSettingsControl
+            LyricsSettingsFlyout.Content = new LyricsWindowSettingsControl
             {
                 MaxHeight = 500,
                 MaxWidth = 850,
@@ -134,7 +134,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenWindow<LyricsSearchWindow>();
+            WindowHelper.OpenOrShowWindow<LyricsSearchWindow>();
         }
 
         private void TimelineSliderOverlay_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)

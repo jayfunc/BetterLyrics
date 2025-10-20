@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.Services.Store;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -60,13 +61,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static async Task OpenCacheFolderAsync()
         {
-            await Windows.System.Launcher.LaunchFolderPathAsync(Helper.PathHelper.CacheFolder);
+            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.CacheFolder);
+        }
+
+        [RelayCommand]
+        private static async Task OpenSettingsFolderAsync()
+        {
+            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.LocalFolder);
         }
 
         [RelayCommand]
         private static void RestartApp()
         {
-            Helper.WindowHelper.RestartApp();
+            WindowHelper.RestartApp();
         }
 
         [RelayCommand]

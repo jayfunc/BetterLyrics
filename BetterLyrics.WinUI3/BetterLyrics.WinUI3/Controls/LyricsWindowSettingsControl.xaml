@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.LyricsWindowSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid ColumnSpacing="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+                <Grid Style="{StaticResource SettingsGridStyle}">
+
+                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                        <TextBlock
+                            x:Uid="SettingsPageRecordedWindowStatus"
+                            RelativePanel.AlignLeftWithPanel="True"
+                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <Button x:Uid="SettingsPageCreateFromCurrent" Command="{x:Bind ViewModel.CopyLyricsWindowStatusCommand}" />
+                        <Button
+                            x:Uid="SettingsPageCreateFromTemplates"
+                            VerticalAlignment="Center"
+                            RelativePanel.AlignRightWithPanel="True">
+                            <Button.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem x:Uid="SettingsPageStandardMode" Command="{x:Bind ViewModel.CreateStandardLyricsWindowStatusCommand}" />
+                                    <MenuFlyoutItem x:Uid="SettingsPageDesktopMode" Command="{x:Bind ViewModel.CreateTransparentLyricsWindowStatusCommand}" />
+                                    <MenuFlyoutItem x:Uid="SettingsPageDockedMode" Command="{x:Bind ViewModel.CreateDockedLyricsWindowStatusCommand}" />
+                                    <MenuFlyoutItem x:Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
+                                    <MenuFlyoutItem x:Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
+                                </MenuFlyout>
+                            </Button.Flyout>
+                        </Button>
+
+                        <StackPanel
+                            Padding="24,0"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            CornerRadius="4"
+                            Spacing="16"
+                            Visibility="{Binding ElementName=LyricsWindowManagerExpander, Path=IsExpanded, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                            <ListView
+                                x:Name="WindowStatusListView"
+                                Padding="0,12"
+                                CornerRadius="4"
+                                ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
+                                SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus, Mode=TwoWay}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel
+                                            Padding="0,10"
+                                            RightTapped="StackPanel_RightTapped"
+                                            Spacing="6">
+                                            <StackPanel.ContextFlyout>
+                                                <MenuBarItemFlyout>
+                                                    <MenuFlyoutItem
+                                                        x:Uid="LyricsWindowSettingsControlSetDefault"
+                                                        Click="SetDefaultMenuFlyoutItem_Click"
+                                                        IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                                    <MenuFlyoutItem
+                                                        x:Uid="SettingsPageDelete"
+                                                        Click="DeleteMenuFlyoutItem_Click"
+                                                        IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                                </MenuBarItemFlyout>
+                                            </StackPanel.ContextFlyout>
+                                            <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Column="1">
+
+            <controls:SwitchPresenter Margin="0,100,0,0" Value="{x:Bind ViewModel.ListViewSelectedItemTag, Mode=OneWay}">
+                <controls:SwitchPresenter.ContentTransitions>
+                    <TransitionCollection>
+                        <PopupThemeTransition />
+                    </TransitionCollection>
+                </controls:SwitchPresenter.ContentTransitions>
+
+                <!--  General  -->
+                <controls:Case Value="General">
+                    <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+                        <Grid Style="{StaticResource SettingsGridStyle}">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <controls:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8AC;}">
+                                    <StackPanel
+                                        Margin="0,6,0,0"
+                                        Orientation="Horizontal"
+                                        Spacing="6">
+                                        <TextBox Text="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.Name, Mode=TwoWay}" TextWrapping="Wrap" />
+                                        <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
+                                        <Button
+                                            Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
+                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                  FontSize=12,
+                                                                  Glyph=&#xE72C;}"
+                                            Style="{StaticResource GhostButtonStyle}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageDisplayTypeSwitcher"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xF246;}"
+                                    IsExpanded="True">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
+                                        <ComboBoxItem x:Uid="MainPageLyriscOnly" />
+                                        <ComboBoxItem x:Uid="MainPageSplitView" />
+                                    </ComboBox>
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageLayoutOrientation">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
+                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
+                                            </ComboBox>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageAOT"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xE718;}"
+                                    IsExpanded="True">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAlwaysOnTop, Mode=TwoWay}" />
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageForceAlwaysOnTop" IsEnabled="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAlwaysOnTop, Mode=OneWay}">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAlwaysOnTopPolling, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageWorkArea"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xE78B;}"
+                                    IsExpanded="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsWorkArea, Mode=TwoWay}" />
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageWorkAreaHeight" IsEnabled="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                            <uc:ExtendedSlider
+                                                Default="64"
+                                                Frequency="1"
+                                                Maximum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}"
+                                                Minimum="64"
+                                                Unit="px"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.DockHeight, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+
+                                        <controls:SettingsCard x:Uid="SettingsPageDockPlacement" IsEnabled="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
+                                                <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
+                                            </ComboBox>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
+                                <controls:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED1A;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </controls:Case>
+
+                <!--  Album art area style  -->
+                <controls:Case Value="AlbumArtStyle">
+                    <uc:AlbumArtLayoutSettingsControl AlbumArtLayoutSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Lyrics style and effect  -->
+                <controls:Case Value="Lyrics">
+                    <uc:LyricsSettingsControl LyricsEffectSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" LyricsStyleSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Lyrics background  -->
+                <controls:Case Value="LyricsBackground">
+                    <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Advanced  -->
+                <controls:Case Value="Advanced">
+                    <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+                        <Grid Style="{StaticResource SettingsGridStyle}">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <controls:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C4;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageClickThrough" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C9;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsClickThrough, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="SettingsPageBorderless" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B2;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsBorderless, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageAdaptEnvColor"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xE88F;}"
+                                    IsExpanded="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageEnvColorSample" Header="Environment color sample mode">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
+                                            </ComboBox>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
+                                <controls:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB41;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageTitleBarAreaNone" />
+                                        <ComboBoxItem x:Uid="SettingsPageTitleBarAreaTop" />
+                                        <ComboBoxItem x:Uid="SettingsPageTitleBarAreaWhole" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </controls:Case>
+
+            </controls:SwitchPresenter>
+
+            <Grid Padding="36,0" Style="{StaticResource SettingsGridStyle}">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                    <TextBlock x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <ListView
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.HorizontalScrollMode="Enabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollMode="Disabled"
+                        SelectionChanged="ListView_SelectionChanged">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.Items>
+
+                            <ListViewItem IsSelected="True" Tag="General">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <FontIcon
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xECAA;" />
+                                    <TextBlock x:Uid="AppSettingsControlGeneral" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </ListViewItem>
+
+                            <ListViewItem Tag="AlbumArtStyle">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <FontIcon
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xE93C;" />
+                                    <TextBlock x:Uid="SettingsPageAlbumStyle" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </ListViewItem>
+
+                            <ListViewItem Tag="Lyrics">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <FontIcon
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xEDC6;" />
+                                    <TextBlock x:Uid="SettingsPageLyrics" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </ListViewItem>
+
+                            <ListViewItem Tag="LyricsBackground">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <FontIcon
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xF5EF;" />
+                                    <TextBlock x:Uid="SettingsPageBackgroundOverlay" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </ListViewItem>
+
+                            <ListViewItem Tag="Advanced">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <FontIcon
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xEC7A;" />
+                                    <TextBlock x:Uid="SettingsPageAdvanced" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </ListViewItem>
+
+                        </ListView.Items>
+
+                    </ListView>
+
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

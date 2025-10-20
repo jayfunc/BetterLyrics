@@ -18,6 +18,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
 using Microsoft.UI.Text;
@@ -68,6 +69,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
 
         private double _albumArtSize = 0f;
+        private int _songInfoHeight = 0;
 
         private string? _lastSongTitle;
         private string? _songTitle;
@@ -103,8 +105,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private Color _adaptiveGrayedFontColor = Colors.Transparent;
         private Color? _adaptiveColoredFontColor = null;
 
-        private Color _albumArtLightAccentColor = Colors.Transparent;
-        private Color _albumArtDarkAccentColor = Colors.Transparent;
+        private List<Color> _albumArtLightAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
+        private List<Color> _albumArtDarkAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
         private Color _environmentalColor = Colors.Transparent;
         private Color _grayedEnvironmentalColor = Colors.Transparent;
 
@@ -126,9 +128,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         [ObservableProperty]
         public partial bool IsPlaying { get; set; } = false;
-
-        private bool _isLyricsWindowLocked = false;
-        private bool _isMouseWithinWindow = false;
 
         private bool _isLayoutChanged = true;
 
@@ -164,7 +163,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             FontWeight = FontWeights.ExtraBlack,
         };
 
-        private LyricsLayoutOrientation _lyricsLayoutOrientation;
+        //private LyricsLayoutOrientation _lyricsLayoutOrientation;
 
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; }
@@ -189,7 +188,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             AppSettings = _settingsService.AppSettings;
 
-            _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _settingsService.AppSettings.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
+            _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
             UpdateSongInfoFontSize();
 
 
@@ -398,8 +397,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _albumArtChanged = true;
 
-            _albumArtLightAccentColor = e.AlbumArtLightAccentColor ?? Colors.Transparent;
-            _albumArtDarkAccentColor = e.AlbumArtDarkAccentColor ?? Colors.Transparent;
+            _albumArtLightAccentColors = e.AlbumArtLightAccentColors;
+            _albumArtDarkAccentColors = e.AlbumArtDarkAccentColors;
 
             UpdateColorConfig();
         }

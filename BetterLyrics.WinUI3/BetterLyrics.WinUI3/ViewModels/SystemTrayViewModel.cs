@@ -11,30 +11,10 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class SystemTrayViewModel(ISettingsService settingsService) : BaseViewModel, IRecipient<PropertyChangedMessage<bool>>
+    public partial class SystemTrayViewModel(ISettingsService settingsService) : BaseViewModel
     {
-        private readonly ISettingsService _settingsService = settingsService;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsLyricsWindowLocked { get; set; } = false;
-
         [ObservableProperty]
         public partial string ToolTipText { get; set; } = Constants.App.AppName;
-
-        public void Receive(PropertyChangedMessage<bool> message)
-        {
-            if (message.Sender is LyricsWindowViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsWindowViewModel.IsLyricsWindowLocked))
-                {
-                    if (IsLyricsWindowLocked != message.NewValue)
-                    {
-                        IsLyricsWindowLocked = message.NewValue;
-                    }
-                }
-            }
-        }
 
         [RelayCommand]
         private static void ExitApp()
@@ -51,39 +31,26 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static void ResetWindowPosition()
         {
-            LyricsWindow? lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-            if (lyricsWindow != null)
-            {
-                lyricsWindow.MoveAndResize(0, 0, 800, 600);
-            }
+            var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            lyricsWindow?.MoveAndResize(100, 100, 800, 500);
         }
 
         [RelayCommand]
         private static void OpenSettings()
         {
-            WindowHelper.OpenWindow<SettingsWindow>();
+            WindowHelper.OpenOrShowWindow<SettingsWindow>();
         }
 
         [RelayCommand]
         private static void OpenMusicGallery()
         {
-            WindowHelper.OpenWindow<MusicGalleryWindow>();
+            WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
         }
 
         [RelayCommand]
         private static void OpenLyrics()
         {
-            WindowHelper.OpenWindow<LyricsWindow>();
-        }
-
-        [RelayCommand]
-        private void UnlockWindow()
-        {
-            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
-            if (window == null) return;
-
-            DesktopModeHelper.SetClickThrough(window, false);
-            IsLyricsWindowLocked = false;
+            WindowHelper.OpenOrShowWindow<LyricsWindow>();
         }
     }
 }

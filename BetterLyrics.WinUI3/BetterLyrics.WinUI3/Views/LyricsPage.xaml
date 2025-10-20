@@ -29,8 +29,8 @@
                 x:Uid="MainPageNoMusicPlaying"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontFamily="{x:Bind ViewModel.LiveStates.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.LiveStates.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
+                FontFamily="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
+                FontSize="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -220,9 +220,20 @@
                         </Button>-->
 
                         <Button
+                            Click="LyricsSearchShortcutButton_Click"
+                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                  Glyph=&#xE721;}"
+                            Style="{StaticResource GhostButtonStyle}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="LyricsPageLyricsSearchButtonToolTip" />
+                            </ToolTipService.ToolTip>
+                        </Button>
+
+                        <!--  Lyrics window manager shortcut settings  -->
+                        <Button
                             Click="LyricsSettingsShortcutButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  Glyph=&#xEDC6;}"
+                                                  Glyph=&#xE61F;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="LyricsPageLyricsSettingsButtonToolTip" />
@@ -235,16 +246,6 @@
                                     Placement="Right"
                                     ShouldConstrainToRootBounds="False" />
                             </Button.ContextFlyout>
-                        </Button>
-
-                        <Button
-                            Click="LyricsSearchShortcutButton_Click"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  Glyph=&#xE721;}"
-                            Style="{StaticResource GhostButtonStyle}">
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Uid="LyricsPageLyricsSearchButtonToolTip" />
-                            </ToolTipService.ToolTip>
                         </Button>
 
                         <!--  Playback shortcut settings  -->
