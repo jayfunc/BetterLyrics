@@ -291,13 +291,15 @@ namespace BetterLyrics.WinUI3.Helper
                 _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top :
                 _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
 
+            y -= 1;
+
             User32.SetWindowPos(
                 hwnd,
                 IntPtr.Zero,
                 (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
                 (int)y,
                 (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Width,
-                (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight,
+                (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight + 1,
                 User32.SetWindowPosFlags.SWP_SHOWWINDOW
             );
         }
@@ -309,7 +311,7 @@ namespace BetterLyrics.WinUI3.Helper
             var uEdge = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
 
             double top = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top : _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
-            double bottom = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight : _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom;
+            double bottom = top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
 
             Shell32.APPBARDATA abd = new()
             {
@@ -366,9 +368,7 @@ namespace BetterLyrics.WinUI3.Helper
                     _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top :
                     _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
 
-                double bottom = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ?
-                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight :
-                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom;
+                double bottom = top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
 
                 Shell32.APPBARDATA abd = new()
                 {
@@ -392,9 +392,9 @@ namespace BetterLyrics.WinUI3.Helper
                      hwnd,
                      IntPtr.Zero,
                      (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
-                     (int)top,
+                     (int)top - 1,
                      (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Width,
-                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight,
+                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight + 1,
                      User32.SetWindowPosFlags.SWP_SHOWWINDOW
                  );
 
