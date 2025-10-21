@@ -38,5 +38,25 @@ namespace BetterLyrics.WinUI3.Helper
                 rect.Height
             );
         }
+
+        public static Windows.Foundation.Rect WithX(this Windows.Foundation.Rect rect, double x)
+        {
+            return new Windows.Foundation.Rect(
+                x,
+                rect.Y,
+                rect.Width,
+                rect.Height
+            );
+        }
+
+        public static Windows.Foundation.Rect WithY(this Windows.Foundation.Rect rect, double y)
+        {
+            return new Windows.Foundation.Rect(
+                rect.X,
+                y,
+                rect.Width,
+                rect.Height
+            );
+        }
     }
 }

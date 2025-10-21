@@ -36,11 +36,35 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowX { get; set; } = 100;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowY { get; set; } = 100;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowWidth { get; set; } = 800;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowHeight { get; set; } = 500;
 
         public LyricsWindowStatus()
         {
             UpdateMonitorNameAndBounds();
             UpdateDemoWindowAndMonitorBounds();
+        }
+
+        partial void OnWindowXChanged(double value)
+        {
+            WindowBounds = WindowBounds.WithX(value);
+        }
+
+        partial void OnWindowYChanged(double value)
+        {
+            WindowBounds = WindowBounds.WithY(value);
+        }
+
+        partial void OnWindowWidthChanged(double value)
+        {
+            WindowBounds = WindowBounds.WithWidth(value);
+        }
+
+        partial void OnWindowHeightChanged(double value)
+        {
+            WindowBounds = WindowBounds.WithHeight(value);
         }
 
         partial void OnLyricsStyleSettingsChanged(LyricsStyleSettings oldValue, LyricsStyleSettings newValue)
@@ -168,12 +192,19 @@ namespace BetterLyrics.WinUI3.Models
             return new LyricsWindowStatus
             {
                 Name = App.ResourceLoader!.GetString("DesktopMode"),
-                WindowBounds = new Rect(100, 100, 400, 250),
+                LyricsDisplayType = LyricsDisplayType.LyricsOnly,
+                WindowBounds = new Rect(100, 100, 600, 250),
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
                 IsBorderless = true,
+                IsClickThrough = true,
                 IsAdaptToEnvironment = true,
-                EnvironmentSampleMode = Enums.WindowPixelSampleMode.WindowEdge,
+                EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
+                LyricsStyleSettings = new()
+                {
+                    LyricsFontSize = 20,
+                    LyricsAlignmentType = TextAlignmentType.Center,
+                },
                 LyricsBackgroundSettings = new LyricsBackgroundSettings
                 {
                     IsPureColorOverlayEnabled = false,

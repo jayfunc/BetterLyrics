@@ -721,6 +721,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
     <value>Fullscreen mode</value>
   </data>
+  <data name="SettingsPageHeight.Header" xml:space="preserve">
+    <value>Height</value>
+  </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>Automatically hide/show lyric window when music is not playing</value>
   </data>
@@ -1206,6 +1209,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="SettingsPageWidth.Header" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
+    <value>Window bounds</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>As a separate work area docked to the upper/lower edge of the screen</value>

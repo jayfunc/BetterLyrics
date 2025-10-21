@@ -117,18 +117,6 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
-                                        <Button
-                                            Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
-                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                                  FontSize=12,
-                                                                  Glyph=&#xE72C;}"
-                                            Style="{StaticResource GhostButtonStyle}" />
-                                    </StackPanel>
-                                </controls:SettingsCard>
-
                                 <controls:SettingsExpander
                                     x:Uid="SettingsPageDisplayTypeSwitcher"
                                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -145,6 +133,63 @@
                                                 <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
                                                 <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
                                             </ComboBox>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
+                                <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
+                                        <Button
+                                            Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
+                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                  FontSize=12,
+                                                                  Glyph=&#xE72C;}"
+                                            Style="{StaticResource GhostButtonStyle}" />
+                                    </StackPanel>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageWindowBounds"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xF16B;}"
+                                    IsExpanded="True">
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard Header="X">
+                                            <uc:ExtendedSlider
+                                                Frequency="1"
+                                                Maximum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Right, Mode=OneWay}"
+                                                Minimum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Left, Mode=OneWay}"
+                                                ResetButtonVisibility="Collapsed"
+                                                Unit="px"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.WindowX, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard Header="Y">
+                                            <uc:ExtendedSlider
+                                                Frequency="1"
+                                                Maximum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom, Mode=OneWay}"
+                                                Minimum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Top, Mode=OneWay}"
+                                                ResetButtonVisibility="Collapsed"
+                                                Unit="px"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.WindowY, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageWidth">
+                                            <uc:ExtendedSlider
+                                                Frequency="1"
+                                                Maximum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Width, Mode=OneWay}"
+                                                Minimum="64"
+                                                ResetButtonVisibility="Collapsed"
+                                                Unit="px"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.WindowWidth, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageHeight">
+                                            <uc:ExtendedSlider
+                                                Frequency="1"
+                                                Maximum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}"
+                                                Minimum="64"
+                                                ResetButtonVisibility="Collapsed"
+                                                Unit="px"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.WindowHeight, Mode=TwoWay}" />
                                         </controls:SettingsCard>
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
