@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.Models
             PositionOffset = 0;
         }
 
-        public MediaSourceProviderInfo(string provider, bool isEnable = true) : base()
+        public MediaSourceProviderInfo(string provider, bool isEnable = true)
         {
             IsEnabled = isEnable;
             switch (provider)
@@ -54,6 +54,12 @@ namespace BetterLyrics.WinUI3.Models
             }
 
             Provider = provider;
+
+            AlbumArtSearchProvidersInfo.ItemPropertyChanged += AlbumArtSearchProvidersInfo_ItemPropertyChanged;
+            AlbumArtSearchProvidersInfo.CollectionChanged += AlbumArtSearchProvidersInfo_CollectionChanged;
+
+            LyricsSearchProvidersInfo.ItemPropertyChanged += LyricsSearchProvidersInfo_ItemPropertyChanged;
+            LyricsSearchProvidersInfo.CollectionChanged += LyricsSearchProvidersInfo_CollectionChanged;
         }
 
         partial void OnAlbumArtSearchProvidersInfoChanged(FullyObservableCollection<AlbumArtSearchProviderInfo> oldValue, FullyObservableCollection<AlbumArtSearchProviderInfo> newValue)
