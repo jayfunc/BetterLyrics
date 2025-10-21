@@ -62,7 +62,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
   - <details><summary>网易云音乐</summary>
 
-    - Please make sure that you have latest version (3.1.20+) of 网易云音乐 installed on your PC.
+    - Please make sure that you have the latest version (3.1.20+) of 网易云音乐 installed on your PC.
     - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
     - After that, install the [InfLink-rs](https://github.com/apoint123/inflink-rs) plugin in PluginMarket. After the installation is complete, please restart 网易云音乐. At this point, all preparatory operations have been completed. Enjoy it!
 
@@ -138,15 +138,15 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ![alt text](Screenshots/std.png)
 
-### Standard mode (narrow)
+### Narrow mode
 
 ![alt text](Screenshots/std-narrow.png)
 
-### Standard mode (fullscreen)
+### Fullscreen mode
 
 ![alt text](Screenshots/std-fullscreen.png)
 
-### Dock mode
+### Docked mode
 
 ![alt text](Screenshots/dock.png)
 
@@ -206,6 +206,8 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
   - Win32 API wrapper
 - [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
   - Provide the ability for offline lyrics translation
+- [Isolation](https://github.com/Storyteller-Studios/Isolation)
+  - Dynamic fluid background implementation
 - [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
 - [DevWinUI](https://github.com/ghost1372/DevWinUI)
 - [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
