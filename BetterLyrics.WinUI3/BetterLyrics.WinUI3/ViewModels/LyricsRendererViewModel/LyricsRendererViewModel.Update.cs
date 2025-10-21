@@ -71,7 +71,31 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
             }
 
-            _effect?.Properties["iTime"] = Convert.ToSingle(TotalTime.TotalSeconds);
+            //_effect?.Properties["iTime"] = Convert.ToSingle(TotalTime.TotalSeconds);
+
+            if (_effect != null)
+            {
+                var effectTime = Convert.ToSingle(_effect.Properties["iTime"]);
+                effectTime += Convert.ToSingle(_elapsedTime.TotalSeconds);
+                _effect.Properties["iTime"] = effectTime;
+
+                if (_albumArtAccentColor1Transition.IsTransitioning)
+                {
+                    _effect.Properties["color1"] = _albumArtAccentColor1Transition.Value.ToVector3RGB();
+                }
+                if (_albumArtAccentColor2Transition.IsTransitioning)
+                {
+                    _effect.Properties["color2"] = _albumArtAccentColor2Transition.Value.ToVector3RGB();
+                }
+                if (_albumArtAccentColor3Transition.IsTransitioning)
+                {
+                    _effect.Properties["color3"] = _albumArtAccentColor3Transition.Value.ToVector3RGB();
+                }
+                if (_albumArtAccentColor4Transition.IsTransitioning)
+                {
+                    _effect.Properties["color4"] = _albumArtAccentColor4Transition.Value.ToVector3RGB();
+                }
+            }
 
             // 检测播放行变更
             var playingLineIndex = GetCurrentPlayingLineIndex();
@@ -138,8 +162,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 _isCoverAcrylicEffectAmountChanged = true;
 
-                _effect?.Properties["Width"] = Convert.ToSingle(_canvasWidth);
-                _effect?.Properties["Height"] = Convert.ToSingle(_canvasHeight);
+                _effect?.Properties["Width"] = (float)control.ConvertDipsToPixels((float)_canvasWidth, CanvasDpiRounding.Round);
+                _effect?.Properties["Height"] = (float)control.ConvertDipsToPixels((float)_canvasHeight, CanvasDpiRounding.Round);
             }
 
             if (_isSongInfoFontSizeChanged || _isSongTitleVisibilityChanged || _isSongArtistsVisibilityChanged)
@@ -390,7 +414,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _albumArtOpacityTransition.Update(_elapsedTime);
             _immersiveBgOpacityTransition.Update(_elapsedTime);
             _immersiveBgColorTransition.Update(_elapsedTime);
-            _albumArtAccentColorTransition.Update(_elapsedTime);
+            
+            _albumArtAccentColor1Transition.Update(_elapsedTime);
+            _albumArtAccentColor2Transition.Update(_elapsedTime);
+            _albumArtAccentColor3Transition.Update(_elapsedTime);
+            _albumArtAccentColor4Transition.Update(_elapsedTime);
+
             _albumArtBgTransition.Update(_elapsedTime);
             _lyricsBgBrightnessTransition.Update(_elapsedTime);
             _songInfoOpacityTransition.Update(_elapsedTime);
@@ -558,24 +587,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _adaptiveGrayedFontColor = _darkColor;
                 brightness = 0.7f;
                 _grayedEnvironmentalColor = _lightColor;
-                _albumArtAccentColorTransition.StartTransition(_albumArtLightAccentColors.FirstOrDefault());
-
-                _effect?.Properties["color1"] = _albumArtLightAccentColors.ElementAtOrDefault(0).ToVector3RGB();
-                _effect?.Properties["color2"] = _albumArtLightAccentColors.ElementAtOrDefault(1).ToVector3RGB();
-                _effect?.Properties["color3"] = _albumArtLightAccentColors.ElementAtOrDefault(2).ToVector3RGB();
-                _effect?.Properties["color4"] = _albumArtLightAccentColors.ElementAtOrDefault(3).ToVector3RGB();
+                _albumArtAccentColor1Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(0));
+                _albumArtAccentColor2Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(1));
+                _albumArtAccentColor3Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(2));
+                _albumArtAccentColor4Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(3));
             }
             else
             {
                 _adaptiveGrayedFontColor = _lightColor;
                 brightness = 0.3f;
                 _grayedEnvironmentalColor = _darkColor;
-                _albumArtAccentColorTransition.StartTransition(_albumArtDarkAccentColors.FirstOrDefault());
-
-                _effect?.Properties["color1"] = _albumArtDarkAccentColors.ElementAtOrDefault(0).ToVector3RGB();
-                _effect?.Properties["color2"] = _albumArtDarkAccentColors.ElementAtOrDefault(1).ToVector3RGB();
-                _effect?.Properties["color3"] = _albumArtDarkAccentColors.ElementAtOrDefault(2).ToVector3RGB();
-                _effect?.Properties["color4"] = _albumArtDarkAccentColors.ElementAtOrDefault(3).ToVector3RGB();
+                _albumArtAccentColor1Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(0));
+                _albumArtAccentColor2Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(1));
+                _albumArtAccentColor3Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(2));
+                _albumArtAccentColor4Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(3));
             }
 
             _lyricsBgBrightnessTransition.StartTransition(brightness);

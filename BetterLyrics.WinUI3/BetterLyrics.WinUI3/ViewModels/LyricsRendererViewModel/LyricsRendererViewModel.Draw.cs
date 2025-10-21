@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
                 else
                 {
-                    FillBackground(control, combinedDs, _albumArtAccentColorTransition.Value, 0f,
+                    FillBackground(control, combinedDs, _albumArtAccentColor1Transition.Value, 0f,
                         _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PureColorOverlayOpacity / 100.0);
                 }
             }
@@ -153,7 +153,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 using var geometry = CanvasGeometry.CreatePath(pathBuilder);
                 var gradientStops = new CanvasGradientStop[]
                 {
-                    new() { Position = 0.0f, Color = _albumArtAccentColorTransition.Value },
+                    new() { Position = 0.0f, Color = _albumArtAccentColor1Transition.Value },
                     new() { Position = 1.0f, Color = Colors.Transparent }
                 };
 
@@ -360,7 +360,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         var shadowEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
                             _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsShadowScope);
                         using var foregroundShadowEffect = CanvasHelper.CreateForegroundShadowEffect(foregroundFontEffect, shadowEffectMask,
-                            _albumArtAccentColorTransition.Value, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsShadowAmount);
+                            _albumArtAccentColor1Transition.Value, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsShadowAmount);
                         effectLayerDs.DrawImage(foregroundShadowEffect);
                     }
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled)
