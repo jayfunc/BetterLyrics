@@ -41,5 +41,11 @@ namespace BetterLyrics.WinUI3.Controls
             // 让 LyricsSearchProvidersInfo 触发 CollectionChanged 事件
             ViewModel.SelectedMediaSourceProvider?.LyricsSearchProvidersInfo?.Refresh();
         }
+
+        private void MediaSourceProvidersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        {
+            // 让 MediaSourceProvidersInfo 触发 CollectionChanged 事件
+            ViewModel.AppSettings.MediaSourceProvidersInfo?.Refresh();
+        }
     }
 }

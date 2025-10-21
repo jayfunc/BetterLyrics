@@ -122,8 +122,15 @@
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
+
+            <!--  播放源列表  -->
             <ListView
+                x:Name="MediaSourceProvidersListView"
                 VerticalAlignment="Top"
+                AllowDrop="True"
+                CanDragItems="True"
+                CanReorderItems="True"
+                DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
                 ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.HorizontalScrollMode="Enabled"
@@ -138,6 +145,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:MediaSourceProviderInfo">
                         <StackPanel Orientation="Horizontal" Spacing="6">
+                            <FontIcon
+                                FontFamily="Segoe UI Symbol"
+                                FontSize="12"
+                                Glyph="&#x283F;" />
                             <ImageIcon Height="16" Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
                             <TextBlock
                                 MaxWidth="200"
@@ -162,6 +173,7 @@
                 </interactivity:DataTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </Grid>
+
         <StackPanel
             Grid.Column="0"
             HorizontalAlignment="Center"

@@ -1150,6 +1150,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>Right</value>
   </data>
+  <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
+    <value>Spectrum layer</value>
+  </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>Motion rate</value>
   </data>
