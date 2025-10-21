@@ -85,6 +85,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _isAlbumArtSizeChanged = true;
                 }
             }
+            else if (message.Sender is LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.IsSpectrumOverlayEnabled))
+                {
+                    _isSpectrumOverlayEnabledChanged = true;
+                }
+            }
         }
 
         public void Receive(PropertyChangedMessage<Color> message)

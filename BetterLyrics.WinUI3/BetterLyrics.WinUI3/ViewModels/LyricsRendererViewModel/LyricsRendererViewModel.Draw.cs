@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.WinUI;
+using Hqub.Lastfm;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -49,6 +50,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
             DrawAlbumArtBackground(control, combinedDs);
             DrawFluidBackground(control, combinedDs);
+            DrawSpectrum(control, combinedDs);
 
             combinedDs.DrawImage(blurredLyrics);
 
@@ -97,6 +99,76 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _drawFrameStopwatch?.Restart();
                     _drawFrameCount = 0;
                 }
+            }
+        }
+
+        public void DrawSpectrum(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        {
+            if (_spectrumAnalyzer != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSpectrumOverlayEnabled)
+            {
+                var points = new Vector2[_spectrumAnalyzer.BarCount];
+                float pointSpacing = 0;
+
+                if (_spectrumAnalyzer.BarCount > 1)
+                {
+                    pointSpacing = (float)_canvasWidth / (_spectrumAnalyzer.BarCount - 1);
+                }
+
+                for (int i = 0; i < _spectrumAnalyzer.BarCount; i++)
+                {
+                    float x = i * pointSpacing;
+                    float amplitude = _spectrumAnalyzer.SmoothSpectrum.Average() * 10 + _spectrumAnalyzer.SmoothSpectrum[i] * 0.5f;
+                    float y = (float)_canvasHeight - amplitude;
+                    points[i] = new Vector2(x, y);
+                }
+
+                // 用于填充的闭合路径
+                using var pathBuilder = new CanvasPathBuilder(ds);
+                pathBuilder.BeginFigure(points[0]);
+
+                if (_spectrumAnalyzer.BarCount > 2)
+                {
+                    for (int i = 0; i < _spectrumAnalyzer.BarCount - 1; i++)
+                    {
+                        Vector2 p0 = points[Math.Max(i - 1, 0)];
+                        Vector2 p1 = points[i];
+                        Vector2 p2 = points[i + 1];
+                        Vector2 p3 = points[Math.Min(i + 2, _spectrumAnalyzer.BarCount - 1)];
+
+                        Vector2 cp1 = p1 + (p2 - p0) / 6.0f;
+                        Vector2 cp2 = p2 - (p3 - p1) / 6.0f;
+
+                        pathBuilder.AddCubicBezier(cp1, cp2, p2);
+                    }
+                }
+                else
+                {
+                    pathBuilder.AddLine(points[1]);
+                }
+
+                pathBuilder.AddLine(new Vector2(points[_spectrumAnalyzer.BarCount - 1].X, (float)_canvasHeight));
+                pathBuilder.AddLine(new Vector2(points[0].X, (float)_canvasHeight));
+                pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+
+                using var geometry = CanvasGeometry.CreatePath(pathBuilder);
+                var gradientStops = new CanvasGradientStop[]
+                {
+                    new() { Position = 0.0f, Color = _albumArtAccentColorTransition.Value },
+                    new() { Position = 1.0f, Color = Colors.Transparent }
+                };
+
+                using var gradientBrush = new CanvasLinearGradientBrush(ds, gradientStops);
+                gradientBrush.StartPoint = new Vector2((float)_canvasWidth / 2, (float)_canvasHeight);
+                gradientBrush.EndPoint = new Vector2((float)_canvasWidth / 2, points.Select(p => p.Y).Min());
+
+                // 使用渐变画刷填充
+                ds.FillGeometry(geometry, gradientBrush);
+
+                // 绘制轮廓线
+                // var lineColor = Colors.SkyBlue;
+                // float strokeWidth = 2f;
+                // session.DrawGeometry(geometry, lineColor, strokeWidth);
+
             }
         }
 

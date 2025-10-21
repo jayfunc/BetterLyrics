@@ -172,6 +172,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         [NotifyPropertyChangedRecipients]
         public partial ElementTheme ThemeTypeSent { get; set; }
 
+        private SpectrumAnalyzer? _spectrumAnalyzer;
+
         public LyricsRendererViewModel(
             ISettingsService settingsService,
             IMediaSessionsService mediaSessionsService,
@@ -181,7 +183,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _settingsService = settingsService;
             _mediaSessionsService = mediaSessionsService;
             _liveStatesService = liveStatesService;
-
             _lastFMService = lastFMService;
 
             _logger = Ioc.Default.GetRequiredService<ILogger<LyricsRendererViewModel>>();
@@ -190,7 +191,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
             UpdateSongInfoFontSize();
-
 
             _timelineSyncThreshold = 0;
 
@@ -203,6 +203,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IsPlaying = _mediaSessionsService.IsPlaying;
 
             UpdateColorConfig();
+
+            _spectrumAnalyzer = new SpectrumAnalyzer();
         }
 
         private void MediaSessionsService_LyricsChanged(object? sender, LyricsChangedEventArgs e)

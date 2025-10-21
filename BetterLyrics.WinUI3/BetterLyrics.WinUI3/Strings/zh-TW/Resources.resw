@@ -156,6 +156,9 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>無法連接到 LX 音樂服務器，請轉到設置 - 高級選項以檢查是否正確輸入鏈接</value>
   </data>
+  <data name="FullscreenMode" xml:space="preserve">
+    <value>全螢幕模式</value>
+  </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>鎖定</value>
   </data>
@@ -436,6 +439,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音樂庫 - BetterLyrics</value>
   </data>
+  <data name="NarrowMode" xml:space="preserve">
+    <value>窄螢幕模式</value>
+  </data>
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>畫中畫模式</value>
   </data>
@@ -713,9 +719,6 @@
     <value>渲染幀率</value>
   </data>
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
-    <value>全螢幕模式</value>
-  </data>
-  <data name="FullscreenMode" xml:space="preserve">
     <value>全螢幕模式</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
@@ -1147,6 +1150,9 @@
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>靠右</value>
   </data>
+  <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
+    <value>光譜層</value>
+  </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>動作速率</value>
   </data>
@@ -1239,8 +1245,5 @@
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics 已經在運作</value>
-  </data>
-  <data name="NarrowMode" xml:space="preserve">
-    <value>窄螢幕模式</value>
   </data>
 </root>

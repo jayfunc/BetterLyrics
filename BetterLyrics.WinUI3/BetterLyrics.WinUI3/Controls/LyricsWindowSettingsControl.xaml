@@ -281,7 +281,7 @@
                         </ListView.ItemsPanel>
                         <ListView.Items>
 
-                            <ListViewItem IsSelected="True" Tag="General">
+                            <ListViewItem Tag="General">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <FontIcon
                                         FontFamily="{StaticResource IconFontFamily}"

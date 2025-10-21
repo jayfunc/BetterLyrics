@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.WinUI;
+﻿using BetterLyrics.WinUI3.Helper;
+using CommunityToolkit.WinUI;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Collections.Generic;

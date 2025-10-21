@@ -156,6 +156,9 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>LX Music Server에 연결할 수 없습니다. 설정으로 이동하십시오 - 고급 옵션이 링크가 올바르게 입력되었는지 확인하십시오.</value>
   </data>
+  <data name="FullscreenMode" xml:space="preserve">
+    <value>전체화면 모드</value>
+  </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>잠금</value>
   </data>
@@ -436,6 +439,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리 - BetterLyrics</value>
   </data>
+  <data name="NarrowMode" xml:space="preserve">
+    <value>협폭 조명</value>
+  </data>
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>사진 인당 모드</value>
   </data>
@@ -713,9 +719,6 @@
     <value>렌더링 프레임 속도</value>
   </data>
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
-    <value>전체화면 모드</value>
-  </data>
-  <data name="FullscreenMode" xml:space="preserve">
     <value>전체화면 모드</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
@@ -1147,6 +1150,9 @@
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>오른쪽</value>
   </data>
+  <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
+    <value>스펙트럼 레이어</value>
+  </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>모션</value>
   </data>
@@ -1239,8 +1245,5 @@
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics 가 이미 실행 중입니다</value>
-  </data>
-  <data name="NarrowMode" xml:space="preserve">
-    <value>협폭 조명</value>
   </data>
 </root>

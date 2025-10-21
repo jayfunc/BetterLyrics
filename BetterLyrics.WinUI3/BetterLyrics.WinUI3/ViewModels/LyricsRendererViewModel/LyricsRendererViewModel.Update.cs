@@ -54,6 +54,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private bool _isSongInfoFontSizeChanged = false;
         private bool _isAlbumArtSizeChanged = false;
 
+        private bool _isSpectrumOverlayEnabledChanged = true;
+
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
             _elapsedTime = args.Timing.ElapsedTime;
@@ -100,6 +102,25 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _rotateAngle += _coverRotateBaseSpeed * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlaySpeed / 100.0;
             _rotateAngle %= Math.PI * 2;
+
+            if (_isSpectrumOverlayEnabledChanged)
+            {
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSpectrumOverlayEnabled)
+                {
+                    _spectrumAnalyzer?.StartCapture();
+                }
+                else
+                {
+                    _spectrumAnalyzer?.StopCapture();
+                }
+
+                _isSpectrumOverlayEnabledChanged = false;
+            }
+
+            if (_spectrumAnalyzer?.IsCapturing == true)
+            {
+                _spectrumAnalyzer?.UpdateSmoothSpectrum();
+            }
 
             //if (_isCanvasWidthChanged)
             //{

@@ -116,6 +116,14 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageSpectrumLayer"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xF61F;}"
+                        IsExpanded="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=TwoWay}" />
+                    </controls:SettingsExpander>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>
