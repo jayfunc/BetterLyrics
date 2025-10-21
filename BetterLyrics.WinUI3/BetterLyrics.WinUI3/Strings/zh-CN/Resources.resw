@@ -721,6 +721,9 @@
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
     <value>全屏模式</value>
   </data>
+  <data name="SettingsPageHeight.Header" xml:space="preserve">
+    <value>高度</value>
+  </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>音乐未播放/播放时自动隐藏/显示歌词窗口</value>
   </data>
@@ -1206,6 +1209,12 @@
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>版本号</value>
+  </data>
+  <data name="SettingsPageWidth.Header" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
+    <value>窗口边界</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>作为一个独立的工作区域停靠在屏幕的上/下边缘</value>

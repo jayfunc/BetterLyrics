@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (ViewModel.IsImmersiveMode && BottomCommandGrid.Children.Count != 0)
+            if (BottomCommandGrid.Children.Count != 0)
             {
                 ViewModel.BottomCommandGridOpacity = 1f;
             }
@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void BottomCommandGrid_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (ViewModel.IsImmersiveMode && BottomCommandGrid.Children.Count != 0)
+            if (BottomCommandGrid.Children.Count != 0)
             {
                 ViewModel.BottomCommandGridOpacity = 0f;
             }
@@ -90,7 +90,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void BottomCommandFlyoutTrigger_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (ViewModel.IsImmersiveMode && BottomCommandFlyoutContainer.Children.Count != 0)
+            if (BottomCommandFlyoutContainer.Children.Count != 0)
             {
                 ViewModel.BottomCommandFlyoutTriggerOpacity = 1f;
             }
@@ -98,7 +98,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void BottomCommandFlyoutTrigger_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (ViewModel.IsImmersiveMode && BottomCommandFlyoutContainer.Children.Count != 0)
+            if (BottomCommandFlyoutContainer.Children.Count != 0)
             {
                 ViewModel.BottomCommandFlyoutTriggerOpacity = 0f;
             }

@@ -23,7 +23,6 @@ using System.Threading.Tasks;
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsPageViewModel : BaseViewModel,
-        IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<TimeSpan>>
     {
         private readonly IMediaSessionsService _mediaSessionsService;
@@ -38,10 +37,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             _liveStatesService = liveStatesService;
 
             LiveStates = _liveStatesService.LiveStates;
-
-            IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
-
-            OnIsImmersiveModeChanged(IsImmersiveMode);
 
             //Volume = SystemVolumeHelper.GetMasterVolume();
             //SystemVolumeHelper.VolumeChanged += SystemVolumeHelper_VolumeChanged;
@@ -88,9 +83,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial int Volume { get; set; }
 
         [ObservableProperty]
-        public partial bool IsImmersiveMode { get; set; }
-
-        [ObservableProperty]
         public partial double BottomCommandGridOpacity { get; set; }
 
         [ObservableProperty]
@@ -111,16 +103,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial double TimelineSliderThumbSeconds { get; set; } = 0;
 
-        public void Receive(PropertyChangedMessage<bool> message)
-        {
-            if (message.Sender is LyricsWindowViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsWindowViewModel.IsImmersiveMode))
-                {
-                    IsImmersiveMode = message.NewValue;
-                }
-            }
-        }
 
         [RelayCommand]
         private static void OpenSettingsWindow()
@@ -150,20 +132,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private async Task NextSongAsync()
         {
             await _mediaSessionsService.NextAsync();
-        }
-
-        partial void OnIsImmersiveModeChanged(bool value)
-        {
-            if (value)
-            {
-                BottomCommandGridOpacity = 0f;
-                BottomCommandFlyoutTriggerOpacity = 0f;
-            }
-            else
-            {
-                BottomCommandGridOpacity = 1f;
-                BottomCommandFlyoutTriggerOpacity = 1f;
-            }
         }
 
         partial void OnTimelineSliderThumbSecondsChanged(double value)

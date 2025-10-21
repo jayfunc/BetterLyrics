@@ -49,9 +49,6 @@ namespace BetterLyrics.WinUI3
             AppSettings = _settingsService.AppSettings;
             LiveStates = _liveStatesService.LiveStates;
 
-            IsImmersiveMode = _settingsService.AppSettings.GeneralSettings.IsImmersiveMode;
-            OnIsImmersiveModeChanged(_settingsService.AppSettings.GeneralSettings.IsImmersiveMode);
-
             _mediaSessionsService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
         }
 
@@ -69,27 +66,13 @@ namespace BetterLyrics.WinUI3
         /// </summary>
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color BackdropAccentColor { get; set; }
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsImmersiveMode { get; set; }
-
-        [ObservableProperty] public partial double TopCommandGridOpacity { get; set; }
+        [ObservableProperty] public partial double TopCommandGridOpacity { get; set; } = 0;
 
         [ObservableProperty] public partial ElementTheme ThemeType { get; set; } = ElementTheme.Default;
 
         [ObservableProperty] public partial double TitleBarFontSize { get; set; } = 11;
 
         [ObservableProperty] public partial Visibility CloseButtonVisibility { get; set; } = Visibility.Visible;
-
-        partial void OnIsImmersiveModeChanged(bool value)
-        {
-            if (value)
-            {
-                TopCommandGridOpacity = 0f;
-            }
-            else
-            {
-                TopCommandGridOpacity = 1f;
-            }
-        }
 
         public void InitShortcuts()
         {
@@ -203,12 +186,6 @@ namespace BetterLyrics.WinUI3
         public void RefreshLyricsWindowStatus()
         {
             _liveStatesService.RefreshLyricsWindowStatus();
-        }
-
-        [RelayCommand]
-        private void OnImmersiveToggleButtonEnabledChanged()
-        {
-            _settingsService.AppSettings.GeneralSettings.IsImmersiveMode = IsImmersiveMode;
         }
 
         public void Receive(PropertyChangedMessage<List<string>> message)

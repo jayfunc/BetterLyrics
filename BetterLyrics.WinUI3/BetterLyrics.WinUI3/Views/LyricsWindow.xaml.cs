@@ -95,24 +95,22 @@ namespace BetterLyrics.WinUI3.Views
                 else
                 {
                     _liveStatesService.LiveStates.LyricsWindowStatus.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowX = rect.X;
+                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowY = rect.Y;
+                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowWidth = size.Width;
+                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowHeight = size.Height;
                 }
             }
         }
 
         private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            if (ViewModel.IsImmersiveMode)
-            {
-                ViewModel.TopCommandGridOpacity = 1f;
-            }
+            ViewModel.TopCommandGridOpacity = 1f;
         }
 
         private void TopCommandGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            if (ViewModel.IsImmersiveMode)
-            {
-                ViewModel.TopCommandGridOpacity = 0f;
-            }
+            ViewModel.TopCommandGridOpacity = 0f;
         }
 
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)

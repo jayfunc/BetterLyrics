@@ -721,6 +721,9 @@
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
     <value>フルスクリーンモード</value>
   </data>
+  <data name="SettingsPageHeight.Header" xml:space="preserve">
+    <value>高さ</value>
+  </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>音楽が再生されていないときに、自動的に歌詞ウィンドウを非表示/表示します</value>
   </data>
@@ -1206,6 +1209,12 @@
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>バージョン</value>
+  </data>
+  <data name="SettingsPageWidth.Header" xml:space="preserve">
+    <value>幅</value>
+  </data>
+  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
+    <value>ウィンドウ境界</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>画面の上下端にドッキングされた別の作業エリアとして</value>
