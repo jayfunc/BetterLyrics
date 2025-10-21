@@ -24,7 +24,25 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
 
-        private readonly ValueTransition<Color> _albumArtAccentColorTransition = new(
+        private readonly ValueTransition<Color> _albumArtAccentColor1Transition = new(
+            initialValue: Colors.Transparent,
+            durationSeconds: 0.3f,
+            interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+        );
+
+        private readonly ValueTransition<Color> _albumArtAccentColor2Transition = new(
+            initialValue: Colors.Transparent,
+            durationSeconds: 0.3f,
+            interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+        );
+
+        private readonly ValueTransition<Color> _albumArtAccentColor3Transition = new(
+            initialValue: Colors.Transparent,
+            durationSeconds: 0.3f,
+            interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+        );
+
+        private readonly ValueTransition<Color> _albumArtAccentColor4Transition = new(
             initialValue: Colors.Transparent,
             durationSeconds: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)

@@ -96,7 +96,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         /// <para><seealso cref="_isCoverAcrylicEffectAmountChanged"/> == true</para>
         /// <para><seealso cref="_isAlbumArtBgOpacityChanged"/> == true</para>
         /// <para><seealso cref="_albumArtBgTransition"/> 正在变化</para>
-        /// <para><seealso cref="_albumArtAccentColorTransition"/> 正在变化</para>
+        /// <para><seealso cref="_albumArtAccentColor1Transition"/> 正在变化</para>
         /// 如果上述条件均不满足，需调用 <seealso cref="UpdateAlbumArtBgRenderTarget"/> 来更新渲染缓存
         /// </summary>
         /// <param name="control"></param>
@@ -190,7 +190,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         /// <para><seealso cref="_albumArtChanged"/> == true</para>
         /// <para><seealso cref="_isAlbumArtShadowAmountChanged"/> == true</para>
         /// <para><seealso cref="_albumArtBgTransition"/> 正在变化</para>
-        /// <para><seealso cref="_albumArtAccentColorTransition"/> 正在变化</para>
+        /// <para><seealso cref="_albumArtAccentColor1Transition"/> 正在变化</para>
         /// 如果上述条件均不满足，需调用 <seealso cref="UpdateAlbumArtRenderTarget"/> 来更新渲染缓存
         /// </summary>
         /// <param name="control"></param>
@@ -223,7 +223,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             combinedDs.DrawImage(new ShadowEffect
             {
                 Source = overlappedCovers,
-                ShadowColor = _albumArtAccentColorTransition.Value,
+                ShadowColor = _albumArtAccentColor1Transition.Value,
                 BlurAmount = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount,
                 Optimization = EffectOptimization.Speed,
             });
