@@ -1,11 +1,14 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using CommunityToolkit.WinUI.Helpers;
+using Impressionist.Abstractions;
+using Impressionist.Implementations;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
@@ -21,6 +24,7 @@ using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI;
+using static Vanara.PInvoke.Ole32;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -87,20 +91,53 @@ namespace BetterLyrics.WinUI3.Helper
             return buffer;
         }
 
-        public static List<Windows.UI.Color> GetAccentColorsFromByte(byte[] bytes, int count, bool? isDark = null)
+        public static async Task<PaletteResult> GetAccentColorsFromByteAsync(byte[] bytes, int count, bool? isDark = null)
         {
-            using var image = Image.Load<Rgba32>(bytes);
-            var colorThief = new ColorThief.ImageSharp.ColorThief();
-            var mainColor = colorThief.GetColor(image, 10, false);
-            var palette = colorThief.GetPalette(image, 255, 10, false);
-            var topColors = palette
-                .OrderByDescending(x => x.Population)
-                .Where(x => x.IsDark == (isDark ?? mainColor.IsDark))
-                .Select(x => Windows.UI.Color.FromArgb(x.Color.A, x.Color.R, x.Color.G, x.Color.B))
-                .Take(count)
-                .ToList();
+            using var stream = new InMemoryRandomAccessStream();
+            await stream.WriteAsync(bytes.AsBuffer());
+            stream.Seek(0);
+            var decoder = await BitmapDecoder.CreateAsync(stream);
+            var colors = await GetPixelColor(decoder);
+            var palette = await PaletteGenerators.OctTreePaletteGenerator.CreatePalette(colors, count, false, isDark);
+            return palette;
+        }
 
-            return topColors;
+        public static async Task<ThemeColorResult> GetAccentColorFromByteAsync(byte[] bytes)
+        {
+            using var stream = new InMemoryRandomAccessStream();
+            await stream.WriteAsync(bytes.AsBuffer());
+            stream.Seek(0);
+            var decoder = await BitmapDecoder.CreateAsync(stream);
+            var colors = await GetPixelColor(decoder);
+            var theme = await PaletteGenerators.OctTreePaletteGenerator.CreateThemeColor(colors, false);
+            return theme;
+        }
+
+        public static async Task<Dictionary<Vector3, int>> GetPixelColor(BitmapDecoder bitmapDecoder)
+        {
+            var pixelDataProvider = await bitmapDecoder.GetPixelDataAsync();
+            var pixels = pixelDataProvider.DetachPixelData();
+            var count = bitmapDecoder.PixelWidth * bitmapDecoder.PixelHeight;
+            var vector = new Dictionary<Vector3, int>();
+            for (int i = 0; i < count; i += 10)
+            {
+                var offset = i * 4;
+                var b = pixels[offset];
+                var g = pixels[offset + 1];
+                var r = pixels[offset + 2];
+                var a = pixels[offset + 3];
+                if (a == 0) continue;
+                var color = new Vector3(r, g, b);
+                if (vector.ContainsKey(color))
+                {
+                    vector[color]++;
+                }
+                else
+                {
+                    vector[color] = 1;
+                }
+            }
+            return vector;
         }
 
         //public static async Task<BitmapImage> GetBitmapImageFromBytesAsync(byte[] imageBytes)
@@ -156,7 +193,7 @@ namespace BetterLyrics.WinUI3.Helper
             return (double)(sum / (pixels.Length / 4));
         }
 
-        public static byte[] MakeSquareWithThemeColor(byte[] imageBytes)
+        public static async Task<byte[]> MakeSquareWithThemeColor(byte[] imageBytes)
         {
             using var image = Image.Load<Rgba32>(imageBytes);
 
@@ -168,7 +205,9 @@ namespace BetterLyrics.WinUI3.Helper
 
             int size = Math.Max(image.Width, image.Height);
 
-            var themeColor = Rgba32.ParseHex(GetAccentColorsFromByte(imageBytes, 1).FirstOrDefault().ToHex());
+            var result = await GetAccentColorFromByteAsync(imageBytes);
+            var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
+            var themeColor = Rgba32.ParseHex(color.ToHex());
 
             using var square = new Image<Rgba32>(size, size, themeColor);
 
