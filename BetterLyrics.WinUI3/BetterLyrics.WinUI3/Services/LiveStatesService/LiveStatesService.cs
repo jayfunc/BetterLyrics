@@ -36,13 +36,19 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             {
                 case nameof(LyricsWindowStatus.IsWorkArea):
                     WindowHelper.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
-                    UpdateWindowBoundsWhenWorkArea();
+                    if (LiveStates.LyricsWindowStatus.IsWorkArea)
+                    {
+                        UpdateWindowBoundsWhenWorkArea();
+                    }
                     break;
                 case nameof(LyricsWindowStatus.DockHeight):
                 case nameof(LyricsWindowStatus.DockPlacement):
                 case nameof(LyricsWindowStatus.MonitorDeviceName):
                     WindowHelper.UpdateWorkArea<LyricsWindow>();
-                    UpdateWindowBoundsWhenWorkArea();
+                    if (LiveStates.LyricsWindowStatus.IsWorkArea)
+                    {
+                        UpdateWindowBoundsWhenWorkArea();
+                    }
                     break;
                 case nameof(LyricsWindowStatus.IsShownInSwitchers):
                     WindowHelper.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
