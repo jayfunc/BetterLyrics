@@ -286,22 +286,6 @@ namespace BetterLyrics.WinUI3.Helper
             if (_workAreas.Contains(hwnd)) return;
 
             RegisterWorkArea(hwnd);
-
-            double y = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ?
-                _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top :
-                _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
-
-            y -= 1;
-
-            User32.SetWindowPos(
-                hwnd,
-                IntPtr.Zero,
-                (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
-                (int)y,
-                (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Width,
-                (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight + 1,
-                User32.SetWindowPosFlags.SWP_SHOWWINDOW
-            );
         }
 
         private static void RegisterWorkArea(IntPtr hwnd)
@@ -350,55 +334,40 @@ namespace BetterLyrics.WinUI3.Helper
             _workAreas.Remove(hwnd);
         }
 
-        public static void UpdateWorkAreaHeight<T>()
+        public static void UpdateWorkArea<T>()
         {
             var window = GetWindowByWindowType<T>() as Window;
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
 
-            App.DispatcherQueueTimer?.Debounce(() =>
+            if (!_workAreas.Contains(hwnd))
+                return;
+
+            var uEdge = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
+
+            double top = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ?
+                _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top :
+                _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
+
+            double bottom = top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
+
+            Shell32.APPBARDATA abd = new()
             {
-                if (!_workAreas.Contains(hwnd))
-                    return;
-
-                var uEdge = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
-
-                double top = _liveStatesService.LiveStates.LyricsWindowStatus.DockPlacement == DockPlacement.Top ?
-                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Top :
-                    _liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
-
-                double bottom = top + _liveStatesService.LiveStates.LyricsWindowStatus.DockHeight;
-
-                Shell32.APPBARDATA abd = new()
+                cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+                hWnd = hwnd,
+                uEdge = uEdge,
+                rc = new RECT
                 {
-                    cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
-                    hWnd = hwnd,
-                    uEdge = uEdge,
-                    rc = new RECT
-                    {
-                        Left = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
-                        Top = (int)top,
-                        Right = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Right,
-                        Bottom = (int)bottom,
-                    },
-                };
+                    Left = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
+                    Top = (int)top,
+                    Right = (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Right,
+                    Bottom = (int)bottom,
+                },
+            };
 
-                Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
-                Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
-
-                // 同步窗口实际高度和位置
-                User32.SetWindowPos(
-                     hwnd,
-                     IntPtr.Zero,
-                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Left,
-                     (int)top - 1,
-                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.MonitorBounds.Width,
-                     (int)_liveStatesService.LiveStates.LyricsWindowStatus.DockHeight + 1,
-                     User32.SetWindowPosFlags.SWP_SHOWWINDOW
-                 );
-
-            }, TimeSpan.FromMilliseconds(100));
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
+            Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
         }
 
         public static void SetLyricsWindowVisibilityByPlayingStatus()
