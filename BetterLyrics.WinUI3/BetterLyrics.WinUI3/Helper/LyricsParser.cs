@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using Lyricify.Lyrics.Models;
+using Lyricify.Lyrics.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using LyricsData = BetterLyrics.WinUI3.Models.LyricsData;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class LyricsParser
+    public partial class LyricsParser
     {
         private List<LyricsData> _lyricsDataArr = [];
 
@@ -34,10 +35,10 @@ namespace BetterLyrics.WinUI3.Helper
                         ParseLrc(raw);
                         break;
                     case LyricsFormat.Qrc:
-                        ParseQQNeteaseKugou(Lyricify.Lyrics.Parsers.QrcParser.Parse(raw).Lines);
+                        ParseQQNeteaseKugou(QrcParser.Parse(raw).Lines);
                         break;
                     case LyricsFormat.Krc:
-                        ParseQQNeteaseKugou(Lyricify.Lyrics.Parsers.KrcParser.Parse(raw).Lines);
+                        ParseQQNeteaseKugou(KrcParser.Parse(raw).Lines);
                         break;
                     case LyricsFormat.Ttml:
                         ParseTtml(raw);
@@ -153,18 +154,41 @@ namespace BetterLyrics.WinUI3.Helper
                 else
                 {
                     // 普通LRC行
-                    var bracketRegex = new Regex(@"\[(\d{2}):(\d{2})\.(\d{2,3})\]");
-                    var bracketMatches = bracketRegex.Matches(line);
+                    MatchCollection? bracketMatches = null;
+                    Regex? bracketRegex = null;
+                    var hasMatched = false;
+
+                    var bracketRegex1 = LrcRegex1();
+                    var bracketMatches1 = bracketRegex1.Matches(line);
+                    if(bracketMatches1.Count > 0)
+                    {
+                        bracketMatches = bracketMatches1;
+                        bracketRegex = bracketRegex1;
+                        hasMatched = true;
+                    }
+
+                    if (!hasMatched)
+                    {
+                        var bracketRegex2 = LrcRegex2();
+                        var bracketMatches2 = bracketRegex2.Matches(line);
+                        if (bracketMatches2.Count > 0)
+                        {
+                            bracketMatches = bracketMatches2;
+                            bracketRegex = bracketRegex2;
+                            hasMatched = true;
+                        }
+                    }
+
                     string content = line;
                     int? lineStartTime = null;
-                    if (bracketMatches.Count > 0)
+                    if (hasMatched)
                     {
-                        var m = bracketMatches[0];
+                        var m = bracketMatches![0];
                         int min = int.Parse(m.Groups[1].Value);
                         int sec = int.Parse(m.Groups[2].Value);
                         int ms = int.Parse(m.Groups[3].Value.PadRight(3, '0'));
                         lineStartTime = min * 60_000 + sec * 1000 + ms;
-                        content = bracketRegex.Replace(line, "");
+                        content = bracketRegex!.Replace(line, "");
                         lrcLines.Add((lineStartTime.Value, content, new List<(int, string)>()));
                     }
                 }
@@ -450,5 +474,11 @@ namespace BetterLyrics.WinUI3.Helper
 
             _lyricsDataArr.Add(new LyricsData(lyricsLines));
         }
+
+        [GeneratedRegex(@"\[(\d{2}):(\d{2})\.(\d{2,3})\]")]
+        private static partial Regex LrcRegex1();
+
+        [GeneratedRegex(@"\[(\d{2}):(\d{2})\:(\d{2,3})\]")]
+        private static partial Regex LrcRegex2();
     }
 }

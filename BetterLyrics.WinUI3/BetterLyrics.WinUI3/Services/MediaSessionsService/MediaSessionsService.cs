@@ -322,13 +322,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         fixedArtist = mediaProperties.Artist.Split(" — ").FirstOrDefault() ?? mediaProperties.Artist;
                         fixedAlbum = mediaProperties.Artist.Split(" — ").LastOrDefault() ?? mediaProperties.AlbumTitle;
                     }
-                    else if (sessionId == Constants.PlayerID.NetEaseCloudMusic)
+                    else if (PlayerIdMatcher.IsNeteaseFamily(sessionId))
                     {
                         songId = mediaProperties.Genres.FirstOrDefault()?.Replace("NCM-", "");
-                        if (songId != null && songId.Length != 10)
-                        {
-                            songId = null;
-                        }
                     }
 
                     _cachedSongInfo = new SongInfo
