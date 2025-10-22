@@ -203,6 +203,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IsPlaying = _mediaSessionsService.IsPlaying;
 
             UpdateColorConfig();
+            Debug.WriteLine("Line 206: Invoke UpdateColorConfig();");
 
             _spectrumAnalyzer = new SpectrumAnalyzer();
         }
@@ -211,6 +212,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             _currentLyricsData = e.LyricsData;
             _isLayoutChanged = true;
+            Debug.WriteLine("Line 214: _isLayoutChanged = true");
         }
 
         private int GetCurrentPlayingLineIndex()
@@ -360,6 +362,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             if (diff >= _timelineSyncThreshold + 5000)
             {
                 _isLayoutChanged = true;
+                Debug.WriteLine("Line 364: _isLayoutChanged = true");
             }
         }
 
@@ -403,6 +406,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _albumArtDarkAccentColors = e.AlbumArtDarkAccentColors;
 
             UpdateColorConfig();
+            Debug.WriteLine("Line 409: Invoke UpdateColorConfig();");
         }
     }
 }

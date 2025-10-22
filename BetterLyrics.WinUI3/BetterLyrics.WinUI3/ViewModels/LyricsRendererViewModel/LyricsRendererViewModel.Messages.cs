@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -103,6 +104,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _immersiveBgColorTransition.StartTransition(message.NewValue);
                     _environmentalColor = message.NewValue;
                     UpdateColorConfig();
+                    Debug.WriteLine("Line 107: Invoke UpdateColorConfig();");
                 }
             }
             else if (message.Sender is LyricsStyleSettings)
