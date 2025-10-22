@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services;
 using Lyricify.Lyrics.Models;
+using Lyricify.Lyrics.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using LyricsData = BetterLyrics.WinUI3.Models.LyricsData;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class LyricsParser
+    public partial class LyricsParser
     {
         private List<LyricsData> _lyricsDataArr = [];
 
@@ -34,10 +35,10 @@ namespace BetterLyrics.WinUI3.Helper
                         ParseLrc(raw);
                         break;
                     case LyricsFormat.Qrc:
-                        ParseQQNeteaseKugou(Lyricify.Lyrics.Parsers.QrcParser.Parse(raw).Lines);
+                        ParseQQNeteaseKugou(QrcParser.Parse(raw).Lines);
                         break;
                     case LyricsFormat.Krc:
-                        ParseQQNeteaseKugou(Lyricify.Lyrics.Parsers.KrcParser.Parse(raw).Lines);
+                        ParseQQNeteaseKugou(KrcParser.Parse(raw).Lines);
                         break;
                     case LyricsFormat.Ttml:
                         ParseTtml(raw);
@@ -121,9 +122,7 @@ namespace BetterLyrics.WinUI3.Helper
                 new List<(int time, string text, List<(int time, string text)> syllables)>();
 
             // 支持 [mm:ss.xx]字、<mm:ss.xx>字，毫秒两位或三位
-            var syllableRegex = new Regex(
-                @"(\[|\<)(\d{2}):(\d{2})\.(\d{2,3})(\]|\>)([^\[\]\<\>]*)"
-            );
+            var syllableRegex = SyllableRegex();
 
             foreach (var line in lines)
             {
@@ -140,7 +139,7 @@ namespace BetterLyrics.WinUI3.Helper
 
                     syllables.Add((totalMs, text));
                 }
-                if (syllables.Count > 0)
+                if (syllables.Count > 1)
                 {
                     lrcLines.Add(
                         (
@@ -153,18 +152,19 @@ namespace BetterLyrics.WinUI3.Helper
                 else
                 {
                     // 普通LRC行
-                    var bracketRegex = new Regex(@"\[(\d{2}):(\d{2})\.(\d{2,3})\]");
+                    Regex? bracketRegex = LrcRegex();
                     var bracketMatches = bracketRegex.Matches(line);
+
                     string content = line;
                     int? lineStartTime = null;
                     if (bracketMatches.Count > 0)
                     {
-                        var m = bracketMatches[0];
+                        var m = bracketMatches![0];
                         int min = int.Parse(m.Groups[1].Value);
                         int sec = int.Parse(m.Groups[2].Value);
-                        int ms = int.Parse(m.Groups[3].Value.PadRight(3, '0'));
+                        int ms = int.Parse(m.Groups[4].Value.PadRight(3, '0'));
                         lineStartTime = min * 60_000 + sec * 1000 + ms;
-                        content = bracketRegex.Replace(line, "");
+                        content = bracketRegex!.Replace(line, "");
                         lrcLines.Add((lineStartTime.Value, content, new List<(int, string)>()));
                     }
                 }
@@ -450,5 +450,10 @@ namespace BetterLyrics.WinUI3.Helper
 
             _lyricsDataArr.Add(new LyricsData(lyricsLines));
         }
+
+        [GeneratedRegex(@"\[(\d*):(\d*)(\.|\:)(\d*)\]")]
+        private static partial Regex LrcRegex();
+        [GeneratedRegex(@"(\[|\<)(\d*):(\d*)\.(\d*)(\]|\>)([^\[\]\<\>]*)")]
+        private static partial Regex SyllableRegex();
     }
 }
