@@ -131,7 +131,7 @@ namespace BetterLyrics.WinUI3.Helper
                     }
                 case WindowPixelSampleMode.AboveWindow:
                     {
-                        return GetAverageColorFromScreenRegion(myRect.Left, myRect.Top - 3, screenWidth, 1);
+                        return GetAverageColorFromScreenRegion(myRect.Left, myRect.Top - 2, screenWidth, 1);
                     }
                 case WindowPixelSampleMode.WindowArea:
                     {
@@ -149,49 +149,21 @@ namespace BetterLyrics.WinUI3.Helper
                         if (width <= 0 || height <= 0)
                             return System.Drawing.Color.Transparent;
 
-                        var edgeThickness = new Thickness(36, 0, 36, 0);
+                        var edgeThickness = new Thickness(36, 36, 36, 36);
                         List<System.Drawing.Color> edgeColors = [];
 
                         // Top edge
-                        if (edgeThickness.Top > 0 && edgeThickness.Top < height)
-                            edgeColors.Add(
-                                GetAverageColorFromScreenRegion(
-                                    myRect.Left,
-                                    myRect.Top,
-                                    width,
-                                    (int)edgeThickness.Top
-                                )
-                            );
+                        if (edgeThickness.Top > 0)
+                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Left, myRect.Top - (int)edgeThickness.Top, width, (int)edgeThickness.Top));
                         // Bottom edge
-                        if (edgeThickness.Bottom > 0 && edgeThickness.Bottom < height)
-                            edgeColors.Add(
-                                GetAverageColorFromScreenRegion(
-                                    myRect.Left,
-                                    myRect.Bottom - (int)edgeThickness.Bottom,
-                                    width,
-                                    (int)edgeThickness.Bottom
-                                )
-                            );
+                        if (edgeThickness.Bottom > 0)
+                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Left, myRect.Bottom, width, (int)edgeThickness.Bottom));
                         // Left edge
-                        if (edgeThickness.Left > 0 && edgeThickness.Left < width)
-                            edgeColors.Add(
-                                GetAverageColorFromScreenRegion(
-                                    myRect.Left,
-                                    myRect.Top + (int)edgeThickness.Top,
-                                    (int)edgeThickness.Left,
-                                    height - (int)edgeThickness.Top - (int)edgeThickness.Bottom
-                                )
-                            );
+                        if (edgeThickness.Left > 0)
+                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Left - (int)edgeThickness.Left, myRect.Top, (int)edgeThickness.Left, height));
                         // Right edge
-                        if (edgeThickness.Right > 0 && edgeThickness.Right < width)
-                            edgeColors.Add(
-                                GetAverageColorFromScreenRegion(
-                                    myRect.Right - (int)edgeThickness.Right,
-                                    myRect.Top + (int)edgeThickness.Top,
-                                    (int)edgeThickness.Right,
-                                    height - (int)edgeThickness.Top - (int)edgeThickness.Bottom
-                                )
-                            );
+                        if (edgeThickness.Right > 0)
+                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Right, myRect.Top, (int)edgeThickness.Right, height));
 
                         // 合并四边平均色
                         if (edgeColors.Count == 0)
