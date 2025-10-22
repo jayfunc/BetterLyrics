@@ -156,7 +156,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ## Demonstration
 
-Watch our introduction video (uploaded on 18 Aug 2025) on Bilibili [here](https://www.bilibili.com/video/BV1yLYtzQEME/).
+Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bilibili.com/video/BV1QRstz1EGt/).
 
 ## Try it now
 
