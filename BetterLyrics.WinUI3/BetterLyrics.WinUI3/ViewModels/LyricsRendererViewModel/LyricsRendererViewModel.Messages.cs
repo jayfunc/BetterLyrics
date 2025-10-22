@@ -104,7 +104,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _immersiveBgColorTransition.StartTransition(message.NewValue);
                     _environmentalColor = message.NewValue;
                     UpdateColorConfig();
-                    Debug.WriteLine("Line 107: Invoke UpdateColorConfig();");
                 }
             }
             else if (message.Sender is LyricsStyleSettings)

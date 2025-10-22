@@ -384,7 +384,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 _maxLyricsWidth = _canvasWidth - _lyricsXTransition.Value - _rightMargin;
                 _maxLyricsWidth = Math.Max(_maxLyricsWidth, 0);
-                Debug.WriteLine("Line 387: _isLayoutChanged = true");
                 _isLayoutChanged = true;
             }
 
@@ -396,12 +395,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             if (_isLayoutChanged || _isPlayingLineChanged)
             {
                 UpdateCanvasTargetYScrollOffset();
-                if (_isLayoutChanged)
-                {
-                    Debug.WriteLine("--------------------跳变");
-                }
-                //_canvasYScrollTransition.StartTransition(_canvasTargetYScrollOffset, _isLayoutChanged);
-                _canvasYScrollTransition.StartTransition(_canvasTargetYScrollOffset);
+                _canvasYScrollTransition.StartTransition(_canvasTargetYScrollOffset, _isLayoutChanged);
             }
 
             UpdateVisibleLinesBoundary();
@@ -677,7 +671,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
 
             _isLayoutChanged = true;
-            Debug.WriteLine("Line 680: _isLayoutChanged = true");
         }
 
         private void UpdateVisibleLinesProps(ICanvasAnimatedControl control)

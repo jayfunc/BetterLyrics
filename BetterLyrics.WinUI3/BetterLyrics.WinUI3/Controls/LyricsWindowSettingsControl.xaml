@@ -137,6 +137,24 @@
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
 
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageAdaptEnvColor"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xE88F;}"
+                                    IsExpanded="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageEnvColorSample" Header="Environment color sample mode">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
+                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
+                                            </ComboBox>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
                                 <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
@@ -274,24 +292,6 @@
                                 <controls:SettingsCard x:Uid="SettingsPageBorderless" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B2;}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsBorderless, Mode=TwoWay}" />
                                 </controls:SettingsCard>
-
-                                <controls:SettingsExpander
-                                    x:Uid="SettingsPageAdaptEnvColor"
-                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xE88F;}"
-                                    IsExpanded="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
-                                    <controls:SettingsExpander.Items>
-                                        <controls:SettingsCard x:Uid="SettingsPageEnvColorSample" Header="Environment color sample mode">
-                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
-                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
-                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
-                                                <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
-                                            </ComboBox>
-                                        </controls:SettingsCard>
-                                    </controls:SettingsExpander.Items>
-                                </controls:SettingsExpander>
 
                                 <controls:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB41;}">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
