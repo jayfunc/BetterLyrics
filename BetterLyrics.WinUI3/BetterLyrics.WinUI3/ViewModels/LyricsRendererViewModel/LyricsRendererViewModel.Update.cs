@@ -406,12 +406,16 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _titleXTransition.Update(_elapsedTime);
             _titleYTransition.Update(_elapsedTime);
+
             _lyricsXTransition.Update(_elapsedTime);
             _lyricsYTransition.Update(_elapsedTime);
+            
             _albumArtXTransition.Update(_elapsedTime);
             _albumArtYTransition.Update(_elapsedTime);
+            
             _lyricsOpacityTransition.Update(_elapsedTime);
             _albumArtOpacityTransition.Update(_elapsedTime);
+            
             _immersiveBgOpacityTransition.Update(_elapsedTime);
             _immersiveBgColorTransition.Update(_elapsedTime);
             

@@ -154,7 +154,10 @@ namespace BetterLyrics.WinUI3
                         {
                             presenter.IsAlwaysOnTop = true;
                         }
-                        UpdateBackdropAccentColor(hwnd);
+                        if (_liveStatesService.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment)
+                        {
+                            UpdateBackdropAccentColor(hwnd);
+                        }
                     }, Constants.Time.DebounceTimeout);
                 }
             );

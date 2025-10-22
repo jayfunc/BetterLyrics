@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
+using CommunityToolkit.WinUI.Controls;
 using System.Linq;
 
 namespace BetterLyrics.WinUI3.Services.LiveStatesService
@@ -33,11 +34,21 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
         {
             switch (e.PropertyName)
             {
-                case nameof(LyricsWindowStatus.DockHeight):
                 case nameof(LyricsWindowStatus.IsWorkArea):
+                    WindowHelper.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
+                    if (LiveStates.LyricsWindowStatus.IsWorkArea)
+                    {
+                        UpdateWindowBoundsWhenWorkArea();
+                    }
+                    break;
+                case nameof(LyricsWindowStatus.DockHeight):
                 case nameof(LyricsWindowStatus.DockPlacement):
                 case nameof(LyricsWindowStatus.MonitorDeviceName):
-                    WindowHelper.UpdateWorkAreaHeight<LyricsWindow>();
+                    WindowHelper.UpdateWorkArea<LyricsWindow>();
+                    if (LiveStates.LyricsWindowStatus.IsWorkArea)
+                    {
+                        UpdateWindowBoundsWhenWorkArea();
+                    }
                     break;
                 case nameof(LyricsWindowStatus.IsShownInSwitchers):
                     WindowHelper.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
@@ -85,17 +96,43 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
 
         public void RefreshLyricsWindowStatus()
         {
-            // Order matters!!!
             WindowHelper.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
+
+            if (LiveStates.LyricsWindowStatus.IsWorkArea)
+            {
+                UpdateWindowBoundsWhenWorkArea();
+            }
+
+            WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds);
+            LiveStates.LyricsWindowStatus.UpdateMonitorNameAndBounds();
+            LiveStates.LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
+
             WindowHelper.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
             WindowHelper.SetIsAlwaysOnTop<LyricsWindow>(LiveStates.LyricsWindowStatus.IsAlwaysOnTop);
             WindowHelper.SetIsClickThrough<LyricsWindow>(LiveStates.LyricsWindowStatus.IsClickThrough);
             WindowHelper.SetIsBorderless<LyricsWindow>(LiveStates.LyricsWindowStatus.IsBorderless);
             WindowHelper.SetLyricsWindowVisibilityByPlayingStatus();
             WindowHelper.SetTitleBarArea<LyricsWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
-            WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds);
-            LiveStates.LyricsWindowStatus.UpdateMonitorNameAndBounds();
-            LiveStates.LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
+        }
+
+        private void UpdateWindowBoundsWhenWorkArea()
+        {
+            LiveStates.LyricsWindowStatus.WindowBounds = new Windows.Foundation.Rect(
+                LiveStates.LyricsWindowStatus.MonitorBounds.X,
+                LiveStates.LyricsWindowStatus.DockPlacement switch
+                {
+                    Enums.DockPlacement.Top => LiveStates.LyricsWindowStatus.MonitorBounds.Top,
+                    Enums.DockPlacement.Bottom => LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - LiveStates.LyricsWindowStatus.DockHeight - 1,
+                    _ => LiveStates.LyricsWindowStatus.MonitorBounds.Top,
+                },
+                LiveStates.LyricsWindowStatus.MonitorBounds.Width,
+                LiveStates.LyricsWindowStatus.DockPlacement switch
+                {
+                    Enums.DockPlacement.Top => LiveStates.LyricsWindowStatus.DockHeight,
+                    Enums.DockPlacement.Bottom => LiveStates.LyricsWindowStatus.DockHeight + 1,
+                    _ => LiveStates.LyricsWindowStatus.DockHeight,
+                }
+            );
         }
     }
 }
