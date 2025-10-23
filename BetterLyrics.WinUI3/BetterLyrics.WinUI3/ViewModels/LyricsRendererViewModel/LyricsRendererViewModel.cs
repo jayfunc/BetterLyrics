@@ -394,6 +394,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void MediaSessionsService_AlbumArtChangedChanged(object? sender, AlbumArtChangedEventArgs e)
         {
+            _lastAlbumArtCanvasBitmap?.Dispose();
+            _lastAlbumArtCanvasBitmap = null;
+
             _lastAlbumArtSwBitmap = _albumArtSwBitmap;
             _albumArtSwBitmap = e.AlbumArtSwBitmap;
 
