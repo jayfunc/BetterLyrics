@@ -1,7 +1,6 @@
-﻿using Impressionist.Abstractions;
+﻿using ColorThiefDotNet;
+using Impressionist.Abstractions;
 using Impressionist.Implementations;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,44 +15,33 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class PaletteHelper
     {
-        public static async Task<PaletteResult> OctTreeGetAccentColorsFromByteAsync(byte[] bytes, int count, bool? isDark = null)
+        private static ColorThief colorThief = new();
+        public static async Task<PaletteResult> OctTreeGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark = null)
         {
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(bytes.AsBuffer());
-            stream.Seek(0);
-            var decoder = await BitmapDecoder.CreateAsync(stream);
             var colors = await GetPixelColor(decoder);
             var palette = await PaletteGenerators.OctTreePaletteGenerator.CreatePalette(colors, count, false, isDark);
             return palette;
         }
 
-        public static async Task<ThemeColorResult> OctTreeGetAccentColorFromByteAsync(byte[] bytes)
+        public static async Task<ThemeColorResult> OctTreeGetAccentColorFromByteAsync(BitmapDecoder decoder)
         {
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(bytes.AsBuffer());
-            stream.Seek(0);
-            var decoder = await BitmapDecoder.CreateAsync(stream);
             var colors = await GetPixelColor(decoder);
             var theme = await PaletteGenerators.OctTreePaletteGenerator.CreateThemeColor(colors, false);
             return theme;
         }
 
-        public static Task<ThemeColorResult> MedianCutGetAccentColorFromByteAsync(byte[] bytes)
+        public static async Task<ThemeColorResult> MedianCutGetAccentColorFromByteAsync(BitmapDecoder decoder)
         {
-            using var image = Image.Load<Rgba32>(bytes);
-            var colorThief = new ColorThief.ImageSharp.ColorThief();
-            var mainColor = colorThief.GetColor(image, 10, false);
+            var mainColor = await colorThief.GetColor(decoder, 10, false);
             var theme = new ThemeColorResult(new Vector3(mainColor.Color.R, mainColor.Color.G, mainColor.Color.B), mainColor.IsDark);
-            return Task.FromResult(theme);
+            return theme;
         }
 
-        public static Task<PaletteResult> MedianCutGetAccentColorsFromByteAsync(byte[] bytes, int count, bool? isDark = null)
+        public static async Task<PaletteResult> MedianCutGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark = null)
         {
-            using var image = Image.Load<Rgba32>(bytes);
-            var colorThief = new ColorThief.ImageSharp.ColorThief();
-            var mainColor = colorThief.GetColor(image, 10, false);
+            var mainColor = await colorThief.GetColor(decoder, 10, false);
             var theme = new ThemeColorResult(new Vector3(mainColor.Color.R, mainColor.Color.G, mainColor.Color.B), mainColor.IsDark);
-            var palette = colorThief.GetPalette(image, 255, 10, false);
+            var palette = await colorThief.GetPalette(decoder, 255, 10, false);
             var topColors = palette
                 .Where(x => x.IsDark == (isDark ?? mainColor.IsDark))
                 .OrderByDescending(x => x.Population)
@@ -62,7 +50,7 @@ namespace BetterLyrics.WinUI3.Helper
                 .ToList();
             var paletteResult = new PaletteResult(topColors, mainColor.IsDark, theme);
 
-            return Task.FromResult(paletteResult);
+            return paletteResult;
         }
 
         public static async Task<Dictionary<Vector3, int>> GetPixelColor(BitmapDecoder bitmapDecoder)
