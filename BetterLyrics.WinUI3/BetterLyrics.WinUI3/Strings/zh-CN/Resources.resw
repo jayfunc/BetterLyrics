@@ -1012,6 +1012,9 @@
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>在文件资源管理器中打开</value>
   </data>
+  <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+    <value>取色算法</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>该文件夹已包含在已有文件夹中，无需再次添加</value>
   </data>

@@ -1012,6 +1012,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>Open in file explorer</value>
   </data>
+  <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+    <value>Palette Generator Type</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>This folder is already included in the existing folder and does not need to be added again</value>
   </data>
