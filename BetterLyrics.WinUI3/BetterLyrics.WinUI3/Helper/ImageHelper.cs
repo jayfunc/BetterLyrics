@@ -83,7 +83,7 @@ namespace BetterLyrics.WinUI3.Helper
         }
 
         
-        public static Task<ThemeColorResult> GetAccentColorFromByteAsync(BitmapDecoder decoder, PaletteGeneratorType generatorType)
+        public static Task<ThemeColorResult> GetAccentColorAsync(BitmapDecoder decoder, PaletteGeneratorType generatorType)
         {
             return generatorType switch
             {
@@ -92,7 +92,7 @@ namespace BetterLyrics.WinUI3.Helper
                 _ => throw new ArgumentOutOfRangeException(nameof(generatorType)),
             };
         }
-        public static Task<PaletteResult> GetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool? isDark = null)
+        public static Task<PaletteResult> GetAccentColorsAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool? isDark = null)
         {
             return generatorType switch
             {
@@ -181,49 +181,43 @@ namespace BetterLyrics.WinUI3.Helper
             return (double)(sum / (pixels.Length / 4));
         }
 
-        public static async Task<IBuffer> MakeSquareWithThemeColor(IBuffer buffer, PaletteGeneratorType generatorType)
+        public static async Task<BitmapDecoder> MakeSquareWithThemeColor(IBuffer buffer, PaletteGeneratorType generatorType)
         {
-            try
+
+            using var stream = new InMemoryRandomAccessStream();
+            await stream.WriteAsync(buffer);
+            var decoder = await BitmapDecoder.CreateAsync(stream);
+
+            if (decoder.PixelWidth == decoder.PixelHeight)
             {
-                using var stream = new InMemoryRandomAccessStream();
-                await stream.WriteAsync(buffer);
-                var decoder = await BitmapDecoder.CreateAsync(stream);
-
-                if (decoder.PixelWidth == decoder.PixelHeight)
-                {
-                    // 已经是正方形，直接返回
-                    return buffer;
-                }
-
-                using var device = CanvasDevice.GetSharedDevice();
-                using var canvasBitmap = await CanvasBitmap.LoadAsync(device, stream);
-                var size = Math.Max(decoder.PixelWidth, decoder.PixelHeight);
-
-                var result = await GetAccentColorFromByteAsync(decoder, generatorType);
-                var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
-                using var renderTarget = new CanvasRenderTarget(device, size, size, 96);
-
-                int offsetX = (int)(size - decoder.PixelWidth) / 2;
-                int offsetY = (int)(size - decoder.PixelHeight) / 2;
-                using (var ds = renderTarget.CreateDrawingSession())
-                {
-                    ds.FillRectangle(0, 0, size, size, color);
-                    ds.DrawImage(canvasBitmap, offsetX, offsetY);
-                }
-
-                // 保存为 PNG 并转为 byte[]
-                stream.Seek(0);
-                stream.Size = 0;
-                await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
-                var newBuffer = new Windows.Storage.Streams.Buffer((uint)stream.Size);
-
-                await stream.ReadAsync(newBuffer, (uint)stream.Size, InputStreamOptions.None);
-                return newBuffer;
+                // 已经是正方形，直接返回
+                return decoder;
             }
-            catch(Exception e)
+
+            using var device = CanvasDevice.GetSharedDevice();
+            using var canvasBitmap = await CanvasBitmap.LoadAsync(device, stream);
+            var size = Math.Max(decoder.PixelWidth, decoder.PixelHeight);
+
+            var result = await GetAccentColorAsync(decoder, generatorType);
+            var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
+            using var renderTarget = new CanvasRenderTarget(device, size, size, 96);
+
+            int offsetX = (int)(size - decoder.PixelWidth) / 2;
+            int offsetY = (int)(size - decoder.PixelHeight) / 2;
+            using (var ds = renderTarget.CreateDrawingSession())
             {
-                throw e;
+                ds.FillRectangle(0, 0, size, size, color);
+                ds.DrawImage(canvasBitmap, offsetX, offsetY);
             }
+
+            // 保存为 PNG 并转为 byte[]
+            stream.Seek(0);
+            stream.Size = 0;
+            await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
+            stream.Seek(0);
+            var newDecoder = await BitmapDecoder.CreateAsync(stream);
+            return newDecoder;
+
         }
 
         public static async Task<IBuffer> Resize(IBuffer buffer, int size)

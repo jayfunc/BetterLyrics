@@ -52,22 +52,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 buffer = tempBuffer;
                 token.ThrowIfCancellationRequested();
             }
-            buffer = await ImageHelper.MakeSquareWithThemeColor(buffer, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType);
-
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(buffer);
-            token.ThrowIfCancellationRequested();
-
-            decoder = await BitmapDecoder.CreateAsync(stream);
+            decoder = await ImageHelper.MakeSquareWithThemeColor(buffer, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType);
             token.ThrowIfCancellationRequested();
 
             var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
-            albumArtSwBitmap = SoftwareBitmap.Copy(albumArtSwBitmap);
             token.ThrowIfCancellationRequested();
 
-            var albumArtLightAccentColors = await ImageHelper.GetAccentColorsFromByteAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
+            var albumArtLightAccentColors = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
             var lightColorBytes = albumArtLightAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
-            var albumArtDarkAccentColors = await ImageHelper.GetAccentColorsFromByteAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
+            var albumArtDarkAccentColors = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
             var darkColorBytes = albumArtDarkAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
             AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, lightColorBytes, darkColorBytes));
         }
