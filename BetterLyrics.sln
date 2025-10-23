@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.WinUI3", "Bett
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Impressionist", "Impressionist\Impressionist\Impressionist.csproj", "{A678BCA5-03DE-71E4-73C1-388B7550E4E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorThief.WinUI3", "ColorThief.WinUI3\ColorThief.WinUI3.csproj", "{8F2FE667-2D91-428E-0630-05E6330F9625}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -61,6 +63,18 @@ Global
 		{A678BCA5-03DE-71E4-73C1-388B7550E4E3}.Release|x64.Build.0 = Release|Any CPU
 		{A678BCA5-03DE-71E4-73C1-388B7550E4E3}.Release|x86.ActiveCfg = Release|Any CPU
 		{A678BCA5-03DE-71E4-73C1-388B7550E4E3}.Release|x86.Build.0 = Release|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|ARM64.Build.0 = Release|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|x64.Build.0 = Release|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

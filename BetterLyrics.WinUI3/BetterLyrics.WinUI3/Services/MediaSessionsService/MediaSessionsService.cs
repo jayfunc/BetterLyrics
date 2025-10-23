@@ -23,6 +23,7 @@ using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Media.Control;
@@ -58,7 +59,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly MediaManager _mediaManager = new();
 
         private SongInfo? _cachedSongInfo;
-        private byte[]? _SMTCAlbumArtBytes = null;
+        private IBuffer? _SMTCAlbumArtBuffer = null;
 
         public event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
         public event EventHandler<TimelineChangedEventArgs>? TimelineChanged;
@@ -303,7 +304,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         StopSSE();
                     }
 
-                    _SMTCAlbumArtBytes = null;
+                    _SMTCAlbumArtBuffer = null;
                 }
                 else
                 {
@@ -352,15 +353,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                     if (sessionId == Constants.PlayerID.LXMusic && _lxMusicAlbumArtBytes != null)
                     {
-                        _SMTCAlbumArtBytes = _lxMusicAlbumArtBytes;
+                        _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
                     }
                     else if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
                     {
-                        _SMTCAlbumArtBytes = await ImageHelper.ToByteArrayAsync(streamReference);
+                        _SMTCAlbumArtBuffer = await ImageHelper.ToBufferAsync(streamReference);
                     }
                     else
                     {
-                        _SMTCAlbumArtBytes = null;
+                        _SMTCAlbumArtBuffer = null;
                     }
                 }
 
@@ -532,7 +533,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             {
                                 _logger.LogInformation("LX Music Album Art URL: {url}", picUrl);
                                 _lxMusicAlbumArtBytes = await ImageHelper.GetImageBytesFromUrlAsync(picUrl);
-                                _SMTCAlbumArtBytes = _lxMusicAlbumArtBytes;
+                                _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
                                 UpdateAlbumArt();
                             }
                         }

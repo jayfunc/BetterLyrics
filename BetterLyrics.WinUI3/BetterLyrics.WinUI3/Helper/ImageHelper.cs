@@ -9,12 +9,6 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Media.Imaging;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,7 +46,7 @@ namespace BetterLyrics.WinUI3.Helper
             return RandomAccessStreamReference.CreateFromStream(stream);
         }
 
-        public static async Task<byte[]> CreateTextPlaceholderBytesAsync(int width, int height)
+        public static async Task<IRandomAccessStream> CreateTextPlaceholderBytesAsync(int width, int height)
         {
             using var device = CanvasDevice.GetSharedDevice();
             using var renderTarget = new CanvasRenderTarget(device, width, height, 96);
@@ -82,34 +76,29 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             // 保存为 PNG 并转为 byte[]
-            using var stream = new InMemoryRandomAccessStream();
+            var stream = new InMemoryRandomAccessStream();
             await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
-            var buffer = new byte[stream.Size];
-            using (var reader = new DataReader(stream.GetInputStreamAt(0)))
-            {
-                await reader.LoadAsync((uint)stream.Size);
-                reader.ReadBytes(buffer);
-            }
-            return buffer;
+            stream.Seek(0);
+            return stream;
         }
 
         
-        public static Task<ThemeColorResult> GetAccentColorFromByteAsync(byte[] bytes, PaletteGeneratorType generatorType)
+        public static Task<ThemeColorResult> GetAccentColorFromByteAsync(BitmapDecoder decoder, PaletteGeneratorType generatorType)
         {
             return generatorType switch
             {
-                PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorFromByteAsync(bytes),
-                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorFromByteAsync(bytes),
-                _ => throw new ArgumentOutOfRangeException("generatorType"),
+                PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorFromByteAsync(decoder),
+                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorFromByteAsync(decoder),
+                _ => throw new ArgumentOutOfRangeException(nameof(generatorType)),
             };
         }
-        public static Task<PaletteResult> GetAccentColorsFromByteAsync(byte[] bytes, int count, PaletteGeneratorType generatorType, bool? isDark = null)
+        public static Task<PaletteResult> GetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool? isDark = null)
         {
             return generatorType switch
             {
-                PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorsFromByteAsync(bytes, count, isDark),
-                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorsFromByteAsync(bytes, count, isDark),
-                _ => throw new ArgumentOutOfRangeException("generatorType"),
+                PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorsFromByteAsync(decoder, count, isDark),
+                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorsFromByteAsync(decoder, count, isDark),
+                _ => throw new ArgumentOutOfRangeException(nameof(generatorType)),
             };
         }
 
@@ -166,13 +155,12 @@ namespace BetterLyrics.WinUI3.Helper
         //    return stream;
         //}
 
-        public static async Task<byte[]> ToByteArrayAsync(IRandomAccessStreamReference streamRef)
+        public static async Task<IBuffer> ToBufferAsync(IRandomAccessStreamReference streamRef)
         {
             using IRandomAccessStream stream = await streamRef.OpenReadAsync();
-            using var reader = new DataReader(stream);
-            await reader.LoadAsync((uint)stream.Size);
-            byte[] buffer = new byte[stream.Size];
-            reader.ReadBytes(buffer);
+            stream.Seek(0);
+            var buffer = new Windows.Storage.Streams.Buffer((uint)stream.Size);
+            await stream.ReadAsync(buffer, (uint)stream.Size, InputStreamOptions.None);
             return buffer;
         }
 
@@ -193,55 +181,111 @@ namespace BetterLyrics.WinUI3.Helper
             return (double)(sum / (pixels.Length / 4));
         }
 
-        public static async Task<byte[]> MakeSquareWithThemeColor(byte[] imageBytes, PaletteGeneratorType generatorType)
+        public static async Task<IBuffer> MakeSquareWithThemeColor(IBuffer buffer, PaletteGeneratorType generatorType)
         {
-            using var image = Image.Load<Rgba32>(imageBytes);
-
-            if (image.Width == image.Height)
+            try
             {
-                // 已经是正方形，直接返回
-                return imageBytes;
+                using var stream = new InMemoryRandomAccessStream();
+                await stream.WriteAsync(buffer);
+                var decoder = await BitmapDecoder.CreateAsync(stream);
+
+                if (decoder.PixelWidth == decoder.PixelHeight)
+                {
+                    // 已经是正方形，直接返回
+                    return buffer;
+                }
+
+                using var device = CanvasDevice.GetSharedDevice();
+                using var canvasBitmap = await CanvasBitmap.LoadAsync(device, stream);
+                var size = Math.Max(decoder.PixelWidth, decoder.PixelHeight);
+
+                var result = await GetAccentColorFromByteAsync(decoder, generatorType);
+                var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
+                using var renderTarget = new CanvasRenderTarget(device, size, size, 96);
+
+                int offsetX = (int)(size - decoder.PixelWidth) / 2;
+                int offsetY = (int)(size - decoder.PixelHeight) / 2;
+                using (var ds = renderTarget.CreateDrawingSession())
+                {
+                    ds.FillRectangle(0, 0, size, size, color);
+                    ds.DrawImage(canvasBitmap, offsetX, offsetY);
+                }
+
+                // 保存为 PNG 并转为 byte[]
+                stream.Seek(0);
+                stream.Size = 0;
+                await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
+                var newBuffer = new Windows.Storage.Streams.Buffer((uint)stream.Size);
+
+                await stream.ReadAsync(newBuffer, (uint)stream.Size, InputStreamOptions.None);
+                return newBuffer;
             }
-
-            int size = Math.Max(image.Width, image.Height);
-
-            var result = await GetAccentColorFromByteAsync(imageBytes, generatorType);
-            var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
-            var themeColor = Rgba32.ParseHex(color.ToHex());
-
-            using var square = new Image<Rgba32>(size, size, themeColor);
-
-            int offsetX = (size - image.Width) / 2;
-            int offsetY = (size - image.Height) / 2;
-
-            square.Mutate(ctx => ctx.DrawImage(image, new Point(offsetX, offsetY), 1f));
-
-            using var ms = new MemoryStream();
-            square.Save(ms, new PngEncoder());
-            return ms.ToArray();
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
-        public static byte[] Resize(byte[] imageBytes, int size)
+        public static async Task<IBuffer> Resize(IBuffer buffer, int size)
         {
-            using (Image image = Image.Load(imageBytes))
+            using var stream = new InMemoryRandomAccessStream();
+            await stream.WriteAsync(buffer);
+            var decoder = await BitmapDecoder.CreateAsync(stream);
+
+            var factor = Math.Max((double)size / decoder.PixelWidth, (double)size / decoder.PixelHeight);
+
+            var width = (uint)(decoder.PixelWidth * factor);
+            var height = (uint)(decoder.PixelHeight * factor);
+
+            if (factor > 1)
             {
-                var factor = Math.Max((double)size / image.Width, (double)size / image.Height);
-
-                int width = (int)(image.Width * factor);
-                int height = (int)(image.Height * factor);
-
-                if (factor > 1)
+                var transform = new BitmapTransform()
                 {
-                    image.Mutate(x => x.Resize(width, height, KnownResamplers.Welch));
-                }
-                else
-                {
-                    image.Mutate(x => x.Resize(width, height, KnownResamplers.NearestNeighbor));
-                }
+                    ScaledWidth = width,
+                    ScaledHeight = height,
+                    InterpolationMode = BitmapInterpolationMode.Fant
+                };
+                var pixelData = await decoder.GetPixelDataAsync(
+                    BitmapPixelFormat.Rgba8,
+                    BitmapAlphaMode.Straight,
+                    transform, ExifOrientationMode.RespectExifOrientation,
+                    ColorManagementMode.ColorManageToSRgb);
+                var pixels = pixelData.DetachPixelData();
 
-                using var ms = new MemoryStream();
-                image.Save(ms, new JpegEncoder());
-                return ms.ToArray();
+                stream.Seek(0);
+                stream.Size = 0;
+                var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+                encoder.SetPixelData(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Straight, width, height, 96, 96, pixels);
+                await encoder.FlushAsync();
+                var output = new Windows.Storage.Streams.Buffer((uint)stream.Size);
+                stream.Seek(0);
+                await stream.ReadAsync(output, (uint)stream.Size, InputStreamOptions.None);
+                return output;
+            }
+            else
+            {
+                var transform = new BitmapTransform()
+                {
+                    ScaledWidth = (uint)width,
+                    ScaledHeight = (uint)height,
+                    InterpolationMode = BitmapInterpolationMode.NearestNeighbor
+                };
+                var pixelData = await decoder.GetPixelDataAsync(
+                    BitmapPixelFormat.Rgba8,
+                    BitmapAlphaMode.Straight,
+                    transform, ExifOrientationMode.RespectExifOrientation,
+                    ColorManagementMode.ColorManageToSRgb);
+                var pixels = pixelData.DetachPixelData();
+
+                stream.Seek(0);
+                stream.Size = 0;
+                var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
+                encoder.SetPixelData(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Straight, width, height, 96, 96, pixels);
+                await encoder.FlushAsync();
+                var output = new Windows.Storage.Streams.Buffer((uint)stream.Size);
+                stream.Seek(0);
+                await stream.ReadAsync(output, (uint)stream.Size, InputStreamOptions.None);
+                return output;
             }
         }
 
