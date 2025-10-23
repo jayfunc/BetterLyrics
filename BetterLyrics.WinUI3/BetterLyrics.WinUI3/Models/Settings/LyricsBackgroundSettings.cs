@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
+using BetterLyrics.WinUI3.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumOverlayEnabled { get; set; } = false;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.OctTree;
+
         public LyricsBackgroundSettings() { }
 
         public object Clone()
@@ -39,6 +42,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 PureColorOverlayOpacity = this.PureColorOverlayOpacity,
                 CoverOverlaySpeed = this.CoverOverlaySpeed,
                 CoverAcrylicEffectAmount = this.CoverAcrylicEffectAmount,
+                PaletteGeneratorType = this.PaletteGeneratorType
             };
         }
     }

@@ -1,5 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models.Settings;
 using CommunityToolkit.WinUI.Helpers;
 using Impressionist.Abstractions;
 using Impressionist.Implementations;
@@ -91,26 +93,24 @@ namespace BetterLyrics.WinUI3.Helper
             return buffer;
         }
 
-        public static async Task<PaletteResult> GetAccentColorsFromByteAsync(byte[] bytes, int count, bool? isDark = null)
+        
+        public static Task<ThemeColorResult> GetAccentColorFromByteAsync(byte[] bytes, PaletteGeneratorType generatorType)
         {
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(bytes.AsBuffer());
-            stream.Seek(0);
-            var decoder = await BitmapDecoder.CreateAsync(stream);
-            var colors = await GetPixelColor(decoder);
-            var palette = await PaletteGenerators.OctTreePaletteGenerator.CreatePalette(colors, count, false, isDark);
-            return palette;
+            return generatorType switch
+            {
+                PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorFromByteAsync(bytes),
+                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorFromByteAsync(bytes),
+                _ => throw new ArgumentOutOfRangeException("generatorType"),
+            };
         }
-
-        public static async Task<ThemeColorResult> GetAccentColorFromByteAsync(byte[] bytes)
+        public static Task<PaletteResult> GetAccentColorsFromByteAsync(byte[] bytes, int count, PaletteGeneratorType generatorType, bool? isDark = null)
         {
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(bytes.AsBuffer());
-            stream.Seek(0);
-            var decoder = await BitmapDecoder.CreateAsync(stream);
-            var colors = await GetPixelColor(decoder);
-            var theme = await PaletteGenerators.OctTreePaletteGenerator.CreateThemeColor(colors, false);
-            return theme;
+            return generatorType switch
+            {
+                PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorsFromByteAsync(bytes, count, isDark),
+                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorsFromByteAsync(bytes, count, isDark),
+                _ => throw new ArgumentOutOfRangeException("generatorType"),
+            };
         }
 
         public static async Task<Dictionary<Vector3, int>> GetPixelColor(BitmapDecoder bitmapDecoder)
@@ -193,7 +193,7 @@ namespace BetterLyrics.WinUI3.Helper
             return (double)(sum / (pixels.Length / 4));
         }
 
-        public static async Task<byte[]> MakeSquareWithThemeColor(byte[] imageBytes)
+        public static async Task<byte[]> MakeSquareWithThemeColor(byte[] imageBytes, PaletteGeneratorType generatorType)
         {
             using var image = Image.Load<Rgba32>(imageBytes);
 
@@ -205,7 +205,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             int size = Math.Max(image.Width, image.Height);
 
-            var result = await GetAccentColorFromByteAsync(imageBytes);
+            var result = await GetAccentColorFromByteAsync(imageBytes, generatorType);
             var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
             var themeColor = Rgba32.ParseHex(color.ToHex());
 

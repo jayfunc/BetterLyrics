@@ -49,7 +49,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 token.ThrowIfCancellationRequested();
             }
 
-            bytes = await ImageHelper.MakeSquareWithThemeColor(bytes);
+            bytes = await ImageHelper.MakeSquareWithThemeColor(bytes, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType);
 
             using var stream = new InMemoryRandomAccessStream();
             await stream.WriteAsync(bytes.AsBuffer());
@@ -62,9 +62,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             albumArtSwBitmap = SoftwareBitmap.Copy(albumArtSwBitmap);
             token.ThrowIfCancellationRequested();
 
-            var albumArtLightAccentColors = await ImageHelper.GetAccentColorsFromByteAsync(bytes, 4, false);
+            var albumArtLightAccentColors = await ImageHelper.GetAccentColorsFromByteAsync(bytes, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
             var lightColorBytes = albumArtLightAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
-            var albumArtDarkAccentColors = await ImageHelper.GetAccentColorsFromByteAsync(bytes, 4, true);
+            var albumArtDarkAccentColors = await ImageHelper.GetAccentColorsFromByteAsync(bytes, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
             var darkColorBytes = albumArtDarkAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
             AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, lightColorBytes, darkColorBytes));
         }
