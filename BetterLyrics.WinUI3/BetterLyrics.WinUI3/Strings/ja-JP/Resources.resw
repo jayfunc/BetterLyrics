@@ -976,6 +976,9 @@
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>メディアライブラリ</value>
   </data>
+  <data name="SettingsPageMedianCut.Content" xml:space="preserve">
+    <value>保守的</value>
+  </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>この再生ソースを監視します</value>
   </data>
@@ -1006,6 +1009,9 @@
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>なし</value>
   </data>
+  <data name="SettingsPageOctTree.Content" xml:space="preserve">
+    <value>急進的だ</value>
+  </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>不透明度</value>
   </data>
@@ -1013,7 +1019,7 @@
     <value>ファイルエクスプローラーで開きます</value>
   </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
-    <value>パレット生成器タイプ</value>
+    <value>カラーピックスタイル</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>このフォルダーは既存のフォルダーに既に含まれており、再度追加する必要はありません</value>

@@ -976,6 +976,9 @@
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>미디어 라이브러리</value>
   </data>
+  <data name="SettingsPageMedianCut.Content" xml:space="preserve">
+    <value>안전하게</value>
+  </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>이 재생 소스를 모니터링하십시오</value>
   </data>
@@ -1006,6 +1009,9 @@
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>없음</value>
   </data>
+  <data name="SettingsPageOctTree.Content" xml:space="preserve">
+    <value>공격적인</value>
+  </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>투명도</value>
   </data>
@@ -1013,7 +1019,7 @@
     <value>파일 탐색기에서 열립니다</value>
   </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
-    <value>팔레트 생성기 유형</value>
+    <value>색상 선택 스타일</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>이 폴더는 이미 기존 폴더에 포함되어 있으며 다시 추가 할 필요가 없습니다.</value>
