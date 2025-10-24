@@ -12,13 +12,13 @@ If this is the first time that you use this app, only standard mode was initiall
 
 Settings -> Lyrics window manager -> Create from templates -> Fullscreen mode
 
-<video controls src="add-fullscreen-mode.mp4" width="600"></video>
+![](PixPin_2025-10-24_18-00-04.gif)
 
 ### How to switch modes
 
 You can switch modes by pressing default shortcuts `Ctrl + Alt + S` and then choosing one of the modes displayed on your screen. (Press `Escape` to close the choosing window)
 
-<video controls src="switch-modes.mp4" width="600"></video>
+![](PixPin_2025-10-24_18-02-25.gif)
 
 ### How to install ".msixbundle" package? (for test package only)
 [See this doc](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md)
