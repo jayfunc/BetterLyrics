@@ -5,7 +5,7 @@
 Be sure that you have already enable developer mode. To do that, you can follow the steps below:
 
 1. Go to "Settings", select "System", go to "Developer Options".
-   ![alt text](image.png)
+   ![alt text](image-0.png)
 
 2. Turn on "Developer Mode" and enable local PowerShell script allowance.
    ![alt text](image-1.png)
