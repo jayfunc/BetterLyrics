@@ -144,6 +144,10 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ### Fullscreen mode
 
+> ⚠️ Due to GIF format and frame rate limitations, the displayed effect is for preview only. Please refer to the actual device for the actual effect.
+
+![](Screenshots/PixPin_2025-10-24_18-13-44.gif)
+
 ![alt text](Screenshots/std-fullscreen.png)
 
 ### Docked mode
@@ -153,6 +157,12 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 ### Desktop mode
 
 ![alt text](Screenshots/desktop.png)
+
+### Song switching animation
+
+> ⚠️ Due to GIF format and frame rate limitations, the displayed effect is for preview only. Please refer to the actual device for the actual effect.
+
+![](Screenshots/PixPin_2025-10-24_18-17-17.gif)
 
 ## Demonstration
 
