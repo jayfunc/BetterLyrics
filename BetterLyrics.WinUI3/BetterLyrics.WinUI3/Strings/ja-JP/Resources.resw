@@ -520,8 +520,8 @@
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>適用する</value>
   </data>
-  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
-    <value>自動サイズ変更</value>
+  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <value>自動調整</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動起動</value>
@@ -624,9 +624,6 @@
   </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>ドラッグ可能</value>
-  </data>
-  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
-    <value>自動調整</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>アニメーションタイプを緩和します</value>

@@ -85,6 +85,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isAlbumArtSizeChanged = true;
                 }
+                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.IsAutoSongInfoFontSize))
+                {
+                    UpdateSongInfoFontSize();
+                }
             }
             else if (message.Sender is LyricsBackgroundSettings)
             {

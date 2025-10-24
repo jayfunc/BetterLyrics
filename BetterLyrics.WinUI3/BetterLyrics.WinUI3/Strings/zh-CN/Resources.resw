@@ -488,7 +488,7 @@
     <value>配置专辑封面源</value>
   </data>
   <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>专辑封面</value>
+    <value>专辑封面尺寸</value>
   </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>专辑封面源</value>
@@ -520,8 +520,8 @@
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>应用</value>
   </data>
-  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
-    <value>自动调整尺寸</value>
+  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <value>自动调整</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自动启动</value>
@@ -624,9 +624,6 @@
   </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>可拖拽区域</value>
-  </data>
-  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
-    <value>自动调整</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>缓动动画类型</value>

@@ -144,7 +144,10 @@
                                     IsExpanded="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
                                     <controls:SettingsExpander.Items>
-                                        <controls:SettingsCard x:Uid="SettingsPageEnvColorSample" Header="Environment color sample mode">
+                                        <controls:SettingsCard
+                                            x:Uid="SettingsPageEnvColorSample"
+                                            Header="Environment color sample mode"
+                                            IsEnabled="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
                                             <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                                 <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
                                                 <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />

@@ -23,7 +23,7 @@
                                                  Glyph=&#xE744;}"
                         IsExpanded="True">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAutoSize">
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.AutoAlbumArtSize, Mode=TwoWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.AutoAlbumArtSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
@@ -67,14 +67,26 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
-                        <local:ExtendedSlider
-                            Default="18"
-                            Frequency="2"
-                            Maximum="72"
-                            Minimum="8"
-                            Value="{x:Bind AlbumArtLayoutSettings.SongInfoFontSize, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageLyricsFontSize"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE8E9;}"
+                        IsExpanded="True">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                                <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoSongInfoFontSize, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard>
+                                <local:ExtendedSlider
+                                    Default="18"
+                                    Frequency="2"
+                                    IsEnabled="{x:Bind AlbumArtLayoutSettings.IsAutoSongInfoFontSize, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                                    Maximum="72"
+                                    Minimum="8"
+                                    Value="{x:Bind AlbumArtLayoutSettings.SongInfoFontSize, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <controls:SettingsExpander
                         x:Uid="SettingsPageShowTitle"

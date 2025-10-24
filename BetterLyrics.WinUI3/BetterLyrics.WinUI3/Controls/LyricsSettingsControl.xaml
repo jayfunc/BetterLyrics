@@ -181,7 +181,7 @@
                                                  Glyph=&#xE8E9;}"
                         IsExpanded="True">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageDynamicLyricsFontSize">
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Mode=TwoWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
