@@ -199,6 +199,7 @@ namespace BetterLyrics.WinUI3.Models
                 IsBorderless = true,
                 IsClickThrough = true,
                 IsAdaptToEnvironment = true,
+                IsShownInSwitchers = false,
                 EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
                 LyricsStyleSettings = new()
                 {
@@ -222,6 +223,7 @@ namespace BetterLyrics.WinUI3.Models
                 IsAlwaysOnTopPolling = true,
                 IsBorderless = true,
                 IsAdaptToEnvironment = true,
+                IsShownInSwitchers = false,
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 EnvironmentSampleMode = WindowPixelSampleMode.BelowWindow,
                 TitleBarArea = TitleBarArea.None,
@@ -246,6 +248,7 @@ namespace BetterLyrics.WinUI3.Models
                 WindowBounds = monitorBounds,
                 IsAlwaysOnTop = true,
                 IsBorderless = true,
+                IsShownInSwitchers = false,
                 TitleBarArea = Enums.TitleBarArea.None,
                 LyricsLayoutOrientation = Enums.LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings
