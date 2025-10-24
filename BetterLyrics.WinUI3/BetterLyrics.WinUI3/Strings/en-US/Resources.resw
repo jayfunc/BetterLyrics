@@ -306,6 +306,9 @@
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>Lyrics window switcher</value>
   </data>
+  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
+    <value>Go to Settings to add more modes</value>
+  </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>Album art area only</value>
   </data>

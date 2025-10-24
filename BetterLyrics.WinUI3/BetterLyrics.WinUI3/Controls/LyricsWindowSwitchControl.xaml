@@ -34,8 +34,9 @@
                 <KeyboardAccelerator Key="Escape" />
             </Button.KeyboardAccelerators>
         </Button>
+
         <ListView
-            Margin="48"
+            Margin="48,56"
             ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus, Mode=TwoWay}">
             <ItemsControl.ItemsPanel>
@@ -56,5 +57,20 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <StackPanel
+            Margin="20"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal"
+            Spacing="6">
+            <FontIcon
+                Margin="0,1,0,0"
+                FontFamily="{StaticResource IconFontFamily}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="&#xE946;" />
+            <TextBlock x:Uid="LyricsWindowSwitchWindowHelp" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        </StackPanel>
     </Grid>
+
 </UserControl>
