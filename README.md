@@ -1,4 +1,4 @@
-[_Click here to view frequently asked questions (FAQ)_](https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/FAQ.md)
+[_Click here to view frequently asked questions (FAQ)_](https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/index.md)
 
 ![](Promotion/banner.png)
 
