@@ -92,6 +92,7 @@ namespace BetterLyrics.WinUI3.Helper
                 _ => throw new ArgumentOutOfRangeException(nameof(generatorType)),
             };
         }
+
         public static Task<PaletteResult> GetAccentColorsAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool? isDark = null)
         {
             return generatorType switch

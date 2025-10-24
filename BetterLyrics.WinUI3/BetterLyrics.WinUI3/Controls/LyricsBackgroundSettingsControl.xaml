@@ -114,15 +114,15 @@
                                     Value="{x:Bind LyricsBackgroundSettings.FluidOverlayOpacity, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType">
+                                <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageMedianCut" />
+                                    <ComboBoxItem x:Uid="SettingsPageOctTree" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
-                    <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE790;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem Content="MedianCut" />
-                            <ComboBoxItem Content="OctTree" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
 
                     <controls:SettingsExpander
                         x:Uid="SettingsPageSpectrumLayer"

@@ -36,6 +36,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<LyricsWindowStatus>>,
+        IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
         IRecipient<PropertyChangedMessage<List<string>>>
     {
@@ -682,6 +683,17 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 if (message.PropertyName == nameof(TranslationSettings.ChineseRomanization))
                 {
                     UpdateTranslations();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
+        {
+            if (message.Sender is LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
+                {
+                    UpdateAlbumArt();
                 }
             }
         }

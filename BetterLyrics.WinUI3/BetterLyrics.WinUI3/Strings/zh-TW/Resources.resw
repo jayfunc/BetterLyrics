@@ -976,6 +976,9 @@
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>媒體庫</value>
   </data>
+  <data name="SettingsPageMedianCut.Content" xml:space="preserve">
+    <value>保守</value>
+  </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>監聽此播放來源</value>
   </data>
@@ -1006,6 +1009,9 @@
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>無</value>
   </data>
+  <data name="SettingsPageOctTree.Content" xml:space="preserve">
+    <value>激進</value>
+  </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>專輯背景層不透明度</value>
   </data>
@@ -1013,7 +1019,7 @@
     <value>在檔案總管中開啟</value>
   </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
-    <value>取色算法</value>
+    <value>取色風格</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>該資料夾已包含在已有資料夾中，無需再次添加</value>

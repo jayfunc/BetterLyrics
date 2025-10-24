@@ -12,7 +12,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBlurAmount { get; set; } = 5;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsLineFadeEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsLineFadeEnabled { get; set; } = true;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LineRenderingType LyricsGlowEffectScope { get; set; } = LineRenderingType.CurrentChar;
