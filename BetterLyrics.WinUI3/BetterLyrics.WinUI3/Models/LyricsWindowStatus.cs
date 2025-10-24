@@ -257,7 +257,7 @@ namespace BetterLyrics.WinUI3.Models
                 {
                     AutoAlbumArtSize = false,
                     AlbumArtSize = 128,
-                    SongInfoFontSize = 48,
+                    SongInfoFontSize = 36,
                 }
             };
         }
