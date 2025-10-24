@@ -1012,6 +1012,9 @@
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>ファイルエクスプローラーで開きます</value>
   </data>
+  <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+    <value>パレット生成器タイプ</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>このフォルダーは既存のフォルダーに既に含まれており、再度追加する必要はありません</value>
   </data>

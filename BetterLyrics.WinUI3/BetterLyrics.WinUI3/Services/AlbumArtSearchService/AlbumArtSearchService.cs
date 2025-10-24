@@ -11,9 +11,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 {
@@ -31,9 +33,9 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             _iTunesHttpClinet = new();
         }
 
-        public async Task<byte[]?> SearchAsync(string mediaSessionId, string title, string artist, string album, byte[]? bytesFromSMTC, CancellationToken token)
+        public async Task<IBuffer?> SearchAsync(string mediaSessionId, string title, string artist, string album, IBuffer? bufferFromSMTC, CancellationToken token)
         {
-            byte[]? result = null;
+            IBuffer? result = null;
 
             try
             {
@@ -47,15 +49,16 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                     switch (provider.Provider)
                     {
                         case AlbumArtSearchProvider.Local:
-                            result = SearchFile(artist, title);
+                            result = SearchFile(artist, title)?.AsBuffer();
                             break;
                         case AlbumArtSearchProvider.SMTC:
-                            result = bytesFromSMTC;
+                            result = bufferFromSMTC;
                             break;
                         case AlbumArtSearchProvider.iTunes:
                             foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
                             {
-                                result = await SearchiTunesAsync(artist, album, title, countryCode);
+                                var byteArray = await SearchiTunesAsync(artist, album, title, countryCode);
+                                result = byteArray?.AsBuffer();
                                 if (token.IsCancellationRequested) return result;
                                 if (result != null) break;
                             }
