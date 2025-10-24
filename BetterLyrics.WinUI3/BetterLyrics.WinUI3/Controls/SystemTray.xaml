@@ -30,6 +30,11 @@
                     </Style>
                 </MenuFlyout.MenuFlyoutPresenterStyle>
                 <MenuFlyoutItem
+                    x:Uid="SystemTraySwitch"
+                    Command="{x:Bind ViewModel.OpenLyricsWindowSwitchCommand}"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE8AB;}" />
+                <MenuFlyoutItem
                     x:Uid="SystemTrayLyrics"
                     Command="{x:Bind ViewModel.OpenLyricsCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -44,13 +49,11 @@
                     Command="{x:Bind ViewModel.OpenSettingsCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE713;}" />
-                <MenuFlyoutSeparator />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayResetWindowPosition"
                     Command="{x:Bind ViewModel.ResetWindowPositionCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE923;}" />
-                <MenuFlyoutSeparator />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayRestart"
                     Command="{x:Bind ViewModel.RestartAppCommand}"

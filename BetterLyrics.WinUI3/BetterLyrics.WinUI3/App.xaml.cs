@@ -118,6 +118,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<LyricsSearchControlViewModel>()
                     .AddSingleton<LyricsWindowSettingsControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchControlViewModel>()
+                    .AddSingleton<LyricsWindowSwitchWindowViewModel>()
                     .AddSingleton<LyricsWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()

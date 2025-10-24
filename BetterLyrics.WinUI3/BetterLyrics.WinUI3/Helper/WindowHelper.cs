@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
@@ -33,10 +34,8 @@ namespace BetterLyrics.WinUI3.Helper
         public static void HideWindow<T>()
         {
             var window = _activeWindows.Find(w => w is T);
-            if (window is Window w)
-            {
-                w.Hide();
-            }
+            var castedWindow = window as Window;
+            castedWindow?.Hide();
         }
 
         public static void CloseWindow<T>()

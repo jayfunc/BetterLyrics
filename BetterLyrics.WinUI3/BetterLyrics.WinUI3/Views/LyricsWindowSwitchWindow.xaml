@@ -10,7 +10,10 @@
     Title="LyricsWindowSwitchWindow"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid x:Name="RootGrid" Opacity="{x:Bind ViewModel.RootGridOpacity, Mode=OneWay}">
+        <Grid.OpacityTransition>
+            <ScalarTransition />
+        </Grid.OpacityTransition>
         <Grid
             x:Name="PlaceholderGrid"
             Width="1"

@@ -46,7 +46,7 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
-                    <!--  More  -->
+                    <!--  Music gallery  -->
                     <Button Click="MusicGalleryButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
@@ -54,6 +54,16 @@
                             Glyph="&#xE8F1;" />
                         <ToolTipService.ToolTip>
                             <ToolTip x:Uid="HostWindowMusicGalleryButtonToolTip" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+
+                    <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE8AB;" />
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="LyricsWindowSwitchButtonToolTip" />
                         </ToolTipService.ToolTip>
                     </Button>
 

@@ -18,7 +18,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged" RightTapped="RootGrid_RightTapped">
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
         <!--<Image Source="/Assets/Cover.jpg" />-->
