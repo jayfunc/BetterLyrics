@@ -520,9 +520,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>Apply</value>
   </data>
-  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
-    <value>Automatic resizing</value>
-  </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Automatic startup</value>
   </data>
@@ -625,7 +622,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>Draggable area</value>
   </data>
-  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
+  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>Automatic adjustment</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">

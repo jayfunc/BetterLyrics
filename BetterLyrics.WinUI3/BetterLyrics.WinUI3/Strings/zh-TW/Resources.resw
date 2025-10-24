@@ -488,7 +488,7 @@
     <value>配置專輯封面源</value>
   </data>
   <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>專輯封面</value>
+    <value>相簿藝術尺寸</value>
   </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>專輯封面來源</value>
@@ -520,8 +520,8 @@
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>應用</value>
   </data>
-  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
-    <value>自動調整大小</value>
+  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <value>自動調整</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動啟動</value>
@@ -624,9 +624,6 @@
   </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>拖動</value>
-  </data>
-  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
-    <value>自動調整</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>緩動動畫類型</value>

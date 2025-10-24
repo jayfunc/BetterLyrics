@@ -488,7 +488,7 @@
     <value>앨범 표지 소스를 구성합니다</value>
   </data>
   <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>앨범아트</value>
+    <value>앨범 아트 크기</value>
   </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>앨범 아트 소스</value>
@@ -520,8 +520,8 @@
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>적용하다</value>
   </data>
-  <data name="SettingsPageAutoSize.Header" xml:space="preserve">
-    <value>자동 크기 조정</value>
+  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <value>자동 조정</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>자동 시작</value>
@@ -624,9 +624,6 @@
   </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>드래그 가능</value>
-  </data>
-  <data name="SettingsPageDynamicLyricsFontSize.Header" xml:space="preserve">
-    <value>자동 조정</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>애니메이션 유형 완화</value>

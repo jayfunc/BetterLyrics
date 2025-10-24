@@ -160,6 +160,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_isCanvasWidthChanged || _isCanvasHeightChanged)
             {
+                UpdateSongInfoFontSize();
+
                 _isCoverAcrylicEffectAmountChanged = true;
 
                 _effect?.Properties["Width"] = (float)control.ConvertDipsToPixels((float)_canvasWidth, CanvasDpiRounding.Round);
@@ -409,16 +411,16 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             _lyricsXTransition.Update(_elapsedTime);
             _lyricsYTransition.Update(_elapsedTime);
-            
+
             _albumArtXTransition.Update(_elapsedTime);
             _albumArtYTransition.Update(_elapsedTime);
-            
+
             _lyricsOpacityTransition.Update(_elapsedTime);
             _albumArtOpacityTransition.Update(_elapsedTime);
-            
+
             _immersiveBgOpacityTransition.Update(_elapsedTime);
             _immersiveBgColorTransition.Update(_elapsedTime);
-            
+
             _albumArtAccentColor1Transition.Update(_elapsedTime);
             _albumArtAccentColor2Transition.Update(_elapsedTime);
             _albumArtAccentColor3Transition.Update(_elapsedTime);
@@ -783,8 +785,16 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void UpdateSongInfoFontSize()
         {
-            _titleTextFormat.FontSize = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoFontSize;
-            _artistTextFormat.FontSize = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoFontSize - 2;
+            if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.IsAutoSongInfoFontSize)
+            {
+                _titleTextFormat.FontSize = (int)Math.Clamp(Math.Min(_canvasHeight, _canvasWidth) / 20, 8, 72);
+            }
+            else
+            {
+                _titleTextFormat.FontSize = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoFontSize;
+            }
+
+            _artistTextFormat.FontSize = (int)(_titleTextFormat.FontSize * 0.8);
 
             _isSongInfoFontSizeChanged = true;
         }
