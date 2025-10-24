@@ -188,6 +188,18 @@
                                             </StackPanel>
                                         </controls:SettingsCard>
 
+                                        <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                            <StackPanel Spacing="6">
+                                                <TextBlock x:Uid="SetingsPageContributors" />
+                                                <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                                    <HyperlinkButton Content="jayfunc" NavigateUri="https://github.com/jayfunc" />
+                                                    <HyperlinkButton Content="Raspberry-Monster" NavigateUri="https://github.com/Raspberry-Monster" />
+                                                    <HyperlinkButton Content="ZHider" NavigateUri="https://github.com/ZHider" />
+                                                    <HyperlinkButton Content="kusutori" NavigateUri="https://github.com/kusutori" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </controls:SettingsCard>
+
                                     </controls:SettingsExpander.Items>
                                     <controls:SettingsExpander.ItemsHeader>
                                         <InfoBar

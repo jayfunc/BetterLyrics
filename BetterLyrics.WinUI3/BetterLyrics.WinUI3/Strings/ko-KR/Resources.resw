@@ -448,6 +448,9 @@
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>사진 인당 모드</value>
   </data>
+  <data name="SetingsPageContributors.Text" xml:space="preserve">
+    <value>기여자</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>기부</value>
   </data>

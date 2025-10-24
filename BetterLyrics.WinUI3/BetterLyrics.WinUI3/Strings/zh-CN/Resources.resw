@@ -448,6 +448,9 @@
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>画中画模式</value>
   </data>
+  <data name="SetingsPageContributors.Text" xml:space="preserve">
+    <value>贡献者</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>捐贈</value>
   </data>

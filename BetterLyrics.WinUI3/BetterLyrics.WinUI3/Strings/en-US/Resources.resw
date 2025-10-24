@@ -448,6 +448,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>Picture-in-picture mode</value>
   </data>
+  <data name="SetingsPageContributors.Text" xml:space="preserve">
+    <value>Contributors</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>Donation</value>
   </data>

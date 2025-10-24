@@ -448,6 +448,9 @@
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>ピクチャーインピクチャーモード</value>
   </data>
+  <data name="SetingsPageContributors.Text" xml:space="preserve">
+    <value>投稿者</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>寄付</value>
   </data>
