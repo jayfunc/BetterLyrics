@@ -1012,6 +1012,9 @@
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>在檔案總管中開啟</value>
   </data>
+  <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+    <value>取色算法</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>該資料夾已包含在已有資料夾中，無需再次添加</value>
   </data>

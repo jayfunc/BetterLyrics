@@ -33,39 +33,36 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 return;
             }
 
-            byte[]? bytes = await Task.Run(async () => await _albumArtSearchService.SearchAsync(
+            IBuffer? buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(
                 SongInfo?.PlayerId ?? "",
                 _cachedSongInfo.Title,
                 _cachedSongInfo.Artist,
                 _cachedSongInfo?.Album ?? string.Empty,
-                _SMTCAlbumArtBytes,
+                _SMTCAlbumArtBuffer,
                 token
             ), token);
             if (token.IsCancellationRequested) return;
+            BitmapDecoder? decoder = null;
 
-            if (bytes == null)
+            if (buffer == null)
             {
-                bytes = await ImageHelper.CreateTextPlaceholderBytesAsync(500, 500);
+                using var placeHolderStream = await ImageHelper.CreateTextPlaceholderBytesAsync(500, 500);
+                var tempBuffer = new Windows.Storage.Streams.Buffer((uint)placeHolderStream.Size);
+                await placeHolderStream.ReadAsync(tempBuffer, (uint)placeHolderStream.Size, InputStreamOptions.None);
+                buffer = tempBuffer;
                 token.ThrowIfCancellationRequested();
             }
-
-            bytes = ImageHelper.MakeSquareWithThemeColor(bytes);
-
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(bytes.AsBuffer());
-            token.ThrowIfCancellationRequested();
-
-            var decoder = await BitmapDecoder.CreateAsync(stream);
+            decoder = await ImageHelper.MakeSquareWithThemeColor(buffer, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType);
             token.ThrowIfCancellationRequested();
 
             var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
-            albumArtSwBitmap = SoftwareBitmap.Copy(albumArtSwBitmap);
             token.ThrowIfCancellationRequested();
 
-            var albumArtLightAccentColors = ImageHelper.GetAccentColorsFromByte(bytes, 4, false);
-            var albumArtDarkAccentColors = ImageHelper.GetAccentColorsFromByte(bytes, 4, true);
-
-            AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, albumArtLightAccentColors, albumArtDarkAccentColors));
+            var albumArtLightAccentColors = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
+            var lightColorBytes = albumArtLightAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
+            var albumArtDarkAccentColors = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
+            var darkColorBytes = albumArtDarkAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
+            AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, lightColorBytes, darkColorBytes));
         }
     }
 }
