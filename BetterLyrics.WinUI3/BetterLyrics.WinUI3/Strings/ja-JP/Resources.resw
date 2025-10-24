@@ -306,6 +306,9 @@
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>歌詞ウィンドウスイッチャー</value>
   </data>
+  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
+    <value>設定に移動して、さらにモードを追加してください</value>
+  </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>アルバムアートエリアのみ</value>
   </data>

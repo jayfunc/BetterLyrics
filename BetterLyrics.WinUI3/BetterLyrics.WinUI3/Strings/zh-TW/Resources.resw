@@ -306,6 +306,9 @@
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>歌詞視窗切換器</value>
   </data>
+  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
+    <value>前往設定以新增更多模式</value>
+  </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>僅限相簿藝術區域</value>
   </data>
