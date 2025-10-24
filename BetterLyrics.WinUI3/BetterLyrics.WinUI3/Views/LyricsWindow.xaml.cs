@@ -27,6 +27,8 @@ namespace BetterLyrics.WinUI3.Views
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
         private readonly WindowMessageMonitor _wmm;
 
+        public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
+
         public LyricsWindow()
         {
             this.InitializeComponent();
@@ -79,8 +81,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
-
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
             if (args.DidPositionChange || args.DidSizeChange)
@@ -126,6 +126,11 @@ namespace BetterLyrics.WinUI3.Views
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.ExitOrClose();
+        }
+
+        private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenOrShowWindow<LyricsWindowSwitchWindow>();
         }
     }
 }

@@ -16,13 +16,19 @@
         VerticalAlignment="Center"
         Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
         CornerRadius="12">
+        <FontIcon
+            Margin="20"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontFamily="{StaticResource IconFontFamily}"
+            Glyph="&#xE8AB;" />
         <Button
             Margin="12"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
             Click="Button_Click"
             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                  Glyph=&#xE653;}"
+                                  Glyph=&#xE73C;}"
             Style="{StaticResource GhostButtonStyle}">
             <Button.KeyboardAccelerators>
                 <KeyboardAccelerator Key="Escape" />

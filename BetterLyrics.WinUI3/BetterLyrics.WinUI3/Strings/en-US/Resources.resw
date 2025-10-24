@@ -303,6 +303,9 @@
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>Set as default</value>
   </data>
+  <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
+    <value>Lyrics window switcher</value>
+  </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>Album art area only</value>
   </data>
@@ -330,9 +333,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>Welcome to BetterLyrics</value>
-  </data>
-  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Immersive mode</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
     <value>Add to playlist</value>
@@ -520,6 +520,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>Apply</value>
   </data>
+  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <value>Automatic adjustment</value>
+  </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Automatic startup</value>
   </data>
@@ -621,9 +624,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>Draggable area</value>
-  </data>
-  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
-    <value>Automatic adjustment</value>
   </data>
   <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>Easing animation type</value>
@@ -1254,6 +1254,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SystemTraySwitch.Text" xml:space="preserve">
+    <value>Lyrics window switcher</value>
   </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>Translate server is not set, please configure it in settings first</value>

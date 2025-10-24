@@ -172,5 +172,13 @@ namespace BetterLyrics.WinUI3.Views
         {
             ViewModel.TimelineSliderThumbOpacity = 0f;
         }
+
+        private void RootGrid_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            if (BottomCommandFlyoutContainer.Children.Count != 0)
+            {
+                BottomCommandFlyout.ShowAt(BottomCommandFlyoutTrigger);
+            }
+        }
     }
 }

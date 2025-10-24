@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -32,13 +33,21 @@ namespace BetterLyrics.WinUI3.Controls
             DataContext = Ioc.Default.GetRequiredService<LyricsWindowSwitchControlViewModel>();
         }
 
-        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            WindowHelper.HideWindow<LyricsWindowSwitchWindow>();
+            await HideAsync();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            await HideAsync();
+        }
+
+        private async Task HideAsync()
+        {
+            var lyricsWindowSwitchWindow = WindowHelper.GetWindowByWindowType<LyricsWindowSwitchWindow>();
+            lyricsWindowSwitchWindow?.ViewModel.RootGridOpacity = 0;
+            await Task.Delay(300);
             WindowHelper.HideWindow<LyricsWindowSwitchWindow>();
         }
     }

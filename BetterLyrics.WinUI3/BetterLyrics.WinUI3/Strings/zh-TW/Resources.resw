@@ -303,6 +303,9 @@
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>設為預設</value>
   </data>
+  <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
+    <value>歌詞視窗切換器</value>
+  </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>僅限相簿藝術區域</value>
   </data>
@@ -330,9 +333,6 @@
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>歡迎使用 BetterLyrics</value>
-  </data>
-  <data name="MainWindowImmersiveMode.ToolTipService.ToolTip" xml:space="preserve">
-    <value>沉浸模式</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
     <value>添加到歌單</value>
@@ -1254,6 +1254,9 @@
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>打開設置</value>
+  </data>
+  <data name="SystemTraySwitch.Text" xml:space="preserve">
+    <value>歌詞視窗切換器</value>
   </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>未設定翻譯伺服器，請先在設定中進行配置</value>

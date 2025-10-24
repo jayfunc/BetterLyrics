@@ -1,4 +1,6 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.ViewModels;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -25,6 +27,8 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class LyricsWindowSwitchWindow : Window
     {
+        public LyricsWindowSwitchWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowSwitchWindowViewModel>();
+
         public LyricsWindowSwitchWindow()
         {
             InitializeComponent();
@@ -37,6 +41,19 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.IsShownInSwitchers = false;
             this.SetIsAlwaysOnTop(true);
             SetTitleBar(PlaceholderGrid);
+
+            AppWindow.Changed += AppWindow_Changed;
+        }
+
+        private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
+        {
+            if (args.DidVisibilityChange)
+            {
+                if (sender.IsVisible)
+                {
+                    ViewModel.RootGridOpacity = 1;
+                }
+            }
         }
     }
 }
