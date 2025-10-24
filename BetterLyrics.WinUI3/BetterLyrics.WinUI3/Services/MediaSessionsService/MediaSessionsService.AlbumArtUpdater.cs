@@ -56,6 +56,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             token.ThrowIfCancellationRequested();
 
             var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
+            albumArtSwBitmap.DpiX = 96;
+            albumArtSwBitmap.DpiY = 96;
             token.ThrowIfCancellationRequested();
 
             var albumArtLightAccentColors = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);

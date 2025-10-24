@@ -201,7 +201,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             var result = await GetAccentColorAsync(decoder, generatorType);
             var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
-            using var renderTarget = new CanvasRenderTarget(device, size, size, canvasBitmap?.Dpi ?? 96);
+            using var renderTarget = new CanvasRenderTarget(device, size, size, 96);
 
             int offsetX = (int)(size - decoder.PixelWidth) / 2;
             int offsetY = (int)(size - decoder.PixelHeight) / 2;
