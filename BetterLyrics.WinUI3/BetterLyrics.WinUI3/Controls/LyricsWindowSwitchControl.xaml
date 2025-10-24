@@ -23,7 +23,11 @@
             Click="Button_Click"
             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                   Glyph=&#xE653;}"
-            Style="{StaticResource GhostButtonStyle}" />
+            Style="{StaticResource GhostButtonStyle}">
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Escape" />
+            </Button.KeyboardAccelerators>
+        </Button>
         <ListView
             Margin="48"
             ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
