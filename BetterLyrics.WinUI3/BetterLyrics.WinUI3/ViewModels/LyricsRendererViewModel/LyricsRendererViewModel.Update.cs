@@ -437,7 +437,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.IsDynamicLyricsFontSize)
             {
-                _lyricsTextFormat.FontSize = (float)Math.Clamp(Math.Min(_canvasHeight, _canvasWidth) / 10, 12, 72);
+                _lyricsTextFormat.FontSize = (float)Math.Clamp(Math.Min(_canvasHeight, _canvasWidth) / 15, 12, 96);
             }
             else
             {

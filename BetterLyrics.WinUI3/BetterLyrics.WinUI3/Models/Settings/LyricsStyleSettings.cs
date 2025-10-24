@@ -13,7 +13,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class LyricsStyleSettings : ObservableRecipient, ICloneable
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDynamicLyricsFontSize { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDynamicLyricsFontSize { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontSize { get; set; } = 24;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBgFontOpacity { get; set; } = 30; // 30% opacity
