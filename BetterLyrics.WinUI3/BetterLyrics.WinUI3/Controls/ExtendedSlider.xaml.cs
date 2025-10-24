@@ -68,6 +68,8 @@ namespace BetterLyrics.WinUI3.Controls
             DependencyProperty.Register(nameof(Maximum), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(default));
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(nameof(Value), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(default));
+        private static readonly DependencyProperty RoundedValueProperty =
+            DependencyProperty.Register(nameof(Value), typeof(string), typeof(ExtendedSlider), new PropertyMetadata(default));
         public static readonly DependencyProperty DefaultProperty =
             DependencyProperty.Register(nameof(Default), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(default));
         public static readonly DependencyProperty ResetButtonVisibilityProperty =
@@ -93,7 +95,16 @@ namespace BetterLyrics.WinUI3.Controls
         public double Value
         {
             get => (double)GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
+            set
+            {
+                SetValue(ValueProperty, value);
+                SetValue(RoundedValueProperty, value.ToString("F1").Replace(".0", ""));
+            }
+        }
+        private string RoundedValue
+        {
+            get => (string)GetValue(RoundedValueProperty);
+            set => SetValue(RoundedValueProperty, value);
         }
         public double Default
         {

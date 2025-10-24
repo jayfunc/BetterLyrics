@@ -43,7 +43,7 @@
                 Margin="3,-2,3,0"
                 Orientation="Horizontal"
                 Spacing="2">
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind Value, Mode=OneWay}" />
+                <TextBlock VerticalAlignment="Center" Text="{x:Bind RoundedValue, Mode=OneWay}" />
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind Unit, Mode=OneWay}" />
             </StackPanel>
 
