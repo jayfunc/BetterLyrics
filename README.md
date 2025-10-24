@@ -182,7 +182,7 @@ Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bi
 
 If you are using a third-party modified Windows, you probably can not launch the app.
 
-To solve this issue, please try to download from [Google Drive (v1.0.82.0)](https://drive.google.com/file/d/1UtGmmDqD5SWGJpp4LmWycHUT9-Bb8fur/view?usp=sharing) (may not be the latest version) and follow the instructions [here](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md).
+To solve this issue, please try to download from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases/latest) for the download link) and follow the instructions [here](https://github.com/jayfunc/BetterLyrics/blob/dev/Sideloadly/index.md).
 
 ## Build
 
