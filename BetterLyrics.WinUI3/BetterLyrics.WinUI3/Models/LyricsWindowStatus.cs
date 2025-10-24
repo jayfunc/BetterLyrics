@@ -207,8 +207,7 @@ namespace BetterLyrics.WinUI3.Models
                 },
                 LyricsBackgroundSettings = new LyricsBackgroundSettings
                 {
-                    IsPureColorOverlayEnabled = false,
-                    IsCoverOverlayEnabled = false,
+                    IsFluidOverlayEnabled = false,
                 }
             };
         }
@@ -233,7 +232,8 @@ namespace BetterLyrics.WinUI3.Models
                 },
                 LyricsBackgroundSettings = new LyricsBackgroundSettings
                 {
-                    IsCoverOverlayEnabled = false,
+                    IsFluidOverlayEnabled = false,
+                    IsPureColorOverlayEnabled = true,
                 }
             };
         }
@@ -250,13 +250,13 @@ namespace BetterLyrics.WinUI3.Models
                 LyricsLayoutOrientation = Enums.LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
-                    LyricsFontSize = 96,
+                    LyricsFontSize = 72,
                     LyricsAlignmentType = Enums.TextAlignmentType.Center,
                 },
                 AlbumArtLayoutSettings = new AlbumArtLayoutSettings
                 {
                     AutoAlbumArtSize = false,
-                    AlbumArtSize = 148,
+                    AlbumArtSize = 128,
                     SongInfoFontSize = 48,
                 }
             };
