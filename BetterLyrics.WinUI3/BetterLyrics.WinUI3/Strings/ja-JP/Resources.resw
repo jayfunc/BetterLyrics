@@ -806,7 +806,7 @@
     <value>ログレコード</value>
   </data>
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
-    <value>LX Music Server</value>
+    <value>LX音楽サーバー</value>
   </data>
   <data name="SettingsPageLyrics.Text" xml:space="preserve">
     <value>歌詞のスタイルと効果</value>
@@ -1256,7 +1256,7 @@
     <value>ウィンドウの位置をリセットします</value>
   </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>Restart</value>
+    <value>再起動</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>設定を開く</value>
