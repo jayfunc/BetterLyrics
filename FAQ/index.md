@@ -14,11 +14,15 @@ Settings -> Lyrics window manager -> Create from templates -> Fullscreen mode
 
 ![](PixPin_2025-10-24_18-06-32.gif)
 
-### How to switch modes
+### How to switch modes?
 
 You can switch modes by pressing default shortcuts `Ctrl + Alt + S` and then choosing one of the modes displayed on your screen. (Press `Escape` to close the choosing window)
 
 ![](PixPin_2025-10-24_18-07-45.gif)
+
+### How to move and resize the window? I cannot touch the window.
+
+![](PixPin_2025-10-25_09-08-47.gif)
 
 ### How to install ".msixbundle" package? (for test package only)
 [See this doc](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md)
