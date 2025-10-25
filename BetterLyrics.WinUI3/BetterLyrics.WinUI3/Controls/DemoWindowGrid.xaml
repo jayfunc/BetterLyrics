@@ -21,23 +21,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource AccentFillColorDefaultBrush}"
-            CornerRadius="4">
-            <interactivity:Interaction.Behaviors>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind LyricsWindowStatus.IsBorderless, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="True">
-                    <interactivity:ChangePropertyAction PropertyName="BorderThickness" Value="0" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind LyricsWindowStatus.IsBorderless, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="False">
-                    <interactivity:ChangePropertyAction PropertyName="BorderThickness" Value="1" />
-                </interactivity:DataTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-        </Grid>
+            CornerRadius="4" />
         <!--  Is default  -->
         <Grid
             Margin="4"
