@@ -30,6 +30,15 @@ You can switch modes by pressing the default shortcuts `Ctrl + Alt + S` and then
 
 ### 🤔 How to move and resize the window? I cannot touch the window.
 
+If you are not able to select and move the window, make sure that you have both:
+
+- Disabled `Click-through` in `Advanced settings` in `Lyrics window manager`.
+- Selected **_other than_** `None` in `Draggable area` in `General` in `Lyrics window manager`.
+
+> Click-through ensure that all mouse activity will go through a pinned widget and straight to the underlying game or application - [Microsoft Learn](https://learn.microsoft.com/en-us/gaming/game-bar/guide/click-through)
+
+Alternatively, you can skip the steps above and directly adjust window position and size in `General` in  `Lyrics window manager`. See the clip below.
+
 ![](PixPin_2025-10-25_09-08-47.gif)
 
 ### 🤔 How to install ".msixbundle" package? (for test package only)
