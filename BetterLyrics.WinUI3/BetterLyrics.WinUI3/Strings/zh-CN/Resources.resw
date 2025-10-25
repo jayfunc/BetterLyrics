@@ -671,7 +671,7 @@
     <value>平滑步进</value>
   </data>
   <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>英语 (English)</value>
+    <value>English</value>
   </data>
   <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>环境色彩采样模式</value>
@@ -752,7 +752,7 @@
     <value>广东话拼音</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
-    <value>韩语（한국어）</value>
+    <value>한국어</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>语言</value>
@@ -1181,7 +1181,7 @@
     <value>目标语言</value>
   </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁体中文（繁體中文）</value>
+    <value>繁體中文</value>
   </data>
   <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
@@ -1256,7 +1256,7 @@
     <value>重置窗口位置</value>
   </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>Restart</value>
+    <value>重新启动</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>打开设置</value>
