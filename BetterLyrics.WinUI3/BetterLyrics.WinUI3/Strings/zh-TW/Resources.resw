@@ -1256,7 +1256,7 @@
     <value>重置窗口位置</value>
   </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>Restart</value>
+    <value>重新啟動</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>打開設置</value>
