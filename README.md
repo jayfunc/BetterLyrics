@@ -235,10 +235,9 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 
 ## ✍️ Help us translate into your language
 
-Cannot find your language?
-Don't worry! Start translating and become one of the contributors! 😆
+Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆
 
-Fork this project and navigate to `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Strings\` then open any `.resw` file to start contributing!
+Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 to accept invitation and become a valuable translator now!
 
 ## Star history
 
