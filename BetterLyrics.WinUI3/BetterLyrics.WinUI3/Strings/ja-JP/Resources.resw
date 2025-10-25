@@ -1256,7 +1256,7 @@
     <value>ウィンドウの位置をリセットします</value>
   </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>再アート</value>
+    <value>Restart</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>設定を開く</value>
