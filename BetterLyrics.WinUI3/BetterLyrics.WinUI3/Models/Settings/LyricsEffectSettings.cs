@@ -39,6 +39,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsVerticalEdgeOpacity { get; set; } = 0; // 0% opacity
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFanLyricsEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FanLyricsAngle { get; set; } = 30;
 
         public LyricsEffectSettings(int lyricsScrollTopDuration, int lyricsScrollDuration, int lyricsScrollBottomDuration, EasingType lyricsScrollEasingType)
         {
@@ -68,7 +69,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsScrollTopDelay = this.LyricsScrollTopDelay,
                 LyricsScrollBottomDelay = this.LyricsScrollBottomDelay,
                 LyricsVerticalEdgeOpacity = this.LyricsVerticalEdgeOpacity,
-                IsFanLyricsEnabled = this.IsFanLyricsEnabled
+                IsFanLyricsEnabled = this.IsFanLyricsEnabled,
+                FanLyricsAngle = this.FanLyricsAngle,
             };
         }
     }
