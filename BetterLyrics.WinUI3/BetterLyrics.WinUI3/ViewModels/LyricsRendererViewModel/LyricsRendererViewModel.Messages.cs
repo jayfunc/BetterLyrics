@@ -56,6 +56,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsFloatAnimationEnabled))
                 {
                 }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Is3DLyricsEnabled))
+                {
+                    _isLyrics3DMatrixChanged = true;
+                }
             }
             else if (message.Sender is MediaSourceProviderInfo)
             {
@@ -210,6 +214,22 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 else if (message.PropertyName == nameof(LyricsEffectSettings.FanLyricsAngle))
                 {
                     _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DXAngle))
+                {
+                    _isLyrics3DMatrixChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DYAngle))
+                {
+                    _isLyrics3DMatrixChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DZAngle))
+                {
+                    _isLyrics3DMatrixChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DDepth))
+                {
+                    _isLyrics3DMatrixChanged = true;
                 }
             }
             else if (message.Sender is LyricsStyleSettings)
@@ -367,7 +387,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     UpdateColorConfig();
                     UpdateSongInfoFontSize();
-                    
+
                     _isLayoutChanged = true;
                 }
             }

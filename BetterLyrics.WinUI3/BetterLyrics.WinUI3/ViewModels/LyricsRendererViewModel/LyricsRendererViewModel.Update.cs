@@ -56,6 +56,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isSpectrumOverlayEnabledChanged = true;
 
+        private bool _isLyrics3DMatrixChanged = true;
+
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
             _elapsedTime = args.Timing.ElapsedTime;
@@ -163,6 +165,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 UpdateSongInfoFontSize();
 
                 _isCoverAcrylicEffectAmountChanged = true;
+                _isLyrics3DMatrixChanged = true;
 
                 _effect?.Properties["Width"] = (float)control.ConvertDipsToPixels((float)_canvasWidth, CanvasDpiRounding.Round);
                 _effect?.Properties["Height"] = (float)control.ConvertDipsToPixels((float)_canvasHeight, CanvasDpiRounding.Round);
@@ -274,6 +277,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _isSongInfoFontSizeChanged = false;
                 _isSongTitleVisibilityChanged = false;
                 _isSongArtistsVisibilityChanged = false;
+
+                _isLyrics3DMatrixChanged = true;
             }
 
             // 先重置这两个的变化状态
@@ -387,6 +392,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _maxLyricsWidth = _canvasWidth - _lyricsXTransition.Value - _rightMargin;
                 _maxLyricsWidth = Math.Max(_maxLyricsWidth, 0);
                 _isLayoutChanged = true;
+                _isLyrics3DMatrixChanged = true;
+            }
+
+            if (_isLyrics3DMatrixChanged)
+            {
+                UpdateLyrics3DMatrix();
+                _isLyrics3DMatrixChanged = false;
             }
 
             if (_isLayoutChanged)
@@ -797,6 +809,38 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _artistTextFormat.FontSize = (int)(_titleTextFormat.FontSize * 0.8);
 
             _isSongInfoFontSizeChanged = true;
+        }
+
+        private void UpdateLyrics3DMatrix()
+        {
+            if (!_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Is3DLyricsEnabled) return;
+
+            Vector3 center = new(
+                (float)(_lyricsXTransition.Value + _maxLyricsWidth / 2),
+                (float)(_lyricsYTransition.Value + _canvasHeight / 2),
+                0);
+
+            float rotationX = (float)(Math.PI * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Lyrics3DXAngle / 180.0);
+            float rotationY = (float)(Math.PI * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Lyrics3DYAngle / 180.0);
+            float rotationZ = (float)(Math.PI * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Lyrics3DZAngle / 180.0);
+
+            Matrix4x4 rotation =
+                Matrix4x4.CreateRotationX(rotationX) *
+                Matrix4x4.CreateRotationY(rotationY) *
+                Matrix4x4.CreateRotationZ(rotationZ);
+            Matrix4x4 perspective = Matrix4x4.Identity;
+            perspective.M34 = 1.0f / _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Lyrics3DDepth;
+
+            // 组合变换：
+            // 1. 将中心移到原点
+            // 2. 旋转
+            // 3. 应用透视
+            // 4. 将中心移回原位
+            _lyrics3DMatrix =
+                Matrix4x4.CreateTranslation(-center) *
+                rotation *
+                perspective *
+                Matrix4x4.CreateTranslation(center);
         }
     }
 }

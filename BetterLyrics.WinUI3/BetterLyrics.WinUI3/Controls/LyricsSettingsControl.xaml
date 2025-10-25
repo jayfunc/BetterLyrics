@@ -378,6 +378,53 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
+                    <!--  3D 歌词  -->
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPage3DLyrics"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE914;}"
+                        IsExpanded="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard Header="X" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Frequency="1"
+                                    Maximum="90"
+                                    Minimum="-90"
+                                    Unit="°"
+                                    Value="{x:Bind LyricsEffectSettings.Lyrics3DXAngle, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard Header="Y" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Frequency="1"
+                                    Maximum="90"
+                                    Minimum="-90"
+                                    Unit="°"
+                                    Value="{x:Bind LyricsEffectSettings.Lyrics3DYAngle, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard Header="Z" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Frequency="1"
+                                    Maximum="90"
+                                    Minimum="-90"
+                                    Unit="°"
+                                    Value="{x:Bind LyricsEffectSettings.Lyrics3DZAngle, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPage3DLyricsDepth" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="1000"
+                                    Frequency="10"
+                                    Maximum="1000"
+                                    Minimum="100"
+                                    Unit="°"
+                                    Value="{x:Bind LyricsEffectSettings.Lyrics3DDepth, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
                     <!--  滚动动画  -->
                     <controls:SettingsExpander
                         x:Uid="SettingsPageScrollEasing"

@@ -52,7 +52,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             DrawFluidBackground(control, combinedDs);
             DrawSpectrum(control, combinedDs);
 
-            combinedDs.DrawImage(blurredLyrics);
+            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
+            {
+                using var perspectiveEffect = new Transform3DEffect
+                {
+                    Source = blurredLyrics,
+                    TransformMatrix = _lyrics3DMatrix
+                };
+
+                combinedDs.DrawImage(perspectiveEffect);
+            }
+            else
+            {
+                combinedDs.DrawImage(blurredLyrics);
+            }
 
             ds.DrawImage(combined);
 
@@ -318,10 +331,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                 double yOffset = line.YOffsetTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
 
-                // 组合变换：缩放 -> 旋转 -> 平移
+                //// 组合变换：缩放 -> 旋转 -> 平移
                 ds.Transform =
                     Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition)
-                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value, 
+                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value,
                     currentPlayingLine.Position.WithX(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0))
                     * Matrix3x2.CreateTranslation((float)_lyricsXTransition.Value, (float)yOffset);
 
