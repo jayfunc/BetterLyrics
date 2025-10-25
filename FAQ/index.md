@@ -1,44 +1,54 @@
 # Welcome to BetterLyrics
 
-### Where I can find the logs?
+### 🤔 Where can I find the logs?
 `%LocalAppData%\Packages\37412.BetterLyrics_rd1g0rsrrtxw8\LocalCache\logs`
 
-### Where I can find the lyrics cache?
+### 🤔 Where can I find the lyrics cache?
 `%LocalAppData%\Packages\37412.BetterLyrics_rd1g0rsrrtxw8\LocalCache\lyrics`
 
-### How to add more modes?
+### 🤔 I cannot see any buttons.
 
-If this is the first time that you use this app, only standard mode was initially added for you. To add more modes, follow the steps below:
+By default, the top command bar and the bottom command bar (playback control panel) are automatically hidden when your mouse is out of those areas. Just hover your mouse back to those areas to show them again.
+
+### 🤔 No music is playing now. What should I do?
+
+Some of the players need additional config, check out **Multiple Music Players Supported** under [this](https://github.com/jayfunc/BetterLyrics/blob/dev/README.md#-highlighted-features) section.
+
+### 🤔 How to add more modes?
+
+If this is the first time that you use this app, only the standard mode was initially added for you. To add more modes, follow the steps below:
 
 Settings -> Lyrics window manager -> Create from templates -> Fullscreen mode
 
 ![](PixPin_2025-10-24_18-06-32.gif)
 
-### How to switch modes?
+### 🤔 How to switch modes?
 
-You can switch modes by pressing default shortcuts `Ctrl + Alt + S` and then choosing one of the modes displayed on your screen. (Press `Escape` to close the choosing window)
+You can switch modes by pressing the default shortcuts `Ctrl + Alt + S` and then choosing one of the modes displayed on your screen. (Press `Escape` to close the choosing window)
 
 ![](PixPin_2025-10-24_18-07-45.gif)
 
-### How to move and resize the window? I cannot touch the window.
+### 🤔 How to move and resize the window? I cannot touch the window.
 
 ![](PixPin_2025-10-25_09-08-47.gif)
 
-### How to install ".msixbundle" package? (for test package only)
+### 🤔 How to install ".msixbundle" package? (for test package only)
 [See this doc](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/How2Install.md)
 
-### Lyrics are moving back and forth constantly, how to fix it?
+### 🤔 Lyrics are moving back and forth constantly.
 ![](Snipaste_2025-08-22_14-59-53.png)
 
 Go to Settings > Playback sources > Disable "Lyrics timeline sync" or increase "Lyrics timeline sync threshold"
 
-### Wrong lyrics are shown, how to fix it?
+### 🤔 Wrong lyrics are shown.
 ![](image.png)
 
-Open search panel to manually search for the correct lyrics.
+Open the search panel to manually search for the correct lyrics.
 
-### Playback control panel is not showing in dock mode, how to fix it?
+### 🤔 Bottom command bar (playback control panel) is hidden?
+
+By default, the playback control panel at the bottom is hidden automatically when your mouse is out of that area. 
 
 ![](Snipaste_2025-08-22_14-50-16.png)
 
-Hover over the bottom of the lyrics window and click on the white line to show the playback control panel.
+But when the window size is too small to place that panel, only hovering over the bottom of the lyrics window and clicking on the white line can the playback control panel be displayed, or just right-click on the inner side of the window.
