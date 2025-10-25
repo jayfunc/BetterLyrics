@@ -1256,7 +1256,7 @@
     <value>창 위치를 재설정합니다</value>
   </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>Restart</value>
+    <value>재시작</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>열기 설정</value>
