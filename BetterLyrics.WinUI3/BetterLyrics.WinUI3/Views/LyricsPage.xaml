@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:const="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,19 +19,27 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged" RightTapped="RootGrid_RightTapped">
+    <Grid
+        x:Name="RootGrid"
+        RightTapped="RootGrid_RightTapped"
+        SizeChanged="RootGrid_SizeChanged">
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
         <!--<Image Source="/Assets/Cover.jpg" />-->
 
         <!--  No music playing placeholder  -->
         <Grid x:Name="NoMusicPlayingGrid" Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
-            <TextBlock
-                x:Uid="MainPageNoMusicPlaying"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontFamily="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
-                FontSize="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}" />
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock
+                    x:Uid="MainPageNoMusicPlaying"
+                    HorizontalAlignment="Center"
+                    FontFamily="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
+                    FontSize="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}"
+                    TextWrapping="Wrap" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <HyperlinkButton x:Uid="SettingsPageFAQ" NavigateUri="{x:Bind const:Link.FAQUrl}" />
+                </StackPanel>
+            </StackPanel>
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
