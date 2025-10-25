@@ -460,6 +460,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>If you like this project, please consider supporting it by donating. Your support will help keep the project alive and encourage further development.</value>
   </data>
+  <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
+    <value>3D lyrics</value>
+  </data>
+  <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
+    <value>Depth</value>
+  </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>About</value>
   </data>

@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
@@ -173,6 +174,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         public partial ElementTheme ThemeTypeSent { get; set; }
 
         private SpectrumAnalyzer? _spectrumAnalyzer;
+
+        private Matrix4x4 _lyrics3DMatrix = Matrix4x4.Identity;
 
         public LyricsRendererViewModel(
             ISettingsService settingsService,

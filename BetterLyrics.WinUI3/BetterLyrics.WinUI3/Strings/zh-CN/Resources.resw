@@ -460,6 +460,12 @@
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的生命并鼓励进一步的发展。</value>
   </data>
+  <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
+    <value>3D 歌词</value>
+  </data>
+  <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
+    <value>深度</value>
+  </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>关于</value>
   </data>
