@@ -358,9 +358,25 @@
                     </controls:SettingsExpander>
 
                     <!--  扇形歌词  -->
-                    <controls:SettingsCard x:Uid="SettingsPageFan" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEBC5;}">
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageFan"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xEBC5;}"
+                        IsExpanded="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard IsEnabled="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="30"
+                                    Frequency="1"
+                                    Maximum="90"
+                                    Minimum="-90"
+                                    Unit="°"
+                                    Value="{x:Bind LyricsEffectSettings.FanLyricsAngle, Mode=TwoWay}" />
+
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  滚动动画  -->
                     <controls:SettingsExpander

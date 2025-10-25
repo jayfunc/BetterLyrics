@@ -207,6 +207,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isLayoutChanged = true;
                 }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.FanLyricsAngle))
+                {
+                    _isLayoutChanged = true;
+                }
             }
             else if (message.Sender is LyricsStyleSettings)
             {

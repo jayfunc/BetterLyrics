@@ -321,7 +321,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 // 组合变换：缩放 -> 旋转 -> 平移
                 ds.Transform =
                     Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition)
-                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value, currentPlayingLine.Position)
+                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value, 
+                    currentPlayingLine.Position.WithX(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0))
                     * Matrix3x2.CreateTranslation((float)_lyricsXTransition.Value, (float)yOffset);
 
                 using var combined = new CanvasCommandList(control);

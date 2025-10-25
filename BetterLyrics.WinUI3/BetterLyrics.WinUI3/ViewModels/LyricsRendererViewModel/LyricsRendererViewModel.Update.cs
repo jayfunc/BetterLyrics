@@ -696,7 +696,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                     line.AngleTransition.StartTransition(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsFanLyricsEnabled
                             ? Math.PI
-                                * (30.0 / 180.0)
+                                * (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.FanLyricsAngle / 180.0)
                                 * distanceFactor
                                 * (i > _playingLineIndex ? 1 : -1)
                             : 0
