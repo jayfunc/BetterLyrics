@@ -202,7 +202,7 @@
     <value>向 LibreTranslate 请求翻译失败，请检查设置或本机 LibreTranslate 配置</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
-    <value>加载歌词中...</value>
+    <value>正在加载歌词……</value>
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
     <value>未找到歌词</value>
@@ -671,7 +671,7 @@
     <value>平滑步进</value>
   </data>
   <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>English</value>
+    <value>英语 (English)</value>
   </data>
   <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>环境色彩采样模式</value>
@@ -752,7 +752,7 @@
     <value>广东话拼音</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
-    <value>한국어</value>
+    <value>韩语（한국어）</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>语言</value>
@@ -1181,7 +1181,7 @@
     <value>目标语言</value>
   </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁體中文</value>
+    <value>繁体中文（繁體中文）</value>
   </data>
   <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
