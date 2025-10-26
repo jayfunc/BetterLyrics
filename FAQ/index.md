@@ -42,7 +42,7 @@ Alternatively, you can skip the steps above and directly adjust window position 
 ![](PixPin_2025-10-25_09-08-47.gif)
 
 ### 🤔 How to install ".msixbundle" package? (for test package only)
-[See this doc](https://github.com/jayfunc/BetterLyrics/blob/dev/How2Install/index.md)
+[See this doc](https://github.com/jayfunc/BetterLyrics/blob/dev/Sideloadly/index.md)
 
 ### 🤔 Lyrics are moving back and forth constantly.
 ![](Snipaste_2025-08-22_14-59-53.png)
