@@ -32,7 +32,23 @@ namespace BetterLyrics.WinUI3.Models
             LyricsLines = lyricsLines;
         }
 
-        public void SetDisplayedTextAlongWith(LyricsData translationData, string separator, int toleranceMs = 0)
+        public void ClearTranslatedText()
+        {
+            foreach (var line in LyricsLines)
+            {
+                line.TranslatedText = "";
+            }
+        }
+
+        public void ClearPhoneticText()
+        {
+            foreach (var line in LyricsLines)
+            {
+                line.PhoneticText = "";
+            }
+        }
+
+        public void SetTranslatedText(LyricsData translationData, string separator, int toleranceMs = 0)
         {
             foreach (var line in LyricsLines)
             {
@@ -42,17 +58,39 @@ namespace BetterLyrics.WinUI3.Models
 
                 if (transLine != null)
                 {
-                    line.DisplayedText = $"{line.OriginalText}{separator}{transLine.OriginalText}";
+                    // 此处 transLine.OriginalText 指翻译中的“原文”属性
+                    line.TranslatedText = transLine.OriginalText;
                 }
                 else
                 {
-                    // 没有匹配的翻译，翻译部分留空
-                    line.DisplayedText = $"{line.OriginalText}";
+                    // 没有匹配的翻译
+                    line.TranslatedText = "";
                 }
             }
         }
 
-        public void SetDisplayedTextAlongWith(string translation, string separator)
+        public void SetPhoneticText(LyricsData phoneticData, string separator, int toleranceMs = 0)
+        {
+            foreach (var line in LyricsLines)
+            {
+                // 在音译歌词中查找与当前行开始时间最接近且在容忍范围内的行
+                var transLine = phoneticData.LyricsLines
+                    .FirstOrDefault(t => Math.Abs(t.StartMs - line.StartMs) <= toleranceMs);
+
+                if (transLine != null)
+                {
+                    // 此处 transLine.OriginalText 指音译中的“原文”属性
+                    line.PhoneticText = transLine.OriginalText;
+                }
+                else
+                {
+                    // 没有匹配的音译
+                    line.PhoneticText = "";
+                }
+            }
+        }
+
+        public void SetTranslation(string translation, string separator)
         {
             List<string> translationArr = translation.Split(StringHelper.NewLine).ToList();
             int i = 0;
@@ -60,21 +98,13 @@ namespace BetterLyrics.WinUI3.Models
             {
                 if (i >= translationArr.Count)
                 {
-                    line.DisplayedText = line.OriginalText; // No translation available, keep original text
+                    line.TranslatedText = ""; // No translation available, keep empty
                 }
                 else
                 {
-                    line.DisplayedText = $"{line.OriginalText}{separator}{translationArr[i]}";
+                    line.TranslatedText = translationArr[i];
                 }
                 i++;
-            }
-        }
-
-        public void SetDisplayedTextInOriginalText()
-        {
-            foreach (var line in LyricsLines)
-            {
-                line.DisplayedText = line.OriginalText;
             }
         }
 
@@ -120,8 +150,9 @@ namespace BetterLyrics.WinUI3.Models
                 {
                     StartMs = 0,
                     EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
+                    PhoneticText = "",
                     OriginalText = "● ● ●",
-                    DisplayedText = "● ● ●",
+                    TranslatedText = "",
                     LyricsChars = [],
                 },
             ]);

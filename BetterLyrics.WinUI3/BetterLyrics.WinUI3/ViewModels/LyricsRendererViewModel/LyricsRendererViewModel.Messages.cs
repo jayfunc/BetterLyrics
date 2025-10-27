@@ -234,7 +234,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
             else if (message.Sender is LyricsStyleSettings)
             {
-                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontSize))
+                if (message.PropertyName == nameof(LyricsStyleSettings.PhoneticLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.OriginalLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.TranslatedLyricsFontSize))
                 {
                     _isLayoutChanged = true;
                 }
@@ -268,7 +276,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isLayoutChanged = true;
                 }
-                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsHighlightScope))
+                else if (message.PropertyName == nameof(LyricsEffectSettings.OriginalLyricsHighlightScope))
                 {
                     _isLayoutChanged = true;
                 }
@@ -372,7 +380,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (message.Sender is LyricsStyleSettings)
             {
-                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontFamily))
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+            if (message.Sender is LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
                 {
                     _isLayoutChanged = true;
                 }

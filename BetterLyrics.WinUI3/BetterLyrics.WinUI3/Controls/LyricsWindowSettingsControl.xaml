@@ -268,9 +268,14 @@
                     <uc:AlbumArtLayoutSettingsControl AlbumArtLayoutSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings, Mode=OneWay}" />
                 </controls:Case>
 
-                <!--  Lyrics style and effect  -->
-                <controls:Case Value="Lyrics">
-                    <uc:LyricsSettingsControl LyricsEffectSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" LyricsStyleSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
+                <!--  Lyrics style  -->
+                <controls:Case Value="LyricsStyle">
+                    <uc:LyricsStyleSettingsControl LyricsStyleSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Lyrics  effect  -->
+                <controls:Case Value="LyricsEffect">
+                    <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
                 </controls:Case>
 
                 <!--  Lyrics background  -->
@@ -349,13 +354,23 @@
                                 </StackPanel>
                             </ListViewItem>
 
-                            <ListViewItem Tag="Lyrics">
+                            <ListViewItem Tag="LyricsStyle">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <FontIcon
                                         FontFamily="{StaticResource IconFontFamily}"
                                         FontSize="16"
                                         Glyph="&#xEDC6;" />
-                                    <TextBlock x:Uid="SettingsPageLyrics" VerticalAlignment="Center" />
+                                    <TextBlock x:Uid="SettingsPageLyricsStyle" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </ListViewItem>
+
+                            <ListViewItem Tag="LyricsEffect">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <FontIcon
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xF4A5;" />
+                                    <TextBlock x:Uid="SettingsPageLyricsEffect" VerticalAlignment="Center" />
                                 </StackPanel>
                             </ListViewItem>
 

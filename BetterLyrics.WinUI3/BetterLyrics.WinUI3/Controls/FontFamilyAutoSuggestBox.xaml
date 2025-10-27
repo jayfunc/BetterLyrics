@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.FontFamilyAutoSuggestBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" Spacing="6">
+            <AutoSuggestBox
+                x:Name="AutoSuggestBox"
+                Width="150"
+                GotFocus="AutoSuggestBox_GotFocus"
+                LostFocus="AutoSuggestBox_LostFocus"
+                SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+                Text="{x:Bind SelectedFontFamily, Mode=OneWay}"
+                TextChanged="AutoSuggestBox_TextChanged" />
+            <Button
+                Click="Button_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      FontSize=12,
+                                      Glyph=&#xE72C;}"
+                Style="{StaticResource GhostButtonStyle}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

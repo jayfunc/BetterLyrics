@@ -306,10 +306,7 @@
                         </controls:SettingsExpander>
 
                         <!--  Lyrics phonetic  -->
-                        <controls:SettingsExpander
-                            x:Uid="SettingsPageChinese"
-                            IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}"
-                            IsExpanded="True">
+                        <controls:SettingsExpander x:Uid="SettingsPageChinese" IsExpanded="True">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=TwoWay}" />
                             <controls:SettingsExpander.Items>
                                 <controls:SettingsCard>
@@ -320,7 +317,7 @@
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
-                        <controls:SettingsCard x:Uid="SettingsPageJapanese" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
+                        <controls:SettingsCard x:Uid="SettingsPageJapanese">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
                         </controls:SettingsCard>
 

@@ -27,8 +27,9 @@
 		<None Remove="Controls\AppSettingsControl.xaml" />
 		<None Remove="Controls\DemoWindowGrid.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
+		<None Remove="Controls\FontFamilyAutoSuggestBox.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
-		<None Remove="Controls\LyricsSettingsControl.xaml" />
+		<None Remove="Controls\LyricsStyleSettingsControl.xaml" />
 		<None Remove="Controls\LyricsWindowSettingsControl.xaml" />
 		<None Remove="Controls\LyricsWindowSwitchControl.xaml" />
 		<None Remove="Controls\MediaSettingsControl.xaml" />
@@ -201,6 +202,16 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
+	  <Page Update="Controls\FontFamilyAutoSuggestBox.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\LyricsStyleSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
 	  <Page Update="Views\LyricsWindowSwitchWindow.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
@@ -241,7 +252,7 @@
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsSettingsControl.xaml">
+	  <Page Update="Controls\LyricsEffectSettingsControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

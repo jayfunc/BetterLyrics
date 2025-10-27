@@ -571,6 +571,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>Convert Chinese to Traditional Chinese</value>
   </data>
+  <data name="SettingsPageCJK.Header" xml:space="preserve">
+    <value>CJK Unified Ideograph</value>
+  </data>
   <data name="SettingsPageClickThrough.Header" xml:space="preserve">
     <value>Click-through</value>
   </data>
@@ -718,6 +721,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>Follow system</value>
   </data>
+  <data name="SettingsPageFontColor.Header" xml:space="preserve">
+    <value>Font color</value>
+  </data>
   <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>Keep the lyrics window on top by polling</value>
   </data>
@@ -814,9 +820,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX Music Server</value>
   </data>
-  <data name="SettingsPageLyrics.Text" xml:space="preserve">
-    <value>Lyrics style and effect</value>
-  </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>Alignment</value>
   </data>
@@ -824,7 +827,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Lyrics background</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>Font color (Non-current playback area)</value>
+    <value>Non-current playback area</value>
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>Font opacity (Non-current playback area)</value>
@@ -860,7 +863,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Extra Light</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>Font color (Current playback area)</value>
+    <value>Current playback area</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>Adaptive to lyrics background (Colored)</value>
@@ -897,6 +900,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Glow effect</value>
+  </data>
+  <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
+    <value>Highlight</value>
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>Original highlight range</value>
@@ -945,9 +951,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
     <value>Shadows</value>
-  </data>
-  <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
-    <value>Lyrics stroke color</value>
   </data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>Lyrics style</value>
@@ -1027,6 +1030,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>Open in file explorer</value>
   </data>
+  <data name="SettingsPageOriginalText.Header" xml:space="preserve">
+    <value>Original text</value>
+  </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Color picker style</value>
   </data>
@@ -1041,6 +1047,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>The path cannot be found on your computer</value>
+  </data>
+  <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
+    <value>Phonetic text</value>
   </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>Pinyin of Mandarin</value>
@@ -1180,6 +1189,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageStandardMode.Text" xml:space="preserve">
     <value>Standard mode</value>
   </data>
+  <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke color</value>
+  </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>Default</value>
   </data>
@@ -1213,6 +1225,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
     <value>Switch in and cut out shortcut keys</value>
   </data>
+  <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
+    <value>Translated text</value>
+  </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>Lyrics translation</value>
   </data>
@@ -1227,6 +1242,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="SettingsPageWesternChar.Header" xml:space="preserve">
+    <value>Latin alphabet</value>
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>Width</value>

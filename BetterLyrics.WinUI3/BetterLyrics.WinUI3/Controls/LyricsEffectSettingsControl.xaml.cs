@@ -21,27 +21,15 @@ using Windows.Foundation.Collections;
 
 namespace BetterLyrics.WinUI3.Controls
 {
-    public sealed partial class LyricsSettingsControl : UserControl
+    public sealed partial class LyricsEffectSettingsControl : UserControl
     {
-        public ObservableCollection<string> SystemFontNames { get; set; } = [.. FontHelper.SystemFontFamilies];
-
-        public LyricsSettingsControl()
+        public LyricsEffectSettingsControl()
         {
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty LyricsStyleSettingsProperty =
-            DependencyProperty.Register(nameof(LyricsStyleSettings), typeof(LyricsStyleSettings), typeof(LyricsSettingsControl), new PropertyMetadata(default));
-
-        public LyricsStyleSettings LyricsStyleSettings
-        {
-            get => (LyricsStyleSettings)GetValue(LyricsStyleSettingsProperty);
-            set => SetValue(LyricsStyleSettingsProperty, value);
-        }
-
-
         public static readonly DependencyProperty LyricsEffectSettingsProperty =
-            DependencyProperty.Register(nameof(LyricsEffectSettings), typeof(LyricsEffectSettings), typeof(LyricsSettingsControl), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(LyricsEffectSettings), typeof(LyricsEffectSettings), typeof(LyricsEffectSettingsControl), new PropertyMetadata(default));
 
         public LyricsEffectSettings LyricsEffectSettings
         {

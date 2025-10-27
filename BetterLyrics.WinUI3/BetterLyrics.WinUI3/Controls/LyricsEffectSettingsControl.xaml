@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <UserControl
-    x:Class="BetterLyrics.WinUI3.Controls.LyricsSettingsControl"
+    x:Class="BetterLyrics.WinUI3.Controls.LyricsEffectSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
@@ -15,203 +15,6 @@
         <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                    <!--  Lyrics style  -->
-
-                    <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
-                        <ComboBox ItemsSource="{x:Bind SystemFontNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsStyleSettings.LyricsFontFamily, Mode=TwoWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </controls:SettingsCard>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8DD;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsFontWeight, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsThin" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsExtraLight" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsLight" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsSemiLight" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsNormal" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsMedium" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsSemiBold" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsBold" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsExtraBold" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsBlack" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsExtraBlack" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsBgFontOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB42;}">
-                        <local:ExtendedSlider
-                            Default="30"
-                            Frequency="1"
-                            Maximum="100"
-                            Minimum="0"
-                            Unit="%"
-                            Value="{x:Bind LyricsStyleSettings.LyricsBgFontOpacity, Mode=TwoWay}" />
-                    </controls:SettingsCard>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC12;}">
-                        <local:ExtendedSlider
-                            Default="0"
-                            Frequency="1"
-                            Maximum="5"
-                            Minimum="0"
-                            Value="{x:Bind LyricsStyleSettings.LyricsFontStrokeWidth, Mode=TwoWay}" />
-                    </controls:SettingsCard>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsStrokeFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D3;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
-                    <ColorPicker
-                        ColorSpectrumShape="Box"
-                        IsAlphaEnabled="True"
-                        IsAlphaSliderVisible="True"
-                        IsAlphaTextInputVisible="True"
-                        IsColorChannelTextInputVisible="True"
-                        IsColorSliderVisible="True"
-                        IsHexInputVisible="True"
-                        IsMoreButtonVisible="True"
-                        Color="{x:Bind LyricsStyleSettings.LyricsCustomStrokeFontColor, Mode=TwoWay}">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="Equal"
-                                Value="2">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </interactivity:DataTriggerBehavior>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="NotEqual"
-                                Value="2">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </interactivity:DataTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                    </ColorPicker>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsBgFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D3;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
-                    <ColorPicker
-                        ColorSpectrumShape="Box"
-                        IsAlphaEnabled="True"
-                        IsAlphaSliderVisible="True"
-                        IsAlphaTextInputVisible="True"
-                        IsColorChannelTextInputVisible="True"
-                        IsColorSliderVisible="True"
-                        IsHexInputVisible="True"
-                        IsMoreButtonVisible="True"
-                        Color="{x:Bind LyricsStyleSettings.LyricsCustomBgFontColor, Mode=TwoWay}">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="Equal"
-                                Value="2">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </interactivity:DataTriggerBehavior>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="NotEqual"
-                                Value="2">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </interactivity:DataTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                    </ColorPicker>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsFgFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D3;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
-                    <ColorPicker
-                        ColorSpectrumShape="Box"
-                        IsAlphaEnabled="True"
-                        IsAlphaSliderVisible="True"
-                        IsAlphaTextInputVisible="True"
-                        IsColorChannelTextInputVisible="True"
-                        IsColorSliderVisible="True"
-                        IsHexInputVisible="True"
-                        IsMoreButtonVisible="True"
-                        Color="{x:Bind LyricsStyleSettings.LyricsCustomFgFontColor, Mode=TwoWay}">
-                        <interactivity:Interaction.Behaviors>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind LyricsStyleSettings.LyricsFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="Equal"
-                                Value="2">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                            </interactivity:DataTriggerBehavior>
-                            <interactivity:DataTriggerBehavior
-                                Binding="{x:Bind LyricsStyleSettings.LyricsFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                ComparisonCondition="NotEqual"
-                                Value="2">
-                                <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                            </interactivity:DataTriggerBehavior>
-                        </interactivity:Interaction.Behaviors>
-                    </ColorPicker>
-
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageLyricsFontSize"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xE8E9;}"
-                        IsExpanded="True">
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
-                                <ToggleSwitch IsOn="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                            <controls:SettingsCard IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
-                                <local:ExtendedSlider
-                                    Frequency="2"
-                                    Maximum="96"
-                                    Minimum="12"
-                                    ResetButtonVisibility="Collapsed"
-                                    Value="{x:Bind LyricsStyleSettings.LyricsFontSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF579;}">
-                        <local:ExtendedSlider
-                            x:Uid="SettingsPageLyricsLineSpacingFactorSlider"
-                            Default="0.5"
-                            Frequency="0.1"
-                            Maximum="2"
-                            Minimum="0"
-                            Unit="x"
-                            Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
-                    </controls:SettingsCard>
-
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsTranslationSeparator" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF464;}">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBox AcceptsReturn="True" Text="{x:Bind LyricsStyleSettings.LyricsTranslationSeparator, Mode=TwoWay}" />
-                            <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
-                        </StackPanel>
-                    </controls:SettingsCard>
 
                     <!--  Effect  -->
 
@@ -245,44 +48,48 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsLineFadeEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <!--  译文高亮  -->
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageLyricsTranslationHighlight"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xE7E6;}"
-                        IsExpanded="True">
+                    <!--  高亮  -->
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsHighlight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E6;}">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAmount">
+
+                            <controls:SettingsCard x:Uid="SettingsPagePhoneticText">
                                 <local:ExtendedSlider
                                     Default="60"
                                     Frequency="5"
                                     Maximum="100"
                                     Minimum="0"
-                                    Value="{x:Bind LyricsEffectSettings.LyricsTranslationHighlightAmount, Mode=TwoWay}" />
+                                    Unit="%"
+                                    Value="{x:Bind LyricsEffectSettings.PhoneticLyricsHighlightAmount, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
 
-                    <!--  原文高亮  -->
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageLyricsHighlightScope"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xE7E6;}"
-                        IsExpanded="True">
-                        <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsHighlightScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
-                        </ComboBox>
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAmount">
+                            <controls:SettingsCard x:Uid="SettingsPageLyricsHighlightScope">
+                                <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.OriginalLyricsHighlightScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPageOriginalText">
                                 <local:ExtendedSlider
-                                    Default="100"
+                                    Default="60"
                                     Frequency="5"
                                     Maximum="100"
                                     Minimum="0"
-                                    Value="{x:Bind LyricsEffectSettings.LyricsHighlightAmount, Mode=TwoWay}" />
+                                    Unit="%"
+                                    Value="{x:Bind LyricsEffectSettings.OriginalLyricsHighlightAmount, Mode=TwoWay}" />
                             </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPageTranslatedText">
+                                <local:ExtendedSlider
+                                    Default="60"
+                                    Frequency="5"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsEffectSettings.TranslatedLyricsHighlightAmount, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
@@ -426,11 +233,7 @@
                     </controls:SettingsExpander>
 
                     <!--  滚动动画  -->
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageScrollEasing"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xECE7;}"
-                        IsExpanded="True">
+                    <controls:SettingsExpander x:Uid="SettingsPageScrollEasing" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xECE7;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeLinear" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeSmoothStep" />

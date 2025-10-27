@@ -203,7 +203,7 @@ namespace BetterLyrics.WinUI3.Models
                 EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
                 LyricsStyleSettings = new()
                 {
-                    LyricsFontSize = 20,
+                    OriginalLyricsFontSize = 20,
                     LyricsAlignmentType = TextAlignmentType.Center,
                 },
                 LyricsBackgroundSettings = new LyricsBackgroundSettings
@@ -230,7 +230,7 @@ namespace BetterLyrics.WinUI3.Models
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
-                    LyricsFontSize = 18,
+                    OriginalLyricsFontSize = 18,
                 },
                 LyricsBackgroundSettings = new LyricsBackgroundSettings
                 {
@@ -253,7 +253,7 @@ namespace BetterLyrics.WinUI3.Models
                 LyricsLayoutOrientation = Enums.LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
-                    LyricsFontSize = 72,
+                    OriginalLyricsFontSize = 72,
                     LyricsAlignmentType = Enums.TextAlignmentType.Center,
                 },
                 AlbumArtLayoutSettings = new AlbumArtLayoutSettings

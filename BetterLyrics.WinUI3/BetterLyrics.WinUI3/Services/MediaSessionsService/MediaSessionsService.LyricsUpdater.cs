@@ -36,27 +36,22 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private async Task RefreshTranslationAsync(CancellationToken token)
         {
             TranslationSearchProvider = null;
-            _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
+            _lyricsDataArr.ElementAtOrDefault(0)?.ClearTranslatedText();
             LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
             IsTranslating = true;
 
-            if (_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled)
-            {
-                await SetDisplayedAlongWithTranslationsAsync(token);
-                if (token.IsCancellationRequested) return;
-            }
-            else
-            {
-                _logger.LogInformation("Translation is disabled, showing original lyrics only.");
-                _lyricsDataArr.ElementAtOrDefault(0)?.SetDisplayedTextInOriginalText();
-                _langIndex = 0;
-            }
+            await SetPhoneticTextAsync(token);
+            await SetTranslatedTextAsync(token);
+            if (token.IsCancellationRequested) return;
+
             IsTranslating = false;
             LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
         }
 
-        private async Task SetDisplayedAlongWithTranslationsAsync(CancellationToken token)
+        private async Task SetTranslatedTextAsync(CancellationToken token)
         {
+            if (!_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled) return;
+
             _logger.LogInformation("Showing translation for lyrics...");
             string targetLangCode = _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode;
             _logger.LogInformation("Target language code: {TargetLangCode}", targetLangCode);
@@ -66,30 +61,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
             _logger.LogInformation("Original language code: {OriginalLangCode}", originalLangCode ?? "null");
 
-            if (originalLangCode == "zh" && _settingsService.AppSettings.TranslationSettings.IsChineseRomanizationEnabled)
-            {
-                switch (_settingsService.AppSettings.TranslationSettings.ChineseRomanization)
-                {
-                    case ChineseRomanization.Pinyin:
-                        targetLangCode = "pinyin";
-                        break;
-                    case ChineseRomanization.Jyutping:
-                        targetLangCode = "jyutping";
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (originalLangCode == "ja" && _settingsService.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled)
-            {
-                targetLangCode = "romaji";
-            }
-
             if (originalLangCode == targetLangCode)
             {
                 _logger.LogInformation("Original lyrics already in target language: {TargetLangCode}", targetLangCode);
 
-                _lyricsDataArr[0].SetDisplayedTextInOriginalText();
+                _lyricsDataArr[0].ClearTranslatedText();
             }
             else
             {
@@ -100,12 +76,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
                     if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
                     {
-                        _lyricsDataArr[found].SetDisplayedTextInOriginalText();
+                        _lyricsDataArr[found].ClearTranslatedText();
                         _langIndex = found;
                     }
                     else
                     {
-                        _lyricsDataArr[0].SetDisplayedTextAlongWith(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                        _lyricsDataArr[0].SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
                         _langIndex = 0;
                         TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
                     }
@@ -123,12 +99,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
                         {
                             _lyricsDataArr[^1] = _lyricsDataArr[0].CreateLyricsDataFrom(translated);
-                            _lyricsDataArr[^1].SetDisplayedTextInOriginalText();
+                            _lyricsDataArr[^1].ClearTranslatedText();
                             _langIndex = _lyricsDataArr.Count - 1;
                         }
                         else
                         {
-                            _lyricsDataArr[0].SetDisplayedTextAlongWith(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
+                            _lyricsDataArr[0].SetTranslation(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
                             _langIndex = 0;
                         }
                         TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;
@@ -139,6 +115,52 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     }
                 }
             }
+        }
+
+        private async Task SetPhoneticTextAsync(CancellationToken token)
+        {
+            _logger.LogInformation("Showing phonetic text for lyrics...");
+            string targetPhoneticCode = "";
+            _logger.LogInformation("Target phonetic code: {TargetPhonetic}", targetPhoneticCode);
+            string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
+            if (originalText == null) return;
+
+            string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
+            _logger.LogInformation("Original language code: {OriginalLangCode}", originalLangCode ?? "null");
+
+            if (originalLangCode == "zh" && _settingsService.AppSettings.TranslationSettings.IsChineseRomanizationEnabled)
+            {
+                switch (_settingsService.AppSettings.TranslationSettings.ChineseRomanization)
+                {
+                    case ChineseRomanization.Pinyin:
+                        targetPhoneticCode = "pinyin";
+                        break;
+                    case ChineseRomanization.Jyutping:
+                        targetPhoneticCode = "jyutping";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if (originalLangCode == "ja" && _settingsService.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled)
+            {
+                targetPhoneticCode = "romaji";
+            }
+
+            if (targetPhoneticCode == "")
+            {
+                _lyricsDataArr[0].ClearPhoneticText();
+            }
+
+            // Try get phonetic text from itself first
+            int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr, targetPhoneticCode);
+            if (found >= 0)
+            {
+                _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
+                _lyricsDataArr[0].SetPhoneticText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                _langIndex = 0;
+            }
+
         }
 
         private async Task RefreshLyricsAsync(CancellationToken token)
@@ -180,8 +202,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _lyricsDataArr.Count);
 
-            // This ensures that original lyrics are always shown while waiting for translations
-            _lyricsDataArr[0].SetDisplayedTextInOriginalText();
+            // This ensures that translation is always reset while waiting for translations
+            _lyricsDataArr[0].ClearTranslatedText();
             LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
             ApplyChinesePreference();
             UpdateTranslations();
