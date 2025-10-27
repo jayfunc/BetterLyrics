@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial LyricsSearchResult? SelectedLyricsSearchResult { get; set; }
 
         [ObservableProperty]
-        public partial LyricsData? LyricsData { get; set; }
+        public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
 
         [ObservableProperty]
         public partial LyricsLine? SelectedLyricsLine { get; set; }
@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void InitMappedSongSearchQuery()
         {
             LyricsSearchResults.Clear();
-            LyricsData = null;
+            LyricsDataArr = null;
             if (_mediaSessionsService.SongInfo != null)
             {
                 var found = GetMappedSongSearchQueryFromSettings();
@@ -172,12 +172,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (value?.Raw != null)
             {
                 var lyricsParser = new LyricsParser();
-                var lyricsDataArr = lyricsParser.Parse(value?.Raw, (int?)_mediaSessionsService.SongInfo?.DurationMs);
-                LyricsData = lyricsDataArr.FirstOrDefault();
+                lyricsParser.Parse(value?.Title ?? "", value?.Artist ?? "", value?.Raw, (int?)_mediaSessionsService.SongInfo?.DurationMs, value?.Provider);
+                LyricsDataArr = [.. lyricsParser.LyricsDataArr];
             }
             else
             {
-                LyricsData = null;
+                LyricsDataArr = null;
             }
         }
 

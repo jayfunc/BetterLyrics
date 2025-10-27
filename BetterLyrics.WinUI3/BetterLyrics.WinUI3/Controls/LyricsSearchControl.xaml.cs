@@ -31,5 +31,10 @@ namespace BetterLyrics.WinUI3.Controls
             InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
         }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.SelectedLyricsLine = e.OriginalSource as LyricsLine;
+        }
     }
 }

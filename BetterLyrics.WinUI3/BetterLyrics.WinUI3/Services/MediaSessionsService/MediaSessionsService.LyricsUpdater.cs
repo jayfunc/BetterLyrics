@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Lyricify.Lyrics.Helpers.General;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             TranslationSearchProvider = null;
             _lyricsDataArr.ElementAtOrDefault(0)?.ClearTranslatedText();
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            {
+                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+            });
+
             IsTranslating = true;
 
             await SetPhoneticTextAsync(token);
@@ -45,7 +51,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (token.IsCancellationRequested) return;
 
             IsTranslating = false;
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            {
+                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+            });
         }
 
         private async Task SetTranslatedTextAsync(CancellationToken token)
@@ -170,7 +180,10 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             LyricsSearchProvider = null;
             _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
 
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            {
+                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+            });
 
             if (SongInfo != null)
             {
@@ -191,9 +204,10 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                 _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsSearchResult?.IsFound, LyricsSearchProvider?.ToString() ?? "null");
 
-                _lyricsDataArr = new LyricsParser().Parse(lyricsSearchResult?.Raw, (int?)SongInfo?.DurationMs);
+                var lyricsParser = new LyricsParser();
+                lyricsParser.Parse(SongInfo.Title, SongInfo.Artist, lyricsSearchResult?.Raw, (int?)SongInfo?.DurationMs, LyricsSearchProvider);
+                _lyricsDataArr = lyricsParser.LyricsDataArr;
                 ApplyChinesePreference();
-                FillTranslationFromCache(LyricsSearchProvider);
             }
             else
             {
@@ -204,7 +218,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             // Show original first while loading phonetic and translated
             ApplyChinesePreference();
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            {
+                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+            });
+
             UpdateTranslations();
         }
 
@@ -218,56 +237,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 {
                     item.OriginalText = traditionalChinesePreferred ? ChineseHelper.ToTC(item.OriginalText) : ChineseHelper.ToSC(item.OriginalText);
                 }
-            }
-        }
-
-        private void FillTranslationFromCache(LyricsSearchProvider? provider)
-        {
-            string? translationRaw = null;
-            switch (provider)
-            {
-                case Enums.LyricsSearchProvider.QQ:
-                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
-                    break;
-                case Enums.LyricsSearchProvider.Kugou:
-                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
-                    break;
-                case Enums.LyricsSearchProvider.Netease:
-                    translationRaw = FileHelper.ReadLyricsCache(SongInfo!.Title, SongInfo.Artist, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
-                    break;
-                case Enums.LyricsSearchProvider.LrcLib:
-                    break;
-                case Enums.LyricsSearchProvider.AmllTtmlDb:
-                    break;
-                case Enums.LyricsSearchProvider.LocalMusicFile:
-                    break;
-                case Enums.LyricsSearchProvider.LocalLrcFile:
-                    break;
-                case Enums.LyricsSearchProvider.LocalEslrcFile:
-                    break;
-                case Enums.LyricsSearchProvider.LocalTtmlFile:
-                    break;
-                default:
-                    break;
-            }
-            if (translationRaw != null)
-            {
-                var translationData = new LyricsParser().Parse(translationRaw, (int?)SongInfo?.DurationMs);
-                if (provider == Enums.LyricsSearchProvider.QQ)
-                {
-                    foreach (var data in translationData)
-                    {
-                        foreach (var item in data.LyricsLines)
-                        {
-                            if (item.OriginalText == "//")
-                            {
-                                item.OriginalText = "";
-                            }
-                        }
-                    }
-                }
-
-                _lyricsDataArr = _lyricsDataArr.Concat(translationData).ToList();
             }
         }
 

@@ -145,35 +145,46 @@
                     Visibility="{x:Bind ViewModel.IsSearching, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
             </Grid>
             <Grid Grid.Column="2">
-                <ListView ItemsSource="{x:Bind ViewModel.LyricsData.LyricsLines, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedLyricsLine, Mode=TwoWay}">
+                <Pivot ItemsSource="{x:Bind ViewModel.LyricsDataArr, Mode=OneWay}">
                     <interactivity:Interaction.Behaviors>
                         <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.LyricsData, Mode=OneWay}"
+                            Binding="{x:Bind ViewModel.LyricsDataArr, Mode=OneWay}"
                             ComparisonCondition="Equal"
                             Value="{x:Null}">
                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                         </interactivity:DataTriggerBehavior>
                         <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.LyricsData, Mode=OneWay}"
+                            Binding="{x:Bind ViewModel.LyricsDataArr, Mode=OneWay}"
                             ComparisonCondition="NotEqual"
                             Value="{x:Null}">
                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                         </interactivity:DataTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
-                    <ListView.ItemTemplate>
+                    <Pivot.HeaderTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{Binding StartMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
-                                <TextBlock
-                                    Margin="1,0"
-                                    Foreground="{ThemeResource SystemFillColorNeutralBrush}"
-                                    Text="-" />
-                                <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{Binding EndMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
-                                <TextBlock Margin="6,0" Text="{Binding OriginalText}" />
-                            </StackPanel>
+                            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{Binding LanguageCode, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </Pivot.HeaderTemplate>
+                    <Pivot.ItemTemplate>
+                        <DataTemplate>
+                            <ListView ItemsSource="{Binding LyricsLines, Mode=OneWay}" SelectionChanged="ListView_SelectionChanged">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{Binding StartMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                                            <TextBlock
+                                                Margin="1,0"
+                                                Foreground="{ThemeResource SystemFillColorNeutralBrush}"
+                                                Text="-" />
+                                            <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{Binding EndMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                                            <TextBlock Margin="6,0" Text="{Binding OriginalText}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </DataTemplate>
+                    </Pivot.ItemTemplate>
+                </Pivot>
                 <StackPanel
                     Padding="0,36"
                     HorizontalAlignment="Center"
@@ -182,13 +193,13 @@
                     <Image MaxWidth="100" Source="/Assets/Page.png" />
                     <interactivity:Interaction.Behaviors>
                         <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.LyricsData, Mode=OneWay}"
+                            Binding="{x:Bind ViewModel.LyricsDataArr, Mode=OneWay}"
                             ComparisonCondition="NotEqual"
                             Value="{x:Null}">
                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                         </interactivity:DataTriggerBehavior>
                         <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.LyricsData, Mode=OneWay}"
+                            Binding="{x:Bind ViewModel.LyricsDataArr, Mode=OneWay}"
                             ComparisonCondition="Equal"
                             Value="{x:Null}">
                             <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
