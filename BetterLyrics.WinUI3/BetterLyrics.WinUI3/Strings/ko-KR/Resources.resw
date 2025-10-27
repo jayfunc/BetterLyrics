@@ -571,6 +571,9 @@
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>중국어를 전통적인 중국어로 전환합니다</value>
   </data>
+  <data name="SettingsPageCJK.Header" xml:space="preserve">
+    <value>CJK Unified Ideograph</value>
+  </data>
   <data name="SettingsPageClickThrough.Header" xml:space="preserve">
     <value>클릭률</value>
   </data>
@@ -718,6 +721,9 @@
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>시스템을 따르십시오</value>
   </data>
+  <data name="SettingsPageFontColor.Header" xml:space="preserve">
+    <value>Font color</value>
+  </data>
   <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>투표를 통해 가사 창을 맨 위에 두세요</value>
   </data>
@@ -814,9 +820,6 @@
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX 음악 서버</value>
   </data>
-  <data name="SettingsPageLyrics.Text" xml:space="preserve">
-    <value>가사 스타일과 효과</value>
-  </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>조정</value>
   </data>
@@ -824,7 +827,7 @@
     <value>가사 배경</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>글꼴 색상 (비 전류 재생 영역)</value>
+    <value>Non-current playback area</value>
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>글꼴 불투명 (비 전류 재생 영역)</value>
@@ -860,7 +863,7 @@
     <value>여분의 빛</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>글꼴 색상 (현재 재생 영역)</value>
+    <value>Current playback area</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>가사 배경 (색상)에 적응</value>
@@ -897,6 +900,9 @@
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>글로우 효과</value>
+  </data>
+  <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
+    <value>Highlight</value>
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>원래 하이라이트 범위</value>
@@ -945,9 +951,6 @@
   </data>
   <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
     <value>그림자</value>
-  </data>
-  <data name="SettingsPageLyricsStrokeFontColor.Header" xml:space="preserve">
-    <value>가사 스트로크 컬러</value>
   </data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>가사 스타일</value>
@@ -1027,6 +1030,9 @@
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>파일 탐색기에서 열립니다</value>
   </data>
+  <data name="SettingsPageOriginalText.Header" xml:space="preserve">
+    <value>Original text</value>
+  </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>색상 선택 스타일</value>
   </data>
@@ -1041,6 +1047,9 @@
   </data>
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>경로는 컴퓨터에서 찾을 수 없습니다</value>
+  </data>
+  <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
+    <value>Phonetic text</value>
   </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>만다린의 피니 인</value>
@@ -1180,6 +1189,9 @@
   <data name="SettingsPageStandardMode.Text" xml:space="preserve">
     <value>표준 모드</value>
   </data>
+  <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke color</value>
+  </data>
   <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
     <value>기본</value>
   </data>
@@ -1213,6 +1225,9 @@
   <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
     <value>바로 가기 키를 자르고 잘라냅니다</value>
   </data>
+  <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
+    <value>Translated text</value>
+  </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>가사 번역</value>
   </data>
@@ -1227,6 +1242,9 @@
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>버전</value>
+  </data>
+  <data name="SettingsPageWesternChar.Header" xml:space="preserve">
+    <value>Latin alphabet</value>
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>너비</value>
