@@ -10,9 +10,11 @@
     mc:Ignorable="d">
 
     <Window.SystemBackdrop>
-        <MicaBackdrop />
+        <DesktopAcrylicBackdrop />
     </Window.SystemBackdrop>
 
-    <local:MusicGalleryPage />
+    <Grid>
+        <local:MusicGalleryPage />
+    </Grid>
 
 </Window>
