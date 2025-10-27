@@ -111,6 +111,8 @@
 	<!--Disable Trimming for Specific Packages-->
 	<ItemGroup>
 		<TrimmerRootAssembly Include="TagLibSharp" />
+		<TrimmerRootAssembly Include="NAudio.Wasapi" />
+		<TrimmerRootAssembly Include="Vanara.PInvoke.CoreAudio" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Update="Assets\AIMP.png">

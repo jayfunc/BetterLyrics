@@ -16,17 +16,17 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public partial class LyricsParser
     {
-        private List<LyricsData> _lyricsDataArr = [];
+        public List<LyricsData> LyricsDataArr { get; private set; } = [];
 
-        public LyricsData? LibreTranslationLyricsData => _lyricsDataArr.LastOrDefault();
+        public LyricsData? LibreTranslationLyricsData => LyricsDataArr.LastOrDefault();
 
-        public List<LyricsData> Parse(string? raw, int? durationMs)
+        public void Parse(string title, string artist, string? raw, int? durationMs, LyricsSearchProvider? lyricsSearchProvider)
         {
+            LyricsDataArr = [];
             durationMs ??= (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
-            _lyricsDataArr = [];
             if (raw == null)
             {
-                _lyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder(durationMs.Value));
+                LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder(durationMs.Value));
             }
             else
             {
@@ -50,16 +50,61 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
             FillRomanizationLyricsData();
-            _lyricsDataArr.Add(new LyricsData()); // 为 LibreTranslation 预留
-            return _lyricsDataArr;
+            FillTranslationFromCache(title, artist, lyricsSearchProvider);
+            LyricsDataArr.Add(new LyricsData()); // 为 LibreTranslation 预留
+        }
+
+        private void FillTranslationFromCache(string title, string artist, LyricsSearchProvider? provider)
+        {
+            string? translationRaw = null;
+            switch (provider)
+            {
+                case LyricsSearchProvider.QQ:
+                    translationRaw = FileHelper.ReadLyricsCache(title, artist, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
+                    break;
+                case LyricsSearchProvider.Kugou:
+                    translationRaw = FileHelper.ReadLyricsCache(title, artist, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
+                    break;
+                case LyricsSearchProvider.Netease:
+                    translationRaw = FileHelper.ReadLyricsCache(title, artist, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
+                    break;
+                case LyricsSearchProvider.LrcLib:
+                    break;
+                case LyricsSearchProvider.AmllTtmlDb:
+                    break;
+                case LyricsSearchProvider.LocalMusicFile:
+                    break;
+                case LyricsSearchProvider.LocalLrcFile:
+                    break;
+                case LyricsSearchProvider.LocalEslrcFile:
+                    break;
+                case LyricsSearchProvider.LocalTtmlFile:
+                    break;
+                default:
+                    break;
+            }
+
+            if (translationRaw != null)
+            {
+                switch (provider)
+                {
+                    case LyricsSearchProvider.QQ:
+                    case LyricsSearchProvider.Kugou:
+                    case LyricsSearchProvider.Netease:
+                        ParseLrc(translationRaw);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void FillRomanizationLyricsData()
         {
-            var chinese = _lyricsDataArr.Where(x => x.LanguageCode == "zh").FirstOrDefault();
+            var chinese = LyricsDataArr.Where(x => x.LanguageCode == "zh").FirstOrDefault();
             if (chinese != null)
             {
-                _lyricsDataArr.Add(new LyricsData
+                LyricsDataArr.Add(new LyricsData
                 {
                     LanguageCode = "pinyin",
                     LyricsLines = chinese.LyricsLines.Select(line => new LyricsLine
@@ -76,7 +121,7 @@ namespace BetterLyrics.WinUI3.Helper
                         }).ToList()
                     }).ToList()
                 });
-                _lyricsDataArr.Add(new LyricsData
+                LyricsDataArr.Add(new LyricsData
                 {
                     LanguageCode = "jyutping",
                     LyricsLines = chinese.LyricsLines.Select(line => new LyricsLine
@@ -94,10 +139,10 @@ namespace BetterLyrics.WinUI3.Helper
                     }).ToList()
                 });
             }
-            var japanese = _lyricsDataArr.Where(x => x.LanguageCode == "ja").FirstOrDefault();
+            var japanese = LyricsDataArr.Where(x => x.LanguageCode == "ja").FirstOrDefault();
             if (japanese != null)
             {
-                _lyricsDataArr.Add(new LyricsData
+                LyricsDataArr.Add(new LyricsData
                 {
                     LanguageCode = "romaji",
                     LyricsLines = japanese.LyricsLines.Select(line => new LyricsLine
@@ -182,8 +227,9 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             // 初始化每种语言的歌词列表
-            _lyricsDataArr.Clear();
-            for (int i = 0; i < languageCount; i++) _lyricsDataArr.Add(new LyricsData());
+            //LyricsDataArr.Clear();
+            int langStartIndex = LyricsDataArr.Count;
+            for (int i = 0; i < languageCount; i++) LyricsDataArr.Add(new LyricsData());
 
             // 遍历每个时间分组
             if (grouped != null)
@@ -221,7 +267,7 @@ namespace BetterLyrics.WinUI3.Helper
                                     currentIndex += charText?.Length ?? 0;
                                 }
                             }
-                            _lyricsDataArr[langIdx].LyricsLines.Add(line);
+                            LyricsDataArr[langStartIndex + langIdx].LyricsLines.Add(line);
                         }
                         // 没有翻译行则不补原文，直接跳过
                     }
@@ -333,9 +379,9 @@ namespace BetterLyrics.WinUI3.Helper
                         });
                     }
                 }
-                _lyricsDataArr.Add(new LyricsData(originalLines));
+                LyricsDataArr.Add(new LyricsData(originalLines));
                 if (translationLines.Count > 0)
-                    _lyricsDataArr.Add(new LyricsData(translationLines));
+                    LyricsDataArr.Add(new LyricsData(translationLines));
             }
             catch
             {
@@ -450,7 +496,7 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
 
-            _lyricsDataArr.Add(new LyricsData(lyricsLines));
+            LyricsDataArr.Add(new LyricsData(lyricsLines));
         }
 
         [GeneratedRegex(@"\[(\d*):(\d*)(\.|\:)(\d*)\]")]

@@ -89,6 +89,64 @@
                             <TextBlock Text="{Binding ElementName=TimelineSlider, Path=Maximum, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
                         </StackPanel>
 
+                        <!--  Volume  -->
+                        <Button Click="VolumeButton_Click" Style="{StaticResource GhostButtonStyle}">
+                            <Grid>
+
+                                <!--  Volumn: 0  -->
+                                <FontIcon
+                                    x:Name="VolumeLevel0"
+                                    FontFamily="{StaticResource IconFontFamily}"
+                                    Glyph="&#xE74F;">
+                                    <FontIcon.OpacityTransition>
+                                        <ScalarTransition />
+                                    </FontIcon.OpacityTransition>
+                                </FontIcon>
+
+                                <!--  Volumn: 1-32  -->
+                                <FontIcon
+                                    x:Name="VolumeLevel1"
+                                    FontFamily="{StaticResource IconFontFamily}"
+                                    Glyph="&#xE993;">
+                                    <FontIcon.OpacityTransition>
+                                        <ScalarTransition />
+                                    </FontIcon.OpacityTransition>
+                                </FontIcon>
+
+                                <!--  Volumn: 33-65  -->
+                                <FontIcon
+                                    x:Name="VolumeLevel2"
+                                    FontFamily="{StaticResource IconFontFamily}"
+                                    Glyph="&#xE994;">
+                                    <FontIcon.OpacityTransition>
+                                        <ScalarTransition />
+                                    </FontIcon.OpacityTransition>
+                                </FontIcon>
+
+                                <!--  Volumn: 66-100  -->
+                                <FontIcon
+                                    x:Name="VolumeLevel3"
+                                    FontFamily="{StaticResource IconFontFamily}"
+                                    Glyph="&#xE995;">
+                                    <FontIcon.OpacityTransition>
+                                        <ScalarTransition />
+                                    </FontIcon.OpacityTransition>
+                                </FontIcon>
+                            </Grid>
+
+                            <Button.ContextFlyout>
+                                <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
+                                    <uc:ExtendedSlider
+                                        Frequency="1"
+                                        Maximum="100"
+                                        Minimum="0"
+                                        ResetButtonVisibility="Collapsed"
+                                        Unit="%"
+                                        Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
+                                </Flyout>
+                            </Button.ContextFlyout>
+                        </Button>
+
                     </StackPanel>
                 </Grid>
 
@@ -155,78 +213,6 @@
                         x:Name="BottomRightCommandStackPanel"
                         Orientation="Horizontal"
                         Spacing="3">
-
-                        <!--  Volume  -->
-                        <!--<Button Click="VolumeButton_Click" Style="{StaticResource GhostButtonStyle}">
-                            <Grid>
-
-                        -->
-                        <!--  Volumn: 0  -->
-                        <!--
-                                <FontIcon
-                                    x:Name="VolumeLevel0"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    Glyph="&#xE74F;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                </FontIcon>
-
-                        -->
-                        <!--  Volumn: 1-32  -->
-                        <!--
-                                <FontIcon
-                                    x:Name="VolumeLevel1"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    Glyph="&#xE993;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                </FontIcon>
-
-                        -->
-                        <!--  Volumn: 33-65  -->
-                        <!--
-                                <FontIcon
-                                    x:Name="VolumeLevel2"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    Glyph="&#xE994;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                </FontIcon>
-
-                        -->
-                        <!--  Volumn: 66-100  -->
-                        <!--
-                                <FontIcon
-                                    x:Name="VolumeLevel3"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    Glyph="&#xE995;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                </FontIcon>
-                            </Grid>
-                            <Button.ContextFlyout>
-                                <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock x:Uid="SettingsPageSliderPrefix" VerticalAlignment="Center" />
-                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind ViewModel.Volume, Mode=OneWay}" />
-                                        <TextBlock Margin="0,0,14,0" VerticalAlignment="Center" />
-                                        <Slider
-                                            Width="150"
-                                            Maximum="100"
-                                            Minimum="0"
-                                            SnapsTo="Ticks"
-                                            StepFrequency="1"
-                                            TickFrequency="1"
-                                            TickPlacement="None"
-                                            Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
-                                    </StackPanel>
-                                </Flyout>
-                            </Button.DataContext>
-                        </Button>-->
 
                         <Button
                             Click="LyricsSearchShortcutButton_Click"
@@ -380,7 +366,7 @@
         <uc:SystemTray />
 
         <VisualStateManager.VisualStateGroups>
-            <!--<VisualStateGroup x:Name="VolumeState">
+            <VisualStateGroup x:Name="VolumeState">
                 <VisualState x:Name="Volume0">
                     <VisualState.StateTriggers>
                         <ui:CompareStateTrigger
@@ -437,7 +423,7 @@
                         <Setter Target="VolumeLevel3.Opacity" Value="1" />
                     </VisualState.Setters>
                 </VisualState>
-            </VisualStateGroup>-->
+            </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

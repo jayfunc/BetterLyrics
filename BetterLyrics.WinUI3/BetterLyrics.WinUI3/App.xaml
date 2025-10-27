@@ -59,6 +59,7 @@
             <converter:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
             <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
             <converter:RectToMarginConverter x:Key="RectToMarginConverter" />
+            <converter:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

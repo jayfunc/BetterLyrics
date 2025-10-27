@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Lyricify.Lyrics.Helpers;
 using Lyricify.Lyrics.Providers.Web.Kugou;
 using Lyricify.Lyrics.Searchers;
 using Microsoft.Extensions.Logging;
@@ -436,11 +437,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private static async Task<LyricsSearchResult> SearchQQNeteaseKugouAsync(string title, string artist, string album, int durationMs, string? songId, Searchers searchers)
+        private static async Task<LyricsSearchResult> SearchQQNeteaseKugouAsync(string title, string artist, string album, int durationMs, string? songId, Searchers searcher)
         {
             var lyricsSearchResult = new LyricsSearchResult();
 
-            switch (searchers)
+            switch (searcher)
             {
                 case Searchers.QQMusic:
                     lyricsSearchResult.Provider = LyricsSearchProvider.QQ;
@@ -458,21 +459,20 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
 
             ISearchResult? result;
-            if (searchers == Searchers.Netease && songId != null)
+            if (searcher == Searchers.Netease && songId != null)
             {
                 result = new NeteaseSearchResult(title, [artist], album, null, durationMs, songId);
             }
             else
             {
-                result = await SearchersHelper.GetSearcher(searchers).SearchForResult(
-                    new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
-                    {
-                        DurationMs = durationMs,
-                        Album = album,
-                        Artists = [artist],
-                        Title = title,
-                    }
-                );
+                result = await SearchHelper.Search(new Lyricify.Lyrics.Models.TrackMultiArtistMetadata()
+                {
+                    DurationMs = durationMs,
+                    Album = album,
+                    AlbumArtists = [artist],
+                    Artists = [artist],
+                    Title = title,
+                }, searcher);
             }
 
             if (result is QQMusicSearchResult qqResult)
@@ -519,7 +519,17 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 var response = await Lyricify.Lyrics.Helpers.ProviderHelper.KugouApi.GetSearchLyrics(hash: kugouResult.Hash);
                 string? original = null;
-                if (response?.Candidates.FirstOrDefault() is SearchLyricsResponse.Candidate candidate)
+                var candidateWithTranslation = response?.Candidates.Where(x => x.TransId != null).FirstOrDefault();
+                SearchLyricsResponse.Candidate? candidate;
+                if (candidateWithTranslation != null)
+                {
+                    candidate = candidateWithTranslation;
+                }
+                else
+                {
+                    candidate = response?.Candidates.FirstOrDefault();
+                }
+                if (candidate != null)
                 {
                     original = await Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyricsAsync(candidate.Id, candidate.AccessKey);
                     if (candidate.TransId != null)

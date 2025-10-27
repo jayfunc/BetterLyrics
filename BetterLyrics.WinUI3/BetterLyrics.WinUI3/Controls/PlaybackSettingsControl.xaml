@@ -207,10 +207,10 @@
                         <!--  Provider info  -->
                         <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <controls:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
-                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                            <HyperlinkButton IsEnabled="False" Content="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" NavigateUri="{x:Bind ViewModel.OriginalLyricsRef, Mode=OneWay}" />
                         </controls:SettingsCard>
                         <controls:SettingsCard x:Uid="LyricsPageTranslationProviderPrefix">
-                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                            <HyperlinkButton IsEnabled="False" Content="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" NavigateUri="{x:Bind ViewModel.TranslatedLyricsRef, Mode=OneWay}" />
                         </controls:SettingsCard>
 
                         <!--  Lyrics translation  -->

@@ -129,7 +129,7 @@ namespace BetterLyrics.WinUI3.Models
             ICanvasAnimatedControl control,
             bool createPhonetic, bool createTranslated,
             int phoneticTextFontSize, int originalTextFontSize, int translatedTextFontSize,
-            LyricsFontWeight originalTextFontWeight,
+            LyricsFontWeight fontWeight,
             string fontFamilyCJK, string fontFamilyWestern,
             double maxWidth, double maxHeight, TextAlignmentType type)
         {
@@ -142,6 +142,7 @@ namespace BetterLyrics.WinUI3.Models
                     HorizontalAlignment = CanvasHorizontalAlignment.Left,
                     VerticalAlignment = CanvasVerticalAlignment.Top,
                     FontSize = phoneticTextFontSize,
+                    FontWeight = fontWeight.ToFontWeight(),
                     FontFamily = LanguageHelper.IsCJK(PhoneticText) ? fontFamilyCJK : fontFamilyWestern,
                 }, (float)maxWidth, (float)maxHeight)
                 {
@@ -154,7 +155,7 @@ namespace BetterLyrics.WinUI3.Models
                 HorizontalAlignment = CanvasHorizontalAlignment.Left,
                 VerticalAlignment = CanvasVerticalAlignment.Top,
                 FontSize = originalTextFontSize,
-                FontWeight = originalTextFontWeight.ToFontWeight(),
+                FontWeight = fontWeight.ToFontWeight(),
                 FontFamily = LanguageHelper.IsCJK(OriginalText) ? fontFamilyCJK : fontFamilyWestern,
             }, (float)maxWidth, (float)maxHeight)
             {
@@ -168,6 +169,7 @@ namespace BetterLyrics.WinUI3.Models
                     HorizontalAlignment = CanvasHorizontalAlignment.Left,
                     VerticalAlignment = CanvasVerticalAlignment.Top,
                     FontSize = translatedTextFontSize,
+                    FontWeight = fontWeight.ToFontWeight(),
                     FontFamily = LanguageHelper.IsCJK(TranslatedText) ? fontFamilyCJK : fontFamilyWestern,
                 }, (float)maxWidth, (float)maxHeight)
                 {
