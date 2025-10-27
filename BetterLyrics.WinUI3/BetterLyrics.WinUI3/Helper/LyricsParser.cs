@@ -18,6 +18,8 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private List<LyricsData> _lyricsDataArr = [];
 
+        public LyricsData? LibreTranslationLyricsData => _lyricsDataArr.LastOrDefault();
+
         public List<LyricsData> Parse(string? raw, int? durationMs)
         {
             durationMs ??= (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
@@ -48,7 +50,7 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
             FillRomanizationLyricsData();
-            _lyricsDataArr.Add(new LyricsData()); // 为机翻预留
+            _lyricsDataArr.Add(new LyricsData()); // 为 LibreTranslation 预留
             return _lyricsDataArr;
         }
 

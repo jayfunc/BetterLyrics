@@ -134,12 +134,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private int _timelineSyncThreshold = 0;
 
-        private CanvasTextFormat _lyricsTextFormat = new()
-        {
-            HorizontalAlignment = CanvasHorizontalAlignment.Left,
-            VerticalAlignment = CanvasVerticalAlignment.Top,
-            FontSize = 12,
-        };
+        private int _phoneticLyricsFontSize = 18;
+        private int _originalLyricsFontSize = 36;
+        private int _translatedLyricsFontSize = 18;
+
+        private LyricsFontWeight _originalLyricsFontWeight = LyricsFontWeight.Bold;
+
         private CanvasTextFormat _titleTextFormat = new()
         {
             FontSize = 18,

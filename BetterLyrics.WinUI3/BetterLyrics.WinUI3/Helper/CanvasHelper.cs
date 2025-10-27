@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
@@ -72,19 +73,38 @@ namespace BetterLyrics.WinUI3.Helper
         {
             CanvasCommandList list = new(control);
             using var ds = list.CreateDrawingSession();
+
+            // 描边
             if (strokeWidth > 0)
             {
-                if (lyricsLine.TextGeometry == null)
+                if (lyricsLine.PhoneticCanvasGeometry != null)
                 {
-                    return list;
+                    ds.DrawGeometry(lyricsLine.PhoneticCanvasGeometry, lyricsLine.PhoneticPosition, strokeColor, strokeWidth);
                 }
-                ds.DrawGeometry(lyricsLine.TextGeometry, lyricsLine.Position, strokeColor, strokeWidth); // 描边
+                if (lyricsLine.OriginalCanvasGeometry != null)
+                {
+                    ds.DrawGeometry(lyricsLine.OriginalCanvasGeometry, lyricsLine.OriginalPosition, strokeColor, strokeWidth);
+                }
+                if (lyricsLine.TranslatedCanvasGeometry != null)
+                {
+                    ds.DrawGeometry(lyricsLine.TranslatedCanvasGeometry, lyricsLine.TranslatedPosition, strokeColor, strokeWidth);
+                }
             }
-            if (lyricsLine.CanvasTextLayout == null)
+
+            // 绘制文本（填充）
+            if (lyricsLine.PhoneticCanvasTextLayout != null)
             {
-                return list;
+                ds.DrawTextLayout(lyricsLine.PhoneticCanvasTextLayout, lyricsLine.PhoneticPosition, fontColor);
             }
-            ds.DrawTextLayout(lyricsLine.CanvasTextLayout, lyricsLine.Position, fontColor); // 绘制文本（填充）
+            if (lyricsLine.OriginalCanvasTextLayout != null)
+            {
+                ds.DrawTextLayout(lyricsLine.OriginalCanvasTextLayout, lyricsLine.OriginalPosition, fontColor);
+            }
+            if (lyricsLine.TranslatedCanvasTextLayout != null)
+            {
+                ds.DrawTextLayout(lyricsLine.TranslatedCanvasTextLayout, lyricsLine.TranslatedPosition, fontColor);
+            }
+
             return list;
         }
 
@@ -113,12 +133,12 @@ namespace BetterLyrics.WinUI3.Helper
             var mask = new CanvasCommandList(control);
             using var ds = mask.CreateDrawingSession();
 
-            if (lyricsLine.CanvasTextLayout == null)
+            if (lyricsLine.OriginalCanvasTextLayout == null)
             {
                 return mask;
             }
 
-            var highlightRegion = lyricsLine.CanvasTextLayout.GetCharacterRegions(charStartIndex, charLength).FirstOrDefault();
+            var highlightRegion = lyricsLine.OriginalCanvasTextLayout.GetCharacterRegions(charStartIndex, charLength).FirstOrDefault();
 
             double highlightTotalWidth = (double)highlightRegion.LayoutBounds.Width;
             // Draw the highlight for the current character
@@ -129,20 +149,20 @@ namespace BetterLyrics.WinUI3.Helper
             // Rects
             var highlightRect = new Rect(
                 highlightRegion.LayoutBounds.X,
-                highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
+                highlightRegion.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                 highlightWidth,
                 highlightRegion.LayoutBounds.Height
             );
 
             var fadeInRect = new Rect(
                 highlightRect.Right - fadingWidth,
-                highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
+                highlightRegion.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                 fadingWidth,
                 highlightRegion.LayoutBounds.Height
             );
             var fadeOutRect = new Rect(
                 highlightRect.Right,
-                highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
+                highlightRegion.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                 fadingWidth,
                 highlightRegion.LayoutBounds.Height
             );
@@ -171,15 +191,15 @@ namespace BetterLyrics.WinUI3.Helper
         {
             var mask = new CanvasCommandList(control);
 
-            if (lyricsLine.CanvasTextLayout == null)
+            if (lyricsLine.OriginalCanvasTextLayout == null)
             {
                 return mask;
             }
 
             using var ds = mask.CreateDrawingSession();
 
-            var regions = lyricsLine.CanvasTextLayout.GetCharacterRegions(0, charStartIndex);
-            var highlightRegion = lyricsLine.CanvasTextLayout
+            var regions = lyricsLine.OriginalCanvasTextLayout.GetCharacterRegions(0, charStartIndex);
+            var highlightRegion = lyricsLine.OriginalCanvasTextLayout
                 .GetCharacterRegions(charStartIndex, charLength)
                 .FirstOrDefault();
             if (regions.Length > 0)
@@ -190,7 +210,7 @@ namespace BetterLyrics.WinUI3.Helper
                     var region = regions[j];
                     var rect = new Rect(
                         region.LayoutBounds.X,
-                        region.LayoutBounds.Y + lyricsLine.Position.Y,
+                        region.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                         region.LayoutBounds.Width,
                         region.LayoutBounds.Height
                     );
@@ -207,14 +227,14 @@ namespace BetterLyrics.WinUI3.Helper
             // Rects
             var highlightRect = new Rect(
                 highlightRegion.LayoutBounds.X,
-                highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
+                highlightRegion.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                 highlightWidth,
                 highlightRegion.LayoutBounds.Height
             );
 
             var fadeInRect = new Rect(
                 highlightRect.Right - fadingWidth,
-                highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
+                highlightRegion.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                 fadingWidth,
                 highlightRegion.LayoutBounds.Height
             );
@@ -225,7 +245,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 var fadeOutRect = new Rect(
                     highlightRect.Right,
-                    highlightRegion.LayoutBounds.Y + lyricsLine.Position.Y,
+                    highlightRegion.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                     fadingWidth,
                     highlightRegion.LayoutBounds.Height
                 );
@@ -246,12 +266,12 @@ namespace BetterLyrics.WinUI3.Helper
             var mask = new CanvasCommandList(control);
             using var ds = mask.CreateDrawingSession();
 
-            if (lyricsLine.CanvasTextLayout == null)
+            if (lyricsLine.OriginalCanvasTextLayout == null)
             {
                 return mask;
             }
 
-            var regions = lyricsLine.CanvasTextLayout.GetCharacterRegions(0, lyricsLine.OriginalText.Length);
+            var regions = lyricsLine.OriginalCanvasTextLayout.GetCharacterRegions(0, lyricsLine.OriginalText.Length);
             if (regions.Length > 0)
             {
                 for (int j = 0; j < regions.Length; j++)
@@ -259,7 +279,7 @@ namespace BetterLyrics.WinUI3.Helper
                     var region = regions[j];
                     var rect = new Rect(
                         region.LayoutBounds.X,
-                        region.LayoutBounds.Y + lyricsLine.Position.Y,
+                        region.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
                         region.LayoutBounds.Width,
                         region.LayoutBounds.Height
                     );
@@ -270,17 +290,17 @@ namespace BetterLyrics.WinUI3.Helper
             return mask;
         }
 
-        public static CanvasCommandList CreateTranslationHighlightMask(ICanvasAnimatedControl control, LyricsLine lyricsLine)
+        public static CanvasCommandList CreatePhoneticHighlightMask(ICanvasAnimatedControl control, LyricsLine lyricsLine)
         {
             var mask = new CanvasCommandList(control);
             using var ds = mask.CreateDrawingSession();
 
-            if (lyricsLine.CanvasTextLayout == null)
+            if (lyricsLine.PhoneticCanvasTextLayout == null)
             {
                 return mask;
             }
 
-            var regions = lyricsLine.CanvasTextLayout.GetCharacterRegions(lyricsLine.OriginalText.Length, lyricsLine.DisplayedText.Length - lyricsLine.OriginalText.Length);
+            var regions = lyricsLine.PhoneticCanvasTextLayout.GetCharacterRegions(0, lyricsLine.PhoneticText.Length);
             if (regions.Length > 0)
             {
                 for (int j = 0; j < regions.Length; j++)
@@ -288,7 +308,36 @@ namespace BetterLyrics.WinUI3.Helper
                     var region = regions[j];
                     var rect = new Rect(
                         region.LayoutBounds.X,
-                        region.LayoutBounds.Y + lyricsLine.Position.Y,
+                        region.LayoutBounds.Y + lyricsLine.PhoneticPosition.Y,
+                        region.LayoutBounds.Width,
+                        region.LayoutBounds.Height
+                    );
+                    ds.FillRectangle(rect, Colors.White);
+                }
+            }
+
+            return mask;
+        }
+
+        public static CanvasCommandList CreateTranslatedHighlightMask(ICanvasAnimatedControl control, LyricsLine lyricsLine)
+        {
+            var mask = new CanvasCommandList(control);
+            using var ds = mask.CreateDrawingSession();
+
+            if (lyricsLine.TranslatedCanvasTextLayout == null)
+            {
+                return mask;
+            }
+
+            var regions = lyricsLine.TranslatedCanvasTextLayout.GetCharacterRegions(0, lyricsLine.TranslatedText.Length);
+            if (regions.Length > 0)
+            {
+                for (int j = 0; j < regions.Length; j++)
+                {
+                    var region = regions[j];
+                    var rect = new Rect(
+                        region.LayoutBounds.X,
+                        region.LayoutBounds.Y + lyricsLine.TranslatedPosition.Y,
                         region.LayoutBounds.Width,
                         region.LayoutBounds.Height
                     );

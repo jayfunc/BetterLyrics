@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services;
 using CommunityToolkit.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
@@ -444,6 +445,13 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _canvasYScrollTransition.Update(_elapsedTime);
         }
 
+        private string AutoSelectFontFamily(string text)
+        {
+            return LanguageHelper.IsCJK(text)
+                    ? _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily
+                    : _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily;
+        }
+
         private void ReLayout(ICanvasAnimatedControl control)
         {
             if (control == null)
@@ -451,14 +459,23 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.IsDynamicLyricsFontSize)
             {
-                _lyricsTextFormat.FontSize = (float)Math.Clamp(Math.Min(_canvasHeight, _canvasWidth) / 15, 12, 96);
+                _originalLyricsFontSize = (int)Math.Clamp(Math.Min(_canvasHeight, _canvasWidth) / 15, 12, 96);
+                _translatedLyricsFontSize = _phoneticLyricsFontSize = (int)(_originalLyricsFontSize * 0.6);
             }
             else
             {
-                _lyricsTextFormat.FontSize = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontSize;
+                _phoneticLyricsFontSize = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.PhoneticLyricsFontSize;
+                _originalLyricsFontSize = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.OriginalLyricsFontSize;
+                _translatedLyricsFontSize = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.TranslatedLyricsFontSize;
             }
-            _lyricsTextFormat.FontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight.ToFontWeight();
-            _lyricsTextFormat.FontFamily = _artistTextFormat.FontFamily = _titleTextFormat.FontFamily = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontFamily;
+
+            _originalLyricsFontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight;
+
+            if (SongInfo != null)
+            {
+                _titleTextFormat.FontFamily = AutoSelectFontFamily(SongInfo.Title);
+                _artistTextFormat.FontFamily = AutoSelectFontFamily(SongInfo.Artist);
+            }
 
             _canvasYScrollTransition.SetDuration(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsScrollDuration / 1000.0);
             _canvasYScrollTransition.SetEasingType(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsScrollEasingType);
@@ -475,16 +492,70 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     continue;
                 }
 
-                line.Position = new Vector2(0, (float)y);
-                line.RecreateTextLayout(control, _lyricsTextFormat, _maxLyricsWidth, _canvasHeight, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType);
-                line.UpdateCenterPosition(_maxLyricsWidth, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType);
-
+                line.RecreateTextLayout(control,
+                    _settingsService.AppSettings.TranslationSettings.IsChineseRomanizationEnabled || _settingsService.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled,
+                    _settingsService.AppSettings.TranslationSettings.IsTranslationEnabled,
+                    _phoneticLyricsFontSize, _originalLyricsFontSize, _translatedLyricsFontSize,
+                    _originalLyricsFontWeight,
+                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily,
+                    _maxLyricsWidth, _canvasHeight, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType);
                 line.RecreateTextGeometry();
 
-                y +=
-                    (double)line.CanvasTextLayout!.LayoutBounds.Height
-                    / line.CanvasTextLayout.LineCount
-                    * (line.CanvasTextLayout.LineCount + _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsLineSpacingFactor);
+                // 设定注音文本布局坐标
+                line.PhoneticPosition = new Vector2(0, (float)y);
+
+                // Y += 注音文本布局高度
+                if (line.PhoneticCanvasTextLayout != null)
+                {
+                    y += line.PhoneticCanvasTextLayout.LayoutBounds.Height;
+                }
+
+                // Y += 自定义 倍注音文本行高
+                if (line.PhoneticCanvasTextLayout != null)
+                {
+                    y +=
+                        (double)line.PhoneticCanvasTextLayout.LayoutBounds.Height
+                        / line.PhoneticCanvasTextLayout.LineCount
+                        * 0.1;
+                }
+
+                // 设定原文文本布局坐标
+                line.OriginalPosition = new Vector2(0, (float)y);
+
+                // Y += 原文文本布局高度
+                if (line.OriginalCanvasTextLayout != null)
+                {
+                    y += (double)line.OriginalCanvasTextLayout.LayoutBounds.Height;
+                }
+
+                if (line.TranslatedCanvasTextLayout != null)
+                {
+                    // Y += 自定义 倍翻译文本行高
+                    y +=
+                        (double)line.TranslatedCanvasTextLayout.LayoutBounds.Height
+                        / line.TranslatedCanvasTextLayout.LineCount
+                        * 0.1;
+                }
+
+                // 设定翻译文本布局坐标
+                line.TranslatedPosition = new Vector2(0, (float)y);
+
+                // Y += 翻译文本布局高度
+                if (line.TranslatedCanvasTextLayout != null)
+                {
+                    y += line.TranslatedCanvasTextLayout.LayoutBounds.Height;
+                }
+
+                // Y += 用户自定义倍数原文文本布局高度
+                if (line.OriginalCanvasTextLayout != null)
+                {
+                    y += (double)line.OriginalCanvasTextLayout.LayoutBounds.Height
+                        / line.OriginalCanvasTextLayout.LineCount
+                        * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsLineSpacingFactor;
+                }
+
+                line.UpdateCenterPosition(_maxLyricsWidth, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType);
+
             }
         }
 
@@ -500,11 +571,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (currentPlayingLine == null) return;
 
-            var playingTextLayout = currentPlayingLine?.CanvasTextLayout;
+            var playingTextLayout = currentPlayingLine?.OriginalCanvasTextLayout;
 
             if (playingTextLayout == null) return;
 
-            double? targetYScrollOffset = -currentPlayingLine!.Position.Y + _currentLyricsData?.LyricsLines[0].Position.Y - playingTextLayout.LayoutBounds.Height / 2.0;
+            //double? targetYScrollOffset = -currentPlayingLine!.OriginalPosition.Y + _currentLyricsData?.LyricsLines[0].OriginalPosition.Y - playingTextLayout.LayoutBounds.Height / 2.0;
+            double? targetYScrollOffset =
+                -currentPlayingLine!.OriginalPosition.Y
+                + _currentLyricsData?.LyricsLines[0].OriginalPosition.Y
+                - (currentPlayingLine.TranslatedPosition.Y + (currentPlayingLine.TranslatedCanvasTextLayout?.LayoutBounds.Height ?? 0) - currentPlayingLine.PhoneticPosition.Y) / 2.0;
 
             if (!targetYScrollOffset.HasValue) return;
 
@@ -540,9 +615,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 int mid = (left + right) / 2;
                 var line = lines[mid];
-                var layout = line.CanvasTextLayout;
+                var layout = line.OriginalCanvasTextLayout;
                 if (layout == null) break;
-                double value = offset + line.Position.Y + (double)layout.LayoutBounds.Height;
+                double value = offset + line.OriginalPosition.Y + (double)layout.LayoutBounds.Height;
                 if (value >= 0)
                 {
                     result = mid;
@@ -563,9 +638,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 int mid = (left + right) / 2;
                 var line = lines[mid];
-                var layout = line.CanvasTextLayout;
+                var layout = line.OriginalCanvasTextLayout;
                 if (layout == null) break;
-                double value = offset + line.Position.Y + (double)layout.LayoutBounds.Height;
+                double value = offset + line.OriginalPosition.Y + (double)layout.LayoutBounds.Height;
                 if (value >= canvasHeight)
                 {
                     result = mid;
@@ -703,7 +778,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     int lineCountDelta = i - _playingLineIndex;
                     int absoluteLineCountDelta = Math.Abs(lineCountDelta);
-                    double distanceFromPlayingLine = Math.Abs(line.Position.Y - currentPlayingLine.Position.Y);
+                    double distanceFromPlayingLine = Math.Abs(line.OriginalPosition.Y - currentPlayingLine.OriginalPosition.Y);
                     double distanceFactor = Math.Clamp(distanceFromPlayingLine / (_canvasHeight / 2), 0, 1);
 
                     line.AngleTransition.StartTransition(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsFanLyricsEnabled

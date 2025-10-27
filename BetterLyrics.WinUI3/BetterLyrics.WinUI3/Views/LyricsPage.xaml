@@ -33,8 +33,8 @@
                 <TextBlock
                     x:Uid="MainPageNoMusicPlaying"
                     HorizontalAlignment="Center"
-                    FontFamily="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontFamily, Mode=OneWay}"
-                    FontSize="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontSize, Mode=OneWay}"
+                    FontFamily="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily, Mode=OneWay}"
+                    FontSize="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.OriginalLyricsFontSize, Mode=OneWay}"
                     TextWrapping="Wrap" />
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <HyperlinkButton x:Uid="SettingsPageFAQ" NavigateUri="{x:Bind const:Link.FAQUrl}" />
@@ -321,7 +321,8 @@
                             Margin="0,0,0,2"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.StartMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}, Mode=OneWay}" />
-                        <TextBlock Margin="0,0,0,2" Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.DisplayedText, Mode=OneWay}" />
+                        <!--  TODO 原文翻译共同显示  -->
+                        <TextBlock Margin="0,0,0,2" Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.OriginalText, Mode=OneWay}" />
                     </StackPanel>
                 </Grid>
                 <Grid

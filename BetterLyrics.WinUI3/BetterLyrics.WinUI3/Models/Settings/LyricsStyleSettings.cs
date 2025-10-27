@@ -14,7 +14,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
     public partial class LyricsStyleSettings : ObservableRecipient, ICloneable
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDynamicLyricsFontSize { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontSize { get; set; } = 24;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PhoneticLyricsFontSize { get; set; } = 12;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int OriginalLyricsFontSize { get; set; } = 24;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsFontSize { get; set; } = 12;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBgFontOpacity { get; set; } = 30; // 30% opacity
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontStrokeWidth { get; set; } = 0;
@@ -27,23 +29,19 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontWeight LyricsFontWeight { get; set; } = LyricsFontWeight.Bold;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsLineSpacingFactor { get; set; } = 0.5;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsTranslationSeparator { get; set; } = StringHelper.NewLine;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCJKFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsWesternFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
 
         public LyricsStyleSettings() { }
-
-        public LyricsStyleSettings(int lyricsFontSize, TextAlignmentType lyricsAlignmentType, int lyricsFontStrokeWidth)
-        {
-            LyricsFontSize = lyricsFontSize;
-            LyricsAlignmentType = lyricsAlignmentType;
-            LyricsFontStrokeWidth = lyricsFontStrokeWidth;
-        }
 
         public object Clone()
         {
             return new LyricsStyleSettings
             {
                 IsDynamicLyricsFontSize = this.IsDynamicLyricsFontSize,
-                LyricsFontSize = this.LyricsFontSize,
+                PhoneticLyricsFontSize = this.PhoneticLyricsFontSize,
+                OriginalLyricsFontSize = this.OriginalLyricsFontSize,
+                TranslatedLyricsFontSize = this.TranslatedLyricsFontSize,
                 LyricsAlignmentType = this.LyricsAlignmentType,
                 LyricsBgFontOpacity = this.LyricsBgFontOpacity,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
@@ -56,7 +54,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsFontWeight = this.LyricsFontWeight,
                 LyricsLineSpacingFactor = this.LyricsLineSpacingFactor,
                 LyricsTranslationSeparator = this.LyricsTranslationSeparator,
-                LyricsFontFamily = this.LyricsFontFamily
+                LyricsCJKFontFamily = this.LyricsCJKFontFamily,
+                LyricsWesternFontFamily = this.LyricsWesternFontFamily,
             };
         }
     }
