@@ -23,7 +23,7 @@ BetterLyrics
 </div>
 
 <h4 align="center">
-Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with local playback and other players
+Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-app playback and other players
 </h3>
 
 ## 🎉 This project was featured by SSPAI!
@@ -123,10 +123,12 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
     - Enjoy an immersive listening journey with rich lyrics, animations and beautifully dynamic backgrounds
-  - **Dock Mode**
+  - **Docked Mode**
     - A smart animated lyrics bar docked to your screen edge
   - **Desktop Mode**
     - Enjoy immersive lyrics floating above your apps
+  - **And More...**
+    - Waiting for you to discover... 
 - 🧠 **Smart Behaviors**
   - Auto hide when music paused
 
@@ -200,6 +202,8 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 
 ## 💖 Many thanks to
 
+### Projects/Packages
+
 - [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
   - Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources
 - [lrclib](https://github.com/tranxuanthang/lrclib)
@@ -218,8 +222,12 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
   - Provide the ability for offline lyrics translation
 - [Isolation](https://github.com/Storyteller-Studios/Isolation)
   - Dynamic fluid background implementation
+- [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization)
+  - Audio visualization reference
+ 
+### Tutorials/Blogs/etc.
+
 - [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
-- [DevWinUI](https://github.com/ghost1372/DevWinUI)
 - [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
 - [cnblogs - .NET App 与 Windows 系统媒体控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
 - [Win2D 中的游戏循环：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
@@ -237,7 +245,7 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 
 Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆
 
-Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 to accept invitation and become a valuable translator now!
+Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 to accept the invitation and become a valuable translator now!
 
 ## Star history
 
