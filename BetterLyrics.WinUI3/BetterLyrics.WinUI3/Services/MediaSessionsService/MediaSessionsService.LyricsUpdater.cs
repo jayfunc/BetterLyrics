@@ -202,10 +202,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _lyricsDataArr.Count);
 
-            // This ensures that translation is always reset while waiting for translations
-            _lyricsDataArr[0].ClearTranslatedText();
-            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
+            // Show original first while loading phonetic and translated
             ApplyChinesePreference();
+            LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
             UpdateTranslations();
         }
 
@@ -217,7 +216,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 foreach (var item in _lyricsDataArr[found].LyricsLines)
                 {
-                    item.OriginalText = traditionalChinesePreferred ? ChineseHelper.S2T(item.OriginalText) : ChineseHelper.T2S(item.OriginalText);
+                    item.OriginalText = traditionalChinesePreferred ? ChineseHelper.ToTC(item.OriginalText) : ChineseHelper.ToSC(item.OriginalText);
                 }
             }
         }
