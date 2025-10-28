@@ -31,7 +31,7 @@ namespace BetterLyrics.WinUI3.Helper
         public float[] SmoothSpectrum { get; private set; }
         
         public int BarCount { get; set; } = 32;
-        public int Sensitivity { get; set; } = 5;
+        public int Sensitivity { get; set; } = 10;
         public float SmoothingFactor { get; set; } = 0.95f;
         public bool IsCapturing { get; private set; } = false;
 

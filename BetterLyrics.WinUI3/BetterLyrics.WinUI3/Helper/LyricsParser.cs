@@ -111,12 +111,12 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         StartMs = line.StartMs,
                         EndMs = line.EndMs,
-                        OriginalText = Pinyin.Pinyin.Instance.HanziToPinyin(line.OriginalText).ToStr(),
+                        OriginalText = LanguageHelper.ToPinyin(line.OriginalText),
                         LyricsChars = line.LyricsChars.Select(c => new LyricsChar
                         {
                             StartMs = c.StartMs,
                             EndMs = c.EndMs,
-                            Text = Pinyin.Pinyin.Instance.HanziToPinyin(c.Text).ToStr(),
+                            Text = LanguageHelper.ToPinyin(c.Text),
                             StartIndex = c.StartIndex
                         }).ToList()
                     }).ToList()
@@ -128,12 +128,12 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         StartMs = line.StartMs,
                         EndMs = line.EndMs,
-                        OriginalText = Pinyin.Jyutping.Instance.HanziToPinyin(line.OriginalText).ToStr(),
+                        OriginalText = LanguageHelper.ToJyutping(line.OriginalText),
                         LyricsChars = line.LyricsChars.Select(c => new LyricsChar
                         {
                             StartMs = c.StartMs,
                             EndMs = c.EndMs,
-                            Text = Pinyin.Jyutping.Instance.HanziToPinyin(c.Text).ToStr(),
+                            Text = LanguageHelper.ToJyutping(c.Text),
                             StartIndex = c.StartIndex
                         }).ToList()
                     }).ToList()

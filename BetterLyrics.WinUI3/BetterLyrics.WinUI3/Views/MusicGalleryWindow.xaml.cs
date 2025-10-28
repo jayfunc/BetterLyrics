@@ -34,12 +34,24 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             AppWindow.SetIcons();
 
+            ExtendsContentIntoTitleBar = true;
+
             AppWindow.Closing += AppWindow_Closing;
         }
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             WindowHelper.CloseWindow<MusicGalleryWindow>();
+        }
+
+        private void LyricsWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenOrShowWindow<LyricsWindow>();
+        }
+
+        private void SettingsWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenOrShowWindow<SettingsWindow>();
         }
     }
 }

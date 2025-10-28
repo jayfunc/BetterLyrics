@@ -70,7 +70,7 @@ namespace BetterLyrics.WinUI3
 
         [ObservableProperty] public partial ElementTheme ThemeType { get; set; } = ElementTheme.Default;
 
-        [ObservableProperty] public partial double TitleBarFontSize { get; set; } = 11;
+        [ObservableProperty] public partial double TitleBarFontSize { get; set; } = 12;
 
         [ObservableProperty] public partial Visibility CloseButtonVisibility { get; set; } = Visibility.Visible;
 

@@ -50,6 +50,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.251021-build.2365" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.230830" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.OpacityMaskView" Version="0.1.250703-build.2173" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250703-build.2173" />
@@ -64,6 +65,7 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
+		<PackageReference Include="csharp-kana" Version="1.0.2" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.2" />
@@ -78,7 +80,6 @@
 		<PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
 		<PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
-		<PackageReference Include="RomajiConverter.Core" Version="1.0.9" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.3-dev-02320" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="ShadowViewer.Controls.Notification" Version="1.2.1" />

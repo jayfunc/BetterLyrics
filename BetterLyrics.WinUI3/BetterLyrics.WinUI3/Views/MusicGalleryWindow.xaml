@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MusicGalleryWindow"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
     <Window.SystemBackdrop>
@@ -14,7 +14,26 @@
     </Window.SystemBackdrop>
 
     <Grid>
-        <local:MusicGalleryPage />
+
+        <local:MusicGalleryPage Margin="0,40,0,0" />
+
+        <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+            <Button
+                x:Name="LyricsWindowButton"
+                Click="LyricsWindowButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      FontSize=12,
+                                      Glyph=&#xE90B;}"
+                Style="{StaticResource TitleBarButtonStyle}" />
+            <Button
+                x:Name="SettingsWindowButton"
+                Click="SettingsWindowButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      FontSize=12,
+                                      Glyph=&#xE713;}"
+                Style="{StaticResource TitleBarButtonStyle}" />
+        </StackPanel>
+
     </Grid>
 
 </Window>

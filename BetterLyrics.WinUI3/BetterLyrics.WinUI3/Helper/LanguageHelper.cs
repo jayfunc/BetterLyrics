@@ -2,6 +2,7 @@
 using NTextCat;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services
@@ -87,7 +88,6 @@ namespace BetterLyrics.WinUI3.Services
         static LanguageHelper()
         {
             _identifier = _factory.Load(PathHelper.LanguageProfilePath);
-            RomajiConverter.Core.Helpers.RomajiHelper.Init();
         }
 
         public static string? DetectLanguageCode(string? text)
@@ -135,9 +135,9 @@ namespace BetterLyrics.WinUI3.Services
             if (char.IsLetter(c) && c < 128)
                 return char.ToUpper(c).ToString();
 
-            if (Pinyin.Pinyin.Instance.IsHanzi(c.ToString()))
+            if (IsHanzi(c.ToString()))
             {
-                return Pinyin.Pinyin.Instance.HanziToPinyin(c.ToString(), Pinyin.ManTone.Style.NORMAL).ToStr().ToUpper().FirstOrDefault().ToString();
+                return ToPinyin(c.ToString(), Pinyin.ManTone.Style.NORMAL).ToUpper().FirstOrDefault().ToString();
             }
 
             return "#";
@@ -145,7 +145,27 @@ namespace BetterLyrics.WinUI3.Services
 
         public static string ToRomaji(string text)
         {
-            return string.Join(" ", RomajiConverter.Core.Helpers.RomajiHelper.SentenceToRomaji(text).Select(x => x.Romaji));
+            return Kana.Kana.KanaToRomaji(text).ToStr();
+        }
+
+        public static string ToPinyin(string text, Pinyin.ManTone.Style style = Pinyin.ManTone.Style.TONE)
+        {
+            return Pinyin.Pinyin.Instance.HanziToPinyin(text, style).ToStr();
+        }
+
+        public static string ToJyutping(string text)
+        {
+            return Pinyin.Jyutping.Instance.HanziToPinyin(text).ToStr();
+        }
+
+        public static bool IsHanzi(char ch)
+        {
+            return IsHanzi(ch.ToString());
+        }
+
+        public static bool IsHanzi(string text)
+        {
+            return Pinyin.Pinyin.Instance.IsHanzi(text);
         }
     }
 }
