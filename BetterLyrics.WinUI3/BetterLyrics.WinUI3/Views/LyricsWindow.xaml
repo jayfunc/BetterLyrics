@@ -57,6 +57,14 @@
                         </ToolTipService.ToolTip>
                     </Button>
 
+                    <Button
+                        x:Name="SettingsWindowButton"
+                        Click="SettingsWindowButton_Click"
+                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                              FontSize=12,
+                                              Glyph=&#xE713;}"
+                        Style="{StaticResource TitleBarButtonStyle}" />
+
                     <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"

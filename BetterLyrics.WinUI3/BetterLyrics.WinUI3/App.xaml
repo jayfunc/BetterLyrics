@@ -60,6 +60,7 @@
             <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
             <converter:RectToMarginConverter x:Key="RectToMarginConverter" />
             <converter:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
+            <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

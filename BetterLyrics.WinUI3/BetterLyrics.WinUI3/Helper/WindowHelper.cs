@@ -114,16 +114,8 @@ namespace BetterLyrics.WinUI3.Helper
             else
             {
                 var castedWindow = (Window)window;
-                if (typeof(T) == typeof(LyricsWindow))
-                {
-                    var lyricsWindow = (LyricsWindow)window;
-                    lyricsWindow.Show();
-                }
-                else
-                {
-                    castedWindow.Restore();
-                    castedWindow.Activate();
-                }
+                castedWindow.Activate();
+                castedWindow.AppWindow.MoveInZOrderAtTop();
             }
         }
 

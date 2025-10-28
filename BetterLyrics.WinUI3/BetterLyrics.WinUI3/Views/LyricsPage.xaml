@@ -267,7 +267,7 @@
                             x:Name="SettingsButton"
                             Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  Glyph=&#xF8B0;}"
+                                                  Glyph=&#xE713;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="SettingsToolTip" x:Uid="LyricsPageSettingsButtonToolTip" />

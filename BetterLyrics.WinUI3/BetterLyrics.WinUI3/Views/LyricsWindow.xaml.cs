@@ -132,5 +132,10 @@ namespace BetterLyrics.WinUI3.Views
         {
             WindowHelper.OpenOrShowWindow<LyricsWindowSwitchWindow>();
         }
+
+        private void SettingsWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             AppWindow.SetIcons();
 
+            ExtendsContentIntoTitleBar = true;
+
             AppWindow.Closing += AppWindow_Closing;
 
             RootFrame.Navigate(typeof(SettingsPage));
@@ -31,6 +33,16 @@ namespace BetterLyrics.WinUI3.Views
         private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
         {
             App.Current.SettingsWindowNotificationPanel = TipContainerCenter;
+        }
+
+        private void LyricsWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenOrShowWindow<LyricsWindow>();
+        }
+
+        private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
         }
     }
 }
