@@ -1,5 +1,3 @@
-[_Click here to view frequently asked questions (FAQ)_](https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/index.md)
-
 ![](Promotion/banner.png)
 
 <div align=center>
@@ -22,9 +20,16 @@ BetterLyrics
 
 </div>
 
+
+<div align="center">
+
+[**_Click here to view wiki_**](https://github.com/jayfunc/BetterLyrics/wiki)
+	
+</div>
+
 <h4 align="center">
 Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-app playback and other players
-</h3>
+</h4>
 
 ## 🎉 This project was featured by SSPAI!
 
