@@ -65,7 +65,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
  
 - 🎶 **Multiple Music Players Supported**
 
-  - Check it out [here](https://github.com/jayfunc/BetterLyrics/wiki/%F0%9F%8E%B6-Known-supported-music-players-(configuration-guidance)) for detailed info
+  - Check it out [here](https://github.com/jayfunc/BetterLyrics/wiki/Known-supported-music-players-(configuration-guidance)) for detailed info
 
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
