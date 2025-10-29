@@ -60,65 +60,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
  
 - 🎶 **Multiple Music Players Supported**
 
-  - <details><summary>网易云音乐</summary>
-
-    - Please make sure that you have the latest version (3.1.20+) of 网易云音乐 installed on your PC.
-    - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
-    - After that, install the [InfLink-rs](https://github.com/apoint123/inflink-rs) plugin in PluginMarket. After the installation is complete, please restart 网易云音乐. At this point, all preparatory operations have been completed. Enjoy it!
-
-    </details>
-
-  - <details><summary>⚠️ 酷狗音乐</summary>
-
-    - Please make sure that the 酷狗音乐 setting "Support system playback controls, such as lock screen interface" is turned on
-    - No timeline information broadcast, which means when you change the timeline position in Kugou Music, BetterLyrics has no way to detect this change
-    - ⚠️ Please note that there are issues with the timeline due to Kugou itself
-
-    </details>
-
-  - <details><summary>⚠️ foobar2000</summary>
-
-    - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
-    - ⚠️ Please note that there are issues with the timeline due to a plugin issue
-
-    </details>
-
-  - Apple Music
-  - Spotify
-  - PotPlayer
-  - Media Player (System)
-
-  - <details><summary>QQ 音乐</summary>
-
-    - Please keep it at the latest version
-    - Then open Settings in QQ 音乐, enable "Show System Media Transport Controls (SMTC)".
-
-    </details>
-
-  - <details><summary>LX Music</summary>
-
-    - Please make sure you have enabled "Open API" in LX Music settings page
-    - Then open BetterLyrics, go to settings, go to "Playback sources", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
-
-    </details>
-
-  - <details><summary>MusicBee</summary>
-
-    - Please install https://github.com/HenryPDT/mb_MediaControl before using
-
-    </details>
-
-  - <details><summary>iTunes</summary>
-
-    - Please install https://github.com/thewizrd/iTunes-SMTC before using
-
-    </details>
-
-  - <details><summary>AIMP</summary>
-
-    - Please install https://www.aimp.ru/?do=catalog&rec_id=1097 before using
-
-    </details>
+  - Check it out [here](https://github.com/jayfunc/BetterLyrics/wiki/%F0%9F%8E%B6-Known-supported-music-players-(configuration-guidance)) for detailed info
 
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
@@ -131,8 +73,6 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
     - Waiting for you to discover... 
 - 🧠 **Smart Behaviors**
   - Auto hide when music paused
-
-> This project is still under development, bugs and unexpected behaviours may exist in the latest branch.
 
 ## Screenshots
 
