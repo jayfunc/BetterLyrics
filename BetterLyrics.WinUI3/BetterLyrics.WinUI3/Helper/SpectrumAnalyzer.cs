@@ -67,7 +67,7 @@ namespace BetterLyrics.WinUI3.Helper
 
                 IsCapturing = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
         }

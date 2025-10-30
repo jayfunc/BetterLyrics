@@ -5,7 +5,10 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using System;
 using System.Numerics;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
@@ -13,6 +16,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
     {
         private OpacityEffect? _albumArtBgEffect;
         private CanvasCommandList? _albumArtEffect;
+        private PixelShaderEffect? _fluidEffect;
 
         private OpacityEffect CreateBgImageEffect(CanvasBitmap canvasBitmap, double opacity)
         {
@@ -245,6 +249,27 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             // 给一个偏移，是为了避免绘制时从原点开始，这样会造成阴影被裁切
             ds.DrawImage(_albumArtEffect, control.Size.ToVector2() / 2 - new Vector2((float)_albumArtSize, (float)_albumArtSize) / 2);
+        }
+
+        private void DisposeFluidEffect()
+        {
+            _fluidEffect?.Dispose();
+            _fluidEffect = null;
+        }
+
+        private async void UpdateFluidEffect(ICanvasAnimatedControl control)
+        {
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/FluidEffect.bin"));
+            IBuffer buffer = await FileIO.ReadBufferAsync(file);
+            var bytes = buffer.ToArray();
+            _fluidEffect = new PixelShaderEffect(bytes);
+            _fluidEffect.Properties["Width"] = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
+            _fluidEffect.Properties["Height"] = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+            _fluidEffect.Properties["color1"] = _albumArtAccentColor1Transition.Value.ToVector3RGB();
+            _fluidEffect.Properties["color2"] = _albumArtAccentColor2Transition.Value.ToVector3RGB();
+            _fluidEffect.Properties["color3"] = _albumArtAccentColor3Transition.Value.ToVector3RGB();
+            _fluidEffect.Properties["color4"] = _albumArtAccentColor4Transition.Value.ToVector3RGB();
+            _fluidEffect.Properties["EnableLightWave"] = false;
         }
     }
 }

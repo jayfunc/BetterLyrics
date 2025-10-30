@@ -185,11 +185,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void DrawFluidBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (_effect != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsFluidOverlayEnabled)
+            if (_fluidEffect != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsFluidOverlayEnabled)
             {
                 ds.DrawImage(new OpacityEffect
                 {
-                    Source = _effect,
+                    Source = _fluidEffect,
                     Opacity = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.FluidOverlayOpacity / 100f
                 });
             }

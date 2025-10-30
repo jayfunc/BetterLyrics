@@ -82,9 +82,13 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
+            if (_liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing)
+            {
+                //return;
+            }
+
             if (args.DidPositionChange || args.DidSizeChange)
             {
-
                 var size = AppWindow.Size;
                 var rect = AppWindow.Position;
 
@@ -95,10 +99,6 @@ namespace BetterLyrics.WinUI3.Views
                 else
                 {
                     _liveStatesService.LiveStates.LyricsWindowStatus.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
-                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowX = rect.X;
-                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowY = rect.Y;
-                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowWidth = size.Width;
-                    _liveStatesService.LiveStates.LyricsWindowStatus.WindowHeight = size.Height;
                 }
             }
         }

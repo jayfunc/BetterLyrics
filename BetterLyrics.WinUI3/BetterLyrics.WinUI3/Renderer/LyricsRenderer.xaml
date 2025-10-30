@@ -14,7 +14,6 @@
     <Grid>
         <canvas:CanvasAnimatedControl
             x:Name="LyricsCanvas"
-            CreateResources="LyricsCanvas_CreateResources"
             Draw="LyricsCanvas_Draw"
             Update="LyricsCanvas_Update" />
     </Grid>

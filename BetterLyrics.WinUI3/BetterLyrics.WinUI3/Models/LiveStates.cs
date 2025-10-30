@@ -18,6 +18,8 @@ namespace BetterLyrics.WinUI3.Models
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowStatus LyricsWindowStatus { get; set; }
 
+        public bool IsLyricsWindowStatusRefreshing { get; set; } = false;
+
         public LiveStates()
         {
             LyricsWindowStatus = new LyricsWindowStatus();
