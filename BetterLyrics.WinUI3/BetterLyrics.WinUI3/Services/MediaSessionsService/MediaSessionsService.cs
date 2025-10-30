@@ -607,10 +607,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 {
                     UpdateTranslations();
                 }
-                else if (message.PropertyName == nameof(TranslationSettings.ShowTranslationOnly))
-                {
-                    UpdateTranslations();
-                }
                 else if (message.PropertyName == nameof(TranslationSettings.IsChineseRomanizationEnabled))
                 {
                     UpdateTranslations();

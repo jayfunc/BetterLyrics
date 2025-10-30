@@ -51,7 +51,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
             FillRomanizationLyricsData();
             FillTranslationFromCache(title, artist, lyricsSearchProvider);
-            LyricsDataArr.Add(new LyricsData()); // 为 LibreTranslation 预留
         }
 
         private void FillTranslationFromCache(string title, string artist, LyricsSearchProvider? provider)
@@ -106,34 +105,34 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 LyricsDataArr.Add(new LyricsData
                 {
-                    LanguageCode = "pinyin",
+                    LanguageCode = PhoneticHelper.PinyinCode,
                     LyricsLines = chinese.LyricsLines.Select(line => new LyricsLine
                     {
                         StartMs = line.StartMs,
                         EndMs = line.EndMs,
-                        OriginalText = LanguageHelper.ToPinyin(line.OriginalText),
+                        OriginalText = PhoneticHelper.ToPinyin(line.OriginalText),
                         LyricsChars = line.LyricsChars.Select(c => new LyricsChar
                         {
                             StartMs = c.StartMs,
                             EndMs = c.EndMs,
-                            Text = LanguageHelper.ToPinyin(c.Text),
+                            Text = PhoneticHelper.ToPinyin(c.Text),
                             StartIndex = c.StartIndex
                         }).ToList()
                     }).ToList()
                 });
                 LyricsDataArr.Add(new LyricsData
                 {
-                    LanguageCode = "jyutping",
+                    LanguageCode = PhoneticHelper.JyutpingCode,
                     LyricsLines = chinese.LyricsLines.Select(line => new LyricsLine
                     {
                         StartMs = line.StartMs,
                         EndMs = line.EndMs,
-                        OriginalText = LanguageHelper.ToJyutping(line.OriginalText),
+                        OriginalText = PhoneticHelper.ToJyutping(line.OriginalText),
                         LyricsChars = line.LyricsChars.Select(c => new LyricsChar
                         {
                             StartMs = c.StartMs,
                             EndMs = c.EndMs,
-                            Text = LanguageHelper.ToJyutping(c.Text),
+                            Text = PhoneticHelper.ToJyutping(c.Text),
                             StartIndex = c.StartIndex
                         }).ToList()
                     }).ToList()
@@ -144,17 +143,17 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 LyricsDataArr.Add(new LyricsData
                 {
-                    LanguageCode = "romaji",
+                    LanguageCode = PhoneticHelper.RomajiCode,
                     LyricsLines = japanese.LyricsLines.Select(line => new LyricsLine
                     {
                         StartMs = line.StartMs,
                         EndMs = line.EndMs,
-                        OriginalText = LanguageHelper.ToRomaji(line.OriginalText),
+                        OriginalText = PhoneticHelper.ToRomaji(line.OriginalText),
                         LyricsChars = line.LyricsChars.Select(c => new LyricsChar
                         {
                             StartMs = c.StartMs,
                             EndMs = c.EndMs,
-                            Text = LanguageHelper.ToRomaji(c.Text),
+                            Text = PhoneticHelper.ToRomaji(c.Text),
                             StartIndex = c.StartIndex
                         }).ToList()
                     }).ToList()
@@ -212,6 +211,7 @@ namespace BetterLyrics.WinUI3.Helper
                         int ms = int.Parse(m.Groups[4].Value.PadRight(3, '0'));
                         lineStartTime = min * 60_000 + sec * 1000 + ms;
                         content = bracketRegex!.Replace(line, "");
+                        if (content == "//") content = "";
                         lrcLines.Add((lineStartTime.Value, content, new List<(int, string)>()));
                     }
                 }

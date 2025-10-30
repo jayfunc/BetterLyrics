@@ -56,7 +56,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void RefreshMonitorDeviceNames()
         {
             MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
-            LiveStates.LyricsWindowStatus.MonitorDeviceName = MonitorHelper.GetPrimaryMonitorDeviceName();
+            LiveStates.LyricsWindowStatus.MonitorDeviceName = MonitorDeviceNames.FirstOrDefault() ?? "";
         }
 
         [RelayCommand]

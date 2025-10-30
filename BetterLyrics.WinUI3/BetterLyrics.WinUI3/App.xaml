@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="using:BetterLyrics.WinUI3.Converter"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
+    xmlns:globalization="using:Windows.Globalization"
     xmlns:local="using:BetterLyrics.WinUI3"
     xmlns:media="using:CommunityToolkit.WinUI.Media">
     <Application.Resources>
@@ -61,6 +62,7 @@
             <converter:RectToMarginConverter x:Key="RectToMarginConverter" />
             <converter:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
             <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+            <converter:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
@@ -337,6 +339,7 @@
 
             <!--  Fonts  -->
             <FontFamily x:Key="IconFontFamily">ms-appx:///Assets/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
+
         </ResourceDictionary>
     </Application.Resources>
 

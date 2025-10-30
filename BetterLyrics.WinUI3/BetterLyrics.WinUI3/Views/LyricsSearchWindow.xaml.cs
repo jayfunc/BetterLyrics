@@ -33,6 +33,8 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             AppWindow.SetIcons();
 
+            ExtendsContentIntoTitleBar = true;
+
             AppWindow.Closing += AppWindow_Closing;
 
             SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(Enums.BackdropType.Transparent);

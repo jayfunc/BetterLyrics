@@ -5,6 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:globalization="using:Windows.Globalization"
+    xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -24,13 +26,19 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xF2B7;}"
                         IsExpanded="True">
-                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.Language, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageSystemLanguage" />
-                            <ComboBoxItem x:Uid="SettingsPageEN" />
-                            <ComboBoxItem x:Uid="SettingsPageSC" />
-                            <ComboBoxItem x:Uid="SettingsPageTC" />
-                            <ComboBoxItem x:Uid="SettingsPageJA" />
-                            <ComboBoxItem x:Uid="SettingsPageKO" />
+                        <ComboBox ItemsSource="{x:Bind helper:LanguageHelper.SupportedDisplayLanguages}" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.LanguageCode, Mode=TwoWay, Converter={StaticResource DisplayLanguageCodeToIndexConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="globalization:Language">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="{x:Bind DisplayName}" />
+                                        <TextBlock
+                                            VerticalAlignment="Bottom"
+                                            FontSize="12"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Text="{x:Bind NativeName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard>

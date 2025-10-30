@@ -92,7 +92,73 @@
         </Grid>
         <Grid Grid.Column="1">
 
-            <controls:SwitchPresenter Margin="0,100,0,0" Value="{x:Bind ViewModel.ListViewSelectedItemTag, Mode=OneWay}">
+            <Grid Padding="36,0" Style="{StaticResource SettingsGridStyle}">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                    <TextBlock x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <Pivot SelectionChanged="Pivot_SelectionChanged">
+
+                        <PivotItem Tag="General">
+                            <PivotItem.Header>
+                                <TextBlock
+                                    x:Uid="AppSettingsControlGeneral"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </PivotItem.Header>
+                        </PivotItem>
+
+                        <PivotItem Tag="AlbumArtStyle">
+                            <PivotItem.Header>
+                                <TextBlock
+                                    x:Uid="SettingsPageAlbumStyle"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </PivotItem.Header>
+                        </PivotItem>
+
+                        <PivotItem Tag="LyricsStyle">
+                            <PivotItem.Header>
+                                <TextBlock
+                                    x:Uid="SettingsPageLyricsStyle"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </PivotItem.Header>
+                        </PivotItem>
+
+                        <PivotItem Tag="LyricsEffect">
+                            <PivotItem.Header>
+                                <TextBlock
+                                    x:Uid="SettingsPageLyricsEffect"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </PivotItem.Header>
+                        </PivotItem>
+
+                        <PivotItem Tag="LyricsBackground">
+                            <PivotItem.Header>
+                                <TextBlock
+                                    x:Uid="SettingsPageBackgroundOverlay"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </PivotItem.Header>
+                        </PivotItem>
+
+                        <PivotItem Tag="Advanced">
+                            <PivotItem.Header>
+                                <TextBlock
+                                    x:Uid="SettingsPageAdvanced"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </PivotItem.Header>
+                        </PivotItem>
+
+                    </Pivot>
+
+                </StackPanel>
+            </Grid>
+
+            <controls:SwitchPresenter Margin="0,110,0,0" Value="{x:Bind ViewModel.ListViewSelectedItemTag, Mode=OneWay}">
                 <controls:SwitchPresenter.ContentTransitions>
                     <TransitionCollection>
                         <PopupThemeTransition />
@@ -158,7 +224,11 @@
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
 
-                                <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
+                                <controls:SettingsCard
+                                    x:Uid="SettingsPageDockMonitor"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                             Glyph=&#xE7F4;}"
+                                    IsEnabled="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
                                         <Button
@@ -170,11 +240,7 @@
                                     </StackPanel>
                                 </controls:SettingsCard>
 
-                                <controls:SettingsExpander
-                                    x:Uid="SettingsPageWindowBounds"
-                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xF16B;}"
-                                    IsExpanded="True">
+                                <controls:SettingsExpander x:Uid="SettingsPageWindowBounds" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF16B;}">
                                     <controls:SettingsExpander.Items>
                                         <controls:SettingsCard Header="X">
                                             <uc:ExtendedSlider
@@ -251,6 +317,7 @@
                                                 <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
                                             </ComboBox>
                                         </controls:SettingsCard>
+
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
 
@@ -315,91 +382,6 @@
                 </controls:Case>
 
             </controls:SwitchPresenter>
-
-            <Grid Padding="36,0" Style="{StaticResource SettingsGridStyle}">
-                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                    <TextBlock x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                    <ListView
-                        ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                        ScrollViewer.HorizontalScrollMode="Enabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollMode="Disabled"
-                        SelectionChanged="ListView_SelectionChanged">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <ItemsStackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.Items>
-
-                            <ListViewItem Tag="General">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xECAA;" />
-                                    <TextBlock x:Uid="AppSettingsControlGeneral" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </ListViewItem>
-
-                            <ListViewItem Tag="AlbumArtStyle">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xE93C;" />
-                                    <TextBlock x:Uid="SettingsPageAlbumStyle" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </ListViewItem>
-
-                            <ListViewItem Tag="LyricsStyle">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xEDC6;" />
-                                    <TextBlock x:Uid="SettingsPageLyricsStyle" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </ListViewItem>
-
-                            <ListViewItem Tag="LyricsEffect">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xF4A5;" />
-                                    <TextBlock x:Uid="SettingsPageLyricsEffect" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </ListViewItem>
-
-                            <ListViewItem Tag="LyricsBackground">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xF5EF;" />
-                                    <TextBlock x:Uid="SettingsPageBackgroundOverlay" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </ListViewItem>
-
-                            <ListViewItem Tag="Advanced">
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xEC7A;" />
-                                    <TextBlock x:Uid="SettingsPageAdvanced" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </ListViewItem>
-
-                        </ListView.Items>
-
-                    </ListView>
-
-                </StackPanel>
-            </Grid>
 
         </Grid>
     </Grid>

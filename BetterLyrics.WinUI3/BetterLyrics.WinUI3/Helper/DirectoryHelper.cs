@@ -8,6 +8,7 @@ namespace BetterLyrics.WinUI3.Helper
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Text;
@@ -41,6 +42,29 @@ namespace BetterLyrics.WinUI3.Helper
                     // 可根据需要处理异常，如权限不足等
                 }
                 return files;
+            }
+
+            public static void DeleteAllFiles(string folderPath)
+            {
+                if (!Directory.Exists(folderPath))
+                {
+                    return;
+                }
+
+                DirectoryInfo di = new DirectoryInfo(folderPath);
+
+                try
+                {
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        try
+                        {
+                            file.Delete();
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+                catch (Exception) { }
             }
         }
     }

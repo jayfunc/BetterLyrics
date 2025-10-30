@@ -1,6 +1,7 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -31,13 +32,13 @@ namespace BetterLyrics.WinUI3.Controls
     {
         public LyricsWindowSettingsControlViewModel ViewModel => (LyricsWindowSettingsControlViewModel)DataContext;
 
-        private ISettingsService _settingsService;
+        private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
 
         public LyricsWindowSettingsControl()
         {
             InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<LyricsWindowSettingsControlViewModel>();
-            _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         }
 
         private void DeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -50,11 +51,6 @@ namespace BetterLyrics.WinUI3.Controls
                     ViewModel.AppSettings.WindowBoundsRecords.Remove(data);
                 }
             }
-        }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ViewModel?.ListViewSelectedItemTag = ((sender as ListView)!.SelectedItem as ListViewItem)!.Tag;
         }
 
         private void SetDefaultMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -79,6 +75,11 @@ namespace BetterLyrics.WinUI3.Controls
                     menuBarItemFlyout.ShowAt(stackPanel);
                 }
             }
+        }
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel?.ListViewSelectedItemTag = ((sender as Pivot)!.SelectedItem as PivotItem)!.Tag;
         }
     }
 }

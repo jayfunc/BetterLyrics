@@ -19,6 +19,7 @@
             StepFrequency="{x:Bind Frequency, Mode=OneWay}"
             TickFrequency="{x:Bind Frequency, Mode=OneWay}"
             TickPlacement="None"
+            ValueChanged="Slider_ValueChanged"
             Value="{x:Bind Value, Mode=TwoWay}" />
 
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">

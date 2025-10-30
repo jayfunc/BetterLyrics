@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services;
@@ -24,6 +25,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Services.Store;
+using Windows.Storage;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -123,6 +125,28 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _settingsService.ExportSettings(folder.Path);
                 App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("ExportSettingsSuccess") ?? "", InfoBarSeverity.Success);
             }
+        }
+
+        [RelayCommand]
+        private void ClearCacheFiles()
+        {
+            DirectoryHelper.DeleteAllFiles(PathHelper.LogDirectory);
+
+            DirectoryHelper.DeleteAllFiles(PathHelper.LyricsCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.AmllTtmlDbLyricsCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.KugouLyricsCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.LrcLibLyricsCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.NeteaseLyricsCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.QQLyricsCacheDirectory);
+
+            DirectoryHelper.DeleteAllFiles(PathHelper.TranslationCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.KugouTranslationCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.NeteaseTranslationCacheDirectory);
+            DirectoryHelper.DeleteAllFiles(PathHelper.QQTranslationCacheDirectory);
+
+            DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
+
+            App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("ActionCompleted"), InfoBarSeverity.Success);
         }
     }
 }

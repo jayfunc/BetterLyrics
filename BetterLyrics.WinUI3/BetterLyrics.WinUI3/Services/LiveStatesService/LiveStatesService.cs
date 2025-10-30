@@ -98,13 +98,14 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
         {
             WindowHelper.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
 
+            WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds);
+            LiveStates.LyricsWindowStatus.UpdateMonitorNameAndBounds();
+
             if (LiveStates.LyricsWindowStatus.IsWorkArea)
             {
                 UpdateWindowBoundsWhenWorkArea();
             }
 
-            WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds);
-            LiveStates.LyricsWindowStatus.UpdateMonitorNameAndBounds();
             LiveStates.LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
 
             WindowHelper.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);

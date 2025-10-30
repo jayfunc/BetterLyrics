@@ -84,17 +84,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 if (found >= 0)
                 {
                     _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
-                    if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
-                    {
-                        _lyricsDataArr[found].ClearTranslatedText();
-                        _langIndex = found;
-                    }
-                    else
-                    {
-                        _lyricsDataArr[0].SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
-                        _langIndex = 0;
-                        TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
-                    }
+
+                    _lyricsDataArr[0].SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                    TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
                 }
                 else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
                 {
@@ -106,17 +98,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         if (token.IsCancellationRequested) return;
                         if (translated == string.Empty) return;
 
-                        if (_settingsService.AppSettings.TranslationSettings.ShowTranslationOnly)
-                        {
-                            _lyricsDataArr[^1] = _lyricsDataArr[0].CreateLyricsDataFrom(translated);
-                            _lyricsDataArr[^1].ClearTranslatedText();
-                            _langIndex = _lyricsDataArr.Count - 1;
-                        }
-                        else
-                        {
-                            _lyricsDataArr[0].SetTranslation(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
-                            _langIndex = 0;
-                        }
+                        _lyricsDataArr[0].SetTranslation(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
+
                         TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;
                     }
                     catch (Exception)
@@ -140,21 +123,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             if (originalLangCode == "zh" && _settingsService.AppSettings.TranslationSettings.IsChineseRomanizationEnabled)
             {
-                switch (_settingsService.AppSettings.TranslationSettings.ChineseRomanization)
-                {
-                    case ChineseRomanization.Pinyin:
-                        targetPhoneticCode = "pinyin";
-                        break;
-                    case ChineseRomanization.Jyutping:
-                        targetPhoneticCode = "jyutping";
-                        break;
-                    default:
-                        break;
-                }
+                targetPhoneticCode = _settingsService.AppSettings.TranslationSettings.ChineseRomanization.ToPhoneticCode();
             }
             else if (originalLangCode == "ja" && _settingsService.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled)
             {
-                targetPhoneticCode = "romaji";
+                targetPhoneticCode = PhoneticHelper.RomajiCode;
             }
 
             if (targetPhoneticCode == "")
@@ -162,13 +135,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 _lyricsDataArr[0].ClearPhoneticText();
             }
 
-            // Try get phonetic text from itself first
+            // Try get phonetic text from itself
             int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr, targetPhoneticCode);
             if (found >= 0)
             {
                 _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
                 _lyricsDataArr[0].SetPhoneticText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
-                _langIndex = 0;
             }
 
         }
