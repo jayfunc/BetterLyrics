@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionCompleted" xml:space="preserve">
+    <value>Operation completed</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>ローカル音楽ファイル</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>設定ファイルのインポートに失敗し、アプリケーション設定は変更されません</value>
+  </data>
+  <data name="Jyutping" xml:space="preserve">
+    <value>Cantonese pinyin</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>承認が失敗しました、もう一度やり直してください</value>
@@ -448,6 +454,12 @@
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>ピクチャーインピクチャーモード</value>
   </data>
+  <data name="Pinyin" xml:space="preserve">
+    <value>Mandarin pinyin</value>
+  </data>
+  <data name="Romaji" xml:space="preserve">
+    <value>Romaji</value>
+  </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>投稿者</value>
   </data>
@@ -456,6 +468,9 @@
   </data>
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>フィードバック</value>
+  </data>
+  <data name="SetingsPageInstructions.Text" xml:space="preserve">
+    <value>Instructions</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>このプロジェクトが気に入っている場合は、寄付してサポートすることを検討してください。あなたのサポートは、プロジェクトを生かし続け、さらなる開発を促進するのに役立ちます。</value>
@@ -568,11 +583,17 @@
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中国の発音</value>
   </data>
+  <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
+    <value>Chinese lyrics</value>
+  </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>中国人を伝統的な中国人に変換します</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK Unified Ideograph</value>
+  </data>
+  <data name="SettingsPageClearCache.Content" xml:space="preserve">
+    <value>Clear cache files</value>
   </data>
   <data name="SettingsPageClickThrough.Header" xml:space="preserve">
     <value>クリックスルー</value>
@@ -1048,8 +1069,11 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>パスはコンピューターでは見つかりません</value>
   </data>
+  <data name="SettingsPagePhonetic.Text" xml:space="preserve">
+    <value>Lyric annotation</value>
+  </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Phonetic text</value>
+    <value>Phonetic symbols</value>
   </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>マンダリンのピンイン</value>
@@ -1125,6 +1149,9 @@
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>最初の行の期間</value>
+  </data>
+  <data name="SettingsPageServerAddress.Header" xml:space="preserve">
+    <value>Server address</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>テストサーバー</value>
