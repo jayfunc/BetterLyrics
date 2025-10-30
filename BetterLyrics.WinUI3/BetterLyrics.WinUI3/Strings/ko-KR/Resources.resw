@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionCompleted" xml:space="preserve">
+    <value>작전 완료</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>로컬 음악 파일</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>설정 파일 가져 오기 실패, 응용 프로그램 설정은 변경되지 않았습니다</value>
+  </data>
+  <data name="Jyutping" xml:space="preserve">
+    <value>광둥어 병음</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>승인이 실패했습니다. 다시 시도하십시오</value>
@@ -448,6 +454,12 @@
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>사진 인당 모드</value>
   </data>
+  <data name="Pinyin" xml:space="preserve">
+    <value>만다린의 피니 인</value>
+  </data>
+  <data name="Romaji" xml:space="preserve">
+    <value>로만</value>
+  </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>기여자</value>
   </data>
@@ -456,6 +468,9 @@
   </data>
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>피드백</value>
+  </data>
+  <data name="SetingsPageInstructions.Text" xml:space="preserve">
+    <value>지침</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>이 프로젝트가 마음에 들면 기부하여 지원을 고려하십시오. 귀하의 지원은 프로젝트를 계속 유지하고 추가 개발을 장려하는 데 도움이 될 것입니다.</value>
@@ -568,11 +583,17 @@
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>화음</value>
   </data>
+  <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
+    <value>중국어 가사</value>
+  </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>중국어를 전통적인 중국어로 전환합니다</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>한중일 통합 이데오그래프</value>
+  </data>
+  <data name="SettingsPageClearCache.Content" xml:space="preserve">
+    <value>캐시 파일을 지웁니다</value>
   </data>
   <data name="SettingsPageClickThrough.Header" xml:space="preserve">
     <value>클릭률</value>
@@ -1048,6 +1069,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>경로는 컴퓨터에서 찾을 수 없습니다</value>
   </data>
+  <data name="SettingsPagePhonetic.Text" xml:space="preserve">
+    <value>가사 주석</value>
+  </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>발성</value>
   </data>
@@ -1125,6 +1149,9 @@
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>첫 번째 줄의 기간</value>
+  </data>
+  <data name="SettingsPageServerAddress.Header" xml:space="preserve">
+    <value>서버 주소</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>테스트 서버</value>

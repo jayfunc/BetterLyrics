@@ -122,10 +122,14 @@
                                     <controls:SettingsExpander.Items>
 
                                         <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                            <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                                <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.GitHubUrl}" />
-                                                <HyperlinkButton x:Uid="SettingsPageFAQ" NavigateUri="{x:Bind const:Link.FAQUrl}" />
+                                            <StackPanel Spacing="6">
+                                                <TextBlock x:Uid="SetingsPageInstructions" />
+                                                <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                                    <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.GitHubUrl}" />
+                                                    <HyperlinkButton Content="Wiki" NavigateUri="{x:Bind const:Link.WikiUrl}" />
+                                                </StackPanel>
                                             </StackPanel>
+
                                         </controls:SettingsCard>
 
                                         <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
@@ -201,7 +205,7 @@
                                         </controls:SettingsCard>
 
                                     </controls:SettingsExpander.Items>
-                                    <controls:SettingsExpander.ItemsHeader>
+                                    <controls:SettingsExpander.ItemsFooter>
                                         <InfoBar
                                             x:Uid="SettingsPageDisclaimer"
                                             BorderThickness="0"
@@ -209,16 +213,21 @@
                                             IsClosable="False"
                                             IsOpen="True"
                                             Severity="Warning" />
-                                    </controls:SettingsExpander.ItemsHeader>
+                                    </controls:SettingsExpander.ItemsFooter>
                                 </controls:SettingsExpander>
 
                                 <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
                                     <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageCache">
+                                <controls:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
                                     <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
-                                </controls:SettingsCard>
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard>
+                                            <Button x:Uid="SettingsPageClearCache" Command="{x:Bind ViewModel.ClearCacheFilesCommand}" />
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
 
                                 <controls:SettingsCard x:Uid="SettingsPageSettings">
                                     <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenSettingsFolderCommand}" />

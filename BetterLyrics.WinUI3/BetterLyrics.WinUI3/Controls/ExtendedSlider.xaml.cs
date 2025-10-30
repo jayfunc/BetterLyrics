@@ -21,9 +21,16 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class ExtendedSlider : UserControl
     {
+        public event EventHandler<RangeBaseValueChangedEventArgs> ValueChanged;
+
         public ExtendedSlider()
         {
             InitializeComponent();
+        }
+
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            ValueChanged?.Invoke(sender, e);
         }
 
         private void Subtract()

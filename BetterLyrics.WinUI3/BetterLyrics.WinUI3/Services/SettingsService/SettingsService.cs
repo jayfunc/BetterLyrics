@@ -105,30 +105,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         {
             switch (e.PropertyName)
             {
-                case nameof(GeneralSettings.Language):
-                    switch (AppSettings.GeneralSettings.Language)
-                    {
-                        case Enums.Language.FollowSystem:
-                            ApplicationLanguages.PrimaryLanguageOverride = "";
-                            break;
-                        case Enums.Language.English:
-                            ApplicationLanguages.PrimaryLanguageOverride = "en-US";
-                            break;
-                        case Enums.Language.SimplifiedChinese:
-                            ApplicationLanguages.PrimaryLanguageOverride = "zh-CN";
-                            break;
-                        case Enums.Language.TraditionalChinese:
-                            ApplicationLanguages.PrimaryLanguageOverride = "zh-TW";
-                            break;
-                        case Enums.Language.Japanese:
-                            ApplicationLanguages.PrimaryLanguageOverride = "ja-JP";
-                            break;
-                        case Enums.Language.Korean:
-                            ApplicationLanguages.PrimaryLanguageOverride = "ko-KR";
-                            break;
-                        default:
-                            break;
-                    }
+                case nameof(GeneralSettings.LanguageCode):
+                    ApplicationLanguages.PrimaryLanguageOverride = AppSettings.GeneralSettings.LanguageCode;
                     break;
                 default:
                     break;

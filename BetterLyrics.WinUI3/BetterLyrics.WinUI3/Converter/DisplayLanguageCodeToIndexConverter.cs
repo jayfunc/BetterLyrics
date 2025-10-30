@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services;
 using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
@@ -10,27 +9,24 @@ using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    public partial class LanguageCodeToDisplayedNameConverter : IValueConverter
+    public partial class DisplayLanguageCodeToIndexConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is string langCode)
             {
-                if (PhoneticHelper.IsPhoneticCode(langCode))
-                {
-                    return PhoneticHelper.GetDisplayName(langCode);
-                }
-                else
-                {
-                    return new Language(langCode).DisplayName ?? langCode;
-                }
+                return LanguageHelper.SupportedDisplayLanguages.FindIndex(x => x.LanguageTag == langCode);
             }
-            return value?.ToString() ?? "";
+            return 0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            if (value is int index)
+            {
+                return LanguageHelper.SupportedDisplayLanguages.ElementAt(index).LanguageTag;
+            }
+            return "";
         }
     }
 }

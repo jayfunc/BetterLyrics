@@ -3,8 +3,11 @@
     x:Class="BetterLyrics.WinUI3.Controls.PlaybackSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:constants="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:globalization="using:Windows.Globalization"
+    xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -207,72 +210,37 @@
                         <!--  Provider info  -->
                         <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <controls:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
-                            <HyperlinkButton IsEnabled="False" Content="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" NavigateUri="{x:Bind ViewModel.OriginalLyricsRef, Mode=OneWay}" />
+                            <HyperlinkButton
+                                Content="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}"
+                                IsEnabled="False"
+                                NavigateUri="{x:Bind ViewModel.OriginalLyricsRef, Mode=OneWay}" />
                         </controls:SettingsCard>
                         <controls:SettingsCard x:Uid="LyricsPageTranslationProviderPrefix">
-                            <HyperlinkButton IsEnabled="False" Content="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" NavigateUri="{x:Bind ViewModel.TranslatedLyricsRef, Mode=OneWay}" />
+                            <HyperlinkButton
+                                Content="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}"
+                                IsEnabled="False"
+                                NavigateUri="{x:Bind ViewModel.TranslatedLyricsRef, Mode=OneWay}" />
                         </controls:SettingsCard>
 
                         <!--  Lyrics translation  -->
                         <TextBlock x:Uid="SettingsPageTranslation" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <controls:SettingsExpander
-                            x:Uid="LyricsPageTranslationEnabled"
-                            HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                     Glyph=&#xE774;}"
-                            IsExpanded="True">
+                        <controls:SettingsExpander x:Uid="LyricsPageTranslationEnabled" IsExpanded="True">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=TwoWay}" />
                             <controls:SettingsExpander.Items>
                                 <controls:SettingsCard x:Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
-                                    <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
-                                        <ComboBoxItem Content="العربية" Tag="ar" />
-                                        <ComboBoxItem Content="Azərbaycan dili" Tag="az" />
-                                        <ComboBoxItem Content="Български" Tag="bg" />
-                                        <ComboBoxItem Content="বাংলা" Tag="bn" />
-                                        <ComboBoxItem Content="Català" Tag="ca" />
-                                        <ComboBoxItem Content="Čeština" Tag="cs" />
-                                        <ComboBoxItem Content="Dansk" Tag="da" />
-                                        <ComboBoxItem Content="Deutsch" Tag="de" />
-                                        <ComboBoxItem Content="Ελληνικά" Tag="el" />
-                                        <ComboBoxItem Content="English" Tag="en" />
-                                        <ComboBoxItem Content="Esperanto" Tag="eo" />
-                                        <ComboBoxItem Content="Español" Tag="es" />
-                                        <ComboBoxItem Content="Eesti" Tag="et" />
-                                        <ComboBoxItem Content="Euskara" Tag="eu" />
-                                        <ComboBoxItem Content="فارسی" Tag="fa" />
-                                        <ComboBoxItem Content="Suomi" Tag="fi" />
-                                        <ComboBoxItem Content="Français" Tag="fr" />
-                                        <ComboBoxItem Content="Gaeilge" Tag="ga" />
-                                        <ComboBoxItem Content="Galego" Tag="gl" />
-                                        <ComboBoxItem Content="עברית" Tag="he" />
-                                        <ComboBoxItem Content="हिन्दी" Tag="hi" />
-                                        <ComboBoxItem Content="Magyar" Tag="hu" />
-                                        <ComboBoxItem Content="Bahasa Indonesia" Tag="id" />
-                                        <ComboBoxItem Content="Italiano" Tag="it" />
-                                        <ComboBoxItem Content="日本語" Tag="ja" />
-                                        <ComboBoxItem Content="한국어" Tag="ko" />
-                                        <ComboBoxItem Content="Кыргызча" Tag="ky" />
-                                        <ComboBoxItem Content="Lietuvių" Tag="lt" />
-                                        <ComboBoxItem Content="Latviešu" Tag="lv" />
-                                        <ComboBoxItem Content="Bahasa Melayu" Tag="ms" />
-                                        <ComboBoxItem Content="Norsk bokmål" Tag="nb" />
-                                        <ComboBoxItem Content="Nederlands" Tag="nl" />
-                                        <ComboBoxItem Content="Português (Brasil)" Tag="pt-BR" />
-                                        <ComboBoxItem Content="Polski" Tag="pl" />
-                                        <ComboBoxItem Content="Português" Tag="pt" />
-                                        <ComboBoxItem Content="Română" Tag="ro" />
-                                        <ComboBoxItem Content="Русский" Tag="ru" />
-                                        <ComboBoxItem Content="Slovenčina" Tag="sk" />
-                                        <ComboBoxItem Content="Slovenščina" Tag="sl" />
-                                        <ComboBoxItem Content="Shqip" Tag="sq" />
-                                        <ComboBoxItem Content="Српски" Tag="sr" />
-                                        <ComboBoxItem Content="Svenska" Tag="sv" />
-                                        <ComboBoxItem Content="ไทย" Tag="th" />
-                                        <ComboBoxItem Content="Filipino" Tag="tl" />
-                                        <ComboBoxItem Content="Türkçe" Tag="tr" />
-                                        <ComboBoxItem Content="Українська" Tag="uk" />
-                                        <ComboBoxItem Content="اردو" Tag="ur" />
-                                        <ComboBoxItem Content="Tiếng Việt" Tag="vi" />
-                                        <ComboBoxItem Content="中文" Tag="zh" />
+                                    <ComboBox ItemsSource="{x:Bind helper:LanguageHelper.SupportedTranslationTargetLanguages}" SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate x:DataType="globalization:Language">
+                                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                                    <TextBlock Text="{x:Bind DisplayName}" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontSize="12"
+                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                        Text="{x:Bind NativeName}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </controls:SettingsCard>
                                 <controls:SettingsCard x:Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
@@ -299,17 +267,15 @@
                                             IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
                                     </StackPanel>
                                 </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="LyricsPageTranslationOnly" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.ShowTranslationOnly, Mode=TwoWay}" />
-                                </controls:SettingsCard>
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
 
                         <!--  Lyrics phonetic  -->
-                        <controls:SettingsExpander x:Uid="SettingsPageChinese" IsExpanded="True">
+                        <TextBlock x:Uid="SettingsPagePhonetic" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <controls:SettingsExpander x:Uid="SettingsPageChinese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=TwoWay}" />
                             <controls:SettingsExpander.Items>
-                                <controls:SettingsCard>
+                                <controls:SettingsCard IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.ChineseRomanization, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
                                         <ComboBoxItem x:Uid="SettingsPagePinyin" />
                                         <ComboBoxItem x:Uid="SettingsPageJyutping" />
@@ -322,6 +288,7 @@
                         </controls:SettingsCard>
 
                         <!--  中文简体繁体偏好  -->
+                        <TextBlock x:Uid="SettingsPageChineseLyrics" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <controls:SettingsCard x:Uid="SettingsPageChinesePreference">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTraditionalChineseEnabled, Mode=TwoWay}" />
                         </controls:SettingsCard>
@@ -360,7 +327,7 @@
 
                         <!--  LX music server  -->
                         <TextBlock x:Uid="SettingsPageLXMusicServer" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <controls:SettingsCard>
+                        <controls:SettingsCard Header="SettingsPageServerAddress">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <TextBox
                                     IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
@@ -374,17 +341,19 @@
                         </controls:SettingsCard>
 
                         <!--  Apple Music token  -->
-                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="media-user-token (for Apple Muisc)" />
+                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Apple Muisc media-user-token" />
                         <controls:SettingsCard
                             Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                            Description="Use at your own risk"
                             Foreground="{ThemeResource SystemFillColorCautionBrush}"
-                            Header="Use at your own risk">
+                            Header="WARNING">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <TextBox
                                     MaxWidth="250"
                                     PlaceholderText="media-user-token"
                                     Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
                                     TextWrapping="Wrap" />
+                                <HyperlinkButton Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE897;}" NavigateUri="{x:Bind constants:Link.AppleMusicCfgUrl}" />
                                 <Button
                                     Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"
                                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},

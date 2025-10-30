@@ -23,7 +23,6 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class LyricsWindow : Window
     {
-        private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
         private readonly WindowMessageMonitor _wmm;
 
@@ -85,6 +84,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (args.DidPositionChange || args.DidSizeChange)
             {
+
                 var size = AppWindow.Size;
                 var rect = AppWindow.Position;
 
