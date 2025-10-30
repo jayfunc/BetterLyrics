@@ -230,14 +230,9 @@
                                 <controls:SettingsCard x:Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <ComboBox ItemsSource="{x:Bind helper:LanguageHelper.SupportedTranslationTargetLanguages}" SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                         <ComboBox.ItemTemplate>
-                                            <DataTemplate x:DataType="globalization:Language">
+                                            <DataTemplate x:DataType="models:ExtendedLanguage">
                                                 <StackPanel Orientation="Horizontal" Spacing="6">
-                                                    <TextBlock Text="{x:Bind DisplayName}" />
-                                                    <TextBlock
-                                                        VerticalAlignment="Bottom"
-                                                        FontSize="12"
-                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                        Text="{x:Bind NativeName}" />
+                                                    <TextBlock Text="{x:Bind Name}" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>

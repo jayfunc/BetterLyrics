@@ -13,7 +13,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class GeneralSettings : ObservableRecipient
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LanguageCode { get; set; } =  LanguageHelper.GetDefaultDisplayLanguageCode();
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LanguageCode { get; set; } = "";
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LXMusicServer { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> ShowOrHideLyricsWindowShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "H" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = false;

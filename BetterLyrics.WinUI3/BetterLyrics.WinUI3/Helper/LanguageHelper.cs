@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using NTextCat;
 using NTextCat.Commons;
 using System.Collections.Generic;
@@ -13,80 +14,88 @@ namespace BetterLyrics.WinUI3.Helper
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
 
-        public static List<Language> SupportedTranslationTargetLanguages { get; set; } =
+        public static List<ExtendedLanguage> SupportedTranslationTargetLanguages { get; set; } =
         [
-            new Language("ar"),
-            new Language("az"),
+            new ExtendedLanguage("ar"),
+            new ExtendedLanguage("az"),
 
-            new Language("bg"),
-            new Language("bn"),
+            new ExtendedLanguage("bg"),
+            new ExtendedLanguage("bn"),
 
-            new Language("ca"),
-            new Language("cs"),
+            new ExtendedLanguage("ca"),
+            new ExtendedLanguage("cs"),
 
-            new Language("da"),
-            new Language("de"),
+            new ExtendedLanguage("da"),
+            new ExtendedLanguage("de"),
 
-            new Language("el"),
-            new Language("en"),
-            new Language("eo"),
-            new Language("es"),
-            new Language("et"),
-            new Language("eu"),
+            new ExtendedLanguage("el"),
+            new ExtendedLanguage("en"),
+            new ExtendedLanguage("eo"),
+            new ExtendedLanguage("es"),
+            new ExtendedLanguage("et"),
+            new ExtendedLanguage("eu"),
 
-            new Language("fa"),
-            new Language("fi"),
-            new Language("fr"),
+            new ExtendedLanguage("fa"),
+            new ExtendedLanguage("fi"),
+            new ExtendedLanguage("fr"),
 
-            new Language("ga"),
-            new Language("gl"),
+            new ExtendedLanguage("ga"),
+            new ExtendedLanguage("gl"),
 
-            new Language("he"),
-            new Language("hi"),
-            new Language("hu"),
+            new ExtendedLanguage("he"),
+            new ExtendedLanguage("hi"),
+            new ExtendedLanguage("hu"),
 
-            new Language("id"),
-            new Language("it"),
+            new ExtendedLanguage("id"),
+            new ExtendedLanguage("it"),
 
-            new Language("ja"),
+            new ExtendedLanguage("ja"),
 
-            new Language("ko"),
-            new Language("ky"),
+            new ExtendedLanguage("ko"),
+            new ExtendedLanguage("ky"),
 
-            new Language("lt"),
-            new Language("lv"),
+            new ExtendedLanguage("lt"),
+            new ExtendedLanguage("lv"),
 
-            new Language("ms"),
+            new ExtendedLanguage("ms"),
 
-            new Language("nb"),
-            new Language("nl"),
+            new ExtendedLanguage("nb"),
+            new ExtendedLanguage("nl"),
 
-            new Language("pt-BR"),
-            new Language("pl"),
-            new Language("pt"),
+            new ExtendedLanguage("pt-BR"),
+            new ExtendedLanguage("pl"),
+            new ExtendedLanguage("pt"),
 
-            new Language("ro"),
-            new Language("ru"),
+            new ExtendedLanguage("ro"),
+            new ExtendedLanguage("ru"),
 
-            new Language("sk"),
-            new Language("sl"),
-            new Language("sq"),
-            new Language("sr"),
-            new Language("sv"),
+            new ExtendedLanguage("sk"),
+            new ExtendedLanguage("sl"),
+            new ExtendedLanguage("sq"),
+            new ExtendedLanguage("sr"),
+            new ExtendedLanguage("sv"),
 
-            new Language("th"),
-            new Language("tl"),
-            new Language("tr"),
+            new ExtendedLanguage("th"),
+            new ExtendedLanguage("tl"),
+            new ExtendedLanguage("tr"),
 
-            new Language("uk"),
-            new Language("ur"),
+            new ExtendedLanguage("uk"),
+            new ExtendedLanguage("ur"),
 
-            new Language("vi"),
+            new ExtendedLanguage("vi"),
 
-            new Language("zh"),
+            new ExtendedLanguage("zh"),
         ];
 
-        public static List<Language> SupportedDisplayLanguages { get; set; } = ApplicationLanguages.ManifestLanguages.Select(x => new Language(x)).ToList();
+        public static List<ExtendedLanguage> SupportedDisplayLanguages { get; set; } =
+        [
+            new ExtendedLanguage("", App.ResourceLoader!.GetString("SettingsPageSystemLanguage")),
+            new ExtendedLanguage("en-US", "English"),
+            new ExtendedLanguage("ja-JP"),
+            new ExtendedLanguage("ko-KR"),
+            new ExtendedLanguage("zh-CN", "简体中文"),
+            new ExtendedLanguage("zh-TW", "繁體中文"),
+        ];
 
         static LanguageHelper()
         {
@@ -120,20 +129,15 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string GetDefaultTargetTranslationLanguageCode()
         {
-            var found = SupportedTranslationTargetLanguages.Find(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.LanguageTag) == true);
+            var found = SupportedTranslationTargetLanguages.Find(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.LanguageCode) == true);
             if (found == null)
             {
                 return "en";
             }
             else
             {
-                return found.LanguageTag;
+                return found.LanguageCode;
             }
-        }
-
-        public static string GetDefaultDisplayLanguageCode()
-        {
-            return ApplicationLanguages.Languages.FirstOrDefault() ?? "en-US";
         }
 
         public static string GetOrderChar(string text)

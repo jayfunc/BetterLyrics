@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Converter
         {
             if (value is string langCode)
             {
-                return LanguageHelper.SupportedDisplayLanguages.FindIndex(x => x.LanguageTag == langCode);
+                return LanguageHelper.SupportedDisplayLanguages.FindIndex(x => x.LanguageCode == langCode);
             }
             return 0;
         }
@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Converter
         {
             if (value is int index)
             {
-                return LanguageHelper.SupportedDisplayLanguages.ElementAt(index).LanguageTag;
+                return LanguageHelper.SupportedDisplayLanguages.ElementAt(index).LanguageCode;
             }
             return "";
         }
