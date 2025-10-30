@@ -1,5 +1,3 @@
-[_Click here to view frequently asked questions (FAQ)_](https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/index.md)
-
 ![](Promotion/banner.png)
 
 <div align=center>
@@ -22,9 +20,16 @@ BetterLyrics
 
 </div>
 
+
+<div align="center">
+
+[**_Click here to view wiki_**](https://github.com/jayfunc/BetterLyrics/wiki)
+	
+</div>
+
 <h4 align="center">
 Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-app playback and other players
-</h3>
+</h4>
 
 ## 🎉 This project was featured by SSPAI!
 
@@ -60,65 +65,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
  
 - 🎶 **Multiple Music Players Supported**
 
-  - <details><summary>网易云音乐</summary>
-
-    - Please make sure that you have the latest version (3.1.20+) of 网易云音乐 installed on your PC.
-    - Install the [BetterNCM plugin](https://microblock.cc/betterncm) first
-    - After that, install the [InfLink-rs](https://github.com/apoint123/inflink-rs) plugin in PluginMarket. After the installation is complete, please restart 网易云音乐. At this point, all preparatory operations have been completed. Enjoy it!
-
-    </details>
-
-  - <details><summary>⚠️ 酷狗音乐</summary>
-
-    - Please make sure that the 酷狗音乐 setting "Support system playback controls, such as lock screen interface" is turned on
-    - No timeline information broadcast, which means when you change the timeline position in Kugou Music, BetterLyrics has no way to detect this change
-    - ⚠️ Please note that there are issues with the timeline due to Kugou itself
-
-    </details>
-
-  - <details><summary>⚠️ foobar2000</summary>
-
-    - Make sure you have https://github.com/dumbie/foo_mediacontrol installed with it
-    - ⚠️ Please note that there are issues with the timeline due to a plugin issue
-
-    </details>
-
-  - Apple Music
-  - Spotify
-  - PotPlayer
-  - Media Player (System)
-
-  - <details><summary>QQ 音乐</summary>
-
-    - Please keep it at the latest version
-    - Then open Settings in QQ 音乐, enable "Show System Media Transport Controls (SMTC)".
-
-    </details>
-
-  - <details><summary>LX Music</summary>
-
-    - Please make sure you have enabled "Open API" in LX Music settings page
-    - Then open BetterLyrics, go to settings, go to "Playback sources", input your LX Music server address (mostly like http://127.0.0.1:23330) and there you go!
-
-    </details>
-
-  - <details><summary>MusicBee</summary>
-
-    - Please install https://github.com/HenryPDT/mb_MediaControl before using
-
-    </details>
-
-  - <details><summary>iTunes</summary>
-
-    - Please install https://github.com/thewizrd/iTunes-SMTC before using
-
-    </details>
-
-  - <details><summary>AIMP</summary>
-
-    - Please install https://www.aimp.ru/?do=catalog&rec_id=1097 before using
-
-    </details>
+  - Check it out [here](https://github.com/jayfunc/BetterLyrics/wiki/Known-supported-music-players-(configuration-guidance)) for detailed info
 
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
@@ -132,47 +79,34 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 - 🧠 **Smart Behaviors**
   - Auto hide when music paused
 
-> This project is still under development, bugs and unexpected behaviours may exist in the latest branch.
-
 ## Screenshots
 
-### Standard mode
-
-![alt text](Screenshots/std.png)
-
-### Narrow mode
-
-![alt text](Screenshots/std-narrow.png)
-
-### Fullscreen mode
-
 > ⚠️ Due to GIF format and frame rate limitations, the displayed effect is for preview only. Please refer to the actual device for the actual effect.
 
-![](Screenshots/PixPin_2025-10-24_18-13-44.gif)
+<div style="display: flex; justify-content: space-around; align-items: flex-start;">
+  <img src="Screenshots/std.png" width="49%" >
+  <img src="Screenshots/std-narrow.png" width="49%">
+</div>
 
-![alt text](Screenshots/std-fullscreen.png)
+<div style="display: flex; justify-content: space-around; align-items: flex-start;">
+  <img src="Screenshots/PixPin_2025-10-24_18-13-44.gif" width="49%" >
+  <img src="Screenshots/std-fullscreen.png" width="49%">
+</div>
 
-### Docked mode
+<div style="display: flex; justify-content: space-around; align-items: flex-start;">
+  <img src="Screenshots/dock.png" width="49%" >
+  <img src="Screenshots/desktop.png" width="49%">
+</div>
 
-![alt text](Screenshots/dock.png)
-
-### Desktop mode
-
-![alt text](Screenshots/desktop.png)
-
-### Song switching animation
-
-> ⚠️ Due to GIF format and frame rate limitations, the displayed effect is for preview only. Please refer to the actual device for the actual effect.
-
-![](Screenshots/PixPin_2025-10-24_18-17-17.gif)
+<div style="display: flex; justify-content: space-around; align-items: flex-start;">
+  <img src="Screenshots/PixPin_2025-10-24_18-17-17.gif" width="49%" >
+</div>
 
 ## Demonstration
 
 Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bilibili.com/video/BV1QRstz1EGt/).
 
 ## Try it now
-
-### Microsoft Store (Latest version)
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
@@ -182,19 +116,7 @@ Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bi
 
 ☕ If you find it useful, please consider [donating](#donations) or purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
 
-### Unable to download from the MS Store? (Alternative way to download from MS Store, latest version too)
-
-1. Visit https://store.rg-adguard.net/
-2. Type https://apps.microsoft.com/detail/9p1wcd1p597r in the link input area
-3. Select Retail from the drop-down list
-4. Click the check mark
-5. Select the largest installation package in the resulting list to download and install. If you fail to install, try to install the dependency packages first.
-
-### Unable to launch the app?
-
-If you are using a third-party modified Windows, you probably can not launch the app.
-
-To solve this issue, please try to download from Google Drive (see [release](https://github.com/jayfunc/BetterLyrics/releases/latest) for the download link) and follow the instructions [here](https://github.com/jayfunc/BetterLyrics/blob/dev/Sideloadly/index.md).
+Having trouble downloading and installing from the MS Store? See the alternative way to install it [here](https://github.com/jayfunc/BetterLyrics/wiki/Alternative-way-to-download-and-install). 
 
 ## Build
 
@@ -202,28 +124,19 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 
 ## 💖 Many thanks to
 
-### Projects/Packages
-
-- [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)
-  - Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources
-- [lrclib](https://github.com/tranxuanthang/lrclib)
-  - LRCLIB lyrics API provider
-- [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics)
-  - Apple Music lyrics fetch using Python
-- [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet)
-  - Used for extracting pictures from music files
-- [WinUIEx](https://github.com/dotMorten/WinUIEx)
-  - Provide easy ways to access the Win32 API regarding windowing
-- [TagLib#](https://github.com/mono/taglib-sharp)
-  - Used for reading the original lyrics content
-- [Vanara](https://github.com/dahall/Vanara)
-  - Win32 API wrapper
-- [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
-  - Provide the ability for offline lyrics translation
-- [Isolation](https://github.com/Storyteller-Studios/Isolation)
-  - Dynamic fluid background implementation
-- [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization)
-  - Audio visualization reference
+| Projects/Packages | Description |
+| :--- | :--- |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources |
+| [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB lyrics API provider |
+| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music lyrics fetch using Python |
+| [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet) | Used for extracting pictures from music files |
+| [WinUIEx](https://github.com/dotMorten/WinUIEx) | Provide easy ways to access the Win32 API regarding windowing |
+| [TagLib#](https://github.com/mono/taglib-sharp) | Used for reading the original lyrics content |
+| [Vanara](https://github.com/dahall/Vanara) | Win32 API wrapper |
+| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | Provide the ability for offline lyrics translation |
+| [Isolation](https://github.com/Storyteller-Studios/Isolation) | Dynamic fluid background implementation |
+| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | Audio visualization reference |
+| ... | ... |
  
 ### Tutorials/Blogs/etc.
 
@@ -249,7 +162,9 @@ Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891
 
 ## Star history
 
-[![](https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date)
+<div style="display: flex; justify-content: space-around; align-items: flex-start;">
+  <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date" width="49%" >
+</div>
 
 ## Any issues and PRs are welcome
 
