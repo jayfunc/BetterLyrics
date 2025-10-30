@@ -1219,7 +1219,7 @@
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>描边颜色</value>
   </data>
-  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
+  <data name="SettingsPageSystemLanguage" xml:space="preserve">
     <value>默认</value>
   </data>
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">

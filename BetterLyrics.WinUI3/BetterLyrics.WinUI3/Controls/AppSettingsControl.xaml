@@ -9,6 +9,7 @@
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -28,14 +29,9 @@
                         IsExpanded="True">
                         <ComboBox ItemsSource="{x:Bind helper:LanguageHelper.SupportedDisplayLanguages}" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.LanguageCode, Mode=TwoWay, Converter={StaticResource DisplayLanguageCodeToIndexConverter}}">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="globalization:Language">
+                                <DataTemplate x:DataType="models:ExtendedLanguage">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <TextBlock Text="{x:Bind DisplayName}" />
-                                        <TextBlock
-                                            VerticalAlignment="Bottom"
-                                            FontSize="12"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="{x:Bind NativeName}" />
+                                        <TextBlock Text="{x:Bind Name}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>

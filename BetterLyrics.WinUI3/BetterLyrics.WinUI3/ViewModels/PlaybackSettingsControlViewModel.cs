@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             AppleMusicMediaUserToken = PasswordVaultHelper.Get(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey) ?? "";
 
-            SelectedTargetLanguageIndex = LanguageHelper.SupportedTranslationTargetLanguages.ToList().FindIndex(x => x.LanguageTag == AppSettings.TranslationSettings.SelectedTargetLanguageCode);
+            SelectedTargetLanguageIndex = LanguageHelper.SupportedTranslationTargetLanguages.ToList().FindIndex(x => x.LanguageCode == AppSettings.TranslationSettings.SelectedTargetLanguageCode);
 
             IsLastFMAuthenticated = _lastFMService.IsAuthenticated;
             LastFMUser = _lastFMService.User;
@@ -231,7 +231,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnSelectedTargetLanguageIndexChanged(int value)
         {
-            AppSettings.TranslationSettings.SelectedTargetLanguageCode = LanguageHelper.SupportedTranslationTargetLanguages[value].LanguageTag;
+            AppSettings.TranslationSettings.SelectedTargetLanguageCode = LanguageHelper.SupportedTranslationTargetLanguages[value].LanguageCode;
         }
     }
 }
