@@ -79,7 +79,13 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel?.ListViewSelectedItemTag = ((sender as Pivot)!.SelectedItem as PivotItem)!.Tag;
+            if (sender is Pivot pivot)
+            {
+                if (pivot.SelectedItem is PivotItem pivotItem)
+                {
+                    ViewModel?.ListViewSelectedItemTag = pivotItem.Tag;
+                }
+            }
         }
     }
 }
