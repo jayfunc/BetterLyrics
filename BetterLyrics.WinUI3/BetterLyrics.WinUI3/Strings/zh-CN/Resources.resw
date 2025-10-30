@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionCompleted" xml:space="preserve">
+    <value>Operation completed</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>本地音乐文件</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>设置文件导入失败，应用程序设置保持不变</value>
+  </data>
+  <data name="Jyutping" xml:space="preserve">
+    <value>Cantonese pinyin</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>授权失败，请重试</value>
@@ -448,6 +454,12 @@
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>画中画模式</value>
   </data>
+  <data name="Pinyin" xml:space="preserve">
+    <value>Mandarin pinyin</value>
+  </data>
+  <data name="Romaji" xml:space="preserve">
+    <value>Romaji</value>
+  </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>贡献者</value>
   </data>
@@ -456,6 +468,9 @@
   </data>
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>反馈</value>
+  </data>
+  <data name="SetingsPageInstructions.Text" xml:space="preserve">
+    <value>Instructions</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的生命并鼓励进一步的发展。</value>
@@ -568,11 +583,17 @@
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中文注音</value>
   </data>
+  <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
+    <value>Chinese lyrics</value>
+  </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>中文转换为繁体</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK Unified Ideograph</value>
+  </data>
+  <data name="SettingsPageClearCache.Content" xml:space="preserve">
+    <value>Clear cache files</value>
   </data>
   <data name="SettingsPageClickThrough.Header" xml:space="preserve">
     <value>点击穿透</value>
@@ -1048,8 +1069,11 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>无法在您的计算机中找到该路径</value>
   </data>
+  <data name="SettingsPagePhonetic.Text" xml:space="preserve">
+    <value>Lyric annotation</value>
+  </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Phonetic text</value>
+    <value>Phonetic symbols</value>
   </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>普通话拼音</value>
@@ -1125,6 +1149,9 @@
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>首行持续时间</value>
+  </data>
+  <data name="SettingsPageServerAddress.Header" xml:space="preserve">
+    <value>Server address</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>测试服务器</value>
