@@ -35,10 +35,5 @@ namespace BetterLyrics.WinUI3.Renderer
             LyricsCanvas.RemoveFromVisualTree();
             LyricsCanvas = null;
         }
-
-        private async void LyricsCanvas_CreateResources(Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
-        {
-            await ViewModel.CreateResourcesAsync(sender);
-        }
     }
 }

@@ -76,27 +76,31 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             //_effect?.Properties["iTime"] = Convert.ToSingle(TotalTime.TotalSeconds);
 
-            if (_effect != null)
+            if (_fluidEffect == null)
             {
-                var effectTime = Convert.ToSingle(_effect.Properties["iTime"]);
+                UpdateFluidEffect(control);
+            }
+            else
+            {
+                var effectTime = Convert.ToSingle(_fluidEffect.Properties["iTime"]);
                 effectTime += Convert.ToSingle(_elapsedTime.TotalSeconds);
-                _effect.Properties["iTime"] = effectTime;
+                _fluidEffect.Properties["iTime"] = effectTime;
 
                 if (_albumArtAccentColor1Transition.IsTransitioning)
                 {
-                    _effect.Properties["color1"] = _albumArtAccentColor1Transition.Value.ToVector3RGB();
+                    _fluidEffect.Properties["color1"] = _albumArtAccentColor1Transition.Value.ToVector3RGB();
                 }
                 if (_albumArtAccentColor2Transition.IsTransitioning)
                 {
-                    _effect.Properties["color2"] = _albumArtAccentColor2Transition.Value.ToVector3RGB();
+                    _fluidEffect.Properties["color2"] = _albumArtAccentColor2Transition.Value.ToVector3RGB();
                 }
                 if (_albumArtAccentColor3Transition.IsTransitioning)
                 {
-                    _effect.Properties["color3"] = _albumArtAccentColor3Transition.Value.ToVector3RGB();
+                    _fluidEffect.Properties["color3"] = _albumArtAccentColor3Transition.Value.ToVector3RGB();
                 }
                 if (_albumArtAccentColor4Transition.IsTransitioning)
                 {
-                    _effect.Properties["color4"] = _albumArtAccentColor4Transition.Value.ToVector3RGB();
+                    _fluidEffect.Properties["color4"] = _albumArtAccentColor4Transition.Value.ToVector3RGB();
                 }
             }
 
@@ -168,8 +172,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _isCoverAcrylicEffectAmountChanged = true;
                 _isLyrics3DMatrixChanged = true;
 
-                _effect?.Properties["Width"] = (float)control.ConvertDipsToPixels((float)_canvasWidth, CanvasDpiRounding.Round);
-                _effect?.Properties["Height"] = (float)control.ConvertDipsToPixels((float)_canvasHeight, CanvasDpiRounding.Round);
+                _fluidEffect?.Properties["Width"] = (float)control.ConvertDipsToPixels((float)_canvasWidth, CanvasDpiRounding.Round);
+                _fluidEffect?.Properties["Height"] = (float)control.ConvertDipsToPixels((float)_canvasHeight, CanvasDpiRounding.Round);
             }
 
             if (_isSongInfoFontSizeChanged || _isSongTitleVisibilityChanged || _isSongArtistsVisibilityChanged)

@@ -66,10 +66,18 @@
             Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
             CornerRadius="4"
             Opacity="0.7">
-            <TextBlock
-                FontSize="12"
-                Text="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=OneWay}"
-                TextWrapping="Wrap" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,3,0"
+                    FontSize="12"
+                    Text="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=OneWay}"
+                    TextWrapping="Wrap" />
+                <TextBlock FontSize="12" Text="[" />
+                <TextBlock FontSize="12" Text="{x:Bind LyricsWindowStatus.MonitorBounds.Width, Mode=OneWay}" />
+                <TextBlock FontSize="12" Text="×" />
+                <TextBlock FontSize="12" Text="{x:Bind LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}" />
+                <TextBlock FontSize="12" Text="]" />
+            </StackPanel>
         </Grid>
         <!--  Config name  -->
         <Grid

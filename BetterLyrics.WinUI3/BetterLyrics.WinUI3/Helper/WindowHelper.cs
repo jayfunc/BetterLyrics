@@ -194,13 +194,15 @@ namespace BetterLyrics.WinUI3.Helper
             Window? window = GetWindowByWindowType<T>() as Window;
             if (window == null) return;
 
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
             if (enable)
             {
-                EnableWorkArea(window);
+                RegisterWorkArea(hwnd);
             }
             else
             {
-                DisableWorkArea(window);
+                UnregisterWorkArea(hwnd);
             }
         }
 
@@ -245,7 +247,8 @@ namespace BetterLyrics.WinUI3.Helper
             var window = GetWindowByWindowType<T>() as Window;
             if (window == null) return;
 
-            window.AppWindow.MoveAndResize(rect.ToRectInt32());
+            window.AppWindow.Move(new Windows.Graphics.PointInt32((int)rect.X, (int)rect.Y));
+            window.AppWindow.Resize(new Windows.Graphics.SizeInt32((int)rect.Width, (int)rect.Height));
         }
 
         public static void SetTitleBarArea<T>(TitleBarArea titleBarArea)
@@ -259,24 +262,6 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 throw new Exception($"Unsupported window type: {typeof(T).FullName}");
             }
-        }
-
-        private static void DisableWorkArea(Window window)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
-            if (!_workAreas.Contains(hwnd)) return;
-
-            UnregisterWorkArea(hwnd);
-        }
-
-        private static void EnableWorkArea(Window window)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
-            if (_workAreas.Contains(hwnd)) return;
-
-            RegisterWorkArea(hwnd);
         }
 
         private static void RegisterWorkArea(IntPtr hwnd)

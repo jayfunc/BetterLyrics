@@ -47,26 +47,6 @@ namespace BetterLyrics.WinUI3.Models
             UpdateDemoWindowAndMonitorBounds();
         }
 
-        partial void OnWindowXChanged(double value)
-        {
-            WindowBounds = WindowBounds.WithX(value);
-        }
-
-        partial void OnWindowYChanged(double value)
-        {
-            WindowBounds = WindowBounds.WithY(value);
-        }
-
-        partial void OnWindowWidthChanged(double value)
-        {
-            WindowBounds = WindowBounds.WithWidth(value);
-        }
-
-        partial void OnWindowHeightChanged(double value)
-        {
-            WindowBounds = WindowBounds.WithHeight(value);
-        }
-
         partial void OnLyricsStyleSettingsChanged(LyricsStyleSettings oldValue, LyricsStyleSettings newValue)
         {
             oldValue.PropertyChanged -= OldLyricsStyleSettings_PropertyChanged;
@@ -111,12 +91,6 @@ namespace BetterLyrics.WinUI3.Models
             this.OnPropertyChanged(nameof(AlbumArtLayoutSettings));
         }
 
-        partial void OnWindowBoundsChanged(Rect value)
-        {
-            UpdateMonitorNameAndBounds();
-            UpdateDemoWindowAndMonitorBounds();
-        }
-
         partial void OnAutoShowOrHideWindowChanged(bool value)
         {
             WindowHelper.SetLyricsWindowVisibilityByPlayingStatus();
@@ -129,6 +103,17 @@ namespace BetterLyrics.WinUI3.Models
 
             var mointor = MonitorHelper.GetMonitorInfoExFromWindow(lyricsWindow);
             MonitorDeviceName = mointor.szDevice;
+            MonitorBounds = new Rect(
+                mointor.rcMonitor.Left,
+                mointor.rcMonitor.Top,
+                mointor.rcMonitor.Width,
+                mointor.rcMonitor.Height
+            );
+        }
+
+        public void UpdateMonitorBounds()
+        {
+            var mointor = MonitorHelper.GetMonitorInfoExFromDeviceName(MonitorDeviceName);
             MonitorBounds = new Rect(
                 mointor.rcMonitor.Left,
                 mointor.rcMonitor.Top,
@@ -181,6 +166,10 @@ namespace BetterLyrics.WinUI3.Models
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
                 TitleBarArea = this.TitleBarArea,
+                WindowX = this.WindowX,
+                WindowY = this.WindowY,
+                WindowWidth = this.WindowWidth,
+                WindowHeight = this.WindowHeight,
             };
         }
     }
