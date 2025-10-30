@@ -1219,8 +1219,8 @@
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>Stroke color</value>
   </data>
-  <data name="SettingsPageSystemLanguage.Content" xml:space="preserve">
-    <value>デフォルト</value>
+  <data name="SettingsPageSystemLanguage" xml:space="preserve">
+    <value>Default</value>
   </data>
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
     <value>ターゲット言語</value>
