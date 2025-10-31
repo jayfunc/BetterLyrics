@@ -91,11 +91,14 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 </div>
 
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
+  <img src="Screenshots/Snipaste_2025-10-31_19-23-17.png" width="49%">
+  <img src="Screenshots/Snipaste_2025-10-31_19-24-57.png" width="49%">
+</div>
+
+<div style="display: flex; justify-content: space-around; align-items: flex-start;">
   <img src="Screenshots/dock.png" width="49%">
   <img src="Screenshots/desktop.png" width="49%">
 </div>
-
-<br>
 
 > ⚠️ Due to GIF format and frame rate limitations, the displayed effect is for preview only. Please refer to the actual device for the actual effect.
 
