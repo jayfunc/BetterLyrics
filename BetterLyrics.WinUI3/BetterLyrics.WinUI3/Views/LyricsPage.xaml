@@ -9,6 +9,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
@@ -25,7 +26,8 @@
         SizeChanged="RootGrid_SizeChanged">
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
-        <!--<Image Source="/Assets/Cover.jpg" />-->
+
+        <dev:SnowFlakeEffect FlakeCount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SnowFlakeOverlayAmount, Mode=OneWay}" Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
         <!--  No music playing placeholder  -->
         <Grid x:Name="NoMusicPlayingGrid" Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">

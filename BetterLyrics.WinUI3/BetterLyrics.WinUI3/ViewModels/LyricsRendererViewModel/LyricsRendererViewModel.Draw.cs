@@ -115,7 +115,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         public void DrawSpectrum(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (_spectrumAnalyzer != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSpectrumOverlayEnabled)
+            if (_spectrumAnalyzer != null && _spectrumAnalyzer.SmoothSpectrum != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSpectrumOverlayEnabled)
             {
                 var points = new Vector2[_spectrumAnalyzer.BarCount];
                 float pointSpacing = 0;
@@ -340,7 +340,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 using var combinedDs = combined.CreateDrawingSession();
 
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
-                using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, 
+                using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
                     _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
 
                 using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
@@ -356,7 +356,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsLyricsLineFadeEnabled);
                     using var lineMask = CanvasHelper.CreateLineMask(control, line);
 
-                    using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor, 
+                    using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
                         _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth, _fgFontColor);
 
                     using var effectLayer = new CanvasCommandList(control);
