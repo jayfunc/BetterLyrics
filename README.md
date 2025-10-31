@@ -81,32 +81,18 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ## Screenshots
 
-<div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="Screenshots/fs2.png" width="100%">
-</div>
-
-<div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="Screenshots/std.png" width="49%">
-  <img src="Screenshots/narrow.png" width="49%">
-</div>
-
-<div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="Screenshots/Snipaste_2025-10-31_19-23-17.png" width="49%">
-  <img src="Screenshots/Snipaste_2025-10-31_19-24-57.png" width="49%">
-</div>
-
-<div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="Screenshots/dock.png" width="49%">
-  <img src="Screenshots/desktop.png" width="49%">
-</div>
+![](Screenshots/fs2.png)
+![](Screenshots/std.png)
+![](Screenshots/narrow.png)
+![](Screenshots/Snipaste_2025-10-31_19-23-17.png)
+![](Screenshots/Snipaste_2025-10-31_19-27-34.png)
+![](Screenshots/dock.png)
+![](Screenshots/desktop.png)
 
 > ⚠️ Due to GIF format and frame rate limitations, the displayed effect is for preview only. Please refer to the actual device for the actual effect.
 
-<div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="Screenshots/PixPin_2025-10-24_18-13-44.gif" width="49%" >
-  <img src="Screenshots/PixPin_2025-10-24_18-17-17.gif" width="42%" >
-
-</div>
+![](Screenshots/PixPin_2025-10-24_18-13-44.gif)
+![](Screenshots/PixPin_2025-10-24_18-17-17.gif)
 
 ## Demonstration
 
