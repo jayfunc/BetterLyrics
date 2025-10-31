@@ -6,30 +6,30 @@ using System.Diagnostics;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class SpectrumAnalyzer : IDisposable
+    public partial class SpectrumAnalyzer : IDisposable
     {
-        private WasapiLoopbackCapture _capture;
-        
+        private WasapiLoopbackCapture? _capture;
+
         private int _sampleRate = 48000;
         private readonly int _fftLength = 2048;
-        
+
         private readonly float[] _fftLeftBuffer;
         private readonly float[] _fftRightBuffer;
 
         private readonly Complex[] _fftLeftData;
         private readonly Complex[] _fftRightData;
-        
-        private float[] _spectrumLeftData;
-        private float[] _spectrumRightData;
-        private float[] _spectrumData;
+
+        private float[]? _spectrumLeftData;
+        private float[]? _spectrumRightData;
+        private float[]? _spectrumData;
 
         private bool _disposed = false;
-        
+
         private double[] _hammingWindow;
 
-        private float[] _currentSpectrum;
-        public float[] SmoothSpectrum { get; private set; }
-        
+        private float[]? _currentSpectrum;
+        public float[]? SmoothSpectrum { get; private set; }
+
         public int BarCount { get; set; } = 32;
         public int Sensitivity { get; set; } = 10;
         public float SmoothingFactor { get; set; } = 0.95f;
@@ -69,6 +69,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("+++++++++++++++++++" + ex.ToString());
             }
         }
 
@@ -100,10 +101,15 @@ namespace BetterLyrics.WinUI3.Helper
                 _fftRightData[i].Y = 0;
             }
 
+            if (_spectrumData == null || _spectrumRightData == null || _currentSpectrum == null)
+            {
+                return;
+            }
+
             // FFT
             FastFourierTransform.FFT(true, (int)Math.Log(_fftLength, 2), _fftLeftData);
             FastFourierTransform.FFT(true, (int)Math.Log(_fftLength, 2), _fftRightData);
-            for (int i = 0; i < _spectrumLeftData.Length; i++)
+            for (int i = 0; i < _spectrumLeftData?.Length; i++)
             {
                 float real = (float)_fftLeftData[i].X;
                 float imaginary = (float)_fftLeftData[i].Y;
@@ -132,6 +138,11 @@ namespace BetterLyrics.WinUI3.Helper
 
         public void UpdateSmoothSpectrum()
         {
+            if (SmoothSpectrum == null || _currentSpectrum == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < BarCount; i++)
             {
                 SmoothSpectrum[i] = SmoothSpectrum[i] * SmoothingFactor +
