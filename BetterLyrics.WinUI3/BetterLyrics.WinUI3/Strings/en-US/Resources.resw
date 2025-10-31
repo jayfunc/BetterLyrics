@@ -1192,6 +1192,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>Current value: </value>
   </data>
+  <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
+    <value>Snow flake layer</value>
+  </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>Song title &amp; artist</value>
   </data>

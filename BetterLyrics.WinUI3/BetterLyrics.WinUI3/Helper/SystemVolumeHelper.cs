@@ -1,73 +1,61 @@
 ﻿using Microsoft.UI.Dispatching;
+using NAudio.CoreAudioApi;
 using System;
-using Vanara.Extensions;
-using Vanara.PInvoke;
-using static Vanara.PInvoke.CoreAudio;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public static class SystemVolumeHelper
     {
-        private readonly static IMMDeviceEnumerator _deviceEnumerator = new();
-        private static IAudioEndpointVolume? _endpointVolume = null;
-        private static VolumeCallbackImpl? _callbackImpl;
-        private static int _masterVolume = 0;
+        private static MMDeviceEnumerator? _deviceEnumerator;
+        private static MMDevice? _defaultDevice;
         private static DispatcherQueue _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        public static event Action<int>? VolumeChanged;
+        /// <summary>
+        /// 当系统音量或静音状态改变时触发。
+        /// </summary>
+        public static event EventHandler<int>? VolumeNotification;
 
         static SystemVolumeHelper()
         {
-            var device = _deviceEnumerator.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
-            if (device != null)
+            _deviceEnumerator = new MMDeviceEnumerator();
+            _defaultDevice = _deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+
+            if (_defaultDevice != null)
             {
-                device.Activate(typeof(IAudioEndpointVolume).GUID, 0, null, out var obj);
-                if (obj is IAudioEndpointVolume endpointVolume)
-                {
-                    _endpointVolume = endpointVolume;
-                    _callbackImpl = new VolumeCallbackImpl();
-                    _endpointVolume.RegisterControlChangeNotify(_callbackImpl);
-                }
+                _defaultDevice.AudioEndpointVolume.OnVolumeNotification += AudioEndpointVolume_OnVolumeNotification;
             }
         }
 
-        /// <summary>
-        /// 获取当前系统主音量（0~100）。
-        /// </summary>
-        public static int GetMasterVolume()
+        private static void AudioEndpointVolume_OnVolumeNotification(AudioVolumeNotificationData data)
         {
-            if (_endpointVolume != null)
+            _dispatcherQueue?.TryEnqueue(() =>
             {
-                double level = _endpointVolume.GetMasterVolumeLevelScalar();
-                _masterVolume = (int)(level * 100);
+                VolumeNotification?.Invoke(null, (int)(data.MasterVolume * 100));
+            });
+        }
+
+        /// <summary>
+        /// 获取或设置系统主音量 (0 到 100)。
+        /// </summary>
+        public static int MasterVolume
+        {
+            get
+            {
+                if (_defaultDevice == null)
+                    return 0;
+
+                return (int)(_defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
             }
-
-            return _masterVolume;
-        }
-
-        /// <summary>
-        /// 设置当前系统主音量（0~100）。
-        /// </summary>
-        public static void SetMasterVolume(int volume)
-        {
-            if (_masterVolume == volume) return;
-
-            _masterVolume = volume;
-            _endpointVolume?.SetMasterVolumeLevelScalar(_masterVolume / 100f, Guid.Empty);
-        }
-
-        // 内部回调实现
-        private class VolumeCallbackImpl : IAudioEndpointVolumeCallback
-        {
-            HRESULT IAudioEndpointVolumeCallback.OnNotify(nint pNotify)
+            set
             {
-                var data = pNotify.ToStructure<AUDIO_VOLUME_NOTIFICATION_DATA>();
-                _masterVolume = (int)(data.fMasterVolume * 100);
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                {
-                    VolumeChanged?.Invoke(_masterVolume);
-                });
-                return HRESULT.S_OK;
+                if (_defaultDevice == null)
+                    return;
+
+                _defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar = value / 100f;
             }
         }
     }

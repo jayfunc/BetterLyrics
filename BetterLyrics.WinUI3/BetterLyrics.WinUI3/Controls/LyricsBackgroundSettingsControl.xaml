@@ -112,10 +112,10 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsExpander Header="Snow flake layer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
+                    <controls:SettingsExpander x:Uid="SettingsPageSnowFlakeLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard Header="Flake count">
+                            <controls:SettingsCard x:Uid="SettingsPageAmount">
                                 <uc:ExtendedSlider
                                     Frequency="1"
                                     Maximum="100"
@@ -126,9 +126,9 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsExpander x:Uid="SettingsPageSpectrumLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                    <controls:SettingsCard x:Uid="SettingsPageSpectrumLayer">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=TwoWay}" />
-                    </controls:SettingsExpander>
+                    </controls:SettingsCard>
 
                 </StackPanel>
             </Grid>

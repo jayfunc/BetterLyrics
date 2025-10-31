@@ -38,8 +38,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             LiveStates = _liveStatesService.LiveStates;
 
-            Volume = SystemVolumeHelper.GetMasterVolume();
-            SystemVolumeHelper.VolumeChanged += SystemVolumeHelper_VolumeChanged;
+            Volume = SystemVolumeHelper.MasterVolume;
+            SystemVolumeHelper.VolumeNotification += SystemVolumeHelper_VolumeNotification;
 
             _mediaSessionsService = mediaSessionsService;
             _mediaSessionsService.SongInfoChanged += PlaybackService_SongInfoChanged;
@@ -49,14 +49,14 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsSongPlaying = _mediaSessionsService.IsPlaying;
         }
 
+        private void SystemVolumeHelper_VolumeNotification(object? sender, int e)
+        {
+            Volume = e;
+        }
+
         private void PlaybackService_TimelineChanged(object? sender, Events.TimelineChangedEventArgs e)
         {
             SongDurationSeconds = (int)e.End.TotalSeconds;
-        }
-
-        private void SystemVolumeHelper_VolumeChanged(int volume)
-        {
-            Volume = volume;
         }
 
         private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
@@ -137,11 +137,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnTimelineSliderThumbSecondsChanged(double value)
         {
             TimelineSliderThumbLyricsLine = _mediaSessionsService.CurrentLyricsData?.GetLyricsLine(value);
-        }
-
-        partial void OnVolumeChanged(int value)
-        {
-            SystemVolumeHelper.SetMasterVolume(value);
         }
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)

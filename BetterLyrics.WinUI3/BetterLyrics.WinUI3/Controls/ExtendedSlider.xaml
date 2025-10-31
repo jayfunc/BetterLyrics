@@ -13,13 +13,14 @@
     <StackPanel>
 
         <Slider
+            IsEnabled="{x:Bind IsSliderEnabled, Mode=OneWay}"
             Maximum="{x:Bind Maximum, Mode=OneWay}"
             Minimum="{x:Bind Minimum, Mode=OneWay}"
             SnapsTo="Ticks"
             StepFrequency="{x:Bind Frequency, Mode=OneWay}"
+            Tapped="Slider_Tapped"
             TickFrequency="{x:Bind Frequency, Mode=OneWay}"
             TickPlacement="None"
-            ValueChanged="Slider_ValueChanged"
             Value="{x:Bind Value, Mode=TwoWay}" />
 
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using LyricsData = BetterLyrics.WinUI3.Models.LyricsData;
 
@@ -98,7 +99,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private void FillRomanizationLyricsData()
+        private async Task FillRomanizationLyricsData()
         {
             var chinese = LyricsDataArr.Where(x => x.LanguageCode == "zh").FirstOrDefault();
             if (chinese != null)

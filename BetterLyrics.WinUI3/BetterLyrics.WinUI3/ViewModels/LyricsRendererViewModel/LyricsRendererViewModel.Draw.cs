@@ -133,6 +133,17 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     points[i] = new Vector2(x, y);
                 }
 
+                // 限制最高点高度
+                var minY = points.OrderBy(p => p.Y).FirstOrDefault().Y;
+                var limitY = _canvasHeight * (1 - 0.1f);
+                if (minY < limitY)
+                {
+                    var num = (float)(limitY / minY);
+                    points = points.Select(p => new Vector2(p.X, p.Y * num)).ToArray();
+                }
+                // 防止越过画布边界
+                points = points.Select(p => new Vector2(p.X, (float)(Math.Min(_canvasHeight, p.Y)))).ToArray();
+
                 // 用于填充的闭合路径
                 using var pathBuilder = new CanvasPathBuilder(ds);
                 pathBuilder.BeginFigure(points[0]);
@@ -164,21 +175,25 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 using var geometry = CanvasGeometry.CreatePath(pathBuilder);
                 var gradientStops = new CanvasGradientStop[]
                 {
-                    new() { Position = 0.0f, Color = _albumArtAccentColor1Transition.Value },
-                    new() { Position = 1.0f, Color = Colors.Transparent }
+                    new() { Position = 0.0f, Color = Colors.Transparent },
+                    new() { Position = 0.8f, Color = Colors.Transparent },
+                    new() { Position = 1.0f, Color = _adaptiveColoredFontColor ?? _albumArtAccentColor1Transition.Value }
                 };
 
                 using var gradientBrush = new CanvasLinearGradientBrush(ds, gradientStops);
-                gradientBrush.StartPoint = new Vector2((float)_canvasWidth / 2, (float)_canvasHeight);
-                gradientBrush.EndPoint = new Vector2((float)_canvasWidth / 2, points.Select(p => p.Y).Min());
+                gradientBrush.StartPoint = new Vector2(0, 0);
+                gradientBrush.EndPoint = new Vector2(0, (float)_canvasHeight);
 
                 // 使用渐变画刷填充
                 ds.FillGeometry(geometry, gradientBrush);
 
+                // 纯色
+                //ds.FillGeometry(geometry, _adaptiveColoredFontColor ?? _albumArtAccentColor1Transition.Value);
+
                 // 绘制轮廓线
-                // var lineColor = Colors.SkyBlue;
-                // float strokeWidth = 2f;
-                // session.DrawGeometry(geometry, lineColor, strokeWidth);
+                //var lineColor = Colors.SkyBlue;
+                //float strokeWidth = 2f;
+                //ds.DrawGeometry(geometry, _albumArtAccentColor4Transition.Value, strokeWidth);
 
             }
         }

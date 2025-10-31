@@ -87,7 +87,6 @@
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.10" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-		<PackageReference Include="Vanara.PInvoke.CoreAudio" Version="4.2.1" />
 		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.2.1" />
 		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.2.1" />
 		<PackageReference Include="Vanara.PInvoke.Shell32" Version="4.2.1" />
@@ -113,7 +112,6 @@
 	<ItemGroup>
 		<TrimmerRootAssembly Include="TagLibSharp" />
 		<TrimmerRootAssembly Include="NAudio.Wasapi" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.CoreAudio" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Update="Assets\AIMP.png">

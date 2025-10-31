@@ -180,5 +180,10 @@ namespace BetterLyrics.WinUI3.Views
                 BottomCommandFlyout.ShowAt(BottomCommandFlyoutTrigger);
             }
         }
+
+        private void ExtendedSlider_ValueChangedByUser(object sender, Events.ExtendedSliderValueChangedByUserEventArgs e)
+        {
+            SystemVolumeHelper.MasterVolume = ViewModel.Volume;
+        }
     }
 }

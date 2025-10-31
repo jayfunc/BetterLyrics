@@ -100,6 +100,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isSpectrumOverlayEnabledChanged = true;
                 }
+                else if (message.PropertyName == nameof(LyricsBackgroundSettings.IsFluidOverlayEnabled))
+                {
+                    _isFluidOverlayEnabledChanged = true;
+                }
             }
         }
 

@@ -49,38 +49,13 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                     break;
                 case nameof(LyricsWindowStatus.DockHeight):
                 case nameof(LyricsWindowStatus.DockPlacement):
-                    if (LiveStates.LyricsWindowStatus.IsWorkArea)
-                    {
-                        WindowHelper.UpdateWorkArea<LyricsWindow>();
-                        await Task.Delay(300);
-                        WindowHelper.MoveAndResize<LyricsWindow>(GetWindowBoundsWhenWorkArea());
-                    }
-                    break;
                 case nameof(LyricsWindowStatus.MonitorDeviceName):
-                    // 记录切换前的窗口状态是否沾满屏幕
-                    bool isStretchedToMonitor = LiveStates.LyricsWindowStatus.WindowBounds == LiveStates.LyricsWindowStatus.MonitorBounds;
                     LiveStates.LyricsWindowStatus.UpdateMonitorBounds();
                     if (LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
                         WindowHelper.UpdateWorkArea<LyricsWindow>();
                         await Task.Delay(300);
                         WindowHelper.MoveAndResize<LyricsWindow>(GetWindowBoundsWhenWorkArea());
-                    }
-                    else
-                    {
-                        if (isStretchedToMonitor)
-                        {
-                            WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.MonitorBounds);
-                        }
-                        else
-                        {
-                            WindowHelper.MoveAndResize<LyricsWindow>(new Rect(
-                                LiveStates.LyricsWindowStatus.MonitorBounds.X,
-                                LiveStates.LyricsWindowStatus.MonitorBounds.Y,
-                                Math.Min(LiveStates.LyricsWindowStatus.MonitorBounds.Width, LiveStates.LyricsWindowStatus.WindowBounds.Width),
-                                Math.Min(LiveStates.LyricsWindowStatus.MonitorBounds.Height, LiveStates.LyricsWindowStatus.WindowBounds.Height)
-                            ));
-                        }
                     }
                     break;
                 case nameof(LyricsWindowStatus.IsShownInSwitchers):
