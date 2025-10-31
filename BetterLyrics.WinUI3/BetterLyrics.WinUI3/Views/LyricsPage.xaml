@@ -38,9 +38,6 @@
                     FontFamily="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily, Mode=OneWay}"
                     FontSize="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.OriginalLyricsFontSize, Mode=OneWay}"
                     TextWrapping="Wrap" />
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <HyperlinkButton x:Uid="SettingsPageFAQ" NavigateUri="{x:Bind const:Link.FAQUrl}" />
-                </StackPanel>
             </StackPanel>
             <Grid.OpacityTransition>
                 <ScalarTransition />
@@ -139,11 +136,13 @@
                             <Button.ContextFlyout>
                                 <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
                                     <uc:ExtendedSlider
-                                        Frequency="1"
+                                        Frequency="10"
+                                        IsSliderEnabled="False"
                                         Maximum="100"
                                         Minimum="0"
                                         ResetButtonVisibility="Collapsed"
                                         Unit="%"
+                                        ValueChangedByUser="ExtendedSlider_ValueChangedByUser"
                                         Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
                                 </Flyout>
                             </Button.ContextFlyout>

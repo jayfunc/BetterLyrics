@@ -257,8 +257,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _fluidEffect = null;
         }
 
-        private async void UpdateFluidEffect(ICanvasAnimatedControl control)
+        private async void RecreateFluidEffect(ICanvasAnimatedControl control)
         {
+            DisposeFluidEffect();
+
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/FluidEffect.bin"));
             IBuffer buffer = await FileIO.ReadBufferAsync(file);
             var bytes = buffer.ToArray();

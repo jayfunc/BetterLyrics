@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class PhoneticHelper
+    public static class PhoneticHelper
     {
         public const string PinyinCode = "zh-pinyin";
         public const string JyutpingCode = "zh-jyutping";
@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string ToRomaji(string text)
         {
-            return Kana.Kana.KanaToRomaji(text).ToStr();
+            return Kana.Kana.KanaToRomaji(text, Kana.Error.Ignore).ToStr();
         }
 
         public static string ToPinyin(string text, Pinyin.ManTone.Style style = Pinyin.ManTone.Style.TONE)

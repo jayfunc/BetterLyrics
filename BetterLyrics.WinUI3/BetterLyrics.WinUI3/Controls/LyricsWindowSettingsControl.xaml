@@ -227,6 +227,18 @@
                                             </ComboBox>
                                         </controls:SettingsCard>
 
+                                        <controls:SettingsCard x:Uid="SettingsPageDockMonitor" IsEnabled="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
+                                                <Button
+                                                    Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
+                                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                          FontSize=12,
+                                                                          Glyph=&#xE72C;}"
+                                                    Style="{StaticResource GhostButtonStyle}" />
+                                            </StackPanel>
+                                        </controls:SettingsCard>
+
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
 
@@ -250,18 +262,6 @@
                                         </controls:SettingsCard>
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
-
-                                <controls:SettingsCard x:Uid="SettingsPageDockMonitor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7F4;}">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
-                                        <Button
-                                            Command="{x:Bind ViewModel.RefreshMonitorDeviceNamesCommand}"
-                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                                  FontSize=12,
-                                                                  Glyph=&#xE72C;}"
-                                            Style="{StaticResource GhostButtonStyle}" />
-                                    </StackPanel>
-                                </controls:SettingsCard>
 
                                 <controls:SettingsExpander
                                     x:Uid="SettingsPageWindowBounds"

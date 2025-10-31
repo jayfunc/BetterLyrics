@@ -56,6 +56,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private bool _isAlbumArtSizeChanged = false;
 
         private bool _isSpectrumOverlayEnabledChanged = true;
+        private bool _isFluidOverlayEnabledChanged = true;
 
         private bool _isLyrics3DMatrixChanged = true;
 
@@ -76,11 +77,21 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             //_effect?.Properties["iTime"] = Convert.ToSingle(TotalTime.TotalSeconds);
 
-            if (_fluidEffect == null)
+            if (_isFluidOverlayEnabledChanged)
             {
-                UpdateFluidEffect(control);
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsFluidOverlayEnabled)
+                {
+                    RecreateFluidEffect(control);
+                }
+                else
+                {
+                    DisposeFluidEffect();
+                }
+
+                _isFluidOverlayEnabledChanged = false;
             }
-            else
+
+            if (_fluidEffect != null)
             {
                 var effectTime = Convert.ToSingle(_fluidEffect.Properties["iTime"]);
                 effectTime += Convert.ToSingle(_elapsedTime.TotalSeconds);
@@ -710,11 +721,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 if (isLight)
                 {
-                    _adaptiveColoredFontColor = _albumArtDarkAccentColors.FirstOrDefault();
+                    _adaptiveColoredFontColor = _albumArtDarkAccentColors.ElementAtOrDefault(0);
                 }
                 else
                 {
-                    _adaptiveColoredFontColor = _albumArtLightAccentColors.FirstOrDefault();
+                    _adaptiveColoredFontColor = _albumArtLightAccentColors.ElementAtOrDefault(0);
                 }
             }
 

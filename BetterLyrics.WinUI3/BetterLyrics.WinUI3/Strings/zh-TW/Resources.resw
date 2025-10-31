@@ -1192,6 +1192,9 @@
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>目前值： </value>
   </data>
+  <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
+    <value>雪花層</value>
+  </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>歌曲標題和藝術家</value>
   </data>

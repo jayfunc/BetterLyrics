@@ -117,6 +117,11 @@ namespace BetterLyrics.WinUI3.Helper
             return new Vector3((float)color.R / 0xff, (float)color.G / 0xff, (float)color.B / 0xff);
         }
 
+        public static Color GetRandomColor()
+        {
+            return Color.FromArgb(255, (byte)Random.Shared.Next(0, 256), (byte)Random.Shared.Next(0, 256), (byte)Random.Shared.Next(0, 256));
+        }
+
         public static System.Drawing.Color GetAccentColor(IntPtr myHwnd, string monitorDeviceName, WindowPixelSampleMode mode)
         {
             if (!User32.GetWindowRect(myHwnd, out RECT myRect)) return System.Drawing.Color.Transparent;

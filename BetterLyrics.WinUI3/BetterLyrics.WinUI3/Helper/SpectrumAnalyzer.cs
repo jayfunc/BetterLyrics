@@ -1,8 +1,6 @@
-﻿using BetterLyrics.WinUI3.Models.Settings;
-using NAudio.Dsp;
+﻿using NAudio.Dsp;
 using NAudio.Wave;
 using System;
-using System.Diagnostics;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -30,8 +28,8 @@ namespace BetterLyrics.WinUI3.Helper
         private float[]? _currentSpectrum;
         public float[]? SmoothSpectrum { get; private set; }
 
-        public int BarCount { get; set; } = 32;
-        public int Sensitivity { get; set; } = 10;
+        public int BarCount { get; set; } = 16;
+        public int Sensitivity { get; set; } = 100;
         public float SmoothingFactor { get; set; } = 0.95f;
         public bool IsCapturing { get; private set; } = false;
 
@@ -51,12 +49,13 @@ namespace BetterLyrics.WinUI3.Helper
 
         public void StartCapture()
         {
-            _currentSpectrum = new float[BarCount];
-            SmoothSpectrum = new float[BarCount];
-
             try
             {
-                _capture = new WasapiLoopbackCapture();
+                _currentSpectrum = new float[BarCount];
+                SmoothSpectrum = new float[BarCount];
+
+                _capture = new();
+
                 _sampleRate = _capture.WaveFormat.SampleRate;
                 _spectrumLeftData = new float[(int)(24000.0f / _sampleRate * _fftLength) / 2];
                 _spectrumRightData = new float[(int)(24000.0f / _sampleRate * _fftLength) / 2];
@@ -67,10 +66,7 @@ namespace BetterLyrics.WinUI3.Helper
 
                 IsCapturing = true;
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("+++++++++++++++++++" + ex.ToString());
-            }
+            catch (Exception) { }
         }
 
         public void StopCapture()

@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Events;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -21,16 +22,11 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class ExtendedSlider : UserControl
     {
-        public event EventHandler<RangeBaseValueChangedEventArgs> ValueChanged;
+        public event EventHandler<ExtendedSliderValueChangedByUserEventArgs>? ValueChangedByUser;
 
         public ExtendedSlider()
         {
             InitializeComponent();
-        }
-
-        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            ValueChanged?.Invoke(sender, e);
         }
 
         private void Subtract()
@@ -68,7 +64,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty FrequencyProperty =
-            DependencyProperty.Register(nameof(Frequency), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(Frequency), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(1));
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(default));
         public static readonly DependencyProperty MaximumProperty =
@@ -83,6 +79,8 @@ namespace BetterLyrics.WinUI3.Controls
             DependencyProperty.Register(nameof(ResetButtonVisibility), typeof(Visibility), typeof(ExtendedSlider), new PropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty UnitProperty =
             DependencyProperty.Register(nameof(Unit), typeof(string), typeof(ExtendedSlider), new PropertyMetadata(""));
+        public static readonly DependencyProperty IsSliderEnabledProperty =
+            DependencyProperty.Register(nameof(IsSliderEnabled), typeof(bool), typeof(ExtendedSlider), new PropertyMetadata(true));
 
         public double Frequency
         {
@@ -128,20 +126,33 @@ namespace BetterLyrics.WinUI3.Controls
             get => (string)GetValue(UnitProperty);
             set => SetValue(UnitProperty, value);
         }
+        public bool IsSliderEnabled
+        {
+            get => (bool)GetValue(IsSliderEnabledProperty);
+            set => SetValue(IsSliderEnabledProperty, value);
+        }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
             Value = Default;
+            ValueChangedByUser?.Invoke(this, new ExtendedSliderValueChangedByUserEventArgs(Value));
         }
 
         private void SubtractButton_Click(object sender, RoutedEventArgs e)
         {
             Subtract();
+            ValueChangedByUser?.Invoke(this, new ExtendedSliderValueChangedByUserEventArgs(Value));
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             Add();
+            ValueChangedByUser?.Invoke(this, new ExtendedSliderValueChangedByUserEventArgs(Value));
+        }
+
+        private void Slider_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ValueChangedByUser?.Invoke(this, new ExtendedSliderValueChangedByUserEventArgs(Value));
         }
     }
 }
