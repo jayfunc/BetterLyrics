@@ -166,7 +166,7 @@ Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891
 ## Star history
 
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date" width="49%" >
+  <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date" width="100%" >
 </div>
 
 ## Any issues and PRs are welcome
