@@ -322,7 +322,7 @@
 
                         <!--  LX music server  -->
                         <TextBlock x:Uid="SettingsPageLXMusicServer" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <controls:SettingsCard Header="SettingsPageServerAddress">
+                        <controls:SettingsCard x:Uid="SettingsPageServerAddress">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <TextBox
                                     IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
