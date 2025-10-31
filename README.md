@@ -85,19 +85,13 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
   <img src="Screenshots/fs2.png" width="100%">
 </div>
 
-<div style="height: 8px;"></div>
-
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
   <img src="Screenshots/std.png" width="49%">
-  <div style="width: 12px;"></div>
   <img src="Screenshots/narrow.png" width="49%">
 </div>
 
-<div style="height: 8px;"></div>
-
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="Screenshots/dock.png" width="49%" >
-  <div style="width: 12px;"></div>
+  <img src="Screenshots/dock.png" width="49%">
   <img src="Screenshots/desktop.png" width="49%">
 </div>
 
