@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionCompleted" xml:space="preserve">
-    <value>Operation completed</value>
+    <value>操作が完了しました</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>ローカル音楽ファイル</value>
@@ -130,10 +130,10 @@
     <value>ピクチャーインピクチャーモード</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>一般的な</value>
+    <value>一般</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>このメッセージを二度と見せないでください</value>
+    <value>今後このメッセージを表示しない</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>ピクチャーインピクチャーモード</value>
@@ -151,10 +151,10 @@
     <value>デスクトップモード（透明） </value>
   </data>
   <data name="DockedMode" xml:space="preserve">
-    <value>ドック式</value>
+    <value>ドッキングモード</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
-    <value>エクスポートが成功しました</value>
+    <value>出力が完了しました</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>LX Music Serverに接続できない場合は、設定に移動してください。リンクが正しく入力されているかどうかを確認するための高度なオプションに移動してください</value>
@@ -181,7 +181,7 @@
     <value>設定ファイルのインポートに失敗し、アプリケーション設定は変更されません</value>
   </data>
   <data name="Jyutping" xml:space="preserve">
-    <value>Cantonese pinyin</value>
+    <value>広東語のピンイン</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>承認が失敗しました、もう一度やり直してください</value>
@@ -455,10 +455,10 @@
     <value>ピクチャーインピクチャーモード</value>
   </data>
   <data name="Pinyin" xml:space="preserve">
-    <value>Mandarin pinyin</value>
+    <value>マンダリンのピンイン</value>
   </data>
   <data name="Romaji" xml:space="preserve">
-    <value>Romaji</value>
+    <value>ローマン</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>投稿者</value>
@@ -470,16 +470,16 @@
     <value>フィードバック</value>
   </data>
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>Instructions</value>
+    <value>手順</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>このプロジェクトが気に入っている場合は、寄付してサポートすることを検討してください。あなたのサポートは、プロジェクトを生かし続け、さらなる開発を促進するのに役立ちます。</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>3D lyrics</value>
+    <value>3 D 歌詞</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
-    <value>Depth</value>
+    <value>深度</value>
   </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>について</value>
@@ -584,16 +584,16 @@
     <value>中国の発音</value>
   </data>
   <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
-    <value>Chinese lyrics</value>
+    <value>中国語の歌詞</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>中国人を伝統的な中国人に変換します</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
-    <value>CJK Unified Ideograph</value>
+    <value>CJK統一漢字</value>
   </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
-    <value>Clear cache files</value>
+    <value>キャッシュファイルをクリア</value>
   </data>
   <data name="SettingsPageClickThrough.Header" xml:space="preserve">
     <value>クリックスルー</value>
@@ -743,7 +743,7 @@
     <value>システムをフォローします</value>
   </data>
   <data name="SettingsPageFontColor.Header" xml:space="preserve">
-    <value>Font color</value>
+    <value>フォントの色</value>
   </data>
   <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>ポーリングで歌詞ウィンドウを一番上に保ちましょう</value>
@@ -848,7 +848,7 @@
     <value>歌詞の背景</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>Non-current playback area</value>
+    <value>非電流再生エリア</value>
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>フォントの不透明度（非電流再生エリア）</value>
@@ -884,7 +884,7 @@
     <value>余分な光</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>Current playback area</value>
+    <value>現在の再生エリア</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>歌詞の背景に適応する（色付き）</value>
@@ -923,7 +923,7 @@
     <value>グロー効果</value>
   </data>
   <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>Highlight</value>
+    <value>ハイライト</value>
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>オリジナルのハイライト範囲</value>
@@ -1052,7 +1052,7 @@
     <value>ファイルエクスプローラーで開きます</value>
   </data>
   <data name="SettingsPageOriginalText.Header" xml:space="preserve">
-    <value>Original text</value>
+    <value>原文</value>
   </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>カラーピックスタイル</value>
@@ -1070,10 +1070,10 @@
     <value>パスはコンピューターでは見つかりません</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
-    <value>Lyric annotation</value>
+    <value>リリックアノテーション</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Phonetic symbols</value>
+    <value>発音</value>
   </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>マンダリンのピンイン</value>
@@ -1151,7 +1151,7 @@
     <value>最初の行の期間</value>
   </data>
   <data name="SettingsPageServerAddress.Header" xml:space="preserve">
-    <value>Server address</value>
+    <value>サーバーアドレス</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>テストサーバー</value>
@@ -1217,10 +1217,10 @@
     <value>標準モード</value>
   </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
-    <value>Stroke color</value>
+    <value>ストロークカラー</value>
   </data>
   <data name="SettingsPageSystemLanguage" xml:space="preserve">
-    <value>Default</value>
+    <value>デフォルト</value>
   </data>
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
     <value>ターゲット言語</value>
@@ -1253,7 +1253,7 @@
     <value>ショートカットキーを切り込んで切り取ります</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
-    <value>Translated text</value>
+    <value>译文</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>歌詞翻訳</value>
@@ -1271,7 +1271,7 @@
     <value>バージョン</value>
   </data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve">
-    <value>Latin alphabet</value>
+    <value>英字</value>
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>幅</value>
