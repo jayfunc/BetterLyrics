@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionCompleted" xml:space="preserve">
-    <value>Operation completed</value>
+    <value>操作完成</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>本地音乐文件</value>
@@ -181,7 +181,7 @@
     <value>设置文件导入失败，应用程序设置保持不变</value>
   </data>
   <data name="Jyutping" xml:space="preserve">
-    <value>Cantonese pinyin</value>
+    <value>粤语拼音</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>授权失败，请重试</value>
@@ -455,10 +455,10 @@
     <value>画中画模式</value>
   </data>
   <data name="Pinyin" xml:space="preserve">
-    <value>Mandarin pinyin</value>
+    <value>普通话拼音</value>
   </data>
   <data name="Romaji" xml:space="preserve">
-    <value>Romaji</value>
+    <value>罗马音</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>贡献者</value>
@@ -470,16 +470,16 @@
     <value>反馈</value>
   </data>
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>Instructions</value>
+    <value>操作指南</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的生命并鼓励进一步的发展。</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>3D lyrics</value>
+    <value>3D 歌词</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
-    <value>Depth</value>
+    <value>深度</value>
   </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>关于</value>
@@ -584,16 +584,16 @@
     <value>中文注音</value>
   </data>
   <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
-    <value>Chinese lyrics</value>
+    <value>中文歌词</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>中文转换为繁体</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
-    <value>CJK Unified Ideograph</value>
+    <value>中日韩统一表意文字</value>
   </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
-    <value>Clear cache files</value>
+    <value>清除缓存文件</value>
   </data>
   <data name="SettingsPageClickThrough.Header" xml:space="preserve">
     <value>点击穿透</value>
@@ -743,7 +743,7 @@
     <value>跟随系统</value>
   </data>
   <data name="SettingsPageFontColor.Header" xml:space="preserve">
-    <value>Font color</value>
+    <value>字体颜色</value>
   </data>
   <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>通过轮询方式使歌词窗口保持置于顶层状态</value>
@@ -848,7 +848,7 @@
     <value>歌词背景</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>Non-current playback area</value>
+    <value>非当前播放区域</value>
   </data>
   <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
     <value>字体不透明度（非当前播放区域）</value>
@@ -884,7 +884,7 @@
     <value>超细</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>Current playback area</value>
+    <value>当前播放区域</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>适应歌词背景（彩色）</value>
@@ -923,7 +923,7 @@
     <value>辉光效果</value>
   </data>
   <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>Highlight</value>
+    <value>高亮</value>
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>原文高亮显示范围</value>
@@ -1052,7 +1052,7 @@
     <value>在文件资源管理器中打开</value>
   </data>
   <data name="SettingsPageOriginalText.Header" xml:space="preserve">
-    <value>Original text</value>
+    <value>原文</value>
   </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>取色风格</value>
@@ -1070,10 +1070,10 @@
     <value>无法在您的计算机中找到该路径</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
-    <value>Lyric annotation</value>
+    <value>歌词注音</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Phonetic symbols</value>
+    <value>注音</value>
   </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>普通话拼音</value>
@@ -1151,7 +1151,7 @@
     <value>首行持续时间</value>
   </data>
   <data name="SettingsPageServerAddress.Header" xml:space="preserve">
-    <value>Server address</value>
+    <value>服务器地址</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>测试服务器</value>
@@ -1217,10 +1217,10 @@
     <value>标准模式</value>
   </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
-    <value>Stroke color</value>
+    <value>描边颜色</value>
   </data>
   <data name="SettingsPageSystemLanguage" xml:space="preserve">
-    <value>Default</value>
+    <value>默认</value>
   </data>
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
     <value>目标语言</value>
@@ -1253,7 +1253,7 @@
     <value>切入与切出快捷键</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
-    <value>Translated text</value>
+    <value>译文</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>歌词翻译</value>
@@ -1271,7 +1271,7 @@
     <value>版本号</value>
   </data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve">
-    <value>Latin alphabet</value>
+    <value>拉丁字母</value>
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>宽度</value>
