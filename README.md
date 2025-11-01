@@ -41,7 +41,12 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 ## 🌟 Highlighted features
 
 - 🌠 **Pleasing User Interface**
-  - Fluent animations and effects
+  - Smooth and highly personalized style, animations and effects
+    - Immersive fluid background
+    - Perspective/fan-shaped lyrics
+    - Snowflake effect
+    - Multiple lyrics scrolling functions
+    - ... (and more)
 - ↔️ **Strong Lyrics Translation**
   - Offline machine translation (supporting 30+ languages)
   - Auto-reading local lyrics files for embedded translation
