@@ -7,7 +7,6 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using System;
@@ -17,7 +16,6 @@ using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService
 {
-    // TODO 初始化时从文件读取到对象，后续独写操作先操纵对象，写入用 Debounce 写入文件
     // 新建一个 AppSettings 类
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
@@ -45,6 +43,9 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
             AppSettings.WindowBoundsRecords.CollectionChanged += AppSettings_CollectionChanged;
             AppSettings.WindowBoundsRecords.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
+
+            AppSettings.StarredPlaylists.CollectionChanged += AppSettings_CollectionChanged;
+            AppSettings.StarredPlaylists.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
 
             AppSettings.Version = MetadataHelper.AppVersion;
 
@@ -132,7 +133,6 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         /// <returns></returns>
         public bool ImportSettings(string importPath)
         {
-            // TODO 导入有问题
             if (!File.Exists(importPath))
                 return false;
 

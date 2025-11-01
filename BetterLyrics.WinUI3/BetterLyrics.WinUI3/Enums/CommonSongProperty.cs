@@ -10,6 +10,7 @@ namespace BetterLyrics.WinUI3.Enums
     {
         Title,
         Album,
-        Artist
+        Artist,
+        Folder
     }
 }

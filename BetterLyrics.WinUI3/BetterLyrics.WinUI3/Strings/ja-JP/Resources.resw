@@ -431,7 +431,7 @@
     <value>シングルループ</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>曲を検索します</value>
+    <value>曲名、アーティスト、アルバム、フォルダパスを検索してください</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>アルバム</value>
@@ -439,11 +439,17 @@
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
     <value>アーティスト</value>
   </data>
+  <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
+    <value>フォルダー</value>
+  </data>
   <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
     <value>タイトル</value>
   </data>
   <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
     <value>並べ替えタイプ</value>
+  </data>
+  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
+    <value>スター付きプレイリスト</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音楽ギャラリー - BetterLyrics</value>

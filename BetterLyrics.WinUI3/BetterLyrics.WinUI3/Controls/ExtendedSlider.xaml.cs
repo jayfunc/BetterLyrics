@@ -64,7 +64,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty FrequencyProperty =
-            DependencyProperty.Register(nameof(Frequency), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(1));
+            DependencyProperty.Register(nameof(Frequency), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(1.0));
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(default));
         public static readonly DependencyProperty MaximumProperty =

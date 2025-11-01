@@ -33,7 +33,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
-                                    Frequency="1"
+                                    
                                     Maximum="100"
                                     Minimum="0"
                                     Unit="%"
@@ -50,7 +50,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
-                                    Frequency="1"
+                                    
                                     Maximum="100"
                                     Minimum="0"
                                     Unit="%"
@@ -60,7 +60,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="50"
-                                    Frequency="1"
+                                    
                                     Maximum="100"
                                     Minimum="0"
                                     Unit="%"
@@ -70,7 +70,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageBlurAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
-                                    Frequency="1"
+                                    
                                     Maximum="100"
                                     Minimum="0"
                                     Value="{x:Bind LyricsBackgroundSettings.CoverOverlayBlurAmount, Mode=TwoWay}" />
@@ -79,7 +79,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageBackgroundAcrylicEffectAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="0"
-                                    Frequency="1"
+                                    
                                     Maximum="10"
                                     Minimum="0"
                                     Value="{x:Bind LyricsBackgroundSettings.CoverAcrylicEffectAmount, Mode=TwoWay}" />
@@ -95,7 +95,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
-                                    Frequency="1"
+                                    
                                     Maximum="100"
                                     Minimum="0"
                                     Unit="%"
@@ -117,7 +117,7 @@
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageAmount">
                                 <uc:ExtendedSlider
-                                    Frequency="1"
+                                    
                                     Maximum="100"
                                     Minimum="10"
                                     ResetButtonVisibility="Collapsed"

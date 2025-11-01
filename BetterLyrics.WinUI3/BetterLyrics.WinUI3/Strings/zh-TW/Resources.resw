@@ -431,7 +431,7 @@
     <value>單曲循環</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>搜索歌曲</value>
+    <value>搜尋歌曲名稱、藝人、專輯或所在資料夾路徑</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>專輯</value>
@@ -439,11 +439,17 @@
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
     <value>藝術家</value>
   </data>
+  <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
+    <value>文件夹</value>
+  </data>
   <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
     <value>標題</value>
   </data>
   <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
     <value>排序類型</value>
+  </data>
+  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
+    <value>已加星號的歌单</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音樂庫 - BetterLyrics</value>

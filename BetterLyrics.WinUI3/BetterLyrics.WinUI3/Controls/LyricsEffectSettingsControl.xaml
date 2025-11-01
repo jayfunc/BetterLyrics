@@ -27,7 +27,7 @@
                         <local:ExtendedSlider
                             x:Uid="SettingsPageLyricsVerticalEdgeOpacitySlider"
                             Default="0"
-                            Frequency="1"
+                            
                             Maximum="100"
                             Minimum="0"
                             Unit="%"
@@ -38,7 +38,7 @@
                         <local:ExtendedSlider
                             x:Uid="SettingsPageLyricsBlurAmountExtendedSlider"
                             Default="5"
-                            Frequency="1"
+                            
                             Maximum="10"
                             Minimum="0"
                             Value="{x:Bind LyricsEffectSettings.LyricsBlurAmount, Mode=TwoWay}" />
@@ -111,7 +111,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="8"
-                                    Frequency="1"
+                                    
                                     Maximum="20"
                                     Minimum="1"
                                     Value="{x:Bind LyricsEffectSettings.LyricsShadowAmount, Mode=TwoWay}" />
@@ -137,7 +137,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="8"
-                                    Frequency="1"
+                                    
                                     Maximum="20"
                                     Minimum="1"
                                     Value="{x:Bind LyricsEffectSettings.LyricsGlowEffectAmount, Mode=TwoWay}" />
@@ -156,7 +156,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="1"
-                                    Frequency="1"
+                                    
                                     Maximum="4"
                                     Minimum="1"
                                     Value="{x:Bind LyricsEffectSettings.LyricsFloatAmount, Mode=TwoWay}" />
@@ -175,7 +175,7 @@
                             <controls:SettingsCard IsEnabled="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="30"
-                                    Frequency="1"
+                                    
                                     Maximum="90"
                                     Minimum="-90"
                                     Unit="°"
@@ -196,7 +196,7 @@
                             <controls:SettingsCard Header="X" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
-                                    Frequency="1"
+                                    
                                     Maximum="90"
                                     Minimum="-90"
                                     Unit="°"
@@ -205,7 +205,7 @@
                             <controls:SettingsCard Header="Y" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
-                                    Frequency="1"
+                                    
                                     Maximum="90"
                                     Minimum="-90"
                                     Unit="°"
@@ -214,7 +214,7 @@
                             <controls:SettingsCard Header="Z" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
-                                    Frequency="1"
+                                    
                                     Maximum="90"
                                     Minimum="-90"
                                     Unit="°"

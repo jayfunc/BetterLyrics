@@ -142,15 +142,22 @@ namespace BetterLyrics.WinUI3.Views
 
         private void ArtistHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
-            var artist = (string)((HyperlinkButton)sender).Tag;
-            var playlist = new SongsTabInfo(artist, "\uEFA9", true, CommonSongProperty.Artist, artist);
+            var artist = ((Track)((FrameworkElement)sender).DataContext).Artist;
+            var playlist = new SongsTabInfo(artist, "\uEFA9", true, false, CommonSongProperty.Artist, artist);
             ViewModel.UpdateSelectedPlaylist(playlist);
         }
 
         private void AlbumHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
-            var album = (string)((HyperlinkButton)sender).Tag;
-            var playlist = new SongsTabInfo(album, "\uE93C", true, CommonSongProperty.Album, album);
+            var album = ((Track)((FrameworkElement)sender).DataContext).Album;
+            var playlist = new SongsTabInfo(album, "\uE93C", true, false, CommonSongProperty.Album, album);
+            ViewModel.UpdateSelectedPlaylist(playlist);
+        }
+
+        private void PathHyperlibkButton_Click(object sender, RoutedEventArgs e)
+        {
+            var track = ((Track)((FrameworkElement)sender).DataContext);
+            var playlist = new SongsTabInfo(track.GetParentFolderName(), "\uE8B7", true, false, CommonSongProperty.Folder, track.GetParentFolderPath());
             ViewModel.UpdateSelectedPlaylist(playlist);
         }
 
@@ -181,6 +188,30 @@ namespace BetterLyrics.WinUI3.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             ViewModel.CancelRefreshSongs();
+        }
+
+        private void PlaylistFavButton_Click(object sender, RoutedEventArgs e)
+        {
+            var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
+            var targetStatus = !playlist.IsStarred;
+            if (targetStatus)
+            {
+                ViewModel.AppSettings.StarredPlaylists.Add(playlist);
+            }
+            else
+            {
+                ViewModel.AppSettings.StarredPlaylists.Remove(playlist);
+            }
+            playlist.IsStarred = targetStatus;
+        }
+
+        private void StarredPlaylistsListViewItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var songsTabInfo = ((SongsTabInfo)((FrameworkElement)sender).DataContext);
+            if (!ViewModel.SongsTabInfoList.Contains(songsTabInfo))
+            {
+                ViewModel.SongsTabInfoList.Add(songsTabInfo);
+            }
         }
     }
 }
