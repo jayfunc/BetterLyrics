@@ -12,9 +12,11 @@ namespace BetterLyrics.WinUI3.Models
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string OriginalTitle { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string OriginalArtist { get; set; } = string.Empty;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string OriginalAlbum { get; set; } = string.Empty;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string MappedTitle { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string MappedArtist { get; set; } = string.Empty;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string MappedAlbum { get; set; } = string.Empty;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMarkedAsPureMusic { get; set; } = false;
 
@@ -26,8 +28,10 @@ namespace BetterLyrics.WinUI3.Models
             {
                 OriginalTitle = this.OriginalTitle,
                 OriginalArtist = this.OriginalArtist,
+                OriginalAlbum = this.OriginalAlbum,
                 MappedTitle = this.MappedTitle,
                 MappedArtist = this.MappedArtist,
+                MappedAlbum = this.MappedAlbum,
                 IsMarkedAsPureMusic = this.IsMarkedAsPureMusic,
                 LyricsSearchProvider = this.LyricsSearchProvider
             };

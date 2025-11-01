@@ -78,8 +78,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                     {
                         OriginalTitle = _mediaSessionsService.SongInfo.Title,
                         OriginalArtist = _mediaSessionsService.SongInfo.Artist,
+                        OriginalAlbum = _mediaSessionsService.SongInfo.Album,
                         MappedTitle = _mediaSessionsService.SongInfo.Title,
                         MappedArtist = _mediaSessionsService.SongInfo.Artist,
+                        MappedAlbum = _mediaSessionsService.SongInfo.Album,
                     };
                 }
                 else
@@ -95,9 +97,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 return null;
             }
+
             var found = AppSettings.MappedSongSearchQueries
-                .Where(x => x.OriginalTitle == _mediaSessionsService.SongInfo.Title && x.OriginalArtist == _mediaSessionsService.SongInfo.Artist).FirstOrDefault();
-            return found;
+                .Where(x => x.OriginalTitle == _mediaSessionsService.SongInfo.Title && x.OriginalArtist == _mediaSessionsService.SongInfo.Artist && x.OriginalAlbum == _mediaSessionsService.SongInfo.Album);
+
+            return found.FirstOrDefault();
         }
 
         [RelayCommand]
@@ -118,7 +122,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     return await _lyricsSearchService.SearchAllAsync(
                         MappedSongSearchQuery.MappedTitle,
                         MappedSongSearchQuery.MappedArtist,
-                        _mediaSessionsService.SongInfo?.Album ?? "",
+                        MappedSongSearchQuery.MappedAlbum,
                         _mediaSessionsService.SongInfo?.DurationMs ?? 0, token);
                 }, token)];
                 IsSearching = false;
@@ -166,6 +170,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             MappedSongSearchQuery?.MappedArtist = MappedSongSearchQuery?.OriginalArtist ?? string.Empty;
         }
 
+        [RelayCommand]
+        private void ResetMappedAlbum()
+        {
+            MappedSongSearchQuery?.MappedAlbum = MappedSongSearchQuery?.OriginalAlbum ?? string.Empty;
+        }
+
         partial void OnSelectedLyricsSearchResultChanged(LyricsSearchResult? value)
         {
             MappedSongSearchQuery?.LyricsSearchProvider = value?.Provider;
@@ -173,8 +183,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 var lyricsParser = new LyricsParser();
                 lyricsParser.Parse(
-                    MappedSongSearchQuery?.MappedTitle ?? "",
-                    MappedSongSearchQuery?.MappedArtist ?? "",
+                    AppSettings.MappedSongSearchQueries.ToList(),
+                    MappedSongSearchQuery?.OriginalTitle ?? "",
+                    MappedSongSearchQuery?.OriginalArtist ?? "",
+                    MappedSongSearchQuery?.OriginalAlbum ?? "",
                     value?.Raw, (int?)_mediaSessionsService.SongInfo?.DurationMs, value?.Provider);
                 LyricsDataArr = [.. lyricsParser.LyricsDataArr];
             }

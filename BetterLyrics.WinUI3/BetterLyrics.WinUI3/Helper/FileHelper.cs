@@ -37,9 +37,9 @@ namespace BetterLyrics.WinUI3.Helper
             return sb.ToString();
         }
 
-        public static string? ReadLyricsCache(string title, string artist, LyricsFormat format, string cacheFolderPath)
+        public static string? ReadLyricsCache(string title, string artist, string album, LyricsFormat format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {title}{format.ToFileExtension()}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {title} - {album}{format.ToFileExtension()}"));
             if (File.Exists(cacheFilePath))
             {
                 return File.ReadAllText(cacheFilePath);
@@ -57,9 +57,9 @@ namespace BetterLyrics.WinUI3.Helper
             return null;
         }
 
-        public static void WriteLyricsCache(string title, string artist, string lyrics, LyricsFormat format, string cacheFolderPath)
+        public static void WriteLyricsCache(string title, string artist, string album, string lyrics, LyricsFormat format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {title}{format.ToFileExtension()}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {title} - {album}{format.ToFileExtension()}"));
             File.WriteAllText(cacheFilePath, lyrics);
         }
 

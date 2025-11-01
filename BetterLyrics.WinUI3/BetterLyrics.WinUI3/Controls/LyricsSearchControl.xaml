@@ -52,6 +52,19 @@
                                         Style="{StaticResource GhostButtonStyle}" />
                                 </StackPanel>
                             </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="LyricsSearchControlAlbum" Description="{x:Bind ViewModel.MappedSongSearchQuery.OriginalAlbum, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <TextBlock x:Uid="LyricsSearchControlMappedAs" VerticalAlignment="Center" />
+                                    <TextBox Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedAlbum, Mode=TwoWay}" TextWrapping="Wrap" />
+                                    <Button
+                                        VerticalAlignment="Center"
+                                        Command="{x:Bind ViewModel.ResetMappedAlbumCommand}"
+                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                              FontSize=12,
+                                                              Glyph=&#xE777;}"
+                                        Style="{StaticResource GhostButtonStyle}" />
+                                </StackPanel>
+                            </controls:SettingsCard>
                             <controls:SettingsCard>
                                 <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
                             </controls:SettingsCard>
@@ -78,6 +91,7 @@
                                             x:Name="SearchedTitle"
                                             RelativePanel.AlignLeftWithPanel="True"
                                             Text="{Binding Title}"
+                                            TextWrapping="Wrap"
                                             Visibility="{Binding IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         <TextBlock
                                             x:Name="SearchedArtists"
@@ -85,6 +99,14 @@
                                             RelativePanel.AlignLeftWithPanel="True"
                                             RelativePanel.Below="SearchedTitle"
                                             Text="{Binding Artist}"
+                                            TextWrapping="Wrap"
+                                            Visibility="{Binding IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        <TextBlock
+                                            x:Name="SearchedAlbum"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            RelativePanel.Below="SearchedArtists"
+                                            Text="{Binding Album}"
+                                            TextWrapping="Wrap"
                                             Visibility="{Binding IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         <TextBlock
                                             x:Name="SearchedProvider"
