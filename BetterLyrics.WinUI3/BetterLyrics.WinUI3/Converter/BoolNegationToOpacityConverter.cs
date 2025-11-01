@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    public partial class BoolToOpacityConverter : IValueConverter
+    public partial class BoolNegationToOpacityConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is bool boolValue)
             {
-                return boolValue ? 1.0 : 0.0;
+                return boolValue ? 0.0 : 1.0;
             }
-            return 1.0;
+            return 0.0;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             throw new NotImplementedException();
         }
+
     }
 }

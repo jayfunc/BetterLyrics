@@ -1,21 +1,22 @@
 ﻿using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    public partial class BoolToOpacityConverter : IValueConverter
+    public partial class PathToParentFolderConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is bool boolValue)
+            if (value is string path)
             {
-                return boolValue ? 1.0 : 0.0;
+                return Directory.GetParent(path)?.Name ?? "";
             }
-            return 1.0;
+            return "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

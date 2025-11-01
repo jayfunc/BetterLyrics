@@ -431,7 +431,7 @@
     <value>단일 루프</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>노래 검색</value>
+    <value>노래 제목, 아티스트, 앨범 또는 폴더 경로를 검색하세요</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>앨범</value>
@@ -439,11 +439,17 @@
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
     <value>아티스트</value>
   </data>
+  <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
+    <value>폴더</value>
+  </data>
   <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
     <value>제목</value>
   </data>
   <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
     <value>정렬 유형</value>
+  </data>
+  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
+    <value>별표 표시된 재생 목록</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리 - BetterLyrics</value>

@@ -307,6 +307,9 @@
 	    <Generator></Generator>
 	  </PRIResource>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="TemplateSelector\" />
+	</ItemGroup>
 	<!-- Publish Properties -->
 	<PropertyGroup>
 		<PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>

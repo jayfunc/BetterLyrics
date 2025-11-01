@@ -26,11 +26,9 @@
                             x:Uid="SettingsPageRecordedWindowStatus"
                             RelativePanel.AlignLeftWithPanel="True"
                             Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
                         <Button x:Uid="SettingsPageCreateFromCurrent" Command="{x:Bind ViewModel.CopyLyricsWindowStatusCommand}" />
-                        <Button
-                            x:Uid="SettingsPageCreateFromTemplates"
-                            VerticalAlignment="Center"
-                            RelativePanel.AlignRightWithPanel="True">
+                        <Button x:Uid="SettingsPageCreateFromTemplates">
                             <Button.Flyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem x:Uid="SettingsPageStandardMode" Command="{x:Bind ViewModel.CreateStandardLyricsWindowStatusCommand}" />
@@ -213,7 +211,6 @@
                                         <controls:SettingsCard x:Uid="SettingsPageWorkAreaHeight" IsEnabled="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                             <uc:ExtendedSlider
                                                 Default="64"
-                                                Frequency="1"
                                                 Maximum="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}"
                                                 Minimum="64"
                                                 Unit="px"

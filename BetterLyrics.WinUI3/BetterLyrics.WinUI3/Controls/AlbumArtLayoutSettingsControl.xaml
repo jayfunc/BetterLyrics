@@ -41,7 +41,7 @@
                     <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3A;}">
                         <local:ExtendedSlider
                             Default="12"
-                            Frequency="1"
+                            
                             Maximum="100"
                             Minimum="0"
                             Unit="%"
@@ -51,7 +51,7 @@
                     <controls:SettingsCard x:Uid="SettingsPageAlbumShadowAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF5EF;}">
                         <local:ExtendedSlider
                             Default="12"
-                            Frequency="1"
+                            
                             Maximum="64"
                             Minimum="0"
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=TwoWay}" />

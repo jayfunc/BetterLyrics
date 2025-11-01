@@ -59,10 +59,12 @@
             <converter:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
             <converter:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
             <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <converter:BoolNegationToOpacityConverter x:Key="BoolNegationToOpacityConverter" />
             <converter:RectToMarginConverter x:Key="RectToMarginConverter" />
             <converter:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
             <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
             <converter:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
+            <converter:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
@@ -325,6 +327,16 @@
                 TargetType="FlyoutPresenter">
                 <Setter Property="Opacity" Value="0.9" />
                 <Setter Property="MinWidth" Value="850" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
+                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+            </Style>
+
+            <Style
+                x:Key="FlyoutGhostStyle"
+                BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+                TargetType="FlyoutPresenter">
                 <Setter Property="Padding" Value="0" />
                 <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
                 <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />

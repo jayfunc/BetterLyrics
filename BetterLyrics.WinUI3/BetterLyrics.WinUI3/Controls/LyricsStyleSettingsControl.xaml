@@ -58,7 +58,6 @@
                     <controls:SettingsCard x:Uid="SettingsPageLyricsBgFontOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB42;}">
                         <local:ExtendedSlider
                             Default="30"
-                            Frequency="1"
                             Maximum="100"
                             Minimum="0"
                             Unit="%"
@@ -68,8 +67,7 @@
                     <controls:SettingsCard x:Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC12;}">
                         <local:ExtendedSlider
                             Default="0"
-                            Frequency="1"
-                            Maximum="5"
+                            Maximum="10"
                             Minimum="0"
                             Value="{x:Bind LyricsStyleSettings.LyricsFontStrokeWidth, Mode=TwoWay}" />
                     </controls:SettingsCard>
@@ -184,6 +182,7 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
+                    <!--  字体大小  -->
                     <controls:SettingsExpander x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
@@ -192,7 +191,7 @@
                             <controls:SettingsCard x:Uid="SettingsPagePhoneticText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Frequency="2"
-                                    Maximum="96"
+                                    Maximum="256"
                                     Minimum="12"
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsStyleSettings.PhoneticLyricsFontSize, Mode=TwoWay}" />
@@ -200,7 +199,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageOriginalText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Frequency="2"
-                                    Maximum="96"
+                                    Maximum="256"
                                     Minimum="12"
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsStyleSettings.OriginalLyricsFontSize, Mode=TwoWay}" />
@@ -208,7 +207,7 @@
                             <controls:SettingsCard x:Uid="SettingsPageTranslatedText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Frequency="2"
-                                    Maximum="96"
+                                    Maximum="256"
                                     Minimum="12"
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsStyleSettings.TranslatedLyricsFontSize, Mode=TwoWay}" />

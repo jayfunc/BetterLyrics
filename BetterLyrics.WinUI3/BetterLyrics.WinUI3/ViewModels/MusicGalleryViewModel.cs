@@ -45,6 +45,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         private List<Track> _filteredTracks = [];
 
         [ObservableProperty]
+        public partial AppSettings AppSettings { get; set; }
+
+        [ObservableProperty]
         public partial bool IsLocalMediaNotFound { get; set; }
 
         /// <summary>
@@ -93,8 +96,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
         {
             _settingsService = settingsService;
+            AppSettings = _settingsService.AppSettings;
 
-            SongsTabInfoList.Add(new SongsTabInfo(App.ResourceLoader!.GetString("MusicGalleryPageAllSongs"), "\uE8A9", false, CommonSongProperty.Title, string.Empty));
+            SongsTabInfoList.Add(new SongsTabInfo(App.ResourceLoader!.GetString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
 
             RefreshSongs();
 
@@ -319,6 +323,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                     case CommonSongProperty.Artist:
                         _playlistTracks = _tracks.Where(t => t.Artist.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                         break;
+                    case CommonSongProperty.Folder:
+                        _playlistTracks = _tracks.Where(t => t.GetParentFolderPath().Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        break;
                     default:
                         break;
                 }
@@ -338,7 +345,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             _filteredTracks = _playlistTracks.Where(t =>
                     t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                    t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                    t.GetParentFolderPath().Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         private void ApplySongOrderType()
@@ -360,6 +368,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 case CommonSongProperty.Album:
                     GroupedTracks = _filteredTracks.GetGroupedBy(
                         t => LanguageHelper.GetOrderChar(t.Album),
+                        o => ((Track)o).Album
+                    );
+                    break;
+                case CommonSongProperty.Folder:
+                    GroupedTracks = _filteredTracks.GetGroupedBy(
+                        t => LanguageHelper.GetOrderChar(t.GetParentFolderName()),
                         o => ((Track)o).Album
                     );
                     break;
