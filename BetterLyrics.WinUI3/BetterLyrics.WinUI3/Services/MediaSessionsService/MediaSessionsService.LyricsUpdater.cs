@@ -166,7 +166,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     SongInfo.PlayerId ?? "",
                     SongInfo.Title,
                     SongInfo.Artist,
-                    SongInfo.Album ?? "",
+                    SongInfo.Album,
                     SongInfo.DurationMs ?? 0,
                     SongInfo.SongId,
                     token
@@ -177,7 +177,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsSearchResult?.IsFound, LyricsSearchProvider?.ToString() ?? "null");
 
                 var lyricsParser = new LyricsParser();
-                lyricsParser.Parse(SongInfo.Title, SongInfo.Artist, lyricsSearchResult?.Raw, (int?)SongInfo?.DurationMs, LyricsSearchProvider);
+                lyricsParser.Parse(
+                    _settingsService.AppSettings.MappedSongSearchQueries.ToList(),
+                    SongInfo.Title, SongInfo.Artist, SongInfo.Album, lyricsSearchResult?.Raw, (int?)SongInfo?.DurationMs, LyricsSearchProvider);
                 _lyricsDataArr = lyricsParser.LyricsDataArr;
                 ApplyChinesePreference();
             }

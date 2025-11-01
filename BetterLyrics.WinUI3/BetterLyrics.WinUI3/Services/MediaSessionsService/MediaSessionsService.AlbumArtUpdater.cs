@@ -37,7 +37,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 SongInfo?.PlayerId ?? "",
                 _cachedSongInfo.Title,
                 _cachedSongInfo.Artist,
-                _cachedSongInfo?.Album ?? string.Empty,
+                _cachedSongInfo.Album,
                 _SMTCAlbumArtBuffer,
                 token
             ), token);

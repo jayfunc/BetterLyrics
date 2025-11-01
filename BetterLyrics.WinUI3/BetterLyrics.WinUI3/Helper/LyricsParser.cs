@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Vanara.PInvoke;
 using LyricsData = BetterLyrics.WinUI3.Models.LyricsData;
 
 namespace BetterLyrics.WinUI3.Helper
@@ -19,10 +20,23 @@ namespace BetterLyrics.WinUI3.Helper
     {
         public List<LyricsData> LyricsDataArr { get; private set; } = [];
 
-        public LyricsData? LibreTranslationLyricsData => LyricsDataArr.LastOrDefault();
-
-        public void Parse(string title, string artist, string? raw, int? durationMs, LyricsSearchProvider? lyricsSearchProvider)
+        public void Parse(List<MappedSongSearchQuery> mappedSongSearchQueries, string title, string artist, string album, string? raw, int? durationMs, LyricsSearchProvider? lyricsSearchProvider)
         {
+            var overridenTitle = title;
+            var overridenArtist = artist;
+            var overridenAlbum = album;
+
+            var found = mappedSongSearchQueries
+                .Where(x => x.OriginalTitle == overridenTitle && x.OriginalArtist == overridenArtist && x.OriginalAlbum == overridenAlbum)
+                .FirstOrDefault();
+
+            if (found != null)
+            {
+                overridenTitle = found.MappedTitle;
+                overridenArtist = found.MappedArtist;
+                overridenAlbum = found.MappedAlbum;
+            }
+
             LyricsDataArr = [];
             durationMs ??= (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
             if (raw == null)
@@ -51,22 +65,22 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
             FillRomanizationLyricsData();
-            FillTranslationFromCache(title, artist, lyricsSearchProvider);
+            FillTranslationFromCache(overridenTitle, overridenArtist, overridenAlbum, lyricsSearchProvider);
         }
 
-        private void FillTranslationFromCache(string title, string artist, LyricsSearchProvider? provider)
+        private void FillTranslationFromCache(string title, string artist, string album, LyricsSearchProvider? provider)
         {
             string? translationRaw = null;
             switch (provider)
             {
                 case LyricsSearchProvider.QQ:
-                    translationRaw = FileHelper.ReadLyricsCache(title, artist, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
+                    translationRaw = FileHelper.ReadLyricsCache(title, artist, album, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.Kugou:
-                    translationRaw = FileHelper.ReadLyricsCache(title, artist, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
+                    translationRaw = FileHelper.ReadLyricsCache(title, artist, album, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.Netease:
-                    translationRaw = FileHelper.ReadLyricsCache(title, artist, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
+                    translationRaw = FileHelper.ReadLyricsCache(title, artist, album, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.LrcLib:
                     break;
@@ -99,7 +113,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private async Task FillRomanizationLyricsData()
+        private void FillRomanizationLyricsData()
         {
             var chinese = LyricsDataArr.Where(x => x.LanguageCode == "zh").FirstOrDefault();
             if (chinese != null)

@@ -249,6 +249,9 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻訳プロバイダー</value>
   </data>
+  <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
     <value>アーティスト</value>
   </data>
