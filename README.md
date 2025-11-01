@@ -132,6 +132,7 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 | [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | Provide the ability for offline lyrics translation |
 | [Isolation](https://github.com/Storyteller-Studios/Isolation) | Dynamic fluid background implementation |
 | [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | Audio visualization reference |
+| [DevWinUI](https://github.com/ghost1372/DevWinUI) | Provide many out-of-the-box features for building WinUI 3 applications |
 | ... | ... |
  
 ### Tutorials/Blogs/etc.
