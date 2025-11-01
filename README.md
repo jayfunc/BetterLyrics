@@ -1,12 +1,22 @@
 ![](Promotion/banner.png)
 
 <div align=center>
-  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="64">
+  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="96">
 </div>
 
 <h2 align=center>
 BetterLyrics
 </h2>
+
+<h4 align="center">
+Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-app playback and other players
+</h4>
+
+<div align="center">
+
+[**_Click here to view wiki_**](https://github.com/jayfunc/BetterLyrics/wiki)
+	
+</div>
 
 <div align=center>
 
@@ -19,17 +29,6 @@ BetterLyrics
 [![GitHub Repo stars](https://img.shields.io/github/stars/jayfunc/BetterLyrics)](https://github.com/jayfunc/BetterLyrics/stargazers)
 
 </div>
-
-
-<div align="center">
-
-[**_Click here to view wiki_**](https://github.com/jayfunc/BetterLyrics/wiki)
-	
-</div>
-
-<h4 align="center">
-Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-app playback and other players
-</h4>
 
 ## 🎉 This project was featured by SSPAI!
 
