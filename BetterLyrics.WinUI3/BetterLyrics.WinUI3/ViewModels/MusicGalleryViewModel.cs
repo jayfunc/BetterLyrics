@@ -37,6 +37,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
 
+        private readonly DispatcherQueueTimer _refreshSongsTimer;
+
         // All songs
         private List<Track> _tracks = [];
         // Songs in current playlist
@@ -95,6 +97,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
         {
+            _refreshSongsTimer = _dispatcherQueue.CreateTimer();
+
             _settingsService = settingsService;
             AppSettings = _settingsService.AppSettings;
 
@@ -263,7 +267,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void RefreshSongs()
         {
-            _dispatcherQueueTimer.Debounce(() =>
+            _refreshSongsTimer.Debounce(() =>
             {
                 IsDataLoading = true;
                 _tracks.Clear();

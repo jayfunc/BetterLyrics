@@ -11,14 +11,12 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class BaseViewModel : ObservableRecipient
     {
         private protected readonly DispatcherQueue _dispatcherQueue;
-        private protected readonly DispatcherQueueTimer _dispatcherQueueTimer;
 
         public BaseViewModel()
         {
             IsActive = true;
 
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-            _dispatcherQueueTimer = _dispatcherQueue.CreateTimer();
         }
     }
 }

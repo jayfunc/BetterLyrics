@@ -18,6 +18,7 @@ using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 using static Vanara.PInvoke.Ole32;
@@ -46,43 +47,14 @@ namespace BetterLyrics.WinUI3.Helper
             return RandomAccessStreamReference.CreateFromStream(stream);
         }
 
-        public static async Task<IRandomAccessStream> CreateTextPlaceholderBytesAsync(int width, int height)
+        public static async Task<IRandomAccessStream> GetAlbumArtPlaceholderAsync()
         {
-            using var device = CanvasDevice.GetSharedDevice();
-            using var renderTarget = new CanvasRenderTarget(device, width, height, 96);
-
-            // 随机生成渐变色
-            Windows.UI.Color RandomColor()
-            {
-                var rand = new Random(Guid.NewGuid().GetHashCode());
-                double h = rand.NextDouble() * 360;
-                double s = 0.35 + rand.NextDouble() * 0.3; // 0.35~0.65，适中饱和度
-                double l = 0.5 + rand.NextDouble() * 0.3;  // 0.5~0.8，明亮
-                return CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(h, s, l);
-            }
-
-            Windows.UI.Color color1 = RandomColor();
-            Windows.UI.Color color2 = RandomColor();
-
-            using (var ds = renderTarget.CreateDrawingSession())
-            {
-                // 绘制线性渐变背景
-                using var gradientBrush = new Microsoft.Graphics.Canvas.Brushes.CanvasLinearGradientBrush(ds, color1, color2)
-                {
-                    StartPoint = new Vector2(0, 0),
-                    EndPoint = new Vector2(width, height)
-                };
-                ds.FillRectangle(0, 0, width, height, gradientBrush);
-            }
-
-            // 保存为 PNG 并转为 byte[]
-            var stream = new InMemoryRandomAccessStream();
-            await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
-            stream.Seek(0);
+            Uri uri = new Uri($"ms-appx:///Assets/AlbumArtPlaceholder.png");
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
+            IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read);
             return stream;
         }
 
-        
         public static Task<ThemeColorResult> GetAccentColorAsync(BitmapDecoder decoder, PaletteGeneratorType generatorType)
         {
             return generatorType switch

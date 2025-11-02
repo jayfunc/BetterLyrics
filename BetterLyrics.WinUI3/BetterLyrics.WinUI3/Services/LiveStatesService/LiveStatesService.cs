@@ -93,6 +93,9 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                 case nameof(LyricsWindowStatus.TitleBarArea):
                     WindowHelper.SetTitleBarArea<LyricsWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
                     break;
+                case nameof(LyricsWindowStatus.AutoShowOrHideWindow):
+                    WindowHelper.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
+                    break;
                 default:
                     break;
             }
@@ -134,7 +137,7 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             WindowHelper.SetIsAlwaysOnTop<LyricsWindow>(LiveStates.LyricsWindowStatus.IsAlwaysOnTop);
             WindowHelper.SetIsClickThrough<LyricsWindow>(LiveStates.LyricsWindowStatus.IsClickThrough);
             WindowHelper.SetIsBorderless<LyricsWindow>(LiveStates.LyricsWindowStatus.IsBorderless);
-            WindowHelper.SetLyricsWindowVisibilityByPlayingStatus();
+            WindowHelper.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
             WindowHelper.SetTitleBarArea<LyricsWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
 
             if (LiveStates.LyricsWindowStatus.IsWorkArea)

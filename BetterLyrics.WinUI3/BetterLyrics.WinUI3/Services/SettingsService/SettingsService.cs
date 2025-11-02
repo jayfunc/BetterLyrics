@@ -19,10 +19,14 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
     // 新建一个 AppSettings 类
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
+        private DispatcherQueueTimer _writeAppSettingsTimer;
+
         public AppSettings AppSettings { get; set; }
 
         public SettingsService()
         {
+            _writeAppSettingsTimer = _dispatcherQueue.CreateTimer();
+
             AppSettings = ReadAppSettings();
 
             AppSettings.PropertyChanged += AppSettings_PropertyChanged;
@@ -94,12 +98,12 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         private void AppSettings_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
         {
-            WriteAppSettingsDebounce();
+            WriteAppSettings();
         }
 
         private void AppSettings_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            WriteAppSettingsDebounce();
+            WriteAppSettings();
         }
 
         private void AppSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -112,7 +116,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
                 default:
                     break;
             }
-            WriteAppSettingsDebounce();
+            WriteAppSettings();
         }
 
         /// <summary>
@@ -161,9 +165,9 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             return data;
         }
 
-        private void WriteAppSettingsDebounce()
+        private void WriteAppSettings()
         {
-            _dispatcherQueueTimer.Debounce(() =>
+            _writeAppSettingsTimer.Debounce(() =>
             {
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {

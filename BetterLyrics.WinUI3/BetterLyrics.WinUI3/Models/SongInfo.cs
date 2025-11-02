@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 
@@ -30,5 +31,15 @@ namespace BetterLyrics.WinUI3.Models
         public partial string? SongId { get; set; } = null;
 
         public SongInfo() { }
+    }
+
+    public static class SongInfoExtensions
+    {
+        public static SongInfo Placeholder => new()
+        {
+            Title = "N/A",
+            Album = "N/A",
+            Artist = "N/A",
+        };
     }
 }

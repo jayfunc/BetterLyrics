@@ -91,11 +91,6 @@ namespace BetterLyrics.WinUI3.Models
             this.OnPropertyChanged(nameof(AlbumArtLayoutSettings));
         }
 
-        partial void OnAutoShowOrHideWindowChanged(bool value)
-        {
-            WindowHelper.SetLyricsWindowVisibilityByPlayingStatus();
-        }
-
         public void UpdateMonitorNameAndBounds()
         {
             var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
