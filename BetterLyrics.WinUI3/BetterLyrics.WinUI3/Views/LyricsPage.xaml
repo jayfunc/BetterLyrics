@@ -29,35 +29,6 @@
 
         <dev:SnowFlakeEffect FlakeCount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SnowFlakeOverlayAmount, Mode=OneWay}" Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-        <!--  No music playing placeholder  -->
-        <Grid x:Name="NoMusicPlayingGrid" Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock
-                    x:Uid="MainPageNoMusicPlaying"
-                    HorizontalAlignment="Center"
-                    FontFamily="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily, Mode=OneWay}"
-                    FontSize="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.OriginalLyricsFontSize, Mode=OneWay}"
-                    TextWrapping="Wrap" />
-            </StackPanel>
-            <Grid.OpacityTransition>
-                <ScalarTransition />
-            </Grid.OpacityTransition>
-            <interactivity:Interaction.Behaviors>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.SongInfo, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="{x:Null}">
-                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.SongInfo, Mode=OneWay}"
-                    ComparisonCondition="NotEqual"
-                    Value="{x:Null}">
-                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                </interactivity:DataTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-        </Grid>
-
         <!--  Bottom command area  -->
         <Grid
             x:Name="BottomCommandGrid"

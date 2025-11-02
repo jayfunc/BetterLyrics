@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             if (buffer == null)
             {
-                using var placeHolderStream = await ImageHelper.CreateTextPlaceholderBytesAsync(500, 500);
+                using var placeHolderStream = await ImageHelper.GetAlbumArtPlaceholderAsync();
                 var tempBuffer = new Windows.Storage.Streams.Buffer((uint)placeHolderStream.Size);
                 await placeHolderStream.ReadAsync(tempBuffer, (uint)placeHolderStream.Size, InputStreamOptions.None);
                 buffer = tempBuffer;

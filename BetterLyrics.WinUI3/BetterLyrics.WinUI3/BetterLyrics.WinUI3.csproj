@@ -117,6 +117,9 @@
 	  <Content Update="Assets\AIMP.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Update="Assets\AlbumArtPlaceholder.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="Assets\AMLLPlayer.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>

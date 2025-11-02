@@ -16,13 +16,13 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using Vanara.PInvoke;
 using Windows.Foundation;
-using Windows.System;
 using Windows.UI;
 using WinRT.Interop;
 using WinUIEx;
@@ -39,6 +39,7 @@ namespace BetterLyrics.WinUI3
         private readonly ILiveStatesService _liveStatesService;
 
         private ForegroundWindowWatcher? _fgWindowWatcher = null;
+        private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
         public LyricsWindowViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
         {
@@ -54,7 +55,7 @@ namespace BetterLyrics.WinUI3
 
         private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
         {
-            WindowHelper.SetLyricsWindowVisibilityByPlayingStatus();
+            WindowHelper.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
         }
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
@@ -142,11 +143,13 @@ namespace BetterLyrics.WinUI3
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
+
+            _fgWindowWatcherTimer = _dispatcherQueue.CreateTimer();
             _fgWindowWatcher = new ForegroundWindowWatcher(
                 hwnd,
                 fgHwnd =>
                 {
-                    _dispatcherQueueTimer.Debounce(() =>
+                    _fgWindowWatcherTimer.Debounce(() =>
                     {
                         if (_liveStatesService.LiveStates.LyricsWindowStatus.IsAlwaysOnTop &&
                             _liveStatesService.LiveStates.LyricsWindowStatus.IsAlwaysOnTopPolling &&

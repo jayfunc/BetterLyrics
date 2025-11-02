@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
@@ -30,6 +31,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         private static readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
         private static readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+
+        private static DispatcherQueueTimer? _setLyricsWindowVisibilityByPlayingStatusTimer;
 
         public static void HideWindow<T>()
         {
@@ -346,27 +349,36 @@ namespace BetterLyrics.WinUI3.Helper
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
         }
 
-        public static void SetLyricsWindowVisibilityByPlayingStatus()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dispatcherQueue">请确保此参数指向同一个对象，建议传值 BaseViewModel._dispatcherQueue</param>
+        public static void SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue dispatcherQueue)
         {
-            var window = GetWindowByWindowType<LyricsWindow>();
-            if (window == null) return;
+            _setLyricsWindowVisibilityByPlayingStatusTimer ??= dispatcherQueue.CreateTimer();
 
-            if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && !_mediaSessionsService.IsPlaying)
+            _setLyricsWindowVisibilityByPlayingStatusTimer.Debounce(() =>
             {
-                if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
+                var window = GetWindowByWindowType<LyricsWindow>();
+                if (window == null) return;
+
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && !_mediaSessionsService.IsPlaying)
                 {
-                    SetIsWorkArea<LyricsWindow>(false);
+                    if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
+                    {
+                        SetIsWorkArea<LyricsWindow>(false);
+                    }
+                    HideWindow<LyricsWindow>();
                 }
-                HideWindow<LyricsWindow>();
-            }
-            else if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.IsPlaying)
-            {
-                if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
+                else if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.IsPlaying)
                 {
-                    SetIsWorkArea<LyricsWindow>(true);
+                    if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
+                    {
+                        SetIsWorkArea<LyricsWindow>(true);
+                    }
+                    OpenOrShowWindow<LyricsWindow>();
                 }
-                OpenOrShowWindow<LyricsWindow>();
-            }
+            }, Constants.Time.DebounceTimeout);
         }
 
     }
