@@ -491,84 +491,87 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 }, searcher);
             }
 
-            if (result is QQMusicSearchResult qqResult)
+            if (result != null)
             {
-                var response = await Lyricify.Lyrics.Helpers.ProviderHelper.QQMusicApi.GetLyricsAsync(qqResult.Id);
-                var original = response?.Lyrics;
-                var translated = response?.Trans;
-                if (!string.IsNullOrEmpty(translated))
+                if (result is QQMusicSearchResult qqResult)
                 {
-                    FileHelper.WriteLyricsCache(
-                        title,
-                        artist,
-                        album,
-                        translated,
-                        LyricsFormat.Lrc,
-                        PathHelper.QQTranslationCacheDirectory
-                    );
-                }
-
-                lyricsSearchResult.Raw = original;
-            }
-            else if (result is NeteaseSearchResult neteaseResult)
-            {
-                var response = await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyric(neteaseResult.Id);
-                var original = response?.Lrc?.Lyric;
-                var translated = response?.Tlyric?.Lyric;
-                if (!string.IsNullOrEmpty(translated))
-                {
-                    FileHelper.WriteLyricsCache(
-                        title,
-                        artist,
-                        album,
-                        translated,
-                        LyricsFormat.Lrc,
-                        PathHelper.NeteaseTranslationCacheDirectory
-                    );
-                }
-
-                lyricsSearchResult.Raw = original;
-            }
-            else if (result is KugouSearchResult kugouResult)
-            {
-                var response = await Lyricify.Lyrics.Helpers.ProviderHelper.KugouApi.GetSearchLyrics(hash: kugouResult.Hash);
-                string? original = null;
-                var candidate = response?.Candidates.FirstOrDefault();
-                if (candidate != null)
-                {
-                    original = await Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyricsAsync(candidate.Id, candidate.AccessKey);
-                    if (original != null)
+                    var response = await Lyricify.Lyrics.Helpers.ProviderHelper.QQMusicApi.GetLyricsAsync(qqResult.Id);
+                    var original = response?.Lyrics;
+                    var translated = response?.Trans;
+                    if (!string.IsNullOrEmpty(translated))
                     {
-                        var parsedList = Lyricify.Lyrics.Parsers.KrcParser.ParseLyrics(original);
-                        if (parsedList != null)
+                        FileHelper.WriteLyricsCache(
+                            title,
+                            artist,
+                            album,
+                            translated,
+                            LyricsFormat.Lrc,
+                            PathHelper.QQTranslationCacheDirectory
+                        );
+                    }
+
+                    lyricsSearchResult.Raw = original;
+                }
+                else if (result is NeteaseSearchResult neteaseResult)
+                {
+                    var response = await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyric(neteaseResult.Id);
+                    var original = response?.Lrc?.Lyric;
+                    var translated = response?.Tlyric?.Lyric;
+                    if (!string.IsNullOrEmpty(translated))
+                    {
+                        FileHelper.WriteLyricsCache(
+                            title,
+                            artist,
+                            album,
+                            translated,
+                            LyricsFormat.Lrc,
+                            PathHelper.NeteaseTranslationCacheDirectory
+                        );
+                    }
+
+                    lyricsSearchResult.Raw = original;
+                }
+                else if (result is KugouSearchResult kugouResult)
+                {
+                    var response = await Lyricify.Lyrics.Helpers.ProviderHelper.KugouApi.GetSearchLyrics(hash: kugouResult.Hash);
+                    string? original = null;
+                    var candidate = response?.Candidates.FirstOrDefault();
+                    if (candidate != null)
+                    {
+                        original = await Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyricsAsync(candidate.Id, candidate.AccessKey);
+                        if (original != null)
                         {
-                            string translated = "";
-                            foreach (var item in parsedList)
+                            var parsedList = Lyricify.Lyrics.Parsers.KrcParser.ParseLyrics(original);
+                            if (parsedList != null)
                             {
-                                if (item is Lyricify.Lyrics.Models.FullSyllableLineInfo fullSyllableLineInfo)
+                                string translated = "";
+                                foreach (var item in parsedList)
                                 {
-                                    var startTimeSpan = TimeSpan.FromMilliseconds(fullSyllableLineInfo.StartTime ?? 0);
-                                    string startTimeStr = startTimeSpan.ToString(@"mm\:ss\.ff");
-                                    string chTranslation = fullSyllableLineInfo.Translations.GetValueOrDefault("zh") ?? "";
-                                    translated += $"[{startTimeStr}]{chTranslation}\n";
+                                    if (item is Lyricify.Lyrics.Models.FullSyllableLineInfo fullSyllableLineInfo)
+                                    {
+                                        var startTimeSpan = TimeSpan.FromMilliseconds(fullSyllableLineInfo.StartTime ?? 0);
+                                        string startTimeStr = startTimeSpan.ToString(@"mm\:ss\.ff");
+                                        string chTranslation = fullSyllableLineInfo.Translations.GetValueOrDefault("zh") ?? "";
+                                        translated += $"[{startTimeStr}]{chTranslation}\n";
+                                    }
                                 }
-                            }
-                            if (!string.IsNullOrEmpty(translated))
-                            {
-                                FileHelper.WriteLyricsCache(
-                                    title,
-                                    artist,
-                                    album,
-                                    translated,
-                                    LyricsFormat.Lrc,
-                                    PathHelper.KugouTranslationCacheDirectory
-                                );
+                                if (!string.IsNullOrEmpty(translated))
+                                {
+                                    FileHelper.WriteLyricsCache(
+                                        title,
+                                        artist,
+                                        album,
+                                        translated,
+                                        LyricsFormat.Lrc,
+                                        PathHelper.KugouTranslationCacheDirectory
+                                    );
+                                }
                             }
                         }
                     }
-                }
 
-                lyricsSearchResult.Raw = original;
+                    lyricsSearchResult.Raw = original;
+                }
             }
 
             lyricsSearchResult.Title = result?.Title;

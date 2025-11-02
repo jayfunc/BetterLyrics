@@ -8,6 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -83,42 +84,42 @@
             <Grid Grid.Column="1">
                 <ListView ItemsSource="{x:Bind ViewModel.LyricsSearchResults, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedLyricsSearchResult, Mode=TwoWay}">
                     <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ListViewItem IsEnabled="{Binding IsFound}">
-                                <Grid Opacity="{Binding IsFound, Converter={StaticResource BoolToOpacityConverter}}">
+                        <DataTemplate x:DataType="models:LyricsSearchResult">
+                            <ListViewItem IsEnabled="{x:Bind IsFound}">
+                                <Grid Opacity="{x:Bind IsFound, Converter={StaticResource BoolToOpacityConverter}}">
                                     <RelativePanel Padding="0,6">
                                         <TextBlock
                                             x:Name="SearchedTitle"
                                             RelativePanel.AlignLeftWithPanel="True"
-                                            Text="{Binding Title}"
+                                            Text="{x:Bind Title}"
                                             TextWrapping="Wrap"
-                                            Visibility="{Binding IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         <TextBlock
                                             x:Name="SearchedArtists"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             RelativePanel.AlignLeftWithPanel="True"
                                             RelativePanel.Below="SearchedTitle"
-                                            Text="{Binding Artist}"
+                                            Text="{x:Bind Artist}"
                                             TextWrapping="Wrap"
-                                            Visibility="{Binding IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         <TextBlock
                                             x:Name="SearchedAlbum"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             RelativePanel.Below="SearchedArtists"
-                                            Text="{Binding Album}"
+                                            Text="{x:Bind Album}"
                                             TextWrapping="Wrap"
-                                            Visibility="{Binding IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         <TextBlock
                                             x:Name="SearchedProvider"
                                             RelativePanel.AlignRightWithPanel="True"
                                             RelativePanel.AlignVerticalCenterWithPanel="True"
-                                            Text="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                            Text="{x:Bind Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
                                     </RelativePanel>
                                     <TextBlock
                                         x:Uid="LyricsSearchControlNotFound"
                                         VerticalAlignment="Center"
                                         Text="Not found"
-                                        Visibility="{Binding IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
+                                        Visibility="{x:Bind IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
                                 </Grid>
                             </ListViewItem>
                         </DataTemplate>
