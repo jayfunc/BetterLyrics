@@ -18,6 +18,7 @@ using System.Numerics;
 using Windows.Foundation;
 using Windows.Graphics.Effects;
 using Windows.UI;
+using static Vanara.PInvoke.Shell32;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
@@ -128,21 +129,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 for (int i = 0; i < _spectrumAnalyzer.BarCount; i++)
                 {
                     float x = i * pointSpacing;
-                    float amplitude = _spectrumAnalyzer.SmoothSpectrum.Average() * 10 + _spectrumAnalyzer.SmoothSpectrum[i] * 0.5f;
-                    float y = (float)_canvasHeight - amplitude;
+                    float y = _spectrumAnalyzer.SmoothSpectrum[i];
                     points[i] = new Vector2(x, y);
                 }
 
                 // 限制最高点高度
-                var minY = points.OrderBy(p => p.Y).FirstOrDefault().Y;
-                var limitY = _canvasHeight * (1 - 0.1f);
-                if (minY < limitY)
+                var maxY = points.OrderByDescending(p => p.Y).FirstOrDefault().Y;
+                var limitY = _canvasHeight * 0.2f;
+                if (maxY > limitY)
                 {
-                    var num = (float)(limitY / minY);
+                    var num = (float)(limitY / maxY);
                     points = points.Select(p => new Vector2(p.X, p.Y * num)).ToArray();
                 }
-                // 防止越过画布边界
-                points = points.Select(p => new Vector2(p.X, (float)(Math.Min(_canvasHeight, p.Y)))).ToArray();
+
+                points = points.Select(p => new Vector2(p.X, (float)(_canvasHeight - p.Y))).ToArray();
 
                 // 用于填充的闭合路径
                 using var pathBuilder = new CanvasPathBuilder(ds);
@@ -176,7 +176,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 var gradientStops = new CanvasGradientStop[]
                 {
                     new() { Position = 0.0f, Color = Colors.Transparent },
-                    new() { Position = 0.8f, Color = Colors.Transparent },
+                    new() { Position = 0.7f, Color = Colors.Transparent },
                     new() { Position = 1.0f, Color = _adaptiveColoredFontColor ?? _albumArtAccentColor1Transition.Value }
                 };
 
