@@ -130,8 +130,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         [ObservableProperty]
         public partial bool IsPlaying { get; set; } = false;
 
-        private bool _isLayoutChanged = true;
-
         private int _timelineSyncThreshold = 0;
 
         private int _phoneticLyricsFontSize = 18;
