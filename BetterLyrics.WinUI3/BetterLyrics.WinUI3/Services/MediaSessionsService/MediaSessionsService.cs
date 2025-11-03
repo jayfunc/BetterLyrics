@@ -663,7 +663,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageCode))
                 {
-                    _logger.LogInformation("Target language code changed: {code}", _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
+                    _logger.LogInformation("Target LibreTranslate language code changed: {code}", _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
                     UpdateTranslations();
                 }
             }

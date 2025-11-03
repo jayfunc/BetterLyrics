@@ -69,7 +69,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (originalText == null) return;
 
             string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
-            _logger.LogInformation("Original language code: {OriginalLangCode}", originalLangCode ?? "null");
+            _logger.LogInformation("Original language code: {OriginalLangCode}", originalLangCode);
 
             if (originalLangCode == targetLangCode)
             {
@@ -83,7 +83,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr, targetLangCode);
                 if (found >= 0)
                 {
-                    _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
+                    _logger.LogInformation("Found translated text in lyrics data at index {FoundIndex}", found);
 
                     _lyricsDataArr[0].SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
                     TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
@@ -119,7 +119,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (originalText == null) return;
 
             string? originalLangCode = LanguageHelper.DetectLanguageCode(originalText);
-            _logger.LogInformation("Original language code: {OriginalLangCode}", originalLangCode ?? "null");
+            _logger.LogInformation("Original phonetic code: {OriginalLangCode}", originalLangCode);
 
             if (originalLangCode == "zh" && _settingsService.AppSettings.TranslationSettings.IsChineseRomanizationEnabled)
             {
@@ -139,7 +139,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             int found = _translateService.SearchTranslatedLyricsItself(_lyricsDataArr, targetPhoneticCode);
             if (found >= 0)
             {
-                _logger.LogInformation("Found translation in lyrics data at index {FoundIndex}", found);
+                _logger.LogInformation("Found phonetic text in lyrics data at index {FoundIndex}", found);
                 _lyricsDataArr[0].SetPhoneticText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
             }
 
@@ -174,7 +174,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 if (token.IsCancellationRequested) return;
                 LyricsSearchProvider = lyricsSearchResult?.Provider;
 
-                _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsSearchResult?.IsFound, LyricsSearchProvider?.ToString() ?? "null");
+                _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsSearchResult?.IsFound, LyricsSearchProvider);
 
                 var lyricsParser = new LyricsParser();
                 lyricsParser.Parse(

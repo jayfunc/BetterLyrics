@@ -26,6 +26,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
     public partial class LyricsRendererViewModel
     {
+        private bool _isLayoutChanged = true;
+
         private bool _isCanvasWidthChanged = false;
         private bool _isCanvasHeightChanged = false;
 
@@ -60,6 +62,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isLyrics3DMatrixChanged = true;
 
+        private bool _isDeviceChanged = true;
+
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
             _elapsedTime = args.Timing.ElapsedTime;
@@ -77,7 +81,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             //_effect?.Properties["iTime"] = Convert.ToSingle(TotalTime.TotalSeconds);
 
-            if (_isFluidOverlayEnabledChanged)
+            if (_isDeviceChanged || _isFluidOverlayEnabledChanged)
             {
                 if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsFluidOverlayEnabled)
                 {
@@ -142,8 +146,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _isDebugOverlayEnabledChanged = false;
             }
 
-            _rotateAngle += _coverRotateBaseSpeed * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlaySpeed / 100.0;
-            _rotateAngle %= Math.PI * 2;
+            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlaySpeed > 0)
+            {
+                _rotateAngle += _coverRotateBaseSpeed * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlaySpeed / 100.0;
+                _rotateAngle %= Math.PI * 2;
+            }
 
             if (_isSpectrumOverlayEnabledChanged)
             {
@@ -176,7 +183,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             //    }
             //}
 
-            if (_isCanvasWidthChanged || _isCanvasHeightChanged)
+            if (_isDeviceChanged || _isCanvasWidthChanged || _isCanvasHeightChanged)
             {
                 UpdateSongInfoFontSize();
 
@@ -200,7 +207,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
             }
 
-            if (_isDisplayTypeChanged || _isLyricsLayoutOrientationChanged || _isAlbumArtSizeChanged ||
+            if (_isDeviceChanged || _isDisplayTypeChanged || _isLyricsLayoutOrientationChanged || _isAlbumArtSizeChanged ||
                 _isSongInfoFontSizeChanged || _isSongTitleVisibilityChanged || _isSongArtistsVisibilityChanged ||
                 _isCanvasWidthChanged || _isCanvasHeightChanged ||
                 _isAlbumArtSizeChanged)
@@ -320,20 +327,18 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             // 将当前背景图放到 _lastAlbumArtSwBitmap 中 并设置不透明度为 1 
             // 将新的背景图放到 _albumArtSwBitmap 中 并设置不透明度为 0
             // 这样可以实现背景图的连贯渐变效果
-            if (_albumArtChanged || _isLyricsLayoutOrientationChanged || _isAlbumArtSizeChanged ||
+            if (_isDeviceChanged || _albumArtChanged || _isLyricsLayoutOrientationChanged || _isAlbumArtSizeChanged ||
                 _isCanvasHeightChanged || _isCanvasWidthChanged ||
                 _lyricsBgBrightnessTransition.IsTransitioning ||
                 _albumArtBgTransition.IsTransitioning)
             {
-                // 必须先在此处重置动画
-                if (_albumArtChanged)
+                if (_isDeviceChanged || _albumArtChanged)
                 {
+                    // 必须先在此处重置动画
                     _albumArtBgTransition.Reset(0f);
                     _albumArtBgTransition.StartTransition(1f);
-                }
-                // 更新 last 和 current
-                if (_albumArtChanged)
-                {
+
+                    // 更新 last 和 current
                     if (_lastAlbumArtSwBitmap != null)
                     {
                         _lastAlbumArtCanvasBitmap?.Dispose();
@@ -360,50 +365,37 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _isLyricsLayoutOrientationChanged = false;
             _isAlbumArtSizeChanged = false;
 
-            if (_isCoverAcrylicEffectAmountChanged)
+            if (_isDeviceChanged || _isAlbumArtBgOpacityChanged || _isAlbumArtBgBlurAmountChanged || _isCoverAcrylicEffectAmountChanged)
             {
-                UpdateCoverAcrylicOverlay(control);
+                if (_isDeviceChanged || _isCoverAcrylicEffectAmountChanged)
+                {
+                    UpdateCoverAcrylicOverlay(control);
+                }
 
-                DisposeAlbumArtBgRenderTarget();
-                UpdateAlbumArtBgEffect(control);
-                _isAlbumArtBgEffectChanged = true;
-
-                _isCoverAcrylicEffectAmountChanged = false;
-            }
-
-            if (_isAlbumArtBgOpacityChanged)
-            {
                 DisposeAlbumArtBgRenderTarget();
                 UpdateAlbumArtBgEffect(control);
                 _isAlbumArtBgEffectChanged = true;
 
                 _isAlbumArtBgOpacityChanged = false;
-            }
-
-            if (_isAlbumArtBgBlurAmountChanged)
-            {
-                DisposeAlbumArtBgRenderTarget();
-                UpdateAlbumArtBgEffect(control);
-                _isAlbumArtBgEffectChanged = true;
-
                 _isAlbumArtBgBlurAmountChanged = false;
+                _isCoverAcrylicEffectAmountChanged = false;
             }
 
             _albumArtChanged = false;
 
-            if (!_isAlbumArtEffectChanged && _albumArtEffect != null)
+            if (_isDeviceChanged || (!_isAlbumArtEffectChanged && _albumArtEffect != null))
             {
                 UpdateAlbumArtRenderTarget(control);
                 DisposeAlbumArtEffect();
             }
 
-            if (!_isAlbumArtBgEffectChanged && _albumArtBgEffect != null)
+            if (_isDeviceChanged || (!_isAlbumArtBgEffectChanged && _albumArtBgEffect != null))
             {
                 UpdateAlbumArtBgRenderTarget(control);
                 DisposeAlbumArtBgEffect();
             }
 
-            if (_isCanvasHeightChanged || _isCanvasWidthChanged || _lyricsXTransition.IsTransitioning)
+            if (_isDeviceChanged || _isCanvasHeightChanged || _isCanvasWidthChanged || _lyricsXTransition.IsTransitioning)
             {
                 _maxLyricsWidth = _canvasWidth - _lyricsXTransition.Value - _rightMargin;
                 _maxLyricsWidth = Math.Max(_maxLyricsWidth, 0);
@@ -458,6 +450,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _lyricsBgBrightnessTransition.Update(_elapsedTime);
             _songInfoOpacityTransition.Update(_elapsedTime);
             _canvasYScrollTransition.Update(_elapsedTime);
+
+            _isDeviceChanged = false;
         }
 
         private string AutoSelectFontFamily(string text)
