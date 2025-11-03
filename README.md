@@ -9,17 +9,17 @@ BetterLyrics
 </h2>
 
 <h4 align="center">
-Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-app playback and other players
+🤩 An elegant and deeply customizable lyrics & player app, built with WinUI3/Win2D
 </h4>
 
 <div align="center">
-
-[**_Click here to view wiki_**](https://github.com/jayfunc/BetterLyrics/wiki)
 	
+[**_📖 Click here to view wiki_**](https://github.com/jayfunc/BetterLyrics/wiki)
+
 </div>
 
 <div align=center>
-
+	
 ![Static Badge](https://img.shields.io/badge/Language-C%23-purple) ![Static Badge](https://img.shields.io/badge/License-MIT-red) ![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple) ![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
 
 </div>
@@ -27,6 +27,12 @@ Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-ap
 <div align=center>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/jayfunc/BetterLyrics)](https://github.com/jayfunc/BetterLyrics/stargazers)
+
+</div>
+
+<div align="center">
+
+<mark>**_💞 BetterLyrics is made possible by all its contributors, bug reporters and users._**</mark>
 
 </div>
 
@@ -144,7 +150,7 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 - [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
 - [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
 
-## Inspired by
+## 💡 Inspired by
 
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
