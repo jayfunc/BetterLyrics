@@ -12,10 +12,6 @@ BetterLyrics
 An elegant and deeply customizable lyrics & player app, built with WinUI3/Win2D
 </h4>
 
-<h4 align="center">
-一款集优雅与深度自定义为一体的歌词/播放器应用，基于 WinUI3/Win2D 构建
-</h4>
-
 <div align="center">
 
 [**_Click here to view wiki_**](https://github.com/jayfunc/BetterLyrics/wiki)
