@@ -36,6 +36,12 @@ BetterLyrics
 
 </div>
 
+<div align="center">
+
+**_[中文版 README 请点按此处](https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md)_**
+
+</div>
+
 ## 🎉 This project was featured by SSPAI!
 
 Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
