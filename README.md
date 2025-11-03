@@ -9,7 +9,11 @@ BetterLyrics
 </h2>
 
 <h4 align="center">
-Your dynamic lyrics display tool, built with WinUI 3 and Win2D, works with in-app playback and other players
+An elegant and deeply customizable lyrics & player app, built with WinUI3/Win2D
+</h4>
+
+<h4 align="center">
+一款集优雅与深度自定义为一体的歌词/播放器应用，基于 WinUI3/Win2D 构建
 </h4>
 
 <div align="center">
