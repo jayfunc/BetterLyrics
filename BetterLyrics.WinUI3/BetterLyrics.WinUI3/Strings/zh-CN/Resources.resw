@@ -249,11 +249,11 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻译来源</value>
   </data>
-  <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
+  <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
     <value>Album</value>
   </data>
-  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
-    <value>艺术家</value>
+  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
+    <value>Artist</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* 保存更改立即生效，此后将以映射信息和目标歌词源检索该曲目歌词；标记为纯音乐将直接返回纯音乐占位歌词。重置以按原始数据检索。</value>
@@ -276,14 +276,14 @@
   <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>搜索</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Header" xml:space="preserve">
-    <value>歌曲信息映射</value>
+  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <value>Song info mapping</value>
   </data>
   <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>目标歌词搜索提供商</value>
   </data>
-  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
-    <value>标题</value>
+  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+    <value>Title</value>
   </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>歌词搜索 - BetterLyrics</value>
@@ -1320,6 +1320,9 @@
   </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
     <value>重新启动</value>
+  </data>
+  <data name="SystemTraySearch.Text" xml:space="preserve">
+    <value>Lyrics search window</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>打开设置</value>
