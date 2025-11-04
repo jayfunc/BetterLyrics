@@ -249,10 +249,10 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻訳プロバイダー</value>
   </data>
-  <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
+  <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
     <value>アルバム</value>
   </data>
-  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
+  <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
     <value>アーティスト</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
@@ -276,13 +276,13 @@
   <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>検索する</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Header" xml:space="preserve">
+  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
     <value>曲情報マッピング</value>
   </data>
   <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>ターゲット歌詞検索プロバイダー</value>
   </data>
-  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
+  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
     <value>タイトル</value>
   </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
@@ -1320,6 +1320,9 @@
   </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
     <value>再起動</value>
+  </data>
+  <data name="SystemTraySearch.Text" xml:space="preserve">
+    <value>歌詞検索ウィンドウ</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>設定を開く</value>

@@ -106,8 +106,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private Color _adaptiveGrayedFontColor = Colors.Transparent;
         private Color? _adaptiveColoredFontColor = null;
 
-        private List<Color> _albumArtLightAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
-        private List<Color> _albumArtDarkAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
+        private List<Color> _albumArtLightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+        private List<Color> _albumArtDarkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
         private Color _environmentalColor = Colors.Transparent;
         private Color _grayedEnvironmentalColor = Colors.Transparent;
 
