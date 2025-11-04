@@ -192,6 +192,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                 _fluidEffect?.Properties["Width"] = (float)control.ConvertDipsToPixels((float)_canvasWidth, CanvasDpiRounding.Round);
                 _fluidEffect?.Properties["Height"] = (float)control.ConvertDipsToPixels((float)_canvasHeight, CanvasDpiRounding.Round);
+
+                //_topMargin = _bottomMargin = _leftMargin = _middleMargin = _rightMargin = Math.Max(_canvasWidth, _canvasHeight) / 30.0;
             }
 
             if (_isSongInfoFontSizeChanged || _isSongTitleVisibilityChanged || _isSongArtistsVisibilityChanged)
