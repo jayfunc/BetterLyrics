@@ -97,11 +97,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly ILiveStatesService _liveStatesService;
         private readonly ILogger _logger;
 
-        private readonly double _leftMargin = 36f;
-        private readonly double _middleMargin = 36f;
-        private readonly double _rightMargin = 36f;
-        private readonly double _topMargin = 36f;
-        private readonly double _bottomMargin = 36f;
+        private double _leftMargin = 36f;
+        private double _middleMargin = 36f;
+        private double _rightMargin = 36f;
+        private double _topMargin = 36f;
+        private double _bottomMargin = 36f;
 
         private Color _adaptiveGrayedFontColor = Colors.Transparent;
         private Color? _adaptiveColoredFontColor = null;

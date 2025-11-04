@@ -38,7 +38,7 @@ BetterLyrics
 
 ## 🎉 该项目入选少数派推荐文章！
 
-文章链接：[BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)
+文章链接：[BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)。
 
 ## 🔈 反馈交流群
 
@@ -106,7 +106,7 @@ BetterLyrics
 
 ## 演示
 
-在 [哔哩哔哩](https://www.bilibili.com/video/BV1QRstz1EGt/) 上观看于 2025 年 10 月 21 日上传的演示视频 
+在 [哔哩哔哩](https://www.bilibili.com/video/BV1QRstz1EGt/) 上观看于 2025 年 10 月 21 日上传的演示视频。
 
 ## 即刻体验
 
@@ -114,17 +114,19 @@ BetterLyrics
 	<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
 </a>
 
-**无限期**免费试用版和付费版**无任何区别**
+**无限期**免费试用版和付费版**无任何区别**。
 
 ☕ 如果喜欢该软件，请考虑 [捐赠](#捐赠) 或在 **Microsoft Store** 🧧 购买, 感谢您的支持！ 🥰
 
-无法从 Microsoft Store 下载？点按 [此处](https://github.com/jayfunc/BetterLyrics/wiki/Alternative-way-to-download-and-install) 查看其他下载安装方式
+无法从 Microsoft Store 下载？点按 [此处](https://github.com/jayfunc/BetterLyrics/wiki/Alternative-way-to-download-and-install) 查看其他下载安装方式。
 
 ## 构建
 
-在构建之前确保替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`
+在构建之前确保替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`。
 
 ## 💖 感谢
+
+部分功能及代码引用或修改自公开资料库，包括但不限于下述开源项目/包、教程等，在此一并感谢。
 
 | 项目/包 | 描述 |
 | :--- | :--- |
@@ -151,6 +153,8 @@ BetterLyrics
 - [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
 
 ## 💡 灵感来源
+
+部分设计思路参考自下述插件/软件（不含间接或直接引用、修改的代码，仅作为设计思路指导方向）。
 
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)

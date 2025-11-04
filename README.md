@@ -44,7 +44,7 @@ BetterLyrics
 
 ## 🎉 This project was featured by SSPAI!
 
-Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028)
+Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028).
 
 ## 🔈 Feedback and chat group
 
@@ -120,7 +120,7 @@ Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bi
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
 </a>
 
-**Unlimited** free trail or purchase (there is **no difference** between free and paid version)
+**Unlimited** free trail or purchase (there is **no difference** between free and paid version).
 
 ☕ If you find it useful, please consider [donating](#donations) or purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
 
@@ -131,6 +131,8 @@ Having trouble downloading and installing from the MS Store? See the alternative
 Before you build, make sure that you have already replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`
 
 ## 💖 Many thanks to
+
+Some functions and code are referenced or modified from public repositories, including but not limited to the following open source projects/packages, tutorials, etc., and we would like to express our gratitude to them here.
 
 | Projects/Packages | Description |
 | :--- | :--- |
@@ -157,6 +159,8 @@ Before you build, make sure that you have already replaced `BetterLyrics\BetterL
 - [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
 
 ## 💡 Inspired by
+
+Some design ideas are referenced from the following plugins/software (excluding code that is indirectly or directly referenced or modified, and is only used as a guide for design ideas).
 
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
