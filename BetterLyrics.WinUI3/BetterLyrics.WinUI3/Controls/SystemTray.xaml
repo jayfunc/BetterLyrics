@@ -35,6 +35,11 @@
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE8AB;}" />
                 <MenuFlyoutItem
+                    x:Uid="SystemTraySearch"
+                    Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE721;}" />
+                <MenuFlyoutItem
                     x:Uid="SystemTrayLyrics"
                     Command="{x:Bind ViewModel.OpenLyricsCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
