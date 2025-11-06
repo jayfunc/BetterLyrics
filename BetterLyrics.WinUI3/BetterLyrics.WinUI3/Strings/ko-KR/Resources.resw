@@ -141,6 +141,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>취소</value>
   </data>
+  <data name="CreatePlaylistSuccessfully" xml:space="preserve">
+    <value>재생 목록이 성공적으로 생성되었습니다</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>기본</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>설정</value>
+  </data>
+  <data name="ImportPlaylistSuccessfully" xml:space="preserve">
+    <value>재생 목록을 성공적으로 가져왔습니다</value>
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>설정 파일 가져 오기 실패, 응용 프로그램 설정은 변경되지 않았습니다</value>
@@ -346,7 +352,7 @@
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>Betterlyrics에 오신 것을 환영합니다</value>
   </data>
-  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+  <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>재생 목록에 추가하십시오</value>
   </data>
   <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
@@ -355,7 +361,7 @@
   <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>다음 항목</value>
   </data>
-  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+  <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
     <value>재생 큐에 추가하십시오</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
@@ -388,6 +394,9 @@
   <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
     <value>체재</value>
   </data>
+  <data name="MusicGalleryPageFileInfoLyrics.Text" xml:space="preserve">
+    <value>가사</value>
+  </data>
   <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
     <value>길</value>
   </data>
@@ -402,6 +411,9 @@
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>미디어 라이브러리에는 노래가 없습니다</value>
+  </data>
+  <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+    <value>파일에서 가져오기</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>재생 목록을 만듭니다</value>
@@ -465,6 +477,9 @@
   </data>
   <data name="Pinyin" xml:space="preserve">
     <value>만다린의 피니 인</value>
+  </data>
+  <data name="PlaylistViewFailed" xml:space="preserve">
+    <value>경로가 존재하지 않으므로 트랙을 볼 수 없습니다</value>
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>로만</value>
@@ -1329,6 +1344,12 @@
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>가사 창 전환기</value>
+  </data>
+  <data name="TracksAddToPlaylistFailed" xml:space="preserve">
+    <value>경로가 존재하지 않으므로 트랙을 추가할 수 없습니다</value>
+  </data>
+  <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+    <value>선택한 트랙이 이 재생 목록에 추가되었습니다</value>
   </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>번역 서버가 설정되지 않았습니다. 먼저 설정으로 구성하십시오.</value>

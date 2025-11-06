@@ -13,8 +13,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--  Merged dictionaries here  -->
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.SettingsControls/SettingsExpander/SettingsExpander.xaml" />
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
+                <ResourceDictionary Source="ms-appx:///DevWinUI.Controls/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Theme  -->
@@ -66,10 +66,13 @@
             <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
             <converter:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
             <converter:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />
+            <converter:TrackToLyricsConverter x:Key="TrackToLyricsConverter" />
+            <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
             <converters:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
+            <converters:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
 
             <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
@@ -305,8 +308,12 @@
                 </Setter>
             </Style>
 
-            <Style x:Key="ListViewStretchedItemContainerStyle" TargetType="ListViewItem">
+            <Style
+                x:Key="ListViewStretchedItemContainerStyle"
+                BasedOn="{StaticResource DefaultListViewItemStyle}"
+                TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="VerticalContentAlignment" Value="Stretch" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="Padding" Value="0" />
             </Style>

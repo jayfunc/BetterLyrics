@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:scontrols="using:ShadowViewer.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -37,16 +36,6 @@
             </Button>
         </StackPanel>
 
-        <scontrols:NotificationPanel
-            x:Name="TipContainerCenter"
-            Margin="0,0,0,52"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Canvas.ZIndex="1"
-            FlowDirection="RightToLeft"
-            Loaded="TipContainerCenter_Loaded"
-            Orientation="Vertical"
-            Visibility="Collapsed" />
     </Grid>
 
 </Window>

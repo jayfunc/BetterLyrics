@@ -9,6 +9,7 @@ using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.Views;
@@ -34,6 +35,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private readonly IMediaSessionsService _mediaSessionsService;
+        private readonly IResourceService _resourceService;
 
         public string Version { get; set; } = MetadataHelper.AppVersion;
 
@@ -47,10 +49,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial object NavViewSelectedItemTag { get; set; } = "App";
 
-        public SettingsPageViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService)
+        public SettingsPageViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService, IResourceService resourceService)
         {
             _settingsService = settingsService;
             _mediaSessionsService = mediaSessionsService;
+            _resourceService = resourceService;
             AppSettings = _settingsService.AppSettings;
         }
 
@@ -101,7 +104,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else
                 {
-                    App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("ImportSettingsFailed") ?? "");
+                    DevWinUI.Growl.Error(_resourceService.GetLocalizedString("ImportSettingsFailed") ?? "");
                 }
             }
         }
@@ -123,7 +126,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (folder != null)
             {
                 _settingsService.ExportSettings(folder.Path);
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("ExportSettingsSuccess") ?? "", InfoBarSeverity.Success);
+                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ExportSettingsSuccess") ?? "");
             }
         }
 
@@ -146,7 +149,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
-            App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("ActionCompleted"), InfoBarSeverity.Success);
+            DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ActionCompleted"));
         }
     }
 }

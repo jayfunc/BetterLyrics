@@ -9,6 +9,7 @@ using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -22,7 +23,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
-using ShadowViewer.Controls;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -39,22 +39,12 @@ namespace BetterLyrics.WinUI3
         private readonly ILogger<App> _logger;
 
         public static new App Current => (App)Application.Current;
-        public static DispatcherQueue? DispatcherQueue { get; private set; }
-        public static DispatcherQueueTimer? DispatcherQueueTimer { get; private set; }
-        public static ResourceLoader? ResourceLoader { get; private set; }
-
-        public NotificationPanel? LyricsWindowNotificationPanel { get; set; }
-        public NotificationPanel? SettingsWindowNotificationPanel { get; set; }
 
         private static Mutex? _instanceMutex;
 
         public App()
         {
             this.InitializeComponent();
-
-            DispatcherQueue = DispatcherQueue.GetForCurrentThread();
-            DispatcherQueueTimer = DispatcherQueue.CreateTimer();
-            ResourceLoader = new ResourceLoader();
 
             EnsureSingleInstance();
 
@@ -72,12 +62,11 @@ namespace BetterLyrics.WinUI3
 
         private void EnsureSingleInstance()
         {
-            bool createdNew;
-            _instanceMutex = new Mutex(true, Constants.App.AppName, out createdNew);
+            _instanceMutex = new Mutex(true, Constants.App.AppName, out bool createdNew);
 
             if (!createdNew)
             {
-                User32.MessageBox(HWND.NULL, ResourceLoader!.GetString("TryRunMultipleInstance"), null, User32.MB_FLAGS.MB_APPLMODAL);
+                User32.MessageBox(HWND.NULL, new ResourceLoader().GetString("TryRunMultipleInstance"), null, User32.MB_FLAGS.MB_APPLMODAL);
                 Environment.Exit(0);
             }
         }
@@ -111,6 +100,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
                     .AddSingleton<ITranslateService, TranslateService>()
                     .AddSingleton<ILastFMService, LastFMService>()
+                    .AddSingleton<IResourceService, ResourceService>()
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()

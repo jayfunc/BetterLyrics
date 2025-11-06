@@ -1,8 +1,10 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using System;
 using Windows.Foundation;
@@ -171,11 +173,13 @@ namespace BetterLyrics.WinUI3.Models
 
     public static class LyricsWindowStatusExtensions
     {
+        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public static LyricsWindowStatus DesktopMode()
         {
             return new LyricsWindowStatus
             {
-                Name = App.ResourceLoader!.GetString("DesktopMode"),
+                Name = _resourceService.GetLocalizedString("DesktopMode"),
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 WindowBounds = new Rect(100, 100, 600, 250),
                 IsAlwaysOnTop = true,
@@ -201,7 +205,7 @@ namespace BetterLyrics.WinUI3.Models
         {
             return new LyricsWindowStatus
             {
-                Name = App.ResourceLoader!.GetString("DockedMode"),
+                Name = _resourceService.GetLocalizedString("DockedMode"),
                 IsWorkArea = true,
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
@@ -228,7 +232,7 @@ namespace BetterLyrics.WinUI3.Models
         {
             return new LyricsWindowStatus
             {
-                Name = App.ResourceLoader!.GetString("FullscreenMode"),
+                Name = _resourceService.GetLocalizedString("FullscreenMode"),
                 WindowBounds = monitorBounds,
                 IsAlwaysOnTop = true,
                 IsBorderless = true,
@@ -253,7 +257,7 @@ namespace BetterLyrics.WinUI3.Models
         {
             return new LyricsWindowStatus
             {
-                Name = App.ResourceLoader!.GetString("StandardMode"),
+                Name = _resourceService.GetLocalizedString("StandardMode"),
             };
         }
 
@@ -261,7 +265,7 @@ namespace BetterLyrics.WinUI3.Models
         {
             return new LyricsWindowStatus
             {
-                Name = App.ResourceLoader!.GetString("NarrowMode"),
+                Name = _resourceService.GetLocalizedString("NarrowMode"),
                 WindowBounds = new Rect(100, 100, 400, 800),
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
             };

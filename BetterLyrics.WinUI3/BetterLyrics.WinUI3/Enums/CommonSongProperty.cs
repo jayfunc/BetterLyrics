@@ -11,6 +11,7 @@ namespace BetterLyrics.WinUI3.Enums
         Title,
         Album,
         Artist,
-        Folder
+        Folder,
+        M3UFilePath
     }
 }

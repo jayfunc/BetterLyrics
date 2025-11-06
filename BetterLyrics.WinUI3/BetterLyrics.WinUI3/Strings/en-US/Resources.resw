@@ -141,6 +141,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CreatePlaylistSuccessfully" xml:space="preserve">
+    <value>Playlist was created successfully</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>Default</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="ImportPlaylistSuccessfully" xml:space="preserve">
+    <value>Playlist was imported successfully</value>
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>Settings file import failed, application settings remain unchanged</value>
@@ -346,7 +352,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>Welcome to BetterLyrics</value>
   </data>
-  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
+  <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Add to playlist</value>
   </data>
   <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
@@ -355,7 +361,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>Next items</value>
   </data>
-  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
+  <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
     <value>Add to play queue</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
@@ -388,6 +394,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
     <value>Format</value>
   </data>
+  <data name="MusicGalleryPageFileInfoLyrics.Text" xml:space="preserve">
+    <value>Lyrics</value>
+  </data>
   <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
     <value>Path</value>
   </data>
@@ -402,6 +411,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>No songs were found in the media library</value>
+  </data>
+  <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+    <value>Import from file</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>Create a playlist</value>
@@ -465,6 +477,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="Pinyin" xml:space="preserve">
     <value>Mandarin pinyin</value>
+  </data>
+  <data name="PlaylistViewFailed" xml:space="preserve">
+    <value>Unable to view tracks since the path is not existed</value>
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>Romaji</value>
@@ -1329,6 +1344,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>Lyrics window switcher</value>
+  </data>
+  <data name="TracksAddToPlaylistFailed" xml:space="preserve">
+    <value>Unable to add tracks since the path is not existed</value>
+  </data>
+  <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+    <value>Selected tracks have been added to this playlist</value>
   </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>Translate server is not set, please configure it in settings first</value>

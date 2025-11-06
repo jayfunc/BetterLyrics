@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,8 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class PhoneticHelper
     {
+        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public const string PinyinCode = "zh-pinyin";
         public const string JyutpingCode = "zh-jyutping";
         public const string RomajiCode = "ja-romaji";
@@ -22,11 +26,11 @@ namespace BetterLyrics.WinUI3.Helper
             switch (code)
             {
                 case PinyinCode:
-                    return App.ResourceLoader!.GetString("Pinyin");
+                    return _resourceService.GetLocalizedString("Pinyin");
                 case JyutpingCode:
-                    return App.ResourceLoader!.GetString("Jyutping");
+                    return _resourceService.GetLocalizedString("Jyutping");
                 case RomajiCode:
-                    return App.ResourceLoader!.GetString("Romaji");
+                    return _resourceService.GetLocalizedString("Romaji");
                 default:
                     throw new ArgumentOutOfRangeException(nameof(code));
             }

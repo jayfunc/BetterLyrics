@@ -104,7 +104,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     }
                     catch (Exception)
                     {
-                        App.Current.LyricsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("LibreTranslateFailed")!, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                        DevWinUI.Growl.Error(_resourceService.GetLocalizedString("LibreTranslateFailed")!);
                     }
                 }
             }

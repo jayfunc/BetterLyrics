@@ -18,5 +18,14 @@ namespace BetterLyrics.WinUI3.Helper
         {
             return Directory.GetParent(track.Path)?.FullName ?? "";
         }
+
+        public static string GetLyrics(this ATL.Track track)
+        {
+            if (track.Path is string path)
+            {
+                return TagLib.File.Create(path).Tag.Lyrics;
+            }
+            return "";
+        }
     }
 }

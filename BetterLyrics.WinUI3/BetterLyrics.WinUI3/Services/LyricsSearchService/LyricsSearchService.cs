@@ -302,7 +302,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                                 || (album == "" && track.Title == title && track.Artist == artist)
                                 || (album == "" && FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), title, artist)))
                             {
-                                var plain = TagLib.File.Create(file).Tag.Lyrics;
+                                var plain = track.GetLyrics();
                                 if (!plain.IsNullOrEmpty())
                                 {
                                     lyricsSearchResult.Raw = plain;

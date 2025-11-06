@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
@@ -24,6 +25,8 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class LyricsWindow : Window
     {
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         private readonly WindowMessageMonitor _wmm;
 
         public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
@@ -39,7 +42,7 @@ namespace BetterLyrics.WinUI3.Views
             ExtendsContentIntoTitleBar = true;
             AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
 
-            Title = App.ResourceLoader!.GetString("LyricsPageTitle");
+            Title = _resourceService.GetLocalizedString("LyricsPageTitle");
 
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
@@ -116,11 +119,6 @@ namespace BetterLyrics.WinUI3.Views
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
         {
             WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
-        }
-
-        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
-        {
-            App.Current.LyricsWindowNotificationPanel = TipContainerCenter;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

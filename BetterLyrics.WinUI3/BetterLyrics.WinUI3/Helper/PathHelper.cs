@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string LanguageProfilePath => Path.Combine(AssetsFolder, "Wiki82.profile.xml");
         public static string LogoPath => Path.Combine(AssetsFolder, "Logo.ico");
+        public static string AlbumArtPlaceholderPath => "ms-appx:///Assets/AlbumArtPlaceholder.png";
         public static string AIMPLogoPath => Path.Combine(AssetsFolder, "AIMP.png");
         public static string Foobar2000LogoPath => Path.Combine(AssetsFolder, "foobar2000.png");
         public static string MusicBeeLogoPath => Path.Combine(AssetsFolder, "MusicBee.png");
