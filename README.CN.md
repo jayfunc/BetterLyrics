@@ -143,6 +143,8 @@ BetterLyrics
 | [DevWinUI](https://github.com/ghost1372/DevWinUI) | 为 WinUI3 提供众多开箱即用的功能 |
 | ... | ... |
 
+点按 [此处](https://github.com/jayfunc/BetterLyrics/network/dependencies) 查看所有依赖。
+
 ### 教程、博客等
 
 - [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
