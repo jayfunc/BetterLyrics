@@ -11,7 +11,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
@@ -28,6 +27,13 @@
         <renderer:LyricsRenderer />
 
         <dev:SnowFlakeEffect FlakeCount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SnowFlakeOverlayAmount, Mode=OneWay}" Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+        <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Hidden">
+            <StackPanel
+                Margin="20"
+                VerticalAlignment="Bottom"
+                dev:Growl.GrowlParent="True" />
+        </ScrollViewer>
 
         <!--  Bottom command area  -->
         <Grid

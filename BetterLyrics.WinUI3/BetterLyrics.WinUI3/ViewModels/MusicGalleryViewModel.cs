@@ -7,8 +7,11 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
@@ -25,6 +28,8 @@ using Windows.ApplicationModel;
 using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Storage;
+using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -32,6 +37,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ILibWatcherService _libWatcherService;
         private readonly ISettingsService _settingsService;
+        private readonly IResourceService _resourceService;
 
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
@@ -60,6 +66,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial List<Track> SelectedTracks { get; set; } = [];
+
+        [ObservableProperty]
+        public partial int SelectedTracksTotalDuration { get; set; } = 0;
 
         [ObservableProperty]
         public partial ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; } = [];
@@ -95,14 +104,15 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
 
-        public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
+        public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, IResourceService resourceService)
         {
             _refreshSongsTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService = settingsService;
+            _resourceService = resourceService;
             AppSettings = _settingsService.AppSettings;
 
-            SongsTabInfoList.Add(new SongsTabInfo(App.ResourceLoader!.GetString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
+            SongsTabInfoList.Add(new SongsTabInfo(_resourceService.GetLocalizedString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
 
             RefreshSongs();
 
@@ -330,6 +340,21 @@ namespace BetterLyrics.WinUI3.ViewModels
                     case CommonSongProperty.Folder:
                         _playlistTracks = _tracks.Where(t => t.GetParentFolderPath().Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                         break;
+                    case CommonSongProperty.M3UFilePath:
+                        if (SelectedSongsTabInfo.FilterValue is string path)
+                        {
+                            if (File.Exists(path))
+                            {
+                                var m3uFileContent = File.ReadAllText(path);
+                                _playlistTracks = _tracks.Where(t => m3uFileContent.Contains(t.Path)).ToList();
+                            }
+                            else
+                            {
+                                _playlistTracks = [];
+                                DevWinUI.Growl.Error(_resourceService.GetLocalizedString("PlaylistViewFailed"), path);
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -457,6 +482,61 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnPlaybackOrderChanged(PlaybackOrder value)
         {
             _settingsService.AppSettings.MusicGallerySettings.PlaybackOrder = value;
+        }
+
+        private void AddFileToStarredPlaylists(StorageFile file)
+        {
+            AppSettings.StarredPlaylists.Add(new SongsTabInfo
+            {
+                FilterProperty = CommonSongProperty.M3UFilePath,
+                FilterValue = file.Path,
+                Icon = "\uE7BC",
+                IsStarred = true,
+                IsClosable = true,
+                Name = file.Name
+            });
+        }
+
+        [RelayCommand]
+        private async Task CreatePlaylistAsync()
+        {
+            var window = WindowHelper.GetWindowByWindowType<MusicGalleryWindow>();
+            if (window == null) return;
+
+            var picker = new Windows.Storage.Pickers.FileSavePicker();
+            picker.FileTypeChoices.Add("M3U", new List<string>() { ".m3u" });
+
+            var hwnd = WindowNative.GetWindowHandle(window);
+            InitializeWithWindow.Initialize(picker, hwnd);
+
+            var file = await picker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                AddFileToStarredPlaylists(file);
+                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("CreatePlaylistSuccessfully"), file.Path);
+            }
+        }
+
+        [RelayCommand]
+        private async Task ImportPlaylistAsync()
+        {
+            var window = WindowHelper.GetWindowByWindowType<MusicGalleryWindow>();
+            if (window == null) return;
+
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.FileTypeFilter.Add(".m3u");
+
+            var hwnd = WindowNative.GetWindowHandle(window);
+            InitializeWithWindow.Initialize(picker, hwnd);
+
+            var file = await picker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                AddFileToStarredPlaylists(file);
+                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ImportPlaylistSuccessfully"), file.Path);
+            }
         }
     }
 }

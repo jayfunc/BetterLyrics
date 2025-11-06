@@ -6,11 +6,11 @@
     xmlns:const="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
-    xmlns:scontrols="using:ShadowViewer.Controls"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
@@ -94,13 +94,13 @@
 
                                 <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                                <controls:SettingsExpander HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}" IsExpanded="True">
-                                    <controls:SettingsExpander.Header>
+                                <dev:SettingsExpander HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}" IsExpanded="True">
+                                    <dev:SettingsExpander.Header>
                                         <StackPanel Orientation="Horizontal" Spacing="6">
                                             <TextBlock Text="BetterLyrics" />
                                         </StackPanel>
-                                    </controls:SettingsExpander.Header>
-                                    <controls:SettingsExpander.Description>
+                                    </dev:SettingsExpander.Header>
+                                    <dev:SettingsExpander.Description>
                                         <StackPanel
                                             Margin="0,2,0,0"
                                             Orientation="Horizontal"
@@ -112,16 +112,16 @@
                                                 NavigateUri="https://github.com/jayfunc" />
                                             <TextBlock Text="2025" />
                                         </StackPanel>
-                                    </controls:SettingsExpander.Description>
+                                    </dev:SettingsExpander.Description>
                                     <RichTextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
                                         <Paragraph>
                                             <Run x:Uid="SettingsPageVersion" />
                                             <Run Text="{x:Bind ViewModel.Version, Mode=OneWay}" />
                                         </Paragraph>
                                     </RichTextBlock>
-                                    <controls:SettingsExpander.Items>
+                                    <dev:SettingsExpander.Items>
 
-                                        <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                        <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                             <StackPanel Spacing="6">
                                                 <TextBlock x:Uid="SetingsPageInstructions" />
                                                 <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
@@ -130,9 +130,9 @@
                                                 </StackPanel>
                                             </StackPanel>
 
-                                        </controls:SettingsCard>
+                                        </dev:SettingsCard>
 
-                                        <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                        <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                             <StackPanel Spacing="6">
                                                 <TextBlock x:Uid="SetingsPageFeedback" />
                                                 <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
@@ -141,9 +141,9 @@
                                                     <HyperlinkButton x:Uid="SettingsPageTelegram" NavigateUri="{x:Bind const:Link.TelegramUrl}" />
                                                 </StackPanel>
                                             </StackPanel>
-                                        </controls:SettingsCard>
+                                        </dev:SettingsCard>
 
-                                        <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                        <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                             <StackPanel Spacing="6">
                                                 <TextBlock x:Uid="SetingsPageDonation" />
                                                 <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
@@ -190,9 +190,9 @@
                                                         TextWrapping="Wrap" />
                                                 </StackPanel>
                                             </StackPanel>
-                                        </controls:SettingsCard>
+                                        </dev:SettingsCard>
 
-                                        <controls:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                        <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                             <StackPanel Spacing="6">
                                                 <TextBlock x:Uid="SetingsPageContributors" />
                                                 <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
@@ -202,10 +202,10 @@
                                                     <HyperlinkButton Content="kusutori" NavigateUri="https://github.com/kusutori" />
                                                 </StackPanel>
                                             </StackPanel>
-                                        </controls:SettingsCard>
+                                        </dev:SettingsCard>
 
-                                    </controls:SettingsExpander.Items>
-                                    <controls:SettingsExpander.ItemsFooter>
+                                    </dev:SettingsExpander.Items>
+                                    <dev:SettingsExpander.ItemsFooter>
                                         <InfoBar
                                             x:Uid="SettingsPageDisclaimer"
                                             BorderThickness="0"
@@ -213,32 +213,32 @@
                                             IsClosable="False"
                                             IsOpen="True"
                                             Severity="Warning" />
-                                    </controls:SettingsExpander.ItemsFooter>
-                                </controls:SettingsExpander>
+                                    </dev:SettingsExpander.ItemsFooter>
+                                </dev:SettingsExpander>
 
-                                <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
+                                <dev:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
                                     <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
-                                </controls:SettingsCard>
+                                </dev:SettingsCard>
 
-                                <controls:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
+                                <dev:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
                                     <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
-                                    <controls:SettingsExpander.Items>
-                                        <controls:SettingsCard>
+                                    <dev:SettingsExpander.Items>
+                                        <dev:SettingsCard>
                                             <Button x:Uid="SettingsPageClearCache" Command="{x:Bind ViewModel.ClearCacheFilesCommand}" />
-                                        </controls:SettingsCard>
-                                    </controls:SettingsExpander.Items>
-                                </controls:SettingsExpander>
+                                        </dev:SettingsCard>
+                                    </dev:SettingsExpander.Items>
+                                </dev:SettingsExpander>
 
-                                <controls:SettingsCard x:Uid="SettingsPageSettings">
+                                <dev:SettingsCard x:Uid="SettingsPageSettings">
                                     <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenSettingsFolderCommand}" />
-                                </controls:SettingsCard>
+                                </dev:SettingsCard>
 
-                                <controls:SettingsExpander x:Uid="SettingsPageSettingsManager" IsExpanded="True">
+                                <dev:SettingsExpander x:Uid="SettingsPageSettingsManager" IsExpanded="True">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <Button x:Uid="SettingsPageImportSettingsButton" Command="{x:Bind ViewModel.ImportSettingsCommand}" />
                                         <Button x:Uid="SettingsPageExportSettingsButton" Command="{x:Bind ViewModel.ExportSettingsCommand}" />
                                     </StackPanel>
-                                    <controls:SettingsExpander.ItemsHeader>
+                                    <dev:SettingsExpander.ItemsHeader>
                                         <InfoBar
                                             x:Uid="SettingsPageImportSettingsInfo"
                                             BorderThickness="0"
@@ -246,25 +246,25 @@
                                             IsClosable="False"
                                             IsOpen="True"
                                             Severity="Warning" />
-                                    </controls:SettingsExpander.ItemsHeader>
-                                </controls:SettingsExpander>
+                                    </dev:SettingsExpander.ItemsHeader>
+                                </dev:SettingsExpander>
 
-                                <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">
+                                <dev:SettingsCard x:Uid="SettingsPageDebugOverlay">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />
-                                </controls:SettingsCard>
+                                </dev:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
+                                <dev:SettingsCard x:Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.IsFixedTimeStep, Mode=TwoWay}" />
-                                </controls:SettingsCard>
+                                </dev:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageFPS" Visibility="Collapsed">
+                                <dev:SettingsCard x:Uid="SettingsPageFPS" Visibility="Collapsed">
                                     <uc:ExtendedSlider
                                         Default="60"
                                         Frequency="10"
                                         Maximum="240"
                                         Minimum="30"
                                         Value="{x:Bind ViewModel.AppSettings.AdvancedSettings.FPS, Mode=TwoWay}" />
-                                </controls:SettingsCard>
+                                </dev:SettingsCard>
 
                             </StackPanel>
                         </Grid>
@@ -273,6 +273,13 @@
 
             </controls:SwitchPresenter>
         </NavigationView>
+
+        <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Hidden">
+            <StackPanel
+                Margin="20"
+                VerticalAlignment="Bottom"
+                dev:Growl.GrowlParent="True" />
+        </ScrollViewer>
 
     </Grid>
 </Page>

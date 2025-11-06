@@ -408,6 +408,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     UpdateSongInfoFontSize();
 
                     _isLayoutChanged = true;
+
+                    // 模拟设备变更，执行全局强制刷新以避免旧值被误用
+                    _isDeviceChanged = true;
                 }
             }
         }

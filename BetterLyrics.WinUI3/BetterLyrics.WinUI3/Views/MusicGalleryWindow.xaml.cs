@@ -1,4 +1,6 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -26,11 +28,13 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class MusicGalleryWindow : Window
     {
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public MusicGalleryWindow()
         {
             InitializeComponent();
 
-            Title = App.ResourceLoader?.GetString("MusicGalleryPageTitle");
+            Title = _resourceService.GetLocalizedString("MusicGalleryPageTitle");
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             AppWindow.SetIcons();
 

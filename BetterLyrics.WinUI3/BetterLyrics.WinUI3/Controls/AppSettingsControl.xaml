@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
     xmlns:globalization="using:Windows.Globalization"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
@@ -22,7 +23,7 @@
 
                     <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsExpander
+                    <dev:SettingsExpander
                         x:Uid="SettingsPageLanguage"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xF2B7;}"
@@ -36,63 +37,63 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard>
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard>
                                 <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
                     <!--  App behavior  -->
 
                     <TextBlock x:Uid="SettingsPageAppBehavior" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF71C;}">
+                    <dev:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF71C;}">
                         <ToggleSwitch
                             x:Name="AutoStartupToggleSwitch"
                             Loaded="AutoStartupToggleSwitch_Loaded"
                             Unloaded="AutoStartupToggleSwitch_Unloaded" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E8;}">
+                    <dev:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E8;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageListenNewSession" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF270;}">
+                    <dev:SettingsCard x:Uid="SettingsPageListenNewSession" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF270;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                    <dev:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageBorderlessHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                    <dev:SettingsCard x:Uid="SettingsPageBorderlessHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.BorderlessShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageClickThroughHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                    <dev:SettingsCard x:Uid="SettingsPageClickThroughHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ClickThroughShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
                     <!--  Playback shortcut  -->
 
                     <TextBlock x:Uid="SettingsPagePlaybackShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                    <dev:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                    <dev:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
+                    <dev:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
                 </StackPanel>
             </Grid>

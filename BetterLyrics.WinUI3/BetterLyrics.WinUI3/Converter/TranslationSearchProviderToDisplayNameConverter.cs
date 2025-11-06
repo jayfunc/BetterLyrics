@@ -1,13 +1,17 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
+using System;
 
 namespace BetterLyrics.WinUI3.Converter
 {
     public partial class TranslationSearchProviderToDisplayNameConverter : IValueConverter
     {
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is TranslationSearchProvider provider)
@@ -20,10 +24,10 @@ namespace BetterLyrics.WinUI3.Converter
                     TranslationSearchProvider.Kugou => "酷狗音乐",
                     TranslationSearchProvider.AmllTtmlDb => "amll-ttml-db",
                     TranslationSearchProvider.AppleMusic => "Apple Music",
-                    TranslationSearchProvider.LocalLrcFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalLrcFile"),
-                    TranslationSearchProvider.LocalMusicFile => App.ResourceLoader!.GetString("LyricsSearchProviderLocalMusicFile"),
-                    TranslationSearchProvider.LocalEslrcFile => App.ResourceLoader!.GetString("LyricsSearchProviderEslrcFile"),
-                    TranslationSearchProvider.LocalTtmlFile => App.ResourceLoader!.GetString("LyricsSearchProviderTtmlFile"),
+                    TranslationSearchProvider.LocalLrcFile => _resourceService.GetLocalizedString("LyricsSearchProviderLocalLrcFile"),
+                    TranslationSearchProvider.LocalMusicFile => _resourceService.GetLocalizedString("LyricsSearchProviderLocalMusicFile"),
+                    TranslationSearchProvider.LocalEslrcFile => _resourceService.GetLocalizedString("LyricsSearchProviderEslrcFile"),
+                    TranslationSearchProvider.LocalTtmlFile => _resourceService.GetLocalizedString("LyricsSearchProviderTtmlFile"),
                     TranslationSearchProvider.LibreTranslate => "LibreTranslate",
                     _ => "N/A",
                 };

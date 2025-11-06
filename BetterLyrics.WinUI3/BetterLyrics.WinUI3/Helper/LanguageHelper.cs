@@ -1,5 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using NTextCat;
 using NTextCat.Commons;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
+        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
         public static List<ExtendedLanguage> SupportedTranslationTargetLanguages { get; set; } =
         [
@@ -89,7 +92,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static List<ExtendedLanguage> SupportedDisplayLanguages { get; set; } =
         [
-            new ExtendedLanguage("", App.ResourceLoader!.GetString("SettingsPageSystemLanguage")),
+            new ExtendedLanguage("", _resourceService.GetLocalizedString("SettingsPageSystemLanguage")),
             new ExtendedLanguage("en-US", "English"),
             new ExtendedLanguage("ja-JP"),
             new ExtendedLanguage("ko-KR"),

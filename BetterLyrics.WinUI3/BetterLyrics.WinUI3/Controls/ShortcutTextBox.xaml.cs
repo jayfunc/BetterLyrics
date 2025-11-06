@@ -1,4 +1,6 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -23,6 +25,8 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class ShortcutTextBox : UserControl
     {
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public ShortcutTextBox()
         {
             InitializeComponent();
@@ -98,15 +102,11 @@ namespace BetterLyrics.WinUI3.Controls
             bool registered = GlobalHotKeyHelper.IsHotKeyRegistered(Shortcut);
             if (registered)
             {
-                App.Current.SettingsWindowNotificationPanel?.Notify(
-                     App.ResourceLoader!.GetString("SettingsPageShortcutRegSuccessInfo"),
-                     InfoBarSeverity.Success);
+                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageShortcutRegSuccessInfo"));
             }
             else
             {
-                App.Current.SettingsWindowNotificationPanel?.Notify(
-                    App.ResourceLoader!.GetString("SettingsPageShortcutRegFailInfo"),
-                    InfoBarSeverity.Error);
+                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageShortcutRegFailInfo"));
             }
         }
     }

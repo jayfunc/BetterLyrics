@@ -1,10 +1,12 @@
 ﻿using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -25,6 +27,8 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
     public partial class LastFMService : ILastFMService
     {
         private readonly ISettingsService _settingsService;
+        private readonly IResourceService _resourceService;
+
         private readonly LastfmClient _client;
 
         public event EventHandler<LastFMUserChangedEventArgs>? UserChanged;
@@ -34,9 +38,10 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         public bool IsAuthenticated { get; private set; }
 
-        public LastFMService(ISettingsService settingsService)
+        public LastFMService(ISettingsService settingsService, IResourceService resourceService)
         {
             _settingsService = settingsService;
+            _resourceService = resourceService;
 
             _client = new LastfmClient(Constants.LastFM.ApiKey, Constants.LastFM.SharedSecret);
             _client.Session.SessionKey = PasswordVaultHelper.Get(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey) ?? string.Empty;
@@ -53,7 +58,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             }
             catch (Exception)
             {
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader?.GetString("LastFMAuthFailed") ?? "", InfoBarSeverity.Error);
+                DevWinUI.Growl.Error(_resourceService.GetLocalizedString("LastFMAuthFailed") ?? "");
             }
         }
 
@@ -74,10 +79,10 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
             var dialog = new ContentDialog
             {
-                Title = App.ResourceLoader?.GetString("LastFMRequestAuthTitle") ?? "",
-                Content = App.ResourceLoader?.GetString("LastFMRequestAuthDesc") ?? "",
-                PrimaryButtonText = App.ResourceLoader?.GetString("LastFMRequestAuthConfirm") ?? "",
-                CloseButtonText = App.ResourceLoader?.GetString("Cancel") ?? "",
+                Title = _resourceService.GetLocalizedString("LastFMRequestAuthTitle") ?? "",
+                Content = _resourceService.GetLocalizedString("LastFMRequestAuthDesc") ?? "",
+                PrimaryButtonText = _resourceService.GetLocalizedString("LastFMRequestAuthConfirm") ?? "",
+                CloseButtonText = _resourceService.GetLocalizedString("Cancel") ?? "",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = dialogXamlRoot,
             };
@@ -101,10 +106,10 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
             var dialog = new ContentDialog
             {
-                Title = App.ResourceLoader?.GetString("LastFMRequestUnAuthTitle") ?? "",
-                Content = App.ResourceLoader?.GetString("LastFMRequestUnAuthDesc") ?? "",
-                PrimaryButtonText = App.ResourceLoader?.GetString("LastFMRequestUnAuthConfirm") ?? "",
-                CloseButtonText = App.ResourceLoader?.GetString("Cancel") ?? "",
+                Title = _resourceService.GetLocalizedString("LastFMRequestUnAuthTitle") ?? "",
+                Content = _resourceService.GetLocalizedString("LastFMRequestUnAuthDesc") ?? "",
+                PrimaryButtonText = _resourceService.GetLocalizedString("LastFMRequestUnAuthConfirm") ?? "",
+                CloseButtonText = _resourceService.GetLocalizedString("Cancel") ?? "",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = dialogXamlRoot,
             };

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -105,16 +106,16 @@
                             </StackPanel>
                         </Grid>
 
-                        <controls:SettingsCard>
+                        <dev:SettingsCard>
                             <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
-                        </controls:SettingsCard>
+                        </dev:SettingsCard>
 
-                        <controls:SettingsCard x:Uid="LyricsSearchControlTargetSearchProvider">
+                        <dev:SettingsCard x:Uid="LyricsSearchControlTargetSearchProvider">
                             <Button
                                 x:Uid="LyricsSearchControlSearch"
                                 Command="{x:Bind ViewModel.SearchCommand}"
                                 Style="{StaticResource AccentButtonStyle}" />
-                        </controls:SettingsCard>
+                        </dev:SettingsCard>
 
                     </StackPanel>
                 </ScrollViewer>

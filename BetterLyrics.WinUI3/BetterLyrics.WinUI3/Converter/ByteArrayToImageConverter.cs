@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Data;
+﻿using BetterLyrics.WinUI3.Helper;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
@@ -29,11 +30,11 @@ namespace BetterLyrics.WinUI3.Converter
                 }
                 catch
                 {
-                    return null;
+                    return PathHelper.AlbumArtPlaceholderPath;
                 }
             }
 
-            return null;
+            return PathHelper.AlbumArtPlaceholderPath;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

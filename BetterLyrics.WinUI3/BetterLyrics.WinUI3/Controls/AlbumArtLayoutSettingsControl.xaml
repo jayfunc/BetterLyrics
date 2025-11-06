@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dev="using:DevWinUI"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -17,16 +18,16 @@
 
                     <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsExpander
+                    <dev:SettingsExpander
                         x:Uid="SettingsPageAlbumArtSize"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xE744;}"
                         IsExpanded="True">
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.AutoAlbumArtSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                            <controls:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.AutoAlbumArtSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            </dev:SettingsCard>
+                            <dev:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.AutoAlbumArtSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Frequency="2"
                                     Maximum="800"
@@ -34,11 +35,11 @@
                                     ResetButtonVisibility="Collapsed"
                                     Unit="px"
                                     Value="{x:Bind AlbumArtLayoutSettings.AlbumArtSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
-                    <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3A;}">
+                    <dev:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3A;}">
                         <local:ExtendedSlider
                             Default="12"
                             
@@ -46,37 +47,37 @@
                             Minimum="0"
                             Unit="%"
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageRadius, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageAlbumShadowAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF5EF;}">
+                    <dev:SettingsCard x:Uid="SettingsPageAlbumShadowAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF5EF;}">
                         <local:ExtendedSlider
                             Default="12"
                             
                             Maximum="64"
                             Minimum="0"
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
                     <TextBlock x:Uid="SettingsPageSongInfo" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageSongInfoAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
+                    <dev:SettingsCard x:Uid="SettingsPageSongInfoAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageSongInfoLeft" />
                             <ComboBoxItem x:Uid="SettingsPageSongInfoCenter" />
                             <ComboBoxItem x:Uid="SettingsPageSongInfoRight" />
                         </ComboBox>
-                    </controls:SettingsCard>
+                    </dev:SettingsCard>
 
-                    <controls:SettingsExpander
+                    <dev:SettingsExpander
                         x:Uid="SettingsPageLyricsFontSize"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xE8E9;}"
                         IsExpanded="True">
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoSongInfoFontSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                            <controls:SettingsCard>
+                            </dev:SettingsCard>
+                            <dev:SettingsCard>
                                 <local:ExtendedSlider
                                     Default="18"
                                     Frequency="2"
@@ -84,22 +85,22 @@
                                     Maximum="72"
                                     Minimum="8"
                                     Value="{x:Bind AlbumArtLayoutSettings.SongInfoFontSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
-                    <controls:SettingsExpander
+                    <dev:SettingsExpander
                         x:Uid="SettingsPageShowTitle"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xEF3D;}"
                         IsExpanded="True">
                         <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=TwoWay}" />
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageShowArtists">
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageShowArtists">
                                 <ToggleSwitch IsEnabled="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=OneWay}" IsOn="{x:Bind AlbumArtLayoutSettings.ShowArtists, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
                 </StackPanel>
             </Grid>

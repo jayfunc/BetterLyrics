@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.TranslateService
 {
-    public class TranslateService : BaseViewModel, ITranslateService
+    public partial class TranslateService : BaseViewModel, ITranslateService
     {
         private readonly ISettingsService _settingsService;
         private readonly HttpClient _httpClient;

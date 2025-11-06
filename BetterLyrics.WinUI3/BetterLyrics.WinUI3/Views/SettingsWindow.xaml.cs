@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
@@ -9,12 +10,14 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class SettingsWindow : Window
     {
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public SettingsWindowViewModel ViewModel { get; set; } = Ioc.Default.GetRequiredService<SettingsWindowViewModel>();
 
         public SettingsWindow()
         {
             InitializeComponent();
-            Title = App.ResourceLoader?.GetString("SettingsPageTitle");
+            Title = _resourceService.GetLocalizedString("SettingsPageTitle");
             AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
             AppWindow.SetIcons();
 
@@ -28,11 +31,6 @@ namespace BetterLyrics.WinUI3.Views
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             WindowHelper.CloseWindow<SettingsWindow>();
-        }
-
-        private void TipContainerCenter_Loaded(object sender, RoutedEventArgs e)
-        {
-            App.Current.SettingsWindowNotificationPanel = TipContainerCenter;
         }
 
         private void LyricsWindowButton_Click(object sender, RoutedEventArgs e)

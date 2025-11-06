@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -33,6 +34,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ITranslateService _libreTranslateService;
         private readonly ILastFMService _lastFMService;
         private readonly ISettingsService _settingsService;
+        private readonly IResourceService _resourceService;
 
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
@@ -74,11 +76,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             ISettingsService settingsService,
             IMediaSessionsService mediaSessionsService,
             ITranslateService libreTranslateService,
-            ILastFMService lastFMService)
+            ILastFMService lastFMService,
+            IResourceService resourceService)
         {
             _settingsService = settingsService;
             _mediaSessionsService = mediaSessionsService;
             _libreTranslateService = libreTranslateService;
+            _resourceService = resourceService;
 
             _lastFMService = lastFMService;
             _lastFMService.UserChanged += LastFMService_UserChanged;
@@ -143,14 +147,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                         "Hello, world!", AppSettings.TranslationSettings.SelectedTargetLanguageCode, new System.Threading.CancellationToken());
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), InfoBarSeverity.Success);
+                        DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageServerTestSuccessInfo"));
                     });
                 }
                 catch (Exception)
                 {
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), InfoBarSeverity.Error);
+                        DevWinUI.Growl.Error(_resourceService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
                     });
                 }
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
@@ -189,11 +193,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     if (testResult)
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestSuccessInfo"), InfoBarSeverity.Success);
+                        DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageServerTestSuccessInfo"));
                     }
                     else
                     {
-                        App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPageServerTestFailedInfo"), InfoBarSeverity.Error);
+                        DevWinUI.Growl.Error(_resourceService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
                     }
                     IsLXMusicServerTesting = false;
                 });

@@ -1,6 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Helpers.General;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,8 @@ namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsData
     {
+        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public List<LyricsLine> LyricsLines { get; set; }
         private string? _languageCode;
         public string? LanguageCode
@@ -138,7 +142,7 @@ namespace BetterLyrics.WinUI3.Models
             {
                 StartMs = 0,
                 EndMs = durationMs,
-                OriginalText = App.ResourceLoader!.GetString("LyricsNotFound"),
+                OriginalText = _resourceService.GetLocalizedString("LyricsNotFound"),
                 LyricsChars = [],
             }]);
         }

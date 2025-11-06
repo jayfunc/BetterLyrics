@@ -2,9 +2,11 @@
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -21,13 +23,15 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class MediaSettingsControlViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
+        private readonly IResourceService _resourceService;
 
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
 
-        public MediaSettingsControlViewModel(ISettingsService settingsService)
+        public MediaSettingsControlViewModel(ISettingsService settingsService, IResourceService resourceService)
         {
             _settingsService = settingsService;
+            _resourceService = resourceService;
             AppSettings = _settingsService.AppSettings;
         }
 
@@ -57,18 +61,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (AppSettings.LocalMediaFolders.Any(x => Path.GetFullPath(x.Path).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
             {
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathExistedInfo"), InfoBarSeverity.Warning);
+                DevWinUI.Growl.Warning(_resourceService.GetLocalizedString("SettingsPagePathExistedInfo"));
             }
             else if (AppSettings.LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
             {
                 // 添加的文件夹是现有文件夹的子文件夹
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathBeIncludedInfo"), InfoBarSeverity.Warning);
+                DevWinUI.Growl.Warning(_resourceService.GetLocalizedString("SettingsPagePathBeIncludedInfo"));
             }
             else if (AppSettings.LocalMediaFolders.Any(item => Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
             )
             {
                 // 添加的文件夹是现有文件夹的父文件夹
-                App.Current.SettingsWindowNotificationPanel?.Notify(App.ResourceLoader!.GetString("SettingsPagePathIncludingOthersInfo"), InfoBarSeverity.Warning);
+                DevWinUI.Growl.Warning(_resourceService.GetLocalizedString("SettingsPagePathIncludingOthersInfo"));
             }
             else
             {

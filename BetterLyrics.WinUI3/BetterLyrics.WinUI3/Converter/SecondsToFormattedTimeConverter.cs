@@ -11,15 +11,27 @@ namespace BetterLyrics.WinUI3.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            TimeSpan timeSpan = TimeSpan.Zero;
             if (value is double seconds)
             {
-                return TimeSpan.FromSeconds(seconds).ToString(@"mm\:ss");
+                timeSpan = TimeSpan.FromSeconds(seconds);
             }
             else if (value is int secondsInt)
             {
-                return TimeSpan.FromSeconds(secondsInt).ToString(@"mm\:ss");
+                timeSpan = TimeSpan.FromSeconds(secondsInt);
             }
-            return value?.ToString() ?? "";
+            if (timeSpan.Days > 0)
+            {
+                return timeSpan.ToString(@"dd\.hh\:mm\:ss");
+            }
+            else if (timeSpan.Hours > 0)
+            {
+                return timeSpan.ToString(@"hh\:mm\:ss");
+            }
+            else
+            {
+                return timeSpan.ToString(@"mm\:ss");
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

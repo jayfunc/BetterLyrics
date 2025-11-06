@@ -1,4 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
 using System;
 using System.Collections.Generic;
@@ -10,14 +12,16 @@ namespace BetterLyrics.WinUI3.Converter
 {
     public partial class AlbumArtSearchProviderToDisplayNameConverter : IValueConverter
     {
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is AlbumArtSearchProvider provider)
             {
                 return provider switch
                 {
-                    AlbumArtSearchProvider.Local => App.ResourceLoader!.GetString("AlbumArtSearchLocalProvider"),
-                    AlbumArtSearchProvider.SMTC => App.ResourceLoader!.GetString("AlbumArtSearchSMTCProvider"),
+                    AlbumArtSearchProvider.Local => _resourceService.GetLocalizedString("AlbumArtSearchLocalProvider"),
+                    AlbumArtSearchProvider.SMTC => _resourceService.GetLocalizedString("AlbumArtSearchSMTCProvider"),
                     AlbumArtSearchProvider.iTunes => "iTunes",
                     _ => throw new Exception($"Unknown AlbumArtSearchProvider: {provider}"),
                 };
