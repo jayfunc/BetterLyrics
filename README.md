@@ -128,7 +128,7 @@ Having trouble downloading and installing from the MS Store? See the alternative
 
 ## Build
 
-Before you build, make sure that you have already replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`
+Before you build, make sure that you have already replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`.
 
 ## 💖 Many thanks to
 
@@ -148,6 +148,8 @@ Some functions and code are referenced or modified from public repositories, inc
 | [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | Audio visualization reference |
 | [DevWinUI](https://github.com/ghost1372/DevWinUI) | Provide many out-of-the-box features for building WinUI 3 applications |
 | ... | ... |
+
+See all the dependencies [here](https://github.com/jayfunc/BetterLyrics/network/dependencies).
  
 ### Tutorials/Blogs/etc.
 
