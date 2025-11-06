@@ -141,6 +141,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="CreatePlaylistSuccessfully" xml:space="preserve">
+    <value>Playlist was created successfully</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>預設</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="ImportPlaylistSuccessfully" xml:space="preserve">
+    <value>Playlist was imported successfully</value>
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>設置文件導入失敗，應用程序設置保持不變</value>
@@ -346,8 +352,8 @@
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>歡迎使用 BetterLyrics</value>
   </data>
-  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
-    <value>添加到歌單</value>
+  <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
+    <value>Add to playlist</value>
   </data>
   <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
     <value>列表的結尾</value>
@@ -355,8 +361,8 @@
   <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>下一個項目</value>
   </data>
-  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
-    <value>新增到播放隊列</value>
+  <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
+    <value>Add to play queue</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>所有歌曲</value>
@@ -388,6 +394,9 @@
   <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
     <value>格式</value>
   </data>
+  <data name="MusicGalleryPageFileInfoLyrics.Text" xml:space="preserve">
+    <value>Lyrics</value>
+  </data>
   <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
     <value>路徑</value>
   </data>
@@ -402,6 +411,9 @@
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>未在媒體庫內找到任何歌曲</value>
+  </data>
+  <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+    <value>Import from file</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>建立歌單</value>
@@ -465,6 +477,9 @@
   </data>
   <data name="Pinyin" xml:space="preserve">
     <value>普通話拼音</value>
+  </data>
+  <data name="PlaylistViewFailed" xml:space="preserve">
+    <value>Unable to view tracks since the path is not existed</value>
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>羅馬音</value>
@@ -1329,6 +1344,12 @@
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>歌詞視窗切換器</value>
+  </data>
+  <data name="TracksAddToPlaylistFailed" xml:space="preserve">
+    <value>Unable to add tracks since the path is not existed</value>
+  </data>
+  <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+    <value>Selected tracks have been added to this playlist</value>
   </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>未設定翻譯伺服器，請先在設定中進行配置</value>
