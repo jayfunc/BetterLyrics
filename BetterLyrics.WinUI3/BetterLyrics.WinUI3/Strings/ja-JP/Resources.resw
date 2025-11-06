@@ -141,6 +141,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
+  <data name="CreatePlaylistSuccessfully" xml:space="preserve">
+    <value>Playlist was created successfully</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>デフォルト</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="ImportPlaylistSuccessfully" xml:space="preserve">
+    <value>Playlist was imported successfully</value>
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>設定ファイルのインポートに失敗し、アプリケーション設定は変更されません</value>
@@ -346,8 +352,8 @@
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>BetterLyrics へようこそ</value>
   </data>
-  <data name="MusicGalleryPageAddToCustomList.Content" xml:space="preserve">
-    <value>プレイリストに追加します</value>
+  <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
+    <value>Add to playlist</value>
   </data>
   <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
     <value>リストの終わり</value>
@@ -355,8 +361,8 @@
   <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>次のアイテム</value>
   </data>
-  <data name="MusicGalleryPageAddToPlayingQueue.Content" xml:space="preserve">
-    <value>キューを再生するために追加します</value>
+  <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
+    <value>Add to play queue</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>すべての曲</value>
@@ -388,6 +394,9 @@
   <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
     <value>形式</value>
   </data>
+  <data name="MusicGalleryPageFileInfoLyrics.Text" xml:space="preserve">
+    <value>Lyrics</value>
+  </data>
   <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
     <value>パス</value>
   </data>
@@ -402,6 +411,9 @@
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>メディアライブラリには歌が見つかりませんでした</value>
+  </data>
+  <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+    <value>Import from file</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>プレイリストを作成します</value>
@@ -465,6 +477,9 @@
   </data>
   <data name="Pinyin" xml:space="preserve">
     <value>マンダリンのピンイン</value>
+  </data>
+  <data name="PlaylistViewFailed" xml:space="preserve">
+    <value>Unable to view tracks since the path is not existed</value>
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>ローマン</value>
@@ -1329,6 +1344,12 @@
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>歌詞ウィンドウスイッチャー</value>
+  </data>
+  <data name="TracksAddToPlaylistFailed" xml:space="preserve">
+    <value>Unable to add tracks since the path is not existed</value>
+  </data>
+  <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+    <value>Selected tracks have been added to this playlist</value>
   </data>
   <data name="TranslateServerNotSet" xml:space="preserve">
     <value>翻訳サーバーは設定されていません。最初に設定で構成してください</value>
