@@ -38,14 +38,12 @@ namespace BetterLyrics.WinUI3.Helper
         public static string SaltPlayerForWindowsLogoPath => Path.Combine(AssetsFolder, "SaltPlayerForWindows.png");
         public static string MoeKoeMusicLogoPath => Path.Combine(AssetsFolder, "MoeKoeMusic.png");
         public static string Listen1LogoPath => Path.Combine(AssetsFolder, "Listen1.png");
-
         public static string UnknownPlayerLogoPath => Path.Combine(AssetsFolder, "Question.png");
 
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
 
         public static string LyricsCacheDirectory => Path.Combine(CacheFolder, "lyrics");
-
         public static string LrcLibLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "lrclib");
         public static string NeteaseLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "netease");
         public static string QQLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "qq");
@@ -56,14 +54,14 @@ namespace BetterLyrics.WinUI3.Helper
         public static string AmllTtmlDbLastUpdatedPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-last-updated.txt");
 
         public static string TranslationCacheDirectory => Path.Combine(CacheFolder, "translations");
-
         public static string QQTranslationCacheDirectory => Path.Combine(TranslationCacheDirectory, "qq");
         public static string NeteaseTranslationCacheDirectory => Path.Combine(TranslationCacheDirectory, "netease");
         public static string KugouTranslationCacheDirectory => Path.Combine(TranslationCacheDirectory, "kugou");
 
         public static string AlbumArtCacheDirectory => Path.Combine(CacheFolder, "album-art");
-
         public static string iTunesAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "itunes");
+
+        public static string PlayQueuePath => Path.Combine(CacheFolder, "play-queue.m3u");
 
         public static void EnsureDirectories()
         {

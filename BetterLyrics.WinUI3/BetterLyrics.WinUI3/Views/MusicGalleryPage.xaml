@@ -15,6 +15,7 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:muxm="using:Microsoft.UI.Xaml.Media"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Loaded="Page_Loaded"
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
     <Page.Resources>
@@ -450,7 +451,10 @@
                             </ListView.ContextFlyout>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="atl:Track">
-                                    <Grid Padding="12" ColumnSpacing="12" DoubleTapped="SongListViewItem_DoubleTapped">
+                                    <Grid
+                                        Padding="12"
+                                        ColumnSpacing="12"
+                                        DoubleTapped="SongListViewItem_DoubleTapped">
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
@@ -585,7 +589,7 @@
                     <Grid Margin="0,6,0,0" VerticalAlignment="Top">
                         <TextBlock x:Uid="MusicGalleryPagePlayingQueue" Style="{StaticResource BodyStrongTextBlockStyle}" />
                         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.DisplayedPlayingSongIndex, Mode=OneWay}" />
+                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
                             <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
                             <TextBlock Text="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}" />
                         </StackPanel>
@@ -594,7 +598,7 @@
                         <Button x:Uid="MusicGalleryPageEmptyPlayingQueue" Click="EmptyPlayingQueueButton_Click" />
                         <Button x:Uid="MusicGalleryPageScrollToPlayingItem" Click="ScrollToPlayingItemButton_Click" />
                     </StackPanel>
-                    <controls:Segmented HorizontalAlignment="Stretch" SelectedIndex="{x:Bind ViewModel.PlaybackOrder, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
+                    <controls:Segmented HorizontalAlignment="Stretch" SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
                         <controls:Segmented.Items>
                             <controls:SegmentedItem x:Uid="MusicGalleryPageQueueLoop" />
                             <controls:SegmentedItem x:Uid="MusicGalleryPageSingleLoop" />
@@ -607,7 +611,7 @@
                     x:Name="PlayingQueueListView"
                     Margin="0,136,0,0"
                     ItemsSource="{x:Bind ViewModel.TrackPlayingQueue, Mode=OneWay}"
-                    SelectedIndex="{x:Bind ViewModel.PlayingSongIndex, Mode=TwoWay}">
+                    SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Padding="0,6">

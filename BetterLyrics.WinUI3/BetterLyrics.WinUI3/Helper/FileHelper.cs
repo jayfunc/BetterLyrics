@@ -1,6 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using ATL;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,7 +88,5 @@ namespace BetterLyrics.WinUI3.Helper
             ".wav", ".aiff", ".aif", ".pcm", ".cda", ".dsf", ".dff", ".au", ".snd",
             ".mid", ".midi", ".mod", ".xm", ".it", ".s3m"
         };
-
-        public static string MusicSearchPattern => string.Join("|", MusicExtensions.Select(x => $"*{x}"));
     }
 }

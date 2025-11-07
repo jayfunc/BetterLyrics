@@ -574,6 +574,12 @@
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>자동 조정</value>
   </data>
+  <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>앱이 시작되면 음악 라이브러리 창을 여세요</value>
+  </data>
+  <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>음악 라이브러리 창이 열리면 자동으로 계속 재생됩니다</value>
+  </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>자동 시작</value>
   </data>

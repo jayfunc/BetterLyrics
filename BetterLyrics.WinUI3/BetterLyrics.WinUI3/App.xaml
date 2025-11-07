@@ -68,6 +68,7 @@
             <converter:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />
             <converter:TrackToLyricsConverter x:Key="TrackToLyricsConverter" />
             <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converter:IndexToDisplayConverter x:Key="IndexToDisplayConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

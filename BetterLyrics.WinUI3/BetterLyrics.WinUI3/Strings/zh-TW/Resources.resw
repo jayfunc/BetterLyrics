@@ -574,6 +574,12 @@
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>自動調整</value>
   </data>
+  <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>應用程式啟動時開啟音樂庫視窗</value>
+  </data>
+  <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>打開音樂庫視窗時自動繼續播放</value>
+  </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動啟動</value>
   </data>
