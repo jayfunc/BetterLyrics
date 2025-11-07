@@ -37,6 +37,7 @@ namespace BetterLyrics.WinUI3
     {
 
         private readonly ILogger<App> _logger;
+        private readonly ISettingsService _settingsService;
 
         public static new App Current => (App)Application.Current;
 
@@ -53,6 +54,7 @@ namespace BetterLyrics.WinUI3
             ConfigureServices();
 
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
+            _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
             UnhandledException += App_UnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -74,6 +76,10 @@ namespace BetterLyrics.WinUI3
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             WindowHelper.OpenOrShowWindow<LyricsWindow>();
+            if (_settingsService.AppSettings.MusicGallerySettings.AutoOpen)
+            {
+                WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
+            }
         }
 
         private static void ConfigureServices()

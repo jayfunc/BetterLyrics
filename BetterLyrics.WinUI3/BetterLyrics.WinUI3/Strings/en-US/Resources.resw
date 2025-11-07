@@ -574,6 +574,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>Automatic adjustment</value>
   </data>
+  <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>Open the music library window when the app starts</value>
+  </data>
+  <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>Automatically continue playing when the music library window is opened</value>
+  </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Automatic startup</value>
   </data>
