@@ -64,18 +64,18 @@ namespace BetterLyrics.WinUI3.Views
             await LauncherHelper.SelectAndShowFile(((Track)((HyperlinkButton)sender).DataContext).Path);
         }
 
-        private void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var item = (PlayQueueItem)((FrameworkElement)sender).DataContext;
-            ViewModel.PlayTrack(item);
+            await ViewModel.PlayTrackAsync(item);
             PlayingQueueListView.ScrollIntoView(item);
         }
 
-        private void EmptyPlayingQueueButton_Click(object sender, RoutedEventArgs e)
+        private async void EmptyPlayingQueueButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.TrackPlayingQueue.Clear();
             ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
-            ViewModel.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+            await ViewModel.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
         }
 
         private void ScrollToPlayingItemButton_Click(object sender, RoutedEventArgs e)
@@ -83,7 +83,7 @@ namespace BetterLyrics.WinUI3.Views
             ScrollToPlayingItem();
         }
 
-        private void RemoveFromPlayingQueueButton_Click(object sender, RoutedEventArgs e)
+        private async void RemoveFromPlayingQueueButton_Click(object sender, RoutedEventArgs e)
         {
             bool playNext = false;
             var item = (PlayQueueItem)((FrameworkElement)sender).DataContext;
@@ -104,29 +104,29 @@ namespace BetterLyrics.WinUI3.Views
                     index = ViewModel.TrackPlayingQueue.Count - 1;
                 }
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = index;
-                ViewModel.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+                await ViewModel.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
             }
         }
 
-        private void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private async void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = ViewModel.TrackPlayingQueue.Count == 0;
             ViewModel.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, SongListView.SelectedItems.Cast<Track>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
-                ViewModel.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+                await ViewModel.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
             }
         }
 
-        private void AddSongToQueueEndMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private async void AddSongToQueueEndMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = ViewModel.TrackPlayingQueue.Count == 0;
             ViewModel.TrackPlayingQueue.AddRange(SongListView.SelectedItems.Cast<Track>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
-                ViewModel.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+                await ViewModel.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
             }
         }
 
@@ -261,7 +261,7 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private async void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             var displayedTracks = SongListView.Items.Cast<Track>();
             var track = (Track)((FrameworkElement)sender).DataContext;
@@ -272,7 +272,7 @@ namespace BetterLyrics.WinUI3.Views
 
             ViewModel.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, displayedTracks.Select(x => new PlayQueueItem(x)));
             ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = displayedTracks.ToList().IndexOf(track);
-            ViewModel.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+            await ViewModel.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
