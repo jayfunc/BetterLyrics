@@ -119,7 +119,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _timelineController = _mediaPlayer.TimelineController = new();
             _timelineController.PositionChanged += TimelineController_PositionChanged;
-            
+
             _smtc = _mediaPlayer.SystemMediaTransportControls;
             _smtc.IsPlayEnabled = true;
             _smtc.IsPauseEnabled = true;
@@ -522,6 +522,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                 AddFileToStarredPlaylists(file);
                 DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ImportPlaylistSuccessfully"), file.Path);
             }
+        }
+
+        [RelayCommand]
+        private void SwitchPlaybackOrder()
+        {
+            AppSettings.MusicGallerySettings.PlaybackOrder = AppSettings.MusicGallerySettings.PlaybackOrder.GetNext();
+        }
+
+        [RelayCommand]
+        private async Task StopTrackAsync()
+        {
+            await PlayTrackAtAsync(-1);
         }
     }
 }

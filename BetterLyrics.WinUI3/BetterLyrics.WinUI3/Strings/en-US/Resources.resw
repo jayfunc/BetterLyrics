@@ -177,7 +177,7 @@
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>Music gallery</value>
   </data>
-  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+  <data name="HostWindowSettingsButtonToolTip.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="ImportPlaylistSuccessfully" xml:space="preserve">
@@ -367,7 +367,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>All songs</value>
   </data>
-  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
+  <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Clear play queue</value>
   </data>
   <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
@@ -427,22 +427,28 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>Play queue is empty</value>
   </data>
-  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
+  <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+    <value>Playlists</value>
+  </data>
+  <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>List loop</value>
   </data>
-  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
+  <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
     <value>Random</value>
+  </data>
+  <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+    <value>Remove from playlists</value>
   </data>
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>Remove from play queue</value>
   </data>
-  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
+  <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>Scroll to playing item</value>
   </data>
   <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
     <value>Select all</value>
   </data>
-  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
+  <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>Single loop</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
@@ -465,6 +471,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
     <value>Starred playlists</value>
+  </data>
+  <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Music gallery - BetterLyrics</value>
