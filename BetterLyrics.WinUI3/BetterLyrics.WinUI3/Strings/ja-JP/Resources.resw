@@ -177,8 +177,8 @@
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>ミュージックギャラリー</value>
   </data>
-  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
-    <value>設定</value>
+  <data name="HostWindowSettingsButtonToolTip.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="ImportPlaylistSuccessfully" xml:space="preserve">
     <value>Playlist was imported successfully</value>
@@ -367,8 +367,8 @@
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>すべての曲</value>
   </data>
-  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
-    <value>クリアプレイキュー</value>
+  <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
+    <value>Clear play queue</value>
   </data>
   <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
     <value>アルバム</value>
@@ -427,23 +427,29 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>キューを再生するのは空です</value>
   </data>
-  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
-    <value>ループをリストします</value>
+  <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+    <value>Playlists</value>
   </data>
-  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
-    <value>ランダム</value>
+  <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
+    <value>List loop</value>
+  </data>
+  <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+    <value>Remove from playlists</value>
   </data>
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>プレイリストから取り外します</value>
   </data>
-  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
-    <value>アイテムを再生するための位置</value>
+  <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
+    <value>Scroll to playing item</value>
   </data>
   <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
     <value>すべてを選択します</value>
   </data>
-  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
-    <value>シングルループ</value>
+  <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
+    <value>Single loop</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
     <value>Search for song title, artist, album or folder path</value>
@@ -465,6 +471,9 @@
   </data>
   <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
     <value>Starred playlists</value>
+  </data>
+  <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <value>Stop</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音楽ギャラリー - BetterLyrics</value>
