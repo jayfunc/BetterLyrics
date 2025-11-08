@@ -177,7 +177,7 @@
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>音乐库</value>
   </data>
-  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+  <data name="HostWindowSettingsButtonToolTip.Text" xml:space="preserve">
     <value>设置</value>
   </data>
   <data name="ImportPlaylistSuccessfully" xml:space="preserve">
@@ -353,7 +353,7 @@
     <value>欢迎使用 BetterLyrics</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
-    <value>添加到歌单</value>
+    <value>添加到播放列表</value>
   </data>
   <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
     <value>列表的结尾</value>
@@ -367,7 +367,7 @@
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>所有歌曲</value>
   </data>
-  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
+  <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>清除播放队列</value>
   </data>
   <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
@@ -416,7 +416,7 @@
     <value>从文件导入</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>创建歌单</value>
+    <value>创建播放列表</value>
   </data>
   <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
     <value>播放全部</value>
@@ -427,22 +427,28 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>播放队列是空的</value>
   </data>
-  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
+  <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+    <value>播放列表</value>
+  </data>
+  <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>列表循环</value>
   </data>
-  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
+  <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
     <value>随机</value>
+  </data>
+  <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+    <value>从播放列表中删除</value>
   </data>
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>从播放列表移除</value>
   </data>
-  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
+  <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>定位到播放项</value>
   </data>
   <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
     <value>选择全部</value>
   </data>
-  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
+  <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>单曲循环</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
@@ -465,6 +471,9 @@
   </data>
   <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
     <value>已加星标的歌单</value>
+  </data>
+  <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <value>停止</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音乐库 - BetterLyrics</value>

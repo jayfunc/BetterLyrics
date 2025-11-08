@@ -177,7 +177,7 @@
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>음악 갤러리</value>
   </data>
-  <data name="HostWindowSettingsFlyoutItem.Text" xml:space="preserve">
+  <data name="HostWindowSettingsButtonToolTip.Text" xml:space="preserve">
     <value>설정</value>
   </data>
   <data name="ImportPlaylistSuccessfully" xml:space="preserve">
@@ -353,7 +353,7 @@
     <value>Betterlyrics에 오신 것을 환영합니다</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
-    <value>재생 목록에 추가하십시오</value>
+    <value>재생 목록에 추가</value>
   </data>
   <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
     <value>목록의 끝</value>
@@ -367,7 +367,7 @@
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>모든 노래</value>
   </data>
-  <data name="MusicGalleryPageEmptyPlayingQueue.Content" xml:space="preserve">
+  <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>플레이 대기열을 클리어합니다</value>
   </data>
   <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
@@ -416,7 +416,7 @@
     <value>파일에서 가져오기</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>재생 목록을 만듭니다</value>
+    <value>재생목록을 만드세요</value>
   </data>
   <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
     <value>모두 재생하십시오</value>
@@ -427,22 +427,28 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>플레이 대기열이 비어 있습니다</value>
   </data>
-  <data name="MusicGalleryPageQueueLoop.Content" xml:space="preserve">
+  <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+    <value>재생 목록</value>
+  </data>
+  <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>목록 루프</value>
   </data>
-  <data name="MusicGalleryPageQueueRandom.Content" xml:space="preserve">
+  <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
     <value>무작위의</value>
+  </data>
+  <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+    <value>재생 목록에서 제거</value>
   </data>
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>재생 목록에서 제거하십시오</value>
   </data>
-  <data name="MusicGalleryPageScrollToPlayingItem.Content" xml:space="preserve">
+  <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>아이템을 재생하기위한 포지셔닝</value>
   </data>
   <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
     <value>모두를 선택하십시오</value>
   </data>
-  <data name="MusicGalleryPageSingleLoop.Content" xml:space="preserve">
+  <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>단일 루프</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
@@ -465,6 +471,9 @@
   </data>
   <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
     <value>별표 표시된 재생 목록</value>
+  </data>
+  <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <value>멈추기</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리 - BetterLyrics</value>

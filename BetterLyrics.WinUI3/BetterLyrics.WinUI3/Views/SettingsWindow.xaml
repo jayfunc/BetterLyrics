@@ -23,7 +23,11 @@
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       FontSize=12,
                                       Glyph=&#xE90B;}"
-                Style="{StaticResource TitleBarButtonStyle}" />
+                Style="{StaticResource TitleBarButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <TextBlock x:Uid="SystemTrayLyrics" />
+                </ToolTipService.ToolTip>
+            </Button>
             <Button
                 Click="MusicGalleryButton_Click"
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},

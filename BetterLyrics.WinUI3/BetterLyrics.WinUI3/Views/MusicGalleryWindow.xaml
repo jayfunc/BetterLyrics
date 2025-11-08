@@ -24,14 +24,22 @@
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       FontSize=12,
                                       Glyph=&#xE90B;}"
-                Style="{StaticResource TitleBarButtonStyle}" />
+                Style="{StaticResource TitleBarButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <TextBlock x:Uid="SystemTrayLyrics" />
+                </ToolTipService.ToolTip>
+            </Button>
             <Button
                 x:Name="SettingsWindowButton"
                 Click="SettingsWindowButton_Click"
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       FontSize=12,
                                       Glyph=&#xE713;}"
-                Style="{StaticResource TitleBarButtonStyle}" />
+                Style="{StaticResource TitleBarButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <TextBlock x:Uid="HostWindowSettingsButtonToolTip" />
+                </ToolTipService.ToolTip>
+            </Button>
         </StackPanel>
 
     </Grid>
