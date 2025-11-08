@@ -115,10 +115,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+            _mediaPlayer.CommandManager.IsEnabled = false;
+
             _timelineController = _mediaPlayer.TimelineController = new();
             _timelineController.PositionChanged += TimelineController_PositionChanged;
+            
             _smtc = _mediaPlayer.SystemMediaTransportControls;
-            _mediaPlayer.CommandManager.IsEnabled = false;
             _smtc.IsPlayEnabled = true;
             _smtc.IsPauseEnabled = true;
             _smtc.IsNextEnabled = true;
