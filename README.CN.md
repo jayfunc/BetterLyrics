@@ -116,7 +116,7 @@ BetterLyrics
 
 **无限期**免费试用版和付费版**无任何区别**。
 
-如果喜欢该软件，请考虑 [捐赠](#捐赠) 或在 **Microsoft Store** 购买, 感谢您的支持！ 🥰
+如果喜欢该软件，请考虑 [捐赠](#-捐赠) 或在 **Microsoft Store** 购买, 感谢您的支持！ 🥰
 
 无法从 Microsoft Store 下载？点按 [此处](https://github.com/jayfunc/BetterLyrics/wiki/%5BZH%5D-%E5%85%B6%E4%BB%96%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F) 查看其他下载安装方式。
 
