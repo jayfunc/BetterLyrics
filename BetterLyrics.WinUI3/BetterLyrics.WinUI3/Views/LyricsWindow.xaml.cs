@@ -87,7 +87,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (_liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing)
             {
-                //return;
+                return;
             }
 
             if (args.DidPositionChange || args.DidSizeChange)
