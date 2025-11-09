@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                     if (LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
                         await Task.Delay(300);
-                        WindowHelper.MoveAndResize<LyricsWindow>(GetWindowBoundsWhenWorkArea());
+                        WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
                 case nameof(LyricsWindowStatus.DockHeight):
@@ -55,7 +55,7 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                     {
                         WindowHelper.UpdateWorkArea<LyricsWindow>();
                         await Task.Delay(300);
-                        WindowHelper.MoveAndResize<LyricsWindow>(GetWindowBoundsWhenWorkArea());
+                        WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
                 case nameof(LyricsWindowStatus.IsShownInSwitchers):
@@ -82,14 +82,6 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                 case nameof(LyricsWindowStatus.WindowHeight):
                     WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithHeight(LiveStates.LyricsWindowStatus.WindowHeight));
                     break;
-                case nameof(LyricsWindowStatus.WindowBounds):
-                    LiveStates.LyricsWindowStatus.UpdateMonitorNameAndBounds();
-                    LiveStates.LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
-                    LiveStates.LyricsWindowStatus.WindowX = LiveStates.LyricsWindowStatus.WindowBounds.X;
-                    LiveStates.LyricsWindowStatus.WindowY = LiveStates.LyricsWindowStatus.WindowBounds.Y;
-                    LiveStates.LyricsWindowStatus.WindowWidth = LiveStates.LyricsWindowStatus.WindowBounds.Width;
-                    LiveStates.LyricsWindowStatus.WindowHeight = LiveStates.LyricsWindowStatus.WindowBounds.Height;
-                    break;
                 case nameof(LyricsWindowStatus.TitleBarArea):
                     WindowHelper.SetTitleBarArea<LyricsWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
                     break;
@@ -100,7 +92,7 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                     break;
             }
 
-            LiveStates.IsLyricsWindowStatusRefreshing = true;
+            LiveStates.IsLyricsWindowStatusRefreshing = false;
         }
 
         private void LiveStates_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -142,34 +134,19 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
 
             if (LiveStates.LyricsWindowStatus.IsWorkArea)
             {
-                LiveStates.LyricsWindowStatus.WindowBounds = GetWindowBoundsWhenWorkArea();
+                LiveStates.LyricsWindowStatus.WindowBounds = LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea();
             }
 
             WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds);
+            LiveStates.LyricsWindowStatus.WindowX = LiveStates.LyricsWindowStatus.WindowBounds.X;
+            LiveStates.LyricsWindowStatus.WindowY = LiveStates.LyricsWindowStatus.WindowBounds.Y;
+            LiveStates.LyricsWindowStatus.WindowWidth = LiveStates.LyricsWindowStatus.WindowBounds.Width;
+            LiveStates.LyricsWindowStatus.WindowHeight = LiveStates.LyricsWindowStatus.WindowBounds.Height;
 
             LiveStates.LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
 
             LiveStates.IsLyricsWindowStatusRefreshing = false;
         }
 
-        private Rect GetWindowBoundsWhenWorkArea()
-        {
-            return new Rect(
-                LiveStates.LyricsWindowStatus.MonitorBounds.X,
-                LiveStates.LyricsWindowStatus.DockPlacement switch
-                {
-                    Enums.DockPlacement.Top => LiveStates.LyricsWindowStatus.MonitorBounds.Top,
-                    Enums.DockPlacement.Bottom => LiveStates.LyricsWindowStatus.MonitorBounds.Bottom - LiveStates.LyricsWindowStatus.DockHeight - 1,
-                    _ => LiveStates.LyricsWindowStatus.MonitorBounds.Top,
-                },
-                LiveStates.LyricsWindowStatus.MonitorBounds.Width,
-                LiveStates.LyricsWindowStatus.DockPlacement switch
-                {
-                    Enums.DockPlacement.Top => LiveStates.LyricsWindowStatus.DockHeight,
-                    Enums.DockPlacement.Bottom => LiveStates.LyricsWindowStatus.DockHeight + 1,
-                    _ => LiveStates.LyricsWindowStatus.DockHeight,
-                }
-            );
-        }
     }
 }

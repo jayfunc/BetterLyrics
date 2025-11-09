@@ -73,6 +73,16 @@ namespace BetterLyrics.WinUI3.Models
             newValue.PropertyChanged += OldAlbumArtLayoutSettings_PropertyChanged;
         }
 
+        partial void OnWindowBoundsChanged(Rect value)
+        {
+            UpdateMonitorNameAndBounds();
+            UpdateDemoWindowAndMonitorBounds();
+            WindowX = WindowBounds.X;
+            WindowY = WindowBounds.Y;
+            WindowWidth = WindowBounds.Width;
+            WindowHeight = WindowBounds.Height;
+        }
+
         private void OldLyricsStyleSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             this.OnPropertyChanged(nameof(LyricsStyleSettings));
@@ -135,6 +145,26 @@ namespace BetterLyrics.WinUI3.Models
             );
         }
 
+        public Rect GetWindowBoundsWhenWorkArea()
+        {
+            return new Rect(
+                MonitorBounds.X,
+                DockPlacement switch
+                {
+                    DockPlacement.Top => MonitorBounds.Top,
+                    DockPlacement.Bottom => MonitorBounds.Bottom - DockHeight,
+                    _ => MonitorBounds.Top,
+                } - 1,
+                MonitorBounds.Width,
+                DockPlacement switch
+                {
+                    DockPlacement.Top => DockHeight,
+                    DockPlacement.Bottom => DockHeight,
+                    _ => DockHeight,
+                } + 1
+            );
+        }
+
         public object Clone()
         {
             return new LyricsWindowStatus
@@ -191,7 +221,6 @@ namespace BetterLyrics.WinUI3.Models
                 EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
                 LyricsStyleSettings = new()
                 {
-                    OriginalLyricsFontSize = 20,
                     LyricsAlignmentType = TextAlignmentType.Center,
                 },
                 LyricsBackgroundSettings = new LyricsBackgroundSettings
@@ -203,7 +232,7 @@ namespace BetterLyrics.WinUI3.Models
 
         public static LyricsWindowStatus DockedMode()
         {
-            return new LyricsWindowStatus
+            var status = new LyricsWindowStatus
             {
                 Name = _resourceService.GetLocalizedString("DockedMode"),
                 IsWorkArea = true,
@@ -218,7 +247,6 @@ namespace BetterLyrics.WinUI3.Models
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
-                    OriginalLyricsFontSize = 18,
                 },
                 LyricsBackgroundSettings = new LyricsBackgroundSettings
                 {
@@ -226,6 +254,8 @@ namespace BetterLyrics.WinUI3.Models
                     IsPureColorOverlayEnabled = true,
                 }
             };
+            status.WindowBounds = status.GetWindowBoundsWhenWorkArea();
+            return status;
         }
 
         public static LyricsWindowStatus FullscreenMode(Rect monitorBounds)
@@ -237,12 +267,11 @@ namespace BetterLyrics.WinUI3.Models
                 IsAlwaysOnTop = true,
                 IsBorderless = true,
                 IsShownInSwitchers = false,
-                TitleBarArea = Enums.TitleBarArea.None,
-                LyricsLayoutOrientation = Enums.LyricsLayoutOrientation.Vertical,
+                TitleBarArea = TitleBarArea.None,
+                LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
-                    OriginalLyricsFontSize = 72,
-                    LyricsAlignmentType = Enums.TextAlignmentType.Center,
+                    LyricsAlignmentType = TextAlignmentType.Center,
                 },
                 AlbumArtLayoutSettings = new AlbumArtLayoutSettings
                 {

@@ -70,13 +70,24 @@
                             <Grid>
 
                                 <!--  Volumn: 0  -->
-                                <FontIcon
-                                    x:Name="VolumeLevel0"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    Glyph="&#xE74F;">
+                                <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE74F;">
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
                                     </FontIcon.OpacityTransition>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="Equal"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="NotEqual"
+                                            Value="0">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </FontIcon>
 
                                 <!--  Volumn: 1-32  -->
@@ -87,6 +98,20 @@
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
                                     </FontIcon.OpacityTransition>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="GreaterThanOrEqual"
+                                            Value="1">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="LessThan"
+                                            Value="1">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </FontIcon>
 
                                 <!--  Volumn: 33-65  -->
@@ -97,6 +122,20 @@
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
                                     </FontIcon.OpacityTransition>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="GreaterThanOrEqual"
+                                            Value="33">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="LessThan"
+                                            Value="33">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </FontIcon>
 
                                 <!--  Volumn: 66-100  -->
@@ -107,6 +146,20 @@
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
                                     </FontIcon.OpacityTransition>
+                                    <interactivity:Interaction.Behaviors>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="GreaterThanOrEqual"
+                                            Value="66">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                        </interactivity:DataTriggerBehavior>
+                                        <interactivity:DataTriggerBehavior
+                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                            ComparisonCondition="LessThan"
+                                            Value="66">
+                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                        </interactivity:DataTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </FontIcon>
                             </Grid>
 
@@ -343,65 +396,5 @@
 
         <uc:SystemTray />
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="VolumeState">
-                <VisualState x:Name="Volume0">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                            To="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="VolumeLevel0.Opacity" Value="1" />
-                        <Setter Target="VolumeLevel1.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel2.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel3.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Volume1">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="LessThanOrEqual"
-                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                            To="32" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="VolumeLevel0.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel1.Opacity" Value="1" />
-                        <Setter Target="VolumeLevel2.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel3.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Volume2">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="LessThanOrEqual"
-                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                            To="65" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="VolumeLevel0.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel1.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel2.Opacity" Value="1" />
-                        <Setter Target="VolumeLevel3.Opacity" Value="0" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Volume3">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="LessThanOrEqual"
-                            Value="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                            To="100" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="VolumeLevel0.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel1.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel2.Opacity" Value="0" />
-                        <Setter Target="VolumeLevel3.Opacity" Value="1" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>
