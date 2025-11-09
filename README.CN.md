@@ -205,3 +205,9 @@ BetterLyrics
 本项目作者不主张对这些资源的所有权。
 本项目为非商业用途，不得用于侵犯任何权利。
 用户有责任确保其使用符合适用的法律和许可协议。
+
+## 💭 社交媒体分享
+
+![BetterLyrics](https://socialify.git.ci/jayfunc/BetterLyrics/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Light)
+
+![BetterLyrics](https://opengraph.githubassets.com/<any_hash_number>/jayfunc/BetterLyrics)
