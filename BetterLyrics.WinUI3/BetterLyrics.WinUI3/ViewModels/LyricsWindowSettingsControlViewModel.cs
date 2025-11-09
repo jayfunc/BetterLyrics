@@ -80,7 +80,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void CreateFullLyricsWindowStatus()
         {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.FullscreenMode(LiveStates.LyricsWindowStatus.MonitorBounds));
+            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.FullscreenMode());
         }
 
         [RelayCommand]

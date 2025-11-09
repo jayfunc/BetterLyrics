@@ -18,7 +18,7 @@
             Width="1"
             Height="1"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
+            VerticalAlignment="Bottom" />
 
         <local:LyricsPage />
 

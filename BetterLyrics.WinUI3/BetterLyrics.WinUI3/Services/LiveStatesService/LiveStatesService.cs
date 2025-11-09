@@ -127,11 +127,14 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
 
             WindowHelper.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
             WindowHelper.SetIsAlwaysOnTop<LyricsWindow>(LiveStates.LyricsWindowStatus.IsAlwaysOnTop);
+
             WindowHelper.SetIsClickThrough<LyricsWindow>(LiveStates.LyricsWindowStatus.IsClickThrough);
             WindowHelper.SetIsBorderless<LyricsWindow>(LiveStates.LyricsWindowStatus.IsBorderless);
+
             WindowHelper.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
             WindowHelper.SetTitleBarArea<LyricsWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
 
+            // 下述代码可以删除，但是为了避免给用户造成操作上的疑虑，暂时保留
             if (LiveStates.LyricsWindowStatus.IsWorkArea)
             {
                 LiveStates.LyricsWindowStatus.WindowBounds = LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea();
