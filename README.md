@@ -213,3 +213,9 @@ The author of this project does not claim ownership of such resources.
 
 This project is non-commercial and should not be used to infringe any rights. 
 Users are responsible for ensuring their own use complies with applicable laws and licenses.
+
+## 💭 Share it on social media
+
+![BetterLyrics](https://socialify.git.ci/jayfunc/BetterLyrics/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Light)
+
+![BetterLyrics](https://opengraph.githubassets.com/<any_hash_number>/jayfunc/BetterLyrics)
