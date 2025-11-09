@@ -258,28 +258,21 @@ namespace BetterLyrics.WinUI3.Models
             return status;
         }
 
-        public static LyricsWindowStatus FullscreenMode(Rect monitorBounds)
+        public static LyricsWindowStatus FullscreenMode()
         {
-            return new LyricsWindowStatus
+            var status = new LyricsWindowStatus
             {
                 Name = _resourceService.GetLocalizedString("FullscreenMode"),
-                WindowBounds = monitorBounds,
-                IsAlwaysOnTop = true,
                 IsBorderless = true,
-                IsShownInSwitchers = false,
                 TitleBarArea = TitleBarArea.None,
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
                 },
-                AlbumArtLayoutSettings = new AlbumArtLayoutSettings
-                {
-                    AutoAlbumArtSize = false,
-                    AlbumArtSize = 128,
-                    SongInfoFontSize = 36,
-                }
             };
+            status.WindowBounds = status.MonitorBounds;
+            return status;
         }
 
         public static LyricsWindowStatus StandardMode()
