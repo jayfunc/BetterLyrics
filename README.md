@@ -95,7 +95,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 - 🧠 **Smart Behaviors**
   - Auto hide when music paused
 
-## Screenshots
+## 🖼️ Screenshots
 
 ![](Screenshots/fs2.png)
 ![](Screenshots/std.png)
@@ -110,11 +110,11 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 ![](Screenshots/PixPin_2025-10-24_18-13-44.gif)
 ![](Screenshots/PixPin_2025-10-24_18-17-17.gif)
 
-## Demonstration
+## 📹 Demonstration
 
 Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bilibili.com/video/BV1QRstz1EGt/).
 
-## Try it now
+## 🧪 Try it now
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200"/>
@@ -122,13 +122,32 @@ Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bi
 
 **Unlimited** free trail or purchase (there is **no difference** between free and paid version).
 
-☕ If you find it useful, please consider [donating](#donations) or purchasing 🧧 it in **Microsoft Store**, I'll appreciate it! 🥰
+If you find it useful, please consider [donating](#donations) or purchasing it in **Microsoft Store**, I'll appreciate it! 🥰
 
 Having trouble downloading and installing from the MS Store? See the alternative way to install it [here](https://github.com/jayfunc/BetterLyrics/wiki/%5BEN%5D-Alternative-way-to-download-and-install). 
 
-## Build
+## 🏗️ Build
 
 Before you build, make sure that you have already replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`.
+
+## 🤑 Donations
+
+If you like this project, please consider supporting it by donating. Your support will help keep the project alive and encourage further development.
+
+You can donate via:
+- [PayPal](https://paypal.me/zhefangpay)
+- [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
+- <details><summary>支付宝</summary>
+    
+  ![](Donate/Alipay.jpg)
+  
+  </detais>
+
+- <details><summary>微信</summary>
+    
+  ![](Donate/WeChatReward.png)
+  
+  </details>
 
 ## 💖 Many thanks to
 
@@ -175,34 +194,15 @@ Cannot find your language? Or have better translations? Don't worry! Start trans
 
 Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 to accept the invitation and become a valuable translator now!
 
-## Star history
+## ⭐ Star history
 
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
   <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date" width="100%" >
 </div>
 
-## Any issues and PRs are welcome
+## 🤗 Any issues and PRs are welcome
 
 If you find a bug, please file it in issues, or if you have any ideas, feel free to share them here.
-
-## Donations
-
-If you like this project, please consider supporting it by donating. Your support will help keep the project alive and encourage further development.
-
-You can donate via:
-- [PayPal](https://paypal.me/zhefangpay)
-- [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
-- <details><summary>支付宝</summary>
-    
-  ![](Donate/Alipay.jpg)
-  
-  </detais>
-
-- <details><summary>微信</summary>
-    
-  ![](Donate/WeChatReward.png)
-  
-  </details>
 
 ## ⚠️ Disclaimer
 
