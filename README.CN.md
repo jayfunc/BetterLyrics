@@ -89,7 +89,7 @@ BetterLyrics
 - 🧠 **智能化行为**
   - 根据歌曲播放状态自动显隐歌词窗口
 
-## 屏幕截图
+## 🖼️ 屏幕截图
 
 ![](Screenshots/fs2.png)
 ![](Screenshots/std.png)
@@ -104,11 +104,11 @@ BetterLyrics
 ![](Screenshots/PixPin_2025-10-24_18-13-44.gif)
 ![](Screenshots/PixPin_2025-10-24_18-17-17.gif)
 
-## 演示
+## 📹 演示
 
 在 [哔哩哔哩](https://www.bilibili.com/video/BV1QRstz1EGt/) 上观看于 2025 年 10 月 21 日上传的演示视频。
 
-## 即刻体验
+## 🧪 即刻体验
 
 <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
 	<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
@@ -116,13 +116,32 @@ BetterLyrics
 
 **无限期**免费试用版和付费版**无任何区别**。
 
-☕ 如果喜欢该软件，请考虑 [捐赠](#捐赠) 或在 **Microsoft Store** 🧧 购买, 感谢您的支持！ 🥰
+如果喜欢该软件，请考虑 [捐赠](#捐赠) 或在 **Microsoft Store** 购买, 感谢您的支持！ 🥰
 
 无法从 Microsoft Store 下载？点按 [此处](https://github.com/jayfunc/BetterLyrics/wiki/%5BZH%5D-%E5%85%B6%E4%BB%96%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F) 查看其他下载安装方式。
 
-## 构建
+## 🏗️ 构建
 
 在构建之前确保替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`。
+
+## 🤑 捐赠
+
+如果你喜欢本应用，请考虑捐赠支持开发者。这将有助于本应用的长远发展。
+
+通过以下途径捐赠：
+- [PayPal](https://paypal.me/zhefangpay)
+- [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
+- <details><summary>支付宝</summary>
+    
+  ![](Donate/Alipay.jpg)
+  
+  </detais>
+
+- <details><summary>微信</summary>
+    
+  ![](Donate/WeChatReward.png)
+  
+  </details>
 
 ## 💖 感谢
 
@@ -169,34 +188,15 @@ BetterLyrics
 
 现在访问 https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 即刻为本应用提供翻译，成为贡献者！
 
-## 星标记录
+## ⭐ 星标记录
 
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
   <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date" width="100%" >
 </div>
 
-## 欢迎反馈问题、提交代码
+## 🤗 欢迎反馈问题、提交代码
 
 如果发现 Bug 请在 Issues 内提出，同时也欢迎任何想法、建议。
-
-## 捐赠
-
-如果你喜欢本应用，请考虑捐赠支持开发者。这将有助于本应用的长远发展。
-
-通过以下途径捐赠：
-- [PayPal](https://paypal.me/zhefangpay)
-- [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
-- <details><summary>支付宝</summary>
-    
-  ![](Donate/Alipay.jpg)
-  
-  </detais>
-
-- <details><summary>微信</summary>
-    
-  ![](Donate/WeChatReward.png)
-  
-  </details>
 
 ## ⚠️ 免责声明
 
