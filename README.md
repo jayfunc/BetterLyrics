@@ -122,7 +122,7 @@ Watch our demo video (uploaded on 21 Oct 2025) on Bilibili [here](https://www.bi
 
 **Unlimited** free trail or purchase (there is **no difference** between free and paid version).
 
-If you find it useful, please consider [donating](#donations) or purchasing it in **Microsoft Store**, I'll appreciate it! 🥰
+If you find it useful, please consider [donating](#-donations) or purchasing it in **Microsoft Store**, I'll appreciate it! 🥰
 
 Having trouble downloading and installing from the MS Store? See the alternative way to install it [here](https://github.com/jayfunc/BetterLyrics/wiki/%5BEN%5D-Alternative-way-to-download-and-install). 
 
