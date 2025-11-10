@@ -658,8 +658,8 @@
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>配置名稱</value>
   </data>
-  <data name="SettingsPageCreateFromCurrent.Content" xml:space="preserve">
-    <value>從目前的歌詞視窗狀態建立</value>
+  <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
+    <value>複製</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>從範本建立</value>

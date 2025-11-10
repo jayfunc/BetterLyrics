@@ -189,11 +189,6 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        public void RefreshLyricsWindowStatus()
-        {
-            _liveStatesService.RefreshLyricsWindowStatus();
-        }
-
         public void Receive(PropertyChangedMessage<List<string>> message)
         {
             if (message.Sender is GeneralSettings)

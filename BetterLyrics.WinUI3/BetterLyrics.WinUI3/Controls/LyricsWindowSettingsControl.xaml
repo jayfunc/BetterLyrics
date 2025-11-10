@@ -47,18 +47,6 @@
                                 </Button.Flyout>
                             </Button>
 
-                            <!--  Copy from current  -->
-                            <Button
-                                Command="{x:Bind ViewModel.CopyLyricsWindowStatusCommand}"
-                                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                      FontSize=16,
-                                                      Glyph=&#xE8C8;}"
-                                Style="{StaticResource GhostButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip x:Uid="SettingsPageCreateFromCurrent" />
-                                </ToolTipService.ToolTip>
-                            </Button>
-
                             <!--  Import  -->
                             <Button
                                 Click="ImportButton_Click"
@@ -106,6 +94,7 @@
                                                         x:Uid="LyricsWindowSettingsControlSetDefault"
                                                         Click="SetDefaultMenuFlyoutItem_Click"
                                                         IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                                    <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem
                                                         x:Uid="SettingsPageDelete"

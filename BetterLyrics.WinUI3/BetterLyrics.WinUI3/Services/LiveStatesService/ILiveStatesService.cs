@@ -10,6 +10,6 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
     public interface ILiveStatesService
     {
         LiveStates LiveStates { get; set; }
-        void RefreshLyricsWindowStatus();
+        void InitLyricsWindowStatus();
     }
 }
