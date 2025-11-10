@@ -24,6 +24,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using WinRT.Interop;
 using static Vanara.PInvoke.ComCtl32;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -74,10 +75,19 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
                 {
-                    var file = await PickerHelper.PickSaveFileAsync<SettingsWindow>(new Dictionary<string, IList<string>>()
+                    IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
                     {
                         { "JSON", new List<string>() { ".json" } }
-                    });
+                    };
+                    StorageFile? file;
+                    if (this.Parent is FlyoutPresenter)
+                    {
+                        file = await PickerHelper.PickSaveFileAsync<LyricsWindow>(fileTypeChoices);
+                    }
+                    else
+                    {
+                        file = await PickerHelper.PickSaveFileAsync<SettingsWindow>(fileTypeChoices);
+                    }
                     if (file != null)
                     {
                         var clonedData = (LyricsWindowStatus)data.Clone();
@@ -112,5 +122,28 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
+        private async void ImportButton_Click(object sender, RoutedEventArgs e)
+        {
+            string[] fileTypeFilter = [".json"];
+            StorageFile? file;
+            if (this.Parent is FlyoutPresenter)
+            {
+                file = await PickerHelper.PickSingleFileAsync<LyricsWindow>(fileTypeFilter);
+            }
+            else
+            {
+                file = await PickerHelper.PickSingleFileAsync<SettingsWindow>(fileTypeFilter);
+            }
+            if (file != null)
+            {
+                var json = File.ReadAllText(file.Path);
+                var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LyricsWindowStatus);
+                if (data != null)
+                {
+                    ViewModel.AppSettings.WindowBoundsRecords.Add(data);
+                    DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ImportSettingsSuccess"));
+                }
+            }
+        }
     }
 }

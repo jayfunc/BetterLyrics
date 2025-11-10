@@ -253,9 +253,8 @@
                                 <dev:SettingsCard x:Uid="SettingsPageLibreTranslateServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=OneWay}">
                                     <StackPanel Orientation="Horizontal" Spacing="12">
                                         <TextBox
-                                            x:Name="LibreTranslateServerTextBox"
+                                            x:Uid="LibreTranslateServerTextBox"
                                             IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                            PlaceholderText="http://localhost:5000"
                                             Text="{x:Bind ViewModel.AppSettings.TranslationSettings.LibreTranslateServer, Mode=TwoWay}" />
                                         <Button
                                             x:Uid="SettingsPageServerTestButton"

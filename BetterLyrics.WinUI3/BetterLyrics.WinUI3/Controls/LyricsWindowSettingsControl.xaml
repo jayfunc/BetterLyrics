@@ -61,7 +61,7 @@
 
                             <!--  Import  -->
                             <Button
-                                Command="{x:Bind ViewModel.ImportLyricsWindowStatusCommand}"
+                                Click="ImportButton_Click"
                                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                       FontSize=16,
                                                       Glyph=&#xE74B;}"
