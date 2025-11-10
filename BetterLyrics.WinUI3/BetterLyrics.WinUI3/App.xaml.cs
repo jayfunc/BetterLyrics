@@ -120,6 +120,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<LyricsPageViewModel>()
                     .AddSingleton<MusicGalleryViewModel>()
                     .AddSingleton<LyricsRendererViewModel>()
+                    .AddSingleton<AboutControlViewModel>()
                     .BuildServiceProvider()
             );
         }

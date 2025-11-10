@@ -36,9 +36,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
-            if (message.Sender is SettingsPageViewModel)
+            if (message.Sender is AboutControlViewModel)
             {
-                if (message.PropertyName == nameof(SettingsPageViewModel.IsDebugOverlayEnabled))
+                if (message.PropertyName == nameof(AboutControlViewModel.IsDebugOverlayEnabled))
                 {
                     _isDebugOverlayEnabled = message.NewValue;
                     _isDebugOverlayEnabledChanged = true;
