@@ -1,7 +1,9 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -21,6 +23,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using static Vanara.PInvoke.ComCtl32;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -34,6 +37,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
         public LyricsWindowSettingsControl()
         {
@@ -45,8 +49,7 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (sender is MenuFlyoutItem menuFlyoutItem)
             {
-                var data = menuFlyoutItem.DataContext as LyricsWindowStatus;
-                if (data != null)
+                if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
                 {
                     ViewModel.AppSettings.WindowBoundsRecords.Remove(data);
                 }
@@ -57,11 +60,32 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (sender is MenuFlyoutItem menuFlyoutItem)
             {
-                var data = menuFlyoutItem.DataContext as LyricsWindowStatus;
-                if (data != null)
+                if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
                 {
                     ViewModel.AppSettings.WindowBoundsRecords.ForEach(x => x.IsDefault = false);
                     data.IsDefault = true;
+                }
+            }
+        }
+
+        private async void ShareMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem menuFlyoutItem)
+            {
+                if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
+                {
+                    var file = await PickerHelper.PickSaveFileAsync<SettingsWindow>(new Dictionary<string, IList<string>>()
+                    {
+                        { "JSON", new List<string>() { ".json" } }
+                    });
+                    if (file != null)
+                    {
+                        var clonedData = (LyricsWindowStatus)data.Clone();
+                        clonedData.IsDefault = false;
+                        var json = System.Text.Json.JsonSerializer.Serialize(clonedData, SourceGenerationContext.Default.LyricsWindowStatus);
+                        File.WriteAllText(file.Path, json);
+                        DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ExportSettingsSuccess"));
+                    }
                 }
             }
         }
@@ -87,5 +111,6 @@ namespace BetterLyrics.WinUI3.Controls
                 }
             }
         }
+
     }
 }

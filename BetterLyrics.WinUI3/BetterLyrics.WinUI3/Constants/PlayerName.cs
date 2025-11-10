@@ -9,6 +9,7 @@ namespace BetterLyrics.WinUI3.Constants
     public class PlayerName
     {
         public const string LXMusic = "LX Music";
+        public const string LXMusicPortable = "LX Music (Portable)";
         public const string MediaPlayerWindows11 = "Media Player";
         public const string AIMP = "AIMP";
         public const string Foobar2000 = "foobar2000";

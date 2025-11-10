@@ -326,8 +326,8 @@
                         <dev:SettingsCard x:Uid="SettingsPageServerAddress">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <TextBox
+                                    x:Uid="SettingsPageLXMusicServerInput"
                                     IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                    PlaceholderText="http://127.0.0.1:23330"
                                     Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}" />
                                 <Button
                                     x:Uid="SettingsPageServerTestButton"

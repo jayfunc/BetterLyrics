@@ -112,6 +112,8 @@ namespace BetterLyrics.WinUI3.Helper
                     lyricsWindow.ViewModel.InitShortcuts();
                     lyricsWindow.ViewModel.InitFgWindowWatcher();
                     lyricsWindow.ViewModel.RefreshLyricsWindowStatus();
+
+                    _mediaSessionsService.InitPlaybackShortcuts();
                 }
             }
             else

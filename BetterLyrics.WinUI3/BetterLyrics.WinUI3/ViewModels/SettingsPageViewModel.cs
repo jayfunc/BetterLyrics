@@ -1,33 +1,16 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services;
-using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.WinUI;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.Services.Store;
-using Windows.Storage;
-using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -84,16 +67,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task ImportSettingsAsync()
         {
-            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
-            if (window == null) return;
-
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.FileTypeFilter.Add(".json");
-
-            var hwnd = WindowNative.GetWindowHandle(window);
-            InitializeWithWindow.Initialize(picker, hwnd);
-
-            var file = await picker.PickSingleFileAsync();
+            var file = await PickerHelper.PickSingleFileAsync<SettingsWindow>([".json"]);
 
             if (file != null)
             {
@@ -112,16 +86,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task ExportSettingsAsync()
         {
-            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
-            if (window == null) return;
-
-            var picker = new Windows.Storage.Pickers.FolderPicker();
-            picker.FileTypeFilter.Add("*");
-
-            var hwnd = WindowNative.GetWindowHandle(window);
-            InitializeWithWindow.Initialize(picker, hwnd);
-
-            var folder = await picker.PickSingleFolderAsync();
+            var folder = await PickerHelper.PickSingleFolderAsync<SettingsWindow>();
 
             if (folder != null)
             {

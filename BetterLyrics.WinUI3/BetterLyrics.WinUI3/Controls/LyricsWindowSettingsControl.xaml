@@ -3,6 +3,7 @@
     x:Class="BetterLyrics.WinUI3.Controls.LyricsWindowSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:constants="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
@@ -28,18 +29,52 @@
                             RelativePanel.AlignLeftWithPanel="True"
                             Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                        <Button x:Uid="SettingsPageCreateFromCurrent" Command="{x:Bind ViewModel.CopyLyricsWindowStatusCommand}" />
-                        <Button x:Uid="SettingsPageCreateFromTemplates">
-                            <Button.Flyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem x:Uid="SettingsPageStandardMode" Command="{x:Bind ViewModel.CreateStandardLyricsWindowStatusCommand}" />
-                                    <MenuFlyoutItem x:Uid="SettingsPageDesktopMode" Command="{x:Bind ViewModel.CreateTransparentLyricsWindowStatusCommand}" />
-                                    <MenuFlyoutItem x:Uid="SettingsPageDockedMode" Command="{x:Bind ViewModel.CreateDockedLyricsWindowStatusCommand}" />
-                                    <MenuFlyoutItem x:Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
-                                    <MenuFlyoutItem x:Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
-                                </MenuFlyout>
-                            </Button.Flyout>
-                        </Button>
+                        <StackPanel Orientation="Horizontal" Spacing="3">
+
+                            <!--  Create from templates  -->
+                            <Button Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource IconFontFamily}, Glyph=&#xE710;}" Style="{StaticResource GhostButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="SettingsPageCreateFromTemplates" />
+                                </ToolTipService.ToolTip>
+                                <Button.Flyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem x:Uid="SettingsPageStandardMode" Command="{x:Bind ViewModel.CreateStandardLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem x:Uid="SettingsPageDesktopMode" Command="{x:Bind ViewModel.CreateTransparentLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem x:Uid="SettingsPageDockedMode" Command="{x:Bind ViewModel.CreateDockedLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem x:Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem x:Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+
+                            <!--  Copy from current  -->
+                            <Button
+                                Command="{x:Bind ViewModel.CopyLyricsWindowStatusCommand}"
+                                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                      FontSize=16,
+                                                      Glyph=&#xE8C8;}"
+                                Style="{StaticResource GhostButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="SettingsPageCreateFromCurrent" />
+                                </ToolTipService.ToolTip>
+                            </Button>
+
+                            <!--  Import  -->
+                            <Button
+                                Command="{x:Bind ViewModel.ImportLyricsWindowStatusCommand}"
+                                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                      FontSize=16,
+                                                      Glyph=&#xE74B;}"
+                                Style="{StaticResource GhostButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="SettingsPageImport" />
+                                </ToolTipService.ToolTip>
+                            </Button>
+
+                            <!--  Sharing hub  -->
+                            <HyperlinkButton x:Uid="SettingsPageShareHub" NavigateUri="{x:Bind constants:Link.ShareHubUrl}" />
+
+                        </StackPanel>
 
                         <StackPanel
                             Padding="24,0"
@@ -71,6 +106,7 @@
                                                         x:Uid="LyricsWindowSettingsControlSetDefault"
                                                         Click="SetDefaultMenuFlyoutItem_Click"
                                                         IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                                    <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem
                                                         x:Uid="SettingsPageDelete"
                                                         Click="DeleteMenuFlyoutItem_Click"

@@ -115,7 +115,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             UpdateLyrics();
         }
 
-        private void InitPlaybackShortcuts()
+        public void InitPlaybackShortcuts()
         {
             UpdatePlayOrPauseSongShortcut();
             UpdatePreviousSongShortcut();
@@ -306,7 +306,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
 
-                    if (sessionId == Constants.PlayerID.LXMusic)
+                    if (PlayerIdMatcher.IsLXMusic(sessionId))
                     {
                         StopSSE();
                     }
@@ -349,7 +349,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
 
-                    if (sessionId == Constants.PlayerID.LXMusic)
+                    if (PlayerIdMatcher.IsLXMusic(sessionId))
                     {
                         StartSSE();
                     }
@@ -358,7 +358,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         StopSSE();
                     }
 
-                    if (sessionId == Constants.PlayerID.LXMusic && _lxMusicAlbumArtBytes != null)
+                    if (PlayerIdMatcher.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
                     {
                         _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
                     }

@@ -186,6 +186,9 @@
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>設定ファイルのインポートに失敗し、アプリケーション設定は変更されません</value>
   </data>
+  <data name="ImportSettingsSuccess" xml:space="preserve">
+    <value>インポート成功</value>
+  </data>
   <data name="Jyutping" xml:space="preserve">
     <value>広東語のピンイン</value>
   </data>
@@ -317,6 +320,9 @@
   </data>
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>既定のブラウザーに設定する</value>
+  </data>
+  <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
+    <value>エクスポート</value>
   </data>
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>歌詞ウィンドウスイッチャー</value>
@@ -805,6 +811,9 @@
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Windowsを自動的に非表示/表示します</value>
   </data>
+  <data name="SettingsPageImport.Content" xml:space="preserve">
+    <value>インポート</value>
+  </data>
   <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
     <value>設定をインポートします</value>
   </data>
@@ -879,6 +888,9 @@
   </data>
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX Music Server</value>
+  </data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
+    <value>例）http://127.0.0.1: 23330</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>アライメント</value>
@@ -1206,6 +1218,9 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>設定マネージャー</value>
+  </data>
+  <data name="SettingsPageShareHub.Content" xml:space="preserve">
+    <value>オンラインリソース共有ハブを閲覧しましょう</value>
   </data>
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>このホットキーは正常に登録されていません</value>

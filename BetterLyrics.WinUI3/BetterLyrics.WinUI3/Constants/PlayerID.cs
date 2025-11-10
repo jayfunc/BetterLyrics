@@ -10,6 +10,7 @@ namespace BetterLyrics.WinUI3.Constants
     public static class PlayerID
     {
         public const string LXMusic = "cn.toside.music.desktop";
+        public const string LXMusicPortable = "lx-music-desktop.exe";
         public const string MediaPlayerWindows11 = "Microsoft.ZuneMusic_8wekyb3d8bbwe!Microsoft.ZuneMusic";
         public const string AIMP = "AIMP.exe";
         public const string Foobar2000 = "foobar2000.exe";

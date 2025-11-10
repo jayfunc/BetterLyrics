@@ -20,17 +20,10 @@ namespace BetterLyrics.WinUI3.Helper
             var vault = new PasswordVault();
 
             // 删除旧值（避免重复存储）
-            try
+            var oldCredential = vault.FindAllByResource(resource).Where(x => x.UserName == key).FirstOrDefault();
+            if (oldCredential != null)
             {
-                var oldCredential = vault.Retrieve(resource, key);
-                if (oldCredential != null)
-                {
-                    vault.Remove(oldCredential);
-                }
-            }
-            catch
-            {
-                // 没有旧值就忽略
+                vault.Remove(oldCredential);
             }
 
             vault.Add(new PasswordCredential(resource, key, value));
@@ -45,13 +38,13 @@ namespace BetterLyrics.WinUI3.Helper
         public static string? Get(string resource, string key)
         {
             var vault = new PasswordVault();
-            try
+            var credential = vault.FindAllByResource(resource).Where(x => x.UserName == key).FirstOrDefault();
+            if (credential != null)
             {
-                var credential = vault.Retrieve(resource, key);
                 credential.RetrievePassword();
                 return credential.Password;
             }
-            catch
+            else
             {
                 return null;
             }
@@ -63,14 +56,10 @@ namespace BetterLyrics.WinUI3.Helper
         public static void Delete(string resource, string key)
         {
             var vault = new PasswordVault();
-            try
+            var credential = vault.FindAllByResource(resource).Where(x => x.UserName == key).FirstOrDefault();
+            if (credential != null)
             {
-                var credential = vault.Retrieve(resource, key);
                 vault.Remove(credential);
-            }
-            catch
-            {
-                // 不存在就忽略
             }
         }
     }

@@ -30,6 +30,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         void UpdateLyrics();
         void UpdateTranslations();
 
+        void InitPlaybackShortcuts();
+
         bool IsPlaying { get; }
         SongInfo? SongInfo { get; }
         TimeSpan Position { get; }

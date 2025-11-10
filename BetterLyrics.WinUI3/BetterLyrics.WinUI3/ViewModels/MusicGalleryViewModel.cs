@@ -485,16 +485,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task CreatePlaylistAsync()
         {
-            var window = WindowHelper.GetWindowByWindowType<MusicGalleryWindow>();
-            if (window == null) return;
-
-            var picker = new Windows.Storage.Pickers.FileSavePicker();
-            picker.FileTypeChoices.Add("M3U", new List<string>() { ".m3u" });
-
-            var hwnd = WindowNative.GetWindowHandle(window);
-            InitializeWithWindow.Initialize(picker, hwnd);
-
-            var file = await picker.PickSaveFileAsync();
+            var file = await PickerHelper.PickSaveFileAsync<MusicGalleryWindow>(new Dictionary<string, IList<string>>()
+            {
+                { "M3U", [".m3u"] }
+            });
 
             if (file != null)
             {
@@ -506,16 +500,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task ImportPlaylistAsync()
         {
-            var window = WindowHelper.GetWindowByWindowType<MusicGalleryWindow>();
-            if (window == null) return;
-
-            var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.FileTypeFilter.Add(".m3u");
-
-            var hwnd = WindowNative.GetWindowHandle(window);
-            InitializeWithWindow.Initialize(picker, hwnd);
-
-            var file = await picker.PickSingleFileAsync();
+            var file = await PickerHelper.PickSingleFileAsync<MusicGalleryWindow>([".m3u"]);
 
             if (file != null)
             {

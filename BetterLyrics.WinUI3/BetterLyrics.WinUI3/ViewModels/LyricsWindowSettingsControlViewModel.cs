@@ -1,7 +1,9 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
+using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,6 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +24,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private readonly ILiveStatesService _liveStatesService;
+        private readonly IResourceService _resourceService;
 
         [ObservableProperty]
         public partial LiveStates LiveStates { get; set; }
@@ -34,10 +38,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial ObservableCollection<string> MonitorDeviceNames { get; set; }
 
-        public LyricsWindowSettingsControlViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService)
+        public LyricsWindowSettingsControlViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService, IResourceService resourceService)
         {
             _settingsService = settingsService;
             _liveStatesService = liveStatesService;
+            _resourceService = resourceService;
+
             AppSettings = _settingsService.AppSettings;
             AppSettings.WindowBoundsRecords.CollectionChanged += WindowBoundsRecords_CollectionChanged;
             LiveStates = _liveStatesService.LiveStates;
@@ -95,6 +101,22 @@ namespace BetterLyrics.WinUI3.ViewModels
             var data = (LyricsWindowStatus)LiveStates.LyricsWindowStatus.Clone();
             data.IsDefault = false;
             AppSettings.WindowBoundsRecords.Add(data);
+        }
+
+        [RelayCommand]
+        private async Task ImportLyricsWindowStatusAsync()
+        {
+            var file = await PickerHelper.PickSingleFileAsync<SettingsWindow>([".json"]);
+            if (file != null)
+            {
+                var json = File.ReadAllText(file.Path);
+                var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LyricsWindowStatus);
+                if (data != null)
+                {
+                    AppSettings.WindowBoundsRecords.Add(data);
+                    DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ImportSettingsSuccess"));
+                }
+            }
         }
     }
 }

@@ -186,6 +186,9 @@
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>設置文件導入失敗，應用程序設置保持不變</value>
   </data>
+  <data name="ImportSettingsSuccess" xml:space="preserve">
+    <value>匯入成功</value>
+  </data>
   <data name="Jyutping" xml:space="preserve">
     <value>粵語拼音</value>
   </data>
@@ -317,6 +320,9 @@
   </data>
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>設為預設</value>
+  </data>
+  <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
+    <value>匯出</value>
   </data>
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>歌詞視窗切換器</value>
@@ -805,6 +811,9 @@
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>自動隱藏/顯示窗口</value>
   </data>
+  <data name="SettingsPageImport.Content" xml:space="preserve">
+    <value>匯入</value>
+  </data>
   <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
     <value>導入設置</value>
   </data>
@@ -879,6 +888,9 @@
   </data>
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX 音樂服務器</value>
+  </data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
+    <value>例如 http://127.0.0.1: 23330</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>對齊方式</value>
@@ -1206,6 +1218,9 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>設置管理器</value>
+  </data>
+  <data name="SettingsPageShareHub.Content" xml:space="preserve">
+    <value>瀏覽線上資源分享中心</value>
   </data>
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>該熱鍵未成功註冊</value>
