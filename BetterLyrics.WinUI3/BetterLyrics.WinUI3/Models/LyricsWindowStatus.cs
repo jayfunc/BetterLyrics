@@ -185,6 +185,7 @@ namespace BetterLyrics.WinUI3.Models
                 DemoWindowBounds = this.DemoWindowBounds,
                 MonitorBounds = this.MonitorBounds,
                 DemoMonitorBounds = this.DemoMonitorBounds,
+                DockPlacement = this.DockPlacement,
                 LyricsStyleSettings = (LyricsStyleSettings)this.LyricsStyleSettings.Clone(),
                 LyricsEffectSettings = (LyricsEffectSettings)this.LyricsEffectSettings.Clone(),
                 LyricsBackgroundSettings = (LyricsBackgroundSettings)this.LyricsBackgroundSettings.Clone(),

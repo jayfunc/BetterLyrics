@@ -61,24 +61,42 @@ namespace BetterLyrics.WinUI3.Models.Settings
             return new LyricsEffectSettings(this.LyricsScrollTopDuration, this.LyricsScrollDuration, this.LyricsScrollBottomDuration, this.LyricsScrollEasingType)
             {
                 LyricsBlurAmount = this.LyricsBlurAmount,
+
                 IsLyricsLineFadeEnabled = this.IsLyricsLineFadeEnabled,
+
                 IsLyricsGlowEffectEnabled = this.IsLyricsGlowEffectEnabled,
                 LyricsGlowEffectScope = this.LyricsGlowEffectScope,
                 LyricsGlowEffectAmount = this.LyricsGlowEffectAmount,
+
                 IsLyricsShadowEnabled = this.IsLyricsShadowEnabled,
                 LyricsShadowScope = this.LyricsShadowScope,
                 LyricsShadowAmount = this.LyricsShadowAmount,
+
                 OriginalLyricsHighlightScope = this.OriginalLyricsHighlightScope,
                 PhoneticLyricsHighlightAmount = this.PhoneticLyricsHighlightAmount,
                 OriginalLyricsHighlightAmount = this.OriginalLyricsHighlightAmount,
                 TranslatedLyricsHighlightAmount = this.TranslatedLyricsHighlightAmount,
+
                 IsLyricsFloatAnimationEnabled = this.IsLyricsFloatAnimationEnabled,
                 LyricsFloatAmount = this.LyricsFloatAmount,
+
+                LyricsScrollEasingType = this.LyricsScrollEasingType,
+                LyricsScrollDuration = this.LyricsScrollDuration,
+                LyricsScrollTopDuration = this.LyricsScrollTopDuration,
+                LyricsScrollBottomDuration = this.LyricsScrollBottomDuration,
                 LyricsScrollTopDelay = this.LyricsScrollTopDelay,
                 LyricsScrollBottomDelay = this.LyricsScrollBottomDelay,
+
                 LyricsVerticalEdgeOpacity = this.LyricsVerticalEdgeOpacity,
+
                 IsFanLyricsEnabled = this.IsFanLyricsEnabled,
                 FanLyricsAngle = this.FanLyricsAngle,
+
+                Is3DLyricsEnabled = this.Is3DLyricsEnabled,
+                Lyrics3DXAngle = this.Lyrics3DXAngle,
+                Lyrics3DYAngle = this.Lyrics3DYAngle,
+                Lyrics3DZAngle = this.Lyrics3DZAngle,
+                Lyrics3DDepth = this.Lyrics3DDepth,
             };
         }
     }
