@@ -216,6 +216,9 @@
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate에서 번역 요청 실패, 설정 또는 기본 LibreTranslate 구성을 확인하십시오.</value>
   </data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>e.g. http://localhost:5000</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>가사로드 ...</value>
   </data>
@@ -515,7 +518,7 @@
     <value>이 프로젝트가 마음에 들면 기부하여 지원을 고려하십시오. 귀하의 지원은 프로젝트를 계속 유지하고 추가 개발을 장려하는 데 도움이 될 것입니다.</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>3D 가사</value>
+    <value>[Experimental] Depth effect</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>심도</value>
@@ -1265,7 +1268,7 @@
     <value>오른쪽</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
-    <value>스펙트럼 레이어</value>
+    <value>[Experimental] Spectrum Layer</value>
   </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>모션</value>
