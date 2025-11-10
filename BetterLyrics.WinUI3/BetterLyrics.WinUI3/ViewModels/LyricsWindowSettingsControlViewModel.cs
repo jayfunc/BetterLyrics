@@ -45,24 +45,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             _resourceService = resourceService;
 
             AppSettings = _settingsService.AppSettings;
-            AppSettings.WindowBoundsRecords.CollectionChanged += WindowBoundsRecords_CollectionChanged;
             LiveStates = _liveStatesService.LiveStates;
             MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
-        }
-
-        private void WindowBoundsRecords_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (!AppSettings.WindowBoundsRecords.Any(x => x == LiveStates.LyricsWindowStatus))
-            {
-                LiveStates.LyricsWindowStatus = AppSettings.WindowBoundsRecords.FirstOrDefault();
-            }
         }
 
         [RelayCommand]
         private void RefreshMonitorDeviceNames()
         {
             MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
-            LiveStates.LyricsWindowStatus.MonitorDeviceName = MonitorDeviceNames.FirstOrDefault() ?? "";
+            LiveStates.LyricsWindowStatus?.MonitorDeviceName = MonitorDeviceNames.FirstOrDefault() ?? "";
         }
 
         [RelayCommand]
@@ -93,14 +84,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void CreateNarrowLyricsWindowStatus()
         {
             AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.NarrowMode());
-        }
-
-        [RelayCommand]
-        private void CopyLyricsWindowStatus()
-        {
-            var data = (LyricsWindowStatus)LiveStates.LyricsWindowStatus.Clone();
-            data.IsDefault = false;
-            AppSettings.WindowBoundsRecords.Add(data);
         }
     }
 }

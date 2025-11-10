@@ -52,6 +52,10 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
                 {
+                    if (_liveStatesService.LiveStates.LyricsWindowStatus == data)
+                    {
+                        _liveStatesService.LiveStates.LyricsWindowStatus = ViewModel.AppSettings.WindowBoundsRecords.First();
+                    }
                     ViewModel.AppSettings.WindowBoundsRecords.Remove(data);
                 }
             }
@@ -96,6 +100,19 @@ namespace BetterLyrics.WinUI3.Controls
                         File.WriteAllText(file.Path, json);
                         DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ExportSettingsSuccess"));
                     }
+                }
+            }
+        }
+
+        private void CopyMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem menuFlyoutItem)
+            {
+                if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
+                {
+                    var clonedData = (LyricsWindowStatus)data.Clone();
+                    clonedData.IsDefault = false;
+                    ViewModel.AppSettings.WindowBoundsRecords.Add(clonedData);
                 }
             }
         }

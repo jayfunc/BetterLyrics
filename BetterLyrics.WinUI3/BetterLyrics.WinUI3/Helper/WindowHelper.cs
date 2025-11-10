@@ -113,6 +113,8 @@ namespace BetterLyrics.WinUI3.Helper
 
                 if (typeof(T) == typeof(LyricsWindow))
                 {
+                    _liveStatesService.InitLyricsWindowStatus();
+
                     var hwnd = WindowNative.GetWindowHandle(castedWindow);
                     _defaultWindowStyle.Add(hwnd, castedWindow.GetWindowStyle());
                     _defaultExtendedWindowStyle.Add(hwnd, castedWindow.GetExtendedWindowStyle());
@@ -120,7 +122,6 @@ namespace BetterLyrics.WinUI3.Helper
                     var lyricsWindow = (LyricsWindow)window;
                     lyricsWindow.ViewModel.InitShortcuts();
                     lyricsWindow.ViewModel.InitFgWindowWatcher();
-                    lyricsWindow.ViewModel.RefreshLyricsWindowStatus();
 
                     _mediaSessionsService.InitPlaybackShortcuts();
                 }

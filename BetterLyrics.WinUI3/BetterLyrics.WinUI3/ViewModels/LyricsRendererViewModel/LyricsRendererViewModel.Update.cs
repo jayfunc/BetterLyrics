@@ -244,12 +244,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             case LyricsDisplayType.LyricsOnly:
                                 _lyricsOpacityTransition.StartTransition(1f, jumpTo);
                                 _albumArtOpacityTransition.StartTransition(0f, jumpTo);
-                                _lyricsXTransition.StartTransition(_leftMargin, jumpTo);
+                                _lyricsXTransition.StartTransition(_leftMargin, true);
                                 break;
                             case LyricsDisplayType.SplitView:
                                 _lyricsOpacityTransition.StartTransition(1f, jumpTo);
                                 _albumArtOpacityTransition.StartTransition(1f, jumpTo);
-                                _lyricsXTransition.StartTransition((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 + _leftMargin + _middleMargin, jumpTo);
+                                _lyricsXTransition.StartTransition((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 + _leftMargin + _middleMargin, true);
                                 _albumArtXTransition.StartTransition(_leftMargin + ((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 - _albumArtSize) / 2.0, jumpTo);
                                 _titleXTransition.StartTransition(_albumArtXTransition.TargetValue, jumpTo);
                                 break;
@@ -268,7 +268,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         {
                             _albumArtSize = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.AlbumArtSize;
                         }
-                        _lyricsXTransition.StartTransition(_leftMargin, jumpTo);
+                        _lyricsXTransition.StartTransition(_leftMargin, true);
                         _albumArtXTransition.StartTransition(_leftMargin, jumpTo);
                         _titleXTransition.StartTransition(_leftMargin + _albumArtSize * 1.2, jumpTo);
                         switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
@@ -289,7 +289,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                                 _titleYTransition.StartTransition(_topMargin, jumpTo);
                                 _lyricsOpacityTransition.StartTransition(1f, jumpTo);
                                 _albumArtOpacityTransition.StartTransition(1f, jumpTo);
-                                //_lyricsYTransition.StartTransition(_albumArtSize, jumpTo);
                                 _lyricsYTransition.StartTransition(_topMargin, jumpTo);
                                 break;
                             default:

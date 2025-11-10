@@ -658,8 +658,8 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>Configuration name</value>
   </data>
-  <data name="SettingsPageCreateFromCurrent.Content" xml:space="preserve">
-    <value>Create from the current lyrics window status</value>
+  <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>Create from templates</value>
