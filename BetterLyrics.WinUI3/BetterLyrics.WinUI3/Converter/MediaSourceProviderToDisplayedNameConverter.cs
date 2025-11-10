@@ -24,6 +24,7 @@ namespace BetterLyrics.WinUI3.Converter
                     PlayerID.NetEaseCloudMusic => PlayerName.NetEaseCloudMusic,
                     PlayerID.QQMusic => PlayerName.QQMusic,
                     PlayerID.LXMusic => PlayerName.LXMusic,
+                    PlayerID.LXMusicPortable => PlayerName.LXMusicPortable,
                     PlayerID.MediaPlayerWindows11 => PlayerName.MediaPlayerWindows11,
                     PlayerID.AIMP => PlayerName.AIMP,
                     PlayerID.Foobar2000 => PlayerName.Foobar2000,

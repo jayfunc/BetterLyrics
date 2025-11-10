@@ -19,7 +19,7 @@
 
                     <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageTheme">
+                    <dev:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE790;}">
                         <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind LyricsBackgroundSettings.LyricsBackgroundTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
                             <ComboBoxItem x:Uid="SettingsPageLight" />
@@ -27,7 +27,11 @@
                         </ComboBox>
                     </dev:SettingsCard>
 
-                    <dev:SettingsExpander x:Uid="SettingsPagePureLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPagePureLayer"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xEB42;}"
+                        IsExpanded="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
@@ -43,7 +47,11 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageAlbumArtLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageAlbumArtLayer"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE93C;}"
+                        IsExpanded="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
@@ -84,7 +92,11 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageFluidLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageFluidLayer"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xEDA8;}"
+                        IsExpanded="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
@@ -107,7 +119,11 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageSnowFlakeLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageSnowFlakeLayer"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xEDAD;}"
+                        IsExpanded="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageAmount">
@@ -120,7 +136,7 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageSpectrumLayer">
+                    <dev:SettingsCard x:Uid="SettingsPageSpectrumLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE659;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 

@@ -106,7 +106,7 @@ namespace BetterLyrics.WinUI3.Controls
             }
             else
             {
-                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageShortcutRegFailInfo"));
+                DevWinUI.Growl.Error(_resourceService.GetLocalizedString("SettingsPageShortcutRegFailInfo"));
             }
         }
     }

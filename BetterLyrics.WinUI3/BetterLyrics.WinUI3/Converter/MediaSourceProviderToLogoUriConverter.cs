@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.Converter
                     PlayerID.NetEaseCloudMusic => PathHelper.NetEaseCloudMusicLogoPath,
                     PlayerID.QQMusic => PathHelper.QQMusicLogoPath,
                     PlayerID.LXMusic => PathHelper.LXMusicLogoPath,
+                    PlayerID.LXMusicPortable => PathHelper.LXMusicLogoPath,
                     PlayerID.MediaPlayerWindows11 => PathHelper.MediaPlayerWindows11LogoPath,
                     PlayerID.AIMP => PathHelper.AIMPLogoPath,
                     PlayerID.Foobar2000 => PathHelper.Foobar2000LogoPath,

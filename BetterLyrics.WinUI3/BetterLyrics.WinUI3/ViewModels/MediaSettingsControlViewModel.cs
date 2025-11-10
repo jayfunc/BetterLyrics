@@ -38,16 +38,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task SelectAndAddFolderAsync(UIElement sender)
         {
-            var window = WindowHelper.GetWindowByWindowType<SettingsWindow>();
-            if (window == null) return;
-
-            var picker = new Windows.Storage.Pickers.FolderPicker();
-            picker.FileTypeFilter.Add("*");
-
-            var hwnd = WindowNative.GetWindowHandle(window);
-            InitializeWithWindow.Initialize(picker, hwnd);
-
-            var folder = await picker.PickSingleFolderAsync();
+            var folder = await PickerHelper.PickSingleFolderAsync<SettingsWindow>();
 
             if (folder != null)
             {

@@ -5,21 +5,26 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class PlayerIdMatcher
     {
-        private static readonly List<string> _neteaseFamilyRegex =
+        private static readonly List<string> neteaseFamilyRegex =
         [
             "cloudmusic.exe", //NetEaseCloudMusic
             "^17588BrandonWong\\.LyricEase_", //LyricEase
             "^48848aaaaaaccd\\.HyPlayer_" //HyPlayer
         ];
 
-        public static bool IsNeteaseFamily(string player)
+        public static bool IsNeteaseFamily(string id)
         {
-            foreach (var regex in _neteaseFamilyRegex)
+            foreach (var regex in neteaseFamilyRegex)
             {
-                var isMatch = Regex.IsMatch(player, regex);
+                var isMatch = Regex.IsMatch(id, regex);
                 if (isMatch) return true;
             }
             return false;
+        }
+
+        public static bool IsLXMusic(string? id)
+        {
+            return id == Constants.PlayerID.LXMusic || id == Constants.PlayerID.LXMusicPortable;
         }
     }
 }
