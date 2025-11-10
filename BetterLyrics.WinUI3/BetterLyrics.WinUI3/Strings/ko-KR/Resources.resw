@@ -186,6 +186,9 @@
   <data name="ImportSettingsFailed" xml:space="preserve">
     <value>설정 파일 가져 오기 실패, 응용 프로그램 설정은 변경되지 않았습니다</value>
   </data>
+  <data name="ImportSettingsSuccess" xml:space="preserve">
+    <value>Import successful</value>
+  </data>
   <data name="Jyutping" xml:space="preserve">
     <value>광둥어 병음</value>
   </data>
@@ -317,6 +320,9 @@
   </data>
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>기본 값으로 설정</value>
+  </data>
+  <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
+    <value>Export</value>
   </data>
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>가사 창 전환기</value>
@@ -805,6 +811,9 @@
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Windows를 자동으로 숨기고 표시합니다</value>
   </data>
+  <data name="SettingsPageImport.Content" xml:space="preserve">
+    <value>Import</value>
+  </data>
   <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
     <value>가져 오기 설정</value>
   </data>
@@ -879,6 +888,9 @@
   </data>
   <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
     <value>LX 음악 서버</value>
+  </data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
+    <value>e.g. http://127.0.0.1:23330</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>조정</value>
@@ -1206,6 +1218,9 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>설정 관리자</value>
+  </data>
+  <data name="SettingsPageShareHub.Content" xml:space="preserve">
+    <value>Browse online resources sharing hub</value>
   </data>
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>이 핫키는 성공적으로 등록되지 않았습니다</value>
