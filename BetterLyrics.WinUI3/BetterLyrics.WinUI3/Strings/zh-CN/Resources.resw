@@ -216,6 +216,9 @@
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>向 LibreTranslate 请求翻译失败，请检查设置或本机 LibreTranslate 配置</value>
   </data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>例如 http://localhost:5000</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>加载歌词中...</value>
   </data>
@@ -515,7 +518,7 @@
     <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的生命并鼓励进一步的发展。</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>3D 歌词</value>
+    <value>[实验性] 纵深效果</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>深度</value>
@@ -1265,7 +1268,7 @@
     <value>靠右</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
-    <value>频谱层</value>
+    <value>[实验性] 频谱层</value>
   </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>运动速率</value>

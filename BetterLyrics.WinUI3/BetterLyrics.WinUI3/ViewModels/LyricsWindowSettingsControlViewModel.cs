@@ -102,21 +102,5 @@ namespace BetterLyrics.WinUI3.ViewModels
             data.IsDefault = false;
             AppSettings.WindowBoundsRecords.Add(data);
         }
-
-        [RelayCommand]
-        private async Task ImportLyricsWindowStatusAsync()
-        {
-            var file = await PickerHelper.PickSingleFileAsync<SettingsWindow>([".json"]);
-            if (file != null)
-            {
-                var json = File.ReadAllText(file.Path);
-                var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LyricsWindowStatus);
-                if (data != null)
-                {
-                    AppSettings.WindowBoundsRecords.Add(data);
-                    DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ImportSettingsSuccess"));
-                }
-            }
-        }
     }
 }

@@ -67,6 +67,15 @@ namespace BetterLyrics.WinUI3.Helper
             return default;
         }
 
+        public static IntPtr? GetWindowHandle(object? obj)
+        {
+            if (obj is FrameworkElement frameworkElement)
+            {
+                return frameworkElement.XamlRoot.ContentIslandEnvironment.AppWindowId.GetWindowHandle();
+            }
+            return null;
+        }
+
         public static void OpenOrShowWindow<T>()
         {
             var window = _activeWindows.Find(w => w is T);
