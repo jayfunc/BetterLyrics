@@ -216,6 +216,9 @@
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>リブレットランスレートからの翻訳のリクエストが失敗しました。設定またはネイティブリブレットランレート構成を確認してください</value>
   </data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>e.g. http://localhost:5000</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>歌詞の読み込み...</value>
   </data>
@@ -515,7 +518,7 @@
     <value>このプロジェクトが気に入っている場合は、寄付してサポートすることを検討してください。あなたのサポートは、プロジェクトを生かし続け、さらなる開発を促進するのに役立ちます。</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>3 D 歌詞</value>
+    <value>[Experimental] Depth effect</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>深度</value>
@@ -1265,7 +1268,7 @@
     <value>右</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
-    <value>スペクトラムレイヤー</value>
+    <value>[Experimental] Spectrum Layer</value>
   </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>モーション</value>
