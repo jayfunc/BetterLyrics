@@ -658,8 +658,8 @@
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>환경 설정</value>
   </data>
-  <data name="SettingsPageCreateFromCurrent.Content" xml:space="preserve">
-    <value>현재 가사 창 상태에서 만들기</value>
+  <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
+    <value>Copy</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>템플릿에서 만들기</value>
