@@ -40,12 +40,24 @@ namespace BetterLyrics.WinUI3.Models.Settings
             return new LyricsBackgroundSettings
             {
                 LyricsBackgroundTheme = this.LyricsBackgroundTheme,
+
+                IsPureColorOverlayEnabled = this.IsPureColorOverlayEnabled,
+                PureColorOverlayOpacity = this.PureColorOverlayOpacity,
+
+                IsCoverOverlayEnabled = this.IsCoverOverlayEnabled,
                 CoverOverlayBlurAmount = this.CoverOverlayBlurAmount,
                 CoverOverlayOpacity = this.CoverOverlayOpacity,
-                PureColorOverlayOpacity = this.PureColorOverlayOpacity,
                 CoverOverlaySpeed = this.CoverOverlaySpeed,
                 CoverAcrylicEffectAmount = this.CoverAcrylicEffectAmount,
-                PaletteGeneratorType = this.PaletteGeneratorType
+
+                IsFluidOverlayEnabled = this.IsFluidOverlayEnabled,
+                FluidOverlayOpacity = this.FluidOverlayOpacity,
+                PaletteGeneratorType = this.PaletteGeneratorType,
+
+                IsSpectrumOverlayEnabled = this.IsSpectrumOverlayEnabled,
+
+                IsSnowFlakeOverlayEnabled = this.IsSnowFlakeOverlayEnabled,
+                SnowFlakeOverlayAmount = this.SnowFlakeOverlayAmount,
             };
         }
     }
