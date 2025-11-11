@@ -132,7 +132,7 @@
     "CoverOverlayOpacity": 100,
     "CoverOverlaySpeed": 50,
     "CoverAcrylicEffectAmount": 0,
-    "IsFluidOverlayEnabled": true,
+    "IsFluidOverlayEnabled": false,
     "FluidOverlayOpacity": 100,
     "PaletteGeneratorType": 0,
     "IsSpectrumOverlayEnabled": false,

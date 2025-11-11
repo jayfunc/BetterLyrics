@@ -78,8 +78,6 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
 
         private async void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            LiveStates.IsLyricsWindowStatusRefreshing = true;
-
             switch (e.PropertyName)
             {
                 case nameof(LyricsWindowStatus.IsWorkArea):
@@ -134,8 +132,6 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                 default:
                     break;
             }
-
-            LiveStates.IsLyricsWindowStatusRefreshing = false;
         }
 
         public void Receive(PropertyChangedMessage<LyricsWindowStatus> message)
