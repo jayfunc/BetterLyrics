@@ -118,7 +118,9 @@ BetterLyrics
 
 如果喜欢该软件，请考虑 [捐赠](#-捐赠) 或在 **Microsoft Store** 购买, 感谢您的支持！ 🥰
 
-无法从 Microsoft Store 下载？点按 [此处](https://github.com/jayfunc/BetterLyrics/wiki/%5BZH%5D-%E5%85%B6%E4%BB%96%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F) 查看其他下载安装方式。
+无法从 Microsoft Store 下载？尝试以下方法：
+- [从 Microsoft Store 外部下载](https://www.cnblogs.com/jayfunc/p/19212083)
+- 转至 (最新发布页)[https://github.com/jayfunc/BetterLyrics/releases/latest] 并从 `Assets`（资产）列表下载 `.zip` 文件。(安装方法参考 [此文档](https://www.cnblogs.com/jayfunc/p/19212078)。)
 
 ## 🏗️ 构建
 
