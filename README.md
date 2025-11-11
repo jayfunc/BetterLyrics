@@ -126,7 +126,7 @@ If you find it useful, please consider [donating](#-donations) or purchasing it 
 
 Having trouble downloading and installing from the MS Store? Try the following options:
 - [Download from outside Microsoft Store](https://jayfunc.blog/blog/download-from-outside-ms-store)
-- Go to (latest release)[https://github.com/jayfunc/BetterLyrics/releases/latest] and download `.zip` file from `Assets`. (See [this doc](https://jayfunc.blog/blog/how-to-install-zip) for how to install it.)
+- Go to [latest release](https://github.com/jayfunc/BetterLyrics/releases/latest) and download `.zip` file from `Assets`. (See [this doc](https://jayfunc.blog/blog/how-to-install-zip) for how to install it.)
 
 ## 🏗️ Build
 

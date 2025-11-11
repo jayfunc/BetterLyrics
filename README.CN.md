@@ -120,7 +120,7 @@ BetterLyrics
 
 无法从 Microsoft Store 下载？尝试以下方法：
 - [从 Microsoft Store 外部下载](https://www.cnblogs.com/jayfunc/p/19212083)
-- 转至 (最新发布页)[https://github.com/jayfunc/BetterLyrics/releases/latest] 并从 `Assets`（资产）列表下载 `.zip` 文件。(安装方法参考 [此文档](https://www.cnblogs.com/jayfunc/p/19212078)。)
+- 转至 [最新发布页](https://github.com/jayfunc/BetterLyrics/releases/latest) 并从 `Assets`（资产）列表下载 `.zip` 文件。(安装方法参考 [此文档](https://www.cnblogs.com/jayfunc/p/19212078)。)
 
 ## 🏗️ 构建
 
