@@ -4,7 +4,7 @@
   "MonitorDeviceName": "\\\\.\\DISPLAY1",
   "IsWorkArea": false,
   "IsBorderless": true,
-  "IsAlwaysOnTop": false,
+  "IsAlwaysOnTop": true,
   "IsAlwaysOnTopPolling": false,
   "IsShownInSwitchers": true,
   "IsClickThrough": false,
