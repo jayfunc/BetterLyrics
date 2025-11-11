@@ -48,6 +48,10 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             LiveStates.LyricsWindowStatus.UpdateMonitorBounds();
 
             WindowHelper.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
+            if (LiveStates.LyricsWindowStatus.IsWorkArea)
+            {
+                WindowHelper.UpdateWorkArea<LyricsWindow>();
+            }
             await Task.Delay(300);
 
             WindowHelper.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
