@@ -197,7 +197,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             return _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id)?.IsEnabled ?? true;
         }
 
-        private bool IsMediaSourceTimelineSyncEnabled(string id)
+        private bool IsMediaSourceTimelineSyncEnabled(string? id)
         {
             return _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id)?.IsTimelineSyncEnabled ?? true;
         }
@@ -519,7 +519,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
-                if (_cachedSongInfo?.PlayerId == Constants.PlayerID.LXMusic)
+                if (PlayerIdMatcher.IsLXMusic(_cachedSongInfo?.PlayerId))
                 {
                     var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
                     if (data.ValueKind == JsonValueKind.Number)
@@ -533,7 +533,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             _lxMusicDurationSeconds = data.GetDouble();
                         }
 
-                        if (IsMediaSourceTimelineSyncEnabled(Constants.PlayerID.LXMusic))
+                        if (IsMediaSourceTimelineSyncEnabled(_cachedSongInfo?.PlayerId))
                         {
                             TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(TimeSpan.FromSeconds(_lxMusicPositionSeconds), TimeSpan.FromSeconds(_lxMusicDurationSeconds)));
                         }
@@ -547,7 +547,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             {
                                 _logger.LogInformation("LX Music Album Art URL: {url}", picUrl);
                                 _lxMusicAlbumArtBytes = await ImageHelper.GetImageBytesFromUrlAsync(picUrl);
-                                _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
+                                if (_lxMusicAlbumArtBytes != null)
+                                {
+                                    _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
+                                }
+                                else
+                                {
+                                    _SMTCAlbumArtBuffer = null;
+                                }
                                 UpdateAlbumArt();
                             }
                         }
