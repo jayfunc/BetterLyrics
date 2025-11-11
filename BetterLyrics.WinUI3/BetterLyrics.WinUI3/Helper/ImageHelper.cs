@@ -315,15 +315,27 @@ namespace BetterLyrics.WinUI3.Helper
                     // data URL，直接解析
                     return DataUrlToByteArray(url);
                 }
-                else if (Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
-                         (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+                else if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
                 {
-                    // 普通网络图片，下载
-                    return await DownloadImageAsByteArrayAsync(url);
+                    if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+                    {
+                        // 普通网络图片，下载
+                        return await DownloadImageAsByteArrayAsync(url);
+                    }
+                    else if (uri.Scheme == Uri.UriSchemeFile)
+                    {
+                        // 本地文件，读取
+                        var file = await StorageFile.GetFileFromPathAsync(uri.LocalPath);
+                        var buffer = await FileIO.ReadBufferAsync(file);
+                        return buffer.ToArray();
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
-                    // 其他类型暂不支持
                     return null;
                 }
             }

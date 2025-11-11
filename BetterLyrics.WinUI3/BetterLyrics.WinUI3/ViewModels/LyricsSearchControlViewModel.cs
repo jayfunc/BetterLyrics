@@ -183,7 +183,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 var lyricsParser = new LyricsParser();
                 lyricsParser.Parse(
-                    AppSettings.MappedSongSearchQueries.ToList(),
+                   [MappedSongSearchQuery ?? new()],
                     MappedSongSearchQuery?.OriginalTitle ?? "",
                     MappedSongSearchQuery?.OriginalArtist ?? "",
                     MappedSongSearchQuery?.OriginalAlbum ?? "",
