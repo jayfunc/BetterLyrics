@@ -60,17 +60,25 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
 
         public int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr, string targetLangCode)
         {
+            int ret = -1;
+            float maxTranslatinRate = 0.0f;
+
             if (lyricsDataArr.Count > 1)
             {
                 for (int i = 1; i < lyricsDataArr.Count; i++)
                 {
                     if (lyricsDataArr[i].LanguageCode == targetLangCode)
                     {
-                        return i; // Translation lyrics data found
+                        float translationRate = lyricsDataArr[i].LyricsLines.Count / lyricsDataArr[0].LyricsLines.Count;
+                        if (translationRate > maxTranslatinRate)
+                        {
+                            maxTranslatinRate = translationRate;
+                            ret = i;
+                        }
                     }
                 }
             }
-            return -1; // No translation lyrics data found
+            return ret;
         }
     }
 }
