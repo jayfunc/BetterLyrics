@@ -369,7 +369,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             _setLyricsWindowVisibilityByPlayingStatusTimer ??= dispatcherQueue.CreateTimer();
 
-            _setLyricsWindowVisibilityByPlayingStatusTimer.Debounce(async () =>
+            _setLyricsWindowVisibilityByPlayingStatusTimer.Debounce(() =>
             {
                 var window = GetWindowByWindowType<LyricsWindow>();
                 if (window == null) return;
@@ -378,7 +378,9 @@ namespace BetterLyrics.WinUI3.Helper
                 {
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
+                        _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = true;
                         SetIsWorkArea<LyricsWindow>(false);
+                        _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = false;
                     }
                     HideWindow<LyricsWindow>();
                 }
@@ -386,13 +388,13 @@ namespace BetterLyrics.WinUI3.Helper
                 {
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
+                        _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = true;
                         SetIsWorkArea<LyricsWindow>(true);
+                        _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = false;
                     }
                     OpenOrShowWindow<LyricsWindow>();
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
-                        UpdateWorkArea<LyricsWindow>();
-                        await Task.Delay(300);
                         MoveAndResize<LyricsWindow>(_liveStatesService.LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                 }
