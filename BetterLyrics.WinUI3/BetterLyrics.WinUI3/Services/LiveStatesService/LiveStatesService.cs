@@ -80,15 +80,16 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             LiveStates.IsLyricsWindowStatusRefreshing = false;
         }
 
-        private async void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(LyricsWindowStatus.IsWorkArea):
+                    LiveStates.IsLyricsWindowStatusRefreshing = true;
                     WindowHelper.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
+                    LiveStates.IsLyricsWindowStatusRefreshing = false;
                     if (LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
-                        await Task.Delay(300);
                         WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
@@ -98,8 +99,9 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                     LiveStates.LyricsWindowStatus.UpdateMonitorBounds();
                     if (LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
+                        LiveStates.IsLyricsWindowStatusRefreshing = true;
                         WindowHelper.UpdateWorkArea<LyricsWindow>();
-                        await Task.Delay(300);
+                        LiveStates.IsLyricsWindowStatusRefreshing = false;
                         WindowHelper.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
