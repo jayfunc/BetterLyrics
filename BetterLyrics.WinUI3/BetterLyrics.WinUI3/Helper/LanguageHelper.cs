@@ -130,6 +130,11 @@ namespace BetterLyrics.WinUI3.Helper
             };
         }
 
+        public static bool IsCJK(char ch)
+        {
+            return IsCJK(ch.ToString());
+        }
+
         public static string GetDefaultTargetTranslationLanguageCode()
         {
             var found = SupportedTranslationTargetLanguages.Find(x => ApplicationLanguages.Languages.FirstOrDefault()?.Contains(x.LanguageCode) == true);
