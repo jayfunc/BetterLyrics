@@ -64,6 +64,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isDeviceChanged = true;
 
+        private bool _isLyricsXChanged = true;
+
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
             _elapsedTime = args.Timing.ElapsedTime;
@@ -78,6 +80,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _lastFMService.TrackAsync(SongInfo);
                 }
             }
+
+            //if (IsScrolling)
+            //{
+            //    _scrollTime += ScrollDeltaTime;
+            //    _elapsedTime = ScrollDeltaTime;
+            //    TotalTime = _scrollTime;
+            //    IsScrolling = false;
+            //}
 
             //_effect?.Properties["iTime"] = Convert.ToSingle(TotalTime.TotalSeconds);
 
@@ -243,12 +253,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             case LyricsDisplayType.LyricsOnly:
                                 _lyricsOpacityTransition.StartTransition(1f, jumpTo);
                                 _albumArtOpacityTransition.StartTransition(0f, jumpTo);
-                                _lyricsXTransition.StartTransition(_leftMargin, jumpTo);
+                                _lyricsX = _leftMargin;
                                 break;
                             case LyricsDisplayType.SplitView:
                                 _lyricsOpacityTransition.StartTransition(1f, jumpTo);
                                 _albumArtOpacityTransition.StartTransition(1f, jumpTo);
-                                _lyricsXTransition.StartTransition((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 + _leftMargin + _middleMargin, jumpTo);
+                                _lyricsX = (_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 + _leftMargin + _middleMargin;
                                 _albumArtXTransition.StartTransition(_leftMargin + ((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 - _albumArtSize) / 2.0, jumpTo);
                                 _titleXTransition.StartTransition(_albumArtXTransition.TargetValue, jumpTo);
                                 break;
@@ -267,7 +277,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         {
                             _albumArtSize = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.AlbumArtSize;
                         }
-                        _lyricsXTransition.StartTransition(_leftMargin, jumpTo);
+                        _lyricsX = _leftMargin;
                         _albumArtXTransition.StartTransition(_leftMargin, jumpTo);
                         _titleXTransition.StartTransition(_leftMargin + _albumArtSize * 1.2, jumpTo);
                         switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
@@ -304,6 +314,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _isSongArtistsVisibilityChanged = false;
 
                 _isLyrics3DMatrixChanged = true;
+                _isLyricsXChanged = true;
             }
 
             // 先重置这两个的变化状态
@@ -397,11 +408,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 DisposeAlbumArtBgEffect();
             }
 
-            if (_isDeviceChanged || _isCanvasHeightChanged || _isCanvasWidthChanged || _lyricsXTransition.IsTransitioning)
+            if (_isDeviceChanged || _isCanvasHeightChanged || _isCanvasWidthChanged || _isLyricsXChanged)
             {
-                _maxLyricsWidth = Math.Max(_canvasWidth - _lyricsXTransition.Value - _rightMargin, 0);
+                _maxLyricsWidth = Math.Max(_canvasWidth - _lyricsX - _rightMargin, 0);
                 _isLayoutChanged = true;
                 _isLyrics3DMatrixChanged = true;
+                _isLyricsXChanged = false;
             }
 
             if (_isLyrics3DMatrixChanged)
@@ -430,7 +442,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _titleXTransition.Update(_elapsedTime);
             _titleYTransition.Update(_elapsedTime);
 
-            _lyricsXTransition.Update(_elapsedTime);
             _lyricsYTransition.Update(_elapsedTime);
 
             _albumArtXTransition.Update(_elapsedTime);
@@ -903,7 +914,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             if (!_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Is3DLyricsEnabled) return;
 
             Vector3 center = new(
-                (float)(_lyricsXTransition.Value + _maxLyricsWidth / 2),
+                (float)(_lyricsX + _maxLyricsWidth / 2),
                 (float)(_lyricsYTransition.Value + _canvasHeight / 2),
                 0);
 

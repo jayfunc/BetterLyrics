@@ -65,12 +65,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             easingType: EasingType.EaseInOutQuad
         );
 
-        private readonly ValueTransition<double> _lyricsXTransition = new(
-            initialValue: 0f,
-            durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutQuad
-        );
-
         private readonly ValueTransition<double> _lyricsYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,

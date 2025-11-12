@@ -349,7 +349,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition)
                     * Matrix3x2.CreateRotation((float)line.AngleTransition.Value,
                     currentPlayingLine.OriginalPosition.WithX(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0))
-                    * Matrix3x2.CreateTranslation((float)_lyricsXTransition.Value, (float)yOffset);
+                    * Matrix3x2.CreateTranslation((float)_lyricsX, (float)yOffset);
 
                 using var combined = new CanvasCommandList(control);
                 using var combinedDs = combined.CreateDrawingSession();

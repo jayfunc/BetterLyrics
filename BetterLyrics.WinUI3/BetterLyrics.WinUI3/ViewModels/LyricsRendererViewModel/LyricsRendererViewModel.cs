@@ -42,10 +42,24 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isLastFMTrackEnabled = false;
         private bool _isLastFMTracked = false;
+
+        /// <summary>
+        /// This includes all the time the song has been played, even if the user seeks back.
+        /// </summary>
         private TimeSpan _totalPlayingTime = TimeSpan.Zero;
 
+        /// <summary>
+        /// Refresh elapsed time for every frame by render.
+        /// </summary>
         private TimeSpan _elapsedTime = TimeSpan.Zero;
 
+        //public TimeSpan ScrollDeltaTime { get; set; } = TimeSpan.Zero;
+        //private TimeSpan _scrollTime = TimeSpan.Zero;
+        //public bool IsScrolling { get; set; } = false;
+
+        /// <summary>
+        /// Get or set the current time position of the song.
+        /// </summary>
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
@@ -89,6 +103,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private double _canvasTargetYScrollOffset = 0;
 
+        private double _lyricsX = 0f;
         private double _maxLyricsWidth = 0f;
 
         private readonly ISettingsService _settingsService;

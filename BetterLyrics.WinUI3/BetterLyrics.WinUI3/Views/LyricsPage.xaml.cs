@@ -7,7 +7,9 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
+using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
@@ -22,6 +24,8 @@ namespace BetterLyrics.WinUI3.Views
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+
+        private readonly LyricsRendererViewModel _lyricsRendererViewModel = Ioc.Default.GetRequiredService<LyricsRendererViewModel>();
 
         public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
 
@@ -185,5 +189,22 @@ namespace BetterLyrics.WinUI3.Views
         {
             SystemVolumeHelper.MasterVolume = ViewModel.Volume;
         }
+
+        //private void ScrollGrid_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        //{
+        //    if (e.Pointer.PointerDeviceType != PointerDeviceType.Mouse)
+        //        return;
+
+        //    var position = e.GetCurrentPoint(ScrollGrid);
+        //    var delta = position.Properties.MouseWheelDelta;
+        //    double notches = delta / 120.0;
+
+        //    _lyricsRendererViewModel.ScrollDeltaTime = System.TimeSpan.FromSeconds(notches);
+        //    _lyricsRendererViewModel.IsScrolling = true;
+
+        //    Debug.WriteLine(notches);
+
+        //    e.Handled = true;
+        //}
     }
 }
