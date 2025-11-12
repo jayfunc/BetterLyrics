@@ -23,6 +23,7 @@
         x:Name="RootGrid"
         RightTapped="RootGrid_RightTapped"
         SizeChanged="RootGrid_SizeChanged">
+
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
 
@@ -30,10 +31,12 @@
 
         <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Hidden">
             <StackPanel
-                Margin="20"
+                Margin="40"
                 VerticalAlignment="Bottom"
                 dev:Growl.GrowlParent="True" />
         </ScrollViewer>
+
+        <!--<Grid x:Name="ScrollGrid" PointerWheelChanged="ScrollGrid_PointerWheelChanged" Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}" Opacity="0.3"/>-->
 
         <!--  Bottom command area  -->
         <Grid
