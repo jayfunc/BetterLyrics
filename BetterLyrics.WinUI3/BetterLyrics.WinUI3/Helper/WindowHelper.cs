@@ -369,7 +369,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             _setLyricsWindowVisibilityByPlayingStatusTimer ??= dispatcherQueue.CreateTimer();
 
-            _setLyricsWindowVisibilityByPlayingStatusTimer.Debounce(() =>
+            _setLyricsWindowVisibilityByPlayingStatusTimer.Debounce(async () =>
             {
                 var window = GetWindowByWindowType<LyricsWindow>();
                 if (window == null) return;
@@ -389,6 +389,12 @@ namespace BetterLyrics.WinUI3.Helper
                         SetIsWorkArea<LyricsWindow>(true);
                     }
                     OpenOrShowWindow<LyricsWindow>();
+                    if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
+                    {
+                        UpdateWorkArea<LyricsWindow>();
+                        await Task.Delay(300);
+                        MoveAndResize<LyricsWindow>(_liveStatesService.LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+                    }
                 }
             }, Constants.Time.DebounceTimeout);
         }
