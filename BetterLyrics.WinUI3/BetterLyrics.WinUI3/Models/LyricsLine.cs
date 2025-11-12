@@ -143,11 +143,11 @@ namespace BetterLyrics.WinUI3.Models
                     VerticalAlignment = CanvasVerticalAlignment.Top,
                     FontSize = phoneticTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
-                    FontFamily = LanguageHelper.IsCJK(PhoneticText) ? fontFamilyCJK : fontFamilyWestern,
                 }, (float)maxWidth, (float)maxHeight)
                 {
                     HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
                 };
+                PhoneticCanvasTextLayout.SetFontFamily(PhoneticText, fontFamilyCJK, fontFamilyWestern);
             }
 
             OriginalCanvasTextLayout = new CanvasTextLayout(control, OriginalText, new CanvasTextFormat
@@ -156,11 +156,11 @@ namespace BetterLyrics.WinUI3.Models
                 VerticalAlignment = CanvasVerticalAlignment.Top,
                 FontSize = originalTextFontSize,
                 FontWeight = fontWeight.ToFontWeight(),
-                FontFamily = LanguageHelper.IsCJK(OriginalText) ? fontFamilyCJK : fontFamilyWestern,
             }, (float)maxWidth, (float)maxHeight)
             {
                 HorizontalAlignment = type.ToCanvasHorizontalAlignment()
             };
+            OriginalCanvasTextLayout.SetFontFamily(OriginalText, fontFamilyCJK, fontFamilyWestern);
 
             if (createTranslated && TranslatedText != "")
             {
@@ -170,11 +170,11 @@ namespace BetterLyrics.WinUI3.Models
                     VerticalAlignment = CanvasVerticalAlignment.Top,
                     FontSize = translatedTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
-                    FontFamily = LanguageHelper.IsCJK(TranslatedText) ? fontFamilyCJK : fontFamilyWestern,
                 }, (float)maxWidth, (float)maxHeight)
                 {
                     HorizontalAlignment = type.ToCanvasHorizontalAlignment()
                 };
+                TranslatedCanvasTextLayout.SetFontFamily(TranslatedText, fontFamilyCJK, fontFamilyWestern);
             }
         }
 
