@@ -18,11 +18,10 @@ namespace BetterLyrics.WinUI3.Models
         private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
         public List<LyricsLine> LyricsLines { get; set; }
-        private string? _languageCode;
         public string? LanguageCode
         {
-            get => _languageCode ?? LanguageHelper.DetectLanguageCode(WrappedOriginalText);
-            set => _languageCode = value;
+            get => field ?? LanguageHelper.DetectLanguageCode(WrappedOriginalText);
+            set => field = value;
         }
         public string WrappedOriginalText => string.Join(StringHelper.NewLine, LyricsLines.Select(line => line.OriginalText));
 
