@@ -1,17 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models.Settings;
-using CommunityToolkit.WinUI.Helpers;
 using Impressionist.Abstractions;
-using Impressionist.Implementations;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Text;
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Numerics;
@@ -20,8 +13,6 @@ using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using Windows.UI;
-using static Vanara.PInvoke.Ole32;
 
 namespace BetterLyrics.WinUI3.Helper
 {

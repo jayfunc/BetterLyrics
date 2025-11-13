@@ -4,8 +4,6 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace BetterLyrics.WinUI3.Models

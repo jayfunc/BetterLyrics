@@ -1,12 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;

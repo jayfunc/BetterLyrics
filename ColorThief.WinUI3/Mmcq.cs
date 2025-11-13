@@ -32,7 +32,7 @@ namespace ColorThiefDotNet
         {
             var histo = new int[Histosize];
 
-            foreach(var pixel in pixels)
+            foreach (var pixel in pixels)
             {
                 var rval = pixel[0] >> Rshift;
                 var gval = pixel[1] >> Rshift;
@@ -51,36 +51,36 @@ namespace ColorThiefDotNet
 
             // find min/max
             var numPixels = pixels.Count;
-            for(var i = 0; i < numPixels; i++)
+            for (var i = 0; i < numPixels; i++)
             {
                 var pixel = pixels[i];
                 var rval = pixel[0] >> Rshift;
                 var gval = pixel[1] >> Rshift;
                 var bval = pixel[2] >> Rshift;
 
-                if(rval < rmin)
+                if (rval < rmin)
                 {
                     rmin = rval;
                 }
-                else if(rval > rmax)
+                else if (rval > rmax)
                 {
                     rmax = rval;
                 }
 
-                if(gval < gmin)
+                if (gval < gmin)
                 {
                     gmin = gval;
                 }
-                else if(gval > gmax)
+                else if (gval > gmax)
                 {
                     gmax = gval;
                 }
 
-                if(bval < bmin)
+                if (bval < bmin)
                 {
                     bmin = bval;
                 }
-                else if(bval > bmax)
+                else if (bval > bmax)
                 {
                     bmax = bval;
                 }
@@ -94,7 +94,7 @@ namespace ColorThiefDotNet
             int vboxDim1;
             int vboxDim2;
 
-            switch(color)
+            switch (color)
             {
                 case 'r':
                     vboxDim1 = vbox.R1;
@@ -110,9 +110,9 @@ namespace ColorThiefDotNet
                     break;
             }
 
-            for(var i = vboxDim1; i <= vboxDim2; i++)
+            for (var i = vboxDim1; i <= vboxDim2; i++)
             {
-                if(partialsum[i] > total / 2)
+                if (partialsum[i] > total / 2)
                 {
                     var vbox1 = vbox.Clone();
                     var vbox2 = vbox.Clone();
@@ -125,18 +125,18 @@ namespace ColorThiefDotNet
                         : Math.Max(vboxDim1, Math.Abs(Convert.ToInt32(i - 1 - left / 2.0)));
 
                     // avoid 0-count boxes
-                    while(d2 < 0 || partialsum[d2] <= 0)
+                    while (d2 < 0 || partialsum[d2] <= 0)
                     {
                         d2++;
                     }
                     var count2 = lookaheadsum[d2];
-                    while(count2 == 0 && d2 > 0 && partialsum[d2 - 1] > 0)
+                    while (count2 == 0 && d2 > 0 && partialsum[d2 - 1] > 0)
                     {
                         count2 = lookaheadsum[--d2];
                     }
 
                     // set dimensions
-                    switch(color)
+                    switch (color)
                     {
                         case 'r':
                             vbox1.R2 = d2;
@@ -152,7 +152,7 @@ namespace ColorThiefDotNet
                             break;
                     }
 
-                    return new[] {vbox1, vbox2};
+                    return new[] { vbox1, vbox2 };
                 }
             }
 
@@ -161,13 +161,13 @@ namespace ColorThiefDotNet
 
         private static VBox[] MedianCutApply(IList<int> histo, VBox vbox)
         {
-            if(vbox.Count(false) == 0)
+            if (vbox.Count(false) == 0)
             {
                 return null;
             }
-            if(vbox.Count(false) == 1)
+            if (vbox.Count(false) == 1)
             {
-                return new[] {vbox.Clone(), null};
+                return new[] { vbox.Clone(), null };
             }
 
             // only one pixel, no split
@@ -181,28 +181,28 @@ namespace ColorThiefDotNet
             var total = 0;
             var partialsum = new int[VboxLength];
             // -1 = not set / 0 = 0
-            for(var l = 0; l < partialsum.Length; l++)
+            for (var l = 0; l < partialsum.Length; l++)
             {
                 partialsum[l] = -1;
             }
 
             // -1 = not set / 0 = 0
             var lookaheadsum = new int[VboxLength];
-            for(var l = 0; l < lookaheadsum.Length; l++)
+            for (var l = 0; l < lookaheadsum.Length; l++)
             {
                 lookaheadsum[l] = -1;
             }
 
             int i, j, k, sum, index;
 
-            if(maxw == rw)
+            if (maxw == rw)
             {
-                for(i = vbox.R1; i <= vbox.R2; i++)
+                for (i = vbox.R1; i <= vbox.R2; i++)
                 {
                     sum = 0;
-                    for(j = vbox.G1; j <= vbox.G2; j++)
+                    for (j = vbox.G1; j <= vbox.G2; j++)
                     {
-                        for(k = vbox.B1; k <= vbox.B2; k++)
+                        for (k = vbox.B1; k <= vbox.B2; k++)
                         {
                             index = GetColorIndex(i, j, k);
                             sum += histo[index];
@@ -212,14 +212,14 @@ namespace ColorThiefDotNet
                     partialsum[i] = total;
                 }
             }
-            else if(maxw == gw)
+            else if (maxw == gw)
             {
-                for(i = vbox.G1; i <= vbox.G2; i++)
+                for (i = vbox.G1; i <= vbox.G2; i++)
                 {
                     sum = 0;
-                    for(j = vbox.R1; j <= vbox.R2; j++)
+                    for (j = vbox.R1; j <= vbox.R2; j++)
                     {
-                        for(k = vbox.B1; k <= vbox.B2; k++)
+                        for (k = vbox.B1; k <= vbox.B2; k++)
                         {
                             index = GetColorIndex(j, i, k);
                             sum += histo[index];
@@ -231,12 +231,12 @@ namespace ColorThiefDotNet
             }
             else /* maxw == bw */
             {
-                for(i = vbox.B1; i <= vbox.B2; i++)
+                for (i = vbox.B1; i <= vbox.B2; i++)
                 {
                     sum = 0;
-                    for(j = vbox.R1; j <= vbox.R2; j++)
+                    for (j = vbox.R1; j <= vbox.R2; j++)
                     {
-                        for(k = vbox.G1; k <= vbox.G2; k++)
+                        for (k = vbox.G1; k <= vbox.G2; k++)
                         {
                             index = GetColorIndex(j, k, i);
                             sum += histo[index];
@@ -247,9 +247,9 @@ namespace ColorThiefDotNet
                 }
             }
 
-            for(i = 0; i < VboxLength; i++)
+            for (i = 0; i < VboxLength; i++)
             {
-                if(partialsum[i] != -1)
+                if (partialsum[i] != -1)
                 {
                     lookaheadsum[i] = total - partialsum[i];
                 }
@@ -273,10 +273,10 @@ namespace ColorThiefDotNet
             var ncolors = 1;
             var niters = 0;
 
-            while(niters < MaxIterations)
+            while (niters < MaxIterations)
             {
                 var vbox = lh[lh.Count - 1];
-                if(vbox.Count(false) == 0)
+                if (vbox.Count(false) == 0)
                 {
                     lh.Sort(comparator);
                     niters++;
@@ -290,25 +290,25 @@ namespace ColorThiefDotNet
                 var vbox1 = vboxes[0];
                 var vbox2 = vboxes[1];
 
-                if(vbox1 == null)
+                if (vbox1 == null)
                 {
                     throw new Exception(
                         "vbox1 not defined; shouldn't happen!");
                 }
 
                 lh.Add(vbox1);
-                if(vbox2 != null)
+                if (vbox2 != null)
                 {
                     lh.Add(vbox2);
                     ncolors++;
                 }
                 lh.Sort(comparator);
 
-                if(ncolors >= target)
+                if (ncolors >= target)
                 {
                     return;
                 }
-                if(niters++ > MaxIterations)
+                if (niters++ > MaxIterations)
                 {
                     return;
                 }
@@ -318,7 +318,7 @@ namespace ColorThiefDotNet
         public static CMap Quantize(byte[][] pixels, int maxcolors)
         {
             // short-circuit
-            if(pixels.Length == 0 || maxcolors < 2 || maxcolors > 256)
+            if (pixels.Length == 0 || maxcolors < 2 || maxcolors > 256)
             {
                 return null;
             }
@@ -327,7 +327,7 @@ namespace ColorThiefDotNet
 
             // get the beginning vbox from the colors
             var vbox = VboxFromPixels(pixels, histo);
-            var pq = new List<VBox> {vbox};
+            var pq = new List<VBox> { vbox };
 
             // Round up to have the same behaviour as in JavaScript
             var target = (int)Math.Ceiling(FractByPopulation * maxcolors);
@@ -347,7 +347,7 @@ namespace ColorThiefDotNet
 
             // calculate the actual colors
             var cmap = new CMap();
-            foreach(var vb in pq)
+            foreach (var vb in pq)
             {
                 cmap.Push(vb);
             }
@@ -367,7 +367,7 @@ namespace ColorThiefDotNet
             double sum = 0;
             double sumWeight = 0;
 
-            for(var i = 0; i < values.Length; i += 2)
+            for (var i = 0; i < values.Length; i += 2)
             {
                 var value = values[i];
                 var weight = values[i + 1];

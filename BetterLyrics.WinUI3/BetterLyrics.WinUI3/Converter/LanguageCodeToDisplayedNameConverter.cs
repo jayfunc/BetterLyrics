@@ -1,11 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services;
 using Microsoft.UI.Xaml.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Converter

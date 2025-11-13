@@ -1,10 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
@@ -26,7 +22,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PhoneticLyricsHighlightAmount { get; set; } = 60; // 100% 是上界
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int OriginalLyricsHighlightAmount { get; set; } = 100; // 100% 是上界
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsHighlightAmount { get; set; } = 60; // 100% 是上界
-        
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFloatAnimationEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFloatAmount { get; set; } = 1;
 

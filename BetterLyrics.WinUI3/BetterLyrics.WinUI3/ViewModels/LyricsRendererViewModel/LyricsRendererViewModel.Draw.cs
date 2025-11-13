@@ -1,7 +1,5 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.WinUI;
-using Hqub.Lastfm;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -9,14 +7,11 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
-using Windows.Graphics.Effects;
 using Windows.UI;
 using static Vanara.PInvoke.Shell32;
 
@@ -69,7 +64,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             ds.DrawImage(combined);
 
             DrawAlbumArt(control, ds);
-            DrawTitleAndArtist(control, ds);
+            DrawSongInfo(control, ds);
 
             if (_isDebugOverlayEnabled)
             {
@@ -269,52 +264,45 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void DrawTitleAndArtist(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        private void DrawSongInfo(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (_lastSongTitle != null || _lastSongArtist != null)
-            {
-                DrawSingleTitleAndArtist(control, ds, _lastSongTitle, _lastSongArtist, 1 - _songInfoOpacityTransition.Value);
-            }
-            if (_songTitle != null || _songArtist != null)
-            {
-                DrawSingleTitleAndArtist(control, ds, _songTitle, _songArtist, _songInfoOpacityTransition.Value);
-            }
-        }
-
-        private void DrawSingleTitleAndArtist(ICanvasAnimatedControl control, CanvasDrawingSession ds, string? title, string? artist, double opacity)
-        {
-            var maxWidth = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation switch
-            {
-                LyricsLayoutOrientation.Horizontal => _albumArtSize,
-                LyricsLayoutOrientation.Vertical => _canvasWidth - _leftMargin - _albumArtSize - _rightMargin,
-                _ => 0f
-            };
-            if (maxWidth <= 0)
+            if (_maxSongInfoWidth <= 0)
             {
                 return;
             }
 
-            using CanvasTextLayout titleLayout = new(
-                control, title ?? string.Empty,
-                _titleTextFormat, (float)maxWidth, (float)_canvasHeight
-            );
-            using CanvasTextLayout artistLayout = new(
-                control, artist ?? string.Empty,
-                _artistTextFormat, (float)maxWidth, (float)_canvasHeight
-            );
+            DrawSingleSongInfo(control, ds, _lastTitleTextLayout, _lastArtistTextLayout, _lastAlbumTextLayout, 1 - _songInfoOpacityTransition.Value);
+            DrawSingleSongInfo(control, ds, _titleTextLayout, _artistTextLayout, _albumTextLayout, _songInfoOpacityTransition.Value);
+        }
 
-            if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle)
+        private void DrawSingleSongInfo(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasTextLayout? titleLayout, CanvasTextLayout? artistLayout, CanvasTextLayout? albumLayout, double opacity)
+        {
+            if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle && titleLayout != null)
             {
+                double y = 0;
+
                 ds.DrawTextLayout(
                     titleLayout,
-                    new Vector2((float)_titleXTransition.Value, (float)_titleYTransition.Value),
+                    new Vector2((float)_titleXTransition.Value, (float)y),
                     _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 255 * opacity)));
 
-                if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists)
+                y += _titleYTransition.Value;
+
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists && artistLayout != null)
                 {
                     ds.DrawTextLayout(
                         artistLayout,
-                        new Vector2((float)_titleXTransition.Value, (float)(_titleYTransition.Value + titleLayout.LayoutBounds.Height)),
+                        new Vector2((float)_titleXTransition.Value, (float)y),
+                        _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
+
+                    y += titleLayout.LayoutBounds.Height;
+                }
+
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum && albumLayout != null)
+                {
+                    ds.DrawTextLayout(
+                        albumLayout,
+                        new Vector2((float)_titleXTransition.Value, (float)y),
                         _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
                 }
             }
@@ -361,7 +349,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
                 combinedDs.DrawImage(backgroundEffect);
 
-                //if (i == _playingLineIndex)
                 if (line.HighlightOpacityTransition.Value != 0)
                 {
                     GetLinePlayingProgress(i, out int charStartIndex, out int charLength, out double charProgress);

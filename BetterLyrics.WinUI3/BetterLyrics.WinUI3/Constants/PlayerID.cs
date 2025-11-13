@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
-
-namespace BetterLyrics.WinUI3.Constants
+﻿namespace BetterLyrics.WinUI3.Constants
 {
     public static class PlayerID
     {

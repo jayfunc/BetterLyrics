@@ -5,20 +5,14 @@ using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
-using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.TranslateService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
 using Microsoft.UI.Text;
@@ -28,8 +22,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 
@@ -92,6 +84,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private string? _lastSongArtist;
         private string? _songArtist;
 
+        private string? _lastSongAlbum;
+        private string? _songAlbum;
+
         private double _canvasWidth = 0f;
         private double _canvasHeight = 0f;
 
@@ -105,6 +100,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private double _lyricsX = 0f;
         private double _maxLyricsWidth = 0f;
+        private double _maxSongInfoWidth = 0f;
 
         private readonly ISettingsService _settingsService;
         private readonly IMediaSessionsService _mediaSessionsService;
@@ -158,24 +154,33 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             FontSize = 18,
             FontWeight = FontWeights.Bold,
             HorizontalAlignment = CanvasHorizontalAlignment.Left,
-            WordWrapping = CanvasWordWrapping.NoWrap,
-            TrimmingSign = CanvasTrimmingSign.Ellipsis,
-            TrimmingGranularity = CanvasTextTrimmingGranularity.Character,
         };
         private CanvasTextFormat _artistTextFormat = new()
         {
             FontSize = 16,
             FontWeight = FontWeights.Bold,
             HorizontalAlignment = CanvasHorizontalAlignment.Left,
-            WordWrapping = CanvasWordWrapping.NoWrap,
-            TrimmingSign = CanvasTrimmingSign.Ellipsis,
-            TrimmingGranularity = CanvasTextTrimmingGranularity.Character,
+        };
+        private CanvasTextFormat _albumTextFormat = new()
+        {
+            FontSize = 16,
+            FontWeight = FontWeights.Bold,
+            HorizontalAlignment = CanvasHorizontalAlignment.Left,
         };
         private CanvasTextFormat _debugTextFormat = new()
         {
             FontSize = 12,
             FontWeight = FontWeights.ExtraBlack,
         };
+
+        private CanvasTextLayout? _lastTitleTextLayout = null;
+        private CanvasTextLayout? _titleTextLayout = null;
+
+        private CanvasTextLayout? _lastArtistTextLayout = null;
+        private CanvasTextLayout? _artistTextLayout = null;
+
+        private CanvasTextLayout? _lastAlbumTextLayout = null;
+        private CanvasTextLayout? _albumTextLayout = null;
 
         //private LyricsLayoutOrientation _lyricsLayoutOrientation;
 
@@ -391,9 +396,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 _lastSongTitle = _songTitle;
                 _songTitle = SongInfo?.Title;
+                _isSongTitleChanged = true;
 
                 _lastSongArtist = _songArtist;
                 _songArtist = SongInfo?.Artist;
+                _isSongArtistChanged = true;
+
+                _lastSongAlbum = _songAlbum;
+                _songAlbum = SongInfo?.Album;
+                _isSongAlbumChanged = true;
 
                 _songDurationMs = (int)(SongInfo?.DurationMs ?? TimeSpan.FromMinutes(99).TotalMilliseconds);
 

@@ -1,7 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Helper;
-
 namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsChar

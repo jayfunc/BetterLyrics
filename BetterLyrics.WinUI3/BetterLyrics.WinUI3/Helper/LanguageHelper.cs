@@ -1,12 +1,9 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using NTextCat;
-using NTextCat.Commons;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Helper

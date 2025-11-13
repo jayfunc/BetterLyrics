@@ -1,14 +1,13 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Events;
+using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.ViewModels;
+using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using BetterLyrics.WinUI3.Events;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.ViewModels;
-using Microsoft.UI.Dispatching;
 
 namespace BetterLyrics.WinUI3.Services.LibWatcherService
 {

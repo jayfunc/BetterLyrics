@@ -8,7 +8,6 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Helpers;
-using Lyricify.Lyrics.Providers.Web.Kugou;
 using Lyricify.Lyrics.Searchers;
 using Microsoft.Extensions.Logging;
 using NTextCat.Commons;
@@ -17,11 +16,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 {

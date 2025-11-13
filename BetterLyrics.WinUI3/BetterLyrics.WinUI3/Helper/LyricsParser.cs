@@ -2,16 +2,13 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services;
 using Lyricify.Lyrics.Models;
 using Lyricify.Lyrics.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using Vanara.PInvoke;
 using LyricsData = BetterLyrics.WinUI3.Models.LyricsData;
 
 namespace BetterLyrics.WinUI3.Helper

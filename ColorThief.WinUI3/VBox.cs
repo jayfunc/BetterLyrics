@@ -33,7 +33,7 @@ namespace ColorThiefDotNet
 
         public int Volume(bool force)
         {
-            if(volume == null || force)
+            if (volume == null || force)
             {
                 volume = (R2 - R1 + 1) * (G2 - G1 + 1) * (B2 - B1 + 1);
             }
@@ -43,18 +43,18 @@ namespace ColorThiefDotNet
 
         public int Count(bool force)
         {
-            if(count == null || force)
+            if (count == null || force)
             {
                 var npix = 0;
                 int i;
 
-                for(i = R1; i <= R2; i++)
+                for (i = R1; i <= R2; i++)
                 {
                     int j;
-                    for(j = G1; j <= G2; j++)
+                    for (j = G1; j <= G2; j++)
                     {
                         int k;
-                        for(k = B1; k <= B2; k++)
+                        for (k = B1; k <= B2; k++)
                         {
                             var index = Mmcq.GetColorIndex(i, j, k);
                             npix += histo[index];
@@ -75,7 +75,7 @@ namespace ColorThiefDotNet
 
         public int[] Avg(bool force)
         {
-            if(avg == null || force)
+            if (avg == null || force)
             {
                 var ntot = 0;
 
@@ -85,13 +85,13 @@ namespace ColorThiefDotNet
 
                 int i;
 
-                for(i = R1; i <= R2; i++)
+                for (i = R1; i <= R2; i++)
                 {
                     int j;
-                    for(j = G1; j <= G2; j++)
+                    for (j = G1; j <= G2; j++)
                     {
                         int k;
-                        for(k = B1; k <= B2; k++)
+                        for (k = B1; k <= B2; k++)
                         {
                             var histoindex = Mmcq.GetColorIndex(i, j, k);
                             var hval = histo[histoindex];
@@ -103,7 +103,7 @@ namespace ColorThiefDotNet
                     }
                 }
 
-                if(ntot > 0)
+                if (ntot > 0)
                 {
                     avg = new[]
                     {

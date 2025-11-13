@@ -1,11 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System.Collections.Generic;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using Microsoft.UI.Xaml;
-using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService
 {

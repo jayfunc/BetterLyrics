@@ -1,12 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using ATL;
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Ude;
 

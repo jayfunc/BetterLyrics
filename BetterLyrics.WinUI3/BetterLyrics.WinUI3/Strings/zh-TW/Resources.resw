@@ -1231,6 +1231,9 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>該熱鍵已成功註冊</value>
   </data>
+  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <value>顯示專輯</value>
+  </data>
   <data name="SettingsPageShowArtists.Header" xml:space="preserve">
     <value>界面設計</value>
   </data>

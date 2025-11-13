@@ -99,6 +99,9 @@
                             <dev:SettingsCard x:Uid="SettingsPageShowArtists">
                                 <ToggleSwitch IsEnabled="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=OneWay}" IsOn="{x:Bind AlbumArtLayoutSettings.ShowArtists, Mode=TwoWay}" />
                             </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageShowAlbum">
+                                <ToggleSwitch IsEnabled="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=OneWay}" IsOn="{x:Bind AlbumArtLayoutSettings.ShowAlbum, Mode=TwoWay}" />
+                            </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 

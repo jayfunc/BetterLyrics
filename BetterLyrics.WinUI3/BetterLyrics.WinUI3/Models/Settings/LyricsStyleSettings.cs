@@ -3,10 +3,7 @@ using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models.Settings

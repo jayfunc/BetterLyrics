@@ -53,7 +53,7 @@ namespace ColorThiefDotNet
         {
             var pixelArray = await GetPixelsFast(sourceImage, quality, ignoreWhite);
             var cmap = GetColorMap(pixelArray, colorCount);
-            if(cmap != null)
+            if (cmap != null)
             {
                 var colors = cmap.GeneratePalette();
                 return colors;
@@ -70,13 +70,13 @@ namespace ColorThiefDotNet
 
         private async Task<byte[][]> GetPixelsFast(BitmapDecoder sourceImage, int quality, bool ignoreWhite)
         {
-            if(quality < 1)
+            if (quality < 1)
             {
                 quality = DefaultQuality;
             }
 
             var pixels = await GetIntFromPixel(sourceImage);
-            var pixelCount = sourceImage.PixelWidth*sourceImage.PixelHeight;
+            var pixelCount = sourceImage.PixelWidth * sourceImage.PixelHeight;
 
             return ConvertPixels(pixels, Convert.ToInt32(pixelCount), quality, ignoreWhite);
         }
