@@ -1231,6 +1231,9 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>이 핫키는 성공적으로 등록되었습니다</value>
   </data>
+  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <value>Show album</value>
+  </data>
   <data name="SettingsPageShowArtists.Header" xml:space="preserve">
     <value>예술가</value>
   </data>
