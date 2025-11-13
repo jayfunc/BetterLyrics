@@ -204,7 +204,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             if (_isDeviceChanged || _isDisplayTypeChanged || _isLyricsLayoutOrientationChanged || _isAlbumArtSizeChanged ||
                 _isSongInfoFontSizeChanged || _isSongInfoAlignmentTypeChanged ||
                 _isSongTitleVisibilityChanged || _isSongArtistVisibilityChanged || _isSongAlbumVisibilityChanged ||
-                _isSongTitleChanged || _isSongArtistChanged ||
+                _isSongTitleChanged || _isSongArtistChanged || _isSongAlbumChanged ||
                 _isCanvasWidthChanged || _isCanvasHeightChanged ||
                 _isAlbumArtSizeChanged)
             {

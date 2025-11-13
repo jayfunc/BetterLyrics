@@ -1256,7 +1256,7 @@
     <value>스노우 플레이크 레이어</value>
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>노래 제목 및 아티스트</value>
+    <value>노래 정보</value>
   </data>
   <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
     <value>조정</value>
