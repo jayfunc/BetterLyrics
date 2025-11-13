@@ -1256,7 +1256,7 @@
     <value>Snow flake layer</value>
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>歌曲標題和藝術家</value>
+    <value>Song info</value>
   </data>
   <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
     <value>對齊方式</value>
