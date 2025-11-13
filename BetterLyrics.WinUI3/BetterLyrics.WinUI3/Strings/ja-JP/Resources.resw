@@ -1256,7 +1256,7 @@
     <value>スノーフレークレイヤー</value>
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>曲のタイトル＆アーティスト</value>
+    <value>曲情報</value>
   </data>
   <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
     <value>アライメント</value>

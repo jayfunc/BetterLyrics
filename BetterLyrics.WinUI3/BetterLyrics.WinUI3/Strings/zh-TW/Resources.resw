@@ -1256,7 +1256,7 @@
     <value>雪花層</value>
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>歌曲標題和藝術家</value>
+    <value>歌曲資訊</value>
   </data>
   <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
     <value>對齊方式</value>
