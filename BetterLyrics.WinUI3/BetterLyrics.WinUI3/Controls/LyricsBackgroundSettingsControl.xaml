@@ -109,7 +109,7 @@
                                     Value="{x:Bind LyricsBackgroundSettings.FluidOverlayOpacity, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPagePaletteGeneratorType">
+                            <dev:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageMedianCut" />
                                     <ComboBoxItem x:Uid="SettingsPageOctTree" />
@@ -126,7 +126,7 @@
                         IsExpanded="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageAmount">
+                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Maximum="100"
                                     Minimum="10"
