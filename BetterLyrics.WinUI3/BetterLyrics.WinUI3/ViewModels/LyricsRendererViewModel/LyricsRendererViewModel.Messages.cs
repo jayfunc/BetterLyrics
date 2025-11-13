@@ -78,6 +78,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isSongArtistVisibilityChanged = true;
                 }
+                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.ShowAlbum))
+                {
+                    _isSongAlbumVisibilityChanged = true;
+                }
                 else if (message.PropertyName == nameof(AlbumArtLayoutSettings.AutoAlbumArtSize))
                 {
                     _isAlbumArtSizeChanged = true;
@@ -293,8 +297,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 if (message.PropertyName == nameof(AlbumArtLayoutSettings.SongInfoAlignmentType))
                 {
-                    _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment =
+                    _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _albumTextFormat.HorizontalAlignment =
                         _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
+                    _isSongInfoAlignmentTypeChanged = true;
                 }
             }
         }

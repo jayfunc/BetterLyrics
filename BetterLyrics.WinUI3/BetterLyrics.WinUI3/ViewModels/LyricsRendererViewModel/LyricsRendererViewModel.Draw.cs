@@ -279,14 +279,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle && titleLayout != null)
             {
-                double y = 0;
+                double y = _titleYTransition.Value;
 
                 ds.DrawTextLayout(
                     titleLayout,
                     new Vector2((float)_titleXTransition.Value, (float)y),
                     _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 255 * opacity)));
 
-                y += _titleYTransition.Value;
+                y += titleLayout.LayoutBounds.Height;
 
                 if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists && artistLayout != null)
                 {
@@ -295,7 +295,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         new Vector2((float)_titleXTransition.Value, (float)y),
                         _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
 
-                    y += titleLayout.LayoutBounds.Height;
+                    y += artistLayout.LayoutBounds.Height;
                 }
 
                 if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum && albumLayout != null)
@@ -303,7 +303,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     ds.DrawTextLayout(
                         albumLayout,
                         new Vector2((float)_titleXTransition.Value, (float)y),
-                        _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
+                        _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 64 * opacity)));
                 }
             }
         }

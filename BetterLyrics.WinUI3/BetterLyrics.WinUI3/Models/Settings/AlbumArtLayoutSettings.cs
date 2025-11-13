@@ -13,7 +13,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SongInfoFontSize { get; set; } = 18;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowTitle { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowArtists { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowAlbum { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowAlbum { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int AlbumArtSize { get; set; } = 64;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoAlbumArtSize { get; set; } = true;
 
