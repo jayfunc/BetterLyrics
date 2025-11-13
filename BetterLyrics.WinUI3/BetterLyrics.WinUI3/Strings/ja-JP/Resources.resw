@@ -1231,6 +1231,9 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>このホットキーは正常に登録されています</value>
   </data>
+  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <value>Show album</value>
+  </data>
   <data name="SettingsPageShowArtists.Header" xml:space="preserve">
     <value>アーティスト</value>
   </data>
