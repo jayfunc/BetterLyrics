@@ -120,11 +120,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static bool IsCJK(string text)
         {
-            return DetectLanguageCode(text)?.Substring(0, 2) switch
-            {
-                "zh" or "ja" or "ko" => true,
-                _ => false
-            };
+            return Lyricify.Lyrics.Helpers.General.StringHelper.IsCJK(text);
         }
 
         public static bool IsCJK(char ch)
