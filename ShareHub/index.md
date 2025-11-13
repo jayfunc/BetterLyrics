@@ -2,15 +2,30 @@
 
 ## Shared lyrics window status
 
-[Desktop](LyricsWindowStatus/desktop.json)
+Click on the links below to view and download the config files.
 
-[Docked (Bottom)](LyricsWindowStatus/docked-bottom.json)
+Each link is accompanied by a preview image of the lyrics window in that specific status.
 
-[Docked (Top)](LyricsWindowStatus/docked-top.json)
+- [Desktop](LyricsWindowStatus/desktop.json)
 
-[Fullscreen (Horizontal)](LyricsWindowStatus/fs-horiz.json)
+  ![](LyricsWindowStatus/desktop.png)
 
-[Fullscreen (Vertical)](LyricsWindowStatus/fs-vert.json)
+- [Docked (Bottom)](LyricsWindowStatus/docked-bottom.json)
 
-[Standard (Horizontal)](LyricsWindowStatus/std-horiz.json)
+  ![](LyricsWindowStatus/docked-bottom.png)
 
+- [Docked (Top)](LyricsWindowStatus/docked-top.json)
+
+  ![](LyricsWindowStatus/docked-top.png)
+
+- [Fullscreen (Horizontal)](LyricsWindowStatus/fs-horiz.json)
+
+  ![](LyricsWindowStatus/fs-horiz.png)
+
+- [Fullscreen (Vertical)](LyricsWindowStatus/fs-vert.json)
+
+  ![](LyricsWindowStatus/fs-vert.png)
+
+- [Standard (Horizontal)](LyricsWindowStatus/std-horiz.json)
+
+  ![](LyricsWindowStatus/std-horiz.png)
