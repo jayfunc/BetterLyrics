@@ -1,14 +1,9 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services;
+﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Lyricify.Lyrics.Helpers.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using StringHelper = BetterLyrics.WinUI3.Helper.StringHelper;
 
 namespace BetterLyrics.WinUI3.Models

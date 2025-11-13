@@ -1,14 +1,8 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

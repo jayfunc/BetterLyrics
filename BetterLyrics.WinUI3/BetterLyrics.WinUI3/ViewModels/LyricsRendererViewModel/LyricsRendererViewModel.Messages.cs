@@ -1,16 +1,9 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
@@ -83,7 +76,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
                 else if (message.PropertyName == nameof(AlbumArtLayoutSettings.ShowArtists))
                 {
-                    _isSongArtistsVisibilityChanged = true;
+                    _isSongArtistVisibilityChanged = true;
                 }
                 else if (message.PropertyName == nameof(AlbumArtLayoutSettings.AutoAlbumArtSize))
                 {

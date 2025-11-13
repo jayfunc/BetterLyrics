@@ -1,7 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Numerics;
 using Vanara.PInvoke;
-using Windows.UI;
 
 using Color = Windows.UI.Color;
 

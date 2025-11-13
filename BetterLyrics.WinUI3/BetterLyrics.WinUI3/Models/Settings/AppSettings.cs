@@ -1,8 +1,5 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Services;
+﻿using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {

@@ -1,7 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
 using BetterLyrics.WinUI3.Models;
+using System;
 
 namespace BetterLyrics.WinUI3.Events
 {

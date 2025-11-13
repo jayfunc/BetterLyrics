@@ -43,25 +43,25 @@ namespace ColorThiefDotNet
             double h1;
 
             // ReSharper disable CompareOfFloatsByEqualityOperator
-            if(chroma == 0)
+            if (chroma == 0)
             {
                 h1 = 0;
             }
-            else if(max == r)
+            else if (max == r)
             {
                 h1 = (g - b) / chroma % 6;
             }
-            else if(max == g)
+            else if (max == g)
             {
                 h1 = 2 + (b - r) / chroma;
             }
             else //if (max == b)
             {
-                h1 = 4 + (r - g)/chroma;
+                h1 = 4 + (r - g) / chroma;
             }
 
             var lightness = 0.5 * (max - min);
-            var saturation = chroma == 0 ? 0 : chroma / (1 - Math.Abs(2*lightness - 1));
+            var saturation = chroma == 0 ? 0 : chroma / (1 - Math.Abs(2 * lightness - 1));
             HslColor ret;
             ret.H = 60 * h1;
             ret.S = saturation;
@@ -83,7 +83,7 @@ namespace ColorThiefDotNet
 
         public override string ToString()
         {
-            if(A == 255)
+            if (A == 255)
             {
                 return ToHexString();
             }

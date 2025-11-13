@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Security.Credentials;
+﻿using Windows.Security.Credentials;
 
 namespace BetterLyrics.WinUI3.Helper
 {

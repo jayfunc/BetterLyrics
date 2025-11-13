@@ -4,9 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using TagLib.Riff;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {

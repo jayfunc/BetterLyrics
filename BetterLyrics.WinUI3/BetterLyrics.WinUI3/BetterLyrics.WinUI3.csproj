@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+		<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
 		<TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
 		<RootNamespace>BetterLyrics.WinUI3</RootNamespace>
 		<Platforms>x86;x64;ARM64</Platforms>
@@ -345,8 +345,5 @@
 		<AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
 		<InheritWinAppVersionFrom>AssemblyVersion</InheritWinAppVersionFrom>
 		<PackageVersionSettings>AssemblyVersion.None.None</PackageVersionSettings>
-		<Version>2025.6.0</Version>
-		<AssemblyVersion>2025.6.18.0110</AssemblyVersion>
-		<FileVersion>2025.6.18.0110</FileVersion>
 	</PropertyGroup>
 </Project>

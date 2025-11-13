@@ -1,7 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
 using Microsoft.UI.Text;
+using System;
 using Windows.UI.Text;
 
 namespace BetterLyrics.WinUI3.Enums

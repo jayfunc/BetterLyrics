@@ -1231,6 +1231,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>This hotkey has been successfully registered</value>
   </data>
+  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <value>Show album</value>
+  </data>
   <data name="SettingsPageShowArtists.Header" xml:space="preserve">
     <value>Show artists</value>
   </data>

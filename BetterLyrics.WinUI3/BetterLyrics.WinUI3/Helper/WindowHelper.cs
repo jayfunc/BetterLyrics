@@ -12,7 +12,6 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;

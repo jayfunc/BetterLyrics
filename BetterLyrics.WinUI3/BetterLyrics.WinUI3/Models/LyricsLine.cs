@@ -2,21 +2,11 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Shapes;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using Windows.Foundation;
-using Windows.Graphics.Effects;
-using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models
 {

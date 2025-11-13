@@ -4,7 +4,6 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Views
 {

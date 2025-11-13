@@ -1,10 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
@@ -17,6 +13,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SongInfoFontSize { get; set; } = 18;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowTitle { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowArtists { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowAlbum { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int AlbumArtSize { get; set; } = 64;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoAlbumArtSize { get; set; } = true;
 
@@ -33,6 +30,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 SongInfoFontSize = this.SongInfoFontSize,
                 ShowTitle = this.ShowTitle,
                 ShowArtists = this.ShowArtists,
+                ShowAlbum = this.ShowAlbum,
                 AlbumArtSize = this.AlbumArtSize,
                 AutoAlbumArtSize = this.AutoAlbumArtSize,
             };

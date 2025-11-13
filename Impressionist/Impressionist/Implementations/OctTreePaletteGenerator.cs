@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Impressionist.Implementations
@@ -69,7 +68,7 @@ namespace Impressionist.Implementations
                     builder = builder.Where(t => !t.Key.RGBVectorLStarIsDark());
                 }
             }
-                var targetColor = builder.ToDictionary(t => t.Key, t => t.Value);
+            var targetColor = builder.ToDictionary(t => t.Key, t => t.Value);
             foreach (var color in targetColor)
             {
                 quantizer.AddColorRange(color.Key, color.Value);
@@ -139,7 +138,7 @@ namespace Impressionist.Implementations
             }
             public List<Vector3> GetPaletteResult(int count)
             {
-                return Root.GetPaletteResult().OrderByDescending(t=>t.Value).Take(count).Select(t=>t.Key).ToList();
+                return Root.GetPaletteResult().OrderByDescending(t => t.Value).Take(count).Select(t => t.Key).ToList();
             }
             public Vector3 GetThemeResult()
             {

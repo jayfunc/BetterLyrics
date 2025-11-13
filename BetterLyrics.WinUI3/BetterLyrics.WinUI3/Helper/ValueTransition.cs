@@ -1,7 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
 using BetterLyrics.WinUI3.Enums;
+using System;
 
 namespace BetterLyrics.WinUI3.Helper
 {

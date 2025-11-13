@@ -2,11 +2,7 @@
 
 using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.WinUI;
-using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.UI.Xaml.Controls;
-using Windows.Storage;
-using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.Renderer
 {

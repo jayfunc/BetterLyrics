@@ -5,11 +5,8 @@ using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using CommunityToolkit.WinUI.Controls;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Services.LiveStatesService
 {

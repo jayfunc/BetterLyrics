@@ -5,7 +5,6 @@ using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.UI.Windowing;
 using System;
 using Windows.Foundation;
 
