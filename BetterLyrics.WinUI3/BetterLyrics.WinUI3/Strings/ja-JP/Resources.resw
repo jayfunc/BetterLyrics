@@ -1256,7 +1256,7 @@
     <value>Snow flake layer</value>
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>曲のタイトル＆アーティスト</value>
+    <value>Song info</value>
   </data>
   <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
     <value>アライメント</value>
