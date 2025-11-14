@@ -13,6 +13,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
 using Microsoft.UI.Text;
@@ -182,7 +183,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private CanvasTextLayout? _lastAlbumTextLayout = null;
         private CanvasTextLayout? _albumTextLayout = null;
 
-        //private LyricsLayoutOrientation _lyricsLayoutOrientation;
+        private CanvasGeometry? _spectrumGeometry = null;
 
         [ObservableProperty]
         public partial SongInfo? SongInfo { get; set; }
@@ -210,7 +211,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             AppSettings = _settingsService.AppSettings;
 
-            _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
             UpdateSongInfoFontSize();
 
             _timelineSyncThreshold = 0;

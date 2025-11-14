@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.UI;
 using static Vanara.PInvoke.Shell32;
@@ -111,76 +113,34 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         public void DrawSpectrum(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (_spectrumAnalyzer != null && _spectrumAnalyzer.SmoothSpectrum != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSpectrumOverlayEnabled)
+            if (_spectrumGeometry != null)
             {
-                var points = new Vector2[_spectrumAnalyzer.BarCount];
-                float pointSpacing = 0;
-
-                if (_spectrumAnalyzer.BarCount > 1)
-                {
-                    pointSpacing = (float)_canvasWidth / (_spectrumAnalyzer.BarCount - 1);
-                }
-
-                for (int i = 0; i < _spectrumAnalyzer.BarCount; i++)
-                {
-                    float x = i * pointSpacing;
-                    float y = _spectrumAnalyzer.SmoothSpectrum[i];
-                    points[i] = new Vector2(x, y);
-                }
-
-                // 限制最高点高度
-                var maxY = points.OrderByDescending(p => p.Y).FirstOrDefault().Y;
-                var limitY = _canvasHeight * 0.2f;
-                if (maxY > limitY)
-                {
-                    var num = (float)(limitY / maxY);
-                    points = points.Select(p => new Vector2(p.X, p.Y * num)).ToArray();
-                }
-
-                points = points.Select(p => new Vector2(p.X, (float)(_canvasHeight - p.Y))).ToArray();
-
-                // 用于填充的闭合路径
-                using var pathBuilder = new CanvasPathBuilder(ds);
-                pathBuilder.BeginFigure(points[0]);
-
-                if (_spectrumAnalyzer.BarCount > 2)
-                {
-                    for (int i = 0; i < _spectrumAnalyzer.BarCount - 1; i++)
-                    {
-                        Vector2 p0 = points[Math.Max(i - 1, 0)];
-                        Vector2 p1 = points[i];
-                        Vector2 p2 = points[i + 1];
-                        Vector2 p3 = points[Math.Min(i + 2, _spectrumAnalyzer.BarCount - 1)];
-
-                        Vector2 cp1 = p1 + (p2 - p0) / 6.0f;
-                        Vector2 cp2 = p2 - (p3 - p1) / 6.0f;
-
-                        pathBuilder.AddCubicBezier(cp1, cp2, p2);
-                    }
-                }
-                else
-                {
-                    pathBuilder.AddLine(points[1]);
-                }
-
-                pathBuilder.AddLine(new Vector2(points[_spectrumAnalyzer.BarCount - 1].X, (float)_canvasHeight));
-                pathBuilder.AddLine(new Vector2(points[0].X, (float)_canvasHeight));
-                pathBuilder.EndFigure(CanvasFigureLoop.Closed);
-
-                using var geometry = CanvasGeometry.CreatePath(pathBuilder);
                 var gradientStops = new CanvasGradientStop[]
-                {
+                 {
                     new() { Position = 0.0f, Color = Colors.Transparent },
                     new() { Position = 0.7f, Color = Colors.Transparent },
                     new() { Position = 1.0f, Color = _adaptiveColoredFontColor ?? _albumArtAccentColor1Transition.Value }
-                };
+                 };
 
                 using var gradientBrush = new CanvasLinearGradientBrush(ds, gradientStops);
-                gradientBrush.StartPoint = new Vector2(0, 0);
-                gradientBrush.EndPoint = new Vector2(0, (float)_canvasHeight);
+
+                switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SpectrumPlacement)
+                {
+                    case SpectrumPlacement.Top:
+                        gradientBrush.StartPoint = new Vector2(0, (float)_canvasHeight);
+                        gradientBrush.EndPoint = new Vector2(0, 0);
+                        break;
+                    case SpectrumPlacement.Bottom:
+                        gradientBrush.StartPoint = new Vector2(0, 0);
+                        gradientBrush.EndPoint = new Vector2(0, (float)_canvasHeight);
+                        break;
+                    default:
+                        break;
+                }
+
 
                 // 使用渐变画刷填充
-                ds.FillGeometry(geometry, gradientBrush);
+                ds.FillGeometry(_spectrumGeometry, gradientBrush);
 
                 // 纯色
                 //ds.FillGeometry(geometry, _adaptiveColoredFontColor ?? _albumArtAccentColor1Transition.Value);
@@ -189,7 +149,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 //var lineColor = Colors.SkyBlue;
                 //float strokeWidth = 2f;
                 //ds.DrawGeometry(geometry, _albumArtAccentColor4Transition.Value, strokeWidth);
-
             }
         }
 
