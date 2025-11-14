@@ -14,7 +14,7 @@ BetterLyrics
 
 <div align="center">
 	
-[**_📖 Click here to view wiki_**](https://jayfunc.blog/work/betterlyrics)
+[Wiki](https://jayfunc.blog/work/betterlyrics) | [Privacy Policy](PrivacyPolicy.md) | [Terms of Service](TermsofService.md)
 
 </div>
 
