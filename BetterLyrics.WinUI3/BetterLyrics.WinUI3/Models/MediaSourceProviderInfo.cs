@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; } = [.. Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(p, true))];
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
+
+        public bool IsLXMusic => PlayerIdMatcher.IsLXMusic(Provider);
 
         public MediaSourceProviderInfo()
         {

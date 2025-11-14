@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         {
             try
             {
-                using var response = await _amllTtmlDbHttpClient.GetAsync(Constants.AmllTTmlDB.Index, HttpCompletionOption.ResponseHeadersRead);
+                using var response = await _amllTtmlDbHttpClient.GetAsync($"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{Constants.AmllTTmlDB.IndexSuffix}", HttpCompletionOption.ResponseHeadersRead);
                 if (!response.IsSuccessStatusCode) return false;
 
                 await using var stream = await response.Content.ReadAsStreamAsync();
@@ -378,7 +378,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
 
             // 下载歌词内容
-            var url = $"{Constants.AmllTTmlDB.QueryPrefix}{rawLyricFile}";
+            var url = $"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{Constants.AmllTTmlDB.QueryPrefix}/{rawLyricFile}";
             try
             {
                 using var response = await _amllTtmlDbHttpClient.GetAsync(url);

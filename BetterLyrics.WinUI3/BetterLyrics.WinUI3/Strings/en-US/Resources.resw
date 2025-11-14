@@ -571,6 +571,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>Album art area style</value>
   </data>
+  <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
+    <value>Base URL</value>
+  </data>
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>Amount</value>
   </data>
@@ -895,7 +898,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>Log record</value>
   </data>
-  <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX Music Server</value>
   </data>
   <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
@@ -1209,9 +1212,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>The duration of the first line</value>
-  </data>
-  <data name="SettingsPageServerAddress.Header" xml:space="preserve">
-    <value>Server address</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>Test server</value>

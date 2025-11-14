@@ -331,7 +331,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 int textLength = line.OriginalText.Length;
                 if (textLength == 0) return;
 
-                if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsForceWordByWordEffect)
+                if (_settingsService.AppSettings.GeneralSettings.IsForceWordByWordEffect)
                 {
                     // 没有逐字时间轴，均匀分配每个字的高亮时间
                     double lineProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
