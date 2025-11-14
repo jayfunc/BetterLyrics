@@ -14,7 +14,7 @@ BetterLyrics
 
 <div align="center">
 	
-[**_📖 点按此处浏览软件操作说明_**](https://jayfunc.blog/work/betterlyrics-cn)
+[操作指南](https://jayfunc.blog/work/betterlyrics-cn) | [隐私政策](PrivacyPolicy.md) | [服务协议](TermsofService.md)
 
 </div>
 
