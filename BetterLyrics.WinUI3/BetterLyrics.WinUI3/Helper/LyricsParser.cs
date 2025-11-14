@@ -2,14 +2,12 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using Lyricify.Lyrics.Models;
 using Lyricify.Lyrics.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using LyricsData = BetterLyrics.WinUI3.Models.LyricsData;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -49,10 +47,10 @@ namespace BetterLyrics.WinUI3.Helper
                         ParseLrc(raw);
                         break;
                     case LyricsFormat.Qrc:
-                        ParseQQNeteaseKugou(QrcParser.Parse(raw).Lines);
+                        ParseQrcKrc(QrcParser.Parse(raw).Lines);
                         break;
                     case LyricsFormat.Krc:
-                        ParseQQNeteaseKugou(KrcParser.Parse(raw).Lines);
+                        ParseQrcKrc(KrcParser.Parse(raw).Lines);
                         break;
                     case LyricsFormat.Ttml:
                         ParseTtml(raw);
@@ -462,7 +460,7 @@ namespace BetterLyrics.WinUI3.Helper
             return 0;
         }
 
-        private void ParseQQNeteaseKugou(List<ILineInfo>? lines)
+        private void ParseQrcKrc(List<Lyricify.Lyrics.Models.ILineInfo>? lines)
         {
             lines = lines?.Where(x => x.Text != string.Empty).ToList();
             List<LyricsLine> lyricsLines = [];
@@ -481,7 +479,7 @@ namespace BetterLyrics.WinUI3.Helper
                         LyricsChars = [],
                     };
 
-                    var syllables = (lineRead as SyllableLineInfo)?.Syllables;
+                    var syllables = (lineRead as Lyricify.Lyrics.Models.SyllableLineInfo)?.Syllables;
                     if (syllables != null)
                     {
                         int startIndex = 0;

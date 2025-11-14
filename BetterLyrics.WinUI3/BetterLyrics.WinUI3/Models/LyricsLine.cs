@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Models
             easingType: EasingType.EaseInOutQuad
         );
         public ValueTransition<double> ScaleTransition { get; set; } = new(
-            initialValue: 0.75,
+            initialValue: 0,
             durationSeconds: _animationDuration,
             easingType: EasingType.EaseInOutQuad
         );

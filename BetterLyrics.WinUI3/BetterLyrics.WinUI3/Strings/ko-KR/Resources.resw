@@ -1273,6 +1273,15 @@
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[실험] 스펙트럼 레이어</value>
   </data>
+  <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
+    <value>스펙트럼 위치</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
+    <value>맨 아래</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
+    <value>맨 위</value>
+  </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>모션</value>
   </data>

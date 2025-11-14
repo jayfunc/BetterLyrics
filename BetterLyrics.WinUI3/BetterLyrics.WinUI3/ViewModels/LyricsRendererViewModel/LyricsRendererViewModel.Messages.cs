@@ -297,8 +297,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 if (message.PropertyName == nameof(AlbumArtLayoutSettings.SongInfoAlignmentType))
                 {
-                    _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _albumTextFormat.HorizontalAlignment =
-                        _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
                     _isSongInfoAlignmentTypeChanged = true;
                 }
             }
@@ -351,7 +349,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontWeight))
                 {
-                    _isLayoutChanged = true;
+                    _isLyricsFontWeightChanged = true;
                 }
             }
         }
@@ -384,14 +382,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
                 {
-                    _isLayoutChanged = true;
+                    _isLyricsFontFamilyChanged = true;
                 }
             }
             if (message.Sender is LyricsStyleSettings)
             {
                 if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
                 {
-                    _isLayoutChanged = true;
+                    _isLyricsFontFamilyChanged = true;
                 }
             }
         }
@@ -407,8 +405,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                     _isLayoutChanged = true;
 
-                    // 模拟设备变更，执行全局强制刷新以避免旧值被误用
-                    _isDeviceChanged = true;
+                    _isLyricsWindowsStatusChanged = true;
                 }
             }
         }

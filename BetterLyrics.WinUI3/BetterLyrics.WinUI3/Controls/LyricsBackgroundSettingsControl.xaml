@@ -136,9 +136,23 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageSpectrumLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE659;}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageSpectrumLayer"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE93E;}"
+                        IsExpanded="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                        <dev:SettingsExpander.Items>
+
+                            <dev:SettingsCard x:Uid="SettingsPageSpectrumLayerPlacement" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                                <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.SpectrumPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageSpectrumPlacementTop" />
+                                    <ComboBoxItem x:Uid="SettingsPageSpectrumPlacementBottom" />
+                                </ComboBox>
+                            </dev:SettingsCard>
+
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
                 </StackPanel>
             </Grid>

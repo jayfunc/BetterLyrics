@@ -2,7 +2,10 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
+using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -16,41 +19,42 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
     {
         private bool _isLayoutChanged = true;
 
-        private bool _isCanvasWidthChanged = false;
-        private bool _isCanvasHeightChanged = false;
+        private bool _isCanvasWidthChanged = true;
+        private bool _isCanvasHeightChanged = true;
 
-        private bool _isDisplayTypeChanged = false;
-        private bool _isLyricsLayoutOrientationChanged = false;
+        private bool _isDisplayTypeChanged = true;
+        private bool _isLyricsLayoutOrientationChanged = true;
 
-        private bool _isPlayingLineChanged = false;
-        private bool _isVisibleLinesBoundaryChanged = false;
+        private bool _isPlayingLineChanged = true;
+        private bool _isVisibleLinesBoundaryChanged = true;
 
         private bool _isDebugOverlayEnabledChanged = true;
 
-        private bool _albumArtChanged = false;
-        private bool _isCoverAcrylicEffectAmountChanged = false;
+        private bool _albumArtChanged = true;
+        private bool _isCoverAcrylicEffectAmountChanged = true;
 
         private bool _isAlbumArtCornerRadiusChanged = true;
-        private bool _isAlbumArtShadowAmountChanged = false;
+        private bool _isAlbumArtShadowAmountChanged = true;
 
-        private bool _isAlbumArtBgOpacityChanged = false;
-        private bool _isAlbumArtBgBlurAmountChanged = false;
+        private bool _isAlbumArtBgOpacityChanged = true;
+        private bool _isAlbumArtBgBlurAmountChanged = true;
 
-        private bool _isAlbumArtBgEffectChanged = false;
-        private bool _isAlbumArtEffectChanged = false;
+        private bool _isAlbumArtBgEffectChanged = true;
+        private bool _isAlbumArtEffectChanged = true;
 
-        private bool _isSongTitleVisibilityChanged = false;
-        private bool _isSongArtistVisibilityChanged = false;
-        private bool _isSongAlbumVisibilityChanged = false;
+        private bool _isSongTitleVisibilityChanged = true;
+        private bool _isSongArtistVisibilityChanged = true;
+        private bool _isSongAlbumVisibilityChanged = true;
 
-        private bool _isSongTitleChanged = false;
-        private bool _isSongArtistChanged = false;
-        private bool _isSongAlbumChanged = false;
+        private bool _isSongTitleChanged = true;
+        private bool _isSongArtistChanged = true;
+        private bool _isSongAlbumChanged = true;
 
-        private bool _isSongInfoFontSizeChanged = false;
-        private bool _isSongInfoAlignmentTypeChanged = false;
+        private bool _isSongInfoFontSizeChanged = true;
+        private bool _isSongInfoAlignmentTypeChanged = true;
+        private bool _isSongInfoHeightChanged = true;
 
-        private bool _isAlbumArtSizeChanged = false;
+        private bool _isAlbumArtSizeChanged = true;
 
         private bool _isSpectrumOverlayEnabledChanged = true;
         private bool _isFluidOverlayEnabledChanged = true;
@@ -60,6 +64,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private bool _isDeviceChanged = true;
 
         private bool _isLyricsXChanged = true;
+        private bool _isLyricsYChanged = true;
+
+        private bool _isLyricsWindowsStatusChanged = true;
+
+        private bool _isMaxLyricsWidthChanged = true;
+
+        private bool _isLyricsFontFamilyChanged = true;
+        private bool _isLyricsFontWeightChanged = true;
 
         public void Update(ICanvasAnimatedControl control, CanvasAnimatedUpdateEventArgs args)
         {
@@ -137,6 +149,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _isCanvasHeightChanged = _canvasHeight != control.Size.Height;
             _canvasHeight = control.Size.Height;
 
+            UpdateSpectrum(control);
+
             if (_isDebugOverlayEnabledChanged)
             {
                 if (_isDebugOverlayEnabled)
@@ -193,7 +207,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 UpdateSongInfoFontSize();
 
                 _isCoverAcrylicEffectAmountChanged = true;
-                _isLyrics3DMatrixChanged = true;
 
                 _fluidEffect?.Properties["Width"] = (float)control.ConvertDipsToPixels((float)_canvasWidth, CanvasDpiRounding.Round);
                 _fluidEffect?.Properties["Height"] = (float)control.ConvertDipsToPixels((float)_canvasHeight, CanvasDpiRounding.Round);
@@ -201,104 +214,92 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _topMargin = _bottomMargin = _leftMargin = _middleMargin = _rightMargin = Math.Max(_canvasWidth, _canvasHeight) / 30.0;
             }
 
-            if (_isDeviceChanged || _isDisplayTypeChanged || _isLyricsLayoutOrientationChanged || _isAlbumArtSizeChanged ||
-                _isSongInfoFontSizeChanged || _isSongInfoAlignmentTypeChanged ||
-                _isSongTitleVisibilityChanged || _isSongArtistVisibilityChanged || _isSongAlbumVisibilityChanged ||
-                _isSongTitleChanged || _isSongArtistChanged || _isSongAlbumChanged ||
-                _isCanvasWidthChanged || _isCanvasHeightChanged ||
+            if (_isLyricsWindowsStatusChanged || _isDisplayTypeChanged)
+            {
+                UpdateLyricsOpacity();
+                UpdateAlbumArtOpacity();
+            }
+
+            if (_isLyricsWindowsStatusChanged || _isLyricsLayoutOrientationChanged ||
+                _isCanvasHeightChanged || _isCanvasWidthChanged ||
                 _isAlbumArtSizeChanged)
             {
                 UpdateAlbumArtSize();
-                UpdateMaxSongInfoWidth();
+            }
 
+            if (_isAlbumArtSizeChanged)
+            {
+                UpdateMaxSongInfoWidth();
+            }
+
+            if (_isLyricsWindowsStatusChanged || _isLyricsFontWeightChanged)
+            {
+                UpdateSongInfoFontWeight();
+            }
+
+            if (_isLyricsWindowsStatusChanged || _isSongInfoAlignmentTypeChanged)
+            {
+                UpdateSongInfoAlignmentType();
+            }
+
+            if (_isDeviceChanged || _isLyricsWindowsStatusChanged || _isAlbumArtSizeChanged ||
+                _isSongTitleVisibilityChanged || _isSongArtistVisibilityChanged || _isSongAlbumVisibilityChanged ||
+                _isSongTitleChanged || _isSongArtistChanged || _isSongAlbumChanged ||
+                _isSongInfoAlignmentTypeChanged || _isSongInfoFontSizeChanged ||
+                _isLyricsFontFamilyChanged || _isLyricsFontWeightChanged)
+            {
                 UpdateSongTitle(control);
                 UpdateSongArtist(control);
                 UpdateSongAlbum(control);
 
+                UpdateSongInfoFontFamily();
+
                 UpdateSongInfoHeight();
-
-                bool jumpTo = !_isDisplayTypeChanged && !_isLyricsLayoutOrientationChanged &&
-                    (_isCanvasWidthChanged || _isCanvasHeightChanged);
-
-                switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation)
-                {
-                    case LyricsLayoutOrientation.Horizontal:
-                        _albumArtYTransition.StartTransition((_canvasHeight - _albumArtSize - _songInfoHeight) / 2.0, jumpTo);
-                        _titleYTransition.StartTransition(_albumArtYTransition.TargetValue + _albumArtSize * 1.05, jumpTo);
-                        _lyricsYTransition.StartTransition(0, jumpTo);
-                        switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
-                        {
-                            case LyricsDisplayType.AlbumArtOnly:
-                                _lyricsOpacityTransition.StartTransition(0f, jumpTo);
-                                _albumArtOpacityTransition.StartTransition(1f, jumpTo);
-                                _albumArtXTransition.StartTransition(_canvasWidth / 2.0 - _albumArtSize / 2.0, jumpTo);
-                                _titleXTransition.StartTransition(_albumArtXTransition.TargetValue, jumpTo);
-                                break;
-                            case LyricsDisplayType.LyricsOnly:
-                                _lyricsOpacityTransition.StartTransition(1f, jumpTo);
-                                _albumArtOpacityTransition.StartTransition(0f, jumpTo);
-                                _lyricsX = _leftMargin;
-                                break;
-                            case LyricsDisplayType.SplitView:
-                                _lyricsOpacityTransition.StartTransition(1f, jumpTo);
-                                _albumArtOpacityTransition.StartTransition(1f, jumpTo);
-                                _lyricsX = (_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 + _leftMargin + _middleMargin;
-                                _albumArtXTransition.StartTransition(_leftMargin + ((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 - _albumArtSize) / 2.0, jumpTo);
-                                _titleXTransition.StartTransition(_albumArtXTransition.TargetValue, jumpTo);
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    case LyricsLayoutOrientation.Vertical:
-                        _lyricsX = _leftMargin;
-                        _albumArtXTransition.StartTransition(_leftMargin, jumpTo);
-                        _titleXTransition.StartTransition(_leftMargin + _albumArtSize * 1.2, jumpTo);
-                        switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
-                        {
-                            case LyricsDisplayType.AlbumArtOnly:
-                                _lyricsOpacityTransition.StartTransition(0f, jumpTo);
-                                _albumArtOpacityTransition.StartTransition(1f, jumpTo);
-                                _albumArtYTransition.StartTransition((_canvasHeight - _albumArtSize) / 2.0, jumpTo);
-                                _titleYTransition.StartTransition(_albumArtYTransition.TargetValue, jumpTo);
-                                break;
-                            case LyricsDisplayType.LyricsOnly:
-                                _lyricsOpacityTransition.StartTransition(1f, jumpTo);
-                                _albumArtOpacityTransition.StartTransition(0f, jumpTo);
-                                _lyricsYTransition.StartTransition(0, jumpTo);
-                                break;
-                            case LyricsDisplayType.SplitView:
-                                _albumArtYTransition.StartTransition(_topMargin, jumpTo);
-                                _titleYTransition.StartTransition(_topMargin, jumpTo);
-                                _lyricsOpacityTransition.StartTransition(1f, jumpTo);
-                                _albumArtOpacityTransition.StartTransition(1f, jumpTo);
-                                _lyricsYTransition.StartTransition(_topMargin, jumpTo);
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                _isDisplayTypeChanged = false;
-
-                _isSongInfoFontSizeChanged = false;
-                _isSongInfoAlignmentTypeChanged = false;
 
                 _isSongTitleVisibilityChanged = false;
                 _isSongArtistVisibilityChanged = false;
                 _isSongAlbumVisibilityChanged = false;
 
-                _isLyrics3DMatrixChanged = true;
+                _isSongInfoFontSizeChanged = false;
+                _isSongInfoAlignmentTypeChanged = false;
+            }
+
+            if (_isLyricsWindowsStatusChanged ||
+                _isDisplayTypeChanged || _isLyricsLayoutOrientationChanged ||
+                _isCanvasWidthChanged || _isCanvasHeightChanged)
+            {
+                UpdateLyricsX();
+                UpdateLyricsY();
+
                 _isLyricsXChanged = true;
+                _isLyricsYChanged = true;
+            }
+
+            if (_isLyricsWindowsStatusChanged ||
+                _isDisplayTypeChanged || _isLyricsLayoutOrientationChanged ||
+                _isCanvasWidthChanged || _isCanvasHeightChanged ||
+                _isAlbumArtSizeChanged)
+            {
+                UpdateAlbumArtX();
+                UpdateTitleX();
+            }
+
+            if (_isLyricsWindowsStatusChanged ||
+                _isLyricsLayoutOrientationChanged ||
+                _isCanvasWidthChanged || _isCanvasHeightChanged ||
+                _isAlbumArtSizeChanged ||
+                _isSongInfoHeightChanged
+                )
+            {
+                UpdateAlbumArtY();
+                UpdateTitleY();
             }
 
             // 先重置这两个的变化状态
             _isAlbumArtEffectChanged = false;
             _isAlbumArtBgEffectChanged = false;
 
-            if (_isAlbumArtCornerRadiusChanged || _isAlbumArtShadowAmountChanged)
+            if (_isDeviceChanged || _isAlbumArtCornerRadiusChanged || _isAlbumArtShadowAmountChanged)
             {
                 DisposeAlbumArtRenderTarget();
                 UpdateAlbumArtEffect(control);
@@ -385,18 +386,25 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 DisposeAlbumArtBgEffect();
             }
 
-            if (_isDeviceChanged || _isCanvasHeightChanged || _isCanvasWidthChanged || _isLyricsXChanged)
+            if (_isCanvasWidthChanged || _isLyricsXChanged)
             {
                 _maxLyricsWidth = Math.Max(_canvasWidth - _lyricsX - _rightMargin, 0);
+                _isMaxLyricsWidthChanged = true;
+            }
+
+            if (_isMaxLyricsWidthChanged || _isLyricsFontFamilyChanged || _isLyricsFontWeightChanged)
+            {
                 _isLayoutChanged = true;
+            }
+
+            if (_isMaxLyricsWidthChanged || _isLyricsXChanged || _isLyricsYChanged || _isCanvasHeightChanged)
+            {
                 _isLyrics3DMatrixChanged = true;
-                _isLyricsXChanged = false;
             }
 
             if (_isLyrics3DMatrixChanged)
             {
                 UpdateLyrics3DMatrix();
-                _isLyrics3DMatrixChanged = false;
             }
 
             if (_isLayoutChanged)
@@ -413,8 +421,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             UpdateVisibleLinesBoundary();
 
             UpdateVisibleLinesProps(control);
-
-            _isLayoutChanged = false;
 
             _titleXTransition.Update(_elapsedTime);
             _titleYTransition.Update(_elapsedTime);
@@ -440,20 +446,29 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _songInfoOpacityTransition.Update(_elapsedTime);
             _canvasYScrollTransition.Update(_elapsedTime);
 
+            _isLyrics3DMatrixChanged = false;
+            _isLayoutChanged = false;
             _isDeviceChanged = false;
-        }
+            _isDisplayTypeChanged = false;
+            _isLyricsWindowsStatusChanged = false;
 
-        private string AutoSelectFontFamily(string text)
-        {
-            return LanguageHelper.IsCJK(text)
-                    ? _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily
-                    : _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily;
+            _isLyricsXChanged = false;
+            _isLyricsYChanged = false;
+
+            _isSongInfoHeightChanged = false;
+
+            _isMaxLyricsWidthChanged = false;
+
+            _isLyricsFontFamilyChanged = false;
+            _isLyricsFontWeightChanged = false;
         }
 
         private void ReLayout(ICanvasAnimatedControl control)
         {
             if (control == null)
                 return;
+
+            Debug.WriteLine("relayout ...");
 
             if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.IsDynamicLyricsFontSize)
             {
@@ -468,16 +483,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
 
             _originalLyricsFontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight;
-            _titleTextFormat.FontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight.ToFontWeight();
-            _artistTextFormat.FontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight.ToFontWeight();
-            _albumTextFormat.FontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight.ToFontWeight();
-
-            if (SongInfo != null)
-            {
-                _titleTextFormat.FontFamily = AutoSelectFontFamily(SongInfo.Title);
-                _artistTextFormat.FontFamily = AutoSelectFontFamily(SongInfo.Artist);
-                _albumTextFormat.FontFamily = AutoSelectFontFamily(SongInfo.Album);
-            }
 
             _canvasYScrollTransition.SetDuration(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsScrollDuration / 1000.0);
             _canvasYScrollTransition.SetEasingType(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsScrollEasingType);
@@ -938,13 +943,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             _lastTitleTextLayout?.Dispose();
             _lastTitleTextLayout = null;
+
+            _titleTextLayout?.Dispose();
+            _titleTextLayout = null;
+
             _lastTitleTextLayout = new(
                 control, _lastSongTitle ?? string.Empty,
                 _titleTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
             );
 
-            _titleTextLayout?.Dispose();
-            _titleTextLayout = null;
             _titleTextLayout = new(
                 control, _songTitle ?? string.Empty,
                 _titleTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
@@ -957,13 +964,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             _lastArtistTextLayout?.Dispose();
             _lastArtistTextLayout = null;
+
+            _artistTextLayout?.Dispose();
+            _artistTextLayout = null;
+
             _lastArtistTextLayout = new(
                 control, _lastSongArtist ?? string.Empty,
                 _artistTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
             );
 
-            _artistTextLayout?.Dispose();
-            _artistTextLayout = null;
             _artistTextLayout = new(
                 control, _songArtist ?? string.Empty,
                 _artistTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
@@ -976,13 +985,15 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             _lastAlbumTextLayout?.Dispose();
             _lastAlbumTextLayout = null;
+
+            _albumTextLayout?.Dispose();
+            _albumTextLayout = null;
+
             _lastAlbumTextLayout = new(
                 control, _lastSongAlbum ?? string.Empty,
                 _albumTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
             );
 
-            _albumTextLayout?.Dispose();
-            _albumTextLayout = null;
             _albumTextLayout = new(
                 control, _songAlbum ?? string.Empty,
                 _albumTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
@@ -1006,6 +1017,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _songInfoHeight += (int)(_albumTextLayout?.LayoutBounds.Height ?? 0);
                 }
             }
+
+            _isSongInfoHeightChanged = true;
         }
 
         private void UpdateAlbumArtSize()
@@ -1037,6 +1050,314 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     }
                     break;
             }
+
+            _isAlbumArtSizeChanged = true;
         }
+
+        private void UpdateSpectrum(ICanvasAnimatedControl control)
+        {
+            _spectrumGeometry?.Dispose();
+            _spectrumGeometry = null;
+
+            if (_spectrumAnalyzer != null && _spectrumAnalyzer.SmoothSpectrum != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSpectrumOverlayEnabled)
+            {
+                var points = new Vector2[_spectrumAnalyzer.BarCount];
+                float pointSpacing = 0;
+
+                if (_spectrumAnalyzer.BarCount > 1)
+                {
+                    pointSpacing = (float)_canvasWidth / (_spectrumAnalyzer.BarCount - 1);
+                }
+
+                for (int i = 0; i < _spectrumAnalyzer.BarCount; i++)
+                {
+                    float x = i * pointSpacing;
+                    float y = _spectrumAnalyzer.SmoothSpectrum[i];
+                    points[i] = new Vector2(x, y);
+                }
+
+                // 限制最高点高度
+                var maxY = points.OrderByDescending(p => p.Y).FirstOrDefault().Y;
+                var limitY = _canvasHeight * 0.2f;
+                if (maxY > limitY)
+                {
+                    var num = (float)(limitY / maxY);
+                    points = points.Select(p => new Vector2(p.X, p.Y * num)).ToArray();
+                }
+
+                switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SpectrumPlacement)
+                {
+                    case SpectrumPlacement.Top:
+                        break;
+                    case SpectrumPlacement.Bottom:
+                        points = points.Select(p => new Vector2(p.X, (float)(_canvasHeight - p.Y))).ToArray();
+                        break;
+                    default:
+                        break;
+                }
+
+                // 用于填充的闭合路径
+                using var pathBuilder = new CanvasPathBuilder(control);
+                pathBuilder.BeginFigure(points[0]);
+
+                if (_spectrumAnalyzer.BarCount > 2)
+                {
+                    for (int i = 0; i < _spectrumAnalyzer.BarCount - 1; i++)
+                    {
+                        Vector2 p0 = points[Math.Max(i - 1, 0)];
+                        Vector2 p1 = points[i];
+                        Vector2 p2 = points[i + 1];
+                        Vector2 p3 = points[Math.Min(i + 2, _spectrumAnalyzer.BarCount - 1)];
+
+                        Vector2 cp1 = p1 + (p2 - p0) / 6.0f;
+                        Vector2 cp2 = p2 - (p3 - p1) / 6.0f;
+
+                        pathBuilder.AddCubicBezier(cp1, cp2, p2);
+                    }
+                }
+                else
+                {
+                    pathBuilder.AddLine(points[1]);
+                }
+
+                switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SpectrumPlacement)
+                {
+                    case SpectrumPlacement.Top:
+                        pathBuilder.AddLine(new Vector2(points[_spectrumAnalyzer.BarCount - 1].X, 0));
+                        pathBuilder.AddLine(new Vector2(points[0].X, 0));
+                        break;
+                    case SpectrumPlacement.Bottom:
+                        pathBuilder.AddLine(new Vector2(points[_spectrumAnalyzer.BarCount - 1].X, (float)_canvasHeight));
+                        pathBuilder.AddLine(new Vector2(points[0].X, (float)_canvasHeight));
+                        break;
+                    default:
+                        break;
+                }
+
+                pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+
+                _spectrumGeometry = CanvasGeometry.CreatePath(pathBuilder);
+            }
+        }
+
+        private void UpdateAlbumArtY(bool jumpTo = false)
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation)
+            {
+                case LyricsLayoutOrientation.Horizontal:
+                    _albumArtYTransition.StartTransition((_canvasHeight - _albumArtSize - _songInfoHeight) / 2.0, jumpTo);
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.AlbumArtOnly:
+                            _albumArtYTransition.StartTransition((_canvasHeight - _albumArtSize) / 2.0, jumpTo);
+                            break;
+                        case LyricsDisplayType.SplitView:
+                            _albumArtYTransition.StartTransition(_topMargin, jumpTo);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateTitleY(bool jumpTo = false)
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation)
+            {
+                case LyricsLayoutOrientation.Horizontal:
+                    _titleYTransition.StartTransition(_albumArtYTransition.TargetValue + _albumArtSize * 1.05, jumpTo);
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.AlbumArtOnly:
+                            _titleYTransition.StartTransition(_albumArtYTransition.TargetValue, jumpTo);
+                            break;
+                        case LyricsDisplayType.SplitView:
+                            _titleYTransition.StartTransition(_topMargin, jumpTo);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateLyricsY(bool jumpTo = false)
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation)
+            {
+                case LyricsLayoutOrientation.Horizontal:
+                    _lyricsYTransition.StartTransition(0, jumpTo);
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.LyricsOnly:
+                            _lyricsYTransition.StartTransition(0, jumpTo);
+                            break;
+                        case LyricsDisplayType.SplitView:
+                            _lyricsYTransition.StartTransition(_topMargin, jumpTo);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateLyricsOpacity(bool jumpTo = false)
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+            {
+                case LyricsDisplayType.AlbumArtOnly:
+                    _lyricsOpacityTransition.StartTransition(0f, jumpTo);
+                    break;
+                case LyricsDisplayType.LyricsOnly:
+                case LyricsDisplayType.SplitView:
+                    _lyricsOpacityTransition.StartTransition(1f, jumpTo);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateAlbumArtOpacity(bool jumpTo = false)
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+            {
+                case LyricsDisplayType.AlbumArtOnly:
+                case LyricsDisplayType.SplitView:
+                    _albumArtOpacityTransition.StartTransition(1f, jumpTo);
+                    break;
+                case LyricsDisplayType.LyricsOnly:
+                    _albumArtOpacityTransition.StartTransition(0f, jumpTo);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateAlbumArtX(bool jumpTo = false)
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation)
+            {
+                case LyricsLayoutOrientation.Horizontal:
+                    switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.AlbumArtOnly:
+                            _albumArtXTransition.StartTransition(_canvasWidth / 2.0 - _albumArtSize / 2.0, jumpTo);
+                            break;
+                        case LyricsDisplayType.SplitView:
+                            _albumArtXTransition.StartTransition(_leftMargin + ((_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 - _albumArtSize) / 2.0, jumpTo);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    _albumArtXTransition.StartTransition(_leftMargin, jumpTo);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateTitleX(bool jumpTo = false)
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation)
+            {
+                case LyricsLayoutOrientation.Horizontal:
+                    switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.AlbumArtOnly:
+                            _titleXTransition.StartTransition(_albumArtXTransition.TargetValue, jumpTo);
+                            break;
+                        case LyricsDisplayType.SplitView:
+                            _titleXTransition.StartTransition(_albumArtXTransition.TargetValue, jumpTo);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    _titleXTransition.StartTransition(_leftMargin + _albumArtSize * 1.2, jumpTo);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateLyricsX()
+        {
+            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation)
+            {
+                case LyricsLayoutOrientation.Horizontal:
+                    switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.LyricsOnly:
+                            _lyricsX = _leftMargin;
+                            break;
+                        case LyricsDisplayType.SplitView:
+                            _lyricsX = (_canvasWidth - _leftMargin - _middleMargin - _rightMargin) / 2.0 + _leftMargin + _middleMargin;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    _lyricsX = _leftMargin;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void UpdateSongInfoFontFamily()
+        {
+            _lastTitleTextLayout?.SetFontFamily(_lastSongTitle,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
+            _titleTextLayout?.SetFontFamily(_songTitle,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
+
+            _lastArtistTextLayout?.SetFontFamily(_lastSongArtist,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
+            _artistTextLayout?.SetFontFamily(_songArtist,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
+
+            _lastAlbumTextLayout?.SetFontFamily(_lastSongAlbum,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
+            _albumTextLayout?.SetFontFamily(_songAlbum,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
+                _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
+        }
+
+        private void UpdateSongInfoAlignmentType()
+        {
+            _titleTextFormat.HorizontalAlignment = _artistTextFormat.HorizontalAlignment = _albumTextFormat.HorizontalAlignment =
+                _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType.ToCanvasHorizontalAlignment();
+        }
+
+        private void UpdateSongInfoFontWeight()
+        {
+            _titleTextFormat.FontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight.ToFontWeight();
+            _artistTextFormat.FontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight.ToFontWeight();
+            _albumTextFormat.FontWeight = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight.ToFontWeight();
+        }
+
     }
 }

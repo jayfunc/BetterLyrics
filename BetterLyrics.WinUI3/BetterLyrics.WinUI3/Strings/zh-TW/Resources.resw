@@ -1273,6 +1273,15 @@
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[實驗性] 頻譜層</value>
   </data>
+  <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
+    <value>頻譜位置</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
+    <value>底部</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
+    <value>頂部</value>
+  </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>動作速率</value>
   </data>

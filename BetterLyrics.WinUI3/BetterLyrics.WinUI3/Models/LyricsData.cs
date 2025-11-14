@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StringHelper = BetterLyrics.WinUI3.Helper.StringHelper;
 
 namespace BetterLyrics.WinUI3.Models
 {
