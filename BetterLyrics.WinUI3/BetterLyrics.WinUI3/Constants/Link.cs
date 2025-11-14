@@ -2,6 +2,7 @@
 {
     public static class Link
     {
+        public const string MicrosoftStoreUrl = "https://apps.microsoft.com/detail/9p1wcd1p597r";
         public const string GitHubUrl = "https://github.com/jayfunc/BetterLyrics";
         public const string ShareHubUrl = $"{GitHubUrl}/blob/dev/ShareHub/index.md";
         public const string WikiUrl = $"{GitHubUrl}/wiki";

@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
+using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
@@ -47,6 +48,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly ISettingsService _settingsService;
         private readonly ILibWatcherService _libWatcherService;
         private readonly ILiveStatesService _liveStatesService;
+        private readonly IDiscordService _discordService;
         private readonly IResourceService _resourceService;
         private readonly ILogger<MediaSessionsService> _logger;
 
@@ -79,6 +81,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             ILyricsSearchService musicSearchService,
             ILibWatcherService libWatcherService,
             ILiveStatesService liveStatesService,
+            IDiscordService discordService,
             ITranslateService libreTranslateService,
             IResourceService resourceService)
         {
@@ -88,6 +91,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _libWatcherService = libWatcherService;
             _translateService = libreTranslateService;
             _liveStatesService = liveStatesService;
+            _discordService = discordService;
             _resourceService = resourceService;
             _logger = Ioc.Default.GetRequiredService<ILogger<MediaSessionsService>>();
 
@@ -239,6 +243,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(_cachedPosition, TimeSpan.Zero));
+                    _discordService.UpdateRichPresence(_cachedPosition, TimeSpan.Zero);
                 });
             }
             else
@@ -249,6 +254,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
                         TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(_cachedPosition, timelineProperties?.EndTime ?? TimeSpan.Zero));
+                        _discordService.UpdateRichPresence(_cachedPosition, timelineProperties?.EndTime ?? TimeSpan.Zero);
                     });
                 }
             }
@@ -375,6 +381,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
                 UpdateAlbumArt();
                 UpdateLyrics();
+
+                _discordService.UpdateRichPresence(_cachedSongInfo);
             });
         }
 
@@ -446,9 +454,13 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 _cachedSongInfo = SongInfoExtensions.Placeholder;
                 _cachedIsPlaying = false;
+
                 SongInfoChanged?.Invoke(this, new SongInfoChangedEventArgs(_cachedSongInfo));
                 IsPlayingChanged?.Invoke(this, new IsPlayingChangedEventArgs(_cachedIsPlaying));
                 TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(TimeSpan.Zero, TimeSpan.Zero));
+
+                _discordService.UpdateRichPresence(_cachedSongInfo);
+                _discordService.UpdateRichPresence(TimeSpan.Zero, TimeSpan.Zero);
             });
         }
 
@@ -536,6 +548,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         if (IsMediaSourceTimelineSyncEnabled(_cachedSongInfo?.PlayerId))
                         {
                             TimelineChanged?.Invoke(this, new TimelineChangedEventArgs(TimeSpan.FromSeconds(_lxMusicPositionSeconds), TimeSpan.FromSeconds(_lxMusicDurationSeconds)));
+                            _discordService.UpdateRichPresence(TimeSpan.FromSeconds(_lxMusicPositionSeconds), TimeSpan.FromSeconds(_lxMusicDurationSeconds));
                         }
                     }
                     else if (data.ValueKind == JsonValueKind.String)

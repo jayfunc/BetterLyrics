@@ -64,6 +64,7 @@
 		<PackageReference Include="csharp-kana" Version="1.0.2" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
 		<PackageReference Include="DevWinUI.Controls" Version="9.5.0" />
+		<PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.2" />
 		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
