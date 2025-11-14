@@ -18,6 +18,7 @@ namespace BetterLyrics.WinUI3.Models
             set => field = value;
         }
         public string WrappedOriginalText => string.Join(StringHelper.NewLine, LyricsLines.Select(line => line.OriginalText));
+        public bool IsWordByWord => LyricsLines.Any(x => x.LyricsChars.Count != 0);
 
         public LyricsData()
         {
