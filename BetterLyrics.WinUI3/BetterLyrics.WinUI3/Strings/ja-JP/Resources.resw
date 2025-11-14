@@ -1273,6 +1273,15 @@
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[Experimental] Spectrum Layer</value>
   </data>
+  <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
+    <value>Spectrum placement</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>モーション</value>
   </data>
