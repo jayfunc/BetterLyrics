@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
+using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
@@ -99,6 +100,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ITranslateService, TranslateService>()
                     .AddSingleton<ILastFMService, LastFMService>()
                     .AddSingleton<IResourceService, ResourceService>()
+                    .AddSingleton<IDiscordService, DiscordService>()
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()
