@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
                 {
                     if (lyricsDataArr[i].LanguageCode == targetLangCode)
                     {
-                        float translationRate = lyricsDataArr[i].LyricsLines.Count / lyricsDataArr[0].LyricsLines.Count;
+                        float translationRate = lyricsDataArr[i].LyricsLines.Count / (float)lyricsDataArr[0].LyricsLines.Count;
                         if (translationRate > maxTranslatinRate)
                         {
                             maxTranslatinRate = translationRate;

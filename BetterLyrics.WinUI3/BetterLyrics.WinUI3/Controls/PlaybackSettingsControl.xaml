@@ -21,8 +21,64 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <ScrollViewer Margin="0,72,0,0" Style="{StaticResource SettingsScrollViewerStyle}">
+
+        <Grid Grid.Column="0" RowSpacing="18">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                    ComparisonCondition="NotEqual"
+                    Value="0">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                </interactivity:DataTriggerBehavior>
+                <interactivity:DataTriggerBehavior
+                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                    ComparisonCondition="Equal"
+                    Value="0">
+                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                </interactivity:DataTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+
+            <!--  播放源列表  -->
+            <ListView
+                x:Name="MediaSourceProvidersListView"
+                Grid.Row="0"
+                AllowDrop="True"
+                CanDragItems="True"
+                CanReorderItems="True"
+                DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
+                ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollMode="Disabled"
+                SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:MediaSourceProviderInfo">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <FontIcon
+                                FontFamily="Segoe UI Symbol"
+                                FontSize="12"
+                                Glyph="&#x283F;" />
+                            <ImageIcon Height="16" Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
+                            <TextBlock
+                                MaxWidth="200"
+                                Text="{Binding Provider, Converter={StaticResource MediaSourceProviderToDisplayedNameConverter}, Mode=OneWay}"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ScrollViewer Grid.Row="1" Style="{StaticResource SettingsScrollViewerStyle}">
                 <Grid Style="{StaticResource SettingsGridStyle}">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -32,6 +88,27 @@
 
                         <dev:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
+                        </dev:SettingsCard>
+
+                        <!--  LX music server  -->
+                        <dev:SettingsCard x:Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                            <Grid ColumnSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox
+                                    x:Uid="SettingsPageLXMusicServerInput"
+                                    Grid.Column="0"
+                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                    Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}"
+                                    TextWrapping="Wrap" />
+                                <Button
+                                    x:Uid="SettingsPageServerTestButton"
+                                    Grid.Column="1"
+                                    Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                            </Grid>
                         </dev:SettingsCard>
 
                         <!--  时间轴相关配置  -->
@@ -127,55 +204,6 @@
                 </Grid>
             </ScrollViewer>
 
-            <!--  播放源列表  -->
-            <ListView
-                x:Name="MediaSourceProvidersListView"
-                VerticalAlignment="Top"
-                AllowDrop="True"
-                CanDragItems="True"
-                CanReorderItems="True"
-                DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
-                ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                ScrollViewer.HorizontalScrollMode="Enabled"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollMode="Disabled"
-                SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:MediaSourceProviderInfo">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <FontIcon
-                                FontFamily="Segoe UI Symbol"
-                                FontSize="12"
-                                Glyph="&#x283F;" />
-                            <ImageIcon Height="16" Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
-                            <TextBlock
-                                MaxWidth="200"
-                                Text="{Binding Provider, Converter={StaticResource MediaSourceProviderToDisplayedNameConverter}, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <interactivity:Interaction.Behaviors>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
-                    ComparisonCondition="NotEqual"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                </interactivity:DataTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
         </Grid>
 
         <StackPanel
@@ -221,6 +249,9 @@
                                 Content="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}"
                                 IsEnabled="False"
                                 NavigateUri="{x:Bind ViewModel.TranslatedLyricsRef, Mode=OneWay}" />
+                        </dev:SettingsCard>
+                        <dev:SettingsCard x:Uid="SettingsPageForceWordByWordEffect">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsForceWordByWordEffect, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
                         <!--  Lyrics translation  -->
@@ -320,19 +351,25 @@
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
 
-                        <!--  LX music server  -->
-                        <TextBlock x:Uid="SettingsPageLXMusicServer" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsCard x:Uid="SettingsPageServerAddress">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
+                        <!--  amll-ttml-db  -->
+                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="amll-ttml-db" />
+                        <dev:SettingsCard x:Uid="SettingsPageAmllTtmlDbBaseUrl">
+                            <Grid ColumnSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
                                 <TextBox
-                                    x:Uid="SettingsPageLXMusicServerInput"
-                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                    Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}" />
+                                    Grid.Column="0"
+                                    Text="{x:Bind ViewModel.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl, Mode=TwoWay}"
+                                    TextWrapping="Wrap" />
                                 <Button
-                                    x:Uid="SettingsPageServerTestButton"
-                                    Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
-                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
-                            </StackPanel>
+                                    Grid.Column="1"
+                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                          FontSize=12,
+                                                          Glyph=&#xE8FB;}"
+                                    Style="{StaticResource GhostButtonStyle}" />
+                            </Grid>
                         </dev:SettingsCard>
 
                         <!--  Apple Music token  -->
@@ -342,20 +379,31 @@
                             Description="Use at your own risk"
                             Foreground="{ThemeResource SystemFillColorCautionBrush}"
                             Header="WARNING">
-                            <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Grid ColumnSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
                                 <TextBox
-                                    MaxWidth="250"
+                                    Grid.Column="0"
                                     PlaceholderText="media-user-token"
                                     Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
                                     TextWrapping="Wrap" />
-                                <HyperlinkButton Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE897;}" NavigateUri="{x:Bind constants:Link.AppleMusicCfgUrl}" />
+                                <HyperlinkButton
+                                    Grid.Column="1"
+                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                          FontSize=12,
+                                                          Glyph=&#xE897;}"
+                                    NavigateUri="{x:Bind constants:Link.AppleMusicCfgUrl}" />
                                 <Button
+                                    Grid.Column="2"
                                     Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"
                                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                           FontSize=12,
                                                           Glyph=&#xE8FB;}"
                                     Style="{StaticResource GhostButtonStyle}" />
-                            </StackPanel>
+                            </Grid>
                         </dev:SettingsCard>
 
                     </StackPanel>

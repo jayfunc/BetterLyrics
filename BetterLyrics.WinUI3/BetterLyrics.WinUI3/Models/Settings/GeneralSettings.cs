@@ -7,6 +7,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LanguageCode { get; set; } = "";
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LXMusicServer { get; set; } = string.Empty;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string AmllTtmlDbBaseUrl { get; set; } = Constants.AmllTTmlDB.BaseUrl;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsForceWordByWordEffect { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> ShowOrHideLyricsWindowShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "H" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ListenOnNewPlaybackSource { get; set; } = true;

@@ -10,8 +10,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsLineFadeEnabled { get; set; } = true;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsForceWordByWordEffect { get; set; } = true;
-
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LineRenderingType LyricsGlowEffectScope { get; set; } = LineRenderingType.CurrentChar;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsGlowEffectAmount { get; set; } = 8;
@@ -61,8 +59,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsBlurAmount = this.LyricsBlurAmount,
 
                 IsLyricsLineFadeEnabled = this.IsLyricsLineFadeEnabled,
-
-                IsForceWordByWordEffect = this.IsForceWordByWordEffect,
 
                 IsLyricsGlowEffectEnabled = this.IsLyricsGlowEffectEnabled,
                 LyricsGlowEffectScope = this.LyricsGlowEffectScope,

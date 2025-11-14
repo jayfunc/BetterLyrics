@@ -571,6 +571,9 @@
   <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>专辑区域样式</value>
   </data>
+  <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
+    <value>基本 URL</value>
+  </data>
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>量</value>
   </data>
@@ -895,7 +898,7 @@
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>日志记录</value>
   </data>
-  <data name="SettingsPageLXMusicServer.Text" xml:space="preserve">
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX 音乐服务器</value>
   </data>
   <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
@@ -1209,9 +1212,6 @@
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>首行持续时间</value>
-  </data>
-  <data name="SettingsPageServerAddress.Header" xml:space="preserve">
-    <value>服务器地址</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>测试服务器</value>
