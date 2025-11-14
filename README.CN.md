@@ -14,7 +14,7 @@ BetterLyrics
 
 <div align="center">
 	
-[操作指南](https://jayfunc.blog/work/betterlyrics-cn) | [隐私政策](PrivacyPolicy.md) | [服务协议](TermsofService.md)
+[操作指南](https://jayfunc.blog/work/betterlyrics-cn) | [隐私政策](PrivacyPolicy.CN.md) | [服务协议](TermsofService.CN.md)
 
 </div>
 
