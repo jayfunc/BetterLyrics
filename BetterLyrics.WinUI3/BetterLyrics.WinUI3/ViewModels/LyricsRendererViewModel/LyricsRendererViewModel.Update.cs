@@ -98,7 +98,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             //_effect?.Properties["iTime"] = Convert.ToSingle(TotalTime.TotalSeconds);
 
-            if (_isDeviceChanged || _isFluidOverlayEnabledChanged)
+            if (_isDeviceChanged || _isLyricsWindowsStatusChanged || _isFluidOverlayEnabledChanged)
             {
                 if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsFluidOverlayEnabled)
                 {

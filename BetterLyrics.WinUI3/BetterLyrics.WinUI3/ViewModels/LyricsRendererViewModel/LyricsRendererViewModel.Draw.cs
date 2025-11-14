@@ -410,32 +410,5 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             );
         }
 
-        private void FillBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasLinearGradientBrush brush, double radius, double opacity)
-        {
-            ds.FillRoundedRectangle(
-                new Rect(0, 0, _canvasWidth, _canvasHeight),
-                (float)radius,
-                (float)radius,
-                brush
-            );
-        }
-
-        private CanvasLinearGradientBrush CreateVerticalFillBrush(
-            ICanvasAnimatedControl control,
-            List<(double position, Color color)> stops,
-            double startY,
-            double height
-        )
-        {
-            return new CanvasLinearGradientBrush(control, stops.Select(x => new CanvasGradientStop
-            {
-                Position = (float)x.position,
-                Color = x.color,
-            }).ToArray())
-            {
-                StartPoint = new Vector2(0, (float)startY),
-                EndPoint = new Vector2(0, (float)(startY + height)),
-            };
-        }
     }
 }
