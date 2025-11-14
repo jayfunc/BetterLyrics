@@ -799,6 +799,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>Force on top</value>
   </data>
+  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
+    <value>Even if the current lyrics do not have word-by-word information, it will force it to simulate a word-by-word effect</value>
+  </data>
+  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
+    <value>Force enable word-by-word lyrics effect</value>
+  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>Rendering frame rate</value>
   </data>

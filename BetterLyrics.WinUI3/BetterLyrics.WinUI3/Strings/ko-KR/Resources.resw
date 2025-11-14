@@ -799,6 +799,12 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>꼭대기에 강제로</value>
   </data>
+  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
+    <value>현재 가사에 단어별 정보가 없더라도 단어별 효과를 강제로 시뮬레이션합니다</value>
+  </data>
+  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
+    <value>단어별 가사 효과 강제 사용</value>
+  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>렌더링 프레임 속도</value>
   </data>

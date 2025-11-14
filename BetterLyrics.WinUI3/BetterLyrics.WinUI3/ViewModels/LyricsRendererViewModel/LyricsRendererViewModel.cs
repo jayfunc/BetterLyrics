@@ -328,21 +328,29 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
             else
             {
-                // 没有逐字时间轴，均匀分配每个字的高亮时间
                 int textLength = line.OriginalText.Length;
                 if (textLength == 0) return;
 
-                double lineProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
-                lineProgress = Math.Clamp(lineProgress, 0f, 1f);
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsForceWordByWordEffect)
+                {
+                    // 没有逐字时间轴，均匀分配每个字的高亮时间
+                    double lineProgress = (now - line.StartMs) / (lineEndMs - line.StartMs);
+                    lineProgress = Math.Clamp(lineProgress, 0f, 1f);
 
-                // 计算当前高亮到第几个字
-                double charFloatIndex = lineProgress * textLength;
-                int charIndex = (int)charFloatIndex;
-                charStartIndex = Math.Clamp(charIndex, 0, textLength - 1);
-                charLength = 1;
+                    // 计算当前高亮到第几个字
+                    double charFloatIndex = lineProgress * textLength;
+                    int charIndex = (int)charFloatIndex;
+                    charStartIndex = Math.Clamp(charIndex, 0, textLength - 1);
+                    charLength = 1;
 
-                // 当前字的进度（0~1）
-                charProgress = charFloatIndex - charIndex;
+                    // 当前字的进度（0~1）
+                    charProgress = charFloatIndex - charIndex;
+                }
+                else
+                {
+                    charStartIndex = textLength;
+                    charProgress = 1f;
+                }
             }
         }
 

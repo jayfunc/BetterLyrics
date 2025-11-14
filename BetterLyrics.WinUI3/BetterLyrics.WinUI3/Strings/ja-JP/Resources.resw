@@ -799,6 +799,12 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>強制的に上に</value>
   </data>
+  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
+    <value>現在の歌詞に単語ごとの情報がない場合でも、単語ごとの効果をシミュレートすることを余儀なくされます</value>
+  </data>
+  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
+    <value>単語ごとの歌詞効果を強制的に有効にします</value>
+  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>レンダリングフレームレート</value>
   </data>

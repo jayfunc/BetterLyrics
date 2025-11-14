@@ -799,6 +799,12 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>強制置於頂層</value>
   </data>
+  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
+    <value>即使目前的歌詞沒有逐字信息，也會迫使它模擬逐字效果</value>
+  </data>
+  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
+    <value>強制啟用逐字歌詞效果</value>
+  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>渲染幀率</value>
   </data>

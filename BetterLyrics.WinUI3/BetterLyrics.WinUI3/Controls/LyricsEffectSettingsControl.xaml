@@ -47,6 +47,10 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsLineFadeEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <dev:SettingsCard x:Uid="SettingsPageForceWordByWordEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8F0;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsForceWordByWordEffect, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <!--  高亮  -->
                     <dev:SettingsExpander x:Uid="SettingsPageLyricsHighlight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7E6;}">
                         <dev:SettingsExpander.Items>
