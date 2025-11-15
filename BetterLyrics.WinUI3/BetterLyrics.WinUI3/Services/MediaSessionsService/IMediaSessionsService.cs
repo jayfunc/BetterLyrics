@@ -3,19 +3,17 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.ViewModels;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
-    public interface IMediaSessionsService
+    public interface IMediaSessionsService : INotifyPropertyChanged
     {
-        event EventHandler<IsPlayingChangedEventArgs>? IsPlayingChanged;
-        event EventHandler<TimelineChangedEventArgs>? TimelineChanged;
-        event EventHandler<SongInfoChangedEventArgs>? SongInfoChanged;
         event EventHandler<AlbumArtChangedEventArgs>? AlbumArtChanged;
         event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
-        event EventHandler<MediaSourceProvidersInfoEventArgs>? MediaSourceProvidersInfoChanged;
 
         Task PlayAsync();
         Task PauseAsync();
@@ -23,16 +21,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         Task NextAsync();
         Task ChangePosition(double seconds);
 
-        MediaSourceProviderInfo? GetCurrentMediaSourceProviderInfo();
-
         void UpdateLyrics();
         void UpdateTranslations();
 
         void InitPlaybackShortcuts();
 
-        bool IsPlaying { get; }
-        SongInfo? SongInfo { get; }
-        TimeSpan Position { get; }
+        MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; }
+        bool CurrentIsPlaying { get; }
+        SongInfo? CurrentSongInfo { get; }
+        TimeSpan CurrentPosition { get; }
         LyricsData? CurrentLyricsData { get; }
 
         LyricsSearchProvider? LyricsSearchProvider { get; }

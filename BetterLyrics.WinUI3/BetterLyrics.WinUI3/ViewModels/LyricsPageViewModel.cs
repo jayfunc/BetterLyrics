@@ -19,49 +19,25 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class LyricsPageViewModel : BaseViewModel,
         IRecipient<PropertyChangedMessage<TimeSpan>>
     {
-        private readonly IMediaSessionsService _mediaSessionsService;
-        private readonly ISettingsService _settingsService;
+        public IMediaSessionsService MediaSessionsService { get; private set; }
         private readonly ILiveStatesService _liveStatesService;
 
         private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
 
-        public LyricsPageViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
+        public LyricsPageViewModel(IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
         {
-            _settingsService = settingsService;
             _liveStatesService = liveStatesService;
+            MediaSessionsService = mediaSessionsService;
 
             LiveStates = _liveStatesService.LiveStates;
 
             Volume = SystemVolumeHelper.MasterVolume;
             SystemVolumeHelper.VolumeNotification += SystemVolumeHelper_VolumeNotification;
-
-            _mediaSessionsService = mediaSessionsService;
-            _mediaSessionsService.SongInfoChanged += PlaybackService_SongInfoChanged;
-            _mediaSessionsService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
-            _mediaSessionsService.TimelineChanged += PlaybackService_TimelineChanged;
-
-            IsSongPlaying = _mediaSessionsService.IsPlaying;
         }
 
         private void SystemVolumeHelper_VolumeNotification(object? sender, int e)
         {
             Volume = e;
-        }
-
-        private void PlaybackService_TimelineChanged(object? sender, Events.TimelineChangedEventArgs e)
-        {
-            SongDurationSeconds = (int)e.End.TotalSeconds;
-        }
-
-        private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
-        {
-            IsSongPlaying = e.IsPlaying;
-        }
-
-        private void PlaybackService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
-        {
-            SongInfo = e.SongInfo;
-            SongDurationSeconds = SongInfo?.Duration ?? 0;
         }
 
         [ObservableProperty]
@@ -71,9 +47,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial double TimelinePositionSeconds { get; set; }
 
         [ObservableProperty]
-        public partial int SongDurationSeconds { get; set; }
-
-        [ObservableProperty]
         public partial int Volume { get; set; }
 
         [ObservableProperty]
@@ -81,12 +54,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial double BottomCommandFlyoutTriggerOpacity { get; set; }
-
-        [ObservableProperty]
-        public partial SongInfo? SongInfo { get; set; } = null;
-
-        [ObservableProperty]
-        public partial bool IsSongPlaying { get; set; }
 
         [ObservableProperty]
         public partial float TimelineSliderThumbOpacity { get; set; } = 0f;
@@ -107,30 +74,30 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task PlaySongAsync()
         {
-            await _mediaSessionsService.PlayAsync();
+            await MediaSessionsService.PlayAsync();
         }
 
         [RelayCommand]
         private async Task PauseSongAsync()
         {
-            await _mediaSessionsService.PauseAsync();
+            await MediaSessionsService.PauseAsync();
         }
 
         [RelayCommand]
         private async Task PreviousSongAsync()
         {
-            await _mediaSessionsService.PreviousAsync();
+            await MediaSessionsService.PreviousAsync();
         }
 
         [RelayCommand]
         private async Task NextSongAsync()
         {
-            await _mediaSessionsService.NextAsync();
+            await MediaSessionsService.NextAsync();
         }
 
         partial void OnTimelineSliderThumbSecondsChanged(double value)
         {
-            TimelineSliderThumbLyricsLine = _mediaSessionsService.CurrentLyricsData?.GetLyricsLine(value);
+            TimelineSliderThumbLyricsLine = MediaSessionsService.CurrentLyricsData?.GetLyricsLine(value);
         }
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)
@@ -149,5 +116,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
         }
+
     }
 }

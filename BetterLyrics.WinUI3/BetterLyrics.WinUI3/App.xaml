@@ -69,6 +69,8 @@
             <converter:TrackToLyricsConverter x:Key="TrackToLyricsConverter" />
             <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
             <converter:IndexToDisplayConverter x:Key="IndexToDisplayConverter" />
+            <converter:IntToDoubleConverter x:Key="IntToDoubleConverter" />
+            <converter:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

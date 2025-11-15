@@ -23,17 +23,17 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private async Task RefreshArtAlbum(CancellationToken token)
         {
-            if (_cachedSongInfo == null)
+            if (CurrentSongInfo == null)
             {
                 _logger.LogWarning("Cached song info is null, cannot update album art.");
                 return;
             }
 
             IBuffer? buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(
-                SongInfo?.PlayerId ?? "",
-                _cachedSongInfo.Title,
-                _cachedSongInfo.Artist,
-                _cachedSongInfo.Album,
+                CurrentSongInfo?.PlayerId ?? "",
+                CurrentSongInfo.Title,
+                CurrentSongInfo.Artist,
+                CurrentSongInfo.Album,
                 _SMTCAlbumArtBuffer,
                 token
             ), token);

@@ -1,9 +1,11 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
+using System;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
@@ -22,9 +24,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IRecipient<PropertyChangedMessage<LineRenderingType>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>,
             IRecipient<PropertyChangedMessage<EasingType>>,
+            IRecipient<PropertyChangedMessage<TimeSpan>>,
             IRecipient<PropertyChangedMessage<AlbumArtLayoutSettings>>,
             IRecipient<PropertyChangedMessage<LyricsBackgroundSettings>>,
-            IRecipient<PropertyChangedMessage<LyricsWindowStatus>>
+            IRecipient<PropertyChangedMessage<LyricsWindowStatus>>,
+            IRecipient<PropertyChangedMessage<SongInfo?>>
     {
 
         public void Receive(PropertyChangedMessage<bool> message)
@@ -52,13 +56,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 else if (message.PropertyName == nameof(LyricsEffectSettings.Is3DLyricsEnabled))
                 {
                     _isLyrics3DMatrixChanged = true;
-                }
-            }
-            else if (message.Sender is MediaSourceProviderInfo)
-            {
-                if (message.PropertyName == nameof(MediaSourceProviderInfo.IsLastFMTrackEnabled))
-                {
-                    UpdateIsLastFMTrackEnabled();
                 }
             }
             else if (message.Sender is LyricsStyleSettings)
@@ -256,17 +253,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _isLayoutChanged = true;
                 }
             }
-            else if (message.Sender is MediaSourceProviderInfo)
-            {
-                if (message.PropertyName == nameof(MediaSourceProviderInfo.TimelineSyncThreshold))
-                {
-                    UpdateTimelineSyncThreshold();
-                }
-                else if (message.PropertyName == nameof(MediaSourceProviderInfo.PositionOffset))
-                {
-                    UpdatePositionOffset();
-                }
-            }
         }
 
         public void Receive(PropertyChangedMessage<LineRenderingType> message)
@@ -433,6 +419,61 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     _isAlbumArtBgBlurAmountChanged = true;
                     _isCoverAcrylicEffectAmountChanged = true;
                     UpdateColorConfig();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<SongInfo?> message)
+        {
+            if (_mediaSessionsService.CurrentSongInfo?.Title != _songTitle || _mediaSessionsService.CurrentSongInfo?.Artist != _songArtist)
+            {
+                _lastSongTitle = _songTitle;
+                _songTitle = _mediaSessionsService.CurrentSongInfo?.Title;
+                _isSongTitleChanged = true;
+
+                _lastSongArtist = _songArtist;
+                _songArtist = _mediaSessionsService.CurrentSongInfo?.Artist;
+                _isSongArtistChanged = true;
+
+                _lastSongAlbum = _songAlbum;
+                _songAlbum = _mediaSessionsService.CurrentSongInfo?.Album;
+                _isSongAlbumChanged = true;
+
+                _songDurationMs = (int)(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? TimeSpan.FromMinutes(99).TotalMilliseconds);
+
+                _songInfoOpacityTransition.Reset(0f);
+                _songInfoOpacityTransition.StartTransition(1f);
+
+                TotalTime = TimeSpan.Zero;
+
+                // 处理 Last.fm 追踪
+                _totalPlayingTime = TimeSpan.Zero;
+                _isLastFMTracked = false;
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<TimeSpan> message)
+        {
+            if (message.Sender is IMediaSessionsService)
+            {
+                if (message.PropertyName == nameof(IMediaSessionsService.CurrentPosition))
+                {
+                    var diff = Math.Abs(TotalTime.TotalMilliseconds - _mediaSessionsService.CurrentPosition.TotalMilliseconds);
+                    var timelineSyncThreshold = _mediaSessionsService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0;
+                    if (diff >= timelineSyncThreshold)
+                    {
+                        TotalTime = _mediaSessionsService.CurrentPosition;
+                        if (TotalTime.TotalSeconds <= 1)
+                        {
+                            _totalPlayingTime = TimeSpan.Zero;
+                            _isLastFMTracked = false;
+                        }
+                    }
+                    // 大跨度，刷新布局，避免歌词不显示
+                    if (diff >= timelineSyncThreshold + 5000)
+                    {
+                        _isLayoutChanged = true;
+                    }
                 }
             }
         }

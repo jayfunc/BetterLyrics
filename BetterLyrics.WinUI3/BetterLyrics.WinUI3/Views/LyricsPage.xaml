@@ -201,13 +201,13 @@
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="True">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                                 </interactivity:DataTriggerBehavior>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="False">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
@@ -221,13 +221,13 @@
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="True">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                                 </interactivity:DataTriggerBehavior>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.IsSongPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="False">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
@@ -316,7 +316,7 @@
                     Margin="0,-32,0,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
-                    Maximum="{x:Bind ViewModel.SongDurationSeconds, Mode=OneWay}"
+                    Maximum="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"

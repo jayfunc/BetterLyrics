@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
@@ -6,13 +7,16 @@ using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class LyricsSearchControlViewModel : BaseViewModel
+    public partial class LyricsSearchControlViewModel : BaseViewModel,
+        IRecipient<PropertyChangedMessage<SongInfo?>>
     {
         private readonly ILyricsSearchService _lyricsSearchService;
         private readonly IMediaSessionsService _mediaSessionsService;
@@ -49,13 +53,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             AppSettings = _settingsService.AppSettings;
 
-            _mediaSessionsService.SongInfoChanged += MediaSessionsService_SongInfoChanged;
-
-            InitMappedSongSearchQuery();
-        }
-
-        private void MediaSessionsService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
-        {
             InitMappedSongSearchQuery();
         }
 
@@ -63,19 +60,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             LyricsSearchResults.Clear();
             LyricsDataArr = null;
-            if (_mediaSessionsService.SongInfo != null)
+            if (_mediaSessionsService.CurrentSongInfo != null)
             {
                 var found = GetMappedSongSearchQueryFromSettings();
                 if (found == null)
                 {
                     MappedSongSearchQuery = new MappedSongSearchQuery
                     {
-                        OriginalTitle = _mediaSessionsService.SongInfo.Title,
-                        OriginalArtist = _mediaSessionsService.SongInfo.Artist,
-                        OriginalAlbum = _mediaSessionsService.SongInfo.Album,
-                        MappedTitle = _mediaSessionsService.SongInfo.Title,
-                        MappedArtist = _mediaSessionsService.SongInfo.Artist,
-                        MappedAlbum = _mediaSessionsService.SongInfo.Album,
+                        OriginalTitle = _mediaSessionsService.CurrentSongInfo.Title,
+                        OriginalArtist = _mediaSessionsService.CurrentSongInfo.Artist,
+                        OriginalAlbum = _mediaSessionsService.CurrentSongInfo.Album,
+                        MappedTitle = _mediaSessionsService.CurrentSongInfo.Title,
+                        MappedArtist = _mediaSessionsService.CurrentSongInfo.Artist,
+                        MappedAlbum = _mediaSessionsService.CurrentSongInfo.Album,
                     };
                 }
                 else
@@ -87,13 +84,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private MappedSongSearchQuery? GetMappedSongSearchQueryFromSettings()
         {
-            if (_mediaSessionsService.SongInfo == null)
+            if (_mediaSessionsService.CurrentSongInfo == null)
             {
                 return null;
             }
 
             var found = AppSettings.MappedSongSearchQueries
-                .Where(x => x.OriginalTitle == _mediaSessionsService.SongInfo.Title && x.OriginalArtist == _mediaSessionsService.SongInfo.Artist && x.OriginalAlbum == _mediaSessionsService.SongInfo.Album);
+                .Where(x => x.OriginalTitle == _mediaSessionsService.CurrentSongInfo.Title && x.OriginalArtist == _mediaSessionsService.CurrentSongInfo.Artist && x.OriginalAlbum == _mediaSessionsService.CurrentSongInfo.Album);
 
             return found.FirstOrDefault();
         }
@@ -117,7 +114,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         MappedSongSearchQuery.MappedTitle,
                         MappedSongSearchQuery.MappedArtist,
                         MappedSongSearchQuery.MappedAlbum,
-                        _mediaSessionsService.SongInfo?.DurationMs ?? 0, token);
+                        _mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0, token);
                 }, token)];
                 IsSearching = false;
             });
@@ -181,7 +178,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     MappedSongSearchQuery?.OriginalTitle ?? "",
                     MappedSongSearchQuery?.OriginalArtist ?? "",
                     MappedSongSearchQuery?.OriginalAlbum ?? "",
-                    value?.Raw, (int?)_mediaSessionsService.SongInfo?.DurationMs, value?.Provider);
+                    value?.Raw, (int?)_mediaSessionsService.CurrentSongInfo?.DurationMs, value?.Provider);
                 LyricsDataArr = [.. lyricsParser.LyricsDataArr];
             }
             else
@@ -197,6 +194,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 return;
             }
             _mediaSessionsService.ChangePosition(value.StartMs / 1000.0);
+        }
+
+        public void Receive(PropertyChangedMessage<SongInfo?> message)
+        {
+            if (message.Sender is IMediaSessionsService)
+            {
+                if (message.PropertyName == nameof(IMediaSessionsService.CurrentSongInfo))
+                {
+                    InitMappedSongSearchQuery();
+                }
+            }
         }
     }
 }

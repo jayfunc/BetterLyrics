@@ -90,6 +90,10 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
+                        <dev:SettingsCard Header="Discord Presence">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
+                        </dev:SettingsCard>
+
                         <!--  LX music server  -->
                         <dev:SettingsCard x:Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                             <Grid ColumnSpacing="6">
@@ -240,13 +244,13 @@
                         <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <dev:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
                             <HyperlinkButton
-                                Content="{x:Bind ViewModel.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}"
+                                Content="{x:Bind ViewModel.MediaSessionsService.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}"
                                 IsEnabled="False"
                                 NavigateUri="{x:Bind ViewModel.OriginalLyricsRef, Mode=OneWay}" />
                         </dev:SettingsCard>
                         <dev:SettingsCard x:Uid="LyricsPageTranslationProviderPrefix">
                             <HyperlinkButton
-                                Content="{x:Bind ViewModel.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}"
+                                Content="{x:Bind ViewModel.MediaSessionsService.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}"
                                 IsEnabled="False"
                                 NavigateUri="{x:Bind ViewModel.TranslatedLyricsRef, Mode=OneWay}" />
                         </dev:SettingsCard>
