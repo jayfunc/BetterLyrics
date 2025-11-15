@@ -93,8 +93,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             $"Syllable prog: {charProgress}\n" +
                             $"Visible lines: [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n" +
                             $"Total line count: {GetMaxLyricsLineIndexBoundaries().Item2 + 1}\n" +
-                            $"Cur time: {TotalTime + _positionOffset}\n" +
-                            $"Song duration: {TimeSpan.FromMilliseconds(SongInfo?.DurationMs ?? 0)}\n" +
+                            $"Cur time: {TotalTime + TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0)}\n" +
+                            $"Song duration: {TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0)}\n" +
                             $"Y offset: {_canvasYScrollTransition.Value}",
                         new Vector2(10, 40),
                         ThemeTypeSent == Microsoft.UI.Xaml.ElementTheme.Light ? Colors.Black : Colors.White,

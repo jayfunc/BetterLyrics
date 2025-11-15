@@ -26,31 +26,23 @@ namespace BetterLyrics.WinUI3
 {
     public partial class LyricsWindowViewModel
         : BaseWindowViewModel,
+            IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<List<string>>>,
             IRecipient<PropertyChangedMessage<ElementTheme>>
     {
-        private readonly IMediaSessionsService _mediaSessionsService;
         private readonly ISettingsService _settingsService;
         private readonly ILiveStatesService _liveStatesService;
 
         private ForegroundWindowWatcher? _fgWindowWatcher = null;
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
-        public LyricsWindowViewModel(ISettingsService settingsService, IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
+        public LyricsWindowViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService)
         {
             _settingsService = settingsService;
-            _mediaSessionsService = mediaSessionsService;
             _liveStatesService = liveStatesService;
 
             AppSettings = _settingsService.AppSettings;
             LiveStates = _liveStatesService.LiveStates;
-
-            _mediaSessionsService.IsPlayingChanged += PlaybackService_IsPlayingChanged;
-        }
-
-        private void PlaybackService_IsPlayingChanged(object? sender, Events.IsPlayingChangedEventArgs e)
-        {
-            WindowHelper.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
         }
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
@@ -223,6 +215,17 @@ namespace BetterLyrics.WinUI3
                 if (message.PropertyName == nameof(LyricsRendererViewModel.ThemeTypeSent))
                 {
                     ThemeType = message.NewValue;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is IMediaSessionsService)
+            {
+                if (message.PropertyName == nameof(IMediaSessionsService.CurrentIsPlaying))
+                {
+                    WindowHelper.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
                 }
             }
         }

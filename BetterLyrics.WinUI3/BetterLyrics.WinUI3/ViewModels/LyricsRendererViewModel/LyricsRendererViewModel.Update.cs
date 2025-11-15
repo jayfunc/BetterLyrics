@@ -77,14 +77,17 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         {
             _elapsedTime = args.Timing.ElapsedTime;
 
-            if (IsPlaying)
+            if (_mediaSessionsService.CurrentIsPlaying)
             {
                 TotalTime += _elapsedTime;
                 _totalPlayingTime += _elapsedTime;
-                if (_isLastFMTrackEnabled && !_isLastFMTracked && SongInfo?.Duration != null && SongInfo.Duration > 0 && _totalPlayingTime.TotalSeconds >= SongInfo.Duration * 0.5)
+                if ((_mediaSessionsService.CurrentMediaSourceProviderInfo?.IsLastFMTrackEnabled ?? false) &&
+                    _isLastFMTracked == false &&
+                    _mediaSessionsService.CurrentSongInfo?.Duration > 0 &&
+                    _totalPlayingTime.TotalSeconds >= _mediaSessionsService.CurrentSongInfo.Duration * 0.5)
                 {
                     _isLastFMTracked = true;
-                    _lastFMService.TrackAsync(SongInfo);
+                    _lastFMService.TrackAsync(_mediaSessionsService.CurrentSongInfo);
                 }
             }
 
@@ -857,24 +860,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                    Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized
                 );
             }
-        }
-
-        private void UpdateTimelineSyncThreshold()
-        {
-            var current = _mediaSessionsService.GetCurrentMediaSourceProviderInfo();
-            _timelineSyncThreshold = current?.TimelineSyncThreshold ?? 0;
-        }
-
-        private void UpdatePositionOffset()
-        {
-            var current = _mediaSessionsService.GetCurrentMediaSourceProviderInfo();
-            _positionOffset = TimeSpan.FromMilliseconds(current?.PositionOffset ?? 0);
-        }
-
-        private void UpdateIsLastFMTrackEnabled()
-        {
-            var current = _mediaSessionsService.GetCurrentMediaSourceProviderInfo();
-            _isLastFMTrackEnabled = current?.IsLastFMTrackEnabled ?? false;
         }
 
         private void UpdateSongInfoFontSize()

@@ -26,9 +26,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         public event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchProvider? LyricsSearchProvider { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchProvider? LyricsSearchProvider { get; private set; }
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial TranslationSearchProvider? TranslationSearchProvider { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial TranslationSearchProvider? TranslationSearchProvider { get; private set; }
 
         [ObservableProperty] public partial bool IsTranslating { get; set; } = false;
 
@@ -155,18 +155,18 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
             });
 
-            if (SongInfo != null)
+            if (CurrentSongInfo != null)
             {
                 _logger.LogInformation("Searching lyrics for: Title={Title}, Artist={Artist}, Album={Album}, DurationMs={DurationMs}",
-                    SongInfo.Title, SongInfo.Artist, SongInfo.Album, SongInfo.DurationMs);
+                    CurrentSongInfo.Title, CurrentSongInfo.Artist, CurrentSongInfo.Album, CurrentSongInfo.DurationMs);
 
                 var lyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
-                    SongInfo.PlayerId ?? "",
-                    SongInfo.Title,
-                    SongInfo.Artist,
-                    SongInfo.Album,
-                    SongInfo.DurationMs ?? 0,
-                    SongInfo.SongId,
+                    CurrentSongInfo.PlayerId ?? "",
+                    CurrentSongInfo.Title,
+                    CurrentSongInfo.Artist,
+                    CurrentSongInfo.Album,
+                    CurrentSongInfo.DurationMs,
+                    CurrentSongInfo.SongId,
                     token
                 ), token);
                 if (token.IsCancellationRequested) return;
@@ -177,7 +177,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 var lyricsParser = new LyricsParser();
                 lyricsParser.Parse(
                     _settingsService.AppSettings.MappedSongSearchQueries.ToList(),
-                    SongInfo.Title, SongInfo.Artist, SongInfo.Album, lyricsSearchResult?.Raw, (int?)SongInfo?.DurationMs, LyricsSearchProvider);
+                    CurrentSongInfo.Title, CurrentSongInfo.Artist, CurrentSongInfo.Album, lyricsSearchResult?.Raw, (int?)CurrentSongInfo?.DurationMs, LyricsSearchProvider);
                 _lyricsDataArr = lyricsParser.LyricsDataArr;
                 ApplyChinesePreference();
             }

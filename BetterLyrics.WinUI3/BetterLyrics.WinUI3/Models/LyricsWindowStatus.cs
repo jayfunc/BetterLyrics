@@ -272,7 +272,12 @@ namespace BetterLyrics.WinUI3.Models
                     LyricsAlignmentType = TextAlignmentType.Center,
                 },
             };
-            status.WindowBounds = status.MonitorBounds;
+            status.WindowBounds = new Rect(
+                status.MonitorBounds.X,
+                status.MonitorBounds.Y - 1,
+                status.MonitorBounds.Width,
+                status.MonitorBounds.Height + 1
+            );
             return status;
         }
 

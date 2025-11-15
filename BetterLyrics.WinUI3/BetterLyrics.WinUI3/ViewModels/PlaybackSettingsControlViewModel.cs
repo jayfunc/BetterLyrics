@@ -19,11 +19,9 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class PlaybackSettingsControlViewModel : BaseViewModel,
-        IRecipient<PropertyChangedMessage<LyricsSearchProvider?>>,
-        IRecipient<PropertyChangedMessage<TranslationSearchProvider?>>
+    public partial class PlaybackSettingsControlViewModel : BaseViewModel
     {
-        private readonly IMediaSessionsService _mediaSessionsService;
+        public IMediaSessionsService MediaSessionsService;
         private readonly ITranslateService _libreTranslateService;
         private readonly ILastFMService _lastFMService;
         private readonly ISettingsService _settingsService;
@@ -48,12 +46,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLXMusicServerTesting { get; set; } = false;
 
         [ObservableProperty]
-        public partial LyricsSearchProvider? LyricsSearchProvider { get; set; } = null;
-
-        [ObservableProperty]
-        public partial TranslationSearchProvider? TranslationSearchProvider { get; set; } = null;
-
-        [ObservableProperty]
         public partial string OriginalLyricsRef { get; set; } = "about:blank";
 
         [ObservableProperty]
@@ -72,16 +64,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             ILastFMService lastFMService,
             IResourceService resourceService)
         {
+            MediaSessionsService = mediaSessionsService;
+
             _settingsService = settingsService;
-            _mediaSessionsService = mediaSessionsService;
             _libreTranslateService = libreTranslateService;
             _resourceService = resourceService;
 
             _lastFMService = lastFMService;
             _lastFMService.UserChanged += LastFMService_UserChanged;
             _lastFMService.IsAuthenticatedChanged += LastFMService_IsAuthenticatedChanged;
-
-            _mediaSessionsService.SongInfoChanged += MediaSessionsService_SongInfoChanged;
 
             AppSettings = _settingsService.AppSettings;
             AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
@@ -92,9 +83,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             IsLastFMAuthenticated = _lastFMService.IsAuthenticated;
             LastFMUser = _lastFMService.User;
-
-            LyricsSearchProvider = _mediaSessionsService.LyricsSearchProvider;
-            TranslationSearchProvider = _mediaSessionsService.TranslationSearchProvider;
 
             SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
         }
@@ -112,15 +100,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void LastFMService_UserChanged(object? sender, Events.LastFMUserChangedEventArgs e)
         {
             LastFMUser = e.User;
-        }
-
-        private void MediaSessionsService_SongInfoChanged(object? sender, Events.SongInfoChangedEventArgs e)
-        {
-            var current = AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == e.SongInfo?.PlayerId)?.FirstOrDefault();
-            if (_mediaSessionsService.Position.TotalSeconds <= 1 && current?.ResetPositionOffsetOnSongChanged == true)
-            {
-                current.PositionOffset = 0;
-            }
         }
 
         private void MediaSessionsService_SessionIdsChanged(object? sender, Events.MediaSourceProvidersInfoEventArgs e)
@@ -201,29 +180,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void SaveAppleMusicMediaUserToken()
         {
             PasswordVaultHelper.Save(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey, AppleMusicMediaUserToken);
-            _mediaSessionsService.UpdateLyrics();
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsSearchProvider?> message)
-        {
-            if (message.Sender is MediaSessionsService)
-            {
-                if (message.PropertyName == nameof(MediaSessionsService.LyricsSearchProvider))
-                {
-                    LyricsSearchProvider = message.NewValue;
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<TranslationSearchProvider?> message)
-        {
-            if (message.Sender is MediaSessionsService)
-            {
-                if (message.PropertyName == nameof(MediaSessionsService.TranslationSearchProvider))
-                {
-                    TranslationSearchProvider = message.NewValue;
-                }
-            }
+            MediaSessionsService.UpdateLyrics();
         }
 
         partial void OnSelectedTargetLanguageIndexChanged(int value)

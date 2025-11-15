@@ -373,7 +373,7 @@ namespace BetterLyrics.WinUI3.Helper
                 var window = GetWindowByWindowType<LyricsWindow>();
                 if (window == null) return;
 
-                if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && !_mediaSessionsService.IsPlaying)
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && !_mediaSessionsService.CurrentIsPlaying)
                 {
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
@@ -383,7 +383,7 @@ namespace BetterLyrics.WinUI3.Helper
                     }
                     HideWindow<LyricsWindow>();
                 }
-                else if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.IsPlaying)
+                else if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.CurrentIsPlaying)
                 {
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {

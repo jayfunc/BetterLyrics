@@ -13,10 +13,7 @@ namespace BetterLyrics.WinUI3.Models
         public partial string Artist { get; set; }
 
         [ObservableProperty]
-        public partial int? Duration { get; set; }
-
-        [ObservableProperty]
-        public partial double? DurationMs { get; set; }
+        public partial double DurationMs { get; set; }
 
         [ObservableProperty]
         public partial string? PlayerId { get; set; } = null;
@@ -26,6 +23,8 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty]
         public partial string? SongId { get; set; } = null;
+
+        public double Duration => DurationMs / 1000;
 
         public SongInfo() { }
     }

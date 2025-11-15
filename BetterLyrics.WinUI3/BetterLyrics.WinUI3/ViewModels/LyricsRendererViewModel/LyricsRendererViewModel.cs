@@ -57,8 +57,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         [NotifyPropertyChangedRecipients]
         public partial TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
 
-        private TimeSpan _positionOffset = TimeSpan.Zero;
-
         private int _songDurationMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
 
         private Stopwatch? _drawFrameStopwatch;
@@ -139,11 +137,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isDebugOverlayEnabled = false;
 
-        [ObservableProperty]
-        public partial bool IsPlaying { get; set; } = false;
-
-        private int _timelineSyncThreshold = 0;
-
         private int _phoneticLyricsFontSize = 18;
         private int _originalLyricsFontSize = 36;
         private int _translatedLyricsFontSize = 18;
@@ -186,9 +179,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private CanvasGeometry? _spectrumGeometry = null;
 
         [ObservableProperty]
-        public partial SongInfo? SongInfo { get; set; }
-
-        [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         public partial ElementTheme ThemeTypeSent { get; set; }
 
@@ -213,15 +203,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             UpdateSongInfoFontSize();
 
-            _timelineSyncThreshold = 0;
-
-            _mediaSessionsService.IsPlayingChanged += MediaSessionsService_IsPlayingChanged;
-            _mediaSessionsService.SongInfoChanged += MediaSessionsService_SongInfoChanged;
             _mediaSessionsService.AlbumArtChanged += MediaSessionsService_AlbumArtChangedChanged;
             _mediaSessionsService.LyricsChanged += MediaSessionsService_LyricsChanged;
-            _mediaSessionsService.TimelineChanged += MediaSessionsService_TimelineChanged;
-
-            IsPlaying = _mediaSessionsService.IsPlaying;
 
             UpdateColorConfig();
 
@@ -236,7 +219,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private int GetCurrentPlayingLineIndex()
         {
-            var totalMs = TotalTime.TotalMilliseconds + _positionOffset.TotalMilliseconds;
+            var totalMs = TotalTime.TotalMilliseconds + _mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0;
             if (totalMs < _currentLyricsData?.LyricsLines.FirstOrDefault()?.StartMs) return 0;
 
             for (int i = 0; i < _currentLyricsData?.LyricsLines.Count; i++)
@@ -272,7 +255,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             else if (nextLine != null) lineEndMs = nextLine.StartMs;
             else lineEndMs = _songDurationMs;
 
-            double now = (double)TotalTime.TotalMilliseconds + (double)_positionOffset.TotalMilliseconds;
+            double now = (double)TotalTime.TotalMilliseconds + (double)(_mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
 
             // 1. 还没到本句
             if (now < line.StartMs)
@@ -356,75 +339,14 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private Tuple<int, int> GetMaxLyricsLineIndexBoundaries()
         {
-            if (
-                SongInfo == null
+            if (_mediaSessionsService.CurrentSongInfo == null
                 || _currentLyricsData == null
-                || _currentLyricsData.LyricsLines.Count == 0
-            )
+                || _currentLyricsData.LyricsLines.Count == 0)
             {
                 return new Tuple<int, int>(-1, -1);
             }
 
             return new Tuple<int, int>(0, _currentLyricsData.LyricsLines.Count - 1);
-        }
-
-        private void MediaSessionsService_IsPlayingChanged(object? sender, IsPlayingChangedEventArgs e)
-        {
-            IsPlaying = e.IsPlaying;
-        }
-
-        private void MediaSessionsService_TimelineChanged(object? sender, TimelineChangedEventArgs e)
-        {
-            var diff = Math.Abs(TotalTime.TotalMilliseconds - e.Position.TotalMilliseconds);
-            if (diff >= _timelineSyncThreshold)
-            {
-                TotalTime = e.Position;
-                if (TotalTime.TotalSeconds <= 1)
-                {
-                    _totalPlayingTime = TimeSpan.Zero;
-                    _isLastFMTracked = false;
-                }
-            }
-            // 大跨度，刷新布局，避免歌词不显示
-            if (diff >= _timelineSyncThreshold + 5000)
-            {
-                _isLayoutChanged = true;
-            }
-        }
-
-        private void MediaSessionsService_SongInfoChanged(object? sender, SongInfoChangedEventArgs e)
-        {
-            SongInfo = e.SongInfo;
-
-            UpdateTimelineSyncThreshold();
-            UpdatePositionOffset();
-            UpdateIsLastFMTrackEnabled();
-
-            if (SongInfo?.Title != _songTitle || SongInfo?.Artist != _songArtist)
-            {
-                _lastSongTitle = _songTitle;
-                _songTitle = SongInfo?.Title;
-                _isSongTitleChanged = true;
-
-                _lastSongArtist = _songArtist;
-                _songArtist = SongInfo?.Artist;
-                _isSongArtistChanged = true;
-
-                _lastSongAlbum = _songAlbum;
-                _songAlbum = SongInfo?.Album;
-                _isSongAlbumChanged = true;
-
-                _songDurationMs = (int)(SongInfo?.DurationMs ?? TimeSpan.FromMinutes(99).TotalMilliseconds);
-
-                _songInfoOpacityTransition.Reset(0f);
-                _songInfoOpacityTransition.StartTransition(1f);
-
-                TotalTime = TimeSpan.Zero;
-
-                // 处理 Last.fm 追踪
-                _totalPlayingTime = TimeSpan.Zero;
-                _isLastFMTracked = false;
-            }
         }
 
         private void MediaSessionsService_AlbumArtChangedChanged(object? sender, AlbumArtChangedEventArgs e)

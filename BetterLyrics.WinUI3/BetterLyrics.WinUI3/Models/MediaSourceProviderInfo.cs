@@ -16,10 +16,14 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string Provider { get; set; }
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLastFMTrackEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsDiscordPresenceEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsTimelineSyncEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TimelineSyncThreshold { get; set; }
 
+        /// <summary>
+        /// Unit: ms
+        /// </summary>
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PositionOffset { get; set; }
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ResetPositionOffsetOnSongChanged { get; set; } = false;
