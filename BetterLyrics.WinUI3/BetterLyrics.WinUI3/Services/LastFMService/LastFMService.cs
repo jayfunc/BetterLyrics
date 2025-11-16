@@ -133,7 +133,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
                 await _client.Track.ScrobbleAsync(new Hqub.Lastfm.Entities.Scrobble
                 {
                     Track = songInfo.Title,
-                    Artist = songInfo.Artist,
+                    Artist = songInfo.DisplayArtists,
                     Date = DateTime.Now,
                 });
             }

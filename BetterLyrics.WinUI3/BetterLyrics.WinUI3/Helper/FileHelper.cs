@@ -36,9 +36,9 @@ namespace BetterLyrics.WinUI3.Helper
             return sb.ToString();
         }
 
-        public static string? ReadLyricsCache(string title, string artist, string album, LyricsFormat format, string cacheFolderPath)
+        public static string? ReadLyricsCache(SongInfo songInfo, LyricsFormat format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {title} - {album}{format.ToFileExtension()}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.DisplayArtists} - {songInfo.Title} - {songInfo.Album}{format.ToFileExtension()}"));
             if (File.Exists(cacheFilePath))
             {
                 return File.ReadAllText(cacheFilePath);
@@ -58,13 +58,13 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void WriteLyricsCache(SongInfo songInfo, string lyrics, LyricsFormat format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.Artist} - {songInfo.Title} - {songInfo.Album}{format.ToFileExtension()}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.DisplayArtists} - {songInfo.Title} - {songInfo.Album}{format.ToFileExtension()}"));
             File.WriteAllText(cacheFilePath, lyrics);
         }
 
-        public static void WriteAlbumArtCache(string album, string artist, byte[] img, string format, string cacheFolderPath)
+        public static void WriteAlbumArtCache(SongInfo songInfo, byte[] img, string format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {album}{format}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.DisplayArtists} - {songInfo.Album}{format}"));
             File.WriteAllBytes(cacheFilePath, img);
         }
 

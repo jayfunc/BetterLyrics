@@ -33,10 +33,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         private readonly ISettingsService _settingsService;
         private readonly ILogger _logger;
 
-        public LyricsSearchService(ISettingsService settingsService)
+        public LyricsSearchService(ISettingsService settingsService, ILogger<LyricsSearchService> logger)
         {
             _settingsService = settingsService;
-            _logger = Ioc.Default.GetRequiredService<ILogger<LyricsSearchService>>();
+            _logger = logger;
 
             _lrcLibHttpClient = new();
             _lrcLibHttpClient.DefaultRequestHeaders.Add(
@@ -96,20 +96,22 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             var lyricsSearchResult = new LyricsSearchResult();
 
             string overridenTitle = songInfo.Title;
-            string overridenArtist = songInfo.Artist;
+            string[] overridenArtists = songInfo.Artists;
             string overridenAlbum = songInfo.Album;
 
-            _logger.LogInformation("Searching lyrics for: {Title} - {Artist} (Album: {Album}, Duration: {DurationMs}ms)",
-                overridenTitle, overridenArtist, overridenAlbum, songInfo.DurationMs);
+            _logger.LogInformation("SearchSmartlyAsync {SongInfo}", songInfo);
 
             var found = _settingsService.AppSettings.MappedSongSearchQueries
-                .Where(x => x.OriginalTitle == overridenTitle && x.OriginalArtist == overridenArtist && x.OriginalAlbum == overridenAlbum)
+                .Where(x =>
+                    x.OriginalTitle == overridenTitle &&
+                    x.OriginalArtist == overridenArtists.Join(ATL.Settings.DisplayValueSeparator.ToString()) &&
+                    x.OriginalAlbum == overridenAlbum)
                 .FirstOrDefault();
 
             if (found != null)
             {
                 overridenTitle = found.MappedTitle;
-                overridenArtist = found.MappedArtist;
+                overridenArtists = found.MappedArtist.Split(ATL.Settings.DisplayValueSeparator);
                 overridenAlbum = found.MappedAlbum;
 
                 _logger.LogInformation("Found mapped song search query: {MappedSongSearchQuery}", found);
@@ -118,7 +120,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 if (pureMusic)
                 {
                     lyricsSearchResult.Title = overridenTitle;
-                    lyricsSearchResult.Artist = overridenArtist;
+                    lyricsSearchResult.Artists = overridenArtists;
                     lyricsSearchResult.Album = overridenAlbum;
                     lyricsSearchResult.Raw = "[99:00.000]🎶🎶🎶";
                     return lyricsSearchResult;
@@ -130,7 +132,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     return await SearchSingleAsync(
                         ((SongInfo)songInfo.Clone())
                             .WithTitle(overridenTitle)
-                            .WithArtist(overridenArtist)
+                            .WithArtist(overridenArtists)
                             .WithAlbum(overridenAlbum),
                         targetProvider.Value, token);
                 }
@@ -145,7 +147,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 lyricsSearchResult = await SearchSingleAsync(
                     ((SongInfo)songInfo.Clone())
                         .WithTitle(overridenTitle)
-                        .WithArtist(overridenArtist)
+                        .WithArtist(overridenArtists)
                         .WithAlbum(overridenAlbum),
                     provider.Provider, token);
 
@@ -160,7 +162,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         public async Task<List<LyricsSearchResult>> SearchAllAsync(SongInfo songInfo, CancellationToken token)
         {
-            _logger.LogInformation("Searching all lyrics for: {SongInfo}", songInfo);
+            _logger.LogInformation("SearchAllAsync {SongInfo}", songInfo);
             var results = new List<LyricsSearchResult>();
             foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
@@ -184,7 +186,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 // Check cache first
                 if (provider.IsRemote())
                 {
-                    var cachedLyrics = FileHelper.ReadLyricsCache(songInfo.Title, songInfo.Artist, songInfo.Album, lyricsFormat, provider.GetCacheDirectory());
+                    var cachedLyrics = FileHelper.ReadLyricsCache(songInfo, lyricsFormat, provider.GetCacheDirectory());
                     if (!string.IsNullOrWhiteSpace(cachedLyrics))
                     {
                         lyricsSearchResult.Raw = cachedLyrics;
@@ -267,7 +269,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         foreach (var file in DirectoryHelper.GetAllFiles(folder.Path, $"*{format.ToFileExtension()}"))
                         {
                             var fileName = Path.GetFileNameWithoutExtension(file);
-                            if (FileHelper.IsSwitchableNormalizedMatch(fileName, songInfo.Title, songInfo.Artist) || songInfo.LinkedFileName == fileName)
+                            if (FileHelper.IsSwitchableNormalizedMatch(fileName, songInfo.Title, songInfo.DisplayArtists) || songInfo.LinkedFileName == fileName)
                             {
                                 string? raw = await File.ReadAllTextAsync(file, FileHelper.GetEncoding(file));
                                 if (raw != null)
@@ -304,9 +306,9 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
                         {
                             var track = new Track(file);
-                            if ((songInfo.Album != "" && track.Title == songInfo.Title && track.Artist == songInfo.Artist && track.Album == songInfo.Album)
-                                || (songInfo.Album == "" && track.Title == songInfo.Title && track.Artist == songInfo.Artist)
-                                || (songInfo.Album == "" && FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), songInfo.Title, songInfo.Artist)))
+                            if ((songInfo.Album != "" && track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists && track.Album == songInfo.Album)
+                                || (songInfo.Album == "" && track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists)
+                                || (songInfo.Album == "" && FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), songInfo.Title, songInfo.DisplayArtists)))
                             {
                                 var plain = track.GetRawLyrics();
                                 if (!plain.IsNullOrEmpty())
@@ -367,7 +369,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     if (musicName == null || artists == null)
                         continue;
 
-                    if (FileHelper.IsSwitchableNormalizedMatch($"{artists} - {musicName}", songInfo.Title, songInfo.Artist))
+                    if (FileHelper.IsSwitchableNormalizedMatch($"{artists} - {musicName}", songInfo.Title, songInfo.DisplayArtists))
                     {
                         if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
                         {
@@ -397,7 +399,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
                 lyricsSearchResult.Raw = lyrics;
                 lyricsSearchResult.Title = songInfo.Title;
-                lyricsSearchResult.Artist = songInfo.Artist;
+                lyricsSearchResult.Artists = songInfo.Artists;
                 lyricsSearchResult.Album = songInfo.Album;
             }
             catch
@@ -418,7 +420,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             var url =
                 $"https://lrclib.net/api/search?" +
                 $"track_name={Uri.EscapeDataString(songInfo.Title)}&" +
-                $"artist_name={Uri.EscapeDataString(songInfo.Artist)}&" +
+                $"artist_name={Uri.EscapeDataString(songInfo.DisplayArtists)}&" +
                 $"&album_name={Uri.EscapeDataString(songInfo.Album)}" +
                 $"&durationMs={Uri.EscapeDataString(songInfo.DurationMs.ToString())}";
 
@@ -451,7 +453,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             lyricsSearchResult.Raw = original;
             lyricsSearchResult.Title = searchedTitle;
-            lyricsSearchResult.Artist = searchedArtist;
+            lyricsSearchResult.Artists = searchedArtist?.Split(ATL.Settings.DisplayValueSeparator);
             lyricsSearchResult.Album = searchedAlbum;
 
             return lyricsSearchResult;
@@ -481,7 +483,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             ISearchResult? result;
             if (searcher == Searchers.Netease && songInfo.SongId != null)
             {
-                result = new NeteaseSearchResult(songInfo.Title, [songInfo.Artist], songInfo.Album, null, (int)songInfo.DurationMs, songInfo.SongId);
+                result = new NeteaseSearchResult(songInfo.Title, songInfo.Artists, songInfo.Album, songInfo.Artists, (int)songInfo.DurationMs, songInfo.SongId);
             }
             else
             {
@@ -489,10 +491,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 {
                     DurationMs = (int)songInfo.DurationMs,
                     Album = songInfo.Album,
-                    AlbumArtists = [songInfo.Artist],
-                    Artists = [songInfo.Artist],
+                    AlbumArtists = songInfo.Artists.ToList(),
+                    Artists = songInfo.Artists.ToList(),
                     Title = songInfo.Title,
-                }, searcher);
+                }, searcher, Lyricify.Lyrics.Searchers.Helpers.CompareHelper.MatchType.VeryHigh);
             }
 
             if (result != null)
@@ -573,7 +575,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
 
             lyricsSearchResult.Title = result?.Title;
-            lyricsSearchResult.Artist = result?.Artists.Join(" | ");
+            lyricsSearchResult.Artists = result?.Artists;
             lyricsSearchResult.Album = result?.Album;
 
             return lyricsSearchResult;
@@ -588,11 +590,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             if (await _appleMusic.InitAsync())
             {
-                var raw = await _appleMusic.GetLyricsAsync(songInfo.Title, songInfo.Artist);
-                _logger.LogInformation("Apple Music lyrics search result for {SongInfo}: {Raw}", songInfo, raw);
+                var raw = await _appleMusic.GetLyricsAsync(songInfo.Title, songInfo.DisplayArtists);
+                _logger.LogInformation("SearchAppleMusicAsync");
                 lyricsSearchResult.Raw = raw;
                 lyricsSearchResult.Title = songInfo.Title;
-                lyricsSearchResult.Artist = songInfo.Artist;
+                lyricsSearchResult.Artists = songInfo.Artists;
                 lyricsSearchResult.Album = "";
             }
 

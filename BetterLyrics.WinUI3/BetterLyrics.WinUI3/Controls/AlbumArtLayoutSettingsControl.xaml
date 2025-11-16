@@ -5,9 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:dev="using:DevWinUI"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -42,7 +42,6 @@
                     <dev:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3A;}">
                         <local:ExtendedSlider
                             Default="12"
-                            
                             Maximum="100"
                             Minimum="0"
                             Unit="%"
@@ -52,7 +51,6 @@
                     <dev:SettingsCard x:Uid="SettingsPageAlbumShadowAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF5EF;}">
                         <local:ExtendedSlider
                             Default="12"
-                            
                             Maximum="64"
                             Minimum="0"
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=TwoWay}" />

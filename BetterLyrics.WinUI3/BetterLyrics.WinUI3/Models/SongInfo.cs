@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using NTextCat.Commons;
 using System;
 
 namespace BetterLyrics.WinUI3.Models
@@ -11,7 +12,7 @@ namespace BetterLyrics.WinUI3.Models
         public partial string Album { get; set; }
 
         [ObservableProperty]
-        public partial string Artist { get; set; }
+        public partial string[] Artists { get; set; }
 
         [ObservableProperty]
         public partial double DurationMs { get; set; }
@@ -29,6 +30,8 @@ namespace BetterLyrics.WinUI3.Models
 
         public double Duration => DurationMs / 1000;
 
+        public string DisplayArtists => Artists.Join(ATL.Settings.DisplayValueSeparator.ToString());
+
         public SongInfo() { }
 
         public object Clone()
@@ -36,7 +39,7 @@ namespace BetterLyrics.WinUI3.Models
             return new SongInfo()
             {
                 Title = this.Title,
-                Artist = this.Artist,
+                Artists = this.Artists,
                 Album = this.Album,
                 DurationMs = this.DurationMs,
                 PlayerId = this.PlayerId,
@@ -49,22 +52,12 @@ namespace BetterLyrics.WinUI3.Models
         {
             return
                 $"Title: {Title}\n" +
-                $"Artist: {Artist}\n" +
+                $"Artist: {Artists}\n" +
                 $"Album: {Album}\n" +
                 $"Duration: {Duration} sec\n" +
                 $"Plauer ID: {PlayerId}\n" +
                 $"Song ID: {SongId}\n" +
                 $"Linked file name: {LinkedFileName}";
         }
-    }
-
-    public static class SongInfoExtensions
-    {
-        public static SongInfo Placeholder => new()
-        {
-            Title = "N/A",
-            Album = "N/A",
-            Artist = "N/A",
-        };
     }
 }

@@ -11,65 +11,74 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        CornerRadius="12">
-        <FontIcon
-            Margin="20"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontFamily="{StaticResource IconFontFamily}"
-            Glyph="&#xE8AB;" />
-        <Button
-            Margin="12"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Click="Button_Click"
-            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                  Glyph=&#xE73C;}"
-            Style="{StaticResource GhostButtonStyle}">
-            <Button.KeyboardAccelerators>
-                <KeyboardAccelerator Key="Escape" />
-            </Button.KeyboardAccelerators>
-        </Button>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid x:Name="ShadowCastGrid" />
+        <Border
+            x:Name="ShadowRect"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            CornerRadius="12"
+            Loaded="ShadowRect_Loaded"
+            Translation="0,0,64">
+            <Border.Shadow>
+                <ThemeShadow x:Name="Shadow" />
+            </Border.Shadow>
+        </Border>
+        <Grid Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" CornerRadius="12">
+            <TextBlock
+                x:Uid="SystemTraySwitch"
+                Margin="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top" />
+            <Button
+                Margin="12"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="Button_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      Glyph=&#xE73C;}"
+                Style="{StaticResource GhostButtonStyle}">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Key="Escape" />
+                </Button.KeyboardAccelerators>
+            </Button>
 
-        <ListView
-            Margin="48,56"
-            ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
-            SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus, Mode=TwoWay}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid
-                        Margin="0,10"
-                        Padding="5"
-                        AllowFocusOnInteraction="True"
-                        CornerRadius="4"
-                        Tapped="Grid_Tapped">
-                        <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <ListView
+                Margin="48,56"
+                ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
+                SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus, Mode=TwoWay}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Margin="0,10"
+                            Padding="5"
+                            AllowFocusOnInteraction="True"
+                            CornerRadius="4"
+                            Tapped="Grid_Tapped">
+                            <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
-        <StackPanel
-            Margin="20"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
-            Orientation="Horizontal"
-            Spacing="6">
-            <FontIcon
-                Margin="0,1,0,0"
-                FontFamily="{StaticResource IconFontFamily}"
-                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                Glyph="&#xE946;" />
-            <TextBlock x:Uid="LyricsWindowSwitchWindowHelp" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-        </StackPanel>
+            <StackPanel
+                Margin="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal"
+                Spacing="6">
+                <HyperlinkButton Click="SettingsHypelinkButton_Click">
+                    <HyperlinkButton.Content>
+                        <TextBlock x:Uid="LyricsWindowSwitchWindowHelp" />
+                    </HyperlinkButton.Content>
+                </HyperlinkButton>
+            </StackPanel>
+        </Grid>
     </Grid>
+
 
 </UserControl>

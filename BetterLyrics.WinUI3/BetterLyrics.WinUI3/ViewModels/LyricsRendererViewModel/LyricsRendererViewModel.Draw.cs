@@ -189,11 +189,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 ds.Transform = Matrix3x2.CreateRotation((float)_rotateAngle, control.Size.ToVector2() * 0.5f);
 
-                if (_albumArtBgEffect != null)
+                if (_isAlbumArtBgEffectChanged && _albumArtBgEffect != null)
                 {
                     ds.DrawImage(_albumArtBgEffect);
                 }
-                else if (_albumArtBgRenderTarget != null)
+                else if (!_isAlbumArtBgEffectChanged && _albumArtBgRenderTarget != null)
                 {
                     double targetSize = Math.Sqrt(Math.Pow(_canvasWidth, 2) + Math.Pow(_canvasHeight, 2));
                     float offsetX = (float)(_canvasWidth - targetSize) / 2;
@@ -208,6 +208,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void DrawAlbumArt(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
+            // 专辑图封面正在变动，需实时绘制
             if (_isAlbumArtEffectChanged && _albumArtEffect != null)
             {
                 ds.DrawImage(new OpacityEffect
@@ -216,6 +217,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     Opacity = (float)_albumArtOpacityTransition.Value
                 }, new Vector2((float)_albumArtXTransition.Value, (float)_albumArtYTransition.Value));
             }
+            // 专辑图封面不再变动，使用已保存的绘制
             else if (!_isAlbumArtEffectChanged && _albumArtRenderTarget != null)
             {
                 // 这里给一个相反的偏移以恢复位置

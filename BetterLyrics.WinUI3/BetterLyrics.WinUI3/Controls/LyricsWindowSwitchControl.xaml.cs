@@ -40,5 +40,16 @@ namespace BetterLyrics.WinUI3.Controls
             await Task.Delay(300);
             WindowHook.HideWindow<LyricsWindowSwitchWindow>();
         }
+
+        private void ShadowRect_Loaded(object sender, RoutedEventArgs e)
+        {
+            Shadow.Receivers.Add(ShadowCastGrid);
+        }
+
+        private async void SettingsHypelinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            await HideAsync();
+            WindowHook.OpenOrShowWindow<SettingsWindow>();
+        }
     }
 }

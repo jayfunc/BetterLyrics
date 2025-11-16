@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Views

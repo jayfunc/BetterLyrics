@@ -115,12 +115,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             using var overlappedCovers = new CanvasCommandList(control);
             using var overlappedCoversDs = overlappedCovers.CreateDrawingSession();
 
-            if (_lastAlbumArtCanvasBitmap != null)
+            if (_lastAlbumArtCanvasBitmap != null && !_lastAlbumArtCanvasBitmap.IsDisposed())
             {
                 using var lastBgImageEffect = CreateBgImageEffect(_lastAlbumArtCanvasBitmap, 1 - _albumArtBgTransition.Value);
                 DrawBackgroundImgae(lastBgImageEffect, overlappedCoversDs, _lastAlbumArtCanvasBitmap);
             }
-            if (_albumArtCanvasBitmap != null)
+            if (_albumArtCanvasBitmap != null && !_albumArtCanvasBitmap.IsDisposed())
             {
                 using var bgImageEffect = CreateBgImageEffect(_albumArtCanvasBitmap, _albumArtBgTransition.Value);
                 DrawBackgroundImgae(bgImageEffect, overlappedCoversDs, _albumArtCanvasBitmap);
@@ -181,6 +181,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             float offsetX = -(float)(_canvasWidth - targetSize) / 2;
             float offsetY = -(float)(_canvasHeight - targetSize) / 2;
 
+            ds.Clear(Colors.Transparent);
             ds.DrawImage(_albumArtBgEffect, new Vector2(offsetX, offsetY));
         }
 
@@ -251,6 +252,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _albumArtRenderTarget = new CanvasRenderTarget(control, (float)_canvasWidth, (float)_canvasHeight);
             using var ds = _albumArtRenderTarget.CreateDrawingSession();
 
+            ds.Clear(Colors.Transparent);
             // 给一个偏移，是为了避免绘制时从原点开始，这样会造成阴影被裁切
             ds.DrawImage(_albumArtEffect, control.Size.ToVector2() / 2 - new Vector2((float)_albumArtSize, (float)_albumArtSize) / 2);
         }

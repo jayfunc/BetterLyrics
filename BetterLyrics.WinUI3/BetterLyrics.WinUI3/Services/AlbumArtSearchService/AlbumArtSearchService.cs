@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,20 +27,20 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
         private readonly ISettingsService _settingsService;
         private readonly ILogger _logger;
 
-        public AlbumArtSearchService(ISettingsService settingsService)
+        public AlbumArtSearchService(ISettingsService settingsService, ILogger<AlbumArtSearchService> logger)
         {
             _settingsService = settingsService;
-            _logger = Ioc.Default.GetRequiredService<ILogger<AlbumArtSearchService>>();
+            _logger = logger;
             _iTunesHttpClinet = new();
         }
 
-        public async Task<IBuffer?> SearchAsync(string mediaSessionId, string title, string artist, string album, IBuffer? bufferFromSMTC, CancellationToken token)
+        public async Task<IBuffer?> SearchAsync(SongInfo songInfo, IBuffer? bufferFromSMTC, CancellationToken token)
         {
             IBuffer? result = null;
 
             try
             {
-                foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == mediaSessionId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
+                foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == songInfo.PlayerId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
                 {
                     if (!provider.IsEnabled)
                     {
@@ -49,7 +50,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                     switch (provider.Provider)
                     {
                         case AlbumArtSearchProvider.Local:
-                            result = SearchFile(artist, title)?.AsBuffer();
+                            result = SearchFile(songInfo)?.AsBuffer();
                             break;
                         case AlbumArtSearchProvider.SMTC:
                             result = bufferFromSMTC;
@@ -57,7 +58,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                         case AlbumArtSearchProvider.iTunes:
                             foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
                             {
-                                var byteArray = await SearchiTunesAsync(artist, album, title, countryCode);
+                                var byteArray = await SearchiTunesAsync(songInfo, countryCode);
                                 result = byteArray?.AsBuffer();
                                 if (token.IsCancellationRequested) return result;
                                 if (result != null) break;
@@ -77,7 +78,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             return null;
         }
 
-        private byte[]? SearchFile(string artist, string title)
+        private byte[]? SearchFile(SongInfo songInfo)
         {
             foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
             {
@@ -88,7 +89,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                         if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
                         {
                             Track track = new(file);
-                            if ((track.Title == title && track.Artist == artist) || FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), artist, title))
+                            if ((track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists) || FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), songInfo.DisplayArtists, songInfo.Title))
                             {
                                 var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
                                 if (bytes != null)
@@ -103,13 +104,13 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             return null;
         }
 
-        private async Task<byte[]?> SearchiTunesAsync(string artist, string album, string title, string countryCode)
+        private async Task<byte[]?> SearchiTunesAsync(SongInfo songInfo, string countryCode)
         {
             // Source: https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce
             try
             {
                 string format = ".jpg";
-                var cachedAlbumArt = FileHelper.ReadAlbumArtCache(artist, album, format, PathHelper.iTunesAlbumArtCacheDirectory);
+                var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo.DisplayArtists, songInfo.Album, format, PathHelper.iTunesAlbumArtCacheDirectory);
 
                 if (cachedAlbumArt != null)
                 {
@@ -117,7 +118,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                 }
 
                 // Build the iTunes API URL
-                string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode($"{artist} {album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
+                string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode($"{songInfo.Artists} {songInfo.Album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
 
                 // Make a request to the API
                 using HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url);
@@ -139,7 +140,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                         if (fetched != null && fetched.Length > 0)
                         {
                             // Write to cache
-                            FileHelper.WriteAlbumArtCache(artist, album, fetched, format, PathHelper.iTunesAlbumArtCacheDirectory);
+                            FileHelper.WriteAlbumArtCache(songInfo, fetched, format, PathHelper.iTunesAlbumArtCacheDirectory);
                             return fetched;
                         }
                     }
@@ -147,7 +148,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error searching iTunes album art for {Artist} - {Album}", artist, album);
+                _logger.LogError(ex, "SearchiTunesAsync");
             }
             return null;
         }

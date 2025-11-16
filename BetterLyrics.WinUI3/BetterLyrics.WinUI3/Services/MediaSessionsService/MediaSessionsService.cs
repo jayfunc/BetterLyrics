@@ -34,6 +34,8 @@ using Windows.Storage.Streams;
 using WindowsMediaController;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Extensions;
+using CommunityToolkit.WinUI;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
@@ -62,6 +64,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private double _lxMusicPositionSeconds = 0;
         private byte[]? _lxMusicAlbumArtBytes = null;
 
+        private readonly DispatcherQueueTimer? _onMediaPropsChangedTimer;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool CurrentIsPlaying { get; private set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TimeSpan CurrentPosition { get; private set; } = TimeSpan.Zero;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial SongInfo? CurrentSongInfo { get; private set; }
@@ -76,7 +80,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             ILiveStatesService liveStatesService,
             IDiscordService discordService,
             ITranslateService libreTranslateService,
-            IResourceService resourceService)
+            IResourceService resourceService,
+            ILogger<MediaSessionsService> logger)
         {
             _settingsService = settingsService;
             _albumArtSearchService = albumArtSearchService;
@@ -86,7 +91,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _liveStatesService = liveStatesService;
             _discordService = discordService;
             _resourceService = resourceService;
-            _logger = Ioc.Default.GetRequiredService<ILogger<MediaSessionsService>>();
+            _logger = logger;
+
+            _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
 
@@ -272,107 +279,109 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProperties)
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+            _onMediaPropsChangedTimer?.Debounce(() =>
             {
-                if (!_mediaManager.IsStarted) return;
-                if (mediaSession == null)
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
                 {
-                    CurrentSongInfo = SongInfoExtensions.Placeholder;
-                }
-
-                string? sessionId = mediaSession?.Id;
-
-                var desiredSession = GetCurrentSession();
-
-                if (mediaSession != desiredSession) return;
-
-                if (sessionId != null && !IsMediaSourceEnabled(sessionId))
-                {
-                    CurrentSongInfo = SongInfoExtensions.Placeholder;
-
-                    _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
-                        mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
-
-                    if (PlayerIDMatcher.IsLXMusic(sessionId))
+                    if (!_mediaManager.IsStarted) return;
+                    if (mediaSession == null)
                     {
-                        StopSSE();
+                        CurrentSongInfo = SongInfoExtensions.Placeholder;
                     }
 
-                    _SMTCAlbumArtBuffer = null;
-                }
-                else
-                {
-                    var currentMediaSourceProviderInfo = GetCurrentMediaSourceProviderInfo();
-                    if (currentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
-                    {
-                        currentMediaSourceProviderInfo?.PositionOffset = 0;
-                    }
+                    string? sessionId = mediaSession?.Id;
 
-                    string fixedArtist = mediaProperties?.Artist ?? "N/A";
-                    string fixedAlbum = mediaProperties?.AlbumTitle ?? "N/A";
-                    string? songId = null;
+                    var desiredSession = GetCurrentSession();
 
-                    if (PlayerIDMatcher.IsAppleMusic(sessionId))
-                    {
-                        fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault() ?? (mediaProperties?.Artist ?? "N/A");
-                        fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault() ?? (mediaProperties?.AlbumTitle ?? "N/A");
-                    }
-                    else if (PlayerIDMatcher.IsNeteaseFamily(sessionId))
-                    {
-                        songId = mediaProperties?.Genres
-                            .Where(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?.FirstOrDefault()?
-                            .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
-                    }
+                    if (mediaSession != desiredSession) return;
 
-                    var linkedFileName = mediaProperties?.Genres
-                        .Where(x => x.StartsWith(ExtendedGenreFiled.FileName))?.FirstOrDefault()?
-                        .Replace(ExtendedGenreFiled.FileName, "");
+                    if (sessionId != null && !IsMediaSourceEnabled(sessionId))
+                    {
+                        CurrentSongInfo = SongInfoExtensions.Placeholder;
 
-                    CurrentSongInfo = new SongInfo
-                    {
-                        Title = mediaProperties?.Title ?? "N/A",
-                        Artist = fixedArtist,
-                        Album = fixedAlbum,
-                        DurationMs = mediaSession?.ControlSession?.GetTimelineProperties().EndTime.TotalMilliseconds ?? 0,
-                        PlayerId = sessionId,
-                        SongId = songId,
-                        LinkedFileName = linkedFileName
-                    };
+                        if (PlayerIDMatcher.IsLXMusic(sessionId))
+                        {
+                            StopSSE();
+                        }
 
-                    _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
-                        mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
-
-                    if (PlayerIDMatcher.IsLXMusic(sessionId))
-                    {
-                        StartSSE();
-                    }
-                    else
-                    {
-                        StopSSE();
-                    }
-
-                    if (PlayerIDMatcher.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
-                    {
-                        _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
-                    }
-                    else if (mediaProperties?.Thumbnail is IRandomAccessStreamReference streamReference)
-                    {
-                        _SMTCAlbumArtBuffer = await ImageHelper.ToBufferAsync(streamReference);
-                    }
-                    else
-                    {
                         _SMTCAlbumArtBuffer = null;
                     }
-                }
+                    else
+                    {
+                        var currentMediaSourceProviderInfo = GetCurrentMediaSourceProviderInfo();
+                        if (currentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
+                        {
+                            currentMediaSourceProviderInfo?.PositionOffset = 0;
+                        }
 
-                CurrentMediaSourceProviderInfo = GetCurrentMediaSourceProviderInfo();
+                        string fixedArtist = mediaProperties?.Artist ?? "N/A";
+                        string fixedAlbum = mediaProperties?.AlbumTitle ?? "N/A";
+                        string? songId = null;
 
-                UpdateAlbumArt();
-                UpdateLyrics();
+                        if (PlayerIDMatcher.IsAppleMusic(sessionId))
+                        {
+                            fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault() ?? (mediaProperties?.Artist ?? "N/A");
+                            fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault() ?? (mediaProperties?.AlbumTitle ?? "N/A");
+                        }
+                        else if (PlayerIDMatcher.IsNeteaseFamily(sessionId))
+                        {
+                            songId = mediaProperties?.Genres
+                                .Where(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?.FirstOrDefault()?
+                                .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
+                        }
 
-                UpdateDiscordPresence();
-                UpdateCurrentMediaSourceProviderInfoPositionOffset();
-            });
+                        var linkedFileName = mediaProperties?.Genres
+                            .Where(x => x.StartsWith(ExtendedGenreFiled.FileName))?.FirstOrDefault()?
+                            .Replace(ExtendedGenreFiled.FileName, "");
+
+                        CurrentSongInfo = new SongInfo
+                        {
+                            Title = mediaProperties?.Title ?? "N/A",
+                            Artists = fixedArtist.Split(ATL.Settings.DisplayValueSeparator),
+                            Album = fixedAlbum,
+                            DurationMs = mediaSession?.ControlSession?.GetTimelineProperties().EndTime.TotalMilliseconds ?? 0,
+                            PlayerId = sessionId,
+                            SongId = songId,
+                            LinkedFileName = linkedFileName
+                        };
+
+                        _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
+                            mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
+
+                        if (PlayerIDMatcher.IsLXMusic(sessionId))
+                        {
+                            StartSSE();
+                        }
+                        else
+                        {
+                            StopSSE();
+                        }
+
+                        if (PlayerIDMatcher.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
+                        {
+                            _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
+                        }
+                        else if (mediaProperties?.Thumbnail is IRandomAccessStreamReference streamReference)
+                        {
+                            _SMTCAlbumArtBuffer = await ImageHelper.ToBufferAsync(streamReference);
+                        }
+                        else
+                        {
+                            _SMTCAlbumArtBuffer = null;
+                        }
+                    }
+
+                    _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged {SongInfo}", CurrentSongInfo);
+
+                    CurrentMediaSourceProviderInfo = GetCurrentMediaSourceProviderInfo();
+
+                    UpdateAlbumArt();
+                    UpdateLyrics();
+
+                    UpdateDiscordPresence();
+                    UpdateCurrentMediaSourceProviderInfoPositionOffset();
+                });
+            }, Time.DebounceTimeout);
         }
 
         private void MediaManager_OnAnySessionClosed(MediaManager.MediaSession mediaSession)

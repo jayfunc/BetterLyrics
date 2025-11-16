@@ -1,8 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using Lyricify.Lyrics.Parsers;
+using NTextCat.Commons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,28 +17,30 @@ namespace BetterLyrics.WinUI3.Helper
     {
         public List<LyricsData> LyricsDataArr { get; private set; } = [];
 
-        public void Parse(List<MappedSongSearchQuery> mappedSongSearchQueries, string title, string artist, string album, string? raw, int? durationMs, LyricsSearchProvider? lyricsSearchProvider)
+        public void Parse(List<MappedSongSearchQuery> mappedSongSearchQueries, Models.SongInfo songInfo, string? raw, LyricsSearchProvider? lyricsSearchProvider)
         {
-            var overridenTitle = title;
-            var overridenArtist = artist;
-            var overridenAlbum = album;
+            var overridenTitle = songInfo.Title;
+            var overridenArtist = songInfo.Artists;
+            var overridenAlbum = songInfo.Album;
 
             var found = mappedSongSearchQueries
-                .Where(x => x.OriginalTitle == overridenTitle && x.OriginalArtist == overridenArtist && x.OriginalAlbum == overridenAlbum)
+                .Where(x => 
+                    x.OriginalTitle == overridenTitle && 
+                    x.OriginalArtist == overridenArtist.Join(ATL.Settings.DisplayValueSeparator.ToString()) && 
+                    x.OriginalAlbum == overridenAlbum)
                 .FirstOrDefault();
 
             if (found != null)
             {
                 overridenTitle = found.MappedTitle;
-                overridenArtist = found.MappedArtist;
+                overridenArtist = found.MappedArtist.Split(ATL.Settings.DisplayValueSeparator);
                 overridenAlbum = found.MappedAlbum;
             }
 
             LyricsDataArr = [];
-            durationMs ??= (int)TimeSpan.FromMinutes(99).TotalMilliseconds;
             if (raw == null)
             {
-                LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder(durationMs.Value));
+                LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder((int)songInfo.DurationMs));
             }
             else
             {
@@ -60,22 +64,27 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
             FillRomanizationLyricsData();
-            FillTranslationFromCache(overridenTitle, overridenArtist, overridenAlbum, lyricsSearchProvider);
+            FillTranslationFromCache(
+                ((SongInfo)songInfo.Clone())
+                    .WithTitle(overridenTitle)
+                    .WithArtist(overridenArtist)
+                    .WithAlbum(overridenAlbum), 
+                lyricsSearchProvider);
         }
 
-        private void FillTranslationFromCache(string title, string artist, string album, LyricsSearchProvider? provider)
+        private void FillTranslationFromCache(SongInfo songInfo, LyricsSearchProvider? provider)
         {
             string? translationRaw = null;
             switch (provider)
             {
                 case LyricsSearchProvider.QQ:
-                    translationRaw = FileHelper.ReadLyricsCache(title, artist, album, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
+                    translationRaw = FileHelper.ReadLyricsCache(songInfo, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.Kugou:
-                    translationRaw = FileHelper.ReadLyricsCache(title, artist, album, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
+                    translationRaw = FileHelper.ReadLyricsCache(songInfo, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.Netease:
-                    translationRaw = FileHelper.ReadLyricsCache(title, artist, album, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
+                    translationRaw = FileHelper.ReadLyricsCache(songInfo, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
                     break;
                 case LyricsSearchProvider.LrcLib:
                     break;
@@ -215,12 +224,12 @@ namespace BetterLyrics.WinUI3.Helper
                     int? lineStartTime = null;
                     if (bracketMatches.Count > 0)
                     {
-                        var m = bracketMatches![0];
+                        var m = bracketMatches[0];
                         int min = int.Parse(m.Groups[1].Value);
                         int sec = int.Parse(m.Groups[2].Value);
                         int ms = int.Parse(m.Groups[4].Value.PadRight(3, '0'));
                         lineStartTime = min * 60_000 + sec * 1000 + ms;
-                        content = bracketRegex!.Replace(line, "");
+                        content = bracketRegex!.Replace(line, "").Trim();
                         if (content == "//") content = "";
                         lrcLines.Add((lineStartTime.Value, content, new List<(int, string)>()));
                     }

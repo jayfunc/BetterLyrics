@@ -592,7 +592,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             //double? targetYScrollOffset = -currentPlayingLine!.OriginalPosition.Y + _currentLyricsData?.LyricsLines[0].OriginalPosition.Y - playingTextLayout.LayoutBounds.Height / 2.0;
             double? targetYScrollOffset =
                 -currentPlayingLine!.OriginalPosition.Y
-                + _currentLyricsData?.LyricsLines[0].OriginalPosition.Y
+                + _currentLyricsData?.LyricsLines.FirstOrDefault()?.OriginalPosition.Y
                 - (currentPlayingLine.TranslatedPosition.Y + (currentPlayingLine.TranslatedCanvasTextLayout?.LayoutBounds.Height ?? 0) - currentPlayingLine.PhoneticPosition.Y) / 2.0;
 
             if (!targetYScrollOffset.HasValue) return;
@@ -694,20 +694,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _adaptiveGrayedFontColor = _darkColor;
                 brightness = 0.7f;
                 _grayedEnvironmentalColor = _lightColor;
-                _albumArtAccentColor1Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(0));
-                _albumArtAccentColor2Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(1));
-                _albumArtAccentColor3Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(2));
-                _albumArtAccentColor4Transition.StartTransition(_albumArtLightAccentColors.ElementAtOrDefault(3));
+                _albumArtAccentColor1Transition.StartTransition(_mediaSessionsService.LightAccentColors.ElementAtOrDefault(0));
+                _albumArtAccentColor2Transition.StartTransition(_mediaSessionsService.LightAccentColors.ElementAtOrDefault(1));
+                _albumArtAccentColor3Transition.StartTransition(_mediaSessionsService.LightAccentColors.ElementAtOrDefault(2));
+                _albumArtAccentColor4Transition.StartTransition(_mediaSessionsService.LightAccentColors.ElementAtOrDefault(3));
             }
             else
             {
                 _adaptiveGrayedFontColor = _lightColor;
                 brightness = 0.3f;
                 _grayedEnvironmentalColor = _darkColor;
-                _albumArtAccentColor1Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(0));
-                _albumArtAccentColor2Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(1));
-                _albumArtAccentColor3Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(2));
-                _albumArtAccentColor4Transition.StartTransition(_albumArtDarkAccentColors.ElementAtOrDefault(3));
+                _albumArtAccentColor1Transition.StartTransition(_mediaSessionsService.DarkAccentColors.ElementAtOrDefault(0));
+                _albumArtAccentColor2Transition.StartTransition(_mediaSessionsService.DarkAccentColors.ElementAtOrDefault(1));
+                _albumArtAccentColor3Transition.StartTransition(_mediaSessionsService.DarkAccentColors.ElementAtOrDefault(2));
+                _albumArtAccentColor4Transition.StartTransition(_mediaSessionsService.DarkAccentColors.ElementAtOrDefault(3));
             }
 
             _lyricsBgBrightnessTransition.StartTransition(brightness);
@@ -720,11 +720,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 if (isLight)
                 {
-                    _adaptiveColoredFontColor = _albumArtDarkAccentColors.ElementAtOrDefault(0);
+                    _adaptiveColoredFontColor = _mediaSessionsService.DarkAccentColors.ElementAtOrDefault(0);
                 }
                 else
                 {
-                    _adaptiveColoredFontColor = _albumArtLightAccentColors.ElementAtOrDefault(0);
+                    _adaptiveColoredFontColor = _mediaSessionsService.LightAccentColors.ElementAtOrDefault(0);
                 }
             }
 
@@ -958,12 +958,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _artistTextLayout = null;
 
             _lastArtistTextLayout = new(
-                control, _lastSongArtist ?? string.Empty,
+                control, _lastSongArtists ?? string.Empty,
                 _artistTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
             );
 
             _artistTextLayout = new(
-                control, _songArtist ?? string.Empty,
+                control, _songArtists ?? string.Empty,
                 _artistTextFormat, (float)_maxSongInfoWidth, (float)_canvasHeight
             );
 
@@ -1320,10 +1320,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
                 _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
 
-            _lastArtistTextLayout?.SetFontFamily(_lastSongArtist,
+            _lastArtistTextLayout?.SetFontFamily(_lastSongArtists,
                 _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
                 _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
-            _artistTextLayout?.SetFontFamily(_songArtist,
+            _artistTextLayout?.SetFontFamily(_songArtists,
                 _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsCJKFontFamily,
                 _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsWesternFontFamily);
 

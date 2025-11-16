@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.WinUI;
 using Lyricify.Lyrics.Helpers.General;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -61,7 +62,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             if (!_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled) return;
 
-            _logger.LogInformation("Showing translation for lyrics...");
+            _logger.LogInformation("SetTranslatedTextAsync");
             string targetLangCode = _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode;
             _logger.LogInformation("Target language code: {TargetLangCode}", targetLangCode);
             string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
@@ -74,7 +75,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 _logger.LogInformation("Original lyrics already in target language: {TargetLangCode}", targetLangCode);
 
-                _lyricsDataArr[0].ClearTranslatedText();
+                _lyricsDataArr.FirstOrDefault()?.ClearTranslatedText();
             }
             else
             {
@@ -84,7 +85,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 {
                     _logger.LogInformation("Found translated text in lyrics data at index {FoundIndex}", found);
 
-                    _lyricsDataArr[0].SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                    _lyricsDataArr.FirstOrDefault()?.SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
                     TranslationSearchProvider = CurrentLyricsSearchResult?.Provider.ToTranslationSearchProvider();
                 }
                 else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
@@ -97,7 +98,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         if (token.IsCancellationRequested) return;
                         if (translated == string.Empty) return;
 
-                        _lyricsDataArr[0].SetTranslation(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
+                        _lyricsDataArr.FirstOrDefault()?.SetTranslation(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
 
                         TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;
                     }
@@ -131,7 +132,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             if (targetPhoneticCode == "")
             {
-                _lyricsDataArr[0].ClearPhoneticText();
+                _lyricsDataArr.FirstOrDefault()?.ClearPhoneticText();
             }
 
             // Try get phonetic text from itself
@@ -139,14 +140,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (found >= 0)
             {
                 _logger.LogInformation("Found phonetic text in lyrics data at index {FoundIndex}", found);
-                _lyricsDataArr[0].SetPhoneticText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                _lyricsDataArr.FirstOrDefault()?.SetPhoneticText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
             }
 
         }
 
         private async Task RefreshLyricsAsync(CancellationToken token)
         {
-            _logger.LogInformation("Refreshing lyrics...");
+            _logger.LogInformation("RefreshLyricsAsync");
 
             CurrentLyricsSearchResult = null;
             _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
@@ -158,24 +159,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             if (CurrentSongInfo != null)
             {
-                _logger.LogInformation("Searching lyrics for: Title={Title}, Artist={Artist}, Album={Album}, DurationMs={DurationMs}",
-                    CurrentSongInfo.Title, CurrentSongInfo.Artist, CurrentSongInfo.Album, CurrentSongInfo.DurationMs);
-
                 CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(CurrentSongInfo, token), token);
                 if (token.IsCancellationRequested) return;
-
-                _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", CurrentLyricsSearchResult?.IsFound, CurrentLyricsSearchResult?.Provider);
 
                 var lyricsParser = new LyricsParser();
                 lyricsParser.Parse(
                     _settingsService.AppSettings.MappedSongSearchQueries.ToList(),
-                    CurrentSongInfo.Title, CurrentSongInfo.Artist, CurrentSongInfo.Album, CurrentLyricsSearchResult?.Raw, (int?)CurrentSongInfo?.DurationMs, CurrentLyricsSearchResult?.Provider);
+                    CurrentSongInfo, CurrentLyricsSearchResult?.Raw, CurrentLyricsSearchResult?.Provider);
                 _lyricsDataArr = lyricsParser.LyricsDataArr;
                 ApplyChinesePreference();
-            }
-            else
-            {
-                _logger.LogWarning("SongInfo is null, cannot search lyrics.");
             }
 
             _logger.LogInformation("Parsed lyrics: {MultiLangLyricsCount} languages", _lyricsDataArr.Count);
@@ -206,12 +198,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         public void UpdateLyrics()
         {
-            _refreshLyricsRunner.RunAsync(RefreshLyricsAsync);
+            _ = _refreshLyricsRunner.RunAsync(RefreshLyricsAsync);
         }
 
         public void UpdateTranslations()
         {
-            _refreshTranslationRunner.RunAsync(RefreshTranslationAsync);
+            _ = _refreshTranslationRunner.RunAsync(RefreshTranslationAsync);
         }
     }
 }
