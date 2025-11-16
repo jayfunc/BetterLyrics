@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using WinRT.Interop;
 
-namespace BetterLyrics.WinUI3.Helper
+namespace BetterLyrics.WinUI3.Hooks
 {
-    public static class MonitorHelper
+    public static class MonitorHook
     {
         public static IEnumerable<string> GetAllMonitorDeviceNames()
         {

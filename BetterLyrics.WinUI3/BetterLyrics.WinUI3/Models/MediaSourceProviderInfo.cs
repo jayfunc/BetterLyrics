@@ -1,11 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Linq;
+using BetterLyrics.WinUI3.Constants;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -32,7 +33,60 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
-        public bool IsLXMusic => PlayerIdMatcher.IsLXMusic(Provider);
+        public bool IsLXMusic => PlayerIDMatcher.IsLXMusic(Provider);
+
+        public string DisplayName => Provider switch
+        {
+            PlayerID.Spotify => PlayerName.Spotify,
+            PlayerID.AppleMusic => PlayerName.AppleMusic,
+            PlayerID.iTunes => PlayerName.iTunes,
+            PlayerID.KugouMusic => PlayerName.KugouMusic,
+            PlayerID.NetEaseCloudMusic => PlayerName.NetEaseCloudMusic,
+            PlayerID.QQMusic => PlayerName.QQMusic,
+            PlayerID.LXMusic => PlayerName.LXMusic,
+            PlayerID.LXMusicPortable => PlayerName.LXMusicPortable,
+            PlayerID.MediaPlayerWindows11 => PlayerName.MediaPlayerWindows11,
+            PlayerID.AIMP => PlayerName.AIMP,
+            PlayerID.Foobar2000 => PlayerName.Foobar2000,
+            PlayerID.MusicBee => PlayerName.MusicBee,
+            PlayerID.PotPlayer => PlayerName.PotPlayer,
+            PlayerID.Chrome => PlayerName.Chrome,
+            PlayerID.Edge => PlayerName.Edge,
+            PlayerID.BetterLyrics => PlayerName.BetterLyrics,
+            PlayerID.BetterLyricsDebug => PlayerName.BetterLyricsDebug,
+            PlayerID.SaltPlayerForWindows => PlayerName.SaltPlayerForWindows,
+            PlayerID.MoeKoeMusic => PlayerName.MoeKoeMusic,
+            PlayerID.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
+            PlayerID.Listen1 => PlayerName.Listen1,
+            _ => Provider,
+        };
+
+        public string LogoPath => Provider switch
+        {
+            PlayerID.Spotify => PathHelper.SpotifyLogoPath,
+            PlayerID.AppleMusic => PathHelper.AppleMusicLogoPath,
+            PlayerID.AppleMusicAlternative => PathHelper.AppleMusicLogoPath,
+            PlayerID.iTunes => PathHelper.iTunesLogoPath,
+            PlayerID.KugouMusic => PathHelper.KugouMusicLogoPath,
+            PlayerID.NetEaseCloudMusic => PathHelper.NetEaseCloudMusicLogoPath,
+            PlayerID.QQMusic => PathHelper.QQMusicLogoPath,
+            PlayerID.LXMusic => PathHelper.LXMusicLogoPath,
+            PlayerID.LXMusicPortable => PathHelper.LXMusicLogoPath,
+            PlayerID.MediaPlayerWindows11 => PathHelper.MediaPlayerWindows11LogoPath,
+            PlayerID.AIMP => PathHelper.AIMPLogoPath,
+            PlayerID.Foobar2000 => PathHelper.Foobar2000LogoPath,
+            PlayerID.MusicBee => PathHelper.MusicBeeLogoPath,
+            PlayerID.PotPlayer => PathHelper.PotPlayerLogoPath,
+            PlayerID.Chrome => PathHelper.ChromeLogoPath,
+            PlayerID.Edge => PathHelper.EdgeLogoPath,
+            PlayerID.BetterLyrics => PathHelper.LogoPath,
+            PlayerID.BetterLyricsDebug => PathHelper.LogoPath,
+            PlayerID.SaltPlayerForWindows => PathHelper.SaltPlayerForWindowsLogoPath,
+            PlayerID.MoeKoeMusic => PathHelper.MoeKoeMusicLogoPath,
+            PlayerID.MoeKoeMusicAlternative => PathHelper.MoeKoeMusicLogoPath,
+            PlayerID.Listen1 => PathHelper.Listen1LogoPath,
+            _ => PathHelper.UnknownPlayerLogoPath,
+        };
 
         public MediaSourceProviderInfo()
         {

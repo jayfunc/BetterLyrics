@@ -225,7 +225,7 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>Lyrics not found</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>
   <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
@@ -258,7 +258,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>Show translation only</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
     <value>Translation provider</value>
   </data>
   <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
@@ -332,6 +332,9 @@
   </data>
   <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
     <value>Go to Settings to add more modes</value>
+  </data>
+  <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <value>Lyrics window switcher</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>Album art area only</value>
@@ -1149,6 +1152,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
     <value>Play</value>
+  </data>
+  <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
+    <value>Playback source</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Play "Cut To The Feeling" on "soundcloud.com"</value>

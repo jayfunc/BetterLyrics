@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LastFMService;
@@ -68,10 +69,10 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            WindowHelper.OpenOrShowWindow<LyricsWindow>();
+            WindowHook.OpenOrShowWindow<LyricsWindow>();
             if (Ioc.Default.GetRequiredService<ISettingsService>().AppSettings.MusicGallerySettings.AutoOpen)
             {
-                WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
+                WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
             }
         }
 

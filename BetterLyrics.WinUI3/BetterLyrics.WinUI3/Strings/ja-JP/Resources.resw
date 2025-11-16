@@ -225,7 +225,7 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>歌詞が見つかりません</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
     <value>歌詞プロバイダー</value>
   </data>
   <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
@@ -258,7 +258,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>翻訳のみを表示します</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
     <value>翻訳プロバイダー</value>
   </data>
   <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
@@ -332,6 +332,9 @@
   </data>
   <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
     <value>設定に移動して、さらにモードを追加してください</value>
+  </data>
+  <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <value>歌詞ウィンドウスイッチャー</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>アルバムアートエリアのみ</value>
@@ -1149,6 +1152,9 @@
   </data>
   <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
     <value>遊ぶ</value>
+  </data>
+  <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
+    <value>再生ソース</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>「SoundCloud.com」で「Cut to the Feeling」を再生する</value>

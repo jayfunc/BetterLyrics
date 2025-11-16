@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -59,7 +60,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         public async Task AuthAsync()
         {
-            var dialogXamlRoot = WindowHelper.GetWindowByWindowType<SettingsWindow>()?.Content.XamlRoot;
+            var dialogXamlRoot = WindowHook.GetWindowByWindowType<SettingsWindow>()?.Content.XamlRoot;
             if (dialogXamlRoot == null)
             {
                 return;
@@ -86,7 +87,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         public async Task UnAuthAsync()
         {
-            var dialogXamlRoot = WindowHelper.GetWindowByWindowType<SettingsWindow>()?.Content.XamlRoot;
+            var dialogXamlRoot = WindowHook.GetWindowByWindowType<SettingsWindow>()?.Content.XamlRoot;
             if (dialogXamlRoot == null)
             {
                 return;

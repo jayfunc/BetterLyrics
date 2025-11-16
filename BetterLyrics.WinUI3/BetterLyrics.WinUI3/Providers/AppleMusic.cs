@@ -1,11 +1,12 @@
-﻿using System;
+﻿using BetterLyrics.WinUI3.Helper;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Helper
+namespace BetterLyrics.WinUI3.Providers
 {
     public class AppleMusic
     {

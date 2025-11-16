@@ -1,6 +1,6 @@
 ﻿using ATL;
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
@@ -24,6 +24,7 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
+using BetterLyrics.WinUI3.Extensions;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -446,6 +447,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 var storageFile = await StorageFile.GetFileFromPathAsync(track.Path);
                 await updater.CopyFromFileAsync(MediaPlaybackType.Music, storageFile);
+                updater.MusicProperties.AlbumTitle = track.Album;
+                updater.MusicProperties.Genres.Add($"FILENAME-{Path.GetFileNameWithoutExtension(track.Path)}");
                 updater.Update();
             }
         }

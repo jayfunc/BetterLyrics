@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.WinUI3.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.Models.Settings

@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using System;
 using System.IO;
 using System.Text;
@@ -55,9 +56,9 @@ namespace BetterLyrics.WinUI3.Helper
             return null;
         }
 
-        public static void WriteLyricsCache(string title, string artist, string album, string lyrics, LyricsFormat format, string cacheFolderPath)
+        public static void WriteLyricsCache(SongInfo songInfo, string lyrics, LyricsFormat format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {title} - {album}{format.ToFileExtension()}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.Artist} - {songInfo.Title} - {songInfo.Album}{format.ToFileExtension()}"));
             File.WriteAllText(cacheFilePath, lyrics);
         }
 

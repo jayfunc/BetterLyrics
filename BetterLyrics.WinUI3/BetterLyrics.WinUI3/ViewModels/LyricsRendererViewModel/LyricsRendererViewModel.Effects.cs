@@ -1,4 +1,7 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Shaders;
+using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -17,6 +20,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private OpacityEffect? _albumArtBgEffect;
         private CanvasCommandList? _albumArtEffect;
         private PixelShaderEffect? _fluidEffect;
+        private PixelShaderEffect<SnowEffect>? _snowEffect;
 
         private OpacityEffect CreateBgImageEffect(CanvasBitmap canvasBitmap, double opacity)
         {

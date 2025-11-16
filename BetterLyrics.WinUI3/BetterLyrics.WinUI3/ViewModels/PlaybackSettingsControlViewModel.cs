@@ -46,12 +46,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLXMusicServerTesting { get; set; } = false;
 
         [ObservableProperty]
-        public partial string OriginalLyricsRef { get; set; } = "about:blank";
-
-        [ObservableProperty]
-        public partial string TranslatedLyricsRef { get; set; } = "about:blank";
-
-        [ObservableProperty]
         public partial int SelectedTargetLanguageIndex { get; set; }
 
         [ObservableProperty]

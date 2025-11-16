@@ -1,6 +1,10 @@
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using WinUIEx;
 
@@ -20,10 +24,9 @@ namespace BetterLyrics.WinUI3.Views
         {
             InitializeComponent();
 
-            AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Collapsed;
+            this.Init("LyricsWindowSwitchWindowTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
+
             this.CenterOnScreen();
-            this.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(Enums.BackdropType.Transparent);
             this.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
             AppWindow.IsShownInSwitchers = false;
             this.SetIsAlwaysOnTop(true);
@@ -32,7 +35,7 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.Changed += AppWindow_Changed;
         }
 
-        private void AppWindow_Changed(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowChangedEventArgs args)
+        private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
             if (args.DidVisibilityChange)
             {

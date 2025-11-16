@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
@@ -31,8 +32,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             LiveStates = _liveStatesService.LiveStates;
 
-            Volume = SystemVolumeHelper.MasterVolume;
-            SystemVolumeHelper.VolumeNotification += SystemVolumeHelper_VolumeNotification;
+            Volume = SystemVolumeHook.MasterVolume;
+            SystemVolumeHook.VolumeNotification += SystemVolumeHelper_VolumeNotification;
         }
 
         private void SystemVolumeHelper_VolumeNotification(object? sender, int e)
@@ -68,7 +69,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static void OpenSettingsWindow()
         {
-            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+            WindowHook.OpenOrShowWindow<SettingsWindow>();
         }
 
         [RelayCommand]

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BetterLyrics.WinUI3.Hooks;
+using DevWinUI;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -10,7 +12,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         public static async Task<StorageFolder?> PickSingleFolderAsync<T>()
         {
-            var window = WindowHelper.GetWindowByWindowType<T>();
+            var window = WindowHook.GetWindowByWindowType<T>();
             if (window == null) return null;
 
             var picker = new Windows.Storage.Pickers.FolderPicker();
@@ -26,7 +28,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static async Task<StorageFile?> PickSingleFileAsync<T>(string[] fileTypeFilter)
         {
-            var window = WindowHelper.GetWindowByWindowType<T>();
+            var window = WindowHook.GetWindowByWindowType<T>();
             if (window == null) return null;
 
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
@@ -42,7 +44,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static async Task<StorageFile?> PickSaveFileAsync<T>(IDictionary<string, IList<string>> fileTypeChoices)
         {
-            var window = WindowHelper.GetWindowByWindowType<T>();
+            var window = WindowHook.GetWindowByWindowType<T>();
             if (window == null) return null;
 
             var picker = new Windows.Storage.Pickers.FileSavePicker();

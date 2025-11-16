@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         TimeSpan CurrentPosition { get; }
         LyricsData? CurrentLyricsData { get; }
 
-        LyricsSearchProvider? LyricsSearchProvider { get; }
         TranslationSearchProvider? TranslationSearchProvider { get; }
+        LyricsSearchResult? CurrentLyricsSearchResult { get; }
     }
 }

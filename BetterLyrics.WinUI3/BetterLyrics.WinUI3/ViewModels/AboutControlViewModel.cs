@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -59,7 +60,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 var succeed = _settingsService.ImportSettings(file.Path);
                 if (succeed)
                 {
-                    WindowHelper.RestartApp();
+                    WindowHook.RestartApp();
                 }
                 else
                 {

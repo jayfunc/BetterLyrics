@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,7 +27,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         public event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchProvider? LyricsSearchProvider { get; private set; }
+        [ObservableProperty] public partial LyricsSearchResult? CurrentLyricsSearchResult { get; private set; }
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TranslationSearchProvider? TranslationSearchProvider { get; private set; }
 
@@ -84,7 +85,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _logger.LogInformation("Found translated text in lyrics data at index {FoundIndex}", found);
 
                     _lyricsDataArr[0].SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
-                    TranslationSearchProvider = LyricsSearchProvider.ToTranslationSearchProvider();
+                    TranslationSearchProvider = CurrentLyricsSearchResult?.Provider.ToTranslationSearchProvider();
                 }
                 else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
                 {
@@ -147,7 +148,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             _logger.LogInformation("Refreshing lyrics...");
 
-            LyricsSearchProvider = null;
+            CurrentLyricsSearchResult = null;
             _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
 
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
@@ -160,24 +161,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 _logger.LogInformation("Searching lyrics for: Title={Title}, Artist={Artist}, Album={Album}, DurationMs={DurationMs}",
                     CurrentSongInfo.Title, CurrentSongInfo.Artist, CurrentSongInfo.Album, CurrentSongInfo.DurationMs);
 
-                var lyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
-                    CurrentSongInfo.PlayerId ?? "",
-                    CurrentSongInfo.Title,
-                    CurrentSongInfo.Artist,
-                    CurrentSongInfo.Album,
-                    CurrentSongInfo.DurationMs,
-                    CurrentSongInfo.SongId,
-                    token
-                ), token);
+                CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(CurrentSongInfo, token), token);
                 if (token.IsCancellationRequested) return;
-                LyricsSearchProvider = lyricsSearchResult?.Provider;
 
-                _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", lyricsSearchResult?.IsFound, LyricsSearchProvider);
+                _logger.LogInformation("Lyrics was found? {Found}, Provider: {LyricsSearchProvider}", CurrentLyricsSearchResult?.IsFound, CurrentLyricsSearchResult?.Provider);
 
                 var lyricsParser = new LyricsParser();
                 lyricsParser.Parse(
                     _settingsService.AppSettings.MappedSongSearchQueries.ToList(),
-                    CurrentSongInfo.Title, CurrentSongInfo.Artist, CurrentSongInfo.Album, lyricsSearchResult?.Raw, (int?)CurrentSongInfo?.DurationMs, LyricsSearchProvider);
+                    CurrentSongInfo.Title, CurrentSongInfo.Artist, CurrentSongInfo.Album, CurrentLyricsSearchResult?.Raw, (int?)CurrentSongInfo?.DurationMs, CurrentLyricsSearchResult?.Provider);
                 _lyricsDataArr = lyricsParser.LyricsDataArr;
                 ApplyChinesePreference();
             }

@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace BetterLyrics.WinUI3.Extensions
+namespace BetterLyrics.WinUI3.Collections
 {
     // https://stackoverflow.com/a/32013610/11048731
     public class FullyObservableCollection<T> : ObservableCollection<T>

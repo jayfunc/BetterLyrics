@@ -1,7 +1,9 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -16,7 +18,6 @@ namespace BetterLyrics.WinUI3.Views
     public sealed partial class LyricsWindow : Window
     {
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
         private readonly WindowMessageMonitor _wmm;
 
@@ -26,18 +27,12 @@ namespace BetterLyrics.WinUI3.Views
         {
             this.InitializeComponent();
 
-            AppWindow.SetIcons();
-
-            AppWindow.Changed += AppWindow_Changed;
-
-            ExtendsContentIntoTitleBar = true;
-            AppWindow.TitleBar.PreferredHeightOption = TitleBarHeightOption.Collapsed;
-
-            Title = _resourceService.GetLocalizedString("LyricsPageTitle");
-
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
 
+            this.Init("LyricsPageTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
+
+            AppWindow.Changed += AppWindow_Changed;
             AppWindow.Closing += AppWindow_Closing;
         }
 
@@ -70,7 +65,7 @@ namespace BetterLyrics.WinUI3.Views
             if (e.Message.MessageId == (uint)User32.WindowMessage.WM_HOTKEY)
             {
                 int id = (int)e.Message.WParam;
-                GlobalHotKeyHelper.TryInvokeAction(id);
+                GlobalHotKeyHook.TryInvokeAction(id);
             }
         }
 
@@ -109,7 +104,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
+            WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -119,12 +114,12 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+            WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
         }
 
         private void SettingsWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+            WindowHook.OpenOrShowWindow<SettingsWindow>();
         }
     }
 }

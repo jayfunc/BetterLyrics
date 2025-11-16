@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -131,7 +132,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<LyricsSearchWindow>();
+            WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
         }
 
         private void TimelineSliderOverlay_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -180,7 +181,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void ExtendedSlider_ValueChangedByUser(object sender, Events.ExtendedSliderValueChangedByUserEventArgs e)
         {
-            SystemVolumeHelper.MasterVolume = ViewModel.Volume;
+            SystemVolumeHook.MasterVolume = ViewModel.Volume;
         }
 
         //private void ScrollGrid_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)

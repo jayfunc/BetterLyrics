@@ -1,4 +1,6 @@
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -16,11 +18,8 @@ namespace BetterLyrics.WinUI3.Views
         public SettingsWindow()
         {
             InitializeComponent();
-            Title = _resourceService.GetLocalizedString("SettingsPageTitle");
-            AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
-            AppWindow.SetIcons();
 
-            ExtendsContentIntoTitleBar = true;
+            this.Init("SettingsPageTitle");
 
             AppWindow.Closing += AppWindow_Closing;
 
@@ -29,17 +28,17 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            WindowHelper.CloseWindow<SettingsWindow>();
+            WindowHook.CloseWindow<SettingsWindow>();
         }
 
         private void LyricsWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<LyricsWindow>();
+            WindowHook.OpenOrShowWindow<LyricsWindow>();
         }
 
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
+            WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
         }
     }
 }

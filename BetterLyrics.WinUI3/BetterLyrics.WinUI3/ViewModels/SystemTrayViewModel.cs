@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -15,50 +16,50 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static void ExitApp()
         {
-            WindowHelper.ExitApp();
+            WindowHook.ExitApp();
         }
 
         [RelayCommand]
         private static void RestartApp()
         {
-            WindowHelper.RestartApp();
+            WindowHook.RestartApp();
         }
 
         [RelayCommand]
         private static void ResetWindowPosition()
         {
-            var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            var lyricsWindow = WindowHook.GetWindowByWindowType<LyricsWindow>();
             lyricsWindow?.MoveAndResize(100, 100, 800, 500);
         }
 
         [RelayCommand]
         private static void OpenSettings()
         {
-            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+            WindowHook.OpenOrShowWindow<SettingsWindow>();
         }
 
         [RelayCommand]
         private static void OpenMusicGallery()
         {
-            WindowHelper.OpenOrShowWindow<MusicGalleryWindow>();
+            WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
         }
 
         [RelayCommand]
         private static void OpenLyrics()
         {
-            WindowHelper.OpenOrShowWindow<LyricsWindow>();
+            WindowHook.OpenOrShowWindow<LyricsWindow>();
         }
 
         [RelayCommand]
         private static void OpenLyricsWindowSwitch()
         {
-            WindowHelper.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+            WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
         }
 
         [RelayCommand]
         private static void OpenLyricsSearchWindow()
         {
-            WindowHelper.OpenOrShowWindow<LyricsSearchWindow>();
+            WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
         }
     }
 }

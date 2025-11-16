@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
@@ -33,7 +34,7 @@ namespace BetterLyrics.WinUI3
         private readonly ISettingsService _settingsService;
         private readonly ILiveStatesService _liveStatesService;
 
-        private ForegroundWindowWatcher? _fgWindowWatcher = null;
+        private ForegroundWindowHook? _fgWindowWatcher = null;
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
         public LyricsWindowViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService)
@@ -72,11 +73,11 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowShowHideShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.LyricsWindowShowOrHide,
+            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.LyricsWindowShowOrHide,
                 _settingsService.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut,
                 () =>
                 {
-                    var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+                    var window = WindowHook.GetWindowByWindowType<LyricsWindow>();
                     if (window == null) return;
 
                     if (window.Visible)
@@ -85,7 +86,7 @@ namespace BetterLyrics.WinUI3
                     }
                     else
                     {
-                        WindowHelper.OpenOrShowWindow<LyricsWindow>();
+                        WindowHook.OpenOrShowWindow<LyricsWindow>();
                     }
                 }
             );
@@ -93,7 +94,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowBorderlessShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.Borderless,
+            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.Borderless,
                 _settingsService.AppSettings.GeneralSettings.BorderlessShortcut,
                 () =>
                 {
@@ -104,7 +105,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowClickThroughShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.ClickThrough,
+            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.ClickThrough,
                 _settingsService.AppSettings.GeneralSettings.ClickThroughShortcut,
                 () =>
                 {
@@ -115,24 +116,24 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowSwitchShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.LyricsWindowSwitch,
+            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.LyricsWindowSwitch,
                 _settingsService.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut,
                 () =>
                 {
-                    WindowHelper.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+                    WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
                 }
             );
         }
 
         public void InitFgWindowWatcher()
         {
-            var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            var window = WindowHook.GetWindowByWindowType<LyricsWindow>();
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
 
             _fgWindowWatcherTimer = _dispatcherQueue.CreateTimer();
-            _fgWindowWatcher = new ForegroundWindowWatcher(
+            _fgWindowWatcher = new ForegroundWindowHook(
                 hwnd,
                 fgHwnd =>
                 {
@@ -160,18 +161,18 @@ namespace BetterLyrics.WinUI3
             BackdropAccentColor = ColorHelper.GetAccentColor(
                 hwnd,
                 _liveStatesService.LiveStates.LyricsWindowStatus.MonitorDeviceName,
-                _liveStatesService.LiveStates.LyricsWindowStatus.EnvironmentSampleMode).ToColor();
+                _liveStatesService.LiveStates.LyricsWindowStatus.EnvironmentSampleMode);
         }
 
         public void ExitOrClose()
         {
             if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
             {
-                WindowHelper.ExitApp();
+                WindowHook.ExitApp();
             }
             else
             {
-                var window = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+                var window = WindowHook.GetWindowByWindowType<LyricsWindow>();
                 window?.Hide();
             }
         }
@@ -225,7 +226,7 @@ namespace BetterLyrics.WinUI3
             {
                 if (message.PropertyName == nameof(IMediaSessionsService.CurrentIsPlaying))
                 {
-                    WindowHelper.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
+                    WindowHook.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
                 }
             }
         }

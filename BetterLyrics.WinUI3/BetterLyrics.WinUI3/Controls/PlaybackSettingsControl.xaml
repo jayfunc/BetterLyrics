@@ -68,10 +68,10 @@
                                 FontFamily="Segoe UI Symbol"
                                 FontSize="12"
                                 Glyph="&#x283F;" />
-                            <ImageIcon Height="16" Source="{Binding Provider, Converter={StaticResource MediaSourceProviderToLogoUriConverter}, Mode=OneWay}" />
+                            <ImageIcon Height="16" Source="{Binding LogoPath, Mode=OneWay}" />
                             <TextBlock
                                 MaxWidth="200"
-                                Text="{Binding Provider, Converter={StaticResource MediaSourceProviderToDisplayedNameConverter}, Mode=OneWay}"
+                                Text="{Binding DisplayName, Mode=OneWay}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </DataTemplate>
@@ -242,18 +242,54 @@
 
                         <!--  Provider info  -->
                         <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsCard x:Uid="LyricsPageLyricsProviderPrefix">
-                            <HyperlinkButton
-                                Content="{x:Bind ViewModel.MediaSessionsService.LyricsSearchProvider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}"
-                                IsEnabled="False"
-                                NavigateUri="{x:Bind ViewModel.OriginalLyricsRef, Mode=OneWay}" />
+                        <dev:SettingsCard ContentAlignment="Left">
+                            <StackPanel Spacing="6">
+                                <Grid ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        x:Uid="SettingsPagePlaybackSource"
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center" />
+                                    <RichTextBlock
+                                        Grid.Column="1"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        IsTextSelectionEnabled="True"
+                                        TextWrapping="Wrap">
+                                        <Paragraph>
+                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
+                                            <Run Text="(" />
+                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, Mode=OneWay}" />
+                                            <Run Text=")" />
+                                        </Paragraph>
+                                    </RichTextBlock>
+                                </Grid>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <TextBlock VerticalAlignment="Center" Text="NCM ID" />
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.SongId, Mode=OneWay, TargetNullValue=N/A}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <TextBlock x:Uid="LyricsPageLyricsProviderPrefix" VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <TextBlock x:Uid="LyricsPageTranslationProviderPrefix" VerticalAlignment="Center" />
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind ViewModel.MediaSessionsService.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                                </StackPanel>
+                            </StackPanel>
                         </dev:SettingsCard>
-                        <dev:SettingsCard x:Uid="LyricsPageTranslationProviderPrefix">
-                            <HyperlinkButton
-                                Content="{x:Bind ViewModel.MediaSessionsService.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}"
-                                IsEnabled="False"
-                                NavigateUri="{x:Bind ViewModel.TranslatedLyricsRef, Mode=OneWay}" />
-                        </dev:SettingsCard>
+
                         <dev:SettingsCard x:Uid="SettingsPageForceWordByWordEffect">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsForceWordByWordEffect, Mode=TwoWay}" />
                         </dev:SettingsCard>
@@ -276,12 +312,7 @@
                                 </dev:SettingsCard>
                                 <dev:SettingsCard x:Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <dev:SettingsCard.Description>
-                                        <HyperlinkButton Margin="0,6,0,0" NavigateUri="https://github.com/LibreTranslate/LibreTranslate">
-                                            <TextBlock
-                                                x:Uid="SettingsPageTranslationInfoLink"
-                                                FontSize="14"
-                                                TextWrapping="Wrap" />
-                                        </HyperlinkButton>
+                                        <HyperlinkButton Content="https://github.com/LibreTranslate/LibreTranslate" NavigateUri="https://github.com/LibreTranslate/LibreTranslate" />
                                     </dev:SettingsCard.Description>
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=TwoWay}" />
                                 </dev:SettingsCard>

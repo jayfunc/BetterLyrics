@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -34,10 +35,10 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async Task HideAsync()
         {
-            var lyricsWindowSwitchWindow = WindowHelper.GetWindowByWindowType<LyricsWindowSwitchWindow>();
+            var lyricsWindowSwitchWindow = WindowHook.GetWindowByWindowType<LyricsWindowSwitchWindow>();
             lyricsWindowSwitchWindow?.ViewModel.RootGridOpacity = 0;
             await Task.Delay(300);
-            WindowHelper.HideWindow<LyricsWindowSwitchWindow>();
+            WindowHook.HideWindow<LyricsWindowSwitchWindow>();
         }
     }
 }

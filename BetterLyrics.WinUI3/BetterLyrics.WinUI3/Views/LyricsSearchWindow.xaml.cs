@@ -1,4 +1,8 @@
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
@@ -14,26 +18,18 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class LyricsSearchWindow : Window
     {
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
-
         public LyricsSearchWindow()
         {
             InitializeComponent();
 
-            Title = _resourceService.GetLocalizedString("LyricsSearchPageTitle");
-            AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
-            AppWindow.SetIcons();
-
-            ExtendsContentIntoTitleBar = true;
+            this.Init("LyricsSearchPageTitle", backdropType: BackdropType.Transparent);
 
             AppWindow.Closing += AppWindow_Closing;
-
-            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(Enums.BackdropType.Transparent);
         }
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            WindowHelper.CloseWindow<LyricsSearchWindow>();
+            WindowHook.CloseWindow<LyricsSearchWindow>();
         }
 
     }

@@ -53,8 +53,6 @@
             <converter:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
             <converter:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
             <converter:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
-            <converter:MediaSourceProviderToLogoUriConverter x:Key="MediaSourceProviderToLogoUriConverter" />
-            <converter:MediaSourceProviderToDisplayedNameConverter x:Key="MediaSourceProviderToDisplayedNameConverter" />
             <converter:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
             <converter:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
             <converter:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />

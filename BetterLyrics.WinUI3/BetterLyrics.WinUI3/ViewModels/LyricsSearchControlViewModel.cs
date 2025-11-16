@@ -111,10 +111,12 @@ namespace BetterLyrics.WinUI3.ViewModels
                 LyricsSearchResults = [..await Task.Run(async () =>
                 {
                     return await _lyricsSearchService.SearchAllAsync(
-                        MappedSongSearchQuery.MappedTitle,
-                        MappedSongSearchQuery.MappedArtist,
-                        MappedSongSearchQuery.MappedAlbum,
-                        _mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0, token);
+                        new SongInfo {
+                            Title = MappedSongSearchQuery.MappedTitle,
+                            Artist = MappedSongSearchQuery.MappedArtist,
+                            Album = MappedSongSearchQuery.MappedAlbum,
+                            DurationMs = _mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0
+                        }, token);
                 }, token)];
                 IsSearching = false;
             });

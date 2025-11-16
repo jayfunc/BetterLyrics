@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Input;
@@ -89,7 +90,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void CheckButton_Click(object sender, RoutedEventArgs e)
         {
-            bool registered = GlobalHotKeyHelper.IsHotKeyRegistered(Shortcut);
+            bool registered = GlobalHotKeyHook.IsHotKeyRegistered(Shortcut);
             if (registered)
             {
                 DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageShortcutRegSuccessInfo"));

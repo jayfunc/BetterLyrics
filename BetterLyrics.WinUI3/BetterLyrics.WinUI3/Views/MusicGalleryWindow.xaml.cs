@@ -1,4 +1,6 @@
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
@@ -14,34 +16,28 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class MusicGalleryWindow : Window
     {
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
-
         public MusicGalleryWindow()
         {
             InitializeComponent();
 
-            Title = _resourceService.GetLocalizedString("MusicGalleryPageTitle");
-            AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
-            AppWindow.SetIcons();
-
-            ExtendsContentIntoTitleBar = true;
+            this.Init("MusicGalleryPageTitle");
 
             AppWindow.Closing += AppWindow_Closing;
         }
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            WindowHelper.CloseWindow<MusicGalleryWindow>();
+            WindowHook.CloseWindow<MusicGalleryWindow>();
         }
 
         private void LyricsWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<LyricsWindow>();
+            WindowHook.OpenOrShowWindow<LyricsWindow>();
         }
 
         private void SettingsWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHelper.OpenOrShowWindow<SettingsWindow>();
+            WindowHook.OpenOrShowWindow<SettingsWindow>();
         }
     }
 }

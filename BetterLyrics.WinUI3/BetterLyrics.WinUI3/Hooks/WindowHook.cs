@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Views;
@@ -18,9 +19,9 @@ using Windows.Foundation;
 using WinRT.Interop;
 using WinUIEx;
 
-namespace BetterLyrics.WinUI3.Helper
+namespace BetterLyrics.WinUI3.Hooks
 {
-    public static class WindowHelper
+    public static class WindowHook
     {
         private static List<object> _activeWindows = [];
         private static List<object> _workAreas = [];

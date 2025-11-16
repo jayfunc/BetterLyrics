@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using BetterLyrics.WinUI3.Constants;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public static class PlayerIdMatcher
+    public static class PlayerIDMatcher
     {
         private static readonly List<string> neteaseFamilyRegex =
         [
@@ -12,8 +13,10 @@ namespace BetterLyrics.WinUI3.Helper
             "^48848aaaaaaccd\\.HyPlayer_" //HyPlayer
         ];
 
-        public static bool IsNeteaseFamily(string id)
+        public static bool IsNeteaseFamily(string? id)
         {
+            if (id is null) return false;
+
             foreach (var regex in neteaseFamilyRegex)
             {
                 var isMatch = Regex.IsMatch(id, regex);
@@ -22,9 +25,8 @@ namespace BetterLyrics.WinUI3.Helper
             return false;
         }
 
-        public static bool IsLXMusic(string? id)
-        {
-            return id == Constants.PlayerID.LXMusic || id == Constants.PlayerID.LXMusicPortable;
-        }
+        public static bool IsLXMusic(string? id) => id is PlayerID.LXMusic or PlayerID.LXMusicPortable;
+
+        public static bool IsAppleMusic(string? id) => id is PlayerID.AppleMusic or PlayerID.AppleMusicAlternative;
     }
 }
