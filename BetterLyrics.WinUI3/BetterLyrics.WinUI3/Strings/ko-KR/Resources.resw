@@ -225,8 +225,8 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>가사를 찾을 수 없습니다</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
-    <value>가사 제공자</value>
+  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
+    <value>Lyrics provider</value>
   </data>
   <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
     <value>가사를 수동으로 검색합니다</value>
@@ -258,8 +258,8 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>번역 만 표시하십시오</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
-    <value>번역 제공자</value>
+  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
+    <value>Translation provider</value>
   </data>
   <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
     <value>Album</value>
@@ -332,6 +332,9 @@
   </data>
   <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
     <value>설정으로 이동하여 모드를 더 추가하세요</value>
+  </data>
+  <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <value>Lyrics window switcher</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>앨범 아트 영역만</value>
@@ -1149,6 +1152,9 @@
   </data>
   <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
     <value>놀다</value>
+  </data>
+  <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
+    <value>Playback source</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com"에서 "Fut to the Feeling"을 재생하십시오.</value>
