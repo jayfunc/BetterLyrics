@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -6,7 +7,7 @@ namespace BetterLyrics.WinUI3.Extensions
 {
     public static class DisposableObjectExtension
     {
-        extension(IDisposable obj)
+        extension(IDisposable? obj)
         {
             // Credit/Copyright to https://gist.github.com/tcartwright/dab50ebaff7c59f05013de0fb349cabd
             public bool IsDisposed()

@@ -1,12 +1,21 @@
 ﻿using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Helper;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.WinUI;
+using CommunityToolkit.WinUI.Helpers;
+using DevWinUI;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
@@ -14,30 +23,28 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     {
         private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
 
-        public event EventHandler<AlbumArtChangedEventArgs>? AlbumArtChanged;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial SoftwareBitmap? SoftwareBitmap { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<Color> LightAccentColors { get; set; } = Enumerable.Repeat(Colors.Black, 4).ToList();
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<Color> DarkAccentColors { get; set; } = Enumerable.Repeat(Colors.Black, 4).ToList();
 
         private void UpdateAlbumArt()
         {
-            _albumArtRefreshRunner.RunAsync(RefreshArtAlbum);
+            _ = _albumArtRefreshRunner.RunAsync(RefreshArtAlbum);
         }
 
         private async Task RefreshArtAlbum(CancellationToken token)
         {
+            _logger.LogInformation("RefreshArtAlbum");
+
             if (CurrentSongInfo == null)
             {
-                _logger.LogWarning("Cached song info is null, cannot update album art.");
+                _logger.LogWarning("CurrentSongInfo == null");
                 return;
             }
 
-            IBuffer? buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(
-                CurrentSongInfo?.PlayerId ?? "",
-                CurrentSongInfo.Title,
-                CurrentSongInfo.Artist,
-                CurrentSongInfo.Album,
-                _SMTCAlbumArtBuffer,
-                token
-            ), token);
+            IBuffer? buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(CurrentSongInfo, _SMTCAlbumArtBuffer, token), token);
             if (token.IsCancellationRequested) return;
+
             BitmapDecoder? decoder = null;
 
             if (buffer == null)
@@ -45,22 +52,27 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 using var placeHolderStream = await ImageHelper.GetAlbumArtPlaceholderAsync();
                 var tempBuffer = new Windows.Storage.Streams.Buffer((uint)placeHolderStream.Size);
                 await placeHolderStream.ReadAsync(tempBuffer, (uint)placeHolderStream.Size, InputStreamOptions.None);
+                if (token.IsCancellationRequested) return;
+
                 buffer = tempBuffer;
-                token.ThrowIfCancellationRequested();
             }
+
             decoder = await ImageHelper.MakeSquareWithThemeColor(buffer, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType);
-            token.ThrowIfCancellationRequested();
+            if (token.IsCancellationRequested) return;
 
             var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
+            if (token.IsCancellationRequested) return;
+
             albumArtSwBitmap.DpiX = 96;
             albumArtSwBitmap.DpiY = 96;
-            token.ThrowIfCancellationRequested();
 
-            var albumArtLightAccentColors = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
-            var lightColorBytes = albumArtLightAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
-            var albumArtDarkAccentColors = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
-            var darkColorBytes = albumArtDarkAccentColors.Palette.Select(t => Windows.UI.Color.FromArgb(255, (byte)t.X, (byte)t.Y, (byte)t.Z)).ToList();
-            AlbumArtChanged?.Invoke(this, new AlbumArtChangedEventArgs(null, albumArtSwBitmap, lightColorBytes, darkColorBytes));
+            var lightPalette = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
+            var darkPalette = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
+            if (token.IsCancellationRequested) return;
+
+            SoftwareBitmap = albumArtSwBitmap;
+            LightAccentColors = lightPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            DarkAccentColors = darkPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
         }
     }
 }

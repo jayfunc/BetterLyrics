@@ -16,6 +16,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using System;
@@ -75,8 +76,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private string? _lastSongTitle;
         private string? _songTitle;
 
-        private string? _lastSongArtist;
-        private string? _songArtist;
+        private string? _lastSongArtists;
+        private string? _songArtists;
 
         private string? _lastSongAlbum;
         private string? _songAlbum;
@@ -111,8 +112,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private Color _adaptiveGrayedFontColor = Colors.Transparent;
         private Color? _adaptiveColoredFontColor = null;
 
-        private List<Color> _albumArtLightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-        private List<Color> _albumArtDarkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
         private Color _environmentalColor = Colors.Transparent;
         private Color _grayedEnvironmentalColor = Colors.Transparent;
 
@@ -181,6 +180,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private Matrix4x4 _lyrics3DMatrix = Matrix4x4.Identity;
 
+        private readonly DispatcherQueueTimer? _onSongInfoChangedTimer;
+        private readonly DispatcherQueueTimer? _onSoftwareBitmapChangedTimer;
+
         public LyricsRendererViewModel(
             ISettingsService settingsService,
             IMediaSessionsService mediaSessionsService,
@@ -198,7 +200,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             UpdateSongInfoFontSize();
 
-            _mediaSessionsService.AlbumArtChanged += MediaSessionsService_AlbumArtChangedChanged;
             _mediaSessionsService.LyricsChanged += MediaSessionsService_LyricsChanged;
 
             UpdateColorConfig();
@@ -342,22 +343,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
 
             return new Tuple<int, int>(0, _currentLyricsData.LyricsLines.Count - 1);
-        }
-
-        private void MediaSessionsService_AlbumArtChangedChanged(object? sender, AlbumArtChangedEventArgs e)
-        {
-            _lastAlbumArtCanvasBitmap?.Dispose();
-            _lastAlbumArtCanvasBitmap = null;
-
-            _lastAlbumArtSwBitmap = _albumArtSwBitmap;
-            _albumArtSwBitmap = e.AlbumArtSwBitmap;
-
-            _albumArtChanged = true;
-
-            _albumArtLightAccentColors = e.AlbumArtLightAccentColors;
-            _albumArtDarkAccentColors = e.AlbumArtDarkAccentColors;
-
-            UpdateColorConfig();
         }
     }
 }

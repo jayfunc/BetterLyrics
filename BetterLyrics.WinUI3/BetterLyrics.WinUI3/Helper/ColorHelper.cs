@@ -6,12 +6,10 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.Numerics;
 using Vanara.PInvoke;
-
-using Color = Windows.UI.Color;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -135,8 +133,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         private static Color GetAverageColorFromScreenRegion(int x, int y, int width, int height)
         {
-            using Bitmap bmp = new(width, height, PixelFormat.Format32bppArgb);
-            using Graphics gDest = Graphics.FromImage(bmp);
+            using System.Drawing.Bitmap bmp = new(width, height, PixelFormat.Format32bppArgb);
+            using var gDest = System.Drawing.Graphics.FromImage(bmp);
 
             IntPtr hdcDest = gDest.GetHdc();
             IntPtr hdcSrc = (nint)User32.GetDC(IntPtr.Zero); // Entire screen
@@ -149,7 +147,7 @@ namespace BetterLyrics.WinUI3.Helper
             return ComputeAverageColor(bmp);
         }
 
-        private static Color ComputeAverageColor(Bitmap bmp)
+        private static Color ComputeAverageColor(System.Drawing.Bitmap bmp)
         {
             long r = 0, g = 0, b = 0;
             int count = 0;
@@ -169,5 +167,7 @@ namespace BetterLyrics.WinUI3.Helper
             if (count == 0) return Colors.Transparent;
             return Color.FromArgb(255, (byte)(r / count), (byte)(g / count), (byte)(b / count));
         }
+
+        public static Color FromVector3(Vector3 vector3) => Color.FromArgb(255, (byte)vector3.X, (byte)vector3.Y, (byte)vector3.Z);
     }
 }

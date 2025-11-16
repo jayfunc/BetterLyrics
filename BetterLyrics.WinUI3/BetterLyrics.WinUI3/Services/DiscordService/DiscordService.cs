@@ -37,7 +37,7 @@ namespace BetterLyrics.WinUI3.Services.DiscordService
                     SmallImageKey = "logo"
                 },
                 Details = songInfo.Title,
-                State = songInfo.Artist,
+                State = string.Join("; ", songInfo.Artists),
                 Timestamps = Timestamps.FromTimeSpan(songInfo.Duration)
             });
         }

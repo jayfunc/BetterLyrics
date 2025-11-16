@@ -3,8 +3,10 @@
 using BetterLyrics.WinUI3.Enums;
 using Impressionist.Abstractions;
 using Microsoft.Graphics.Canvas;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Numerics;
@@ -18,26 +20,6 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class ImageHelper
     {
-        public static async Task<InMemoryRandomAccessStream> ByteArrayToStream(byte[] bytes)
-        {
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(bytes.AsBuffer());
-            stream.Seek(0);
-
-            return stream;
-        }
-
-        public static RandomAccessStreamReference ByteArrayToRandomAccessStreamReference(byte[] bytes)
-        {
-            using var stream = new InMemoryRandomAccessStream();
-            using var writer = new DataWriter(stream);
-            writer.WriteBytes(bytes);
-            writer.StoreAsync().GetAwaiter().GetResult();
-            writer.FlushAsync().GetAwaiter().GetResult();
-            writer.DetachStream();
-            return RandomAccessStreamReference.CreateFromStream(stream);
-        }
-
         public static async Task<IRandomAccessStream> GetAlbumArtPlaceholderAsync()
         {
             StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(PathHelper.AlbumArtPlaceholderPath));
@@ -65,59 +47,6 @@ namespace BetterLyrics.WinUI3.Helper
             };
         }
 
-        public static async Task<Dictionary<Vector3, int>> GetPixelColor(BitmapDecoder bitmapDecoder)
-        {
-            var pixelDataProvider = await bitmapDecoder.GetPixelDataAsync();
-            var pixels = pixelDataProvider.DetachPixelData();
-            var count = bitmapDecoder.PixelWidth * bitmapDecoder.PixelHeight;
-            var vector = new Dictionary<Vector3, int>();
-            for (int i = 0; i < count; i += 10)
-            {
-                var offset = i * 4;
-                var b = pixels[offset];
-                var g = pixels[offset + 1];
-                var r = pixels[offset + 2];
-                var a = pixels[offset + 3];
-                if (a == 0) continue;
-                var color = new Vector3(r, g, b);
-                if (vector.ContainsKey(color))
-                {
-                    vector[color]++;
-                }
-                else
-                {
-                    vector[color] = 1;
-                }
-            }
-            return vector;
-        }
-
-        //public static async Task<BitmapImage> GetBitmapImageFromBytesAsync(byte[] imageBytes)
-        //{
-        //    var stream = new InMemoryRandomAccessStream();
-        //    await stream.WriteAsync(imageBytes.AsBuffer());
-        //    stream.Seek(0);
-
-        //    var bitmapImage = new BitmapImage();
-        //    await bitmapImage.SetSourceAsync(stream);
-
-        //    return bitmapImage;
-        //}
-
-        //public static async Task<BitmapDecoder> GetDecoderFromByte(byte[] bytes) =>
-        //    await BitmapDecoder.CreateAsync(await ByteArrayToStream(bytes));
-
-        //public static async Task<InMemoryRandomAccessStream> GetStreamFromBytesAsync(byte[] imageBytes)
-        //{
-        //    if (imageBytes == null || imageBytes.Length == 0)
-        //        return null;
-
-        //    InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
-        //    await stream.WriteAsync(imageBytes.AsBuffer());
-
-        //    return stream;
-        //}
-
         public static async Task<IBuffer> ToBufferAsync(IRandomAccessStreamReference streamRef)
         {
             using IRandomAccessStream stream = await streamRef.OpenReadAsync();
@@ -127,26 +56,8 @@ namespace BetterLyrics.WinUI3.Helper
             return buffer;
         }
 
-        public static double GetAverageLuminance(CanvasBitmap bitmap)
-        {
-            var pixels = bitmap.GetPixelBytes();
-            double sum = 0;
-            for (int i = 0; i < pixels.Length; i += 4)
-            {
-                // BGRA
-                byte b = pixels[i];
-                byte g = pixels[i + 1];
-                byte r = pixels[i + 2];
-                // 忽略A
-                double y = 0.299 * r + 0.587 * g + 0.114 * b;
-                sum += y / 255.0;
-            }
-            return (double)(sum / (pixels.Length / 4));
-        }
-
         public static async Task<BitmapDecoder> MakeSquareWithThemeColor(IBuffer buffer, PaletteGeneratorType generatorType)
         {
-
             using var stream = new InMemoryRandomAccessStream();
             await stream.WriteAsync(buffer);
             var decoder = await BitmapDecoder.CreateAsync(stream);
@@ -181,69 +92,6 @@ namespace BetterLyrics.WinUI3.Helper
             var newDecoder = await BitmapDecoder.CreateAsync(stream);
             return newDecoder;
 
-        }
-
-        public static async Task<IBuffer> Resize(IBuffer buffer, int size)
-        {
-            using var stream = new InMemoryRandomAccessStream();
-            await stream.WriteAsync(buffer);
-            var decoder = await BitmapDecoder.CreateAsync(stream);
-
-            var factor = Math.Max((double)size / decoder.PixelWidth, (double)size / decoder.PixelHeight);
-
-            var width = (uint)(decoder.PixelWidth * factor);
-            var height = (uint)(decoder.PixelHeight * factor);
-
-            if (factor > 1)
-            {
-                var transform = new BitmapTransform()
-                {
-                    ScaledWidth = width,
-                    ScaledHeight = height,
-                    InterpolationMode = BitmapInterpolationMode.Fant
-                };
-                var pixelData = await decoder.GetPixelDataAsync(
-                    BitmapPixelFormat.Rgba8,
-                    BitmapAlphaMode.Straight,
-                    transform, ExifOrientationMode.RespectExifOrientation,
-                    ColorManagementMode.ColorManageToSRgb);
-                var pixels = pixelData.DetachPixelData();
-
-                stream.Seek(0);
-                stream.Size = 0;
-                var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
-                encoder.SetPixelData(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Straight, width, height, 96, 96, pixels);
-                await encoder.FlushAsync();
-                var output = new Windows.Storage.Streams.Buffer((uint)stream.Size);
-                stream.Seek(0);
-                await stream.ReadAsync(output, (uint)stream.Size, InputStreamOptions.None);
-                return output;
-            }
-            else
-            {
-                var transform = new BitmapTransform()
-                {
-                    ScaledWidth = (uint)width,
-                    ScaledHeight = (uint)height,
-                    InterpolationMode = BitmapInterpolationMode.NearestNeighbor
-                };
-                var pixelData = await decoder.GetPixelDataAsync(
-                    BitmapPixelFormat.Rgba8,
-                    BitmapAlphaMode.Straight,
-                    transform, ExifOrientationMode.RespectExifOrientation,
-                    ColorManagementMode.ColorManageToSRgb);
-                var pixels = pixelData.DetachPixelData();
-
-                stream.Seek(0);
-                stream.Size = 0;
-                var encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
-                encoder.SetPixelData(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Straight, width, height, 96, 96, pixels);
-                await encoder.FlushAsync();
-                var output = new Windows.Storage.Streams.Buffer((uint)stream.Size);
-                stream.Seek(0);
-                await stream.ReadAsync(output, (uint)stream.Size, InputStreamOptions.None);
-                return output;
-            }
         }
 
         public static byte[] GenerateNoiseBGRA(int width, int height)
@@ -334,6 +182,11 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 return null;
             }
+        }
+
+        public static IRandomAccessStream ToIRandomAccessStream(IBuffer buffer)
+        {
+            return buffer.AsStream().AsRandomAccessStream();
         }
     }
 }

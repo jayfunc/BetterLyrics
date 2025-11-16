@@ -5,7 +5,6 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -25,10 +24,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
 
-        public LyricsPageViewModel(IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
+        public LyricsRendererViewModel.LyricsRendererViewModel LyricsRendererViewModel { get; private set; }
+
+        public LyricsPageViewModel(IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService, LyricsRendererViewModel.LyricsRendererViewModel lyricsRendererViewModel)
         {
             _liveStatesService = liveStatesService;
             MediaSessionsService = mediaSessionsService;
+            LyricsRendererViewModel = lyricsRendererViewModel;
 
             LiveStates = _liveStatesService.LiveStates;
 
@@ -105,7 +107,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (message.Sender is LyricsRendererViewModel.LyricsRendererViewModel)
             {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.LyricsRendererViewModel.TotalTime))
+                if (message.PropertyName == nameof(LyricsRendererViewModel.TotalTime))
                 {
                     if (_timelineThrottle.CanTrigger())
                     {

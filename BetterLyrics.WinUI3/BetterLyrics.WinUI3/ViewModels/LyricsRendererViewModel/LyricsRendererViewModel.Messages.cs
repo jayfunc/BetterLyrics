@@ -4,8 +4,13 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
+using System.Collections.Generic;
+using TagLib.Riff;
+using Windows.Graphics.Imaging;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
@@ -28,8 +33,46 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             IRecipient<PropertyChangedMessage<AlbumArtLayoutSettings>>,
             IRecipient<PropertyChangedMessage<LyricsBackgroundSettings>>,
             IRecipient<PropertyChangedMessage<LyricsWindowStatus>>,
-            IRecipient<PropertyChangedMessage<SongInfo?>>
+            IRecipient<PropertyChangedMessage<SongInfo?>>,
+            IRecipient<PropertyChangedMessage<SoftwareBitmap?>>,
+            IRecipient<PropertyChangedMessage<List<Color>>>
     {
+        private void OnSongInfoChanged()
+        {
+            _lastSongTitle = _songTitle;
+            _songTitle = _mediaSessionsService.CurrentSongInfo?.Title;
+            _isSongTitleChanged = true;
+
+            _lastSongArtists = _songArtists;
+            _songArtists = _mediaSessionsService.CurrentSongInfo?.DisplayArtists;
+            _isSongArtistChanged = true;
+
+            _lastSongAlbum = _songAlbum;
+            _songAlbum = _mediaSessionsService.CurrentSongInfo?.Album;
+            _isSongAlbumChanged = true;
+
+            _songDurationMs = (int)(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? TimeSpan.FromMinutes(99).TotalMilliseconds);
+
+            _songInfoOpacityTransition.Reset(0f);
+            _songInfoOpacityTransition.StartTransition(1f);
+
+            TotalTime = TimeSpan.Zero;
+
+            // 处理 Last.fm 追踪
+            _totalPlayingTime = TimeSpan.Zero;
+            _isLastFMTracked = false;
+        }
+
+        private void OnSoftwareBitmapChanged()
+        {
+            _lastAlbumArtCanvasBitmap?.Dispose();
+            _lastAlbumArtCanvasBitmap = null;
+
+            _lastAlbumArtSwBitmap = _albumArtSwBitmap;
+            _albumArtSwBitmap = _mediaSessionsService.SoftwareBitmap;
+
+            _albumArtChanged = true;
+        }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
@@ -425,30 +468,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         public void Receive(PropertyChangedMessage<SongInfo?> message)
         {
-            if (_mediaSessionsService.CurrentSongInfo?.Title != _songTitle || _mediaSessionsService.CurrentSongInfo?.Artist != _songArtist)
+            if (message.Sender is IMediaSessionsService)
             {
-                _lastSongTitle = _songTitle;
-                _songTitle = _mediaSessionsService.CurrentSongInfo?.Title;
-                _isSongTitleChanged = true;
-
-                _lastSongArtist = _songArtist;
-                _songArtist = _mediaSessionsService.CurrentSongInfo?.Artist;
-                _isSongArtistChanged = true;
-
-                _lastSongAlbum = _songAlbum;
-                _songAlbum = _mediaSessionsService.CurrentSongInfo?.Album;
-                _isSongAlbumChanged = true;
-
-                _songDurationMs = (int)(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? TimeSpan.FromMinutes(99).TotalMilliseconds);
-
-                _songInfoOpacityTransition.Reset(0f);
-                _songInfoOpacityTransition.StartTransition(1f);
-
-                TotalTime = TimeSpan.Zero;
-
-                // 处理 Last.fm 追踪
-                _totalPlayingTime = TimeSpan.Zero;
-                _isLastFMTracked = false;
+                if (message.PropertyName == nameof(IMediaSessionsService.CurrentSongInfo))
+                {
+                    OnSongInfoChanged();
+                }
             }
         }
 
@@ -474,6 +499,32 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     {
                         _isLayoutChanged = true;
                     }
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<SoftwareBitmap?> message)
+        {
+            if (message.Sender is IMediaSessionsService)
+            {
+                if (message.PropertyName == nameof(IMediaSessionsService.SoftwareBitmap))
+                {
+                    OnSoftwareBitmapChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<List<Color>> message)
+        {
+            if (message.Sender is IMediaSessionsService)
+            {
+                if (message.PropertyName == nameof(IMediaSessionsService.LightAccentColors))
+                {
+                    UpdateColorConfig();
+                }
+                else if (message.PropertyName == nameof(IMediaSessionsService.DarkAccentColors))
+                {
+                    UpdateColorConfig();
                 }
             }
         }

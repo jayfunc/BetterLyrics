@@ -265,7 +265,7 @@ namespace BetterLyrics.WinUI3.Models
             {
                 Name = _resourceService.GetLocalizedString("FullscreenMode"),
                 IsBorderless = true,
-                IsAlwaysOnTop = true,
+                IsAlwaysOnTop = false,
                 TitleBarArea = TitleBarArea.None,
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings

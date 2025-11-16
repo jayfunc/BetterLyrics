@@ -133,7 +133,7 @@
                                         Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
                                     <TextBlock
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Text="{x:Bind Artist}"
+                                        Text="{x:Bind DisplayArtists}"
                                         TextWrapping="Wrap"
                                         Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}" />
                                     <TextBlock
