@@ -1,6 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Hooks;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -62,86 +64,28 @@ namespace BetterLyrics.WinUI3.Helper
             );
         }
 
-        public static Color ToColor(this int argb)
-        {
-            byte a = (byte)(argb >> 24);
-            byte r = (byte)(argb >> 16);
-            byte g = (byte)(argb >> 8);
-            byte b = (byte)argb;
-
-            // 还原非预乘分量
-            if (a == 0)
-                return Color.FromArgb(0, 0, 0, 0);
-
-            // 预乘解码
-            // 这里 a+1 是编码时的分母
-            int ap1 = a + 1;
-            r = (byte)Math.Min(255, (r * 255 + (ap1 / 2)) / ap1);
-            g = (byte)Math.Min(255, (g * 255 + (ap1 / 2)) / ap1);
-            b = (byte)Math.Min(255, (b * 255 + (ap1 / 2)) / ap1);
-
-            return Color.FromArgb(a, r, g, b);
-        }
-
-        public static Color ToColor(this System.Drawing.Color color)
-        {
-            return Color.FromArgb(color.A, color.R, color.G, color.B);
-        }
-
-        public static Color WithAlpha(this Color color, byte alpha)
-        {
-            return Color.FromArgb(alpha, color.R, color.G, color.B);
-        }
-
-        public static Color WithOpacity(this Color color, float opacity)
-        {
-            return Color.FromArgb((byte)(opacity * 255), color.R, color.G, color.B);
-        }
-
-        public static Color WithBrightness(this Color color, double brightness)
-        {
-            // 确保亮度因子在合理范围内
-            brightness = Math.Max(0, Math.Min(1, brightness));
-
-            var hsl = CommunityToolkit.WinUI.Helpers.ColorHelper.ToHsl(color);
-            double h = hsl.H;
-            double s = hsl.S;
-
-            return CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(h, s, brightness);
-        }
-
-        public static Vector3 ToVector3RGB(this Color color)
-        {
-            return new Vector3((float)color.R / 0xff, (float)color.G / 0xff, (float)color.B / 0xff);
-        }
-
         public static Color GetRandomColor()
         {
             return Color.FromArgb(255, (byte)Random.Shared.Next(0, 256), (byte)Random.Shared.Next(0, 256), (byte)Random.Shared.Next(0, 256));
         }
 
-        public static System.Drawing.Color GetAccentColor(IntPtr myHwnd, string monitorDeviceName, WindowPixelSampleMode mode)
+        public static Color GetAccentColor(IntPtr myHwnd, string monitorDeviceName, WindowPixelSampleMode mode)
         {
-            if (!User32.GetWindowRect(myHwnd, out RECT myRect)) return System.Drawing.Color.Transparent;
+            if (!User32.GetWindowRect(myHwnd, out RECT myRect)) return Colors.Transparent;
 
-            var monitorInfo = MonitorHelper.GetMonitorInfoExFromDeviceName(monitorDeviceName);
+            var monitorInfo = MonitorHook.GetMonitorInfoExFromDeviceName(monitorDeviceName);
             int screenWidth = monitorInfo.rcMonitor.Width;
             switch (mode)
             {
                 case WindowPixelSampleMode.BelowWindow:
-                    {
-                        return GetAverageColorFromScreenRegion(myRect.Left, myRect.Bottom + 2, screenWidth, 1);
-                    }
+                    return GetAverageColorFromScreenRegion(myRect.Left, myRect.Bottom + 2, screenWidth, 1);
                 case WindowPixelSampleMode.AboveWindow:
-                    {
-                        return GetAverageColorFromScreenRegion(myRect.Left, myRect.Top - 2, screenWidth, 1);
-                    }
+                    return GetAverageColorFromScreenRegion(myRect.Left, myRect.Top - 2, screenWidth, 1);
                 case WindowPixelSampleMode.WindowArea:
                     {
                         int width = myRect.Right - myRect.Left;
                         int height = myRect.Bottom - myRect.Top;
-                        if (width <= 0 || height <= 0)
-                            return System.Drawing.Color.Transparent;
+                        if (width <= 0 || height <= 0) return Colors.Transparent;
                         // 采集窗口区域的平均色
                         return GetAverageColorFromScreenRegion(myRect.Left, myRect.Top, width, height);
                     }
@@ -150,10 +94,10 @@ namespace BetterLyrics.WinUI3.Helper
                         int width = myRect.Right - myRect.Left;
                         int height = myRect.Bottom - myRect.Top;
                         if (width <= 0 || height <= 0)
-                            return System.Drawing.Color.Transparent;
+                            return Colors.Transparent;
 
                         var edgeThickness = new Thickness(36, 36, 36, 36);
-                        List<System.Drawing.Color> edgeColors = [];
+                        List<Color> edgeColors = [];
 
                         // Top edge
                         if (edgeThickness.Top > 0)
@@ -169,30 +113,27 @@ namespace BetterLyrics.WinUI3.Helper
                             edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Right, myRect.Top, (int)edgeThickness.Right, height));
 
                         // 合并四边平均色
-                        if (edgeColors.Count == 0)
-                            return System.Drawing.Color.Transparent;
-                        long r = 0,
-                            g = 0,
-                            b = 0;
+                        if (edgeColors.Count == 0) return Colors.Transparent;
+                        long r = 0, g = 0, b = 0;
                         foreach (var c in edgeColors)
                         {
                             r += c.R;
                             g += c.G;
                             b += c.B;
                         }
-                        return System.Drawing.Color.FromArgb(
+                        return Color.FromArgb(
                             255,
-                            (int)(r / edgeColors.Count),
-                            (int)(g / edgeColors.Count),
-                            (int)(b / edgeColors.Count)
+                            (byte)(r / edgeColors.Count),
+                            (byte)(g / edgeColors.Count),
+                            (byte)(b / edgeColors.Count)
                         );
                     }
                 default:
-                    return System.Drawing.Color.Transparent;
+                    return Colors.Transparent;
             }
         }
 
-        private static System.Drawing.Color GetAverageColorFromScreenRegion(int x, int y, int width, int height)
+        private static Color GetAverageColorFromScreenRegion(int x, int y, int width, int height)
         {
             using Bitmap bmp = new(width, height, PixelFormat.Format32bppArgb);
             using Graphics gDest = Graphics.FromImage(bmp);
@@ -208,7 +149,7 @@ namespace BetterLyrics.WinUI3.Helper
             return ComputeAverageColor(bmp);
         }
 
-        private static System.Drawing.Color ComputeAverageColor(Bitmap bmp)
+        private static Color ComputeAverageColor(Bitmap bmp)
         {
             long r = 0, g = 0, b = 0;
             int count = 0;
@@ -225,8 +166,8 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             }
 
-            if (count == 0) return System.Drawing.Color.Transparent;
-            return System.Drawing.Color.FromArgb((int)(r / count), (int)(g / count), (int)(b / count));
+            if (count == 0) return Colors.Transparent;
+            return Color.FromArgb(255, (byte)(r / count), (byte)(g / count), (byte)(b / count));
         }
     }
 }

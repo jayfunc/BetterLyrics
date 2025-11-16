@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using BetterLyrics.WinUI3.Extensions;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
@@ -117,9 +118,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             if (_fluidEffect != null)
             {
-                var effectTime = Convert.ToSingle(_fluidEffect.Properties["iTime"]);
-                effectTime += Convert.ToSingle(_elapsedTime.TotalSeconds);
-                _fluidEffect.Properties["iTime"] = effectTime;
+                if (_mediaSessionsService.CurrentIsPlaying)
+                {
+                    var effectTime = Convert.ToSingle(_fluidEffect.Properties["iTime"]);
+                    effectTime += Convert.ToSingle(_elapsedTime.TotalSeconds);
+                    _fluidEffect.Properties["iTime"] = effectTime;
+                }
 
                 if (_albumArtAccentColor1Transition.IsTransitioning)
                 {
@@ -168,7 +172,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _isDebugOverlayEnabledChanged = false;
             }
 
-            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlaySpeed > 0)
+            if (_mediaSessionsService.CurrentIsPlaying && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlaySpeed > 0)
             {
                 _rotateAngle += _coverRotateBaseSpeed * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.CoverOverlaySpeed / 100.0;
                 _rotateAngle %= Math.PI * 2;

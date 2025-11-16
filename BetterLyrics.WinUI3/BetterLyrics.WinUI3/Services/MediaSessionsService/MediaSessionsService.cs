@@ -2,7 +2,7 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
-using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
@@ -32,6 +32,8 @@ using System.Threading.Tasks;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
+using BetterLyrics.WinUI3.Constants;
+using BetterLyrics.WinUI3.Hooks;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
@@ -64,7 +66,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TimeSpan CurrentPosition { get; private set; } = TimeSpan.Zero;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial SongInfo? CurrentSongInfo { get; private set; }
 
-        public MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
+        [ObservableProperty] public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
 
         public MediaSessionsService(
             ISettingsService settingsService,
@@ -119,7 +121,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void UpdatePlayOrPauseSongShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
+            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
             {
                 if (CurrentIsPlaying)
                 {
@@ -134,7 +136,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void UpdatePreviousSongShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
+            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
             {
                 _ = PreviousAsync();
             });
@@ -142,7 +144,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void UpdateNextSongShortcut()
         {
-            GlobalHotKeyHelper.UpdateHotKey<LyricsWindow>(ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
+            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
             {
                 _ = NextAsync();
             });
@@ -291,7 +293,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
 
-                    if (PlayerIdMatcher.IsLXMusic(sessionId))
+                    if (PlayerIDMatcher.IsLXMusic(sessionId))
                     {
                         StopSSE();
                     }
@@ -310,15 +312,21 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     string fixedAlbum = mediaProperties?.AlbumTitle ?? "N/A";
                     string? songId = null;
 
-                    if (sessionId == Constants.PlayerID.AppleMusic || sessionId == Constants.PlayerID.AppleMusicAlternative)
+                    if (PlayerIDMatcher.IsAppleMusic(sessionId))
                     {
                         fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault() ?? (mediaProperties?.Artist ?? "N/A");
                         fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault() ?? (mediaProperties?.AlbumTitle ?? "N/A");
                     }
-                    else if (PlayerIdMatcher.IsNeteaseFamily(sessionId ?? ""))
+                    else if (PlayerIDMatcher.IsNeteaseFamily(sessionId))
                     {
-                        songId = mediaProperties?.Genres.FirstOrDefault()?.Replace("NCM-", "");
+                        songId = mediaProperties?.Genres
+                            .Where(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?.FirstOrDefault()?
+                            .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
                     }
+
+                    var linkedFileName = mediaProperties?.Genres
+                        .Where(x => x.StartsWith(ExtendedGenreFiled.FileName))?.FirstOrDefault()?
+                        .Replace(ExtendedGenreFiled.FileName, "");
 
                     CurrentSongInfo = new SongInfo
                     {
@@ -327,13 +335,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         Album = fixedAlbum,
                         DurationMs = mediaSession?.ControlSession?.GetTimelineProperties().EndTime.TotalMilliseconds ?? 0,
                         PlayerId = sessionId,
-                        SongId = songId
+                        SongId = songId,
+                        LinkedFileName = linkedFileName
                     };
 
                     _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                         mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
 
-                    if (PlayerIdMatcher.IsLXMusic(sessionId))
+                    if (PlayerIDMatcher.IsLXMusic(sessionId))
                     {
                         StartSSE();
                     }
@@ -342,7 +351,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         StopSSE();
                     }
 
-                    if (PlayerIdMatcher.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
+                    if (PlayerIDMatcher.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
                     {
                         _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
                     }
@@ -532,7 +541,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
-                if (PlayerIdMatcher.IsLXMusic(CurrentSongInfo?.PlayerId))
+                if (PlayerIDMatcher.IsLXMusic(CurrentSongInfo?.PlayerId))
                 {
                     var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
                     if (data.ValueKind == JsonValueKind.Number)

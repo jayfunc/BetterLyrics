@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Services.LibWatcherService
             UpdateWatchers();
         }
 
-        private void LocalMediaFolders_ItemPropertyChanged(object? sender, Extensions.ItemPropertyChangedEventArgs e)
+        private void LocalMediaFolders_ItemPropertyChanged(object? sender, Collections.ItemPropertyChangedEventArgs e)
         {
             UpdateWatchers();
         }

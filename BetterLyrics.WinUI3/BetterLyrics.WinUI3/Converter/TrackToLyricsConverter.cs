@@ -1,4 +1,5 @@
 ﻿using ATL;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using Microsoft.UI.Xaml.Data;
 using System;
@@ -11,7 +12,7 @@ namespace BetterLyrics.WinUI3.Converter
         {
             if (value is Track track)
             {
-                return track.GetLyrics();
+                return track.GetRawLyrics();
             }
             return "";
         }

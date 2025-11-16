@@ -5,9 +5,9 @@ using Vanara.PInvoke;
 using Windows.System;
 using WinRT.Interop;
 
-namespace BetterLyrics.WinUI3.Helper
+namespace BetterLyrics.WinUI3.Hooks
 {
-    public class GlobalHotKeyHelper
+    public class GlobalHotKeyHook
     {
         private static Dictionary<int, Action> _actions = [];
         private static Dictionary<int, List<string>> _keys = [];
@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (keys.Count == 0) return;
 
-            var window = WindowHelper.GetWindowByWindowType<T>();
+            var window = WindowHook.GetWindowByWindowType<T>();
             if (window == null) return;
 
             HWND hwnd = WindowNative.GetWindowHandle(window);
@@ -62,7 +62,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         private static void UnregisterHotKey<T>(ShortcutID id)
         {
-            var window = WindowHelper.GetWindowByWindowType<T>();
+            var window = WindowHook.GetWindowByWindowType<T>();
             if (window == null) return;
 
             HWND hwnd = WindowNative.GetWindowHandle(window);

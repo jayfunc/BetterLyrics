@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Views;
@@ -104,10 +105,10 @@ namespace BetterLyrics.WinUI3.Models
 
         public void UpdateMonitorNameAndBounds()
         {
-            var lyricsWindow = WindowHelper.GetWindowByWindowType<LyricsWindow>();
+            var lyricsWindow = WindowHook.GetWindowByWindowType<LyricsWindow>();
             if (lyricsWindow == null) return;
 
-            var mointor = MonitorHelper.GetMonitorInfoExFromWindow(lyricsWindow);
+            var mointor = MonitorHook.GetMonitorInfoExFromWindow(lyricsWindow);
             MonitorDeviceName = mointor.szDevice;
             MonitorBounds = new Rect(
                 mointor.rcMonitor.Left,
@@ -119,7 +120,7 @@ namespace BetterLyrics.WinUI3.Models
 
         public void UpdateMonitorBounds()
         {
-            var mointor = MonitorHelper.GetMonitorInfoExFromDeviceName(MonitorDeviceName);
+            var mointor = MonitorHook.GetMonitorInfoExFromDeviceName(MonitorDeviceName);
             MonitorBounds = new Rect(
                 mointor.rcMonitor.Left,
                 mointor.rcMonitor.Top,

@@ -9,10 +9,6 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Window.SystemBackdrop>
-        <DesktopAcrylicBackdrop />
-    </Window.SystemBackdrop>
-
     <Grid x:Name="RootGrid">
         <Frame x:Name="RootFrame" Margin="0,40,0,0" />
 

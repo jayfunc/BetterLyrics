@@ -1,6 +1,9 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Shaders;
 using CommunityToolkit.WinUI;
+using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -67,6 +70,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             DrawAlbumArt(control, ds);
             DrawSongInfo(control, ds);
+
+            DrawSnowEffect(control, ds);
 
             if (_isDebugOverlayEnabled)
             {
@@ -397,6 +402,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                 // Reset scale
                 ds.Transform = Matrix3x2.Identity;
+            }
+        }
+
+        private void DrawSnowEffect(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        {
+            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled)
+            {
+                _snowEffect ??= new PixelShaderEffect<SnowEffect>();
+
+                var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
+                var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+                _snowEffect?.ConstantBuffer = new SnowEffect((float)TotalTime.TotalSeconds, new(width, height));
+
+                ds.DrawImage(_snowEffect);
             }
         }
 

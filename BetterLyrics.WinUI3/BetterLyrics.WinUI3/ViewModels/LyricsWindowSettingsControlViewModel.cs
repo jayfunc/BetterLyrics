@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
@@ -37,13 +38,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             AppSettings = _settingsService.AppSettings;
             LiveStates = _liveStatesService.LiveStates;
-            MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
+            MonitorDeviceNames = [.. MonitorHook.GetAllMonitorDeviceNames()];
         }
 
         [RelayCommand]
         private void RefreshMonitorDeviceNames()
         {
-            MonitorDeviceNames = [.. MonitorHelper.GetAllMonitorDeviceNames()];
+            MonitorDeviceNames = [.. MonitorHook.GetAllMonitorDeviceNames()];
             LiveStates.LyricsWindowStatus?.MonitorDeviceName = MonitorDeviceNames.FirstOrDefault() ?? "";
         }
 

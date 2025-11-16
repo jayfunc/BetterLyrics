@@ -2,9 +2,9 @@
 using NAudio.CoreAudioApi;
 using System;
 
-namespace BetterLyrics.WinUI3.Helper
+namespace BetterLyrics.WinUI3.Hooks
 {
-    public static class SystemVolumeHelper
+    public static class SystemVolumeHook
     {
         private static MMDeviceEnumerator? _deviceEnumerator;
         private static MMDevice? _defaultDevice;
@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Helper
         /// </summary>
         public static event EventHandler<int>? VolumeNotification;
 
-        static SystemVolumeHelper()
+        static SystemVolumeHook()
         {
             _deviceEnumerator = new MMDeviceEnumerator();
             _defaultDevice = _deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);

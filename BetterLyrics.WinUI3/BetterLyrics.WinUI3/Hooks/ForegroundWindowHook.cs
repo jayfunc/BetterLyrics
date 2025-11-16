@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using Vanara.PInvoke;
 
-namespace BetterLyrics.WinUI3.Helper
+namespace BetterLyrics.WinUI3.Hooks
 {
-    public class ForegroundWindowWatcher
+    public class ForegroundWindowHook
     {
         private readonly User32.WinEventProc _winEventDelegate;
         private readonly List<User32.HWINEVENTHOOK> _hooks = new();
@@ -17,7 +17,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         private readonly DispatcherTimer _timer;
 
-        public ForegroundWindowWatcher(IntPtr selfHwnd, WindowChangedHandler onWindowChanged)
+        public ForegroundWindowHook(IntPtr selfHwnd, WindowChangedHandler onWindowChanged)
         {
             _selfHwnd = selfHwnd;
             _onWindowChanged = onWindowChanged;

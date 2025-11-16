@@ -225,7 +225,7 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>未找到歌词</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
     <value>歌词来源</value>
   </data>
   <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
@@ -258,7 +258,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>仅显示翻译</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
     <value>翻译来源</value>
   </data>
   <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
@@ -332,6 +332,9 @@
   </data>
   <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
     <value>转到“设置”以添加更多模式</value>
+  </data>
+  <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <value>歌词窗口切换器</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>仅显示专辑区域</value>
@@ -1149,6 +1152,9 @@
   </data>
   <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
     <value>播放</value>
+  </data>
+  <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
+    <value>播放源</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>在 “soundcloud.com” 上播放 “Cut to the Feeling”</value>

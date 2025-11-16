@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
