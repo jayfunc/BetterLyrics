@@ -7,18 +7,14 @@ using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.UI;
-using static Vanara.PInvoke.Shell32;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {

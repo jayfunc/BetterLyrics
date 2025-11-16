@@ -1,5 +1,4 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
@@ -91,9 +90,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             var found = AppSettings.MappedSongSearchQueries
-                .Where(x => 
-                    x.OriginalTitle == _mediaSessionsService.CurrentSongInfo.Title && 
-                    x.OriginalArtist == _mediaSessionsService.CurrentSongInfo.DisplayArtists && 
+                .Where(x =>
+                    x.OriginalTitle == _mediaSessionsService.CurrentSongInfo.Title &&
+                    x.OriginalArtist == _mediaSessionsService.CurrentSongInfo.DisplayArtists &&
                     x.OriginalAlbum == _mediaSessionsService.CurrentSongInfo.Album);
 
             return found.FirstOrDefault();

@@ -3,13 +3,10 @@
 using BetterLyrics.WinUI3.Enums;
 using Impressionist.Abstractions;
 using Microsoft.Graphics.Canvas;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;

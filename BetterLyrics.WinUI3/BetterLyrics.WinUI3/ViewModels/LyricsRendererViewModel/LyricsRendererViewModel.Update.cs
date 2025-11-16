@@ -1,18 +1,16 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
-using BetterLyrics.WinUI3.Extensions;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {

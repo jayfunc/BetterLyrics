@@ -1,5 +1,4 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Hooks;
+﻿using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;

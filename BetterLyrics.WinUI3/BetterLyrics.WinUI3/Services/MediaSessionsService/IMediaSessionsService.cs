@@ -3,8 +3,6 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.ViewModels;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

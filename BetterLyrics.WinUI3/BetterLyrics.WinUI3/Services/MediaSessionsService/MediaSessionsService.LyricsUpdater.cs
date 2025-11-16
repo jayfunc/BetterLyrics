@@ -4,7 +4,6 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.WinUI;
 using Lyricify.Lyrics.Helpers.General;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;

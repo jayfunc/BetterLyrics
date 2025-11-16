@@ -1,9 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Collections;
+using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
-using BetterLyrics.WinUI3.Collections;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
@@ -17,9 +20,9 @@ using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using CommunityToolkit.WinUI;
 using EvtSource;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -32,10 +35,6 @@ using System.Threading.Tasks;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
-using BetterLyrics.WinUI3.Constants;
-using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Extensions;
-using CommunityToolkit.WinUI;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {

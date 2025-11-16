@@ -1,10 +1,6 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
