@@ -1,6 +1,5 @@
 ﻿using ATL;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
 using Microsoft.UI.Xaml.Data;
 using System;
 

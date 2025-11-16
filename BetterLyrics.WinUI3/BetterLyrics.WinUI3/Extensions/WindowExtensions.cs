@@ -4,10 +4,6 @@ using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
@@ -18,8 +14,8 @@ namespace BetterLyrics.WinUI3.Extensions
         extension(Window window)
         {
             public void Init(
-                string titleKey, 
-                TitleBarHeightOption titleBarHeightOption = TitleBarHeightOption.Standard, 
+                string titleKey,
+                TitleBarHeightOption titleBarHeightOption = TitleBarHeightOption.Standard,
                 BackdropType backdropType = BackdropType.DesktopAcrylic)
             {
                 window.Title = _resourceService.GetLocalizedString(titleKey);

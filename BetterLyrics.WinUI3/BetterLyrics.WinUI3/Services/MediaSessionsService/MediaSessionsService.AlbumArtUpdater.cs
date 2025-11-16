@@ -1,13 +1,7 @@
-﻿using BetterLyrics.WinUI3.Events;
-using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.WinUI;
-using CommunityToolkit.WinUI.Helpers;
-using DevWinUI;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

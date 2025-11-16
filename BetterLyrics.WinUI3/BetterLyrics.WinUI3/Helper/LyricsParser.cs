@@ -24,9 +24,9 @@ namespace BetterLyrics.WinUI3.Helper
             var overridenAlbum = songInfo.Album;
 
             var found = mappedSongSearchQueries
-                .Where(x => 
-                    x.OriginalTitle == overridenTitle && 
-                    x.OriginalArtist == overridenArtist.Join(ATL.Settings.DisplayValueSeparator.ToString()) && 
+                .Where(x =>
+                    x.OriginalTitle == overridenTitle &&
+                    x.OriginalArtist == overridenArtist.Join(ATL.Settings.DisplayValueSeparator.ToString()) &&
                     x.OriginalAlbum == overridenAlbum)
                 .FirstOrDefault();
 
@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3.Helper
                 ((SongInfo)songInfo.Clone())
                     .WithTitle(overridenTitle)
                     .WithArtist(overridenArtist)
-                    .WithAlbum(overridenAlbum), 
+                    .WithAlbum(overridenAlbum),
                 lyricsSearchProvider);
         }
 

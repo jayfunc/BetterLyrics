@@ -1,9 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using DiscordRPC;
-using Microsoft.Windows.Storage;
-using System;
-using System.Diagnostics;
 
 namespace BetterLyrics.WinUI3.Services.DiscordService
 {

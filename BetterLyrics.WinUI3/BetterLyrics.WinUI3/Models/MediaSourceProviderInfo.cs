@@ -1,12 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Collections;
+using BetterLyrics.WinUI3.Constants;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Linq;
-using BetterLyrics.WinUI3.Constants;
 
 namespace BetterLyrics.WinUI3.Models
 {
