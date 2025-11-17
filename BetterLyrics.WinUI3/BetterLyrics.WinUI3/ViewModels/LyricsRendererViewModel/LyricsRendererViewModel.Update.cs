@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Shaders;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -57,6 +58,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private bool _isSpectrumOverlayEnabledChanged = true;
         private bool _isFluidOverlayEnabledChanged = true;
+        private bool _isSnowOverlayEnabledChanged = true;
 
         private bool _isLyrics3DMatrixChanged = true;
 
@@ -139,6 +141,27 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _fluidEffect.Properties["color4"] = _albumArtAccentColor4Transition.Value.ToVector3RGB();
                 }
+            }
+
+            if (_isDeviceChanged || _isLyricsWindowsStatusChanged || _isSnowOverlayEnabledChanged)
+            {
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled)
+                {
+                    RecreateSnowEffect();
+                }
+                else
+                {
+                    DisposeSnowEffect();
+                }
+
+                _isSnowOverlayEnabledChanged = false;
+            }
+
+            if (_snowEffect != null)
+            {
+                var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
+                var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+                _snowEffect.ConstantBuffer = new SnowEffect((float)TotalTime.TotalSeconds, new(width, height));
             }
 
             // 检测播放行变更

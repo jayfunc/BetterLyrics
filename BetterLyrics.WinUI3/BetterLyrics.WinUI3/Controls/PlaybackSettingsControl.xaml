@@ -90,7 +90,7 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard Header="Discord Presence">
+                        <dev:SettingsCard x:Uid="SettingsPageDiscordPresence">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
@@ -261,7 +261,7 @@
                                         <Paragraph>
                                             <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
                                             <Run Text="(" />
-                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, Mode=OneWay}" />
+                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, TargetNullValue=N/A, Mode=OneWay}" />
                                             <Run Text=")" />
                                         </Paragraph>
                                     </RichTextBlock>

@@ -138,6 +138,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isFluidOverlayEnabledChanged = true;
                 }
+                else if (message.PropertyName == nameof(LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled))
+                {
+                    _isSnowOverlayEnabledChanged = true;
+                }
             }
         }
 

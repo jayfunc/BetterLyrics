@@ -278,5 +278,16 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _fluidEffect.Properties["color4"] = _albumArtAccentColor4Transition.Value.ToVector3RGB();
             _fluidEffect.Properties["EnableLightWave"] = false;
         }
+
+        private void DisposeSnowEffect()
+        {
+            _snowEffect?.Dispose();
+            _snowEffect = null;
+        }
+
+        private void RecreateSnowEffect()
+        {
+            _snowEffect = new();
+        }
     }
 }

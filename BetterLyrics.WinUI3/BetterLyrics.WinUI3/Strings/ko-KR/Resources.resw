@@ -691,6 +691,9 @@
   <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
+  <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+    <value>Discord 프레즌스를 통해 청취 상태를 표시합니다</value>
+  </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
     <value>레이아웃 모드</value>
   </data>

@@ -405,14 +405,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void DrawSnowEffect(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled)
+            if (_snowEffect != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled)
             {
-                _snowEffect ??= new PixelShaderEffect<SnowEffect>();
-
-                var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
-                var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
-                _snowEffect?.ConstantBuffer = new SnowEffect((float)TotalTime.TotalSeconds, new(width, height));
-
                 ds.DrawImage(_snowEffect);
             }
         }
