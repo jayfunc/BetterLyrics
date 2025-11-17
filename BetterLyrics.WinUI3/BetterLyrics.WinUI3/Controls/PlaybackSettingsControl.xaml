@@ -68,7 +68,7 @@
                                 FontFamily="Segoe UI Symbol"
                                 FontSize="12"
                                 Glyph="&#x283F;" />
-                            <ImageIcon Height="16" Source="{Binding LogoPath, Mode=OneWay}" />
+                            <Image Height="16" Source="{Binding Logo, Mode=OneWay}" />
                             <TextBlock
                                 MaxWidth="200"
                                 Text="{Binding DisplayName, Mode=OneWay}"

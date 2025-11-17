@@ -4,7 +4,9 @@ using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Linq;
 
@@ -33,6 +35,8 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
+        [ObservableProperty] public partial BitmapImage? Logo { get; private set; }
+
         public bool IsLXMusic => PlayerIDMatcher.IsLXMusic(Provider);
 
         public string DisplayName => Provider switch
@@ -59,33 +63,6 @@ namespace BetterLyrics.WinUI3.Models
             PlayerID.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
             PlayerID.Listen1 => PlayerName.Listen1,
             _ => Provider,
-        };
-
-        public string LogoPath => Provider switch
-        {
-            PlayerID.Spotify => PathHelper.SpotifyLogoPath,
-            PlayerID.AppleMusic => PathHelper.AppleMusicLogoPath,
-            PlayerID.AppleMusicAlternative => PathHelper.AppleMusicLogoPath,
-            PlayerID.iTunes => PathHelper.iTunesLogoPath,
-            PlayerID.KugouMusic => PathHelper.KugouMusicLogoPath,
-            PlayerID.NetEaseCloudMusic => PathHelper.NetEaseCloudMusicLogoPath,
-            PlayerID.QQMusic => PathHelper.QQMusicLogoPath,
-            PlayerID.LXMusic => PathHelper.LXMusicLogoPath,
-            PlayerID.LXMusicPortable => PathHelper.LXMusicLogoPath,
-            PlayerID.MediaPlayerWindows11 => PathHelper.MediaPlayerWindows11LogoPath,
-            PlayerID.AIMP => PathHelper.AIMPLogoPath,
-            PlayerID.Foobar2000 => PathHelper.Foobar2000LogoPath,
-            PlayerID.MusicBee => PathHelper.MusicBeeLogoPath,
-            PlayerID.PotPlayer => PathHelper.PotPlayerLogoPath,
-            PlayerID.Chrome => PathHelper.ChromeLogoPath,
-            PlayerID.Edge => PathHelper.EdgeLogoPath,
-            PlayerID.BetterLyrics => PathHelper.LogoPath,
-            PlayerID.BetterLyricsDebug => PathHelper.LogoPath,
-            PlayerID.SaltPlayerForWindows => PathHelper.SaltPlayerForWindowsLogoPath,
-            PlayerID.MoeKoeMusic => PathHelper.MoeKoeMusicLogoPath,
-            PlayerID.MoeKoeMusicAlternative => PathHelper.MoeKoeMusicLogoPath,
-            PlayerID.Listen1 => PathHelper.Listen1LogoPath,
-            _ => PathHelper.UnknownPlayerLogoPath,
         };
 
         public MediaSourceProviderInfo()
@@ -157,5 +134,9 @@ namespace BetterLyrics.WinUI3.Models
             OnPropertyChanged(nameof(LyricsSearchProvidersInfo));
         }
 
+        async partial void OnProviderChanged(string value)
+        {
+            Logo = await IconHook.GetBitmapImageFromAumid(Provider);
+        }
     }
 }

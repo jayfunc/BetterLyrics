@@ -19,7 +19,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         public static async Task<IRandomAccessStream> GetAlbumArtPlaceholderAsync()
         {
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(PathHelper.AlbumArtPlaceholderPath));
+            StorageFile file = await StorageFile.GetFileFromPathAsync(PathHelper.AlbumArtPlaceholderPath);
             IRandomAccessStream stream = await file.OpenAsync(FileAccessMode.Read);
             return stream;
         }

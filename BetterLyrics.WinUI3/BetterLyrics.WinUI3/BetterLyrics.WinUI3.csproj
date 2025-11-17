@@ -89,8 +89,9 @@
 		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.2.1" />
 		<PackageReference Include="Vanara.PInvoke.Shell32" Version="4.2.1" />
 		<PackageReference Include="Vanara.PInvoke.User32" Version="4.2.1" />
+		<PackageReference Include="Vanara.Windows.Shell" Version="4.2.1" />
 		<PackageReference Include="WinUIEx" Version="2.9.0" />
-		<PackageReference Include="z440.atl.core" Version="7.7.0" />
+		<PackageReference Include="z440.atl.core" Version="7.8.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
@@ -112,22 +113,10 @@
 		<TrimmerRootAssembly Include="NAudio.Wasapi" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Update="Assets\AIMP.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
 	  <Content Update="Assets\AlbumArtPlaceholder.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="Assets\AMLLPlayer.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\AppleMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Chrome.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Edge.png">
+	  <Content Update="Assets\Alipay.jpg">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\FluidEffect.bin">
@@ -142,25 +131,10 @@
 	  <Content Update="Assets\EmptyState.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="Assets\foobar2000.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\HyPlayer.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\iTunes.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\KugouMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
 	  <Content Update="Assets\LastFM.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Leaf.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Listen1.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Logo.ico">
@@ -169,43 +143,13 @@
 	  <Content Update="Assets\Logo.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="Assets\LXMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\MediaPlayerWindows11.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\MoeKoeMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\MusicBee.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\NetEaseCloudMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
 	  <Content Update="Assets\Page.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\PlanetMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\PotPlayer.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\QQMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Question.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\SaltPlayerForWindows.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Segoe Fluent Icons.ttf">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
-	  <Content Update="Assets\Spotify.png">
+	  <Content Update="Assets\WeChatReward.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Content Update="Assets\Wiki82.profile.xml">

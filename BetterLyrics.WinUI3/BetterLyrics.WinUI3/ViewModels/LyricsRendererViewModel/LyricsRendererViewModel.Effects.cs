@@ -20,6 +20,8 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private CanvasCommandList? _albumArtEffect;
         private PixelShaderEffect? _fluidEffect;
         private PixelShaderEffect<SnowEffect>? _snowEffect;
+        private PixelShaderEffect<FogEffect>? _fogEffect;
+        private PixelShaderEffect<RaindropEffect>? _raindropEffect;
 
         private OpacityEffect CreateBgImageEffect(CanvasBitmap canvasBitmap, double opacity)
         {

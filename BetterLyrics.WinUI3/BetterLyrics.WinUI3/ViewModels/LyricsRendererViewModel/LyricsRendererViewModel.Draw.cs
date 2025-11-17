@@ -14,6 +14,7 @@ using System;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.Graphics.Effects;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
@@ -36,12 +37,12 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 if (_liveStatesService.LiveStates.LyricsWindowStatus.IsAdaptToEnvironment)
                 {
-                    FillBackground(control, combinedDs, _immersiveBgColorTransition.Value, 0f,
+                    FillBackground(combinedDs, _immersiveBgColorTransition.Value, 0f,
                         _immersiveBgOpacityTransition.Value * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PureColorOverlayOpacity / 100f);
                 }
                 else
                 {
-                    FillBackground(control, combinedDs, _albumArtAccentColor1Transition.Value, 0f,
+                    FillBackground(combinedDs, _albumArtAccentColor1Transition.Value, 0f,
                         _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PureColorOverlayOpacity / 100.0);
                 }
             }
@@ -65,9 +66,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             ds.DrawImage(combined);
 
             DrawAlbumArt(control, ds);
-            DrawSongInfo(control, ds);
+            DrawSongInfo(ds);
 
-            DrawSnowEffect(control, ds);
+            DrawSnowEffect(ds);
+            //DrawFogEffect(ds);
+            //DrawRaindropEffect(ds, combined);
 
             if (_isDebugOverlayEnabled)
             {
@@ -226,18 +229,18 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void DrawSongInfo(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        private void DrawSongInfo(CanvasDrawingSession ds)
         {
             if (_maxSongInfoWidth <= 0)
             {
                 return;
             }
 
-            DrawSingleSongInfo(control, ds, _lastTitleTextLayout, _lastArtistTextLayout, _lastAlbumTextLayout, 1 - _songInfoOpacityTransition.Value);
-            DrawSingleSongInfo(control, ds, _titleTextLayout, _artistTextLayout, _albumTextLayout, _songInfoOpacityTransition.Value);
+            DrawSingleSongInfo(ds, _lastTitleTextLayout, _lastArtistTextLayout, _lastAlbumTextLayout, 1 - _songInfoOpacityTransition.Value);
+            DrawSingleSongInfo(ds, _titleTextLayout, _artistTextLayout, _albumTextLayout, _songInfoOpacityTransition.Value);
         }
 
-        private void DrawSingleSongInfo(ICanvasAnimatedControl control, CanvasDrawingSession ds, CanvasTextLayout? titleLayout, CanvasTextLayout? artistLayout, CanvasTextLayout? albumLayout, double opacity)
+        private void DrawSingleSongInfo(CanvasDrawingSession ds, CanvasTextLayout? titleLayout, CanvasTextLayout? artistLayout, CanvasTextLayout? albumLayout, double opacity)
         {
             if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle && titleLayout != null)
             {
@@ -403,7 +406,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void DrawSnowEffect(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        private void DrawSnowEffect(CanvasDrawingSession ds)
         {
             if (_snowEffect != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled)
             {
@@ -411,7 +414,24 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void FillBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds, Color color, double radius, double opacity)
+        private void DrawFogEffect(CanvasDrawingSession ds)
+        {
+            if (_fogEffect != null)
+            {
+                ds.DrawImage(_fogEffect);
+            }
+        }
+
+        private void DrawRaindropEffect(CanvasDrawingSession ds, IGraphicsEffectSource source)
+        {
+            if (_raindropEffect != null)
+            {
+                _raindropEffect.Sources[0] = source;
+                ds.DrawImage(_raindropEffect);
+            }
+        }
+
+        private void FillBackground(CanvasDrawingSession ds, Color color, double radius, double opacity)
         {
             ds.FillRoundedRectangle(
                 new Rect(0, 0, _canvasWidth, _canvasHeight),

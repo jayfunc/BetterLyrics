@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         public async Task AuthAsync()
         {
-            var dialogXamlRoot = WindowHook.GetWindowByWindowType<SettingsWindow>()?.Content.XamlRoot;
+            var dialogXamlRoot = WindowHook.GetWindow<SettingsWindow>()?.Content.XamlRoot;
             if (dialogXamlRoot == null)
             {
                 return;
@@ -87,7 +87,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         public async Task UnAuthAsync()
         {
-            var dialogXamlRoot = WindowHook.GetWindowByWindowType<SettingsWindow>()?.Content.XamlRoot;
+            var dialogXamlRoot = WindowHook.GetWindow<SettingsWindow>()?.Content.XamlRoot;
             if (dialogXamlRoot == null)
             {
                 return;

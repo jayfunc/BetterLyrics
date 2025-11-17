@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
+using Vanara.Windows.Shell;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using WinRT.Interop;
@@ -55,7 +56,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
-        public static T? GetWindowByWindowType<T>()
+        public static T? GetWindow<T>()
         {
             foreach (var window in _activeWindows)
             {
@@ -73,7 +74,19 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 return frameworkElement.XamlRoot.ContentIslandEnvironment.AppWindowId.GetWindowHandle();
             }
-            return null;
+            else if (obj != null)
+            {
+                return WindowNative.GetWindowHandle(obj);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static IntPtr? GetWindowHandle<T>()
+        {
+            return GetWindowHandle(GetWindow<T>());
         }
 
         public static void OpenOrShowWindow<T>()
@@ -124,6 +137,17 @@ namespace BetterLyrics.WinUI3.Hooks
                     lyricsWindow.ViewModel.InitFgWindowWatcher();
 
                     _mediaSessionsService.InitPlaybackShortcuts();
+
+                    //TaskbarList.ThumbBarAddButtons(hwnd,
+                    //    [
+                    //        new Shell32.THUMBBUTTON()
+                    //        {
+                    //            szTip = "Previous",
+                    //            dwFlags = Shell32.THUMBBUTTONFLAGS.THBF_ENABLED,
+                    //            dwMask = Shell32.THUMBBUTTONMASK.THB_TOOLTIP | Shell32.THUMBBUTTONMASK.THB_FLAGS,
+                    //        }
+                    //    ]
+                    //);
                 }
             }
             else
@@ -189,7 +213,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsClickThrough<T>(bool enable)
         {
-            Window? window = GetWindowByWindowType<T>() as Window;
+            Window? window = GetWindow<T>() as Window;
             if (window == null) return;
 
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
@@ -206,7 +230,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsWorkArea<T>(bool enable)
         {
-            Window? window = GetWindowByWindowType<T>() as Window;
+            Window? window = GetWindow<T>() as Window;
             if (window == null) return;
 
             IntPtr hwnd = WindowNative.GetWindowHandle(window);
@@ -223,7 +247,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsBorderless<T>(bool enable)
         {
-            var window = GetWindowByWindowType<T>() as Window;
+            var window = GetWindow<T>() as Window;
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
@@ -240,7 +264,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsShowInSwitchers<T>(bool enable)
         {
-            var window = GetWindowByWindowType<T>() as Window;
+            var window = GetWindow<T>() as Window;
             if (window == null) return;
 
             window.AppWindow.IsShownInSwitchers = enable;
@@ -248,7 +272,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsAlwaysOnTop<T>(bool enable)
         {
-            var window = GetWindowByWindowType<T>() as Window;
+            var window = GetWindow<T>() as Window;
             if (window == null) return;
 
             if (window.AppWindow.Presenter is OverlappedPresenter presenter)
@@ -259,7 +283,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void MoveAndResize<T>(Rect rect)
         {
-            var window = GetWindowByWindowType<T>() as Window;
+            var window = GetWindow<T>() as Window;
             if (window == null) return;
 
             window.AppWindow.Move(new Windows.Graphics.PointInt32((int)rect.X, (int)rect.Y));
@@ -270,7 +294,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             if (typeof(T) == typeof(LyricsWindow))
             {
-                LyricsWindow? lyricsWindow = GetWindowByWindowType<LyricsWindow>();
+                LyricsWindow? lyricsWindow = GetWindow<LyricsWindow>();
                 lyricsWindow?.SetTitleBarArea(titleBarArea);
             }
             else
@@ -327,7 +351,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void UpdateWorkArea<T>()
         {
-            var window = GetWindowByWindowType<T>() as Window;
+            var window = GetWindow<T>() as Window;
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
@@ -371,7 +395,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             _setLyricsWindowVisibilityByPlayingStatusTimer.Debounce(() =>
             {
-                var window = GetWindowByWindowType<LyricsWindow>();
+                var window = GetWindow<LyricsWindow>();
                 if (window == null) return;
 
                 if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && !_mediaSessionsService.CurrentIsPlaying)

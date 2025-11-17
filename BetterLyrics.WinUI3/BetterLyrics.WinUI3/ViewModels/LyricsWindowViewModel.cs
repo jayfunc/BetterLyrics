@@ -77,7 +77,7 @@ namespace BetterLyrics.WinUI3
                 _settingsService.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut,
                 () =>
                 {
-                    var window = WindowHook.GetWindowByWindowType<LyricsWindow>();
+                    var window = WindowHook.GetWindow<LyricsWindow>();
                     if (window == null) return;
 
                     if (window.Visible)
@@ -127,7 +127,7 @@ namespace BetterLyrics.WinUI3
 
         public void InitFgWindowWatcher()
         {
-            var window = WindowHook.GetWindowByWindowType<LyricsWindow>();
+            var window = WindowHook.GetWindow<LyricsWindow>();
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
@@ -172,7 +172,7 @@ namespace BetterLyrics.WinUI3
             }
             else
             {
-                var window = WindowHook.GetWindowByWindowType<LyricsWindow>();
+                var window = WindowHook.GetWindow<LyricsWindow>();
                 window?.Hide();
             }
         }

@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             if (keys.Count == 0) return;
 
-            var window = WindowHook.GetWindowByWindowType<T>();
+            var window = WindowHook.GetWindow<T>();
             if (window == null) return;
 
             HWND hwnd = WindowNative.GetWindowHandle(window);
@@ -62,7 +62,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private static void UnregisterHotKey<T>(ShortcutID id)
         {
-            var window = WindowHook.GetWindowByWindowType<T>();
+            var window = WindowHook.GetWindow<T>();
             if (window == null) return;
 
             HWND hwnd = WindowNative.GetWindowHandle(window);
