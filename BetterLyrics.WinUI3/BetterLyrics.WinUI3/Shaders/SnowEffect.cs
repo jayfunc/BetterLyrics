@@ -14,7 +14,7 @@ namespace BetterLyrics.WinUI3.Shaders
     [D2DShaderProfile(D2D1ShaderProfile.PixelShader50)]
     [D2DGeneratedPixelShaderDescriptor]
     [D2DRequiresScenePosition]
-    public readonly partial struct SnowEffect(float time, float2 dispatchSize, float density) : ID2D1PixelShader
+    public readonly partial struct SnowEffect(float time, float2 dispatchSize, float density, float speed) : ID2D1PixelShader
     {
         public float4 Execute()
         {
@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Shaders
                 for (int i = 1; i < 12; i++)
                 {
                     float cellSize = 2.0f + (i * 3.0f);
-                    float downSpeed = 0.3f + (Hlsl.Sin(time * 0.4f + (k + i * 20)) + 1.0f) * 0.00008f;
+                    float downSpeed = 0.3f + (Hlsl.Sin(time * 0.4f + (k + i * 20)) + 1.0f) * 0.00008f * speed;
 
                     float2 uv = (fragCoord / dispatchSize.X) +
                                 new float2(

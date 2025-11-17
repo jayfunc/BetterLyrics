@@ -69,7 +69,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             DrawSongInfo(ds);
 
             DrawSnowEffect(ds);
-            //DrawFogEffect(ds);
+            DrawFogEffect(ds);
             //DrawRaindropEffect(ds, combined);
 
             if (_isDebugOverlayEnabled)
@@ -416,7 +416,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void DrawFogEffect(CanvasDrawingSession ds)
         {
-            if (_fogEffect != null)
+            if (_fogEffect != null && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsFogOverlayEnabled)
             {
                 ds.DrawImage(_fogEffect);
             }

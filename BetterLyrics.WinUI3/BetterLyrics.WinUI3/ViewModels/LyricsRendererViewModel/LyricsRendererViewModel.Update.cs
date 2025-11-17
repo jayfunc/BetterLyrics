@@ -59,6 +59,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private bool _isSpectrumOverlayEnabledChanged = true;
         private bool _isFluidOverlayEnabledChanged = true;
         private bool _isSnowOverlayEnabledChanged = true;
+        private bool _isFogOverlayEnabledChanged = true;
 
         private bool _isLyrics3DMatrixChanged = true;
 
@@ -164,26 +165,41 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 _snowEffect.ConstantBuffer = new SnowEffect(
                     (float)TotalTime.TotalSeconds,
                     new(width, height),
-                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SnowFlakeOverlayAmount / 100f);
+                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SnowFlakeOverlayAmount / 100f,
+                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SnowFlakeOverlaySpeed);
             }
 
+            if (_isDeviceChanged || _isLyricsWindowsStatusChanged || _isFogOverlayEnabledChanged)
+            {
+                if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsFogOverlayEnabled)
+                {
+                    RecreateFogEffect();
+                }
+                else
+                {
+                    DisposeFogEffect();
+                }
+
+                _isFogOverlayEnabledChanged = false;
+            }
+
+            if (_fogEffect != null)
             {
                 var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
                 var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
-                _fogEffect ??= new();
                 _fogEffect.ConstantBuffer = new FogEffect(
                     (float)TotalTime.TotalSeconds,
                     new(width, height));
             }
 
-            {
-                var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
-                var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
-                _raindropEffect ??= new();
-                _raindropEffect.ConstantBuffer = new RaindropEffect(
-                    (float)TotalTime.TotalSeconds,
-                    new(width, height));
-            }
+            //{
+            //    var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
+            //    var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+            //    _raindropEffect ??= new();
+            //    _raindropEffect.ConstantBuffer = new RaindropEffect(
+            //        (float)TotalTime.TotalSeconds,
+            //        new(width, height));
+            //}
 
             // 检测播放行变更
             var playingLineIndex = GetCurrentPlayingLineIndex();

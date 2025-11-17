@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -363,7 +364,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         if (key == "musicName" && valueArr.GetArrayLength() > 0)
                             musicName = valueArr[0].GetString();
                         if (key == "artists" && valueArr.GetArrayLength() > 0)
-                            artists = valueArr[0].GetString();
+                            artists = valueArr.EnumerateArray().Select(x=>x.GetString()).Join(ATL.Settings.DisplayValueSeparator.ToString());
                     }
                     if (musicName == null || artists == null)
                         continue;
