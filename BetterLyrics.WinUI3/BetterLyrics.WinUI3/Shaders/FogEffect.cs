@@ -15,14 +15,7 @@ namespace BetterLyrics.WinUI3.Shaders
     [D2DRequiresScenePosition]
     public readonly partial struct FogEffect(float time, float2 dispatchSize) : ID2D1PixelShader
     {
-        // === 来自 GLSL #define 的常量 ===
-        private static readonly Float3 WBCOL2 = new Float3(0.15f, 0.8f, 1.7f);
-
-        // GLSL的 mat2(1.6, 1.2, -1.2, 1.6) 是列优先的:
-        // [1.6, -1.2]
-        // [1.2,  1.6]
-        // C# 的 Float2x2 构造函数是行优先的 (m11, m12, m21, m22)
-        private static readonly Float2x2 NoiseMatrix = new Float2x2(1.6f, -1.2f, 1.2f, 1.6f);
+        private static readonly Float2x2 _noiseMatrix = new Float2x2(1.6f, -1.2f, 1.2f, 1.6f);
 
         private static float Hash(Float2 p)
         {
@@ -61,7 +54,7 @@ namespace BetterLyrics.WinUI3.Shaders
             {
                 color += d * Noise((p * 5.0f) + time);
 
-                p = Hlsl.Mul(p, NoiseMatrix);
+                p = Hlsl.Mul(p, _noiseMatrix);
                 d /= 2.0f;
             }
             return color;

@@ -133,13 +133,24 @@
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsBackgroundSettings.SnowFlakeOverlayAmount, Mode=TwoWay}" />
                             </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Maximum="10"
+                                    Minimum="1"
+                                    ResetButtonVisibility="Collapsed"
+                                    Value="{x:Bind LyricsBackgroundSettings.SnowFlakeOverlaySpeed, Mode=TwoWay}" />
+                            </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
+
+                    <dev:SettingsCard x:Uid="SettingsPageFogLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA91;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFogOverlayEnabled, Mode=TwoWay}" />
+                    </dev:SettingsCard>
 
                     <dev:SettingsExpander
                         x:Uid="SettingsPageSpectrumLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xE93E;}"
+                                                 Glyph=&#xF61F;}"
                         IsExpanded="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>

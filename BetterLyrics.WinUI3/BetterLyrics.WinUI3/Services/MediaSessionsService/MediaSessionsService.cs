@@ -337,7 +337,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         CurrentSongInfo = new SongInfo
                         {
                             Title = mediaProperties?.Title ?? "N/A",
-                            Artists = fixedArtist.Split(ATL.Settings.DisplayValueSeparator),
+                            Artists = fixedArtist.SplitByCommonSplitter(),
                             Album = fixedAlbum,
                             DurationMs = mediaSession?.ControlSession?.GetTimelineProperties().EndTime.TotalMilliseconds ?? 0,
                             PlayerId = sessionId,

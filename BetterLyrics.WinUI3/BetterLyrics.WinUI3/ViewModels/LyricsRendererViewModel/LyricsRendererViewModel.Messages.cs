@@ -142,6 +142,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     _isSnowOverlayEnabledChanged = true;
                 }
+                else if (message.PropertyName == nameof(LyricsBackgroundSettings.IsFogOverlayEnabled))
+                {
+                    _isFogOverlayEnabledChanged = true;
+                }
             }
         }
 

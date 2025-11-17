@@ -502,6 +502,9 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>无法查看曲目，因为路径不存在</value>
   </data>
+  <data name="PrivacyPolicy.Content" xml:space="preserve">
+    <value>隐私政策</value>
+  </data>
   <data name="Romaji" xml:space="preserve">
     <value>罗马音</value>
   </data>
@@ -795,6 +798,9 @@
   </data>
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>流体层</value>
+  </data>
+  <data name="SettingsPageFogLayer.Header" xml:space="preserve">
+    <value>雾层</value>
   </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>跟随系统</value>
@@ -1404,6 +1410,9 @@
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>歌词窗口切换器</value>
+  </data>
+  <data name="TermsOfService.Content" xml:space="preserve">
+    <value>服务条款</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>由于路径不存在，无法添加曲目</value>

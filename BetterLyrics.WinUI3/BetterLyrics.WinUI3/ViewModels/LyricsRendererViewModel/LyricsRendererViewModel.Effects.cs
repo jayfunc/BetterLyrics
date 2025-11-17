@@ -289,7 +289,20 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private void RecreateSnowEffect()
         {
+            DisposeSnowEffect();
             _snowEffect = new();
+        }
+
+        private void DisposeFogEffect()
+        {
+            _fogEffect?.Dispose();
+            _fogEffect = null;
+        }
+
+        private void RecreateFogEffect()
+        {
+            DisposeFogEffect();
+            _fogEffect = new();
         }
     }
 }
