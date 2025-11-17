@@ -502,6 +502,9 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Unable to view tracks since the path is not existed</value>
   </data>
+  <data name="PrivacyPolicy.Content" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
   <data name="Romaji" xml:space="preserve">
     <value>ローマン</value>
   </data>
@@ -795,6 +798,9 @@
   </data>
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>流体層</value>
+  </data>
+  <data name="SettingsPageFogLayer.Header" xml:space="preserve">
+    <value>Fog layer</value>
   </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>システムをフォローします</value>
@@ -1404,6 +1410,9 @@
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>歌詞ウィンドウスイッチャー</value>
+  </data>
+  <data name="TermsOfService.Content" xml:space="preserve">
+    <value>Terms of service</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Unable to add tracks since the path is not existed</value>
