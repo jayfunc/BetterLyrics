@@ -493,7 +493,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     AlbumArtists = songInfo.Artists.ToList(),
                     Artists = songInfo.Artists.ToList(),
                     Title = songInfo.Title,
-                }, searcher, Lyricify.Lyrics.Searchers.Helpers.CompareHelper.MatchType.VeryHigh);
+                }, searcher, Lyricify.Lyrics.Searchers.Helpers.CompareHelper.MatchType.PrettyHigh);
             }
 
             if (result != null)

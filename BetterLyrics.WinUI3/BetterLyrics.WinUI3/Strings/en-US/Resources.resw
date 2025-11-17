@@ -691,6 +691,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
+  <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+    <value>Display listening status via Discord Presence</value>
+  </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
     <value>Layout mode</value>
   </data>

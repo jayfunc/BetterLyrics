@@ -691,6 +691,9 @@
   <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
+  <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+    <value>通过 Discord Presence 显示收听状态</value>
+  </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
     <value>布局模式</value>
   </data>

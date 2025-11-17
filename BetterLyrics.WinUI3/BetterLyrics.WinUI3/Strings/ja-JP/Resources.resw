@@ -691,6 +691,9 @@
   <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
+  <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+    <value>Discord Presenceでリスニングステータスを表示</value>
+  </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
     <value>レイアウトモード</value>
   </data>
