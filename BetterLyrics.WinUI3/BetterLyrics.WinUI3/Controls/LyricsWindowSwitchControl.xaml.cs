@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async Task HideAsync()
         {
-            var lyricsWindowSwitchWindow = WindowHook.GetWindowByWindowType<LyricsWindowSwitchWindow>();
+            var lyricsWindowSwitchWindow = WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             lyricsWindowSwitchWindow?.ViewModel.RootGridOpacity = 0;
             await Task.Delay(300);
             WindowHook.HideWindow<LyricsWindowSwitchWindow>();

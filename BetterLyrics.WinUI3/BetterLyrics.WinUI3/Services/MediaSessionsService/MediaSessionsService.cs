@@ -23,6 +23,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
+using DevWinUI;
 using EvtSource;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -636,6 +637,22 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (desiredSession != null)
             {
                 await desiredSession.ControlSession?.TryChangePlaybackPositionAsync(TimeSpan.FromSeconds(seconds).Ticks);
+            }
+        }
+
+        partial void OnCurrentIsPlayingChanged(bool value)
+        {
+            if (WindowHook.GetWindowHandle<LyricsWindow>() is IntPtr hwnd)
+            {
+                TaskbarHelper.SetProgressState(hwnd, value ? TaskbarStates.Normal : TaskbarStates.Paused);
+            }
+        }
+
+        partial void OnCurrentPositionChanged(TimeSpan value)
+        {
+            if (WindowHook.GetWindowHandle<LyricsWindow>() is IntPtr hwnd)
+            {
+                TaskbarHelper.SetProgressValue(hwnd, value.TotalSeconds, CurrentSongInfo?.Duration ?? value.TotalSeconds);
             }
         }
 

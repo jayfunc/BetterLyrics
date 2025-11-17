@@ -1,5 +1,6 @@
 ﻿using ComputeSharp;
 using ComputeSharp.D2D1;
+using static Vanara.PInvoke.Ole32.PROPERTYKEY.System;
 
 namespace BetterLyrics.WinUI3.Shaders
 {
@@ -13,7 +14,7 @@ namespace BetterLyrics.WinUI3.Shaders
     [D2DShaderProfile(D2D1ShaderProfile.PixelShader50)]
     [D2DGeneratedPixelShaderDescriptor]
     [D2DRequiresScenePosition]
-    public readonly partial struct SnowEffect(float time, float2 dispatchSize) : ID2D1PixelShader
+    public readonly partial struct SnowEffect(float time, float2 dispatchSize, float density) : ID2D1PixelShader
     {
         public float4 Execute()
         {
@@ -47,7 +48,7 @@ namespace BetterLyrics.WinUI3.Shaders
 
                     float omiVal = Hlsl.Frac(Hlsl.Sin(Hlsl.Dot(uvStep, new float2(32.4691f, 94.615f))) * 31572.1684f);
 
-                    if (omiVal < 0.08f)
+                    if (omiVal < density)
                     {
                         float newd = (x + 1.0f) * 0.4f * Hlsl.Clamp(1.9f - d * (15.0f + (x * 6.3f)) * (cellSize / 1.4f), 0.0f, 1.0f);
                         snow += newd;

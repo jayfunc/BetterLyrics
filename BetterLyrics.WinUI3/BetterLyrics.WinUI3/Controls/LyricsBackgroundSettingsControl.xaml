@@ -128,8 +128,8 @@
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
-                                    Maximum="100"
-                                    Minimum="10"
+                                    Maximum="10"
+                                    Minimum="0"
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsBackgroundSettings.SnowFlakeOverlayAmount, Mode=TwoWay}" />
                             </dev:SettingsCard>

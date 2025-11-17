@@ -27,7 +27,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static void ResetWindowPosition()
         {
-            var lyricsWindow = WindowHook.GetWindowByWindowType<LyricsWindow>();
+            var lyricsWindow = WindowHook.GetWindow<LyricsWindow>();
             lyricsWindow?.MoveAndResize(100, 100, 800, 500);
         }
 

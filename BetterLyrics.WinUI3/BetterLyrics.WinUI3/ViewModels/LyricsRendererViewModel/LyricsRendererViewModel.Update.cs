@@ -161,7 +161,28 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             {
                 var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
                 var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
-                _snowEffect.ConstantBuffer = new SnowEffect((float)TotalTime.TotalSeconds, new(width, height));
+                _snowEffect.ConstantBuffer = new SnowEffect(
+                    (float)TotalTime.TotalSeconds,
+                    new(width, height),
+                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.SnowFlakeOverlayAmount / 100f);
+            }
+
+            {
+                var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
+                var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+                _fogEffect ??= new();
+                _fogEffect.ConstantBuffer = new FogEffect(
+                    (float)TotalTime.TotalSeconds,
+                    new(width, height));
+            }
+
+            {
+                var width = (float)control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
+                var height = (float)control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+                _raindropEffect ??= new();
+                _raindropEffect.ConstantBuffer = new RaindropEffect(
+                    (float)TotalTime.TotalSeconds,
+                    new(width, height));
             }
 
             // 检测播放行变更
