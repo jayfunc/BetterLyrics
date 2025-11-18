@@ -33,6 +33,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Vanara.Windows.Shell;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
@@ -644,7 +645,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             if (WindowHook.GetWindowHandle<LyricsWindow>() is IntPtr hwnd)
             {
-                TaskbarHelper.SetProgressState(hwnd, value ? TaskbarStates.Normal : TaskbarStates.Paused);
+                TaskbarList.SetProgressState(hwnd, value ? TaskbarButtonProgressState.Normal : TaskbarButtonProgressState.Paused);
             }
         }
 
@@ -652,7 +653,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             if (WindowHook.GetWindowHandle<LyricsWindow>() is IntPtr hwnd)
             {
-                TaskbarHelper.SetProgressValue(hwnd, value.TotalSeconds, CurrentSongInfo?.Duration ?? value.TotalSeconds);
+                TaskbarList.SetProgressValue(hwnd, (ulong)value.TotalSeconds, (ulong)(CurrentSongInfo?.Duration ?? value.TotalSeconds));
             }
         }
 
