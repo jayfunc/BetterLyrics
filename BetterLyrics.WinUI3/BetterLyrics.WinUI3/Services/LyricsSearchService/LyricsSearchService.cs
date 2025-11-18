@@ -102,11 +102,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             _logger.LogInformation("SearchSmartlyAsync {SongInfo}", songInfo);
 
             var found = _settingsService.AppSettings.MappedSongSearchQueries
-                .Where(x =>
+                .FirstOrDefault(x =>
                     x.OriginalTitle == overridenTitle &&
                     x.OriginalArtist == overridenArtists.Join(ATL.Settings.DisplayValueSeparator.ToString()) &&
-                    x.OriginalAlbum == overridenAlbum)
-                .FirstOrDefault();
+                    x.OriginalAlbum == overridenAlbum);
 
             if (found != null)
             {
@@ -138,7 +137,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 }
             }
 
-            foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == songInfo.PlayerId).FirstOrDefault()?.LyricsSearchProvidersInfo ?? [])
+            foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId)?.LyricsSearchProvidersInfo ?? [])
             {
                 if (!provider.IsEnabled)
                 {

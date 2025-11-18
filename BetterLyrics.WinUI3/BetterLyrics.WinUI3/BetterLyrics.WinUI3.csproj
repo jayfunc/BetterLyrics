@@ -109,9 +109,13 @@
 	</ItemGroup>
 	<!--Disable Trimming for Specific Packages-->
 	<ItemGroup>
-		<TrimmerRootAssembly Include="TagLibSharp" />
 		<TrimmerRootAssembly Include="NAudio.Wasapi" />
+		<TrimmerRootAssembly Include="TagLibSharp" />
+		<TrimmerRootAssembly Include="Vanara.PInvoke.DwmApi" />
+		<TrimmerRootAssembly Include="Vanara.PInvoke.Gdi32" />
 		<TrimmerRootAssembly Include="Vanara.PInvoke.Shell32" />
+		<TrimmerRootAssembly Include="Vanara.PInvoke.User32" />
+		<TrimmerRootAssembly Include="Vanara.Windows.Shell" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Update="Assets\AlbumArtPlaceholder.png">

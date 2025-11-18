@@ -24,11 +24,10 @@ namespace BetterLyrics.WinUI3.Helper
             var overridenAlbum = songInfo.Album;
 
             var found = mappedSongSearchQueries
-                .Where(x =>
+                .FirstOrDefault(x =>
                     x.OriginalTitle == overridenTitle &&
                     x.OriginalArtist == overridenArtist.Join(ATL.Settings.DisplayValueSeparator.ToString()) &&
-                    x.OriginalAlbum == overridenAlbum)
-                .FirstOrDefault();
+                    x.OriginalAlbum == overridenAlbum);
 
             if (found != null)
             {
@@ -119,7 +118,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         private void FillRomanizationLyricsData()
         {
-            var chinese = LyricsDataArr.Where(x => x.LanguageCode == "zh").FirstOrDefault();
+            var chinese = LyricsDataArr.FirstOrDefault(x => x.LanguageCode == "zh");
             if (chinese != null)
             {
                 LyricsDataArr.Add(new LyricsData
@@ -157,7 +156,7 @@ namespace BetterLyrics.WinUI3.Helper
                     }).ToList()
                 });
             }
-            var japanese = LyricsDataArr.Where(x => x.LanguageCode == "ja").FirstOrDefault();
+            var japanese = LyricsDataArr.FirstOrDefault(x => x.LanguageCode == "ja");
             if (japanese != null)
             {
                 LyricsDataArr.Add(new LyricsData

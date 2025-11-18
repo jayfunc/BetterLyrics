@@ -27,7 +27,7 @@ namespace BetterLyrics.WinUI3.Extensions
         {
             public string[] SplitByCommonSplitter()
             {
-                var splitter = _splitter.Where(str.Contains).FirstOrDefault();
+                var splitter = _splitter.FirstOrDefault(str.Contains);
                 if (splitter != null)
                 {
                     return str.Split(splitter);

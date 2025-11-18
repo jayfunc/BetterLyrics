@@ -70,7 +70,8 @@ namespace BetterLyrics.WinUI3.Hooks
             catch
             {
                 var shellFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
-                return shellFolder.Where(x => x.ParsingName?.Contains(aumid) == true).FirstOrDefault();
+                var found = shellFolder.FirstOrDefault(x => x.ParsingName?.EndsWith(aumid) == true);
+                return found;
             }
         }
 
