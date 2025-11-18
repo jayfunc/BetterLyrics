@@ -25,8 +25,8 @@ namespace BetterLyrics.WinUI3.Helper
             return false;
         }
 
-        public static bool IsLXMusic(string? id) => id is PlayerID.LXMusic or PlayerID.LXMusicPortable;
+        public static bool IsLXMusic(string? id) => id is SpecialHandlePlayerID.LXMusic or SpecialHandlePlayerID.LXMusicPortable;
 
-        public static bool IsAppleMusic(string? id) => id is PlayerID.AppleMusic or PlayerID.AppleMusicAlternative;
+        public static bool IsAppleMusic(string? id) => id is SpecialHandlePlayerID.AppleMusic or SpecialHandlePlayerID.AppleMusicAlternative;
     }
 }
