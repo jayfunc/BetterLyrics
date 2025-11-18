@@ -179,9 +179,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private Matrix4x4 _lyrics3DMatrix = Matrix4x4.Identity;
 
-        private readonly DispatcherQueueTimer? _onSongInfoChangedTimer;
-        private readonly DispatcherQueueTimer? _onSoftwareBitmapChangedTimer;
-
         public LyricsRendererViewModel(
             ISettingsService settingsService,
             IMediaSessionsService mediaSessionsService,

@@ -15,5 +15,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         }
+
+        public DispatcherQueue GetCurrentDispatcherQueue() => _dispatcherQueue;
     }
 }

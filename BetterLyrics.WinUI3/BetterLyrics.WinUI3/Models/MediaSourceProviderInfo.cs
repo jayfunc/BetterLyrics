@@ -5,10 +5,13 @@ using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -39,31 +42,7 @@ namespace BetterLyrics.WinUI3.Models
 
         public bool IsLXMusic => PlayerIDMatcher.IsLXMusic(Provider);
 
-        public string DisplayName => Provider switch
-        {
-            PlayerID.Spotify => PlayerName.Spotify,
-            PlayerID.AppleMusic => PlayerName.AppleMusic,
-            PlayerID.iTunes => PlayerName.iTunes,
-            PlayerID.KugouMusic => PlayerName.KugouMusic,
-            PlayerID.NetEaseCloudMusic => PlayerName.NetEaseCloudMusic,
-            PlayerID.QQMusic => PlayerName.QQMusic,
-            PlayerID.LXMusic => PlayerName.LXMusic,
-            PlayerID.LXMusicPortable => PlayerName.LXMusicPortable,
-            PlayerID.MediaPlayerWindows11 => PlayerName.MediaPlayerWindows11,
-            PlayerID.AIMP => PlayerName.AIMP,
-            PlayerID.Foobar2000 => PlayerName.Foobar2000,
-            PlayerID.MusicBee => PlayerName.MusicBee,
-            PlayerID.PotPlayer => PlayerName.PotPlayer,
-            PlayerID.Chrome => PlayerName.Chrome,
-            PlayerID.Edge => PlayerName.Edge,
-            PlayerID.BetterLyrics => PlayerName.BetterLyrics,
-            PlayerID.BetterLyricsDebug => PlayerName.BetterLyricsDebug,
-            PlayerID.SaltPlayerForWindows => PlayerName.SaltPlayerForWindows,
-            PlayerID.MoeKoeMusic => PlayerName.MoeKoeMusic,
-            PlayerID.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
-            PlayerID.Listen1 => PlayerName.Listen1,
-            _ => Provider,
-        };
+        [ObservableProperty] public partial string? DisplayName { get; private set; }
 
         public MediaSourceProviderInfo()
         {
@@ -77,7 +56,7 @@ namespace BetterLyrics.WinUI3.Models
             IsEnabled = isEnable;
             switch (provider)
             {
-                case Constants.PlayerID.AppleMusic:
+                case Constants.SpecialHandlePlayerID.AppleMusic:
                     // Apple Music 的特性
                     TimelineSyncThreshold = 1000;
                     PositionOffset = 1000;
@@ -134,9 +113,26 @@ namespace BetterLyrics.WinUI3.Models
             OnPropertyChanged(nameof(LyricsSearchProvidersInfo));
         }
 
-        async partial void OnProviderChanged(string value)
+        partial void OnProviderChanged(string value)
         {
-            Logo = await IconHook.GetBitmapImageFromAumid(Provider);
+            var shellItem = AppHook.GetShellItem(Provider);
+            if (shellItem != null)
+            {
+                DisplayName = AppHook.GetDisplayName(shellItem);
+
+                var icon = AppHook.GetIcon(shellItem);
+
+                shellItem.Dispose();
+
+                if (icon != null)
+                {
+                    App.Current.Resources.DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        Logo = await AppHook.ToBitmapImageAsync(icon.Value);
+                    });
+                }
+            }
+
         }
     }
 }

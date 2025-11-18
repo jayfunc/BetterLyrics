@@ -64,11 +64,19 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:MediaSourceProviderInfo">
                         <StackPanel Orientation="Horizontal" Spacing="6">
+                            <ToolTipService.ToolTip>
+                                <ToolTip Content="{Binding Provider, Mode=OneWay}" />
+                            </ToolTipService.ToolTip>
                             <FontIcon
                                 FontFamily="Segoe UI Symbol"
                                 FontSize="12"
                                 Glyph="&#x283F;" />
-                            <Image Height="16" Source="{Binding Logo, Mode=OneWay}" />
+                            <Grid
+                                Width="16"
+                                Height="16"
+                                CornerRadius="4">
+                                <Image Source="{Binding Logo, Mode=OneWay}" />
+                            </Grid>
                             <TextBlock
                                 MaxWidth="200"
                                 Text="{Binding DisplayName, Mode=OneWay}"
