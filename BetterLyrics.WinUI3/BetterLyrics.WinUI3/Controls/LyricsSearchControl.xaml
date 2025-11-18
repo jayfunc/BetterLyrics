@@ -69,6 +69,17 @@
 
                                 <TextBlock x:Uid="LyricsSearchControlMappedAs" VerticalAlignment="Center" />
                                 <TextBox Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedArtist, Mode=TwoWay}" TextWrapping="Wrap" />
+                                <RichTextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" TextWrapping="Wrap">
+                                    <Paragraph>
+                                        <Run x:Uid="ArtistsSplitHint" />
+                                        <Run Text=";" />
+                                        <Run Text="," />
+                                        <Run Text="/" />
+                                        <Run Text="；" />
+                                        <Run Text="、" />
+                                        <Run Text="，" />
+                                    </Paragraph>
+                                </RichTextBlock>
                                 <Button
                                     VerticalAlignment="Center"
                                     Command="{x:Bind ViewModel.ResetMappedArtistCommand}"

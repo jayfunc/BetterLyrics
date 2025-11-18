@@ -116,7 +116,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     return await _lyricsSearchService.SearchAllAsync(
                         ((SongInfo?)_mediaSessionsService.CurrentSongInfo?.Clone() ?? new())
                             .WithTitle(MappedSongSearchQuery.MappedTitle)
-                            .WithArtist(MappedSongSearchQuery.MappedArtist.Split(ATL.Settings.DisplayValueSeparator))
+                            .WithArtist(MappedSongSearchQuery.MappedArtist.SplitByCommonSplitter())
                             .WithAlbum(MappedSongSearchQuery.MappedAlbum), token);
                 }, token)];
                 IsSearching = false;

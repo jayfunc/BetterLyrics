@@ -132,6 +132,9 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>通用</value>
   </data>
+  <data name="ArtistsSplitHint.Text" xml:space="preserve">
+    <value>键入多位艺术家时请以下述一种分隔符分隔（不要混用）</value>
+  </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>不再显示此消息</value>
   </data>

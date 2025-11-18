@@ -111,6 +111,7 @@
 	<ItemGroup>
 		<TrimmerRootAssembly Include="TagLibSharp" />
 		<TrimmerRootAssembly Include="NAudio.Wasapi" />
+		<TrimmerRootAssembly Include="Vanara.PInvoke.Shell32" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Update="Assets\AlbumArtPlaceholder.png">

@@ -8,7 +8,20 @@ namespace BetterLyrics.WinUI3.Extensions
 {
     public static class StringExtensions
     {
-        private static readonly string[] _splitter = [";", "；", "、", "/"];
+        private static readonly string[] _splitter =
+        [
+            ";"
+            ,
+            ","
+            ,
+            "/"
+            ,
+            "；"
+            ,
+            "、"
+            ,
+            "，"
+        ];
 
         extension(string str)
         {
