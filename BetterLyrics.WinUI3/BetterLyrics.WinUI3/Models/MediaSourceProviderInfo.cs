@@ -141,6 +141,13 @@ namespace BetterLyrics.WinUI3.Models
                         });
                     }
                 }
+                else
+                {
+                    dispatcherQueue.TryEnqueue(async () =>
+                    {
+                        DisplayName = Provider;
+                    });
+                }
             });
         }
     }

@@ -63,11 +63,12 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static ShellItem? GetShellItem(string aumid)
         {
-            try
+            string path = $"shell:AppsFolder\\{aumid}";
+            if (Path.Exists(path))
             {
-                return new ShellItem($"shell:AppsFolder\\{aumid}");
+                return new ShellItem(path);
             }
-            catch
+            else
             {
                 var shellFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
                 var found = shellFolder.FirstOrDefault(x => x.ParsingName?.EndsWith(aumid) == true);
