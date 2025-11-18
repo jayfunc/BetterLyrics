@@ -132,6 +132,9 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>一般的な</value>
   </data>
+  <data name="ArtistsSplitHint.Text" xml:space="preserve">
+    <value>複数のアーティストを入力する場合は、次の区切り記号のいずれかで区切ってください（混在しないでください）</value>
+  </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>このメッセージを二度と見せないでください</value>
   </data>

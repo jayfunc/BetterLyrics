@@ -132,6 +132,9 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>일반적인</value>
   </data>
+  <data name="ArtistsSplitHint.Text" xml:space="preserve">
+    <value>여러 아티스트를 입력할 때 다음 구분 기호 중 하나로 구분하십시오 (혼합하지 마십시오)</value>
+  </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>이 메시지를 다시 표시하지 마십시오</value>
   </data>
