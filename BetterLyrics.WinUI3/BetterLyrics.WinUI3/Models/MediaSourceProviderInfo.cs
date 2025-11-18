@@ -115,24 +115,33 @@ namespace BetterLyrics.WinUI3.Models
 
         partial void OnProviderChanged(string value)
         {
-            var shellItem = AppHook.GetShellItem(Provider);
-            if (shellItem != null)
+            var dispatcherQueue = App.Current.Resources.DispatcherQueue;
+
+            STATaskHelper.RunAsSTATask(() =>
             {
-                DisplayName = AppHook.GetDisplayName(shellItem);
-
-                var icon = AppHook.GetIcon(shellItem);
-
-                shellItem.Dispose();
-
-                if (icon != null)
+                var shellItem = AppHook.GetShellItem(Provider);
+                if (shellItem != null)
                 {
-                    App.Current.Resources.DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        Logo = await AppHook.ToBitmapImageAsync(icon.Value);
-                    });
-                }
-            }
+                    var displayName = AppHook.GetDisplayName(shellItem);
 
+                    dispatcherQueue.TryEnqueue(async () =>
+                    {
+                        DisplayName = displayName;
+                    });
+
+                    var icon = AppHook.GetIcon(shellItem);
+
+                    shellItem.Dispose();
+
+                    if (icon != null)
+                    {
+                        dispatcherQueue.TryEnqueue(async () =>
+                        {
+                            Logo = await AppHook.ToBitmapImageAsync(icon.Value);
+                        });
+                    }
+                }
+            });
         }
     }
 }

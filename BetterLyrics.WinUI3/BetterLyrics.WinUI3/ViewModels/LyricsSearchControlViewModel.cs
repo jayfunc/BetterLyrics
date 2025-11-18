@@ -90,12 +90,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             var found = AppSettings.MappedSongSearchQueries
-                .Where(x =>
+                .FirstOrDefault(x =>
                     x.OriginalTitle == _mediaSessionsService.CurrentSongInfo.Title &&
                     x.OriginalArtist == _mediaSessionsService.CurrentSongInfo.DisplayArtists &&
                     x.OriginalAlbum == _mediaSessionsService.CurrentSongInfo.Album);
 
-            return found.FirstOrDefault();
+            return found;
         }
 
         [RelayCommand]

@@ -14,7 +14,7 @@ namespace BetterLyrics.WinUI3.Helper
         /// <typeparam name="TResult">返回类型</typeparam>
         /// <param name="func">要执行的函数</param>
         /// <returns>一个 Task，其结果是函数的返回值</returns>
-        public static Task<TResult> RunAsStaTask<TResult>(Func<TResult> func)
+        public static Task<TResult> RunAsSTATask<TResult>(Func<TResult> func)
         {
             var tcs = new TaskCompletionSource<TResult>();
             var thread = new Thread(() =>
@@ -42,9 +42,9 @@ namespace BetterLyrics.WinUI3.Helper
         /// </summary>
         /// <param name="action">要执行的 Action</param>
         /// <returns>一个 Task</returns>
-        public static Task RunAsStaTask(Action action)
+        public static Task RunAsSTATask(Action action)
         {
-            return RunAsStaTask(() =>
+            return RunAsSTATask(() =>
             {
                 action();
                 return true; // 返回一个虚拟结果

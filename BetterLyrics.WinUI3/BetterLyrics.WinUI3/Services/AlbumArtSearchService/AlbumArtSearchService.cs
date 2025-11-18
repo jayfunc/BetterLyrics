@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 
             try
             {
-                foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.Where(x => x.Provider == songInfo.PlayerId).FirstOrDefault()?.AlbumArtSearchProvidersInfo ?? [])
+                foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId)?.AlbumArtSearchProvidersInfo ?? [])
                 {
                     if (!provider.IsEnabled)
                     {

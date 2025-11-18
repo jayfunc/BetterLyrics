@@ -410,8 +410,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void UpdateSelectedPlaylist(SongsTabInfo playlist)
         {
-            var found = SongsTabInfoList.Where(x => x.FilterProperty == playlist.FilterProperty && x.FilterValue == playlist.FilterValue)
-                .ToList().FirstOrDefault();
+            var found = SongsTabInfoList.FirstOrDefault(x => x.FilterProperty == playlist.FilterProperty && x.FilterValue == playlist.FilterValue);
             if (found == null)
             {
                 SongsTabInfoList.Add(playlist);

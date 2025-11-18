@@ -326,12 +326,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         else if (PlayerIDMatcher.IsNeteaseFamily(sessionId))
                         {
                             songId = mediaProperties?.Genres
-                                .Where(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?.FirstOrDefault()?
+                                .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
                                 .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
                         }
 
                         var linkedFileName = mediaProperties?.Genres
-                            .Where(x => x.StartsWith(ExtendedGenreFiled.FileName))?.FirstOrDefault()?
+                            .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?
                             .Replace(ExtendedGenreFiled.FileName, "");
 
                         CurrentSongInfo = new SongInfo
