@@ -1,4 +1,7 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
+using Lyricify.Lyrics.Providers.Web.QQMusic;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -67,7 +70,7 @@ namespace BetterLyrics.WinUI3.Providers
             _client.DefaultRequestHeaders.Add("Accept-Language", $"{_language},en;q=0.9");
         }
 
-        public async Task<string?> GetLyricsAsync(string id)
+        private async Task<string?> GetLyricsAsync(string id)
         {
             var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/songs/{id}";
             var url = apiUrl + $"?include[songs]=lyrics,syllable-lyrics&l={_language}";
@@ -109,9 +112,14 @@ namespace BetterLyrics.WinUI3.Providers
             return null;
         }
 
-        public async Task<string> SearchSongInfoAsync(string artist, string title)
+        public async Task<LyricsSearchResult> SearchSongInfoAsync(Models.SongInfo songInfo)
         {
-            var query = $"{artist} {title}";
+            LyricsSearchResult lyricsSearchResult = new()
+            {
+                Provider = Enums.LyricsSearchProvider.AppleMusic
+            };
+
+            var query = $"{songInfo.DisplayArtists} {songInfo.Title}";
             var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/search";
             var url = apiUrl + $"?term={WebUtility.UrlEncode(query)}&types=songs&limit=1&l={_language}";
             var resp = await _client.GetStringAsync(url);
@@ -120,9 +128,26 @@ namespace BetterLyrics.WinUI3.Providers
             if (results.TryGetProperty("songs", out var songs) && songs.GetProperty("data").GetArrayLength() > 0)
             {
                 var song = songs.GetProperty("data")[0];
-                return song.GetProperty("id").ToString();
+
+                var id = song.GetProperty("id").ToString();
+
+                var attr = song.GetProperty("attributes");
+
+                lyricsSearchResult.Title = attr.GetProperty("name").ToString();
+                lyricsSearchResult.Artists = attr.GetProperty("artistName").ToString().SplitByCommonSplitter();
+                lyricsSearchResult.Album = attr.GetProperty("albumName").ToString();
+                lyricsSearchResult.Duration = attr.GetProperty("durationInMillis").GetInt32() / 1000.0;
+
+                lyricsSearchResult.Reference = $"https://music.apple.com/song/{id}";
+                lyricsSearchResult.MatchPercentage = MetadataComparer.CalculateScore(songInfo, lyricsSearchResult);
+
+                if (id != null)
+                {
+                    lyricsSearchResult.Raw = await GetLyricsAsync(id);
+                }
             }
-            return string.Empty;
+
+            return lyricsSearchResult;
         }
     }
 }

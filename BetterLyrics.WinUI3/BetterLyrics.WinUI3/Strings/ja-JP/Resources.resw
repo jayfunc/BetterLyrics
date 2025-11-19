@@ -144,6 +144,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
+  <data name="Copy.Text" xml:space="preserve">
+    <value>コピー</value>
+  </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>正常に作成されました</value>
   </data>
@@ -228,7 +231,7 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>歌詞が見つかりません</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
+  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌詞プロバイダー</value>
   </data>
   <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
@@ -237,7 +240,7 @@
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>歌詞ウィンドウ管理ショートカット設定</value>
   </data>
-  <data name="LyricsPageMatchPercentage.Text" xml:space="preserve">
+  <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>マッチ率</value>
   </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
@@ -264,7 +267,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>翻訳のみを表示します</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
+  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻訳プロバイダー</value>
   </data>
   <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
@@ -273,7 +276,7 @@
   <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
     <value>アーティスト</value>
   </data>
-  <data name="LyricsSearchControlDurauion.Text" xml:space="preserve">
+  <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
     <value>間隔</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
@@ -305,9 +308,6 @@
   </data>
   <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>ターゲット歌詞検索プロバイダー</value>
-  </data>
-  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
-    <value>タイトル</value>
   </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>歌詞検索 - BetterLyrics</value>
@@ -565,6 +565,9 @@
   <data name="SettingsPageAdvanced.Text" xml:space="preserve">
     <value>高度なオプション</value>
   </data>
+  <data name="SettingsPageAlbum.Header" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>アルバムアート</value>
   </data>
@@ -609,6 +612,9 @@
   </data>
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>適用する</value>
+  </data>
+  <data name="SettingsPageArtist.Header" xml:space="preserve">
+    <value>アーティスト</value>
   </data>
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>自動調整</value>
@@ -1189,11 +1195,14 @@
   <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
     <value>遊ぶ</value>
   </data>
-  <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
+  <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
     <value>再生ソース</value>
   </data>
-  <data name="SettingsPagePlaybackSourceID.Text" xml:space="preserve">
+  <data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
     <value>再生ソースID</value>
+  </data>
+  <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
+    <value>現在の再生ソース</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>「SoundCloud.com」で「Cut to the Feeling」を再生する</value>
@@ -1218,6 +1227,9 @@
   </data>
   <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
     <value>記録されたウィンドウステータス</value>
+  </data>
+  <data name="SettingsPageReference.Header" xml:space="preserve">
+    <value>参照リンク</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>このパスの元のファイルとフォルダーは、このアプリから削除するときに削除されません</value>
@@ -1257,6 +1269,9 @@
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>最初の行の期間</value>
+  </data>
+  <data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
+    <value>現在の歌詞検索結果</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>テストサーバー</value>
@@ -1320,6 +1335,12 @@
   </data>
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>右</value>
+  </data>
+  <data name="SettingsPageSongStatus.Header" xml:space="preserve">
+    <value>現在の曲です</value>
+  </data>
+  <data name="SettingsPageSongTitle.Header" xml:space="preserve">
+    <value>タイトル</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[実験的] スペクトラムレイヤー</value>
