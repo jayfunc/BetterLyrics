@@ -237,6 +237,9 @@
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>가사 창 관리 바로 가기 설정</value>
   </data>
+  <data name="LyricsPageMatchPercentage.Text" xml:space="preserve">
+    <value>Match percentage</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>재생 소스 빠른 설정</value>
   </data>
@@ -270,8 +273,14 @@
   <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
     <value>Artist</value>
   </data>
+  <data name="LyricsSearchControlDurauion.Text" xml:space="preserve">
+    <value>Duration</value>
+  </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* 변경 사항 저장 변경은 즉시 적용되며, 그 후 트랙 가사는 맵핑 정보와 대상 가사로 검색됩니다. 순수한 음악으로 표시하면 순수한 음악 자리 표시 자 가사로 직접 돌아갑니다. 원래 데이터로 검색하도록 재설정하십시오.</value>
+  </data>
+  <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+    <value>Ignore cache when searching</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>로 매핑됨</value>
@@ -907,6 +916,9 @@
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>빛</value>
   </data>
+  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
+    <value>Linked local file</value>
+  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>새로운 재생 소스에 대한 모니터링을 활성화하십시오</value>
   </data>
@@ -1039,8 +1051,20 @@
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>오른쪽</value>
   </data>
+  <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <value>Best match</value>
+  </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
     <value>가사 소스를 구성하십시오</value>
+  </data>
+  <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <value>Sequential</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+    <value>In order: Find according to the priority of the list below and return the first lyrics found; Best Match: Search through all enabled lyrics sources and automatically select the best match</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <value>Lyrics search strategy</value>
   </data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
     <value>반 대담한</value>
@@ -1167,6 +1191,9 @@
   </data>
   <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
     <value>Playback source</value>
+  </data>
+  <data name="SettingsPagePlaybackSourceID.Text" xml:space="preserve">
+    <value>Playback source ID</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com"에서 "Fut to the Feeling"을 재생하십시오.</value>
