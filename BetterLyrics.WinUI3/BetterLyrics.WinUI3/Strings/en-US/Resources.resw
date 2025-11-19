@@ -309,6 +309,9 @@
   <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>Target lyrics search provider</value>
   </data>
+  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>Lyrics search - BetterLyrics</value>
   </data>
