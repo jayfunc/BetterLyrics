@@ -237,6 +237,9 @@
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>歌詞ウィンドウ管理ショートカット設定</value>
   </data>
+  <data name="LyricsPageMatchPercentage.Text" xml:space="preserve">
+    <value>マッチ率</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>再生ソースクイック設定</value>
   </data>
@@ -270,8 +273,14 @@
   <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
     <value>アーティスト</value>
   </data>
+  <data name="LyricsSearchControlDurauion.Text" xml:space="preserve">
+    <value>間隔</value>
+  </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>*保存変更はすぐに有効になります。その後、トラックの歌詞がマッピング情報とターゲット歌詞で取得されます。純粋な音楽としてのマーキングは、純粋な音楽プレースホルダーの歌詞に直接戻ります。元のデータで取得するためにリセット。</value>
+  </data>
+  <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+    <value>検索時にキャッシュを無視してください</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>としてマッピングされました</value>
@@ -907,6 +916,9 @@
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>ライト</value>
   </data>
+  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
+    <value>リンクされたローカルファイル</value>
+  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>新しい再生ソースの監視を有効にします</value>
   </data>
@@ -1039,8 +1051,20 @@
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>右</value>
   </data>
+  <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <value>ベストマッチ</value>
+  </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
     <value>歌詞ソースを構成します</value>
+  </data>
+  <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <value>順次処理</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+    <value>順番：以下のリストの優先順位に従って検索し、最初に見つかった歌詞を返します。ベストマッチ：有効になっているすべての歌詞ソースを検索し、自動的に最適なものを選択します</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <value>歌詞検索戦略</value>
   </data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
     <value>セミボールド</value>
@@ -1167,6 +1191,9 @@
   </data>
   <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
     <value>再生ソース</value>
+  </data>
+  <data name="SettingsPagePlaybackSourceID.Text" xml:space="preserve">
+    <value>再生ソースID</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>「SoundCloud.com」で「Cut to the Feeling」を再生する</value>

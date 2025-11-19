@@ -88,7 +88,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                         if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
                         {
                             Track track = new(file);
-                            if ((track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists) || FileHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), songInfo.DisplayArtists, songInfo.Title))
+                            if ((track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists) || StringHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), songInfo.DisplayArtists, songInfo.Title))
                             {
                                 var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
                                 if (bytes != null)

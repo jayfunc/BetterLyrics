@@ -237,6 +237,9 @@
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>歌詞視窗管理快捷設定</value>
   </data>
+  <data name="LyricsPageMatchPercentage.Text" xml:space="preserve">
+    <value>匹配百分比</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>播放源快捷設置</value>
   </data>
@@ -270,8 +273,14 @@
   <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
     <value>藝術家</value>
   </data>
+  <data name="LyricsSearchControlDurauion.Text" xml:space="preserve">
+    <value>時長</value>
+  </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* 保存更改立即生效，此後將以映射信息和目標歌詞源檢索該曲目歌詞；標記為純音樂將直接返回純音樂佔位歌詞。重置以按原始數據檢索。</value>
+  </data>
+  <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+    <value>搜尋時忽略快取</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>映射爲</value>
@@ -907,6 +916,9 @@
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>淺色</value>
   </data>
+  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
+    <value>連結的本機檔案</value>
+  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>啟用對新播放來源的監聽</value>
   </data>
@@ -1039,8 +1051,20 @@
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>靠右</value>
   </data>
+  <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <value>最佳匹配</value>
+  </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
     <value>配置歌詞源</value>
+  </data>
+  <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <value>按順序</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+    <value>依序：依照下方清單的優先順序依序查找，傳回第一個找到的歌詞；最佳符合：在所有已啟用的歌詞來源中搜尋，並自動選擇符合度最高的結果</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <value>歌詞搜尋策略</value>
   </data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
     <value>次粗</value>
@@ -1167,6 +1191,9 @@
   </data>
   <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
     <value>播放源</value>
+  </data>
+  <data name="SettingsPagePlaybackSourceID.Text" xml:space="preserve">
+    <value>播放源 ID</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>在 “soundcloud.com” 上播放 “Cut to the Feeling”</value>

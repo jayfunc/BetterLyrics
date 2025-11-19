@@ -113,11 +113,14 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 LyricsSearchResults = [..await Task.Run(async () =>
                 {
-                    return await _lyricsSearchService.SearchAllAsync(
+                    var result = await _lyricsSearchService.SearchAllAsync(
                         ((SongInfo?)_mediaSessionsService.CurrentSongInfo?.Clone() ?? new())
                             .WithTitle(MappedSongSearchQuery.MappedTitle)
                             .WithArtist(MappedSongSearchQuery.MappedArtist.SplitByCommonSplitter())
-                            .WithAlbum(MappedSongSearchQuery.MappedAlbum), token);
+                            .WithAlbum(MappedSongSearchQuery.MappedAlbum), 
+                        !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, 
+                        token);
+                    return result;
                 }, token)];
                 IsSearching = false;
             });
@@ -176,10 +179,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (value?.Raw != null)
             {
                 var lyricsParser = new LyricsParser();
-                lyricsParser.Parse(
-                   [MappedSongSearchQuery ?? new()],
-                    _mediaSessionsService.CurrentSongInfo,
-                    value?.Raw, value?.Provider);
+                lyricsParser.Parse(_mediaSessionsService.CurrentSongInfo, value);
                 LyricsDataArr = [.. lyricsParser.LyricsDataArr];
             }
             else

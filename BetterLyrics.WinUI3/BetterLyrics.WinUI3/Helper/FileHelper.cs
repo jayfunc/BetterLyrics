@@ -1,7 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Serialization;
 using System;
 using System.IO;
 using System.Text;
@@ -36,12 +39,17 @@ namespace BetterLyrics.WinUI3.Helper
             return sb.ToString();
         }
 
-        public static string? ReadLyricsCache(SongInfo songInfo, LyricsFormat format, string cacheFolderPath)
+        public static LyricsSearchResult? ReadLyricsCache(SongInfo songInfo, LyricsSearchProvider lyricsSearchProvider)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.DisplayArtists} - {songInfo.Title} - {songInfo.Album}{format.ToFileExtension()}"));
+            var cacheFilePath = Path.Combine(
+                lyricsSearchProvider.GetCacheDirectory(),
+                SanitizeFileName($"{songInfo.ToFileName()}.json"));
+
             if (File.Exists(cacheFilePath))
             {
-                return File.ReadAllText(cacheFilePath);
+                var json = File.ReadAllText(cacheFilePath);
+                var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LyricsSearchResult);
+                return data;
             }
             return null;
         }
@@ -56,27 +64,19 @@ namespace BetterLyrics.WinUI3.Helper
             return null;
         }
 
-        public static void WriteLyricsCache(SongInfo songInfo, string lyrics, LyricsFormat format, string cacheFolderPath)
+        public static void WriteLyricsCache(SongInfo songInfo, LyricsSearchResult lyricsSearchResult)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.DisplayArtists} - {songInfo.Title} - {songInfo.Album}{format.ToFileExtension()}"));
-            File.WriteAllText(cacheFilePath, lyrics);
+            var cacheFilePath = Path.Combine(
+                lyricsSearchResult.Provider.GetCacheDirectory(),
+                SanitizeFileName($"{songInfo.ToFileName()}.json"));
+            var json = System.Text.Json.JsonSerializer.Serialize(lyricsSearchResult, SourceGenerationContext.Default.LyricsSearchResult);
+            File.WriteAllText(cacheFilePath, json);
         }
 
         public static void WriteAlbumArtCache(SongInfo songInfo, byte[] img, string format, string cacheFolderPath)
         {
             var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.DisplayArtists} - {songInfo.Album}{format}"));
             File.WriteAllBytes(cacheFilePath, img);
-        }
-
-        public static bool IsSwitchableNormalizedMatch(string fileName, string q1, string q2)
-        {
-            var normFileName = StringHelper.Normalize(fileName);
-            var normQ1 = StringHelper.Normalize(q1);
-            var normQ2 = StringHelper.Normalize(q2);
-
-            // 常见两种顺序
-            return normFileName == normQ1 + normQ2
-                || normFileName == normQ2 + normQ1;
         }
 
         public static readonly string[] MusicExtensions = {

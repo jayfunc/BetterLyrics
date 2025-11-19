@@ -37,12 +37,13 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; } = [.. Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(p, true))];
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchType LyricsSearchType { get; set; } = LyricsSearchType.Sequential;
 
-        [ObservableProperty] public partial BitmapImage? Logo { get; private set; }
+        public string LogoPath => PlayerIDHelper.GetLogoPath(Provider);
 
-        public bool IsLXMusic => PlayerIDMatcher.IsLXMusic(Provider);
+        public string? DisplayName => PlayerIDHelper.GetDisplayName(Provider);
 
-        [ObservableProperty] public partial string? DisplayName { get; private set; }
+        public bool IsLXMusic => PlayerIDHelper.IsLXMusic(Provider);
 
         public MediaSourceProviderInfo()
         {
@@ -56,7 +57,7 @@ namespace BetterLyrics.WinUI3.Models
             IsEnabled = isEnable;
             switch (provider)
             {
-                case Constants.SpecialHandlePlayerID.AppleMusic:
+                case Constants.PlayerID.AppleMusic:
                     // Apple Music 的特性
                     TimelineSyncThreshold = 1000;
                     PositionOffset = 1000;
@@ -111,44 +112,6 @@ namespace BetterLyrics.WinUI3.Models
         private void LyricsSearchProvidersInfo_ItemPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             OnPropertyChanged(nameof(LyricsSearchProvidersInfo));
-        }
-
-        partial void OnProviderChanged(string value)
-        {
-            var dispatcherQueue = App.Current.Resources.DispatcherQueue;
-
-            STATaskHelper.RunAsSTATask(() =>
-            {
-                var shellItem = AppHook.GetShellItem(Provider);
-                if (shellItem != null)
-                {
-                    var displayName = AppHook.GetDisplayName(shellItem);
-
-                    dispatcherQueue.TryEnqueue(async () =>
-                    {
-                        DisplayName = displayName;
-                    });
-
-                    var icon = AppHook.GetIcon(shellItem);
-
-                    shellItem.Dispose();
-
-                    if (icon != null)
-                    {
-                        dispatcherQueue.TryEnqueue(async () =>
-                        {
-                            Logo = await AppHook.ToBitmapImageAsync(icon.Value);
-                        });
-                    }
-                }
-                else
-                {
-                    dispatcherQueue.TryEnqueue(async () =>
-                    {
-                        DisplayName = Provider;
-                    });
-                }
-            });
         }
     }
 }

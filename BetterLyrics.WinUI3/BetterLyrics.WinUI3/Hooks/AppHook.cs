@@ -31,6 +31,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (hIconCopy.IsNull)
             {
+                User32.DestroyIcon(hIconCopy);
                 return null;
             }
             else
