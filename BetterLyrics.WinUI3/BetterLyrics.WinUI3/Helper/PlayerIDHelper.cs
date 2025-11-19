@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Constants;
-using Lyricify.Lyrics.Providers;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 

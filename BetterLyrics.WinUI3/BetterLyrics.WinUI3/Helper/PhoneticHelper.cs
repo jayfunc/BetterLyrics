@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System;
-using System.Linq;
 
 namespace BetterLyrics.WinUI3.Helper
 {
