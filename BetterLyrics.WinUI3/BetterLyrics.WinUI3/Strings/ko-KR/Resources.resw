@@ -144,6 +144,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>취소</value>
   </data>
+  <data name="Copy.Text" xml:space="preserve">
+    <value>접수</value>
+  </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>재생 목록이 성공적으로 생성되었습니다</value>
   </data>
@@ -228,7 +231,7 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>가사를 찾을 수 없습니다</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Text" xml:space="preserve">
+  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>가사 제공자</value>
   </data>
   <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
@@ -237,7 +240,7 @@
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>가사 창 관리 바로 가기 설정</value>
   </data>
-  <data name="LyricsPageMatchPercentage.Text" xml:space="preserve">
+  <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>매치 퍼센트</value>
   </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
@@ -264,7 +267,7 @@
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
     <value>번역 만 표시하십시오</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Text" xml:space="preserve">
+  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>번역 제공자</value>
   </data>
   <data name="LyricsSearchControlAlbum.Text" xml:space="preserve">
@@ -273,7 +276,7 @@
   <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
     <value>아티스트</value>
   </data>
-  <data name="LyricsSearchControlDurauion.Text" xml:space="preserve">
+  <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
     <value>지속</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
@@ -305,9 +308,6 @@
   </data>
   <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>가사 검색 공급자를 타겟팅하십시오</value>
-  </data>
-  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
-    <value>제목</value>
   </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>가사 검색 - BetterLyrics</value>
@@ -565,6 +565,9 @@
   <data name="SettingsPageAdvanced.Text" xml:space="preserve">
     <value>고급 옵션</value>
   </data>
+  <data name="SettingsPageAlbum.Header" xml:space="preserve">
+    <value>앨범</value>
+  </data>
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>앨범 아트</value>
   </data>
@@ -609,6 +612,9 @@
   </data>
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>적용하다</value>
+  </data>
+  <data name="SettingsPageArtist.Header" xml:space="preserve">
+    <value>아티스트</value>
   </data>
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>자동 조정</value>
@@ -1189,11 +1195,14 @@
   <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
     <value>놀다</value>
   </data>
-  <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
+  <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
     <value>재생 소스</value>
   </data>
-  <data name="SettingsPagePlaybackSourceID.Text" xml:space="preserve">
+  <data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
     <value>재생 소스 ID</value>
+  </data>
+  <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
+    <value>현재 재생 소스</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com"에서 "Fut to the Feeling"을 재생하십시오.</value>
@@ -1218,6 +1227,9 @@
   </data>
   <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
     <value>기록 된 창 상태</value>
+  </data>
+  <data name="SettingsPageReference.Header" xml:space="preserve">
+    <value>참고문헌</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>이 경로의 원본 파일과 폴더는이 앱에서 제거 할 때 삭제되지 않습니다.</value>
@@ -1257,6 +1269,9 @@
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>첫 번째 줄의 기간</value>
+  </data>
+  <data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
+    <value>현재 가사 검색 결과</value>
   </data>
   <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>테스트 서버</value>
@@ -1320,6 +1335,12 @@
   </data>
   <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
     <value>오른쪽</value>
+  </data>
+  <data name="SettingsPageSongStatus.Header" xml:space="preserve">
+    <value>현재 노래</value>
+  </data>
+  <data name="SettingsPageSongTitle.Header" xml:space="preserve">
+    <value>제목</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[실험] 스펙트럼 레이어</value>

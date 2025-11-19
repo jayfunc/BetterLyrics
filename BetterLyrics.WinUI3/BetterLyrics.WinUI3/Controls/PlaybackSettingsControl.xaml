@@ -255,96 +255,75 @@
                 <Grid Style="{StaticResource SettingsGridStyle}">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <!--  Provider info  -->
+                        <!--  Realtime info  -->
                         <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsCard ContentAlignment="Left">
+
+                        <!--  Playback source info  -->
+                        <Expander
+                            x:Uid="SettingsPagePlaybackStatus"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
                                 <!--  Playback source  -->
-                                <Grid ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Uid="SettingsPagePlaybackSource" Grid.Column="0" />
-                                    <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Paragraph>
-                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                </Grid>
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSource" Value="{x:Bind ViewModel.MediaSessionsService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
                                 <!--  Playback source ID  -->
-                                <Grid ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Uid="SettingsPagePlaybackSourceID" Grid.Column="0" />
-                                    <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Paragraph>
-                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, TargetNullValue=N/A, Mode=OneWay}" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                </Grid>
-                                <!--  Song title  -->
-                                <Grid ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Uid="LyricsSearchControlTitle" Grid.Column="0" />
-                                    <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Paragraph>
-                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                </Grid>
-                                <!--  Song artists  -->
-                                <Grid ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Uid="LyricsSearchControlArtist" Grid.Column="0" />
-                                    <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Paragraph>
-                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                </Grid>
-                                <!--  Song album  -->
-                                <Grid ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock x:Uid="LyricsSearchControlAlbum" Grid.Column="0" />
-                                    <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                        <Paragraph>
-                                            <Run Text="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                </Grid>
-                                <!--  Lyrics source  -->
-                                <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <TextBlock x:Uid="LyricsPageLyricsProviderPrefix" />
-                                    <HyperlinkButton
-                                        Padding="0"
-                                        Content="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}"
-                                        IsEnabled="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.IsFound, Mode=OneWay}"
-                                        NavigateUri="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay}" />
-                                </StackPanel>
-                                <!--  Translation source  -->
-                                <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <TextBlock x:Uid="LyricsPageTranslationProviderPrefix" />
-                                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.MediaSessionsService.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
-                                </StackPanel>
-                                <!--  Match percentage  -->
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <TextBlock x:Uid="LyricsPageMatchPercentage" />
-                                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
-                                </StackPanel>
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
-                        </dev:SettingsCard>
+                        </Expander>
+
+                        <!--  Song info  -->
+                        <Expander
+                            x:Uid="SettingsPageSongStatus"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left">
+                            <StackPanel Spacing="6">
+                                <!--  Song title  -->
+                                <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Title, TargetNullValue=N/A, Mode=OneWay}" />
+                                <!--  Song artists  -->
+                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                <!--  Song album  -->
+                                <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Album, TargetNullValue=N/A, Mode=OneWay}" />
+                                <!--  Song duration  -->
+                                <local:PropertyRow
+                                    x:Uid="LyricsSearchControlDurauion"
+                                    Unit="s"
+                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Duration, TargetNullValue=N/A, Mode=OneWay}" />
+                            </StackPanel>
+                        </Expander>
+
+                        <!--  Search result info  -->
+                        <Expander
+                            x:Uid="SettingsPageSearchResultStatus"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Left">
+                            <StackPanel Spacing="6">
+                                <!--  Searched title  -->
+                                <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Title, TargetNullValue=N/A, Mode=OneWay}" />
+                                <!--  Searched artists  -->
+                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                <!--  Searched album  -->
+                                <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Album, TargetNullValue=N/A, Mode=OneWay}" />
+                                <!--  Searched duration  -->
+                                <local:PropertyRow
+                                    x:Uid="LyricsSearchControlDurauion"
+                                    Unit="s"
+                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Duration, TargetNullValue=N/A, Mode=OneWay}" />
+                                <!--  Lyrics source  -->
+                                <local:PropertyRow
+                                    x:Uid="LyricsPageLyricsProviderPrefix"
+                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay}"
+                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                <!--  Translation source  -->
+                                <local:PropertyRow x:Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                                <!--  Match percentage  -->
+                                <local:PropertyRow
+                                    x:Uid="LyricsPageMatchPercentage"
+                                    Unit="%"
+                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
+                                <!--  Reference  -->
+                                <local:PropertyRow x:Uid="SettingsPageReference" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay}" />
+                            </StackPanel>
+                        </Expander>
 
                         <dev:SettingsCard x:Uid="SettingsPageForceWordByWordEffect">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsForceWordByWordEffect, Mode=TwoWay}" />

@@ -136,66 +136,25 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:LyricsSearchResult">
                             <ListViewItem IsEnabled="{x:Bind IsFound}">
-                                <StackPanel Padding="3,6" Opacity="{x:Bind IsFound, Converter={StaticResource BoolToPartialOpacityConverter}}">
-                                    <HyperlinkButton
-                                        Padding="0"
-                                        Content="{x:Bind Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}"
-                                        NavigateUri="{x:Bind Reference, FallbackValue=about:blank}" />
-                                    <!--  Title  -->
-                                    <Grid ColumnSpacing="12" Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock x:Uid="LyricsSearchControlTitle" Grid.Column="0" />
-                                        <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                            <Paragraph>
-                                                <Run Text="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                            </Paragraph>
-                                        </RichTextBlock>
-                                    </Grid>
-                                    <!--  Artist  -->
-                                    <Grid ColumnSpacing="12" Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock x:Uid="LyricsSearchControlArtist" Grid.Column="0" />
-                                        <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                            <Paragraph>
-                                                <Run Text="{x:Bind DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
-                                            </Paragraph>
-                                        </RichTextBlock>
-                                    </Grid>
-                                    <!--  Album  -->
-                                    <Grid ColumnSpacing="12" Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock x:Uid="LyricsSearchControlAlbum" Grid.Column="0" />
-                                        <RichTextBlock Grid.Column="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                            <Paragraph>
-                                                <Run Text="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                            </Paragraph>
-                                        </RichTextBlock>
-                                    </Grid>
-                                    <!--  Duration  -->
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        Spacing="6"
-                                        Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <TextBlock x:Uid="LyricsSearchControlDurauion" />
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind Duration}" />
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="s" />
-                                    </StackPanel>
-                                    <!--  Match percentage  -->
-                                    <StackPanel
-                                        Orientation="Horizontal"
-                                        Spacing="6"
-                                        Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <TextBlock x:Uid="LyricsPageMatchPercentage" />
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind MatchPercentage}" />
+                                <StackPanel Padding="0,6" Opacity="{x:Bind IsFound, Converter={StaticResource BoolToPartialOpacityConverter}}">
+                                    <local:PropertyRow
+                                        Margin="-12,0,0,0"
+                                        Link="{x:Bind Reference, Mode=OneWay}"
+                                        Value="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                    <!--  Lyrics search result  -->
+                                    <StackPanel Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow
+                                            x:Uid="LyricsSearchControlDurauion"
+                                            Unit="s"
+                                            Value="{x:Bind Duration, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow
+                                            x:Uid="LyricsPageMatchPercentage"
+                                            Unit="%"
+                                            Value="{x:Bind MatchPercentage, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageReference" Value="{x:Bind Reference, TargetNullValue=N/A, Mode=OneWay}" />
                                     </StackPanel>
                                     <!--  NOT FOUND  -->
                                     <TextBlock
