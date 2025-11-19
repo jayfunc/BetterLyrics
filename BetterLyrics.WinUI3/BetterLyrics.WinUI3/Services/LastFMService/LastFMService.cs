@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             }
             catch (Exception)
             {
-                DevWinUI.Growl.Error(_resourceService.GetLocalizedString("LastFMAuthFailed") ?? "");
+                ToastHelper.ShowToast("LastFMAuthFailed", null, InfoBarSeverity.Error);
             }
         }
 

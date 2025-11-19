@@ -9,13 +9,13 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
-        public const string PinyinCode = "zh-pinyin";
-        public const string JyutpingCode = "zh-jyutping";
-        public const string RomajiCode = "ja-romaji";
+        public const string PinyinCode = "zh-cmn-pinyin";
+        public const string JyutpingCode = "zh-yue-jyutping";
+        public const string RomanCode = "ja-latin";
 
         public static bool IsPhoneticCode(string code)
         {
-            return code == PinyinCode || code == JyutpingCode || code == RomajiCode;
+            return code == PinyinCode || code == JyutpingCode || code == RomanCode;
         }
 
         public static string GetDisplayName(string code)
@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Helper
                     return _resourceService.GetLocalizedString("Pinyin");
                 case JyutpingCode:
                     return _resourceService.GetLocalizedString("Jyutping");
-                case RomajiCode:
+                case RomanCode:
                     return _resourceService.GetLocalizedString("Romaji");
                 default:
                     throw new ArgumentOutOfRangeException(nameof(code));

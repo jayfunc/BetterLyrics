@@ -312,6 +312,7 @@
                                 <local:PropertyRow
                                     x:Uid="LyricsPageLyricsProviderPrefix"
                                     Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay}"
+                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay}"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
                                 <!--  Translation source  -->
                                 <local:PropertyRow x:Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
@@ -320,8 +321,6 @@
                                     x:Uid="LyricsPageMatchPercentage"
                                     Unit="%"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
-                                <!--  Reference  -->
-                                <local:PropertyRow x:Uid="SettingsPageReference" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 

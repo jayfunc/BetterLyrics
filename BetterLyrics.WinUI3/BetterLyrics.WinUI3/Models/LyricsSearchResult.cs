@@ -10,7 +10,16 @@ namespace BetterLyrics.WinUI3.Models
         public LyricsSearchProvider Provider { get; set; }
 
         public string? Raw { get; set; }
+
+        /// <summary>
+        /// 翻译也可能位于 <see cref="Raw"/>
+        /// </summary>
         public string? Translation { get; set; }
+
+        /// <summary>
+        /// 音译也可能位于 <see cref="Raw"/>
+        /// </summary>
+        public string? Transliteration { get; set; }
 
         public string? Title { get; set; }
         public string[]? Artists { get; set; }

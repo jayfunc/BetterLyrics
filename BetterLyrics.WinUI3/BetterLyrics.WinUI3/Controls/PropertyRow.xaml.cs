@@ -80,12 +80,14 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void OnCopyClicked(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(Value)) return;
+            var targetValue = string.IsNullOrEmpty(Link) ? Value : Link;
+
+            if (string.IsNullOrEmpty(targetValue)) return;
 
             try
             {
                 DataPackage dataPackage = new DataPackage();
-                dataPackage.SetText(Value);
+                dataPackage.SetText(targetValue);
                 Clipboard.SetContent(dataPackage);
             }
             catch (Exception ex)
@@ -99,7 +101,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             this.DispatcherQueue.TryEnqueue(async () =>
             {
-                await Task.Delay(1500);
+                await Task.Delay(1000);
 
                 CheckIcon.Opacity = 0;
                 CopyIcon.Opacity = 1;

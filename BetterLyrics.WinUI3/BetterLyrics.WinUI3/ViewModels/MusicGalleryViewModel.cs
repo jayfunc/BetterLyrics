@@ -14,6 +14,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -350,7 +351,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                             else
                             {
                                 _playlistTracks = [];
-                                DevWinUI.Growl.Error(_resourceService.GetLocalizedString("PlaylistViewFailed"), path);
+                                ToastHelper.ShowToast("PlaylistViewFailed", path, InfoBarSeverity.Success);
                             }
                         }
                         break;
@@ -489,7 +490,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (file != null)
             {
                 AddFileToStarredPlaylists(file);
-                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("CreatePlaylistSuccessfully"), file.Path);
+                ToastHelper.ShowToast("CreatePlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
             }
         }
 
@@ -501,7 +502,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (file != null)
             {
                 AddFileToStarredPlaylists(file);
-                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ImportPlaylistSuccessfully"), file.Path);
+                ToastHelper.ShowToast("ImportPlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
             }
         }
 

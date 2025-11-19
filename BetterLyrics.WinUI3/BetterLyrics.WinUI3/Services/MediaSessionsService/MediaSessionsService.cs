@@ -28,6 +28,7 @@ using EvtSource;
 using Lyricify.Lyrics.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -526,7 +527,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 _logger.LogError("Failed to start SSE connection for LX Music.");
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
-                    DevWinUI.Growl.Error(_resourceService.GetLocalizedString("FailToStartLXMusicServer"));
+                    ToastHelper.ShowToast("FailToStartLXMusicServer", null, InfoBarSeverity.Error);
                 });
                 StopSSE();
             }

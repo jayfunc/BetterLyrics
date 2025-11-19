@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -92,11 +93,11 @@ namespace BetterLyrics.WinUI3.Controls
             bool registered = GlobalHotKeyHook.IsHotKeyRegistered(Shortcut);
             if (registered)
             {
-                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageShortcutRegSuccessInfo"));
+                ToastHelper.ShowToast("SettingsPageShortcutRegSuccessInfo", null, InfoBarSeverity.Success);
             }
             else
             {
-                DevWinUI.Growl.Error(_resourceService.GetLocalizedString("SettingsPageShortcutRegFailInfo"));
+                ToastHelper.ShowToast("SettingsPageShortcutRegFailInfo", null, InfoBarSeverity.Error);
             }
         }
     }

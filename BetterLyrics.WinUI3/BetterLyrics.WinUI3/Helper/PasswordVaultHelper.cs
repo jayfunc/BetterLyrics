@@ -12,23 +12,23 @@ namespace BetterLyrics.WinUI3.Helper
         /// <param name="value">要保存的值</param>
         public static void Save(string resource, string key, string value)
         {
-            var vault = new PasswordVault();
-
             // 删除旧值（避免重复存储）
             try
             {
+                var vault = new PasswordVault();
+
                 var oldCredential = vault.Retrieve(resource, key);
                 if (oldCredential != null)
                 {
                     vault.Remove(oldCredential);
                 }
+
+                vault.Add(new PasswordCredential(resource, key, value));
             }
             catch
             {
                 // 没有旧值就忽略
             }
-
-            vault.Add(new PasswordCredential(resource, key, value));
         }
 
         /// <summary>
@@ -39,9 +39,10 @@ namespace BetterLyrics.WinUI3.Helper
         /// <returns>存储的值，若不存在则返回 null</returns>
         public static string? Get(string resource, string key)
         {
-            var vault = new PasswordVault();
             try
             {
+                var vault = new PasswordVault();
+
                 var credential = vault.Retrieve(resource, key);
                 credential.RetrievePassword();
                 return credential.Password;
@@ -57,9 +58,10 @@ namespace BetterLyrics.WinUI3.Helper
         /// </summary>
         public static void Delete(string resource, string key)
         {
-            var vault = new PasswordVault();
             try
             {
+                var vault = new PasswordVault();
+
                 var credential = vault.Retrieve(resource, key);
                 vault.Remove(credential);
             }

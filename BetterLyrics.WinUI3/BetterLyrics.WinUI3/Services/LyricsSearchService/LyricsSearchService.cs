@@ -586,6 +586,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
                     lyricsSearchResult.Raw = response?.Lrc?.Lyric;
                     lyricsSearchResult.Translation = response?.Tlyric?.Lyric;
+                    lyricsSearchResult.Transliteration = response?.Romalrc.Lyric;
                     lyricsSearchResult.Reference = $"https://music.163.com/song?id={neteaseResult.Id}";
                 }
                 else if (result is KugouSearchResult kugouResult)
@@ -644,7 +645,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             if (await _appleMusic.InitAsync())
             {
-                 lyricsSearchResult = await _appleMusic.SearchSongInfoAsync(songInfo);
+                lyricsSearchResult = await _appleMusic.SearchSongInfoAsync(songInfo);
             }
 
             return lyricsSearchResult;
