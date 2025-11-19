@@ -309,6 +309,9 @@
   <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>目标歌词搜索提供商</value>
   </data>
+  <data name="LyricsSearchControlTitle.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>歌词搜索 - BetterLyrics</value>
   </data>
