@@ -11,5 +11,16 @@ namespace BetterLyrics.WinUI3.Helper
                 .ToArray())
                 .ToLowerInvariant();
         public static string NewLine = "\n";
+
+        public static bool IsSwitchableNormalizedMatch(string source, string q1, string q2)
+        {
+            var normFileName = Normalize(source);
+            var normQ1 = Normalize(q1);
+            var normQ2 = Normalize(q2);
+
+            // 常见两种顺序
+            return normFileName == normQ1 + normQ2
+                || normFileName == normQ2 + normQ1;
+        }
     }
 }

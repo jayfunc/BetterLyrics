@@ -71,6 +71,10 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D8;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <dev:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
                     </dev:SettingsCard>

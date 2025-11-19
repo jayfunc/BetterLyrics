@@ -25,6 +25,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using DevWinUI;
 using EvtSource;
+using Lyricify.Lyrics.Providers;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using System;
@@ -32,6 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Vanara.Windows.Shell;
 using Windows.Media.Control;
@@ -180,6 +182,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 case nameof(MediaSourceProviderInfo.LyricsSearchProvidersInfo):
                     UpdateLyrics();
                     break;
+                case nameof(MediaSourceProviderInfo.LyricsSearchType):
+                    UpdateLyrics();
+                    break;
                 default:
                     break;
             }
@@ -300,7 +305,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     {
                         CurrentSongInfo = SongInfoExtensions.Placeholder;
 
-                        if (PlayerIDMatcher.IsLXMusic(sessionId))
+                        if (PlayerIDHelper.IsLXMusic(sessionId))
                         {
                             StopSSE();
                         }
@@ -319,12 +324,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         string fixedAlbum = mediaProperties?.AlbumTitle ?? "N/A";
                         string? songId = null;
 
-                        if (PlayerIDMatcher.IsAppleMusic(sessionId))
+                        if (PlayerIDHelper.IsAppleMusic(sessionId))
                         {
                             fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault() ?? (mediaProperties?.Artist ?? "N/A");
                             fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault() ?? (mediaProperties?.AlbumTitle ?? "N/A");
                         }
-                        else if (PlayerIDMatcher.IsNeteaseFamily(sessionId))
+                        else if (PlayerIDHelper.IsNeteaseFamily(sessionId))
                         {
                             songId = mediaProperties?.Genres
                                 .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
@@ -349,7 +354,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
                             mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
 
-                        if (PlayerIDMatcher.IsLXMusic(sessionId))
+                        if (PlayerIDHelper.IsLXMusic(sessionId))
                         {
                             StartSSE();
                         }
@@ -358,7 +363,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             StopSSE();
                         }
 
-                        if (PlayerIDMatcher.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
+                        if (PlayerIDHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
                         {
                             _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
                         }
@@ -551,7 +556,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
-                if (PlayerIDMatcher.IsLXMusic(CurrentSongInfo?.PlayerId))
+                if (PlayerIDHelper.IsLXMusic(CurrentSongInfo?.PlayerId))
                 {
                     var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
                     if (data.ValueKind == JsonValueKind.Number)

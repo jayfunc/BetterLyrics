@@ -237,6 +237,9 @@
   <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
     <value>Lyrics Window Management Shortcut Settings</value>
   </data>
+  <data name="LyricsPageMatchPercentage.Text" xml:space="preserve">
+    <value>Match percentage</value>
+  </data>
   <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
     <value>Play source shortcut settings</value>
   </data>
@@ -270,8 +273,14 @@
   <data name="LyricsSearchControlArtist.Text" xml:space="preserve">
     <value>Artist</value>
   </data>
+  <data name="LyricsSearchControlDurauion.Text" xml:space="preserve">
+    <value>Duration</value>
+  </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* Save changes take effect immediately, after which the track lyrics will be retrieved with mapping information and target lyrics; marking as pure music will directly return to pure music placeholder lyrics. Reset to retrieve by original data.</value>
+  </data>
+  <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+    <value>Ignore cache when searching</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>mapped as</value>
@@ -907,6 +916,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
+    <value>Linked local file</value>
+  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>Enable monitoring for new playback sources</value>
   </data>
@@ -1039,8 +1051,20 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>Right</value>
   </data>
+  <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <value>Best match</value>
+  </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
     <value>Configure lyrics source</value>
+  </data>
+  <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <value>Sequential</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+    <value>In order: Find according to the priority of the list below and return the first lyrics found; Best Match: Search through all enabled lyrics sources and automatically select the best match</value>
+  </data>
+  <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <value>Lyrics search strategy</value>
   </data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
     <value>Semi Bold</value>
@@ -1167,6 +1191,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPagePlaybackSource.Text" xml:space="preserve">
     <value>Playback source</value>
+  </data>
+  <data name="SettingsPagePlaybackSourceID.Text" xml:space="preserve">
+    <value>Playback source ID</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Play "Cut To The Feeling" on "soundcloud.com"</value>

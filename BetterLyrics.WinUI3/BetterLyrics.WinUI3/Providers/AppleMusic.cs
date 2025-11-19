@@ -14,6 +14,7 @@ namespace BetterLyrics.WinUI3.Providers
         private string _accessToken = "";
         private string _storefront = "";
         private string _language = "";
+        private bool _isInited = false;
 
         public AppleMusic()
         {
@@ -26,11 +27,18 @@ namespace BetterLyrics.WinUI3.Providers
 
         public async Task<bool> InitAsync()
         {
-            await GetAccessTokenAsync();
-            await SetMediaUserTokenAsync();
-            return
-                !string.IsNullOrEmpty(_accessToken) &&
-                !string.IsNullOrEmpty(PasswordVaultHelper.Get(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey));
+            if (!_isInited)
+            {
+                var mediaUserToken = PasswordVaultHelper.Get(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey);
+                if (!string.IsNullOrEmpty(mediaUserToken))
+                {
+                    await GetAccessTokenAsync();
+                    await SetMediaUserTokenAsync(mediaUserToken);
+                    _isInited = !string.IsNullOrEmpty(_accessToken);
+                }
+            }
+
+            return _isInited;
         }
 
         private async Task GetAccessTokenAsync()
@@ -47,11 +55,10 @@ namespace BetterLyrics.WinUI3.Providers
             _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
         }
 
-        private async Task SetMediaUserTokenAsync()
+        private async Task SetMediaUserTokenAsync(string token)
         {
             _client.DefaultRequestHeaders.Remove("media-user-token");
-            _client.DefaultRequestHeaders.Add("media-user-token",
-                PasswordVaultHelper.Get(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey));
+            _client.DefaultRequestHeaders.Add("media-user-token", token);
             var resp = await _client.GetStringAsync("https://amp-api.music.apple.com/v1/me/storefront");
             var json = JsonSerializer.Deserialize(resp, Serialization.SourceGenerationContext.Default.JsonElement);
             _storefront = json.GetProperty("data")[0].GetProperty("id").ToString();
@@ -60,10 +67,8 @@ namespace BetterLyrics.WinUI3.Providers
             _client.DefaultRequestHeaders.Add("Accept-Language", $"{_language},en;q=0.9");
         }
 
-        public async Task<string?> GetLyricsAsync(string title, string artist)
+        public async Task<string?> GetLyricsAsync(string id)
         {
-            string id = await SearchSongInfoAsync(artist, title);
-
             var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/songs/{id}";
             var url = apiUrl + $"?include[songs]=lyrics,syllable-lyrics&l={_language}";
             var resp = await _client.GetStringAsync(url);
@@ -104,7 +109,7 @@ namespace BetterLyrics.WinUI3.Providers
             return null;
         }
 
-        private async Task<string> SearchSongInfoAsync(string artist, string title)
+        public async Task<string> SearchSongInfoAsync(string artist, string title)
         {
             var query = $"{artist} {title}";
             var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/search";

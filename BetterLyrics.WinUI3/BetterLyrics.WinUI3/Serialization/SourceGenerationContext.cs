@@ -10,6 +10,7 @@ namespace BetterLyrics.WinUI3.Serialization
     [JsonSerializable(typeof(TranslateResponse))]
     [JsonSerializable(typeof(JsonElement))]
     [JsonSerializable(typeof(AppSettings))]
+    [JsonSerializable(typeof(LyricsSearchResult))]
     [JsonSourceGenerationOptions(WriteIndented = true)]
     internal partial class SourceGenerationContext : JsonSerializerContext { }
 }

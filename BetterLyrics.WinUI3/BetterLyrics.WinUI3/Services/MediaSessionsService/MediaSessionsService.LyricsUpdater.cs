@@ -158,13 +158,16 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             if (CurrentSongInfo != null)
             {
-                CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(CurrentSongInfo, token), token);
+                CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
+                    CurrentSongInfo,
+                    !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching,
+                    CurrentMediaSourceProviderInfo?.LyricsSearchType,
+                    token),
+                token);
                 if (token.IsCancellationRequested) return;
 
                 var lyricsParser = new LyricsParser();
-                lyricsParser.Parse(
-                    _settingsService.AppSettings.MappedSongSearchQueries.ToList(),
-                    CurrentSongInfo, CurrentLyricsSearchResult?.Raw, CurrentLyricsSearchResult?.Provider);
+                lyricsParser.Parse(CurrentSongInfo, CurrentLyricsSearchResult);
                 _lyricsDataArr = lyricsParser.LyricsDataArr;
                 ApplyChinesePreference();
             }

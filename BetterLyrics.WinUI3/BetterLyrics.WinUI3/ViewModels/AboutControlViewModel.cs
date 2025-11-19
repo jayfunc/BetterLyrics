@@ -93,11 +93,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             DirectoryHelper.DeleteAllFiles(PathHelper.NeteaseLyricsCacheDirectory);
             DirectoryHelper.DeleteAllFiles(PathHelper.QQLyricsCacheDirectory);
 
-            DirectoryHelper.DeleteAllFiles(PathHelper.TranslationCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.KugouTranslationCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.NeteaseTranslationCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.QQTranslationCacheDirectory);
-
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
             DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ActionCompleted"));

@@ -51,13 +51,18 @@ namespace BetterLyrics.WinUI3.Models
         public override string ToString()
         {
             return
-                $"Title: {Title}\n" +
-                $"Artist: {Artists}\n" +
-                $"Album: {Album}\n" +
-                $"Duration: {Duration} sec\n" +
-                $"Plauer ID: {PlayerId}\n" +
-                $"Song ID: {SongId}\n" +
-                $"Linked file name: {LinkedFileName}";
+                $"Title: {Title}, " +
+                $"Artist: {DisplayArtists}, " +
+                $"Album: {Album}, " +
+                $"Duration: {Duration} sec, " +
+                $"Plauer ID: {PlayerId}, " +
+                $"Song ID: {SongId}, " +
+                $"Linked file name: {LinkedFileName}.";
+        }
+
+        public string ToFileName()
+        {
+            return $"{DisplayArtists} - {Title} - {Album} - {Duration}";
         }
     }
 }

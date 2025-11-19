@@ -17,98 +17,48 @@ namespace BetterLyrics.WinUI3.Helper
     {
         public List<LyricsData> LyricsDataArr { get; private set; } = [];
 
-        public void Parse(List<MappedSongSearchQuery> mappedSongSearchQueries, Models.SongInfo songInfo, string? raw, LyricsSearchProvider? lyricsSearchProvider)
+        public void Parse(SongInfo? songInfo, LyricsSearchResult? lyricsSearchResult)
         {
-            var overridenTitle = songInfo.Title;
-            var overridenArtist = songInfo.Artists;
-            var overridenAlbum = songInfo.Album;
-
-            var found = mappedSongSearchQueries
-                .FirstOrDefault(x =>
-                    x.OriginalTitle == overridenTitle &&
-                    x.OriginalArtist == overridenArtist.Join(ATL.Settings.DisplayValueSeparator.ToString()) &&
-                    x.OriginalAlbum == overridenAlbum);
-
-            if (found != null)
-            {
-                overridenTitle = found.MappedTitle;
-                overridenArtist = found.MappedArtist.Split(ATL.Settings.DisplayValueSeparator);
-                overridenAlbum = found.MappedAlbum;
-            }
-
             LyricsDataArr = [];
-            if (raw == null)
+            if (lyricsSearchResult?.Raw == null)
             {
-                LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder((int)songInfo.DurationMs));
+                LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder((int)(songInfo?.DurationMs ?? 0)));
             }
             else
             {
-                switch (raw.DetectFormat())
+                switch (lyricsSearchResult.Raw.DetectFormat())
                 {
                     case LyricsFormat.Lrc:
                     case LyricsFormat.Eslrc:
-                        ParseLrc(raw);
+                        ParseLrc(lyricsSearchResult.Raw);
                         break;
                     case LyricsFormat.Qrc:
-                        ParseQrcKrc(QrcParser.Parse(raw).Lines);
+                        ParseQrcKrc(QrcParser.Parse(lyricsSearchResult.Raw).Lines);
                         break;
                     case LyricsFormat.Krc:
-                        ParseQrcKrc(KrcParser.Parse(raw).Lines);
+                        ParseQrcKrc(KrcParser.Parse(lyricsSearchResult.Raw).Lines);
                         break;
                     case LyricsFormat.Ttml:
-                        ParseTtml(raw);
+                        ParseTtml(lyricsSearchResult.Raw);
                         break;
                     default:
                         break;
                 }
             }
             FillRomanizationLyricsData();
-            FillTranslationFromCache(
-                ((SongInfo)songInfo.Clone())
-                    .WithTitle(overridenTitle)
-                    .WithArtist(overridenArtist)
-                    .WithAlbum(overridenAlbum),
-                lyricsSearchProvider);
+            FillTranslationFromCache(lyricsSearchResult);
         }
 
-        private void FillTranslationFromCache(SongInfo songInfo, LyricsSearchProvider? provider)
+        private void FillTranslationFromCache(LyricsSearchResult? lyricsSearchResult)
         {
-            string? translationRaw = null;
-            switch (provider)
+            if (lyricsSearchResult?.Translation != null)
             {
-                case LyricsSearchProvider.QQ:
-                    translationRaw = FileHelper.ReadLyricsCache(songInfo, LyricsFormat.Lrc, PathHelper.QQTranslationCacheDirectory);
-                    break;
-                case LyricsSearchProvider.Kugou:
-                    translationRaw = FileHelper.ReadLyricsCache(songInfo, LyricsFormat.Lrc, PathHelper.KugouTranslationCacheDirectory);
-                    break;
-                case LyricsSearchProvider.Netease:
-                    translationRaw = FileHelper.ReadLyricsCache(songInfo, LyricsFormat.Lrc, PathHelper.NeteaseTranslationCacheDirectory);
-                    break;
-                case LyricsSearchProvider.LrcLib:
-                    break;
-                case LyricsSearchProvider.AmllTtmlDb:
-                    break;
-                case LyricsSearchProvider.LocalMusicFile:
-                    break;
-                case LyricsSearchProvider.LocalLrcFile:
-                    break;
-                case LyricsSearchProvider.LocalEslrcFile:
-                    break;
-                case LyricsSearchProvider.LocalTtmlFile:
-                    break;
-                default:
-                    break;
-            }
-
-            if (translationRaw != null)
-            {
-                switch (provider)
+                switch (lyricsSearchResult.Provider)
                 {
                     case LyricsSearchProvider.QQ:
                     case LyricsSearchProvider.Kugou:
                     case LyricsSearchProvider.Netease:
-                        ParseLrc(translationRaw);
+                        ParseLrc(lyricsSearchResult.Translation);
                         break;
                     default:
                         break;
