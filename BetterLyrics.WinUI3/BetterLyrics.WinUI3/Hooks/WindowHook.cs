@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
-using Vanara.Windows.Shell;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using WinRT.Interop;

@@ -118,8 +118,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                         ((SongInfo?)_mediaSessionsService.CurrentSongInfo?.Clone() ?? new())
                             .WithTitle(MappedSongSearchQuery.MappedTitle)
                             .WithArtist(MappedSongSearchQuery.MappedArtist.SplitByCommonSplitter())
-                            .WithAlbum(MappedSongSearchQuery.MappedAlbum), 
-                        !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, 
+                            .WithAlbum(MappedSongSearchQuery.MappedAlbum),
+                        !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching,
                         token);
                     return result;
                 }, token)];

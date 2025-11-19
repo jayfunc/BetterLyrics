@@ -5,12 +5,8 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using Lyricify.Lyrics.Parsers;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 {

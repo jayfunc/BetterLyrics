@@ -1,9 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using NTextCat.Commons;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Extensions
 {

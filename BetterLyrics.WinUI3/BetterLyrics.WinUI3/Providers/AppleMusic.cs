@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using Lyricify.Lyrics.Providers.Web.QQMusic;
 using System;
 using System.Net;
 using System.Net.Http;

@@ -1,6 +1,5 @@
 ﻿using ComputeSharp;
 using ComputeSharp.D2D1;
-using static Vanara.PInvoke.Ole32.PROPERTYKEY.System;
 
 namespace BetterLyrics.WinUI3.Shaders
 {

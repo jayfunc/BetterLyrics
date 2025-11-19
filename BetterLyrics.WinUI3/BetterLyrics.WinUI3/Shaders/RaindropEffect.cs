@@ -1,8 +1,5 @@
 ﻿using ComputeSharp;
 using ComputeSharp.D2D1;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Shaders
 {

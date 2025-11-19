@@ -1,17 +1,11 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Collections;
-using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Models
 {
