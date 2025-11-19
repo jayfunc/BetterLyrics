@@ -27,7 +27,6 @@ namespace BetterLyrics.WinUI3.Controls
 
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
         public LyricsWindowSettingsControl()
         {
@@ -87,7 +86,7 @@ namespace BetterLyrics.WinUI3.Controls
                         clonedData.IsDefault = false;
                         var json = System.Text.Json.JsonSerializer.Serialize(clonedData, SourceGenerationContext.Default.LyricsWindowStatus);
                         File.WriteAllText(file.Path, json);
-                        DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ExportSettingsSuccess"));
+                        ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
                     }
                 }
             }
@@ -147,7 +146,7 @@ namespace BetterLyrics.WinUI3.Controls
                 if (data != null)
                 {
                     ViewModel.AppSettings.WindowBoundsRecords.Add(data);
-                    DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ImportSettingsSuccess"));
+                    ToastHelper.ShowToast("ImportSettingsSuccess", null, InfoBarSeverity.Success);
                 }
             }
         }

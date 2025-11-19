@@ -3,10 +3,12 @@ using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Parsers.LyricsParser;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Lyricify.Lyrics.Helpers.General;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +105,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     }
                     catch (Exception)
                     {
-                        DevWinUI.Growl.Error(_resourceService.GetLocalizedString("LibreTranslateFailed")!);
+                        ToastHelper.ShowToast("LibreTranslateFailed", null, InfoBarSeverity.Error);
                     }
                 }
             }
@@ -126,7 +128,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
             else if (originalLangCode == "ja" && _settingsService.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled)
             {
-                targetPhoneticCode = PhoneticHelper.RomajiCode;
+                targetPhoneticCode = PhoneticHelper.RomanCode;
             }
 
             if (targetPhoneticCode == "")

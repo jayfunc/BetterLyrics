@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
 using System.Linq;
@@ -46,18 +47,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (AppSettings.LocalMediaFolders.Any(x => Path.GetFullPath(x.Path).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
             {
-                DevWinUI.Growl.Warning(_resourceService.GetLocalizedString("SettingsPagePathExistedInfo"));
+                ToastHelper.ShowToast("SettingsPagePathExistedInfo", null, InfoBarSeverity.Warning);
             }
             else if (AppSettings.LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
             {
                 // 添加的文件夹是现有文件夹的子文件夹
-                DevWinUI.Growl.Warning(_resourceService.GetLocalizedString("SettingsPagePathBeIncludedInfo"));
+                ToastHelper.ShowToast("SettingsPagePathBeIncludedInfo", null, InfoBarSeverity.Warning);
             }
             else if (AppSettings.LocalMediaFolders.Any(item => Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
             )
             {
                 // 添加的文件夹是现有文件夹的父文件夹
-                DevWinUI.Growl.Warning(_resourceService.GetLocalizedString("SettingsPagePathIncludingOthersInfo"));
+                ToastHelper.ShowToast("SettingsPagePathIncludingOthersInfo", null, InfoBarSeverity.Warning);
             }
             else
             {

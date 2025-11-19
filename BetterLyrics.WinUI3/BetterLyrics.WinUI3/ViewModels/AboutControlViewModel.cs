@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 
@@ -64,7 +65,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else
                 {
-                    DevWinUI.Growl.Error(_resourceService.GetLocalizedString("ImportSettingsFailed") ?? "");
+                    ToastHelper.ShowToast("ImportSettingsFailed", null, InfoBarSeverity.Error);
                 }
             }
         }
@@ -77,7 +78,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (folder != null)
             {
                 _settingsService.ExportSettings(folder.Path);
-                DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ExportSettingsSuccess") ?? "");
+                ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
             }
         }
 
@@ -95,7 +96,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
-            DevWinUI.Growl.Success(_resourceService.GetLocalizedString("ActionCompleted"));
+            ToastHelper.ShowToast("ActionCompleted", null, InfoBarSeverity.Success);
         }
 
     }

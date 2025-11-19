@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Hqub.Lastfm.Entities;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -110,14 +111,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                         "Hello, world!", AppSettings.TranslationSettings.SelectedTargetLanguageCode, new System.Threading.CancellationToken());
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageServerTestSuccessInfo"));
+                        ToastHelper.ShowToast("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
                     });
                 }
                 catch (Exception)
                 {
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        DevWinUI.Growl.Error(_resourceService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
+                        ToastHelper.ShowToast("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
                     });
                 }
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
@@ -156,11 +157,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     if (testResult)
                     {
-                        DevWinUI.Growl.Success(_resourceService.GetLocalizedString("SettingsPageServerTestSuccessInfo"));
+                        ToastHelper.ShowToast("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
                     }
                     else
                     {
-                        DevWinUI.Growl.Error(_resourceService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
+                        ToastHelper.ShowToast("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
                     }
                     IsLXMusicServerTesting = false;
                 });

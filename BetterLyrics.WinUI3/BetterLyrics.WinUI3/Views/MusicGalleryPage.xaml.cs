@@ -244,11 +244,11 @@ namespace BetterLyrics.WinUI3.Views
                             }
                         }
                         File.WriteAllText(path, content);
-                        DevWinUI.Growl.Success(_resourceService.GetLocalizedString("TracksAddToPlaylistSuccessfully"), path);
+                        ToastHelper.ShowToast("TracksAddToPlaylistSuccessfully", null, InfoBarSeverity.Success);
                     }
                     else
                     {
-                        DevWinUI.Growl.Error(_resourceService.GetLocalizedString("TracksAddToPlaylistFailed"), path);
+                        ToastHelper.ShowToast("TracksAddToPlaylistFailed", null, InfoBarSeverity.Error);
                     }
                 }
             }

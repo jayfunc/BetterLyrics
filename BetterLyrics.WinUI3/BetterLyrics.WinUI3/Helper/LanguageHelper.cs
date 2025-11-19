@@ -14,6 +14,9 @@ namespace BetterLyrics.WinUI3.Helper
         private static readonly RankedLanguageIdentifier _identifier;
         private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
+        public const string ChineseCode = "zh";
+        public const string JapaneseCode = "ja";
+
         public static List<ExtendedLanguage> SupportedTranslationTargetLanguages { get; set; } =
         [
             new ExtendedLanguage("ar"),
@@ -105,7 +108,6 @@ namespace BetterLyrics.WinUI3.Helper
         public static string? DetectLanguageCode(string? text)
         {
             if (text == null) return null;
-
             var guessList = _identifier.Identify(text);
             string? code = guessList?.FirstOrDefault()?.Item1.Iso639_2T;
             code = code switch
