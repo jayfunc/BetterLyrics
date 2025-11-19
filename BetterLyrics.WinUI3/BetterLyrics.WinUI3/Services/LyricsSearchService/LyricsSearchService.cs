@@ -373,13 +373,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 }
             }
 
+            int bestScore = 0;
             string? rawLyricFile = null;
             await foreach (var line in File.ReadLinesAsync(PathHelper.AmllTtmlDbIndexPath))
             {
-                lyricsSearchResult.Title = null;
-                lyricsSearchResult.Artists = null;
-                lyricsSearchResult.Album = null;
-
                 if (string.IsNullOrWhiteSpace(line))
                     continue;
                 try
@@ -389,6 +386,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     if (!root.TryGetProperty("metadata", out var metadataArr))
                         continue;
 
+                    string? title = null;
+                    string[]? artists = null;
+                    string? album = null;
+
                     foreach (var meta in metadataArr.EnumerateArray())
                     {
                         if (meta.GetArrayLength() != 2)
@@ -396,19 +397,28 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         var key = meta[0].GetString();
                         var valueArr = meta[1];
                         if (key == "musicName" && valueArr.GetArrayLength() > 0)
-                            lyricsSearchResult.Title = valueArr[0].GetString();
+                            title = valueArr[0].GetString();
                         if (key == "artists" && valueArr.GetArrayLength() > 0)
-                            lyricsSearchResult.Artists = valueArr.EnumerateArray().Select(x => x.GetString() ?? "").ToArray();
+                            artists = valueArr.EnumerateArray().Select(x => x.GetString() ?? "").ToArray();
                         if (key == "album" && valueArr.GetArrayLength() > 0)
-                            lyricsSearchResult.Album = valueArr[0].GetString();
+                            album = valueArr[0].GetString();
                     }
 
-                    if (MetadataComparer.CalculateScore(songInfo, lyricsSearchResult) > 0)
+                    int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult
+                    {
+                        Title = title,
+                        Artists = artists,
+                        Album = album,
+                    });
+                    if (score > bestScore)
                     {
                         if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
                         {
                             rawLyricFile = rawLyricFileProp.GetString();
-                            break;
+                            lyricsSearchResult.Title = title;
+                            lyricsSearchResult.Artists = artists;
+                            lyricsSearchResult.Album = album;
+                            bestScore = score;
                         }
                     }
                 }
