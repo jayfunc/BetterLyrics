@@ -400,44 +400,44 @@
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Clear play queue</value>
   </data>
-  <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
-    <value>앨범</value>
+  <data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
+    <value>Album</value>
   </data>
-  <data name="MusicGalleryPageFileArtist.Text" xml:space="preserve">
-    <value>아티스트</value>
+  <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
+    <value>Artist</value>
   </data>
   <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
     <value>파일 정보</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitDepth.Text" xml:space="preserve">
-    <value>비트 깊이</value>
+  <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
+    <value>Bit depth</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitrate.Text" xml:space="preserve">
-    <value>비트 레이트</value>
+  <data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
+    <value>Bitrate</value>
   </data>
-  <data name="MusicGalleryPageFileInfoDuration.Text" xml:space="preserve">
-    <value>지속</value>
+  <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
+    <value>Duration</value>
   </data>
-  <data name="MusicGalleryPageFileInfoEncoder.Text" xml:space="preserve">
-    <value>인코더</value>
+  <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
+    <value>Encoder</value>
   </data>
-  <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
-    <value>체재</value>
+  <data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
+    <value>Format</value>
   </data>
-  <data name="MusicGalleryPageFileInfoLyrics.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
     <value>Lyrics</value>
   </data>
-  <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
-    <value>길</value>
+  <data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
+    <value>Path</value>
   </data>
-  <data name="MusicGalleryPageFileInfoSampleRate.Text" xml:space="preserve">
-    <value>샘플 속도</value>
+  <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
+    <value>Sample rate</value>
   </data>
-  <data name="MusicGalleryPageFileInfoTitle.Text" xml:space="preserve">
-    <value>제목</value>
+  <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
+    <value>Title</value>
   </data>
-  <data name="MusicGalleryPageFileInfoYear.Text" xml:space="preserve">
-    <value>년도</value>
+  <data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
+    <value>Year</value>
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>미디어 라이브러리에는 노래가 없습니다</value>
