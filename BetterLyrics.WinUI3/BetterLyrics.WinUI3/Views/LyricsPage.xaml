@@ -27,13 +27,6 @@
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
 
-        <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Hidden">
-            <StackPanel
-                Margin="40"
-                VerticalAlignment="Bottom"
-                dev:Growl.GrowlParent="True" />
-        </ScrollViewer>
-
         <!--  Bottom command area  -->
         <Grid
             x:Name="BottomCommandGrid"

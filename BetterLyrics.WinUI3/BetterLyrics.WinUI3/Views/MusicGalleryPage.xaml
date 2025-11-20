@@ -353,8 +353,8 @@
                                             Grid.Column="2"
                                             Click="PlaylistCloseButton_Click"
                                             Content="{ui:FontIcon FontSize=16,
-                                                                  FontFamily={StaticResource IconFontFamily},
-                                                                  Glyph=&#xE711;}"
+                                            FontFamily={StaticResource IconFontFamily},
+                                            Glyph=&#xE711;}"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource GhostButtonStyle}"
                                             Visibility="{x:Bind IsClosable, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -534,8 +534,8 @@
                                             Grid.Column="6"
                                             Click="SongListViewItemMoreButton_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                                  FontSize=12,
-                                                                  Glyph=&#xE712;}"
+                                            FontSize=12,
+                                            Glyph=&#xE712;}"
                                             Style="{StaticResource GhostButtonStyle}" />
 
                                     </Grid>
@@ -632,8 +632,8 @@
                             HorizontalAlignment="Right"
                             Command="{x:Bind ViewModel.StopTrackCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  FontSize=16,
-                                                  Glyph=&#xE71A;}"
+                            FontSize=16,
+                            Glyph=&#xE71A;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPageStopTrack" />
@@ -699,8 +699,8 @@
                             HorizontalAlignment="Right"
                             Click="ScrollToPlayingItemButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  FontSize=16,
-                                                  Glyph=&#xE7B7;}"
+                            FontSize=16,
+                            Glyph=&#xE7B7;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
@@ -713,8 +713,8 @@
                             HorizontalAlignment="Right"
                             Click="EmptyPlayingQueueButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  FontSize=16,
-                                                  Glyph=&#xE738;}"
+                            FontSize=16,
+                            Glyph=&#xE738;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
@@ -745,8 +745,8 @@
                                     <Button
                                         Click="RemoveFromPlayingQueueButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                              FontSize=12,
-                                                              Glyph=&#xE738;}"
+                                        FontSize=12,
+                                        Glyph=&#xE738;}"
                                         Style="{StaticResource GhostButtonStyle}">
                                         <ToolTipService.ToolTip>
                                             <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />
@@ -805,13 +805,6 @@
             </Grid>
             <ProgressRing IsActive="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}" />
         </Grid>
-
-        <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Hidden">
-            <StackPanel
-                Margin="20"
-                VerticalAlignment="Bottom"
-                dev:Growl.GrowlParent="True" />
-        </ScrollViewer>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="PlaybackOrderState">
