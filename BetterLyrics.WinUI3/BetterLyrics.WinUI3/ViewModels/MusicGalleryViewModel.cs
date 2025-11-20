@@ -441,7 +441,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             else
             {
                 var track = playQueueItem.Track;
-                
+
                 var updater = _smtc.DisplayUpdater;
                 updater.ClearAll();
 
