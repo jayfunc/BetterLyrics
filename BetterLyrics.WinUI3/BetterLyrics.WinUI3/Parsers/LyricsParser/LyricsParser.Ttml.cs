@@ -33,14 +33,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                         .Where(s => s.Name.LocalName == "span")
                         .ToList();
 
-                    var romanTextSpans = spans
-                        .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value == "x-roman")
-                        .ToList();
                     var originalTextSpans = spans
                         .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value == null)
-                        .ToList();
-                    var translationTextSpans = spans
-                        .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value == "x-translation")
                         .ToList();
 
                     // 处理原文span后的空白
