@@ -185,5 +185,11 @@ namespace BetterLyrics.WinUI3.Helper
         {
             return buffer.AsStream().AsRandomAccessStream();
         }
+
+        public static IRandomAccessStream ToIRandomAccessStream(byte[] arr)
+        {
+            MemoryStream stream = new MemoryStream(arr);
+            return stream.AsRandomAccessStream();
+        }
     }
 }

@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:ext="using:BetterLyrics.WinUI3.Extensions"
+    xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
@@ -15,6 +16,7 @@
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:muxm="using:Microsoft.UI.Xaml.Media"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded"
@@ -45,7 +47,11 @@
                         ShouldConstrainToRootBounds="False">
                         <ScrollViewer MaxWidth="300" MaxHeight="600">
                             <Grid>
-                                <controls:OpacityMaskView MaxHeight="300" VerticalAlignment="Top">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <controls:OpacityMaskView Grid.Row="0" MaxHeight="300">
                                     <controls:OpacityMaskView.OpacityMask>
                                         <Rectangle>
                                             <Rectangle.Fill>
@@ -56,117 +62,27 @@
                                             </Rectangle.Fill>
                                         </Rectangle>
                                     </controls:OpacityMaskView.OpacityMask>
-                                    <FlipView ItemsSource="{x:Bind ViewModel.TrackRightTapped.EmbeddedPictures, Mode=OneWay}">
-                                        <FlipView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Image Source="{Binding PictureData, Converter={StaticResource ByteArrayToImageConverter}}" />
-                                            </DataTemplate>
-                                        </FlipView.ItemTemplate>
-                                    </FlipView>
+                                    <Image Source="{x:Bind ViewModel.TrackRightTapped.EmbeddedPictures, Mode=OneWay, Converter={StaticResource PictureInfosToImageSourceConverter}}" Stretch="Uniform" />
                                 </controls:OpacityMaskView>
                                 <StackPanel
-                                    Margin="0,200,0,0"
+                                    Grid.Row="1"
                                     Padding="12"
-                                    Spacing="12">
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoTitle" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileArtist" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileAlbum" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoYear" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoDuration" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoBitrate" TextWrapping="Wrap" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoSampleRate" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoBitDepth" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoFormat" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoEncoder" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoPath" />
-                                        <HyperlinkButton Padding="0" Click="SongPathHyperlinkButton_Click">
-                                            <HyperlinkButton.Content>
-                                                <TextBlock
-                                                    IsTextSelectionEnabled="True"
-                                                    Text="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}"
-                                                    TextWrapping="Wrap" />
-                                            </HyperlinkButton.Content>
-                                        </HyperlinkButton>
-                                    </StackPanel>
-                                    <StackPanel>
-                                        <TextBlock x:Uid="MusicGalleryPageFileInfoLyrics" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            IsTextSelectionEnabled="True"
-                                            Text="{x:Bind ViewModel.TrackRightTapped, Converter={StaticResource TrackToLyricsConverter}, Mode=OneWay}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
+                                    Spacing="6">
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoTitle" Value="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileArtist" Value="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileAlbum" Value="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoYear" Value="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoDuration" Value="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitrate" Value="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoSampleRate" Value="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
+                                    <uc:PropertyRow
+                                        x:Uid="MusicGalleryPageFileInfoPath"
+                                        Link="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}"
+                                        Value="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped, Converter={StaticResource TrackToLyricsConverter}, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
                         </ScrollViewer>
@@ -353,8 +269,8 @@
                                             Grid.Column="2"
                                             Click="PlaylistCloseButton_Click"
                                             Content="{ui:FontIcon FontSize=16,
-                                            FontFamily={StaticResource IconFontFamily},
-                                            Glyph=&#xE711;}"
+                                                                  FontFamily={StaticResource IconFontFamily},
+                                                                  Glyph=&#xE711;}"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource GhostButtonStyle}"
                                             Visibility="{x:Bind IsClosable, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -482,29 +398,29 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Grid Grid.Column="0" CornerRadius="6">
-                                            <Image Source="{Binding EmbeddedPictures[0].PictureData, Mode=OneWay, Converter={StaticResource ByteArrayToImageConverter}}" Stretch="Uniform" />
+                                            <Image Source="{x:Bind EmbeddedPictures, Mode=OneWay, Converter={StaticResource PictureInfosToImageSourceConverter}}" Stretch="Uniform" />
                                         </Grid>
 
                                         <!--  基本信息  -->
                                         <Grid Grid.Column="1">
                                             <StackPanel VerticalAlignment="Center" Spacing="6">
-                                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" />
+                                                <TextBlock Text="{x:Bind Title}" TextWrapping="Wrap" />
                                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                                     <Grid Background="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}" CornerRadius="4">
                                                         <TextBlock
                                                             Margin="4,2"
                                                             FontSize="12"
-                                                            Text="{Binding AudioFormat.ShortName}" />
+                                                            Text="{x:Bind AudioFormat.ShortName}" />
                                                     </Grid>
                                                     <HyperlinkButton Padding="0" Click="ArtistHyperlibkButton_Click">
-                                                        <TextBlock Text="{Binding Artist}" TextWrapping="Wrap" />
+                                                        <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
                                                     </HyperlinkButton>
                                                 </StackPanel>
                                             </StackPanel>
                                         </Grid>
 
                                         <HyperlinkButton Grid.Column="2" Click="AlbumHyperlibkButton_Click">
-                                            <TextBlock Text="{Binding Album}" TextWrapping="Wrap" />
+                                            <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
                                         </HyperlinkButton>
 
                                         <!--  年份  -->
@@ -512,7 +428,7 @@
                                             Grid.Column="3"
                                             VerticalAlignment="Center"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="{Binding Year}"
+                                            Text="{x:Bind Year}"
                                             TextWrapping="Wrap" />
 
                                         <!--  歌曲时长  -->
@@ -520,7 +436,7 @@
                                             Grid.Column="4"
                                             VerticalAlignment="Center"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                                            Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                                             TextWrapping="Wrap" />
 
                                         <!--  歌曲时长  -->
@@ -528,14 +444,14 @@
                                             Grid.Column="5"
                                             VerticalAlignment="Center"
                                             Click="PathHyperlibkButton_Click"
-                                            Content="{Binding Path, Converter={StaticResource PathToParentFolderConverter}}" />
+                                            Content="{x:Bind Path, Converter={StaticResource PathToParentFolderConverter}}" />
 
                                         <Button
                                             Grid.Column="6"
                                             Click="SongListViewItemMoreButton_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                            FontSize=12,
-                                            Glyph=&#xE712;}"
+                                                                  FontSize=12,
+                                                                  Glyph=&#xE712;}"
                                             Style="{StaticResource GhostButtonStyle}" />
 
                                     </Grid>
@@ -554,7 +470,7 @@
                                                 <TextBlock
                                                     AutomationProperties.AccessibilityView="Raw"
                                                     Style="{ThemeResource SubtitleTextBlockStyle}"
-                                                    Text="{Binding}" />
+                                                    Text="{x:Bind}" />
                                             </Border>
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
@@ -632,8 +548,8 @@
                             HorizontalAlignment="Right"
                             Command="{x:Bind ViewModel.StopTrackCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                            FontSize=16,
-                            Glyph=&#xE71A;}"
+                                                  FontSize=16,
+                                                  Glyph=&#xE71A;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPageStopTrack" />
@@ -699,8 +615,8 @@
                             HorizontalAlignment="Right"
                             Click="ScrollToPlayingItemButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                            FontSize=16,
-                            Glyph=&#xE7B7;}"
+                                                  FontSize=16,
+                                                  Glyph=&#xE7B7;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
@@ -713,8 +629,8 @@
                             HorizontalAlignment="Right"
                             Click="EmptyPlayingQueueButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                            FontSize=16,
-                            Glyph=&#xE738;}"
+                                                  FontSize=16,
+                                                  Glyph=&#xE738;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
@@ -745,8 +661,8 @@
                                     <Button
                                         Click="RemoveFromPlayingQueueButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                        FontSize=12,
-                                        Glyph=&#xE738;}"
+                                                              FontSize=12,
+                                                              Glyph=&#xE738;}"
                                         Style="{StaticResource GhostButtonStyle}">
                                         <ToolTipService.ToolTip>
                                             <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />

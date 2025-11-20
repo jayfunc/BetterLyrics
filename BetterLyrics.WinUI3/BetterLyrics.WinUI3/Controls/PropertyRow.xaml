@@ -9,7 +9,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Left" ColumnSpacing="12">
+    <Grid HorizontalAlignment="Left" ColumnSpacing="6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -43,8 +43,9 @@
                     Padding="0"
                     HorizontalContentAlignment="Left"
                     Click="OnLinkClicked"
-                    Content="{x:Bind Value, Mode=OneWay}"
-                    Visibility="{x:Bind LinkVisibility, Mode=OneWay}" />
+                    Visibility="{x:Bind LinkVisibility, Mode=OneWay}">
+                    <TextBlock Text="{x:Bind Value, Mode=OneWay}" TextWrapping="Wrap" />
+                </HyperlinkButton>
             </Grid>
 
             <Button

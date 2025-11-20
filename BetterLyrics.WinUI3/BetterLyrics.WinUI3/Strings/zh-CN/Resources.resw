@@ -400,43 +400,43 @@
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>清除播放队列</value>
   </data>
-  <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
     <value>专辑</value>
   </data>
-  <data name="MusicGalleryPageFileArtist.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
     <value>艺术家</value>
   </data>
   <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
     <value>文件信息</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitDepth.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
     <value>位深度</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitrate.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
     <value>比特率</value>
   </data>
-  <data name="MusicGalleryPageFileInfoDuration.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
     <value>期间</value>
   </data>
-  <data name="MusicGalleryPageFileInfoEncoder.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
     <value>编码器</value>
   </data>
-  <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
     <value>格式</value>
   </data>
-  <data name="MusicGalleryPageFileInfoLyrics.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
     <value>歌词</value>
   </data>
-  <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
     <value>路径</value>
   </data>
-  <data name="MusicGalleryPageFileInfoSampleRate.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
     <value>样本率</value>
   </data>
-  <data name="MusicGalleryPageFileInfoTitle.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
     <value>标题</value>
   </data>
-  <data name="MusicGalleryPageFileInfoYear.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
     <value>年</value>
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
