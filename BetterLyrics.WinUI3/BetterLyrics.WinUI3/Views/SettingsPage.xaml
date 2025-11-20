@@ -94,12 +94,5 @@
             </controls:SwitchPresenter>
         </NavigationView>
 
-        <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Hidden">
-            <StackPanel
-                Margin="20"
-                VerticalAlignment="Bottom"
-                dev:Growl.GrowlParent="True" />
-        </ScrollViewer>
-
     </Grid>
 </Page>

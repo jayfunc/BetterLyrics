@@ -51,6 +51,10 @@ namespace BetterLyrics.WinUI3.Helper
                 infoParts.AddRange(songInfo.Artists);
 
             string infoRaw = string.Join(" ", infoParts);
+
+            if (string.IsNullOrEmpty(infoRaw) && songInfo.LinkedFileName is string linkedFileName)
+                infoRaw = linkedFileName;
+
             string infoFingerprint = CreateSortedFingerprint(infoRaw);
 
             double score = _algo.Similarity(infoFingerprint, fileFingerprint);

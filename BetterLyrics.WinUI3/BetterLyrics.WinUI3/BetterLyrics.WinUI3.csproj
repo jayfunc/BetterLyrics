@@ -113,10 +113,6 @@
 	<ItemGroup>
 		<TrimmerRootAssembly Include="NAudio.Wasapi" />
 		<TrimmerRootAssembly Include="TagLibSharp" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.DwmApi" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.Gdi32" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.Shell32" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.User32" />
 		<TrimmerRootAssembly Include="Vanara.Windows.Shell" />
 	</ItemGroup>
 	<ItemGroup>
