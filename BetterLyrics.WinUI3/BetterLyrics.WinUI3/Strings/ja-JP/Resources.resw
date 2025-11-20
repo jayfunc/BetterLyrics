@@ -400,44 +400,44 @@
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Clear play queue</value>
   </data>
-  <data name="MusicGalleryPageFileAlbum.Text" xml:space="preserve">
-    <value>アルバム</value>
+  <data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
+    <value>Album</value>
   </data>
-  <data name="MusicGalleryPageFileArtist.Text" xml:space="preserve">
-    <value>アーティスト</value>
+  <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
+    <value>Artist</value>
   </data>
   <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
     <value>ファイル情報</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitDepth.Text" xml:space="preserve">
-    <value>ビットの深さ</value>
+  <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
+    <value>Bit depth</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitrate.Text" xml:space="preserve">
-    <value>ビットレート</value>
+  <data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
+    <value>Bitrate</value>
   </data>
-  <data name="MusicGalleryPageFileInfoDuration.Text" xml:space="preserve">
-    <value>間隔</value>
+  <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
+    <value>Duration</value>
   </data>
-  <data name="MusicGalleryPageFileInfoEncoder.Text" xml:space="preserve">
-    <value>エンコーダー</value>
+  <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
+    <value>Encoder</value>
   </data>
-  <data name="MusicGalleryPageFileInfoFormat.Text" xml:space="preserve">
-    <value>形式</value>
+  <data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
+    <value>Format</value>
   </data>
-  <data name="MusicGalleryPageFileInfoLyrics.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
     <value>Lyrics</value>
   </data>
-  <data name="MusicGalleryPageFileInfoPath.Text" xml:space="preserve">
-    <value>パス</value>
+  <data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
+    <value>Path</value>
   </data>
-  <data name="MusicGalleryPageFileInfoSampleRate.Text" xml:space="preserve">
-    <value>サンプルレート</value>
+  <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
+    <value>Sample rate</value>
   </data>
-  <data name="MusicGalleryPageFileInfoTitle.Text" xml:space="preserve">
-    <value>タイトル</value>
+  <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
+    <value>Title</value>
   </data>
-  <data name="MusicGalleryPageFileInfoYear.Text" xml:space="preserve">
-    <value>年</value>
+  <data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
+    <value>Year</value>
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>メディアライブラリには歌が見つかりませんでした</value>
