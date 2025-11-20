@@ -1,5 +1,6 @@
 ﻿using ATL;
 using BetterLyrics.WinUI3.Collections;
+using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
@@ -440,15 +441,19 @@ namespace BetterLyrics.WinUI3.ViewModels
             else
             {
                 var track = playQueueItem.Track;
+                
                 var updater = _smtc.DisplayUpdater;
+                updater.ClearAll();
+
                 _smtc.IsEnabled = true;
                 _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
-                updater.AppMediaId = Package.Current.Id.FullName;
 
                 var storageFile = await StorageFile.GetFileFromPathAsync(track.Path);
+
                 await updater.CopyFromFileAsync(MediaPlaybackType.Music, storageFile);
+                updater.AppMediaId = Package.Current.Id.FullName;
                 updater.MusicProperties.AlbumTitle = track.Album;
-                updater.MusicProperties.Genres.Add($"FILENAME-{Path.GetFileNameWithoutExtension(track.Path)}");
+                updater.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(track.Path)}");
                 updater.Update();
             }
         }
