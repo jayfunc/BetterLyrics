@@ -11,13 +11,6 @@ using static Vanara.PInvoke.Shell32;
 
 namespace BetterLyrics.WinUI3.Hooks
 {
-    /**
-     * 使用前先在 .csproj 里添加如下几项
-		<TrimmerRootAssembly Include="Vanara.PInvoke.DwmApi" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.Gdi32" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.Shell32" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.User32" />
-     * */
     public class AppHook
     {
         public static HICON? GetIcon(ShellItem shellItem, int size = 32)
