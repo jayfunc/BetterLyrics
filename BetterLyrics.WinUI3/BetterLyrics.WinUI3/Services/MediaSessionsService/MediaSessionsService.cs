@@ -318,14 +318,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             currentMediaSourceProviderInfo?.PositionOffset = 0;
                         }
 
-                        string fixedArtist = mediaProperties?.Artist ?? "N/A";
-                        string fixedAlbum = mediaProperties?.AlbumTitle ?? "N/A";
+                        string? fixedArtist = mediaProperties?.Artist;
+                        string? fixedAlbum = mediaProperties?.AlbumTitle;
                         string? songId = null;
 
                         if (PlayerIDHelper.IsAppleMusic(sessionId))
                         {
-                            fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault() ?? (mediaProperties?.Artist ?? "N/A");
-                            fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault() ?? (mediaProperties?.AlbumTitle ?? "N/A");
+                            fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault() ?? (mediaProperties?.Artist);
+                            fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault() ?? (mediaProperties?.AlbumTitle);
+                            fixedAlbum = fixedAlbum?.Replace(" - Single", "");
                         }
                         else if (PlayerIDHelper.IsNeteaseFamily(sessionId))
                         {
@@ -340,17 +341,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                         CurrentSongInfo = new SongInfo
                         {
-                            Title = mediaProperties?.Title ?? "N/A",
-                            Artists = fixedArtist.SplitByCommonSplitter(),
-                            Album = fixedAlbum,
+                            Title = mediaProperties?.Title ?? "",
+                            Artists = fixedArtist?.SplitByCommonSplitter() ?? [],
+                            Album = fixedAlbum ?? "",
                             DurationMs = mediaSession?.ControlSession?.GetTimelineProperties().EndTime.TotalMilliseconds ?? 0,
                             PlayerId = sessionId,
                             SongId = songId,
                             LinkedFileName = linkedFileName
                         };
-
-                        _logger.LogInformation("Media properties changed: Title: {Title}, Artist: {Artist}, Album: {Album}",
-                            mediaProperties?.Title, mediaProperties?.Artist, mediaProperties?.AlbumTitle);
 
                         if (PlayerIDHelper.IsLXMusic(sessionId))
                         {
