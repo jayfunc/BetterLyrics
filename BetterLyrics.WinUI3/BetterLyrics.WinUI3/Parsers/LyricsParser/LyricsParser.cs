@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 
         private void LoadTransliteration(LyricsSearchResult? lyricsSearchResult)
         {
-            if (lyricsSearchResult?.Transliteration != null)
+            if (!string.IsNullOrEmpty(lyricsSearchResult?.Transliteration))
             {
                 switch (lyricsSearchResult.Provider)
                 {
