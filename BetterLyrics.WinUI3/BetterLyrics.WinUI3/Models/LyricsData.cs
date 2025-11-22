@@ -142,6 +142,17 @@ namespace BetterLyrics.WinUI3.Models
             }]);
         }
 
+        public static LyricsData GetParseErrorPlaceholder(int durationMs)
+        {
+            return new LyricsData([new LyricsLine
+            {
+                StartMs = 0,
+                EndMs = durationMs,
+                OriginalText = _resourceService.GetLocalizedString("LyricsParseError"),
+                LyricsChars = [],
+            }]);
+        }
+
         public static LyricsData GetLoadingPlaceholder()
         {
             return new LyricsData([

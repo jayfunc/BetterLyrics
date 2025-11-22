@@ -4,7 +4,9 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Parsers;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,12 +14,15 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 {
     public partial class LyricsParser
     {
+        private static readonly ILogger<LyricsParser> _logger = Ioc.Default.GetRequiredService<ILogger<LyricsParser>>();
+
         public List<LyricsData> LyricsDataArr { get; private set; } = [];
 
         public void Parse(SongInfo? songInfo, LyricsSearchResult? lyricsSearchResult)
         {
+            _logger.LogInformation("LyricsParser.Parse");
             LyricsDataArr = [];
-            if (lyricsSearchResult?.Raw == null)
+            if (string.IsNullOrWhiteSpace(lyricsSearchResult?.Raw))
             {
                 LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder((int)(songInfo?.DurationMs ?? 0)));
             }
@@ -27,7 +32,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 {
                     case LyricsFormat.Lrc:
                     case LyricsFormat.Eslrc:
-                        ParseLrc(lyricsSearchResult.Raw);
+                        ParseLrc(lyricsSearchResult.Raw, lyricsSearchResult.Provider.IsRemote());
                         break;
                     case LyricsFormat.Qrc:
                         ParseQrcKrc(QrcParser.Parse(lyricsSearchResult.Raw).Lines);
@@ -49,14 +54,14 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 
         private void LoadTranslation(LyricsSearchResult? lyricsSearchResult)
         {
-            if (lyricsSearchResult?.Translation != null)
+            if (!string.IsNullOrWhiteSpace(lyricsSearchResult?.Translation))
             {
                 switch (lyricsSearchResult.Provider)
                 {
                     case LyricsSearchProvider.QQ:
                     case LyricsSearchProvider.Kugou:
                     case LyricsSearchProvider.Netease:
-                        ParseLrc(lyricsSearchResult.Translation);
+                        ParseLrc(lyricsSearchResult.Translation, true);
                         break;
                     default:
                         break;
@@ -66,12 +71,12 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 
         private void LoadTransliteration(LyricsSearchResult? lyricsSearchResult)
         {
-            if (!string.IsNullOrEmpty(lyricsSearchResult?.Transliteration))
+            if (!string.IsNullOrWhiteSpace(lyricsSearchResult?.Transliteration))
             {
                 switch (lyricsSearchResult.Provider)
                 {
                     case LyricsSearchProvider.Netease:
-                        ParseLrc(lyricsSearchResult.Transliteration);
+                        ParseLrc(lyricsSearchResult.Transliteration, true);
                         LyricsDataArr.LastOrDefault()?.LanguageCode = PhoneticHelper.RomanCode;
                         break;
                     default:

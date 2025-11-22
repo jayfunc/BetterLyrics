@@ -270,6 +270,9 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>翻譯來源</value>
   </data>
+  <data name="LyricsParseError" xml:space="preserve">
+    <value>歌詞解析失敗</value>
+  </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>專輯</value>
   </data>

@@ -327,9 +327,10 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                         if (PlayerIDHelper.IsAppleMusic(sessionId))
                         {
-                            fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault() ?? (mediaProperties?.Artist);
-                            fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault() ?? (mediaProperties?.AlbumTitle);
+                            fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault();
+                            fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault();
                             fixedAlbum = fixedAlbum?.Replace(" - Single", "");
+                            fixedAlbum = fixedAlbum?.Replace(" - EP", "");
                         }
                         else if (PlayerIDHelper.IsNeteaseFamily(sessionId))
                         {

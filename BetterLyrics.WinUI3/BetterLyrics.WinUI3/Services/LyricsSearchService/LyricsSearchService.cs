@@ -325,8 +325,9 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         private LyricsSearchResult SearchEmbedded(SongInfo songInfo)
         {
-            int maxScore = 0;
+            int bestScore = 0;
             string? bestFile = null;
+            string? bestRaw = null;
 
             var lyricsSearchResult = new LyricsSearchResult
             {
@@ -342,18 +343,24 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
                         {
                             var track = new Track(file);
-                            int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult
-                            {
-                                Title = track.Title,
-                                Artists = track.Artist.Split(ATL.Settings.DisplayValueSeparator),
-                                Album = track.Album,
-                                Duration = track.Duration
-                            });
+                            var raw = track.GetRawLyrics();
 
-                            if (score > maxScore)
+                            if (!string.IsNullOrEmpty(raw))
                             {
-                                maxScore = score;
-                                bestFile = file;
+                                int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult
+                                {
+                                    Title = track.Title,
+                                    Artists = track.Artist.Split(ATL.Settings.DisplayValueSeparator),
+                                    Album = track.Album,
+                                    Duration = track.Duration
+                                });
+
+                                if (score > bestScore)
+                                {
+                                    bestScore = score;
+                                    bestFile = file;
+                                    bestRaw = raw;
+                                }
                             }
                         }
                     }
@@ -369,10 +376,9 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 lyricsSearchResult.Album = track.Album;
                 lyricsSearchResult.Duration = track.Duration;
 
-                lyricsSearchResult.Raw = track.GetRawLyrics();
-
+                lyricsSearchResult.Raw = bestRaw;
                 lyricsSearchResult.Reference = bestFile;
-                lyricsSearchResult.MatchPercentage = maxScore;
+                lyricsSearchResult.MatchPercentage = bestScore;
             }
 
             return lyricsSearchResult;
