@@ -26,6 +26,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             using (var blurredLyricsDs = blurredLyrics.CreateDrawingSession())
             {
                 DrawBlurredLyrics(control, blurredLyricsDs);
+                //DrawBlurredLyrics2(control, blurredLyricsDs);
             }
 
             using var combined = new CanvasCommandList(control);
@@ -297,17 +298,18 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
                 //// 组合变换：缩放 -> 旋转 -> 平移
                 ds.Transform =
-                    Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition)
-                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value,
-                    currentPlayingLine.OriginalPosition.WithX(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0))
-                    * Matrix3x2.CreateTranslation((float)_lyricsX, (float)yOffset);
+                    Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition) *
+                    Matrix3x2.CreateRotation(
+                        (float)line.AngleTransition.Value,
+                        currentPlayingLine.OriginalPosition.WithX(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0)) *
+                    Matrix3x2.CreateTranslation((float)_lyricsX, (float)yOffset);
 
                 using var combined = new CanvasCommandList(control);
                 using var combinedDs = combined.CreateDrawingSession();
 
                 // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
                 using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
-                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
+                   _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
 
                 using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
                 combinedDs.DrawImage(backgroundEffect);
@@ -400,6 +402,125 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 }
 
                 // Reset scale
+                ds.Transform = Matrix3x2.Identity;
+            }
+        }
+
+        public void DrawBlurredLyrics2(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        {
+            var currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
+            if (currentPlayingLine == null) return;
+
+            var settings = _liveStatesService.LiveStates.LyricsWindowStatus;
+            var effectSettings = settings.LyricsEffectSettings;
+            bool isKaraokeEnabled = effectSettings.IsLyricsLineFadeEnabled;
+            var styleSettings = settings.LyricsStyleSettings; // 获取样式设置(描边宽等)
+
+            for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
+            {
+                var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(i);
+                if (line == null || line.OriginalCanvasTextLayout == null) continue;
+
+                var textLayout = line.OriginalCanvasTextLayout;
+
+                // === 1. 恢复您原始的矩阵变换逻辑 ===
+                // 不要减去 CenterPosition，保持和您原始代码一致
+                double yOffset = line.YOffsetTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
+                float fanAngleX = effectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0;
+
+                ds.Transform =
+                    Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition)
+                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value,
+                        currentPlayingLine.OriginalPosition.WithX(fanAngleX))
+                    * Matrix3x2.CreateTranslation((float)_lyricsX, (float)yOffset);
+
+                // === 2. 坐标关键：必须使用 line.OriginalPosition ===
+                // CanvasHelper 里是画在 OriginalPosition 上的，我们这里必须一致
+                var drawPos = line.OriginalPosition;
+
+                // A. 绘制阴影 (优化：直接绘制，替代 ShadowEffect)
+                if (effectSettings.IsLyricsShadowEnabled)
+                {
+                    var shadowColor = _albumArtAccentColor1Transition.Value.WithAlpha((byte)(effectSettings.LyricsShadowAmount * 255));
+                    // 偏移 2px 绘制阴影
+                    ds.DrawTextLayout(textLayout, drawPos.X + 2f, drawPos.Y + 2f, shadowColor);
+                }
+
+                // B. 绘制描边 (如果设置里有)
+                // 对应 CanvasHelper.CreateFontEffect 里的 stroke 逻辑
+                if (styleSettings.LyricsFontStrokeWidth > 0)
+                {
+                    // 注意：DrawTextLayout 不支持直接描边，需要用 DrawGeometry
+                    // 如果这一步很卡，可以考虑去掉描边，或者只对当前行描边
+                    if (line.OriginalCanvasGeometry != null)
+                    {
+                        ds.DrawGeometry(line.OriginalCanvasGeometry, drawPos, _strokeFontColor, styleSettings.LyricsFontStrokeWidth);
+                    }
+                }
+
+                // C. 绘制底层文本 (底色)
+                // 对应 CanvasHelper 里的 DrawTextLayout
+                var baseColor = _strokeFontColor.WithAlpha((byte)(_strokeFontColor.A * _lyricsOpacityTransition.Value));
+                ds.DrawTextLayout(textLayout, drawPos, baseColor);
+
+
+                // D. 绘制高亮/卡拉OK效果 (核心优化点)
+                if (line.HighlightOpacityTransition.Value > 0)
+                {
+                    GetLinePlayingProgress(i, out int charStartIndex, out int charLength, out double charProgress);
+
+                    // 整行高亮或非逐字模式
+                    if (charStartIndex >= line.OriginalText.Length || !isKaraokeEnabled)
+                    {
+                        var hlColor = _fgFontColor.WithAlpha((byte)(_fgFontColor.A * line.HighlightOpacityTransition.Value));
+                        ds.DrawTextLayout(textLayout, drawPos, hlColor);
+                    }
+                    else
+                    {
+                        // === 计算裁剪区域 (照搬 CreateCharMask 的逻辑) ===
+                        var regions = textLayout.GetCharacterRegions(charStartIndex, 1);
+
+                        // 默认裁剪宽度覆盖到当前字之前
+                        double validWidth = 0;
+                        if (regions.Length > 0)
+                        {
+                            var region = regions[0];
+                            // CanvasHelper 里的逻辑：region.LayoutBounds.X 是相对于 Layout 左上角的
+                            // highlightWidth = TotalWidth * Progress
+                            double highlightWidth = region.LayoutBounds.Width * charProgress;
+
+                            // 当前高亮的总右边界 = 当前字左边 + 当前字播放过的宽度
+                            validWidth = region.LayoutBounds.X + highlightWidth;
+                        }
+                        else if (charStartIndex > 0)
+                        {
+                            // 容错：如果取不到当前字区域（例如空格），取上一个字的右边缘
+                            var prevRegions = textLayout.GetCharacterRegions(charStartIndex - 1, 1);
+                            if (prevRegions.Length > 0) validWidth = prevRegions[0].LayoutBounds.Right;
+                        }
+
+                        if (validWidth > 0)
+                        {
+                            // === 创建 Layer 进行裁剪 ===
+                            // 裁剪矩形的 X/Y 必须加上 drawPos (OriginalPosition)
+                            // 因为 CreateLayer 是基于当前 Transform 的全局坐标
+                            var clipRect = new Rect(
+                                drawPos.X,              // 从文字绘制起点的 X 开始
+                                drawPos.Y,              // 从文字绘制起点的 Y 开始
+                                validWidth,             // 宽度
+                                textLayout.LayoutBounds.Height // 高度
+                            );
+
+                            using (ds.CreateLayer(1.0f, clipRect))
+                            {
+                                var hlColor = _fgFontColor.WithAlpha((byte)(_fgFontColor.A * line.HighlightOpacityTransition.Value));
+                                ds.DrawTextLayout(textLayout, drawPos, hlColor);
+                            }
+                        }
+                    }
+                }
+
+                // 重置变换，准备画下一行
                 ds.Transform = Matrix3x2.Identity;
             }
         }
