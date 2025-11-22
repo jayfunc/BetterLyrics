@@ -1180,6 +1180,9 @@
   <data name="SettingsPageOriginalText.Header" xml:space="preserve">
     <value>原文</value>
   </data>
+  <data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
+    <value>單獨設置最低匹配閾值</value>
+  </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>取色風格</value>
   </data>

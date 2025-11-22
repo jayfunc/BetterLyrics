@@ -1180,6 +1180,9 @@
   <data name="SettingsPageOriginalText.Header" xml:space="preserve">
     <value>원본</value>
   </data>
+  <data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
+    <value>최소 일치 임계값을 개별적으로 설정하십시오</value>
+  </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>색상 선택 스타일</value>
   </data>

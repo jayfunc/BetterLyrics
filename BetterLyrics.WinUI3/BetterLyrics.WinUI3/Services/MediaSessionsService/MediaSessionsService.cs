@@ -183,6 +183,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 case nameof(MediaSourceProviderInfo.LyricsSearchType):
                     UpdateLyrics();
                     break;
+                case nameof(MediaSourceProviderInfo.MatchingThreshold):
+                    UpdateLyrics();
+                    break;
                 default:
                     break;
             }
