@@ -14,7 +14,7 @@ BetterLyrics
 
 <div align="center">
 	
-[操作指南](https://jayfunc.blog/work/betterlyrics-cn) | [隐私政策](PrivacyPolicy.CN.md) | [服务协议](TermsofService.CN.md)
+[使用指南](https://github.com/jayfunc/BetterLyrics/wiki/使用指南) | [隐私政策](PrivacyPolicy.CN.md) | [服务协议](TermsofService.CN.md)
 
 </div>
 
@@ -75,7 +75,7 @@ BetterLyrics
  
 - 🎶 **支持众多音乐播放器**
 
-  - 点击 [此处](https://jayfunc.blog/work/betterlyrics-cn#yi-zhi-zhi-chi-de-yin-le-bo-fang-qi-pei-zhi-zhi-nan) 查看详细信息
+  - 点击 [此处](https://github.com/jayfunc/BetterLyrics/wiki/使用指南#已知支持的音乐播放器配置指南) 查看详细信息
 
 - 🪟 **多种显示模式**
   - **标准模式**
