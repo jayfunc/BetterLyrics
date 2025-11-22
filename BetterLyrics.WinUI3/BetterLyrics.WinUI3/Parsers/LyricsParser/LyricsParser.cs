@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             LyricsDataArr = [];
             if (string.IsNullOrWhiteSpace(lyricsSearchResult?.Raw))
             {
-                LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder((int)(songInfo?.DurationMs ?? 0)));
+                LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder());
             }
             else
             {
@@ -45,6 +45,11 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                         break;
                     default:
                         break;
+                }
+
+                if (LyricsDataArr.Count == 0)
+                {
+                    LyricsDataArr.Add(LyricsData.GetParseErrorPlaceholder());
                 }
             }
             LoadTranslation(lyricsSearchResult);
