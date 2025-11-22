@@ -564,13 +564,11 @@
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
                                 <ToolTip>
-                                    <ToolTip.Content>
-                                        <Grid>
-                                            <TextBlock x:Name="PlaybackRepeatAllHint" x:Uid="MusicGalleryPageQueueLoop" />
-                                            <TextBlock x:Name="PlaybackRepeatOneHint" x:Uid="MusicGalleryPageSingleLoop" />
-                                            <TextBlock x:Name="PlaybackShuffleHint" x:Uid="MusicGalleryPageQueueRandom" />
-                                        </Grid>
-                                    </ToolTip.Content>
+                                    <Grid>
+                                        <TextBlock x:Name="PlaybackRepeatAllHint" x:Uid="MusicGalleryPageQueueLoop" />
+                                        <TextBlock x:Name="PlaybackRepeatOneHint" x:Uid="MusicGalleryPageSingleLoop" />
+                                        <TextBlock x:Name="PlaybackShuffleHint" x:Uid="MusicGalleryPageQueueRandom" />
+                                    </Grid>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                             <Button.Content>

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -22,7 +23,7 @@
                                       Glyph=&#xE90B;}"
                 Style="{StaticResource TitleBarButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <TextBlock x:Uid="SystemTrayLyrics" />
+                    <ToolTip x:Uid="SettingsPageLyricsWindowToolTip" />
                 </ToolTipService.ToolTip>
             </Button>
             <Button
@@ -33,7 +34,7 @@
                                       Glyph=&#xE713;}"
                 Style="{StaticResource TitleBarButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <TextBlock x:Uid="HostWindowSettingsButtonToolTip" />
+                    <ToolTip x:Uid="HostWindowSettingsButtonToolTip" />
                 </ToolTipService.ToolTip>
             </Button>
         </StackPanel>

@@ -209,12 +209,45 @@
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
-                                    <dev:SettingsCard Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                        <dev:SettingsCard.HeaderIcon>
-                                            <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
-                                        </dev:SettingsCard.HeaderIcon>
-                                        <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
-                                    </dev:SettingsCard>
+                                    <Grid>
+                                        <dev:SettingsExpander Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                            <dev:SettingsExpander.HeaderIcon>
+                                                <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                            </dev:SettingsExpander.HeaderIcon>
+                                            <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                            <dev:SettingsExpander.Items>
+                                                <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
+                                                    <local:ExtendedSlider
+                                                        Default="0"
+                                                        Maximum="100"
+                                                        Minimum="0"
+                                                        Unit="%"
+                                                        Value="{Binding MatchingThreshold, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
+                                            </dev:SettingsExpander.Items>
+                                        </dev:SettingsExpander>
+                                        <Grid
+                                            Width="48"
+                                            HorizontalAlignment="Left"
+                                            Background="{ThemeResource ControlStrokeColorDefaultBrush}"
+                                            CornerRadius="4,0,0,4"
+                                            Opacity="0">
+                                            <interactivity:Interaction.Behaviors>
+                                                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                </interactivity:EventTriggerBehavior>
+                                                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                </interactivity:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <Grid.OpacityTransition>
+                                                <ScalarTransition />
+                                            </Grid.OpacityTransition>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip x:Uid="SettingsPageHoldDragSort" />
+                                            </ToolTipService.ToolTip>
+                                        </Grid>
+                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

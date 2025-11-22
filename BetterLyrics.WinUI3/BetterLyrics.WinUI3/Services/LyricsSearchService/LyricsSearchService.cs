@@ -159,7 +159,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         .WithAlbum(overridenAlbum),
                     provider.Provider, checkCache, token);
 
-                if (lyricsSearchResult.IsFound)
+                if (lyricsSearchResult.IsFound && lyricsSearchResult.MatchPercentage >= provider.MatchingThreshold)
                 {
                     switch (lyricsSearchType)
                     {
@@ -204,7 +204,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             try
             {
                 // Check cache first if allowed
-                if (checkCache && provider.IsRemote())
+                if (checkCache)
                 {
                     var cached = FileHelper.ReadLyricsCache(songInfo, provider);
                     if (cached != null)
@@ -214,42 +214,36 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     }
                 }
 
-                if (provider.IsLocal())
+                switch (provider)
                 {
-                    if (provider == LyricsSearchProvider.LocalMusicFile)
-                    {
+                    case LyricsSearchProvider.QQ:
+                        lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.QQMusic);
+                        break;
+                    case LyricsSearchProvider.Kugou:
+                        lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Kugou);
+                        break;
+                    case LyricsSearchProvider.Netease:
+                        lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Netease);
+                        break;
+                    case LyricsSearchProvider.LrcLib:
+                        lyricsSearchResult = await SearchLrcLibAsync(songInfo);
+                        break;
+                    case LyricsSearchProvider.AmllTtmlDb:
+                        lyricsSearchResult = await SearchAmllTtmlDbAsync(songInfo);
+                        break;
+                    case LyricsSearchProvider.LocalMusicFile:
                         lyricsSearchResult = SearchEmbedded(songInfo);
-                    }
-                    else
-                    {
+                        break;
+                    case LyricsSearchProvider.LocalLrcFile:
+                    case LyricsSearchProvider.LocalEslrcFile:
+                    case LyricsSearchProvider.LocalTtmlFile:
                         lyricsSearchResult = await SearchFile(songInfo, provider.GetLyricsFormat());
-                    }
-                }
-                else
-                {
-                    switch (provider)
-                    {
-                        case LyricsSearchProvider.LrcLib:
-                            lyricsSearchResult = await SearchLrcLibAsync(songInfo);
-                            break;
-                        case LyricsSearchProvider.QQ:
-                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.QQMusic);
-                            break;
-                        case LyricsSearchProvider.Kugou:
-                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Kugou);
-                            break;
-                        case LyricsSearchProvider.Netease:
-                            lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Netease);
-                            break;
-                        case LyricsSearchProvider.AmllTtmlDb:
-                            lyricsSearchResult = await SearchAmllTtmlDbAsync(songInfo);
-                            break;
-                        case LyricsSearchProvider.AppleMusic:
-                            lyricsSearchResult = await SearchAppleMusicAsync(songInfo);
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+                    case LyricsSearchProvider.AppleMusic:
+                        lyricsSearchResult = await SearchAppleMusicAsync(songInfo);
+                        break;
+                    default:
+                        break;
                 }
 
                 if (token.IsCancellationRequested)
@@ -262,13 +256,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
             }
 
-            if (lyricsSearchResult.IsFound)
-            {
-                if (provider.IsRemote())
-                {
-                    FileHelper.WriteLyricsCache(songInfo, lyricsSearchResult);
-                }
-            }
+            FileHelper.WriteLyricsCache(songInfo, lyricsSearchResult);
 
             return lyricsSearchResult;
         }

@@ -45,6 +45,10 @@ namespace BetterLyrics.WinUI3.Helper
         public static string KugouLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "kugou");
         public static string AmllTtmlDbLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "amll-ttml-db");
         public static string AppleMusicCacheDirectory => Path.Combine(LyricsCacheDirectory, "apple-music");
+        public static string LocalMusicCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-music");
+        public static string LocalLrcCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-lrc");
+        public static string LocalEslrcCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-eslrc");
+        public static string LocalTtmlCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-ttml");
         public static string AmllTtmlDbIndexPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-index.jsonl");
         public static string AmllTtmlDbLastUpdatedPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-last-updated.txt");
 
@@ -65,6 +69,10 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(NeteaseLyricsCacheDirectory);
             Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
             Directory.CreateDirectory(AppleMusicCacheDirectory);
+            Directory.CreateDirectory(LocalMusicCacheDirectory);
+            Directory.CreateDirectory(LocalLrcCacheDirectory);
+            Directory.CreateDirectory(LocalEslrcCacheDirectory);
+            Directory.CreateDirectory(LocalTtmlCacheDirectory);
 
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
         }
