@@ -131,25 +131,23 @@ namespace BetterLyrics.WinUI3.Models
             return result;
         }
 
-        public static LyricsData GetNotfoundPlaceholder(int durationMs)
+        public static LyricsData GetNotfoundPlaceholder()
         {
             return new LyricsData([new LyricsLine
             {
                 StartMs = 0,
-                EndMs = durationMs,
+                EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
                 OriginalText = _resourceService.GetLocalizedString("LyricsNotFound"),
-                LyricsChars = [],
             }]);
         }
 
-        public static LyricsData GetParseErrorPlaceholder(int durationMs)
+        public static LyricsData GetParseErrorPlaceholder()
         {
             return new LyricsData([new LyricsLine
             {
                 StartMs = 0,
-                EndMs = durationMs,
+                EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
                 OriginalText = _resourceService.GetLocalizedString("LyricsParseError"),
-                LyricsChars = [],
             }]);
         }
 
@@ -160,10 +158,7 @@ namespace BetterLyrics.WinUI3.Models
                 {
                     StartMs = 0,
                     EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                    PhoneticText = "",
                     OriginalText = "● ● ●",
-                    TranslatedText = "",
-                    LyricsChars = [],
                 },
             ]);
         }
