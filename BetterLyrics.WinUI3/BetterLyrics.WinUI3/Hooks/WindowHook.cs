@@ -118,6 +118,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));
                 }
+
                 TrackWindow(window);
                 var castedWindow = (Window)window;
                 castedWindow.Restore();

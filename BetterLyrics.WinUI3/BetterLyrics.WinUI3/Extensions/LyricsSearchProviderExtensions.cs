@@ -16,6 +16,10 @@ namespace BetterLyrics.WinUI3.Extensions
                 LyricsSearchProvider.Kugou => PathHelper.KugouLyricsCacheDirectory,
                 LyricsSearchProvider.AmllTtmlDb => PathHelper.AmllTtmlDbLyricsCacheDirectory,
                 LyricsSearchProvider.AppleMusic => PathHelper.AppleMusicCacheDirectory,
+                LyricsSearchProvider.LocalMusicFile => PathHelper.LocalMusicCacheDirectory,
+                LyricsSearchProvider.LocalLrcFile => PathHelper.LocalLrcCacheDirectory,
+                LyricsSearchProvider.LocalEslrcFile => PathHelper.LocalEslrcCacheDirectory,
+                LyricsSearchProvider.LocalTtmlFile => PathHelper.LocalTtmlCacheDirectory,
                 _ => throw new ArgumentOutOfRangeException(nameof(provider)),
             };
 

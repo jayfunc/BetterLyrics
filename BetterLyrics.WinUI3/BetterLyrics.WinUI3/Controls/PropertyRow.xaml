@@ -57,7 +57,7 @@
                 Click="OnCopyClicked"
                 Opacity="0">
                 <ToolTipService.ToolTip>
-                    <TextBlock x:Uid="Copy" />
+                    <ToolTip x:Uid="Copy" />
                 </ToolTipService.ToolTip>
                 <Button.OpacityTransition>
                     <ScalarTransition />

@@ -65,7 +65,7 @@
                                               Glyph=&#xE713;}"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <ToolTipService.ToolTip>
-                            <TextBlock x:Uid="HostWindowSettingsButtonToolTip" />
+                            <ToolTip x:Uid="HostWindowSettingsButtonToolTip" />
                         </ToolTipService.ToolTip>
                     </Button>
 
