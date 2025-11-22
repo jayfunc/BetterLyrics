@@ -14,7 +14,7 @@ BetterLyrics
 
 <div align="center">
 	
-[Wiki](https://jayfunc.blog/work/betterlyrics) | [Privacy Policy](PrivacyPolicy.md) | [Terms of Service](TermsofService.md)
+[User Guide](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide) | [Privacy Policy](PrivacyPolicy.md) | [Terms of Service](TermsofService.md)
 
 </div>
 
@@ -81,7 +81,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
  
 - 🎶 **Multiple Music Players Supported**
 
-  - Check it out [here](https://jayfunc.blog/work/betterlyrics#known-supported-music-players-configuration-guidance)) for detailed info
+  - Check it out [here](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide#known-supported-music-players-configuration-guide) for detailed info
 
 - 🪟 **Multiple Display Modes**
   - **Standard Mode**
