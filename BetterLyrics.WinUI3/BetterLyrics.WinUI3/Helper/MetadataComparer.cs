@@ -16,50 +16,49 @@ namespace BetterLyrics.WinUI3.Helper
         private const double WeightDuration = 0.10;
 
         // JaroWinkler 适合短字符串匹配
-        private static readonly JaroWinkler _algo = new JaroWinkler();
+        private static readonly JaroWinkler _algo = new();
 
         public static int CalculateScore(SongInfo local, LyricsSearchResult remote)
         {
             if (local == null || remote == null) return 0;
 
-            double titleScore = GetStringSimilarity(local.Title, remote.Title);
-            double artistScore = GetArtistSimilarity(local.Artists, remote.Artists);
-            double albumScore = GetStringSimilarity(local.Album, remote.Album);
-            double durationScore = GetDurationSimilarity(local.DurationMs, remote.Duration);
+            double totalScore = 0;
 
-            double totalScore = (titleScore * WeightTitle) +
-                                (artistScore * WeightArtist) +
-                                (albumScore * WeightAlbum) +
-                                (durationScore * WeightDuration);
+            bool localHasMetadata = !string.IsNullOrWhiteSpace(local.Title);
+            bool remoteHasMetadata = !string.IsNullOrWhiteSpace(remote.Title);
+
+            if (localHasMetadata && remoteHasMetadata)
+            {
+                double titleScore = GetStringSimilarity(local.Title, remote.Title);
+                double artistScore = GetArtistSimilarity(local.Artists, remote.Artists);
+                double albumScore = GetStringSimilarity(local.Album, remote.Album);
+                double durationScore = GetDurationSimilarity(local.DurationMs, remote.Duration);
+
+                totalScore = (titleScore * WeightTitle) +
+                                    (artistScore * WeightArtist) +
+                                    (albumScore * WeightAlbum) +
+                                    (durationScore * WeightDuration);
+            }
+            else
+            {
+                string? localQuery = localHasMetadata
+                    ? $"{local.Title} {string.Join(" ", local.Artists ?? [])}"
+                    : Path.GetFileNameWithoutExtension(local.LinkedFileName);
+
+                string remoteQuery = remoteHasMetadata
+                    ? $"{remote.Title} {string.Join(" ", remote.Artists ?? [])}"
+                    : Path.GetFileNameWithoutExtension(remote.Reference);
+
+                string fp1 = CreateSortedFingerprint(localQuery);
+                string fp2 = CreateSortedFingerprint(remoteQuery);
+
+                if (string.IsNullOrWhiteSpace(fp1) || string.IsNullOrWhiteSpace(fp2))
+                    totalScore = 0;
+                else
+                    totalScore = _algo.Similarity(fp1, fp2);
+            }
 
             return (int)Math.Round(totalScore * 100);
-        }
-
-        public static int CalculateScore(SongInfo songInfo, string filePathOrName)
-        {
-            if (songInfo == null || string.IsNullOrWhiteSpace(filePathOrName)) return 0;
-
-            string fileName = Path.GetFileNameWithoutExtension(filePathOrName);
-            string fileFingerprint = CreateSortedFingerprint(fileName);
-
-            var infoParts = new List<string>();
-
-            if (!string.IsNullOrEmpty(songInfo.Title))
-                infoParts.Add(songInfo.Title);
-
-            if (songInfo.Artists != null)
-                infoParts.AddRange(songInfo.Artists);
-
-            string infoRaw = string.Join(" ", infoParts);
-
-            if (string.IsNullOrEmpty(infoRaw) && songInfo.LinkedFileName is string linkedFileName)
-                infoRaw = linkedFileName;
-
-            string infoFingerprint = CreateSortedFingerprint(infoRaw);
-
-            double score = _algo.Similarity(infoFingerprint, fileFingerprint);
-
-            return (int)Math.Round(score * 100);
         }
 
         private static double GetStringSimilarity(string? s1, string? s2)
@@ -105,7 +104,7 @@ namespace BetterLyrics.WinUI3.Helper
             return 1.0 - ((diff - PerfectTolerance) / (MaxTolerance - PerfectTolerance));
         }
 
-        private static string CreateSortedFingerprint(string input)
+        private static string CreateSortedFingerprint(string? input)
         {
             if (string.IsNullOrWhiteSpace(input)) return "";
 

@@ -294,7 +294,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     {
                         foreach (var file in DirectoryHelper.GetAllFiles(folder.Path, $"*{format.ToFileExtension()}"))
                         {
-                            int score = MetadataComparer.CalculateScore(songInfo, file);
+                            int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult { Reference = file });
                             if (score > maxScore)
                             {
                                 bestFile = file;
@@ -352,7 +352,8 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                                     Title = track.Title,
                                     Artists = track.Artist.Split(ATL.Settings.DisplayValueSeparator),
                                     Album = track.Album,
-                                    Duration = track.Duration
+                                    Duration = track.Duration,
+                                    Reference = file,
                                 });
 
                                 if (score > bestScore)
