@@ -144,32 +144,42 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             List<LyricsSearchResult> lyricsSearchResults = [];
 
-            // 曲目没有被映射
-            foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId)?.LyricsSearchProvidersInfo ?? [])
+            var mediaSourceProviderInfo = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId);
+            if (mediaSourceProviderInfo != null)
             {
-                if (!provider.IsEnabled)
+                // 曲目没有被映射
+                foreach (var provider in mediaSourceProviderInfo.LyricsSearchProvidersInfo)
                 {
-                    continue;
-                }
-
-                lyricsSearchResult = await SearchSingleAsync(
-                    ((SongInfo)songInfo.Clone())
-                        .WithTitle(overridenTitle)
-                        .WithArtist(overridenArtists)
-                        .WithAlbum(overridenAlbum),
-                    provider.Provider, checkCache, token);
-
-                if (lyricsSearchResult.IsFound && lyricsSearchResult.MatchPercentage >= provider.MatchingThreshold)
-                {
-                    switch (lyricsSearchType)
+                    if (!provider.IsEnabled)
                     {
-                        case LyricsSearchType.Sequential:
-                            return lyricsSearchResult;
-                        case LyricsSearchType.BestMatch:
-                            lyricsSearchResults.Add((LyricsSearchResult)lyricsSearchResult.Clone());
-                            break;
-                        default:
-                            break;
+                        continue;
+                    }
+
+                    lyricsSearchResult = await SearchSingleAsync(
+                        ((SongInfo)songInfo.Clone())
+                            .WithTitle(overridenTitle)
+                            .WithArtist(overridenArtists)
+                            .WithAlbum(overridenAlbum),
+                        provider.Provider, checkCache, token);
+
+                    int matchingThreshold = mediaSourceProviderInfo.MatchingThreshold;
+                    if (provider.IsMatchingThresholdOverwritten)
+                    {
+                        matchingThreshold = provider.MatchingThreshold;
+                    }
+
+                    if (lyricsSearchResult.IsFound && lyricsSearchResult.MatchPercentage >= matchingThreshold)
+                    {
+                        switch (lyricsSearchType)
+                        {
+                            case LyricsSearchType.Sequential:
+                                return lyricsSearchResult;
+                            case LyricsSearchType.BestMatch:
+                                lyricsSearchResults.Add((LyricsSearchResult)lyricsSearchResult.Clone());
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
@@ -204,7 +214,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             try
             {
                 // Check cache first if allowed
-                if (checkCache)
+                if (checkCache && provider.IsRemote())
                 {
                     var cached = FileHelper.ReadLyricsCache(songInfo, provider);
                     if (cached != null)
@@ -256,7 +266,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
             }
 
-            FileHelper.WriteLyricsCache(songInfo, lyricsSearchResult);
+            if (provider.IsRemote())
+            {
+                FileHelper.WriteLyricsCache(songInfo, lyricsSearchResult);
+            }
 
             return lyricsSearchResult;
         }

@@ -188,6 +188,14 @@
                                 <ComboBoxItem x:Uid="SettingsPageLyricsSearchBestMatch" />
                             </ComboBox>
                         </dev:SettingsCard>
+                        <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
+                            <local:ExtendedSlider
+                                Default="0"
+                                Maximum="100"
+                                Minimum="0"
+                                Unit="%"
+                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.MatchingThreshold, Mode=TwoWay}" />
+                        </dev:SettingsCard>
 
                         <ListView
                             x:Name="LyricsSearchProvidersListView"
@@ -210,13 +218,16 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
                                     <Grid>
-                                        <dev:SettingsExpander Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                        <dev:SettingsExpander Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}" IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
                                             <dev:SettingsExpander.HeaderIcon>
                                                 <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
                                             </dev:SettingsExpander.HeaderIcon>
                                             <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
                                             <dev:SettingsExpander.Items>
-                                                <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
+                                                <dev:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
+                                                    <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
+                                                <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
                                                     <local:ExtendedSlider
                                                         Default="0"
                                                         Maximum="100"

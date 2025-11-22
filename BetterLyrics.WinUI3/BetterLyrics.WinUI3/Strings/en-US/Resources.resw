@@ -1180,6 +1180,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageOriginalText.Header" xml:space="preserve">
     <value>Original text</value>
   </data>
+  <data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
+    <value>Set the minimum match threshold individually</value>
+  </data>
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Color picker style</value>
   </data>
