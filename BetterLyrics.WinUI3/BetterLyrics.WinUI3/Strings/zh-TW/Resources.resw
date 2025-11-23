@@ -231,6 +231,12 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>找不到歌詞</value>
   </data>
+  <data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <value>Cache path</value>
+  </data>
+  <data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <value>Cache path</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>
@@ -1286,7 +1292,7 @@
     <value>當前行持續時間</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
-    <value>歌詞滾動動畫類型</value>
+    <value>Lyric animation type</value>
   </data>
   <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
     <value>首行延時</value>
@@ -1500,5 +1506,8 @@
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics 已經在運作</value>
+  </data>
+  <data name="UserGuide.Content" xml:space="preserve">
+    <value>User Guide</value>
   </data>
 </root>
