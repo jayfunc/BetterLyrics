@@ -224,7 +224,7 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <!--  滚动动画  -->
+                    <!--  歌词动画  -->
                     <dev:SettingsExpander x:Uid="SettingsPageScrollEasing" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xECE7;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeLinear" />
@@ -246,7 +246,7 @@
                                     Default="500"
                                     Frequency="50"
                                     Maximum="1000"
-                                    Minimum="50"
+                                    Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollTopDuration, Mode=TwoWay}" />
                             </dev:SettingsCard>
@@ -255,7 +255,7 @@
                                     Default="500"
                                     Frequency="50"
                                     Maximum="1000"
-                                    Minimum="50"
+                                    Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollDuration, Mode=TwoWay}" />
                             </dev:SettingsCard>
@@ -264,7 +264,7 @@
                                     Default="500"
                                     Frequency="50"
                                     Maximum="1000"
-                                    Minimum="50"
+                                    Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollBottomDuration, Mode=TwoWay}" />
                             </dev:SettingsCard>

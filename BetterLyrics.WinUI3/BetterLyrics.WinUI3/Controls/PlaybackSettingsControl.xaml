@@ -308,9 +308,7 @@
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <!--  Playback source  -->
                                 <local:PropertyRow x:Uid="SettingsPagePlaybackSource" Value="{x:Bind ViewModel.MediaSessionsService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
-                                <!--  Playback source ID  -->
                                 <local:PropertyRow x:Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
@@ -321,13 +319,9 @@
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <!--  Song title  -->
                                 <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                <!--  Song artists  -->
                                 <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
-                                <!--  Song album  -->
                                 <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                <!--  Song duration  -->
                                 <local:PropertyRow
                                     x:Uid="LyricsSearchControlDurauion"
                                     Unit="s"
@@ -341,30 +335,27 @@
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <!--  Searched title  -->
                                 <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                <!--  Searched artists  -->
                                 <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
-                                <!--  Searched album  -->
                                 <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                <!--  Searched duration  -->
                                 <local:PropertyRow
                                     x:Uid="LyricsSearchControlDurauion"
                                     Unit="s"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Duration, TargetNullValue=N/A, Mode=OneWay}" />
-                                <!--  Lyrics source  -->
                                 <local:PropertyRow
                                     x:Uid="LyricsPageLyricsProviderPrefix"
                                     Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay}"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
-                                <!--  Translation source  -->
                                 <local:PropertyRow x:Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.TranslationSearchProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
-                                <!--  Match percentage  -->
                                 <local:PropertyRow
                                     x:Uid="LyricsPageMatchPercentage"
                                     Unit="%"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
+                                <local:PropertyRow
+                                    x:Uid="LyricsPageCachePath"
+                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay}"
+                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 
@@ -508,7 +499,7 @@
                                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                           FontSize=12,
                                                           Glyph=&#xE897;}"
-                                    NavigateUri="{x:Bind constants:Link.AppleMusicCfgUrl}" />
+                                    NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
                                 <Button
                                     Grid.Column="2"
                                     Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"

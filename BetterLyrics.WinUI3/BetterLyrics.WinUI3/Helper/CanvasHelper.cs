@@ -5,6 +5,7 @@ using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -55,11 +56,11 @@ namespace BetterLyrics.WinUI3.Helper
                     Source = new GaussianBlurEffect
                     {
                         Source = backgroundFontEffect,
-                        BlurAmount = (float)lyricsLine.BlurAmountTransition.Value,
+                        BlurAmount = (float)Math.Max(lyricsLine.BlurAmountTransition.Value, 0),
                         BorderMode = EffectBorderMode.Soft,
                         Optimization = EffectOptimization.Speed,
                     },
-                    Opacity = (float)(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity),
+                    Opacity = (float)Math.Max(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity, 0),
                 };
             }
         }

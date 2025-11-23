@@ -370,7 +370,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     combinedDs.DrawImage(new OpacityEffect
                     {
                         Source = effectLayer,
-                        Opacity = (float)(line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value),
+                        Opacity = (float)Math.Max(line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value, 0),
                     });
 
                     if (i == _playingLineIndex)

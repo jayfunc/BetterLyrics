@@ -195,6 +195,10 @@
                                             x:Uid="LyricsPageMatchPercentage"
                                             Unit="%"
                                             Value="{x:Bind MatchPercentage, Mode=OneWay}" />
+                                        <local:PropertyRow
+                                            x:Uid="LyricsPageCachePath"
+                                            Link="{x:Bind SelfPath, TargetNullValue=N/A, Mode=OneWay}"
+                                            ToolTipService.ToolTip="{x:Bind SelfPath, TargetNullValue=N/A, Mode=OneWay}" />
                                     </StackPanel>
                                     <!--  NOT FOUND  -->
                                     <TextBlock

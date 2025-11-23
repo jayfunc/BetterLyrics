@@ -231,6 +231,12 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>가사를 찾을 수 없습니다</value>
   </data>
+  <data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <value>캐시</value>
+  </data>
+  <data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <value>캐시</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>가사 제공자</value>
   </data>
@@ -1286,7 +1292,7 @@
     <value>현재 라인 기간</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
-    <value>가사 스크롤링 애니메이션 유형</value>
+    <value>가사 애니메이션 유형</value>
   </data>
   <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
     <value>첫 번째 줄 지연</value>
@@ -1500,5 +1506,8 @@
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics 가 이미 실행 중입니다</value>
+  </data>
+  <data name="UserGuide.Content" xml:space="preserve">
+    <value>사용 안내서</value>
   </data>
 </root>

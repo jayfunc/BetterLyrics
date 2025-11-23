@@ -48,6 +48,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 var json = File.ReadAllText(cacheFilePath);
                 var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LyricsSearchResult);
+                data?.SelfPath = cacheFilePath;
                 return data;
             }
             return null;
@@ -68,6 +69,7 @@ namespace BetterLyrics.WinUI3.Helper
             var cacheFilePath = Path.Combine(
                 lyricsSearchResult.Provider.GetCacheDirectory(),
                 SanitizeFileName($"{songInfo.ToFileName()}.json"));
+            lyricsSearchResult.SelfPath = cacheFilePath;
             var json = System.Text.Json.JsonSerializer.Serialize(lyricsSearchResult, SourceGenerationContext.Default.LyricsSearchResult);
             File.WriteAllText(cacheFilePath, json);
         }

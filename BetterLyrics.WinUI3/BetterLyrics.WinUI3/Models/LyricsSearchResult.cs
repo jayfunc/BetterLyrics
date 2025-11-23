@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using NTextCat.Commons;
 using System;
@@ -27,6 +28,8 @@ namespace BetterLyrics.WinUI3.Models
         public double? Duration { get; set; }
         [ObservableProperty] public partial int MatchPercentage { get; set; } = -1;
         [ObservableProperty] public partial string Reference { get; set; } = "about:blank";
+
+        public string? SelfPath { get; set; }
 
         public bool IsFound => !string.IsNullOrEmpty(Raw);
 
