@@ -2,8 +2,7 @@ name: Notify Telegram on GitHub Release
 
 on:
   release:
-    types: [published]
-  workflow_dispatch:
+    types: [published, edited]
 
 jobs:
   notify:
