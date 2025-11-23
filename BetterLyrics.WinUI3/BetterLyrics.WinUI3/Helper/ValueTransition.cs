@@ -57,7 +57,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public void SetDuration(double seconds)
         {
-            if (seconds <= 0)
+            if (seconds < 0)
                 throw new ArgumentOutOfRangeException(nameof(seconds), "Duration must be positive.");
             _durationSeconds = seconds;
         }
@@ -145,7 +145,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private Func<T, T, double, T> GetInterpolatorByEasingType(EasingType type)
+        private Func<T, T, double, T> GetInterpolatorByEasingType(EasingType? type)
         {
             if (typeof(T) == typeof(double))
             {
@@ -193,6 +193,7 @@ namespace BetterLyrics.WinUI3.Helper
                             t = EasingHelper.Linear(t);
                             break;
                         default:
+                            t = EasingHelper.EaseInOutQuad(t);
                             break;
                     }
                     return (T)(object)(s + (e - s) * t);
@@ -201,7 +202,7 @@ namespace BetterLyrics.WinUI3.Helper
             throw new NotSupportedException($"Easing type {type} is not supported for type {typeof(T)}.");
         }
 
-        public void SetEasingType(EasingType easingType)
+        public void SetEasingType(EasingType? easingType)
         {
             _easingType = easingType;
             _interpolator = GetInterpolatorByEasingType(easingType);

@@ -51,11 +51,10 @@
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.GitHubUrl}" />
-                                        <HyperlinkButton Content="Wiki" NavigateUri="{x:Bind const:Link.WikiUrl}" />
-                                        <HyperlinkButton Content="FAQ" NavigateUri="{x:Bind const:Link.FAQUrl}" />
+                                        <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.GitHub}" />
+                                        <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
                                         <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
-                                        <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfServiceUrl}" />
+                                        <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
                                     </StackPanel>
                                 </StackPanel>
 
@@ -65,9 +64,9 @@
                                 <StackPanel Spacing="6">
                                     <TextBlock x:Uid="SetingsPageFeedback" />
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton x:Uid="SettingsPageQQGroup" NavigateUri="{x:Bind const:Link.QQGroupUrl}" />
-                                        <HyperlinkButton x:Uid="SettingsPageDiscord" NavigateUri="{x:Bind const:Link.DiscordUrl}" />
-                                        <HyperlinkButton x:Uid="SettingsPageTelegram" NavigateUri="{x:Bind const:Link.TelegramUrl}" />
+                                        <HyperlinkButton x:Uid="SettingsPageQQGroup" NavigateUri="{x:Bind const:Link.QQGroup}" />
+                                        <HyperlinkButton x:Uid="SettingsPageDiscord" NavigateUri="{x:Bind const:Link.Discord}" />
+                                        <HyperlinkButton x:Uid="SettingsPageTelegram" NavigateUri="{x:Bind const:Link.Telegram}" />
                                     </StackPanel>
                                 </StackPanel>
                             </dev:SettingsCard>

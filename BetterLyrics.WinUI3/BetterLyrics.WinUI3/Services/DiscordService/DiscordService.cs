@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Services.DiscordService
             {
                 StatusDisplay = StatusDisplayType.Details,
                 Type = ActivityType.Listening,
-                Buttons = new Button[] { new() { Label = "Get this status", Url = Constants.Link.MicrosoftStoreUrl } },
+                Buttons = new Button[] { new() { Label = "Get this status", Url = Constants.Link.MicrosoftStore } },
                 Assets = new Assets
                 {
                     LargeImageKey = "banner",

@@ -60,7 +60,7 @@
                             </Button>
 
                             <!--  Sharing hub  -->
-                            <HyperlinkButton x:Uid="SettingsPageShareHub" NavigateUri="{x:Bind constants:Link.ShareHubUrl}" />
+                            <HyperlinkButton x:Uid="SettingsPageShareHub" NavigateUri="{x:Bind constants:Link.ShareHub}" />
 
                         </StackPanel>
 

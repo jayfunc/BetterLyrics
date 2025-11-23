@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -13,37 +14,13 @@ namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsLine
     {
-        private const double _animationDuration = 0.3;
-        public ValueTransition<double> AngleTransition { get; set; } = new(
-            initialValue: 0,
-            durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutQuad
-        );
-        public ValueTransition<double> BlurAmountTransition { get; set; } = new(
-            initialValue: 0,
-            durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutQuad
-        );
-        public ValueTransition<double> HighlightOpacityTransition { get; set; } = new(
-            initialValue: 0,
-            durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutQuad
-        );
-        public ValueTransition<double> OpacityTransition { get; set; } = new(
-            initialValue: 0,
-            durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutQuad
-        );
-        public ValueTransition<double> ScaleTransition { get; set; } = new(
-            initialValue: 0,
-            durationSeconds: _animationDuration,
-            easingType: EasingType.EaseInOutQuad
-        );
-        public ValueTransition<double> YOffsetTransition { get; set; } = new(
-            initialValue: 0,
-            durationSeconds: 0.5,
-            easingType: EasingType.EaseInOutQuad
-        );
+        public double AnimationDuration { get; set; } = 0.3;
+        public ValueTransition<double> AngleTransition { get; set; }
+        public ValueTransition<double> BlurAmountTransition { get; set; }
+        public ValueTransition<double> HighlightOpacityTransition { get; set; }
+        public ValueTransition<double> OpacityTransition { get; set; }
+        public ValueTransition<double> ScaleTransition { get; set; }
+        public ValueTransition<double> YOffsetTransition { get; set; }
 
         public CanvasTextLayout? OriginalCanvasTextLayout { get; private set; }
         public CanvasTextLayout? TranslatedCanvasTextLayout { get; private set; }
@@ -85,6 +62,40 @@ namespace BetterLyrics.WinUI3.Models
         public CanvasGeometry? OriginalCanvasGeometry { get; private set; }
         public CanvasGeometry? TranslatedCanvasGeometry { get; private set; }
         public CanvasGeometry? PhoneticCanvasGeometry { get; private set; }
+
+        public LyricsLine()
+        {
+            AngleTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutQuad
+            );
+            BlurAmountTransition = new(
+                 initialValue: 0,
+                 durationSeconds: AnimationDuration,
+                 easingType: EasingType.EaseInOutQuad
+             );
+            HighlightOpacityTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutQuad
+            );
+            OpacityTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutQuad
+            );
+            ScaleTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutQuad
+            );
+            YOffsetTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutQuad
+            );
+        }
 
         public void UpdateCenterPosition(double maxWidth, TextAlignmentType type)
         {

@@ -231,6 +231,12 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>歌詞が見つかりません</value>
   </data>
+  <data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <value>キャッシュパス</value>
+  </data>
+  <data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <value>キャッシュパス</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌詞プロバイダー</value>
   </data>
@@ -1286,7 +1292,7 @@
     <value>現在のライン期間</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
-    <value>歌詞スクロールアニメーションタイプ</value>
+    <value>リリックアニメーションタイプ</value>
   </data>
   <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
     <value>最初の行の遅延</value>
@@ -1500,5 +1506,8 @@
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics はすでに実行されています</value>
+  </data>
+  <data name="UserGuide.Content" xml:space="preserve">
+    <value>利用案内</value>
   </data>
 </root>

@@ -892,7 +892,27 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         yScrollDelay = distanceFactor * _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsScrollBottomDelay / 1000.0;
                     }
 
-                    line.YOffsetTransition.SetEasingType(_canvasYScrollTransition.EasingType ?? EasingType.Linear);
+                    line.AngleTransition.SetEasingType(_canvasYScrollTransition.EasingType);
+                    line.AngleTransition.SetDuration(yScrollDuration);
+                    line.AngleTransition.SetDelay(yScrollDelay);
+
+                    line.ScaleTransition.SetEasingType(_canvasYScrollTransition.EasingType);
+                    line.ScaleTransition.SetDuration(yScrollDuration);
+                    line.ScaleTransition.SetDelay(yScrollDelay);
+
+                    line.BlurAmountTransition.SetEasingType(_canvasYScrollTransition.EasingType);
+                    line.BlurAmountTransition.SetDuration(yScrollDuration);
+                    line.BlurAmountTransition.SetDelay(yScrollDelay);
+
+                    line.OpacityTransition.SetEasingType(_canvasYScrollTransition.EasingType);
+                    line.OpacityTransition.SetDuration(yScrollDuration);
+                    line.OpacityTransition.SetDelay(yScrollDelay);
+
+                    line.HighlightOpacityTransition.SetEasingType(_canvasYScrollTransition.EasingType);
+                    line.HighlightOpacityTransition.SetDuration(yScrollDuration);
+                    line.HighlightOpacityTransition.SetDelay(yScrollDelay);
+
+                    line.YOffsetTransition.SetEasingType(_canvasYScrollTransition.EasingType);
                     line.YOffsetTransition.SetDuration(yScrollDuration);
                     line.YOffsetTransition.SetDelay(yScrollDelay);
                     line.YOffsetTransition.StartTransition(_canvasTargetYScrollOffset, _isLayoutChanged);

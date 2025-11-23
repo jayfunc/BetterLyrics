@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.GitHubUrl));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.GitHub));
         }
 
         [RelayCommand]

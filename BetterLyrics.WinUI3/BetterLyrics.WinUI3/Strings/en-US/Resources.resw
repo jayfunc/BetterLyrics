@@ -231,6 +231,12 @@
   <data name="LyricsNotFound" xml:space="preserve">
     <value>Lyrics not found</value>
   </data>
+  <data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <value>Cache path</value>
+  </data>
+  <data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <value>Cache path</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>
@@ -1286,7 +1292,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Current line duration</value>
   </data>
   <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
-    <value>Lyrics scrolling animation type</value>
+    <value>Lyric animation type</value>
   </data>
   <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
     <value>First line delay</value>
@@ -1500,5 +1506,8 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics is already running</value>
+  </data>
+  <data name="UserGuide.Content" xml:space="preserve">
+    <value>User Guide</value>
   </data>
 </root>
