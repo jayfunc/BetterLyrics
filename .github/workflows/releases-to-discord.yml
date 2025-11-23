@@ -2,8 +2,7 @@ name: Notify Discord on GitHub Release
 
 on:
   release:
-    types: [published]
-  workflow_dispatch:
+    types: [published, edited]
 
 jobs:
   github-releases-to-discord:
