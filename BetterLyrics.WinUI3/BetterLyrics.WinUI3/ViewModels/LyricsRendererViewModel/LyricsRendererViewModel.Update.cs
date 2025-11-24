@@ -485,7 +485,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
             UpdateVisibleLinesBoundary();
 
-            UpdateVisibleLinesProps(control);
+            UpdateVisibleLinesProps();
 
             _titleXTransition.Update(_elapsedTime);
             _titleYTransition.Update(_elapsedTime);
