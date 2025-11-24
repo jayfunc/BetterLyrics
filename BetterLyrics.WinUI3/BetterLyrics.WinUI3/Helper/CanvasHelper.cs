@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Helper
                 return new OpacityEffect
                 {
                     Source = backgroundFontEffect,
-                    Opacity = (float)(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity),
+                    Opacity = (float)Math.Clamp(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity, 0, 1),
                 };
             }
             else
@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.Helper
                         BorderMode = EffectBorderMode.Soft,
                         Optimization = EffectOptimization.Speed,
                     },
-                    Opacity = (float)Math.Max(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity, 0),
+                    Opacity = (float)Math.Clamp(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity, 0, 1),
                 };
             }
         }
@@ -119,7 +119,7 @@ namespace BetterLyrics.WinUI3.Helper
                     Source = foregroundFontEffect,
                     AlphaMask = mask,
                 },
-                BlurAmount = (float)glowEffectAmount,
+                BlurAmount = (float)Math.Clamp(glowEffectAmount, 0, 100),
                 Optimization = EffectOptimization.Speed,
             };
         }
@@ -358,7 +358,7 @@ namespace BetterLyrics.WinUI3.Helper
                     Source = foregroundFontEffect,
                     AlphaMask = mask,
                 },
-                Opacity = (float)opacity,
+                Opacity = (float)Math.Clamp(opacity, 0, 1),
             };
         }
 
@@ -372,7 +372,7 @@ namespace BetterLyrics.WinUI3.Helper
                     AlphaMask = mask,
                 },
                 ShadowColor = shadowColor,
-                BlurAmount = (float)shadowAmount,
+                BlurAmount = (float)Math.Clamp(shadowAmount, 0, 100),
                 Optimization = EffectOptimization.Speed,
             };
         }
@@ -386,7 +386,7 @@ namespace BetterLyrics.WinUI3.Helper
                     Source = foregroundFontEffect,
                     AlphaMask = mask,
                 },
-                Opacity = (float)opacity,
+                Opacity = (float)Math.Clamp(opacity, 0, 1),
             };
         }
 
