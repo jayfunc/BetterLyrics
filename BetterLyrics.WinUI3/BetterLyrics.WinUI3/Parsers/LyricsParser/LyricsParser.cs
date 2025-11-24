@@ -49,7 +49,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 
                 if (LyricsDataArr.Count == 0)
                 {
-                    LyricsDataArr.Add(LyricsData.GetParseErrorPlaceholder());
+                    LyricsDataArr.Add(LyricsData.GetNotfoundPlaceholder());
                 }
             }
             LoadTranslation(lyricsSearchResult);
