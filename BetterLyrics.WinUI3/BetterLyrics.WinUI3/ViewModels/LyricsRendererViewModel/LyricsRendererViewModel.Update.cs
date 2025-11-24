@@ -834,7 +834,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _isLayoutChanged = true;
         }
 
-        private void UpdateVisibleLinesProps(ICanvasAnimatedControl control)
+        private void UpdateVisibleLinesProps()
         {
             var currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
