@@ -592,7 +592,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
                     lyricsSearchResult.Raw = response?.Lrc?.Lyric;
                     lyricsSearchResult.Translation = response?.Tlyric?.Lyric;
-                    lyricsSearchResult.Transliteration = response?.Romalrc.Lyric;
+                    lyricsSearchResult.Transliteration = response?.Romalrc?.Lyric;
                     lyricsSearchResult.Reference = $"https://music.163.com/song?id={neteaseResult.Id}";
                 }
                 else if (result is KugouSearchResult kugouResult)
