@@ -2,7 +2,7 @@ name: Notify Telegram on GitHub Release
 
 on:
   release:
-    types: [published, edited]
+    types: [published]
 
 jobs:
   notify:
