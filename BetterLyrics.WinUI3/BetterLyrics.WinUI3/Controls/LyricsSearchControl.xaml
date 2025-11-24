@@ -323,31 +323,29 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
-            <RelativePanel>
-                <TextBlock
-                    x:Uid="LyricsSearchControlHelp"
-                    Margin="0,0,24,0"
-                    FontSize="12"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                    RelativePanel.LeftOf="Reset"
-                    TextWrapping="Wrap" />
-                <Button
-                    x:Name="Reset"
-                    x:Uid="LyricsSearchControlReset"
-                    Margin="0,0,6,0"
-                    Command="{x:Bind ViewModel.ResetCommand}"
-                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                    RelativePanel.LeftOf="SaveChanges" />
-                <Button
-                    x:Name="SaveChanges"
-                    x:Uid="LyricsSearchControlSaveChanges"
-                    Command="{x:Bind ViewModel.SaveCommand}"
-                    RelativePanel.AlignRightWithPanel="True"
-                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                    Style="{StaticResource AccentButtonStyle}" />
-            </RelativePanel>
+        <Grid Grid.Row="1" ColumnSpacing="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Uid="LyricsSearchControlHelp"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                TextWrapping="Wrap" />
+            <Button
+                x:Uid="LyricsSearchControlReset"
+                Grid.Column="2"
+                Command="{x:Bind ViewModel.ResetCommand}" />
+            <Button
+                x:Uid="LyricsSearchControlSaveChanges"
+                Grid.Column="3"
+                Command="{x:Bind ViewModel.SaveCommand}"
+                Style="{StaticResource AccentButtonStyle}" />
         </Grid>
     </Grid>
 </UserControl>
