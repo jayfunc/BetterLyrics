@@ -18,7 +18,8 @@ namespace BetterLyrics.WinUI3.Renderer
 
         private void LyricsCanvas_Draw(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedDrawEventArgs args)
         {
-            ViewModel.Draw(sender, args.DrawingSession);
+            using var ds = args.DrawingSession;
+            ViewModel.Draw(sender, ds);
         }
 
         private void LyricsCanvas_Update(Microsoft.Graphics.Canvas.UI.Xaml.ICanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedUpdateEventArgs args)
