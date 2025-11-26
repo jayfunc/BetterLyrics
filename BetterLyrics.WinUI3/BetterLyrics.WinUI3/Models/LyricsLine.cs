@@ -17,8 +17,9 @@ namespace BetterLyrics.WinUI3.Models
         public double AnimationDuration { get; set; } = 0.3;
         public ValueTransition<double> AngleTransition { get; set; }
         public ValueTransition<double> BlurAmountTransition { get; set; }
-        public ValueTransition<double> HighlightOpacityTransition { get; set; }
-        public ValueTransition<double> OpacityTransition { get; set; }
+        public ValueTransition<double> PhoneticTextOpacityTransition { get; set; }
+        public ValueTransition<double> OriginalTextOpacityTransition { get; set; }
+        public ValueTransition<double> TranslatedTextOpacityTransition { get; set; }
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> YOffsetTransition { get; set; }
 
@@ -40,7 +41,7 @@ namespace BetterLyrics.WinUI3.Models
         /// </summary>
         public Vector2 PhoneticPosition { get; set; }
 
-        public List<LyricsChar> LyricsChars { get; set; } = [];
+        public List<LyricsSyllable> LyricsSyllables { get; set; } = [];
 
         public int? DurationMs => EndMs - StartMs;
         public int? EndMs { get; set; }
@@ -75,12 +76,17 @@ namespace BetterLyrics.WinUI3.Models
                  durationSeconds: AnimationDuration,
                  easingType: EasingType.EaseInOutQuad
              );
-            HighlightOpacityTransition = new(
+            PhoneticTextOpacityTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
                 easingType: EasingType.EaseInOutQuad
             );
-            OpacityTransition = new(
+            OriginalTextOpacityTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutQuad
+            );
+            TranslatedTextOpacityTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
                 easingType: EasingType.EaseInOutQuad

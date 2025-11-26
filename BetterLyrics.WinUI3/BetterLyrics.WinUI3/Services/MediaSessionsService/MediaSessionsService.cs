@@ -59,7 +59,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly ILibWatcherService _libWatcherService;
         private readonly ILiveStatesService _liveStatesService;
         private readonly IDiscordService _discordService;
-        private readonly IResourceService _resourceService;
         private readonly ILogger<MediaSessionsService> _logger;
 
         private double _lxMusicPositionSeconds = 0;
@@ -81,7 +80,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             ILiveStatesService liveStatesService,
             IDiscordService discordService,
             ITranslateService libreTranslateService,
-            IResourceService resourceService,
             ILogger<MediaSessionsService> logger)
         {
             _settingsService = settingsService;
@@ -91,7 +89,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _translateService = libreTranslateService;
             _liveStatesService = liveStatesService;
             _discordService = discordService;
-            _resourceService = resourceService;
             _logger = logger;
 
             _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
@@ -584,7 +581,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             if (picUrl != null)
                             {
                                 _logger.LogInformation("LX Music Album Art URL: {url}", picUrl);
-                                _lxMusicAlbumArtBytes = await ImageHelper.GetImageBytesFromUrlAsync(picUrl);
+                                _lxMusicAlbumArtBytes = await ImageHelper.GetImageByteArrayFromUrlAsync(picUrl);
                                 if (_lxMusicAlbumArtBytes != null)
                                 {
                                     _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();

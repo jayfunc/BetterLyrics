@@ -48,18 +48,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             durationSeconds: 0.3f
         );
 
-        private readonly ValueTransition<double> _titleXTransition = new(
-            initialValue: 0f,
-            durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutQuad
-        );
-
-        private readonly ValueTransition<double> _titleYTransition = new(
-            initialValue: 0f,
-            durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutQuad
-        );
-
         private readonly ValueTransition<double> _lyricsYTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f,
@@ -69,11 +57,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private readonly ValueTransition<double> _lyricsOpacityTransition = new(
             initialValue: 0f,
             durationSeconds: 0.3f
-        );
-
-        private readonly ValueTransition<double> _albumArtBgTransition = new(
-            initialValue: 0f,
-            durationSeconds: 1f
         );
 
         private readonly ValueTransition<double> _albumArtOpacityTransition = new(

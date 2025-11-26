@@ -70,6 +70,10 @@
             <converter:IntToDoubleConverter x:Key="IntToDoubleConverter" />
             <converter:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
             <converter:PictureInfosToImageSourceConverter x:Key="PictureInfosToImageSourceConverter" />
+            <converter:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
+            <converter:TextAlignmentTypeToHorizontalAlignmentConverter x:Key="TextAlignmentTypeToHorizontalAlignmentConverter" />
+            <converter:LyricsLayoutOrientationToOrientationConverter x:Key="LyricsLayoutOrientationToOrientationConverter" />
+            <converter:LyricsLayoutOrientationNegationToOrientationConverter x:Key="LyricsLayoutOrientationNegationToOrientationConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

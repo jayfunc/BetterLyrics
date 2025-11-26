@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Helper
                 return new OpacityEffect
                 {
                     Source = backgroundFontEffect,
-                    Opacity = (float)Math.Clamp(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity, 0, 1),
+                    Opacity = (float)Math.Clamp(lyricsLine.OriginalTextOpacityTransition.Value * lyricsLayerOpacity, 0, 1),
                 };
             }
             else
@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.Helper
                         BorderMode = EffectBorderMode.Soft,
                         Optimization = EffectOptimization.Speed,
                     },
-                    Opacity = (float)Math.Clamp(lyricsLine.OpacityTransition.Value * lyricsLayerOpacity, 0, 1),
+                    Opacity = (float)Math.Clamp(lyricsLine.OriginalTextOpacityTransition.Value * lyricsLayerOpacity, 0, 1),
                 };
             }
         }
@@ -69,37 +69,6 @@ namespace BetterLyrics.WinUI3.Helper
         {
             CanvasCommandList list = new(control);
             using var ds = list.CreateDrawingSession();
-
-            // 描边
-            if (strokeWidth > 0)
-            {
-                if (lyricsLine.PhoneticCanvasGeometry != null)
-                {
-                    ds.DrawGeometry(lyricsLine.PhoneticCanvasGeometry, lyricsLine.PhoneticPosition, strokeColor, strokeWidth);
-                }
-                if (lyricsLine.OriginalCanvasGeometry != null)
-                {
-                    ds.DrawGeometry(lyricsLine.OriginalCanvasGeometry, lyricsLine.OriginalPosition, strokeColor, strokeWidth);
-                }
-                if (lyricsLine.TranslatedCanvasGeometry != null)
-                {
-                    ds.DrawGeometry(lyricsLine.TranslatedCanvasGeometry, lyricsLine.TranslatedPosition, strokeColor, strokeWidth);
-                }
-            }
-
-            // 绘制文本（填充）
-            if (lyricsLine.PhoneticCanvasTextLayout != null)
-            {
-                ds.DrawTextLayout(lyricsLine.PhoneticCanvasTextLayout, lyricsLine.PhoneticPosition, fontColor);
-            }
-            if (lyricsLine.OriginalCanvasTextLayout != null)
-            {
-                ds.DrawTextLayout(lyricsLine.OriginalCanvasTextLayout, lyricsLine.OriginalPosition, fontColor);
-            }
-            if (lyricsLine.TranslatedCanvasTextLayout != null)
-            {
-                ds.DrawTextLayout(lyricsLine.TranslatedCanvasTextLayout, lyricsLine.TranslatedPosition, fontColor);
-            }
 
             return list;
         }
@@ -257,34 +226,28 @@ namespace BetterLyrics.WinUI3.Helper
             return mask;
         }
 
-        public static CanvasCommandList CreateLineMask(ICanvasAnimatedControl control, LyricsLine lyricsLine)
-        {
-            var mask = new CanvasCommandList(control);
-            using var ds = mask.CreateDrawingSession();
+        //public static Rect? GetLineRect(LyricsLine lyricsLine)
+        //{
+        //    if (lyricsLine.OriginalCanvasTextLayout == null) return null;
 
-            if (lyricsLine.OriginalCanvasTextLayout == null)
-            {
-                return mask;
-            }
+        //    var regions = lyricsLine.OriginalCanvasTextLayout.GetCharacterRegions(0, lyricsLine.OriginalText.Length);
+        //    if (regions.Length > 0)
+        //    {
+        //        for (int j = 0; j < regions.Length; j++)
+        //        {
+        //            var region = regions[j];
+        //            var rect = new Rect(
+        //                region.LayoutBounds.X,
+        //                region.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
+        //                region.LayoutBounds.Width,
+        //                region.LayoutBounds.Height
+        //            );
+        //            ds.FillRectangle(rect, Colors.White);
+        //        }
+        //    }
 
-            var regions = lyricsLine.OriginalCanvasTextLayout.GetCharacterRegions(0, lyricsLine.OriginalText.Length);
-            if (regions.Length > 0)
-            {
-                for (int j = 0; j < regions.Length; j++)
-                {
-                    var region = regions[j];
-                    var rect = new Rect(
-                        region.LayoutBounds.X,
-                        region.LayoutBounds.Y + lyricsLine.OriginalPosition.Y,
-                        region.LayoutBounds.Width,
-                        region.LayoutBounds.Height
-                    );
-                    ds.FillRectangle(rect, Colors.White);
-                }
-            }
-
-            return mask;
-        }
+        //    return mask;
+        //}
 
         public static CanvasCommandList CreatePhoneticHighlightMask(ICanvasAnimatedControl control, LyricsLine lyricsLine)
         {

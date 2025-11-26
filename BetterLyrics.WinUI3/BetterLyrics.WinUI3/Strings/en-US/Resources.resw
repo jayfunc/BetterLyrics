@@ -1033,6 +1033,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Font weight</value>
   </data>
+  <data name="SettingsPageLyricsGlowEffect.Description" xml:space="preserve">
+    <value>Enable glow effect for syllables with long duration</value>
+  </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Glow effect</value>
   </data>
@@ -1074,6 +1077,12 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>Right</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <value>Enable scaling for syllables with long duration</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>Scale effect</value>
   </data>
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
     <value>Best match</value>

@@ -15,7 +15,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int OriginalLyricsFontSize { get; set; } = 24;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsFontSize { get; set; } = 12;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBgFontOpacity { get; set; } = 30; // 30% opacity
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontStrokeWidth { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color LyricsCustomBgFontColor { get; set; } = Colors.White;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color LyricsCustomFgFontColor { get; set; } = Colors.White;
@@ -40,7 +39,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 OriginalLyricsFontSize = this.OriginalLyricsFontSize,
                 TranslatedLyricsFontSize = this.TranslatedLyricsFontSize,
                 LyricsAlignmentType = this.LyricsAlignmentType,
-                LyricsBgFontOpacity = this.LyricsBgFontOpacity,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
                 LyricsCustomBgFontColor = this.LyricsCustomBgFontColor,
                 LyricsCustomFgFontColor = this.LyricsCustomFgFontColor,

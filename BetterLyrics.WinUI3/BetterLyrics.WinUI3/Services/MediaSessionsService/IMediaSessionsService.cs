@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,7 +35,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         TimeSpan CurrentPosition { get; }
         LyricsData? CurrentLyricsData { get; }
 
-        SoftwareBitmap? SoftwareBitmap { get; }
+        BitmapImage? AlbumArtBitmapImage { get; }
         List<Color> LightAccentColors { get; }
         List<Color> DarkAccentColors { get; }
 
