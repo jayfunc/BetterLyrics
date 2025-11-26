@@ -1033,6 +1033,9 @@
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>フォント重量</value>
   </data>
+  <data name="SettingsPageLyricsGlowEffect.Description" xml:space="preserve">
+    <value>長時間の音節にグロウ効果を有効にします</value>
+  </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>グロー効果</value>
   </data>

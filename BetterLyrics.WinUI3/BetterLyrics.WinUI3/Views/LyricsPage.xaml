@@ -27,6 +27,101 @@
         <!--  Lyrics area  -->
         <renderer:LyricsRenderer />
 
+        <!--  Album art and song info area  -->
+        <StackPanel
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Orientation="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource LyricsLayoutOrientationNegationToOrientationConverter}, Mode=OneWay}"
+            Translation="{x:Bind ViewModel.AlbumArtTranslation, Mode=OneWay}">
+            <StackPanel.TranslationTransition>
+                <Vector3Transition />
+            </StackPanel.TranslationTransition>
+
+            <!--  Album art  -->
+            <Grid Padding="32">
+                <Grid x:Name="ShadowCastGrid" CornerRadius="32">
+                    <Image
+                        Width="{x:Bind ViewModel.LyricsRendererViewModel.AlbumArtSize, Mode=OneWay}"
+                        Height="{x:Bind ViewModel.LyricsRendererViewModel.AlbumArtSize, Mode=OneWay}"
+                        Opacity="{x:Bind ViewModel.LastAlbumArtOpacity, Mode=OneWay}"
+                        Source="{x:Bind ViewModel.LastAlbumArtBitmapImage, Mode=OneWay}">
+                        <Image.OpacityTransition>
+                            <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                        </Image.OpacityTransition>
+                    </Image>
+                    <Image
+                        Width="{x:Bind ViewModel.LyricsRendererViewModel.AlbumArtSize, Mode=OneWay}"
+                        Height="{x:Bind ViewModel.LyricsRendererViewModel.AlbumArtSize, Mode=OneWay}"
+                        Opacity="{x:Bind ViewModel.AlbumArtOpacity, Mode=OneWay}"
+                        Source="{x:Bind ViewModel.AlbumArtBitmapImage, Mode=OneWay}">
+                        <Image.OpacityTransition>
+                            <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                        </Image.OpacityTransition>
+                    </Image>
+                </Grid>
+                <Border
+                    x:Name="ShadowRect"
+                    Width="{x:Bind ViewModel.LyricsRendererViewModel.AlbumArtSize, Mode=OneWay}"
+                    Height="{x:Bind ViewModel.LyricsRendererViewModel.AlbumArtSize, Mode=OneWay}"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    CornerRadius="32"
+                    Loaded="ShadowRect_Loaded"
+                    Translation="0,0,64">
+                    <Border.Shadow>
+                        <ThemeShadow x:Name="Shadow" />
+                    </Border.Shadow>
+                </Border>
+            </Grid>
+
+            <!--  Song info  -->
+            <StackPanel Width="{x:Bind ViewModel.LyricsRendererViewModel.AlbumArtSize, Mode=OneWay}" Opacity="{x:Bind ViewModel.SongInfoOpacity, Mode=OneWay}">
+                <StackPanel.OpacityTransition>
+                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                </StackPanel.OpacityTransition>
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Margin" Value="32,-16,32,0" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                        ComparisonCondition="Equal"
+                        Value="1">
+                        <interactivity:ChangePropertyAction PropertyName="Margin" Value="-16,32,0,0" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <TextBlock
+                    x:Name="TitleTextBlock"
+                    HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
+                    FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                    IsTextSelectionEnabled="True"
+                    Loaded="TitleTextBlock_Loaded"
+                    TextWrapping="Wrap"
+                    Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock
+                    x:Name="ArtistsTextBlock"
+                    HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
+                    FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                    IsTextSelectionEnabled="True"
+                    Loaded="ArtistsTextBlock_Loaded"
+                    Opacity="0.5"
+                    TextWrapping="Wrap"
+                    Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <TextBlock
+                    x:Name="AlbumTextBlock"
+                    HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
+                    FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                    IsTextSelectionEnabled="True"
+                    Loaded="AlbumTextBlock_Loaded"
+                    Opacity="0.5"
+                    TextWrapping="Wrap"
+                    Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </StackPanel>
+
+        </StackPanel>
+
         <!--  Bottom command area  -->
         <Grid
             x:Name="BottomCommandGrid"

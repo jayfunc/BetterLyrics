@@ -1,6 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Controls;
+using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -9,6 +11,8 @@ using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Documents;
+using System;
 using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Views
@@ -59,6 +63,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            ViewModel.RootWidth = e.NewSize.Width;
+            ViewModel.RootHeight = e.NewSize.Height;
+
             if (e.NewSize.Width < 500 || e.NewSize.Height < 100)
             {
                 if (BottomCommandGrid.Children.Count != 0)
@@ -183,21 +190,24 @@ namespace BetterLyrics.WinUI3.Views
             SystemVolumeHook.MasterVolume = ViewModel.Volume;
         }
 
-        //private void ScrollGrid_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        //{
-        //    if (e.Pointer.PointerDeviceType != PointerDeviceType.Mouse)
-        //        return;
+        private void ShadowRect_Loaded(object sender, RoutedEventArgs e)
+        {
+            Shadow.Receivers.Add(ShadowCastGrid);
+        }
 
-        //    var position = e.GetCurrentPoint(ScrollGrid);
-        //    var delta = position.Properties.MouseWheelDelta;
-        //    double notches = delta / 120.0;
+        private void TitleTextBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.TitleTextBlock = TitleTextBlock;
+        }
 
-        //    _lyricsRendererViewModel.ScrollDeltaTime = System.TimeSpan.FromSeconds(notches);
-        //    _lyricsRendererViewModel.IsScrolling = true;
+        private void ArtistsTextBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ArtistsTextBlock = ArtistsTextBlock;
+        }
 
-        //    Debug.WriteLine(notches);
-
-        //    e.Handled = true;
-        //}
+        private void AlbumTextBlock_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AlbumTextBlock = AlbumTextBlock;
+        }
     }
 }

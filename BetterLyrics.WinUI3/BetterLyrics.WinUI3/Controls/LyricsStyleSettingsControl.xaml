@@ -56,15 +56,6 @@
                         </ComboBox>
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsBgFontOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB42;}">
-                        <local:ExtendedSlider
-                            Default="30"
-                            Maximum="100"
-                            Minimum="0"
-                            Unit="%"
-                            Value="{x:Bind LyricsStyleSettings.LyricsBgFontOpacity, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-
                     <dev:SettingsCard x:Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC12;}">
                         <local:ExtendedSlider
                             Default="0"

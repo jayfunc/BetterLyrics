@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     {
         private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial SoftwareBitmap? SoftwareBitmap { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial BitmapImage? AlbumArtBitmapImage { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<Color> LightAccentColors { get; set; } = Enumerable.Repeat(Colors.Black, 4).ToList();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<Color> DarkAccentColors { get; set; } = Enumerable.Repeat(Colors.Black, 4).ToList();
 
@@ -54,17 +55,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             decoder = await ImageHelper.MakeSquareWithThemeColor(buffer, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType);
             if (token.IsCancellationRequested) return;
 
-            var albumArtSwBitmap = await decoder.GetSoftwareBitmapAsync(BitmapPixelFormat.Rgba8, BitmapAlphaMode.Premultiplied);
-            if (token.IsCancellationRequested) return;
-
-            albumArtSwBitmap.DpiX = 96;
-            albumArtSwBitmap.DpiY = 96;
-
             var lightPalette = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
             var darkPalette = await ImageHelper.GetAccentColorsAsync(decoder, 4, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
             if (token.IsCancellationRequested) return;
 
-            SoftwareBitmap = albumArtSwBitmap;
+            var bitmapImage = new BitmapImage();
+            await bitmapImage.SetSourceAsync(ImageHelper.ToIRandomAccessStream(buffer));
+            if (token.IsCancellationRequested) return;
+
+            AlbumArtBitmapImage = bitmapImage;
             LightAccentColors = lightPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
             DarkAccentColors = darkPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
         }

@@ -112,7 +112,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                                 StartMs = line.StartMs,
                                 EndMs = line.EndMs,
                                 OriginalText = PhoneticHelper.ToPinyin(line.OriginalText),
-                                LyricsChars = line.LyricsChars.Select(c => new LyricsChar
+                                LyricsSyllables = line.LyricsSyllables.Select(c => new LyricsSyllable
                                 {
                                     StartMs = c.StartMs,
                                     EndMs = c.EndMs,
@@ -133,7 +133,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                                 StartMs = line.StartMs,
                                 EndMs = line.EndMs,
                                 OriginalText = PhoneticHelper.ToJyutping(line.OriginalText),
-                                LyricsChars = line.LyricsChars.Select(c => new LyricsChar
+                                LyricsSyllables = line.LyricsSyllables.Select(c => new LyricsSyllable
                                 {
                                     StartMs = c.StartMs,
                                     EndMs = c.EndMs,
@@ -157,7 +157,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                                 StartMs = line.StartMs,
                                 EndMs = line.EndMs,
                                 OriginalText = PhoneticHelper.ToRomaji(line.OriginalText),
-                                LyricsChars = line.LyricsChars.Select(c => new LyricsChar
+                                LyricsSyllables = line.LyricsSyllables.Select(c => new LyricsSyllable
                                 {
                                     StartMs = c.StartMs,
                                     EndMs = c.EndMs,

@@ -1033,6 +1033,9 @@
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>字体粗细</value>
   </data>
+  <data name="SettingsPageLyricsGlowEffect.Description" xml:space="preserve">
+    <value>为持续时间较长的音节启用发光效果</value>
+  </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>辉光效果</value>
   </data>

@@ -87,21 +87,15 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsExpander
-                        x:Uid="SettingsPageShowTitle"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xEF3D;}"
-                        IsExpanded="True">
+                    <dev:SettingsCard x:Uid="SettingsPageShowTitle" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEF3D;}">
                         <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageShowArtists">
-                                <ToggleSwitch IsEnabled="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=OneWay}" IsOn="{x:Bind AlbumArtLayoutSettings.ShowArtists, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageShowAlbum">
-                                <ToggleSwitch IsEnabled="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=OneWay}" IsOn="{x:Bind AlbumArtLayoutSettings.ShowAlbum, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                    </dev:SettingsCard>
+                    <dev:SettingsCard x:Uid="SettingsPageShowArtists" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEF3D;}">
+                        <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowArtists, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+                    <dev:SettingsCard x:Uid="SettingsPageShowAlbum" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEF3D;}">
+                        <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowAlbum, Mode=TwoWay}" />
+                    </dev:SettingsCard>
 
                 </StackPanel>
             </Grid>

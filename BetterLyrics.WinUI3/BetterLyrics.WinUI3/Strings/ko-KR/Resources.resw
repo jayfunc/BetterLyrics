@@ -1033,6 +1033,9 @@
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>글꼴 무게</value>
   </data>
+  <data name="SettingsPageLyricsGlowEffect.Description" xml:space="preserve">
+    <value>지속 시간이 긴 음절에 대해 발광 효과를 활성화합니다</value>
+  </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>글로우 효과</value>
   </data>

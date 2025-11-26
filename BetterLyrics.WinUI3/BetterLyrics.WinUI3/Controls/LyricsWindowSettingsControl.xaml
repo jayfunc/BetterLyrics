@@ -13,21 +13,32 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid ColumnSpacing="6">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+    <Grid>
+
+        <Grid x:Name="DisplayGrid" SizeChanged="DisplayGrid_SizeChanged">
             <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                 <Grid Style="{StaticResource SettingsGridStyle}">
 
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <TextBlock
-                            x:Uid="SettingsPageRecordedWindowStatus"
-                            RelativePanel.AlignLeftWithPanel="True"
-                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                x:Uid="SettingsPageRecordedWindowStatus"
+                                Grid.Column="0"
+                                Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                            <Button
+                                Grid.Column="2"
+                                Margin="0,30,0,0"
+                                Command="{x:Bind ViewModel.OpenConfigPanelCommand}"
+                                Style="{StaticResource AccentButtonStyle}">
+                                <TextBlock x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig" />
+                            </Button>
+                        </Grid>
 
                         <StackPanel Orientation="Horizontal" Spacing="3">
 
@@ -114,12 +125,40 @@
                 </Grid>
             </ScrollViewer>
         </Grid>
-        <Grid Grid.Column="1">
+
+        <Grid
+            x:Name="ConfigGrid"
+            Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+            Opacity="{x:Bind ViewModel.IsConfigPanelOpened, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
+            Translation="{x:Bind ViewModel.ConfigPanelTranslation, Mode=OneWay}">
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
+            <Grid.TranslationTransition>
+                <Vector3Transition />
+            </Grid.TranslationTransition>
 
             <Grid Padding="36,0" Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                    <TextBlock x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig"
+                            Grid.Column="0"
+                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <Button
+                            Grid.Column="2"
+                            Margin="0,30,0,0"
+                            Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
+                            Content="{ui:FontIcon FontSize=16,
+                                                  FontFamily={StaticResource IconFontFamily},
+                                                  Glyph=&#xE711;}"
+                            Style="{StaticResource AccentButtonStyle}" />
+                    </Grid>
 
                     <Pivot SelectionChanged="Pivot_SelectionChanged">
 
@@ -395,5 +434,6 @@
             </controls:SwitchPresenter>
 
         </Grid>
+
     </Grid>
 </UserControl>

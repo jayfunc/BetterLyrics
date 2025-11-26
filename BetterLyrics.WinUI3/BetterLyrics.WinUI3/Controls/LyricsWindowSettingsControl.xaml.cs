@@ -149,5 +149,10 @@ namespace BetterLyrics.WinUI3.Controls
                 }
             }
         }
+
+        private void DisplayGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ViewModel.DisplayPanelHeight = e.NewSize.Height;
+        }
     }
 }

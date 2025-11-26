@@ -137,7 +137,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static async Task<byte[]?> GetImageBytesFromUrlAsync(string url)
+        public static async Task<byte[]?> GetImageByteArrayFromUrlAsync(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
             {
@@ -184,6 +184,16 @@ namespace BetterLyrics.WinUI3.Helper
         public static IRandomAccessStream ToIRandomAccessStream(IBuffer buffer)
         {
             return buffer.AsStream().AsRandomAccessStream();
+        }
+
+        public static byte[] ToByteArray(IBuffer buffer)
+        {
+            using (var dataReader = DataReader.FromBuffer(buffer))
+            {
+                byte[] byteArray = new byte[buffer.Length];
+                dataReader.ReadBytes(byteArray);
+                return byteArray;
+            }
         }
 
         public static IRandomAccessStream ToIRandomAccessStream(byte[] arr)

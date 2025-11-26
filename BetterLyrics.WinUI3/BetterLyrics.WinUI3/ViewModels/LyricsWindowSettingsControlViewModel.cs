@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Numerics;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -16,7 +17,6 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private readonly ILiveStatesService _liveStatesService;
-        private readonly IResourceService _resourceService;
 
         [ObservableProperty]
         public partial LiveStates LiveStates { get; set; }
@@ -30,11 +30,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial ObservableCollection<string> MonitorDeviceNames { get; set; }
 
-        public LyricsWindowSettingsControlViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService, IResourceService resourceService)
+        [ObservableProperty]
+        public partial bool IsConfigPanelOpened { get; set; } = false;
+
+        [ObservableProperty]
+        public partial Vector3 ConfigPanelTranslation { get; set; } = new();
+
+        [ObservableProperty]
+        public partial double DisplayPanelHeight { get; set; } = 0;
+
+        public LyricsWindowSettingsControlViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService)
         {
             _settingsService = settingsService;
             _liveStatesService = liveStatesService;
-            _resourceService = resourceService;
 
             AppSettings = _settingsService.AppSettings;
             LiveStates = _liveStatesService.LiveStates;
@@ -76,6 +84,32 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void CreateNarrowLyricsWindowStatus()
         {
             AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.NarrowMode());
+        }
+
+        [RelayCommand]
+        private void OpenConfigPanel()
+        {
+            IsConfigPanelOpened = true;
+            ConfigPanelTranslation = new();
+        }
+
+        [RelayCommand]
+        private void CloseConfigPanel()
+        {
+            IsConfigPanelOpened = false;
+            ConfigPanelTranslation = new(0, (float)DisplayPanelHeight, 0);
+        }
+
+        partial void OnDisplayPanelHeightChanged(double value)
+        {
+            if (IsConfigPanelOpened)
+            {
+                OpenConfigPanel();
+            }
+            else
+            {
+                CloseConfigPanel();
+            }
         }
     }
 }

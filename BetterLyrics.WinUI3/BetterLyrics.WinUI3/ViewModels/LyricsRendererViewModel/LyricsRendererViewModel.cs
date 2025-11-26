@@ -57,37 +57,17 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
         private int _drawFrameCount = 0;
         private int _displayedDrawFrameCount = 0;
 
-        private SoftwareBitmap? _lastAlbumArtSwBitmap = null;
-        private SoftwareBitmap? _albumArtSwBitmap = null;
-
-        private CanvasBitmap? _lastAlbumArtCanvasBitmap = null;
-        private CanvasBitmap? _albumArtCanvasBitmap = null;
-
-        private CanvasRenderTarget? _albumArtBgRenderTarget;
-        private CanvasRenderTarget? _albumArtRenderTarget;
-
-        private CanvasBitmap? _coverAcrylicNoiseCanvasBitmap = null;
-
         private double _albumArtSize = 0f;
-        private int _songInfoHeight = 0;
 
-        private string? _lastSongTitle;
-        private string? _songTitle;
-
-        private string? _lastSongArtists;
-        private string? _songArtists;
-
-        private string? _lastSongAlbum;
-        private string? _songAlbum;
+        [ObservableProperty] public partial double AlbumArtSize { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double AlbumArtX { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double AlbumArtY { get; set; } = 0;
 
         private double _canvasWidth = 0f;
         private double _canvasHeight = 0f;
 
         private readonly double _defaultScale = 0.75f;
         private readonly double _highlightedScale = 1.0f;
-
-        private readonly double _coverRotateBaseSpeed = 0.003f;
-        private double _rotateAngle = 0f;
 
         private double _canvasTargetYScrollOffset = 0;
 
@@ -135,38 +115,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 
         private LyricsFontWeight _originalLyricsFontWeight = LyricsFontWeight.Bold;
 
-        private CanvasTextFormat _titleTextFormat = new()
-        {
-            FontSize = 18,
-            FontWeight = FontWeights.Bold,
-            HorizontalAlignment = CanvasHorizontalAlignment.Left,
-        };
-        private CanvasTextFormat _artistTextFormat = new()
-        {
-            FontSize = 16,
-            FontWeight = FontWeights.Bold,
-            HorizontalAlignment = CanvasHorizontalAlignment.Left,
-        };
-        private CanvasTextFormat _albumTextFormat = new()
-        {
-            FontSize = 16,
-            FontWeight = FontWeights.Bold,
-            HorizontalAlignment = CanvasHorizontalAlignment.Left,
-        };
         private CanvasTextFormat _debugTextFormat = new()
         {
             FontSize = 12,
             FontWeight = FontWeights.ExtraBlack,
         };
-
-        private CanvasTextLayout? _lastTitleTextLayout = null;
-        private CanvasTextLayout? _titleTextLayout = null;
-
-        private CanvasTextLayout? _lastArtistTextLayout = null;
-        private CanvasTextLayout? _artistTextLayout = null;
-
-        private CanvasTextLayout? _lastAlbumTextLayout = null;
-        private CanvasTextLayout? _albumTextLayout = null;
 
         private CanvasGeometry? _spectrumGeometry = null;
 
@@ -192,8 +145,6 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             _logger = Ioc.Default.GetRequiredService<ILogger<LyricsRendererViewModel>>();
 
             AppSettings = _settingsService.AppSettings;
-
-            UpdateSongInfoFontSize();
 
             _mediaSessionsService.LyricsChanged += MediaSessionsService_LyricsChanged;
 
@@ -231,11 +182,11 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             return GetMaxLyricsLineIndexBoundaries().Item2;
         }
 
-        private void GetLinePlayingProgress(int lineIndex, out int charStartIndex, out int charLength, out double charProgress)
+        private void GetLinePlayingProgress(int lineIndex, out int syllableStartIndex, out int syllableLength, out double syllableProgress)
         {
-            charStartIndex = 0;
-            charLength = 0;
-            charProgress = 0f;
+            syllableStartIndex = 0;
+            syllableLength = 0;
+            syllableProgress = 0f;
 
             var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(lineIndex);
             if (line == null) return;
@@ -257,45 +208,45 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             // 2. 已经超过本句
             if (now > lineEndMs)
             {
-                charProgress = 1f;
-                charStartIndex = line.OriginalText.Length - 1;
-                charLength = 1;
+                syllableProgress = 1f;
+                syllableStartIndex = line.OriginalText.Length - 1;
+                syllableLength = 1;
                 return;
             }
 
             // 3. 有逐字时间轴
-            if (line.LyricsChars != null && line.LyricsChars.Count > 1)
+            if (line.LyricsSyllables != null && line.LyricsSyllables.Count > 1)
             {
-                int charTimingsCount = line.LyricsChars.Count;
+                int charTimingsCount = line.LyricsSyllables.Count;
                 for (int i = 0; i < charTimingsCount; i++)
                 {
-                    var timing = line.LyricsChars[i];
-                    var nextTiming = line.LyricsChars.ElementAtOrDefault(i + 1);
+                    var timing = line.LyricsSyllables[i];
+                    var nextTiming = line.LyricsSyllables.ElementAtOrDefault(i + 1);
 
                     int timingEndMs;
                     if (timing.EndMs != null) timingEndMs = timing.EndMs.Value;
                     else if (nextTiming != null) timingEndMs = nextTiming.StartMs;
                     else timingEndMs = lineEndMs;
 
-                    charStartIndex = timing.StartIndex;
-                    charLength = timing.Text.Length;
+                    syllableStartIndex = timing.StartIndex;
+                    syllableLength = timing.Text.Length;
 
                     // 当前时间在某个字的高亮区间
                     if (now >= timing.StartMs && now <= timingEndMs)
                     {
                         if (timingEndMs != timing.StartMs)
                         {
-                            charProgress = (now - timing.StartMs) / (timingEndMs - timing.StartMs);
+                            syllableProgress = (now - timing.StartMs) / (timingEndMs - timing.StartMs);
                         }
                         else
                         {
-                            charProgress = 0f;
+                            syllableProgress = 0f;
                         }
                         return;
                     }
                     else if (now > timingEndMs && (nextTiming == null || now < nextTiming?.StartMs))
                     {
-                        charProgress = 1f;
+                        syllableProgress = 1f;
                         return;
                     }
                 }
@@ -314,16 +265,16 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     // 计算当前高亮到第几个字
                     double charFloatIndex = lineProgress * textLength;
                     int charIndex = (int)charFloatIndex;
-                    charStartIndex = Math.Clamp(charIndex, 0, textLength - 1);
-                    charLength = 1;
+                    syllableStartIndex = Math.Clamp(charIndex, 0, textLength - 1);
+                    syllableLength = 1;
 
                     // 当前字的进度（0~1）
-                    charProgress = charFloatIndex - charIndex;
+                    syllableProgress = charFloatIndex - charIndex;
                 }
                 else
                 {
-                    charStartIndex = textLength;
-                    charProgress = 1f;
+                    syllableStartIndex = textLength;
+                    syllableProgress = 1f;
                 }
             }
         }

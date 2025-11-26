@@ -50,7 +50,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     // 拼接空白字符后的原文
                     string originalText = string.Concat(originalTextSpans.Select(s => s.Value));
 
-                    var originalCharTimings = new List<LyricsChar>();
+                    var originalCharTimings = new List<LyricsSyllable>();
                     int originalStartIndex = 0;
                     foreach (var span in originalTextSpans)
                     {
@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                         string? sEnd = span.Attribute("end")?.Value;
                         int sStartMs = ParseTtmlTime(sBegin);
                         int sEndMs = ParseTtmlTime(sEnd);
-                        originalCharTimings.Add(new LyricsChar
+                        originalCharTimings.Add(new LyricsSyllable
                         {
                             StartMs = sStartMs,
                             EndMs = sEndMs,
@@ -77,7 +77,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                         StartMs = pStartMs,
                         EndMs = pEndMs,
                         OriginalText = originalText,
-                        LyricsChars = originalCharTimings,
+                        LyricsSyllables = originalCharTimings,
                     });
 
                     // 解析 x-role
@@ -108,7 +108,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 .ToList();
 
             string text = string.Concat(textSpans.Select(s => s.Value));
-            var charTimings = new List<LyricsChar>();
+            var charTimings = new List<LyricsSyllable>();
             int startIndex = 0;
             foreach (var span in textSpans)
             {
@@ -116,7 +116,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 string? sEnd = span.Attribute("end")?.Value;
                 int sStartMs = ParseTtmlTime(sBegin);
                 int sEndMs = ParseTtmlTime(sEnd);
-                charTimings.Add(new LyricsChar
+                charTimings.Add(new LyricsSyllable
                 {
                     StartMs = sStartMs,
                     EndMs = sEndMs,
@@ -132,7 +132,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     StartMs = pStartMs,
                     EndMs = pEndMs,
                     OriginalText = text,
-                    LyricsChars = charTimings,
+                    LyricsSyllables = charTimings,
                 });
             }
         }

@@ -9,12 +9,15 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
 using System.Numerics;
+using System.Windows.Media.Media3D;
 using Windows.Foundation;
 using Windows.Graphics.Effects;
 using Windows.UI;
+using static Vanara.PInvoke.Kernel32;
 
 namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
 {
@@ -35,9 +38,10 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                         _liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.PureColorOverlayOpacity / 100.0);
                 }
             }
-            DrawAlbumArtBackground(control, ds);
             DrawFluidBackground(control, ds);
             DrawSpectrum(control, ds);
+
+            DrawSnowEffect(ds);
 
             if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
             {
@@ -45,7 +49,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 using var blurredLyrics = new CanvasCommandList(control);
                 using (var blurredLyricsDs = blurredLyrics.CreateDrawingSession())
                 {
-                    DrawBlurredLyrics(control, blurredLyricsDs);
+                    DrawLyrics(control, blurredLyricsDs);
                 }
                 ds.DrawImage(new Transform3DEffect
                 {
@@ -55,13 +59,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
             else
             {
-                DrawBlurredLyrics(control, ds);
+                DrawLyrics(control, ds);
             }
 
-            DrawAlbumArt(control, ds);
-            DrawSongInfo(ds);
-
-            DrawSnowEffect(ds);
             DrawFogEffect(ds);
             //DrawRaindropEffect(ds, combined);
 
@@ -75,9 +75,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 {
                     GetLinePlayingProgress(
                         _playingLineIndex,
-                        out int charStartIndex,
-                        out int charLength,
-                        out double charProgress
+                        out int syllableStartIndex,
+                        out int syllableLength,
+                        out double syllableProgress
                     );
 
                     ds.DrawText(
@@ -85,9 +85,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                             $"Canvas size: {_canvasWidth}x{_canvasHeight}\n" +
                             $"FPS (Draw): {_displayedDrawFrameCount}\n" +
                             $"Playing line: {_playingLineIndex}\n" +
-                            $"Syllable start idx: {charStartIndex}\n" +
-                            $"Syllable len: {charLength}\n" +
-                            $"Syllable prog: {charProgress}\n" +
+                            $"Syllable start idx: {syllableStartIndex}\n" +
+                            $"Syllable len: {syllableLength}\n" +
+                            $"Syllable prog: {syllableProgress}\n" +
                             $"Visible lines: [{_startVisibleLineIndex}, {_endVisibleLineIndex}]\n" +
                             $"Total line count: {GetMaxLyricsLineIndexBoundaries().Item2 + 1}\n" +
                             $"Cur time: {TotalTime + TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0)}\n" +
@@ -161,112 +161,7 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        private void DrawBackgroundImgae(OpacityEffect effect, CanvasDrawingSession ds, CanvasBitmap canvasBitmap)
-        {
-            double imageWidth = (double)canvasBitmap.Size.Width;
-            double imageHeight = (double)canvasBitmap.Size.Height;
-
-            double targetSize = Math.Sqrt(Math.Pow(_canvasWidth, 2) + Math.Pow(_canvasHeight, 2));
-            double scaleFactor = targetSize / Math.Min(imageWidth, imageHeight);
-
-            double x = _canvasWidth / 2 - imageWidth * scaleFactor / 2;
-            double y = _canvasHeight / 2 - imageHeight * scaleFactor / 2;
-
-            ds.DrawImage(effect, new Vector2((float)x, (float)y));
-        }
-
-        private void DrawAlbumArtBackground(ICanvasAnimatedControl control, CanvasDrawingSession ds)
-        {
-            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings.IsCoverOverlayEnabled)
-            {
-                ds.Transform = Matrix3x2.CreateRotation((float)_rotateAngle, control.Size.ToVector2() * 0.5f);
-
-                if (_isAlbumArtBgEffectChanged && _albumArtBgEffect != null)
-                {
-                    ds.DrawImage(_albumArtBgEffect);
-                }
-                else if (!_isAlbumArtBgEffectChanged && _albumArtBgRenderTarget != null)
-                {
-                    double targetSize = Math.Sqrt(Math.Pow(_canvasWidth, 2) + Math.Pow(_canvasHeight, 2));
-                    float offsetX = (float)(_canvasWidth - targetSize) / 2;
-                    float offsetY = (float)(_canvasHeight - targetSize) / 2;
-
-                    ds.DrawImage(_albumArtBgRenderTarget, new Vector2(offsetX, offsetY));
-                }
-
-                ds.Transform = Matrix3x2.Identity;
-            }
-        }
-
-        private void DrawAlbumArt(ICanvasAnimatedControl control, CanvasDrawingSession ds)
-        {
-            // 专辑图封面正在变动，需实时绘制
-            if (_isAlbumArtEffectChanged && _albumArtEffect != null)
-            {
-                ds.DrawImage(new OpacityEffect
-                {
-                    Source = _albumArtEffect,
-                    Opacity = (float)_albumArtOpacityTransition.Value
-                }, new Vector2((float)_albumArtXTransition.Value, (float)_albumArtYTransition.Value));
-            }
-            // 专辑图封面不再变动，使用已保存的绘制
-            else if (!_isAlbumArtEffectChanged && _albumArtRenderTarget != null)
-            {
-                // 这里给一个相反的偏移以恢复位置
-                ds.DrawImage(new OpacityEffect
-                {
-                    Source = _albumArtRenderTarget,
-                    Opacity = (float)_albumArtOpacityTransition.Value
-                }, new Vector2((float)_albumArtXTransition.Value, (float)_albumArtYTransition.Value) -
-                    control.Size.ToVector2() / 2 + new Vector2((float)_albumArtSize, (float)_albumArtSize) / 2);
-            }
-        }
-
-        private void DrawSongInfo(CanvasDrawingSession ds)
-        {
-            if (_maxSongInfoWidth <= 0)
-            {
-                return;
-            }
-
-            DrawSingleSongInfo(ds, _lastTitleTextLayout, _lastArtistTextLayout, _lastAlbumTextLayout, 1 - _songInfoOpacityTransition.Value);
-            DrawSingleSongInfo(ds, _titleTextLayout, _artistTextLayout, _albumTextLayout, _songInfoOpacityTransition.Value);
-        }
-
-        private void DrawSingleSongInfo(CanvasDrawingSession ds, CanvasTextLayout? titleLayout, CanvasTextLayout? artistLayout, CanvasTextLayout? albumLayout, double opacity)
-        {
-            if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle && titleLayout != null)
-            {
-                double y = _titleYTransition.Value;
-
-                ds.DrawTextLayout(
-                    titleLayout,
-                    new Vector2((float)_titleXTransition.Value, (float)y),
-                    _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 255 * opacity)));
-
-                y += titleLayout.LayoutBounds.Height;
-
-                if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists && artistLayout != null)
-                {
-                    ds.DrawTextLayout(
-                        artistLayout,
-                        new Vector2((float)_titleXTransition.Value, (float)y),
-                        _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 128 * opacity)));
-
-                    y += artistLayout.LayoutBounds.Height;
-                }
-
-                if (_liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum && albumLayout != null)
-                {
-                    ds.DrawTextLayout(
-                        albumLayout,
-                        new Vector2((float)_titleXTransition.Value, (float)y),
-                        _bgFontColor.WithAlpha((byte)(_albumArtOpacityTransition.Value * 64 * opacity)));
-                }
-            }
-        }
-
-        private void DrawBlurredLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        private void DrawLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
             var currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
 
@@ -275,8 +170,9 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                 return;
             }
 
-            var rotationY = currentPlayingLine.OriginalPosition
-                .WithX(_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0);
+            var lyricsEffectSettings = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings;
+
+            var rotationY = currentPlayingLine.OriginalPosition.WithX(lyricsEffectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0);
 
             for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
             {
@@ -299,81 +195,50 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
                     Matrix3x2.CreateRotation((float)line.AngleTransition.Value, rotationY) *
                     Matrix3x2.CreateTranslation((float)_lyricsX, (float)yOffset);
 
-                using var combined = new CanvasCommandList(control);
-                using (var combinedDs = combined.CreateDrawingSession())
+                using var textOnlyLayer = new CanvasCommandList(control);
+                using (var textOnlyLayerDs = textOnlyLayer.CreateDrawingSession())
                 {
-                    // 先铺一层带默认透明度的已经加了模糊效果的歌词作为最底层（背景歌词层次）
-                    using var backgroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
-                       _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth, _bgFontColor);
+                    var strokeWidth = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth;
 
-                    using var backgroundEffect = CanvasHelper.CreateBackgroundEffect(line, backgroundFontEffect, _lyricsOpacityTransition.Value);
-                    combinedDs.DrawImage(backgroundEffect);
-
-                    if (line.HighlightOpacityTransition.Value != 0)
+                    // 描边
+                    if (strokeWidth > 0)
                     {
-                        GetLinePlayingProgress(i, out int charStartIndex, out int charLength, out double charProgress);
-
-                        using var charMask = CanvasHelper.CreateCharMask(control, line, charStartIndex, charLength, charProgress);
-                        using var lineStartToCharMask = CanvasHelper.CreateLineStartToCharMask(control, line, charStartIndex, charLength, charProgress,
-                            _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsLyricsLineFadeEnabled);
-                        using var lineMask = CanvasHelper.CreateLineMask(control, line);
-
-                        var opacity = (float)Math.Clamp(line.HighlightOpacityTransition.Value * _lyricsOpacityTransition.Value, 0, 1);
-
-                        using var foregroundFontEffect = CanvasHelper.CreateFontEffect(line, control, _strokeFontColor,
-                            _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth, _fgFontColor);
-
-                        using (var layer = combinedDs.CreateLayer(opacity))
+                        if (line.PhoneticCanvasGeometry != null)
                         {
-                            if (line.PhoneticText != "" && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.PhoneticLyricsHighlightAmount != 0)
-                            {
-                                using var phoneticHighlightMask = CanvasHelper.CreatePhoneticHighlightMask(control, line);
-                                using var foregroundPhoneticHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, phoneticHighlightMask,
-                                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.PhoneticLyricsHighlightAmount / 100.0);
-                                combinedDs.DrawImage(foregroundPhoneticHighlightEffect);
-                            }
-                            if (line.TranslatedText != "" && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.TranslatedLyricsHighlightAmount != 0)
-                            {
-                                using var translatedHighlightMask = CanvasHelper.CreateTranslatedHighlightMask(control, line);
-                                using var foregroundTranslatedHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, translatedHighlightMask,
-                                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.TranslatedLyricsHighlightAmount / 100.0);
-                                combinedDs.DrawImage(foregroundTranslatedHighlightEffect);
-                            }
-                            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsLyricsShadowEnabled)
-                            {
-                                var shadowEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
-                                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsShadowScope);
-                                using var foregroundShadowEffect = CanvasHelper.CreateForegroundShadowEffect(foregroundFontEffect, shadowEffectMask,
-                                    _albumArtAccentColor1Transition.Value, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsShadowAmount);
-                                combinedDs.DrawImage(foregroundShadowEffect);
-                            }
-                            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled)
-                            {
-                                var blurEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
-                                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsGlowEffectScope);
-                                using var foregroundBlurEffect = CanvasHelper.CreateForegroundBlurEffect(foregroundFontEffect, blurEffectMask,
-                                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsGlowEffectAmount);
-                                combinedDs.DrawImage(foregroundBlurEffect);
-                            }
-                            if (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.OriginalLyricsHighlightAmount != 0)
-                            {
-                                var highlightEffectMask = CanvasHelper.GetAlphaMask(control, charMask, lineStartToCharMask, lineMask,
-                                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.OriginalLyricsHighlightScope);
-                                using var foregroundHighlightEffect = CanvasHelper.CreateForegroundHighlightEffect(foregroundFontEffect, highlightEffectMask,
-                                    _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.OriginalLyricsHighlightAmount / 100.0);
-                                combinedDs.DrawImage(foregroundHighlightEffect);
-                            }
+                            textOnlyLayerDs.DrawGeometry(line.PhoneticCanvasGeometry, line.PhoneticPosition, _strokeFontColor, strokeWidth);
                         }
+                        if (line.OriginalCanvasGeometry != null)
+                        {
+                            textOnlyLayerDs.DrawGeometry(line.OriginalCanvasGeometry, line.OriginalPosition, _strokeFontColor, strokeWidth);
+                        }
+                        if (line.TranslatedCanvasGeometry != null)
+                        {
+                            textOnlyLayerDs.DrawGeometry(line.TranslatedCanvasGeometry, line.TranslatedPosition, _strokeFontColor, strokeWidth);
+                        }
+                    }
+
+                    // 绘制文本（填充）
+                    if (line.PhoneticCanvasTextLayout != null)
+                    {
+                        textOnlyLayerDs.DrawTextLayout(line.PhoneticCanvasTextLayout, line.PhoneticPosition, _bgFontColor);
+                    }
+                    if (line.OriginalCanvasTextLayout != null)
+                    {
+                        textOnlyLayerDs.DrawTextLayout(line.OriginalCanvasTextLayout, line.OriginalPosition, _bgFontColor);
+                    }
+                    if (line.TranslatedCanvasTextLayout != null)
+                    {
+                        textOnlyLayerDs.DrawTextLayout(line.TranslatedCanvasTextLayout, line.TranslatedPosition, _bgFontColor);
                     }
                 }
 
-                if (i == _playingLineIndex && _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.IsLyricsFloatAnimationEnabled)
+                if (i == _playingLineIndex)
                 {
-                    DrawWordByWordFloating(ds, combined, line, i);
+                    DrawPlayingLine(control, ds, textOnlyLayer, line, i);
                 }
                 else
                 {
-                    ds.DrawImage(combined);
+                    DrawUnPlayingLine(ds, textOnlyLayer, line);
                 }
 
                 // Reset scale
@@ -381,205 +246,258 @@ namespace BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel
             }
         }
 
-        public void DrawWordByWordFloating(
-            CanvasDrawingSession ds,
-            ICanvasImage sourceImage,
-            LyricsLine line,
-            int lineIndex)
+        private void DrawPlayingLine(ICanvasAnimatedControl control, CanvasDrawingSession ds, ICanvasImage textOnlyLayer, LyricsLine line, int lineIndex)
         {
-            GetLinePlayingProgress(lineIndex, out int charStartIndex, out int charLength, out double charProgress);
+            var lyricsEffectSettings = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings;
 
-            var layout = line.OriginalCanvasTextLayout;
-            if (layout == null) return;
+            var lineBlurAmount = line.BlurAmountTransition.Value;
 
-            foreach (var lyricsChar in line.LyricsChars)
+            var phoneticTextOpacity = line.PhoneticTextOpacityTransition.Value;
+            var originalTextOpacity = line.OriginalTextOpacityTransition.Value;
+            var translatedTextOpacity = line.TranslatedTextOpacityTransition.Value;
+
+            var phoneticTextLayout = line.PhoneticCanvasTextLayout;
+            if (phoneticTextLayout != null)
             {
-                var regions = layout.GetCharacterRegions(lyricsChar.StartIndex, lyricsChar.Text.Length);
+                Rect bounds = phoneticTextLayout.LayoutBounds;
 
-                byte rgb = (byte)(lyricsChar.StartIndex * 32 % 255);
-                Color color = Color.FromArgb(255, rgb, rgb, rgb);
-
-                var floatAmount = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings.LyricsFloatAmount;
-                floatAmount = 8;
-                double floatOffset;
-                double scaleOffset;
-
-                var lastingTimeMs = lyricsChar.EndMs - lyricsChar.StartMs;
-
-                // 已经跳完了的
-                if (lyricsChar.StartIndex < charStartIndex)
+                var rect = new Rect(
+                    bounds.X + line.PhoneticPosition.X,
+                    bounds.Y + line.PhoneticPosition.Y,
+                    bounds.Width,
+                    bounds.Height
+                );
+                ds.DrawImage(new GaussianBlurEffect
                 {
-                    floatOffset = 0;
-                    scaleOffset = 0;
-                }
-                // 正在跳的
-                else if (lyricsChar.StartIndex == charStartIndex)
-                {
-                    floatOffset = -floatAmount + floatAmount * Math.Sin(charProgress * Math.PI / 2);
-                    if (lastingTimeMs >= 500)
-                    {
-                        scaleOffset = floatAmount * Math.Sin(charProgress * Math.PI) / 25;
-                    }
-                    else
-                    {
-                        scaleOffset = 0;
-                    }
-                }
-                // 等待跳的
-                else
-                {
-                    floatOffset = -floatAmount;
-                    scaleOffset = 0;
-                }
-
-                foreach (var region in regions)
-                {
-                    Rect bounds = region.LayoutBounds;
-
-                    Rect sourceRect = new Rect(
-                        bounds.X + line.OriginalPosition.X,
-                        bounds.Y + line.OriginalPosition.Y,
-                        bounds.Width,
-                        bounds.Height
-                    );
-
-                    double originalWidth = bounds.Width;
-                    double originalHeight = bounds.Height;
-
-                    double scaledWidth = originalWidth * (1 + scaleOffset);
-                    double scaledHeight = originalHeight * (1 + scaleOffset);
-
-                    double scaleOffsetX = (scaledWidth - originalWidth) / 2;
-                    double scaleOffsetY = (scaledHeight - originalHeight) / 2;
-
-                    Rect destRect = new Rect(
-                        sourceRect.X - scaleOffsetX,
-                        sourceRect.Y + scaleOffsetY - floatOffset,
-                        scaledWidth,
-                        scaledHeight
-                    );
-
-                    ds.DrawImage(sourceImage, destRect, sourceRect, 1f);
-                }
+                    BlurAmount = (float)lineBlurAmount,
+                    Source = textOnlyLayer,
+                    BorderMode = EffectBorderMode.Soft
+                }, rect, rect, (float)phoneticTextOpacity);
             }
-        }
 
-        public void DrawBlurredLyrics2(ICanvasAnimatedControl control, CanvasDrawingSession ds)
-        {
-            var currentPlayingLine = _currentLyricsData?.LyricsLines.ElementAtOrDefault(_playingLineIndex);
-            if (currentPlayingLine == null) return;
-
-            var settings = _liveStatesService.LiveStates.LyricsWindowStatus;
-            var effectSettings = settings.LyricsEffectSettings;
-            bool isKaraokeEnabled = effectSettings.IsLyricsLineFadeEnabled;
-            var styleSettings = settings.LyricsStyleSettings; // 获取样式设置(描边宽等)
-
-            for (int i = _startVisibleLineIndex; i <= _endVisibleLineIndex; i++)
+            var originalTextLayout = line.OriginalCanvasTextLayout;
+            if (originalTextLayout != null)
             {
-                var line = _currentLyricsData?.LyricsLines.ElementAtOrDefault(i);
-                if (line == null || line.OriginalCanvasTextLayout == null) continue;
+                GetLinePlayingProgress(lineIndex, out int syllableStartIndex, out int syllableLength, out double syllableProgress);
 
-                var textLayout = line.OriginalCanvasTextLayout;
+                var curCharIndex = syllableStartIndex + syllableLength * syllableProgress; // 当前唱的字符（相对于整行歌词，非子行）
+                float fadeWidth = (1f / line.OriginalText.Length) * 0.5f; // 渐变边缘宽度：半个字
 
-                // === 1. 恢复您原始的矩阵变换逻辑 ===
-                // 不要减去 CenterPosition，保持和您原始代码一致
-                double yOffset = line.YOffsetTransition.Value + _canvasHeight / 2 + _lyricsYTransition.Value;
-                float fanAngleX = effectSettings.FanLyricsAngle < 0 ? (float)_maxLyricsWidth : 0;
-
-                ds.Transform =
-                    Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition)
-                    * Matrix3x2.CreateRotation((float)line.AngleTransition.Value,
-                        currentPlayingLine.OriginalPosition.WithX(fanAngleX))
-                    * Matrix3x2.CreateTranslation((float)_lyricsX, (float)yOffset);
-
-                // === 2. 坐标关键：必须使用 line.OriginalPosition ===
-                // CanvasHelper 里是画在 OriginalPosition 上的，我们这里必须一致
-                var drawPos = line.OriginalPosition;
-
-                // A. 绘制阴影 (优化：直接绘制，替代 ShadowEffect)
-                if (effectSettings.IsLyricsShadowEnabled)
+                var lineRegions = originalTextLayout.GetCharacterRegions(0, line.OriginalText.Length);
+                var charCountUpToCurRegion = 0;
+                foreach (var subLineRegion in lineRegions)
                 {
-                    var shadowColor = _albumArtAccentColor1Transition.Value.WithAlpha((byte)(effectSettings.LyricsShadowAmount * 255));
-                    // 偏移 2px 绘制阴影
-                    ds.DrawTextLayout(textLayout, drawPos.X + 2f, drawPos.Y + 2f, shadowColor);
-                }
+                    var subLineLayoutBounds = subLineRegion.LayoutBounds;
+                    charCountUpToCurRegion += subLineRegion.CharacterCount;
 
-                // B. 绘制描边 (如果设置里有)
-                // 对应 CanvasHelper.CreateFontEffect 里的 stroke 逻辑
-                if (styleSettings.LyricsFontStrokeWidth > 0)
-                {
-                    // 注意：DrawTextLayout 不支持直接描边，需要用 DrawGeometry
-                    // 如果这一步很卡，可以考虑去掉描边，或者只对当前行描边
-                    if (line.OriginalCanvasGeometry != null)
+                    Rect subLineRect = new Rect(
+                        subLineLayoutBounds.X + line.OriginalPosition.X,
+                        subLineLayoutBounds.Y + line.OriginalPosition.Y,
+                        subLineLayoutBounds.Width,
+                        subLineLayoutBounds.Height
+                    );
+
+                    using (var maskLayer = new CanvasCommandList(control))
                     {
-                        ds.DrawGeometry(line.OriginalCanvasGeometry, drawPos, _strokeFontColor, styleSettings.LyricsFontStrokeWidth);
-                    }
-                }
-
-                // C. 绘制底层文本 (底色)
-                // 对应 CanvasHelper 里的 DrawTextLayout
-                var baseColor = _strokeFontColor.WithAlpha((byte)(_strokeFontColor.A * _lyricsOpacityTransition.Value));
-                ds.DrawTextLayout(textLayout, drawPos, baseColor);
-
-
-                // D. 绘制高亮/卡拉OK效果 (核心优化点)
-                if (line.HighlightOpacityTransition.Value > 0)
-                {
-                    GetLinePlayingProgress(i, out int charStartIndex, out int charLength, out double charProgress);
-
-                    // 整行高亮或非逐字模式
-                    if (charStartIndex >= line.OriginalText.Length || !isKaraokeEnabled)
-                    {
-                        var hlColor = _fgFontColor.WithAlpha((byte)(_fgFontColor.A * line.HighlightOpacityTransition.Value));
-                        ds.DrawTextLayout(textLayout, drawPos, hlColor);
-                    }
-                    else
-                    {
-                        // === 计算裁剪区域 (照搬 CreateCharMask 的逻辑) ===
-                        var regions = textLayout.GetCharacterRegions(charStartIndex, 1);
-
-                        // 默认裁剪宽度覆盖到当前字之前
-                        double validWidth = 0;
-                        if (regions.Length > 0)
+                        using (var maskLayerDs = maskLayer.CreateDrawingSession())
                         {
-                            var region = regions[0];
-                            // CanvasHelper 里的逻辑：region.LayoutBounds.X 是相对于 Layout 左上角的
-                            // highlightWidth = TotalWidth * Progress
-                            double highlightWidth = region.LayoutBounds.Width * charProgress;
+                            float currentPos = (float)((curCharIndex - subLineRegion.CharacterIndex) / subLineRegion.CharacterCount);
+                            currentPos = Math.Clamp(currentPos, 0, 1 + fadeWidth);
 
-                            // 当前高亮的总右边界 = 当前字左边 + 当前字播放过的宽度
-                            validWidth = region.LayoutBounds.X + highlightWidth;
-                        }
-                        else if (charStartIndex > 0)
-                        {
-                            // 容错：如果取不到当前字区域（例如空格），取上一个字的右边缘
-                            var prevRegions = textLayout.GetCharacterRegions(charStartIndex - 1, 1);
-                            if (prevRegions.Length > 0) validWidth = prevRegions[0].LayoutBounds.Right;
-                        }
-
-                        if (validWidth > 0)
-                        {
-                            // === 创建 Layer 进行裁剪 ===
-                            // 裁剪矩形的 X/Y 必须加上 drawPos (OriginalPosition)
-                            // 因为 CreateLayer 是基于当前 Transform 的全局坐标
-                            var clipRect = new Rect(
-                                drawPos.X,              // 从文字绘制起点的 X 开始
-                                drawPos.Y,              // 从文字绘制起点的 Y 开始
-                                validWidth,             // 宽度
-                                textLayout.LayoutBounds.Height // 高度
-                            );
-
-                            using (ds.CreateLayer(1.0f, clipRect))
+                            using (var maskBrush = new CanvasLinearGradientBrush(ds,
+                            [
+                                new CanvasGradientStop { Position = 0, Color = Colors.White.WithAlpha((byte)(255 * originalTextOpacity)) }, // 左侧：亮
+                                new CanvasGradientStop { Position = currentPos, Color = Colors.White.WithAlpha((byte)(255 * originalTextOpacity)) },
+                                new CanvasGradientStop { Position = currentPos + fadeWidth, Color = Color.FromArgb((byte)(255 * Math.Min(0.3, originalTextOpacity)), 255, 255, 255) }, // 过渡到暗
+                                new CanvasGradientStop { Position = 1 + fadeWidth, Color = Color.FromArgb((byte)(255 * Math.Min(0.3, originalTextOpacity)), 255, 255, 255) } // 右侧：暗
+                            ]))
                             {
-                                var hlColor = _fgFontColor.WithAlpha((byte)(_fgFontColor.A * line.HighlightOpacityTransition.Value));
-                                ds.DrawTextLayout(textLayout, drawPos, hlColor);
+                                if (maskBrush != null)
+                                {
+                                    maskBrush.StartPoint = new Vector2((float)subLineRect.X, (float)subLineRect.Y);
+                                    maskBrush.EndPoint = new Vector2((float)(subLineRect.X + subLineRect.Width), (float)subLineRect.Y);
+
+                                    maskLayerDs.FillRectangle(subLineRect, maskBrush);
+                                }
+                            }
+                        }
+
+                        using var textWithOpacityLayer = new AlphaMaskEffect
+                        {
+                            Source = new CropEffect
+                            {
+                                Source = textOnlyLayer,
+                                SourceRectangle = subLineRect,
+                                BorderMode = EffectBorderMode.Soft,
+                            },
+                            AlphaMask = maskLayer,
+                        };
+
+                        for (int i = subLineRegion.CharacterIndex; i < subLineRegion.CharacterIndex + subLineRegion.CharacterCount; i++)
+                        {
+                            int curCharIndexInt = (int)Math.Floor(curCharIndex);
+
+                            var charRegions = originalTextLayout.GetCharacterRegions(i, 1);
+                            if (charRegions.Length > 0)
+                            {
+                                // START 处理浮动动画
+                                double floatOffset = 0;
+                                double targetFloatOffset = 2;
+                                if (lyricsEffectSettings.IsLyricsFloatAnimationEnabled)
+                                {
+                                    if (i < curCharIndexInt)
+                                    {
+                                        floatOffset = 0;
+                                    }
+                                    else if (i == curCharIndexInt)
+                                    {
+                                        var charProgress = curCharIndex - curCharIndexInt;
+                                        floatOffset = -targetFloatOffset + charProgress * targetFloatOffset;
+                                    }
+                                    else
+                                    {
+                                        floatOffset = -targetFloatOffset;
+                                    }
+                                }
+                                // END 处理浮动动画
+
+                                var charRegion = charRegions.FirstOrDefault();
+                                var charLayoutBounds = charRegion.LayoutBounds;
+
+                                var sourceCharRect = new Rect(
+                                    charLayoutBounds.X + line.OriginalPosition.X,
+                                    charLayoutBounds.Y + line.OriginalPosition.Y,
+                                    charLayoutBounds.Width,
+                                    charLayoutBounds.Height
+                                );
+
+                                // START 处理缩放、辉光动画
+                                double scale = 1;
+                                double glow = 0;
+                                var parentSyllable = line.LyricsSyllables.FirstOrDefault(x => x.StartIndex <= i && i < x.StartIndex + x.Text.Length);
+                                if (parentSyllable != null && parentSyllable.IsLongDuration && parentSyllable.StartIndex == syllableStartIndex)
+                                {
+                                    if (lyricsEffectSettings.IsLyricsScaleEffectEnabled)
+                                    {
+                                        scale += Math.Sin(syllableProgress * Math.PI) * 0.15;
+                                    }
+                                    if (lyricsEffectSettings.IsLyricsGlowEffectEnabled)
+                                    {
+                                        glow = Math.Sin(syllableProgress * Math.PI) * 8;
+                                    }
+                                }
+                                // END 处理缩放、辉光动画
+
+                                using (var charWithOpacityLayer = new CropEffect
+                                {
+                                    Source = textWithOpacityLayer,
+                                    SourceRectangle = sourceCharRect,
+                                    BorderMode = EffectBorderMode.Soft,
+                                })
+                                {
+                                    var destCharRect = sourceCharRect.Scale(scale).AddY(-floatOffset);
+
+                                    if (glow > 0)
+                                    {
+                                        ds.DrawImage(new GaussianBlurEffect
+                                        {
+                                            Source = charWithOpacityLayer,
+                                            BlurAmount = (float)glow,
+                                            BorderMode = EffectBorderMode.Soft,
+                                        }, destCharRect.Extend(16), sourceCharRect.Extend(16));
+                                    }
+                                    ds.DrawImage(charWithOpacityLayer, destCharRect, sourceCharRect);
+                                }
+
                             }
                         }
                     }
                 }
+            }
 
-                // 重置变换，准备画下一行
-                ds.Transform = Matrix3x2.Identity;
+            var translatedTextLayout = line.TranslatedCanvasTextLayout;
+            if (translatedTextLayout != null)
+            {
+                Rect bounds = translatedTextLayout.LayoutBounds;
+
+                var rect = new Rect(
+                    bounds.X + line.TranslatedPosition.X,
+                    bounds.Y + line.TranslatedPosition.Y,
+                    bounds.Width,
+                    bounds.Height
+                );
+                ds.DrawImage(new GaussianBlurEffect
+                {
+                    BlurAmount = (float)lineBlurAmount,
+                    Source = textOnlyLayer,
+                    BorderMode = EffectBorderMode.Soft
+                }, rect, rect, (float)translatedTextOpacity);
+            }
+        }
+
+        private void DrawUnPlayingLine(CanvasDrawingSession ds, ICanvasImage textOnlyLayer, LyricsLine line)
+        {
+            var lineBlurAmount = line.BlurAmountTransition.Value;
+
+            var phoneticTextOpacity = line.PhoneticTextOpacityTransition.Value;
+            var originalTextOpacity = line.OriginalTextOpacityTransition.Value;
+            var translatedTextOpacity = line.TranslatedTextOpacityTransition.Value;
+
+            var phoneticTextLayout = line.PhoneticCanvasTextLayout;
+            if (phoneticTextLayout != null)
+            {
+                Rect bounds = phoneticTextLayout.LayoutBounds;
+
+                var rect = new Rect(
+                    bounds.X + line.PhoneticPosition.X,
+                    bounds.Y + line.PhoneticPosition.Y,
+                    bounds.Width,
+                    bounds.Height
+                );
+                ds.DrawImage(new GaussianBlurEffect
+                {
+                    BlurAmount = (float)lineBlurAmount,
+                    Source = textOnlyLayer,
+                    BorderMode = EffectBorderMode.Soft
+                }, rect, rect, (float)phoneticTextOpacity);
+            }
+
+            var originalTextLayout = line.OriginalCanvasTextLayout;
+            if (originalTextLayout != null)
+            {
+                Rect bounds = originalTextLayout.LayoutBounds;
+
+                var rect = new Rect(
+                    bounds.X + line.OriginalPosition.X,
+                    bounds.Y + line.OriginalPosition.Y,
+                    bounds.Width,
+                    bounds.Height
+                );
+                ds.DrawImage(new GaussianBlurEffect
+                {
+                    BlurAmount = (float)lineBlurAmount,
+                    Source = textOnlyLayer,
+                    BorderMode = EffectBorderMode.Soft
+                }, rect, rect, (float)originalTextOpacity);
+            }
+
+            var translatedTextLayout = line.TranslatedCanvasTextLayout;
+            if (translatedTextLayout != null)
+            {
+                Rect bounds = translatedTextLayout.LayoutBounds;
+
+                var rect = new Rect(
+                    bounds.X + line.TranslatedPosition.X,
+                    bounds.Y + line.TranslatedPosition.Y,
+                    bounds.Width,
+                    bounds.Height
+                );
+                ds.DrawImage(new GaussianBlurEffect
+                {
+                    BlurAmount = (float)lineBlurAmount,
+                    Source = textOnlyLayer,
+                    BorderMode = EffectBorderMode.Soft
+                }, rect, rect, (float)translatedTextOpacity);
             }
         }
 
