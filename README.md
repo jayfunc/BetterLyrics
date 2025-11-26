@@ -40,6 +40,8 @@ BetterLyrics
 
 **_[中文版 README 请点按此处](https://github.com/jayfunc/BetterLyrics/blob/dev/README.CN.md)_**
 
+<mark>**_This project is under active development; unexpected issues may occur._**</mark>
+
 </div>
 
 ## 🎉 This project was featured by SSPAI!
