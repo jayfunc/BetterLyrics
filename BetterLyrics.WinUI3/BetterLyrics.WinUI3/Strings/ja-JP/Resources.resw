@@ -1033,6 +1033,9 @@
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>フォント重量</value>
   </data>
+  <data name="SettingsPageLyricsGlowEffect.Description" xml:space="preserve">
+    <value>Enable glow effect for syllables with long duration</value>
+  </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>グロー効果</value>
   </data>
@@ -1074,6 +1077,12 @@
   </data>
   <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
     <value>右</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <value>Enable scaling for syllables with long duration</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>Scale effect</value>
   </data>
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
     <value>Best match</value>
