@@ -25,7 +25,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private int _langIndex = 0;
         private List<LyricsData> _lyricsDataArr = [];
 
-        public LyricsData? CurrentLyricsData => _lyricsDataArr.ElementAtOrDefault(_langIndex);
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsData? CurrentLyricsData { get; private set; }
 
         public event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
 
@@ -35,15 +35,17 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         [ObservableProperty] public partial bool IsTranslating { get; set; } = false;
 
+        private void SetCurrentLyricsData()
+        {
+            CurrentLyricsData = _lyricsDataArr.ElementAtOrDefault(_langIndex);
+        }
+
         private async Task RefreshTranslationAsync(CancellationToken token)
         {
             TranslationSearchProvider = null;
             _lyricsDataArr.ElementAtOrDefault(0)?.ClearTranslatedText();
 
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-            {
-                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
-            });
+            SetCurrentLyricsData();
 
             IsTranslating = true;
 
@@ -53,10 +55,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             IsTranslating = false;
 
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-            {
-                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
-            });
+            SetCurrentLyricsData();
+
         }
 
         private async Task SetTranslatedTextAsync(CancellationToken token)
@@ -86,7 +86,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 {
                     _logger.LogInformation("Found translated text in lyrics data at index {FoundIndex}", found);
 
-                    _lyricsDataArr.FirstOrDefault()?.SetTranslatedText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                    _lyricsDataArr.FirstOrDefault()?.SetTranslatedText(_lyricsDataArr[found], 50);
                     TranslationSearchProvider = CurrentLyricsSearchResult?.Provider.ToTranslationSearchProvider();
                 }
                 else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         if (token.IsCancellationRequested) return;
                         if (translated == string.Empty) return;
 
-                        _lyricsDataArr.FirstOrDefault()?.SetTranslation(translated, _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator);
+                        _lyricsDataArr.FirstOrDefault()?.SetTranslation(translated);
 
                         TranslationSearchProvider = Enums.TranslationSearchProvider.LibreTranslate;
                     }
@@ -141,7 +141,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (found >= 0)
             {
                 _logger.LogInformation("Found phonetic text in lyrics data at index {FoundIndex}", found);
-                _lyricsDataArr.FirstOrDefault()?.SetPhoneticText(_lyricsDataArr[found], _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsTranslationSeparator, 50);
+                _lyricsDataArr.FirstOrDefault()?.SetPhoneticText(_lyricsDataArr[found], 50);
             }
 
         }
@@ -153,10 +153,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             CurrentLyricsSearchResult = null;
             _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
 
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-            {
-                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
-            });
+            SetCurrentLyricsData();
 
             if (CurrentSongInfo != null)
             {

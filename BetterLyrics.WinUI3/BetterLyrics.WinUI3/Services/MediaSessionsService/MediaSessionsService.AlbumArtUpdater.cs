@@ -63,9 +63,10 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             await bitmapImage.SetSourceAsync(ImageHelper.ToIRandomAccessStream(buffer));
             if (token.IsCancellationRequested) return;
 
-            AlbumArtBitmapImage = bitmapImage;
             LightAccentColors = lightPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
             DarkAccentColors = darkPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+
+            AlbumArtBitmapImage = bitmapImage;
         }
     }
 }

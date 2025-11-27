@@ -24,7 +24,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontColorType LyricsStrokeFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontWeight LyricsFontWeight { get; set; } = LyricsFontWeight.Bold;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsLineSpacingFactor { get; set; } = 0.5;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsTranslationSeparator { get; set; } = StringHelper.NewLine;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCJKFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsWesternFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
 
@@ -48,7 +47,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsStrokeFontColorType = this.LyricsStrokeFontColorType,
                 LyricsFontWeight = this.LyricsFontWeight,
                 LyricsLineSpacingFactor = this.LyricsLineSpacingFactor,
-                LyricsTranslationSeparator = this.LyricsTranslationSeparator,
                 LyricsCJKFontFamily = this.LyricsCJKFontFamily,
                 LyricsWesternFontFamily = this.LyricsWesternFontFamily,
             };

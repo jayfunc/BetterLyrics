@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
-        public void SetTranslatedText(LyricsData translationData, string separator, int toleranceMs = 0)
+        public void SetTranslatedText(LyricsData translationData, int toleranceMs = 0)
         {
             foreach (var line in LyricsLines)
             {
@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
-        public void SetPhoneticText(LyricsData phoneticData, string separator, int toleranceMs = 0)
+        public void SetPhoneticText(LyricsData phoneticData, int toleranceMs = 0)
         {
             foreach (var line in LyricsLines)
             {
@@ -89,7 +89,7 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
-        public void SetTranslation(string translation, string separator)
+        public void SetTranslation(string translation)
         {
             List<string> translationArr = translation.Split(StringHelper.NewLine).ToList();
             int i = 0;

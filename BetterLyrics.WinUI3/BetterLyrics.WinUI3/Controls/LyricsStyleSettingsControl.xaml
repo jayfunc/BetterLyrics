@@ -218,13 +218,6 @@
                             Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsTranslationSeparator" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF464;}">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <TextBox AcceptsReturn="True" Text="{x:Bind LyricsStyleSettings.LyricsTranslationSeparator, Mode=TwoWay}" />
-                            <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
-                        </StackPanel>
-                    </dev:SettingsCard>
-
                 </StackPanel>
             </Grid>
         </ScrollViewer>
