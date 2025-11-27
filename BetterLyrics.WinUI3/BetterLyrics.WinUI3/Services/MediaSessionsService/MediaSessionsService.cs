@@ -714,14 +714,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         public void Receive(PropertyChangedMessage<string> message)
         {
-            if (message.Sender is LyricsStyleSettings)
-            {
-                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsTranslationSeparator))
-                {
-                    UpdateTranslations();
-                }
-            }
-            else if (message.Sender is TranslationSettings)
+            if (message.Sender is TranslationSettings)
             {
                 if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageCode))
                 {

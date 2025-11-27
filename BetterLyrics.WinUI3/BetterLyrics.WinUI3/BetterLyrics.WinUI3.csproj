@@ -65,7 +65,7 @@
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
 		<PackageReference Include="csharp-kana" Version="1.0.2" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
-		<PackageReference Include="DevWinUI.Controls" Version="9.5.0" />
+		<PackageReference Include="DevWinUI.Controls" Version="9.6.0" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.0" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.2" />
@@ -80,7 +80,7 @@
 		<PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
 		<PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="9.0.3-dev-02320" />
+		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="System.Drawing.Common" Version="10.0.0" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.0" />
@@ -93,7 +93,7 @@
 		<PackageReference Include="Vanara.Windows.Shell" Version="4.2.1" />
 		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
 		<PackageReference Include="WinUIEx" Version="2.9.0" />
-		<PackageReference Include="z440.atl.core" Version="7.8.0" />
+		<PackageReference Include="z440.atl.core" Version="7.9.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />

@@ -13,7 +13,6 @@ using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -116,7 +115,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<LyricsPageViewModel>()
                     .AddSingleton<MusicGalleryViewModel>()
-                    .AddSingleton<LyricsRendererViewModel>()
+                    //.AddSingleton<LyricsRendererViewModel>()
                     .AddSingleton<AboutControlViewModel>()
                     .BuildServiceProvider()
             );

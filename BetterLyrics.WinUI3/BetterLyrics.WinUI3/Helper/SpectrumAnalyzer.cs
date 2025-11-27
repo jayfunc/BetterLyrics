@@ -6,6 +6,7 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public partial class SpectrumAnalyzer : IDisposable
     {
+        private readonly object _lock = new();
         private WasapiLoopbackCapture? _capture;
 
         private int _sampleRate = 48000;
@@ -121,12 +122,15 @@ namespace BetterLyrics.WinUI3.Helper
                 Array.Copy(_spectrumRightData, 0, _spectrumData, _spectrumLeftData.Length, _spectrumRightData.Length);
             }
 
-            for (int i = 0; i < BarCount; i++)
+            lock (_lock)
             {
-                int index = (int)((float)i / BarCount * _spectrumData.Length);
-                if (index < _spectrumData.Length)
+                for (int i = 0; i < BarCount; i++)
                 {
-                    _currentSpectrum[i] = _spectrumData[index] * 250f * Sensitivity;
+                    int index = (int)((float)i / BarCount * _spectrumData.Length);
+                    if (index < _spectrumData.Length)
+                    {
+                        _currentSpectrum[i] = _spectrumData[index] * 250f * Sensitivity;
+                    }
                 }
             }
 
@@ -139,10 +143,13 @@ namespace BetterLyrics.WinUI3.Helper
                 return;
             }
 
-            for (int i = 0; i < BarCount; i++)
+            lock (_lock)
             {
-                SmoothSpectrum[i] = SmoothSpectrum[i] * SmoothingFactor +
-                    _currentSpectrum[i] * (1 - SmoothingFactor);
+                for (int i = 0; i < BarCount; i++)
+                {
+                    SmoothSpectrum[i] = SmoothSpectrum[i] * SmoothingFactor +
+                        _currentSpectrum[i] * (1 - SmoothingFactor);
+                }
             }
         }
 

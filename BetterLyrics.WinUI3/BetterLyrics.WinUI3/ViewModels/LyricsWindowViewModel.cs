@@ -9,7 +9,6 @@ using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
-using BetterLyrics.WinUI3.ViewModels.LyricsRendererViewModel;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
@@ -211,13 +210,13 @@ namespace BetterLyrics.WinUI3
 
         public void Receive(PropertyChangedMessage<ElementTheme> message)
         {
-            if (message.Sender is LyricsRendererViewModel)
-            {
-                if (message.PropertyName == nameof(LyricsRendererViewModel.ThemeTypeSent))
-                {
-                    ThemeType = message.NewValue;
-                }
-            }
+            //if (message.Sender is LyricsRendererViewModel)
+            //{
+            //    if (message.PropertyName == nameof(LyricsRendererViewModel.ThemeTypeSent))
+            //    {
+            //        ThemeType = message.NewValue;
+            //    }
+            //}
         }
 
         public void Receive(PropertyChangedMessage<bool> message)
