@@ -14,6 +14,7 @@ using System.Numerics;
 using System.Text;
 using Windows.Foundation;
 using Windows.UI;
+using static Vanara.PInvoke.Kernel32;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
@@ -36,7 +37,7 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (line.PhoneticCanvasTextLayout == null) return;
 
-            var opacity = line.PhoneticTextOpacityTransition.Value;
+            var opacity = line.OpacityTransition.Value * 0.3;
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.PhoneticCanvasTextLayout.LayoutBounds;
 
@@ -62,7 +63,7 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (line.TranslatedCanvasTextLayout == null) return;
 
-            var opacity = line.TranslatedTextOpacityTransition.Value;
+            var opacity = line.OpacityTransition.Value * 0.3;
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.TranslatedCanvasTextLayout.LayoutBounds;
 
@@ -94,7 +95,7 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (line.OriginalCanvasTextLayout == null) return;
 
-            var originalTextOpacity = line.OriginalTextOpacityTransition.Value;
+            var opacity = line.OpacityTransition.Value;
 
             var curCharIndex = state.SyllableStartIndex + state.SyllableLength * state.SyllableProgress;
             float fadeWidth = (1f / Math.Max(1, line.OriginalText.Length)) * 0.5f;
@@ -103,7 +104,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             foreach (var subLineRegion in lineRegions)
             {
-                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, curCharIndex, fadeWidth, originalTextOpacity, state, settings);
+                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, curCharIndex, fadeWidth, opacity, state, settings);
             }
         }
 
@@ -115,7 +116,7 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasTextLayoutRegion subLineRegion,
             double curCharIndex,
             float fadeWidth,
-            double originalTextOpacity,
+            double opacity,
             LinePlaybackState state,
             LyricsEffectSettings settings)
         {
@@ -134,13 +135,13 @@ namespace BetterLyrics.WinUI3.Renderer
                     float progressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / subLineRegion.CharacterCount);
                     progressInRegion = Math.Clamp(progressInRegion, 0, 1 + fadeWidth);
 
-                    var stop1 = Colors.White.WithAlpha((byte)(255 * originalTextOpacity));
-                    var stop2 = Color.FromArgb((byte)(255 * Math.Min(0.3, originalTextOpacity)), 255, 255, 255);
+                    var stop1 = Colors.White.WithAlpha((byte)(255 * opacity));
+                    var stop2 = Color.FromArgb((byte)(255 * Math.Min(0.3, opacity)), 255, 255, 255);
 
                     using (var maskBrush = new CanvasLinearGradientBrush(resourceCreator,
                         [
-                            new CanvasGradientStop { Position = 0, Color = stop1 },
-                            new CanvasGradientStop { Position = progressInRegion, Color = stop1 },
+                            new CanvasGradientStop { Position = - fadeWidth, Color = stop1 },
+                            new CanvasGradientStop { Position = - fadeWidth + progressInRegion, Color = stop1 },
                             new CanvasGradientStop { Position = progressInRegion + fadeWidth, Color = stop2 },
                             new CanvasGradientStop { Position = 1 + fadeWidth, Color = stop2 }
                         ]))

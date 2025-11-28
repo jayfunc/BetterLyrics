@@ -28,59 +28,66 @@ namespace BetterLyrics.WinUI3.Renderer
             int playingLineIndex,
             int startVisibleIndex,
             int endVisibleIndex,
-            double canvasHeight,
             double lyricsX,
+            double lyricsY,
             double lyricsWidth,
+            double lyricsHeight,
+            double lyricsOpacity,
             LyricsWindowStatus windowStatus,
             Color strokeColor,
             Color bgColor,
             Func<int, LinePlaybackState> getPlaybackState)
         {
-            if (windowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
+            using (var opacityLayer = ds.CreateLayer((float)lyricsOpacity))
             {
-                using (var layer = new CanvasCommandList(control))
+                if (windowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
                 {
-                    using (var layerDs = layer.CreateDrawingSession())
+                    using (var layer = new CanvasCommandList(control))
                     {
-                        DrawLyrics(
-                            control,
-                            layerDs,
-                            lyricsData,
-                            playingLineIndex,
-                            startVisibleIndex,
-                            endVisibleIndex,
-                            canvasHeight,
-                            lyricsX,
-                            lyricsWidth,
-                            windowStatus,
-                            strokeColor,
-                            bgColor,
-                            getPlaybackState);
-                    }
+                        using (var layerDs = layer.CreateDrawingSession())
+                        {
+                            DrawLyrics(
+                                control,
+                                layerDs,
+                                lyricsData,
+                                playingLineIndex,
+                                startVisibleIndex,
+                                endVisibleIndex,
+                                lyricsX,
+                                lyricsY,
+                                lyricsWidth,
+                                lyricsHeight,
+                                windowStatus,
+                                strokeColor,
+                                bgColor,
+                                getPlaybackState);
+                        }
 
-                    ds.DrawImage(new Transform3DEffect
-                    {
-                        Source = layer,
-                        TransformMatrix = _threeDimMatrix
-                    });
+                        ds.DrawImage(new Transform3DEffect
+                        {
+                            Source = layer,
+                            TransformMatrix = _threeDimMatrix
+                        });
+                    }
                 }
-            }
-            else
-            {
-                DrawLyrics(
-                    control,
-                    ds,
-                    lyricsData,
-                    playingLineIndex,
-                    startVisibleIndex,
-                    endVisibleIndex,
-                    canvasHeight,
-                    lyricsX,
-                    lyricsWidth,
-                    windowStatus,
-                    strokeColor,
-                    bgColor,
-                    getPlaybackState);
+                else
+                {
+                    DrawLyrics(
+                        control,
+                        ds,
+                        lyricsData,
+                        playingLineIndex,
+                        startVisibleIndex,
+                        endVisibleIndex,
+                        lyricsX,
+                        lyricsY,
+                        lyricsWidth,
+                        lyricsHeight,
+                        windowStatus,
+                        strokeColor,
+                        bgColor,
+                        getPlaybackState);
+                }
             }
         }
 
@@ -91,9 +98,10 @@ namespace BetterLyrics.WinUI3.Renderer
             int playingLineIndex,
             int startVisibleIndex,
             int endVisibleIndex,
-            double canvasHeight,
             double lyricsX,
+            double lyricsY,
             double lyricsWidth,
+            double lyricsHeight,
             LyricsWindowStatus windowStatus,
             Color strokeColor,
             Color bgColor,
@@ -117,7 +125,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 if (line.OriginalCanvasTextLayout == null) continue;
                 if (line.OriginalCanvasTextLayout.LayoutBounds.Width <= 0) continue;
 
-                double yOffset = line.YOffsetTransition.Value + canvasHeight / 2;
+                double yOffset = line.YOffsetTransition.Value + lyricsY + lyricsHeight / 2;
 
                 var transform =
                     Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition) *

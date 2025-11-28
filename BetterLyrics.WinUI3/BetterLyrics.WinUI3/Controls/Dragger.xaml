@@ -1,0 +1,25 @@
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.Dragger"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid
+        Background="Transparent"
+        PointerCanceled="Grid_PointerReleased"
+        PointerEntered="Grid_PointerEntered"
+        PointerExited="Grid_PointerExited"
+        PointerMoved="Grid_PointerMoved"
+        PointerPressed="Grid_PointerPressed"
+        PointerReleased="Grid_PointerReleased">
+
+        <Border x:Name="HitArea" Background="{ThemeResource SystemControlForegroundBaseMediumLowBrush}">
+            <Grid
+                x:Name="HandlePill"
+                Background="{ThemeResource TextFillColorSecondaryBrush}"
+                CornerRadius="4" />
+        </Border>
+    </Grid>
+</UserControl>

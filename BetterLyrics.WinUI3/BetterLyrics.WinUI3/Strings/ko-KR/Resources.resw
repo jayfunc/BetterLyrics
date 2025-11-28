@@ -130,7 +130,7 @@
     <value>사진 인당 모드</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>일반적인</value>
+    <value>윈도우</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>여러 아티스트를 입력할 때 다음 구분 기호 중 하나로 구분하십시오 (혼합하지 마십시오)</value>
@@ -607,6 +607,9 @@
   <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>앨범 영역 스타일</value>
   </data>
+  <data name="SettingsPageAlignment.Header" xml:space="preserve">
+    <value>조정</value>
+  </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>기본 URL</value>
   </data>
@@ -664,11 +667,17 @@
   <data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
     <value>테두리 없는 가사 창 단축키</value>
   </data>
+  <data name="SettingsPageBottomGapFactor.Header" xml:space="preserve">
+    <value>하단 간격 높이 계수</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>로그 파일, 네트워크 가사 캐시 포함</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>은닉처</value>
+  </data>
+  <data name="SettingsPageCenter.Content" xml:space="preserve">
+    <value>센터</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>화음</value>
@@ -859,6 +868,9 @@
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
     <value>전체화면 모드</value>
   </data>
+  <data name="SettingsPageGeneralLayoutFactor.Text" xml:space="preserve">
+    <value>일반 레이아웃 요소</value>
+  </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>신장</value>
   </data>
@@ -870,6 +882,9 @@
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>여기를 누른 상태에서 드래그하여 정렬하세요</value>
+  </data>
+  <data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
+    <value>수평 레이아웃 요소</value>
   </data>
   <data name="SettingsPageImport.Content" xml:space="preserve">
     <value>가져오기</value>
@@ -925,6 +940,9 @@
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
     <value>사용자 이름</value>
   </data>
+  <data name="SettingsPageLayout.Text" xml:space="preserve">
+    <value>레이아웃</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>레이아웃 방향</value>
   </data>
@@ -933,6 +951,9 @@
   </data>
   <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
     <value>세로</value>
+  </data>
+  <data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
+    <value>왼쪽 갭 영역 너비 계수</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>서버 주소</value>
@@ -982,8 +1003,8 @@
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>용감한</value>
   </data>
-  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>센터</value>
+  <data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
+    <value>가사 영역 너비 계수</value>
   </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>가사 효과</value>
@@ -1045,9 +1066,6 @@
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>원래 하이라이트 범위</value>
   </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>왼쪽</value>
-  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>빛</value>
   </data>
@@ -1075,8 +1093,14 @@
   <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
     <value>현재 라인은 현재 숯으로 시작합니다</value>
   </data>
-  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>오른쪽</value>
+  <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
+    <value>가사 영역 높이 계수</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <value>장시간 음절 배율을 조정할 수 있습니다</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>스케일 효과</value>
   </data>
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
     <value>최상의 검색 결과</value>
@@ -1158,6 +1182,12 @@
   </data>
   <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
     <value>운모 대체</value>
+  </data>
+  <data name="SettingsPageMiddleGapColFactor.Header" xml:space="preserve">
+    <value>중간 영역 갭 폭 계수</value>
+  </data>
+  <data name="SettingsPageMiddleGapRowFactor.Header" xml:space="preserve">
+    <value>중간 간격 영역 높이 계수</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>테스트 음악을 재생하십시오</value>
@@ -1276,6 +1306,9 @@
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>변경 사항을 적용하려면 앱을 다시 시작하십시오</value>
   </data>
+  <data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
+    <value>오른쪽 간격 영역 너비 계수</value>
+  </data>
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>일본 주석</value>
   </data>
@@ -1345,6 +1378,9 @@
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>시스템 환경에서 보여주세요</value>
   </data>
+  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
+    <value>레이아웃 스플리터 표시</value>
+  </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>제목 표시</value>
   </data>
@@ -1357,16 +1393,10 @@
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>노래 정보</value>
   </data>
-  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
-    <value>조정</value>
-  </data>
-  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
-    <value>센터</value>
-  </data>
-  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+  <data name="SettingsPageLeft.Content" xml:space="preserve">
     <value>왼쪽</value>
   </data>
-  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
+  <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>오른쪽</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
@@ -1429,6 +1459,15 @@
   <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
     <value>바로 가기 키를 자르고 잘라냅니다</value>
   </data>
+  <data name="SettingsPageTopGapFactor.Header" xml:space="preserve">
+    <value>상단 간격 영역 높이 계수</value>
+  </data>
+  <data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
+    <value>트랙 요약 영역 너비 계수</value>
+  </data>
+  <data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
+    <value>트랙 요약 영역 높이 계수</value>
+  </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>번역</value>
   </data>
@@ -1446,6 +1485,9 @@
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>버전</value>
+  </data>
+  <data name="SettingsPageVerticalLayoutFactor.Text" xml:space="preserve">
+    <value>수직 레이아웃 요소</value>
   </data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve">
     <value>라틴 알파벳</value>
@@ -1512,5 +1554,8 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>사용 안내서</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>왼쪽</value>
   </data>
 </root>

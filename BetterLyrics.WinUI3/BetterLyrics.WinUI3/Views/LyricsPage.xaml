@@ -29,184 +29,263 @@
         <!--  Win2D drawing area  -->
         <uc:NowPlayingCanvas x:Name="NowPlayingCanvas" />
 
-        <!--  Album art and song info area  -->
-        <StackPanel
-            x:Name="AlbumArtWithSongInfoStackPanel"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Orientation="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource LyricsLayoutOrientationNegationToOrientationConverter}, Mode=OneWay}"
-            SizeChanged="AlbumArtWithSongInfoStackPanel_SizeChanged"
-            Translation="0,0,0">
-            <StackPanel.TranslationTransition>
-                <Vector3Transition />
-            </StackPanel.TranslationTransition>
+        <Grid x:Name="TrackSummaryGridContainer" Loaded="TrackSummaryGridContainer_Loaded">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="TopGapDef" Height="*" />
+                <RowDefinition x:Name="TrackSummaryRowDef" Height="*" />
+                <RowDefinition x:Name="MiddleGapRowDef" Height="*" />
+                <RowDefinition x:Name="LyricsRowDef" Height="*" />
+                <RowDefinition x:Name="BottomGapDef" Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftGapDef" Width="*" />
+                <ColumnDefinition x:Name="TrackSummaryColDef" Width="*" />
+                <ColumnDefinition x:Name="MiddleGapColDef" Width="*" />
+                <ColumnDefinition x:Name="LyricsColDef" Width="*" />
+                <ColumnDefinition x:Name="RightGapDef" Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <!--  Album art  -->
-            <Grid Padding="32">
+            <!--  Album art and song info area  -->
+            <Grid
+                x:Name="TrackSummaryGrid"
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.AlbumArtAlignmentType, Mode=OneWay}"
+                VerticalAlignment="Center"
+                SizeChanged="TrackSummaryGrid_SizeChanged">
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="AlbumArtRowDef" Height="*" />
+                    <RowDefinition x:Name="SongInfoRowDef" Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="AlbumArtColDef" Width="*" />
+                    <ColumnDefinition x:Name="SongInfoColDef" Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <Grid.OpacityTransition>
-                    <ScalarTransition />
+                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                        ComparisonCondition="Equal"
-                        Value="2">
-                        <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <Grid x:Name="ShadowCastGrid" CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}">
-                    <Image
-                        Width="{x:Bind AlbumArtSize, Mode=OneWay}"
-                        Height="{x:Bind AlbumArtSize, Mode=OneWay}"
-                        Opacity="{x:Bind ViewModel.LastAlbumArtOpacity, Mode=OneWay}"
-                        Source="{x:Bind ViewModel.LastAlbumArtBitmapImage, Mode=OneWay}">
-                        <Image.OpacityTransition>
-                            <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
-                        </Image.OpacityTransition>
-                    </Image>
-                    <Image
-                        Width="{x:Bind AlbumArtSize, Mode=OneWay}"
-                        Height="{x:Bind AlbumArtSize, Mode=OneWay}"
-                        Opacity="{x:Bind ViewModel.AlbumArtOpacity, Mode=OneWay}"
-                        Source="{x:Bind ViewModel.AlbumArtBitmapImage, Mode=OneWay}">
-                        <Image.OpacityTransition>
-                            <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
-                        </Image.OpacityTransition>
-                    </Image>
-                    <dev:AnimatedImage ImageUrl="" />
+
+                <!--  Album art  -->
+                <Grid
+                    x:Name="AlbumArtGrid"
+                    Grid.Row="0"
+                    Padding="32"
+                    HorizontalAlignment="Center">
+                    <Grid.OpacityTransition>
+                        <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                    </Grid.OpacityTransition>
+                    <Grid x:Name="ShadowCastGrid" CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}">
+                        <Image x:Name="LastAlbumArtImage" Stretch="Uniform">
+                            <Image.OpacityTransition>
+                                <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                            </Image.OpacityTransition>
+                        </Image>
+                        <Image x:Name="AlbumArtImage" Stretch="Uniform">
+                            <Image.OpacityTransition>
+                                <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                            </Image.OpacityTransition>
+                        </Image>
+                    </Grid>
+                    <Border
+                        x:Name="ShadowRect"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}"
+                        Loaded="ShadowRect_Loaded"
+                        Translation="0,0,0">
+                        <Border.Shadow>
+                            <ThemeShadow x:Name="Shadow" />
+                        </Border.Shadow>
+                    </Border>
                 </Grid>
-                <Border
-                    x:Name="ShadowRect"
-                    Width="{x:Bind AlbumArtSize, Mode=OneWay}"
-                    Height="{x:Bind AlbumArtSize, Mode=OneWay}"
-                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}"
-                    Loaded="ShadowRect_Loaded"
-                    Translation="0,0,64">
-                    <Border.Shadow>
-                        <ThemeShadow x:Name="Shadow" />
-                    </Border.Shadow>
-                </Border>
+
+                <!--  Song info  -->
+                <StackPanel x:Name="SongInfoStackPanel">
+                    <StackPanel.OpacityTransition>
+                        <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                    </StackPanel.OpacityTransition>
+
+                    <dev:OpacityMaskView>
+                        <dev:OpacityMaskView.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Offset="0" Color="Transparent" />
+                                <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                <GradientStop Offset="1" Color="Transparent" />
+                            </LinearGradientBrush>
+                        </dev:OpacityMaskView.OpacityMask>
+                        <dev:AutoScrollView
+                            x:Name="TitleAutoScrollHoverEffectView"
+                            IsPlaying="False"
+                            PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
+                            PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
+                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="20">
+                            <TextBlock
+                                x:Name="TitleTextBlock"
+                                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
+                                FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                TextTrimming="None"
+                                Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        </dev:AutoScrollView>
+                    </dev:OpacityMaskView>
+
+                    <dev:OpacityMaskView>
+                        <dev:OpacityMaskView.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Offset="0" Color="Transparent" />
+                                <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                <GradientStop Offset="1" Color="Transparent" />
+                            </LinearGradientBrush>
+                        </dev:OpacityMaskView.OpacityMask>
+                        <dev:AutoScrollView
+                            x:Name="ArtistsAutoScrollHoverEffectView"
+                            IsPlaying="False"
+                            PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
+                            PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
+                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="20">
+                            <TextBlock
+                                x:Name="ArtistsTextBlock"
+                                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
+                                FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                Opacity="0.5"
+                                TextTrimming="None"
+                                Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        </dev:AutoScrollView>
+                    </dev:OpacityMaskView>
+
+                    <dev:OpacityMaskView>
+                        <dev:OpacityMaskView.OpacityMask>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Offset="0" Color="Transparent" />
+                                <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                <GradientStop Offset="1" Color="Transparent" />
+                            </LinearGradientBrush>
+                        </dev:OpacityMaskView.OpacityMask>
+                        <dev:AutoScrollView
+                            x:Name="AlbumAutoScrollHoverEffectView"
+                            IsPlaying="False"
+                            PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
+                            PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
+                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="20">
+                            <TextBlock
+                                x:Name="AlbumTextBlock"
+                                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
+                                FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                Opacity="0.5"
+                                TextTrimming="None"
+                                Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        </dev:AutoScrollView>
+                    </dev:OpacityMaskView>
+
+                </StackPanel>
+
             </Grid>
 
-            <!--  Song info  -->
-            <StackPanel x:Name="SongInfoStackPanel" Width="{x:Bind AlbumArtSize, Mode=OneWay}">
-                <StackPanel.OpacityTransition>
-                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
-                </StackPanel.OpacityTransition>
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="Margin" Value="32,-16,32,0" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="Margin" Value="-16,32,0,0" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
+            <Grid
+                x:Name="LyricsPlaceholder"
+                Grid.Row="3"
+                Grid.Column="3"
+                SizeChanged="LyricsPlaceholder_SizeChanged" />
 
-                <dev:OpacityMaskView>
-                    <dev:OpacityMaskView.OpacityMask>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="Transparent" />
-                            <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                            <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                            <GradientStop Offset="1" Color="Transparent" />
-                        </LinearGradientBrush>
-                    </dev:OpacityMaskView.OpacityMask>
-                    <dev:AutoScrollView
-                        x:Name="TitleAutoScrollHoverEffectView"
-                        Width="{x:Bind AlbumArtSize, Mode=OneWay}"
-                        Padding="5,0,0,0"
-                        IsPlaying="False"
-                        PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
-                        PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
-                        PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
-                        ScrollingPixelsPreSecond="20">
-                        <TextBlock
-                            x:Name="TitleTextBlock"
-                            HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
-                            FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                            TextTrimming="None"
-                            Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    </dev:AutoScrollView>
-                </dev:OpacityMaskView>
+            <uc:Dragger
+                x:Name="LeftGapDragger"
+                Grid.RowSpan="5"
+                Grid.Column="0"
+                Margin="0,0,-8,0"
+                HorizontalAlignment="Right"
+                DragDelta="LeftGapDragger_DragDelta">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
+            <uc:Dragger
+                x:Name="TrackSummaryColDragger"
+                Grid.RowSpan="5"
+                Grid.Column="1"
+                Margin="0,0,-8,0"
+                HorizontalAlignment="Right"
+                DragDelta="TrackSummaryColDragger_DragDelta">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
+            <uc:Dragger
+                x:Name="MiddleColDragger"
+                Grid.RowSpan="5"
+                Grid.Column="2"
+                Margin="0,0,-8,0"
+                HorizontalAlignment="Right"
+                DragDelta="MiddleColDragger_DragDelta">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
+            <uc:Dragger
+                x:Name="LyricsColDragger"
+                Grid.RowSpan="5"
+                Grid.Column="3"
+                Margin="0,0,-8,0"
+                HorizontalAlignment="Right"
+                DragDelta="LyricsColDragger_DragDelta">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
 
-                <dev:OpacityMaskView>
-                    <dev:OpacityMaskView.OpacityMask>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="Transparent" />
-                            <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                            <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                            <GradientStop Offset="1" Color="Transparent" />
-                        </LinearGradientBrush>
-                    </dev:OpacityMaskView.OpacityMask>
-                    <dev:AutoScrollView
-                        x:Name="ArtistsAutoScrollHoverEffectView"
-                        Width="{x:Bind AlbumArtSize, Mode=OneWay}"
-                        Padding="5,0,0,0"
-                        IsPlaying="False"
-                        PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
-                        PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
-                        PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
-                        ScrollingPixelsPreSecond="20">
-                        <TextBlock
-                            x:Name="ArtistsTextBlock"
-                            HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
-                            FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                            Opacity="0.5"
-                            TextTrimming="None"
-                            Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    </dev:AutoScrollView>
-                </dev:OpacityMaskView>
+            <uc:Dragger
+                x:Name="TopGapDragger"
+                Grid.Row="0"
+                Grid.ColumnSpan="5"
+                Margin="0,0,0,-8"
+                VerticalAlignment="Bottom"
+                DragDelta="TopGapDragger_DragDelta"
+                Orientation="Horizontal">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
+            <uc:Dragger
+                x:Name="TrackSummaryRowDragger"
+                Grid.Row="1"
+                Grid.ColumnSpan="5"
+                Margin="0,0,0,-8"
+                VerticalAlignment="Bottom"
+                DragDelta="TrackSummaryRowDragger_DragDelta"
+                Orientation="Horizontal">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
+            <uc:Dragger
+                x:Name="MiddleRowDragger"
+                Grid.Row="2"
+                Grid.ColumnSpan="5"
+                Margin="0,0,0,-8"
+                VerticalAlignment="Bottom"
+                DragDelta="MiddleRowDragger_DragDelta"
+                Orientation="Horizontal">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
+            <uc:Dragger
+                x:Name="LyricsRowDragger"
+                Grid.Row="3"
+                Grid.ColumnSpan="5"
+                Margin="0,0,0,-8"
+                VerticalAlignment="Bottom"
+                DragDelta="LyricsRowDragger_DragDelta"
+                Orientation="Horizontal">
+                <uc:Dragger.OpacityTransition>
+                    <ScalarTransition />
+                </uc:Dragger.OpacityTransition>
+            </uc:Dragger>
 
-                <dev:OpacityMaskView>
-                    <dev:OpacityMaskView.OpacityMask>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="Transparent" />
-                            <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                            <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                            <GradientStop Offset="1" Color="Transparent" />
-                        </LinearGradientBrush>
-                    </dev:OpacityMaskView.OpacityMask>
-                    <dev:AutoScrollView
-                        x:Name="AlbumAutoScrollHoverEffectView"
-                        Width="{x:Bind AlbumArtSize, Mode=OneWay}"
-                        Padding="5,0,0,0"
-                        IsPlaying="False"
-                        PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
-                        PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
-                        PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
-                        ScrollingPixelsPreSecond="20">
-                        <TextBlock
-                            x:Name="AlbumTextBlock"
-                            HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
-                            FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                            Opacity="0.5"
-                            TextTrimming="None"
-                            Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    </dev:AutoScrollView>
-                </dev:OpacityMaskView>
-
-            </StackPanel>
-
-        </StackPanel>
+        </Grid>
 
         <!--  Bottom command area  -->
         <Grid

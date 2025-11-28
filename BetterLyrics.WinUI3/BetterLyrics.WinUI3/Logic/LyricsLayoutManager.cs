@@ -12,6 +12,17 @@ namespace BetterLyrics.WinUI3.Logic
 {
     public class LyricsLayoutManager
     {
+        /// <summary>
+        /// 重排歌词，Y 轴从 0 刻度开始算
+        /// </summary>
+        /// <param name="resourceCreator"></param>
+        /// <param name="lyricsData"></param>
+        /// <param name="status"></param>
+        /// <param name="appSettings"></param>
+        /// <param name="canvasWidth"></param>
+        /// <param name="canvasHeight"></param>
+        /// <param name="lyricsWidth"></param>
+        /// <param name="lyricsHeight"></param>
         public void MeasureAndArrange(
             ICanvasAnimatedControl resourceCreator,
             LyricsData? lyricsData,
@@ -19,7 +30,8 @@ namespace BetterLyrics.WinUI3.Logic
             AppSettings appSettings,
             double canvasWidth,
             double canvasHeight,
-            double lyricsWidth)
+            double lyricsWidth,
+            double lyricsHeight)
         {
             if (lyricsData == null || resourceCreator == null) return;
 
@@ -55,13 +67,16 @@ namespace BetterLyrics.WinUI3.Logic
                     phoneticFontSize, originalFontSize, translatedFontSize,
                     fontWeight,
                     style.LyricsCJKFontFamily, style.LyricsWesternFontFamily,
-                    lyricsWidth, canvasHeight, style.LyricsAlignmentType
+                    lyricsWidth, lyricsHeight, style.LyricsAlignmentType
                 );
 
                 line.RecreateTextGeometry();
 
+                // 顶部坐标
+                line.TopPosition = new Vector2(0, (float)currentY);
+
                 // 注音层
-                line.PhoneticPosition = new Vector2(0, (float)currentY);
+                line.PhoneticPosition = line.TopPosition;
                 if (line.PhoneticCanvasTextLayout != null)
                 {
                     currentY += line.PhoneticCanvasTextLayout.LayoutBounds.Height;
@@ -88,6 +103,9 @@ namespace BetterLyrics.WinUI3.Logic
                     currentY += line.TranslatedCanvasTextLayout.LayoutBounds.Height;
                 }
 
+                // 底部坐标
+                line.BottomPosition = new Vector2(0, (float)currentY);
+
                 // 行间距
                 if (line.OriginalCanvasTextLayout != null)
                 {
@@ -100,7 +118,7 @@ namespace BetterLyrics.WinUI3.Logic
         }
 
         /// <summary>
-        /// 计算当前应该滚动到的目标 Y 轴偏移量
+        /// 计算为了让当前歌词行的竖直几何中心点对齐到 0（原点），画布应该移动的距离（从画布最初始状态计算的值）
         /// </summary>
         public double? CalculateTargetScrollOffset(
             LyricsData? lyricsData,
@@ -115,10 +133,10 @@ namespace BetterLyrics.WinUI3.Logic
             if (currentLine?.OriginalCanvasTextLayout == null || firstLine == null) return null;
 
             return -currentLine.OriginalPosition.Y
-                   + firstLine.OriginalPosition.Y
-                   - (currentLine.TranslatedPosition.Y
-                      + (currentLine.TranslatedCanvasTextLayout?.LayoutBounds.Height ?? 0)
-                      - currentLine.PhoneticPosition.Y) / 2.0;
+                + firstLine.OriginalPosition.Y
+                - (currentLine.TranslatedPosition.Y
+                    + (currentLine.TranslatedCanvasTextLayout?.LayoutBounds.Height ?? 0)
+                    - currentLine.PhoneticPosition.Y) / 2.0;
         }
 
         /// <summary>
@@ -128,14 +146,16 @@ namespace BetterLyrics.WinUI3.Logic
         public (int Start, int End) CalculateVisibleRange(
             IList<LyricsLine>? lines,
             double currentScrollOffset,
+            double lyricsY,
+            double lyricsHeight,
             double canvasHeight)
         {
             if (lines == null || lines.Count == 0) return (-1, -1);
 
-            double offset = currentScrollOffset + canvasHeight / 2;
+            double offset = currentScrollOffset + lyricsY + lyricsHeight / 2;
 
-            int start = FindFirstVisibleLine(lines, offset);
-            int end = FindLastVisibleLine(lines, offset, canvasHeight);
+            int start = FindFirstVisibleLine(lines, offset, lyricsY);
+            int end = FindLastVisibleLine(lines, offset, lyricsY, lyricsHeight, canvasHeight);
 
             // 修正边界情况
             if (start != -1 && end == -1)
@@ -146,7 +166,7 @@ namespace BetterLyrics.WinUI3.Logic
             return (start, end);
         }
 
-        private int FindFirstVisibleLine(IList<LyricsLine> lines, double offset)
+        private int FindFirstVisibleLine(IList<LyricsLine> lines, double offset, double lyricsY)
         {
             int left = 0, right = lines.Count - 1, result = -1;
             while (left <= right)
@@ -154,14 +174,16 @@ namespace BetterLyrics.WinUI3.Logic
                 int mid = (left + right) / 2;
                 var line = lines[mid];
                 if (line.OriginalCanvasTextLayout == null) break;
-                double value = offset + line.OriginalPosition.Y + (double)line.OriginalCanvasTextLayout.LayoutBounds.Height;
+                double value = offset + line.BottomPosition.Y;
+                // 理论上说应该使用下面这一行来精确计算视野内的首个可见行，但是考虑到动画视觉效果，还是注释掉了
+                //if (value >= lyricsY) { result = mid; right = mid - 1; }
                 if (value >= 0) { result = mid; right = mid - 1; }
                 else { left = mid + 1; }
             }
             return result;
         }
 
-        private int FindLastVisibleLine(IList<LyricsLine> lines, double offset, double canvasHeight)
+        private int FindLastVisibleLine(IList<LyricsLine> lines, double offset, double lyricsY, double lyricsHeight, double canvasHeight)
         {
             int left = 0, right = lines.Count - 1, result = -1;
             while (left <= right)
@@ -169,7 +191,9 @@ namespace BetterLyrics.WinUI3.Logic
                 int mid = (left + right) / 2;
                 var line = lines[mid];
                 if (line.OriginalCanvasTextLayout == null) break;
-                double value = offset + line.OriginalPosition.Y + (double)line.OriginalCanvasTextLayout.LayoutBounds.Height;
+                double value = offset + line.BottomPosition.Y;
+                // 同理
+                //if (value >= lyricsY + lyricsHeight) { result = mid; right = mid - 1; }
                 if (value >= canvasHeight) { result = mid; right = mid - 1; }
                 else { left = mid + 1; }
             }

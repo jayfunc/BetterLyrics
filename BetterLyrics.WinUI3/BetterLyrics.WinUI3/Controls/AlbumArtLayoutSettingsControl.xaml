@@ -18,26 +18,13 @@
 
                     <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsExpander
-                        x:Uid="SettingsPageAlbumArtSize"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xE744;}"
-                        IsExpanded="True">
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
-                                <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.AutoAlbumArtSize, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.AutoAlbumArtSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
-                                <local:ExtendedSlider
-                                    Frequency="2"
-                                    Maximum="800"
-                                    Minimum="10"
-                                    ResetButtonVisibility="Collapsed"
-                                    Unit="px"
-                                    Value="{x:Bind AlbumArtLayoutSettings.AlbumArtSize, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                    <dev:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
+                        <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.AlbumArtAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageLeft" />
+                            <ComboBoxItem x:Uid="SettingsPageCenter" />
+                            <ComboBoxItem x:Uid="SettingsPageRight" />
+                        </ComboBox>
+                    </dev:SettingsCard>
 
                     <dev:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3A;}">
                         <local:ExtendedSlider
@@ -58,11 +45,11 @@
 
                     <TextBlock x:Uid="SettingsPageSongInfo" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageSongInfoAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
+                    <dev:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageSongInfoLeft" />
-                            <ComboBoxItem x:Uid="SettingsPageSongInfoCenter" />
-                            <ComboBoxItem x:Uid="SettingsPageSongInfoRight" />
+                            <ComboBoxItem x:Uid="SettingsPageLeft" />
+                            <ComboBoxItem x:Uid="SettingsPageCenter" />
+                            <ComboBoxItem x:Uid="SettingsPageRight" />
                         </ComboBox>
                     </dev:SettingsCard>
 

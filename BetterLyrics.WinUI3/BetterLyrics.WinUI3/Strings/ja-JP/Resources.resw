@@ -130,7 +130,7 @@
     <value>ピクチャーインピクチャーモード</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>一般的な</value>
+    <value>ウィンドウ</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>複数のアーティストを入力する場合は、次の区切り記号のいずれかで区切ってください（混在しないでください）</value>
@@ -607,6 +607,9 @@
   <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>アルバムエリアスタイル</value>
   </data>
+  <data name="SettingsPageAlignment.Header" xml:space="preserve">
+    <value>アライメント</value>
+  </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>ベースURL</value>
   </data>
@@ -664,11 +667,17 @@
   <data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
     <value>ボーダーレス歌詞ウィンドウショートカット</value>
   </data>
+  <data name="SettingsPageBottomGapFactor.Header" xml:space="preserve">
+    <value>ボトムギャップハイトファクター</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>ログファイル、ネットワーク歌詞キャッシュを含む</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>キャッシュ</value>
+  </data>
+  <data name="SettingsPageCenter.Content" xml:space="preserve">
+    <value>中心</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中国の発音</value>
@@ -859,6 +868,9 @@
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
     <value>フルスクリーンモード</value>
   </data>
+  <data name="SettingsPageGeneralLayoutFactor.Text" xml:space="preserve">
+    <value>一般的なレイアウトファクター</value>
+  </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>高さ</value>
   </data>
@@ -870,6 +882,9 @@
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>ここを長押ししてドラッグして並べ替えましょう</value>
+  </data>
+  <data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
+    <value>水平レイアウト係数</value>
   </data>
   <data name="SettingsPageImport.Content" xml:space="preserve">
     <value>インポート</value>
@@ -925,6 +940,9 @@
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
     <value>ユーザー名</value>
   </data>
+  <data name="SettingsPageLayout.Text" xml:space="preserve">
+    <value>レイアウト</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>レイアウトの向き</value>
   </data>
@@ -933,6 +951,9 @@
   </data>
   <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
     <value>垂直方向</value>
+  </data>
+  <data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
+    <value>左ギャップエリア幅係数</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>サーバーアドレス</value>
@@ -982,8 +1003,8 @@
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>大胆な</value>
   </data>
-  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>中心</value>
+  <data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
+    <value>歌詞エリア幅係数</value>
   </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>歌詞効果</value>
@@ -1045,9 +1066,6 @@
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>オリジナルのハイライト範囲</value>
   </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>左</value>
-  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>ライト</value>
   </data>
@@ -1075,8 +1093,14 @@
   <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
     <value>現在のラインが現在の文字から始まります</value>
   </data>
-  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>右</value>
+  <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
+    <value>歌詞エリアの高さ係数</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <value>長時間の音節のスケーリングを有効にします</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>スケール効果</value>
   </data>
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
     <value>ベストマッチ</value>
@@ -1158,6 +1182,12 @@
   </data>
   <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
     <value>マイカル</value>
+  </data>
+  <data name="SettingsPageMiddleGapColFactor.Header" xml:space="preserve">
+    <value>ミドルエリアギャップ幅係数</value>
+  </data>
+  <data name="SettingsPageMiddleGapRowFactor.Header" xml:space="preserve">
+    <value>ミドルギャップエリアハイトファクター</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>テスト音楽を再生します</value>
@@ -1276,6 +1306,9 @@
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>変更を適用するためのアプリを再起動します</value>
   </data>
+  <data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
+    <value>右ギャップエリア幅係数</value>
+  </data>
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>日本の注釈</value>
   </data>
@@ -1345,6 +1378,9 @@
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>システム環境に表示します</value>
   </data>
+  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
+    <value>レイアウトスプリッターを表示</value>
+  </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>タイトルを表示</value>
   </data>
@@ -1357,16 +1393,10 @@
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>曲情報</value>
   </data>
-  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
-    <value>アライメント</value>
-  </data>
-  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
-    <value>中心</value>
-  </data>
-  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+  <data name="SettingsPageLeft.Content" xml:space="preserve">
     <value>左</value>
   </data>
-  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
+  <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>右</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
@@ -1429,6 +1459,15 @@
   <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
     <value>ショートカットキーを切り込んで切り取ります</value>
   </data>
+  <data name="SettingsPageTopGapFactor.Header" xml:space="preserve">
+    <value>トップギャップエリアの高さ係数</value>
+  </data>
+  <data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
+    <value>トラックサマリーエリア幅係数</value>
+  </data>
+  <data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
+    <value>トラックサマリーエリアの高さ係数</value>
+  </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>译文</value>
   </data>
@@ -1446,6 +1485,9 @@
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>バージョン</value>
+  </data>
+  <data name="SettingsPageVerticalLayoutFactor.Text" xml:space="preserve">
+    <value>垂直レイアウト係数</value>
   </data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve">
     <value>英字</value>
@@ -1512,5 +1554,8 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>利用案内</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>左</value>
   </data>
 </root>

@@ -171,6 +171,15 @@
                             </PivotItem.Header>
                         </PivotItem>
 
+                        <PivotItem Tag="Layout">
+                            <PivotItem.Header>
+                                <TextBlock
+                                    x:Uid="SettingsPageLayout"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource BodyTextBlockStyle}" />
+                            </PivotItem.Header>
+                        </PivotItem>
+
                         <PivotItem Tag="AlbumArtStyle">
                             <PivotItem.Header>
                                 <TextBlock
@@ -207,15 +216,6 @@
                             </PivotItem.Header>
                         </PivotItem>
 
-                        <PivotItem Tag="Advanced">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="SettingsPageAdvanced"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
-
                     </Pivot>
 
                 </StackPanel>
@@ -228,7 +228,7 @@
                     </TransitionCollection>
                 </controls:SwitchPresenter.ContentTransitions>
 
-                <!--  General  -->
+                <!--  Window  -->
                 <controls:Case Value="General">
                     <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                         <Grid Style="{StaticResource SettingsGridStyle}">
@@ -245,26 +245,6 @@
                                         <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
                                     </StackPanel>
                                 </dev:SettingsCard>
-
-                                <dev:SettingsExpander
-                                    x:Uid="SettingsPageDisplayTypeSwitcher"
-                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                             Glyph=&#xF246;}"
-                                    IsExpanded="True">
-                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
-                                        <ComboBoxItem x:Uid="MainPageLyriscOnly" />
-                                        <ComboBoxItem x:Uid="MainPageSplitView" />
-                                    </ComboBox>
-                                    <dev:SettingsExpander.Items>
-                                        <dev:SettingsCard x:Uid="SettingsPageLayoutOrientation">
-                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
-                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
-                                            </ComboBox>
-                                        </dev:SettingsCard>
-                                    </dev:SettingsExpander.Items>
-                                </dev:SettingsExpander>
 
                                 <dev:SettingsExpander
                                     x:Uid="SettingsPageWorkArea"
@@ -375,37 +355,6 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
                                 </dev:SettingsCard>
 
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
-                </controls:Case>
-
-                <!--  Album art area style  -->
-                <controls:Case Value="AlbumArtStyle">
-                    <uc:AlbumArtLayoutSettingsControl AlbumArtLayoutSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings, Mode=OneWay}" />
-                </controls:Case>
-
-                <!--  Lyrics style  -->
-                <controls:Case Value="LyricsStyle">
-                    <uc:LyricsStyleSettingsControl LyricsStyleSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
-                </controls:Case>
-
-                <!--  Lyrics  effect  -->
-                <controls:Case Value="LyricsEffect">
-                    <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
-                </controls:Case>
-
-                <!--  Lyrics background  -->
-                <controls:Case Value="LyricsBackground">
-                    <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
-                </controls:Case>
-
-                <!--  Advanced  -->
-                <controls:Case Value="Advanced">
-                    <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                        <Grid Style="{StaticResource SettingsGridStyle}">
-                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
                                 <dev:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C4;}">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
                                 </dev:SettingsCard>
@@ -429,6 +378,155 @@
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>
+                </controls:Case>
+
+                <!--  Layout  -->
+                <controls:Case Value="Layout">
+                    <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+                        <Grid Style="{StaticResource SettingsGridStyle}">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <dev:SettingsExpander x:Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
+                                        <ComboBoxItem x:Uid="MainPageLyriscOnly" />
+                                        <ComboBoxItem x:Uid="MainPageSplitView" />
+                                    </ComboBox>
+                                    <dev:SettingsExpander.Items>
+                                        <dev:SettingsCard x:Uid="SettingsPageLayoutOrientation">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
+                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
+                                            </ComboBox>
+                                        </dev:SettingsCard>
+                                    </dev:SettingsExpander.Items>
+                                </dev:SettingsExpander>
+
+                                <dev:SettingsCard x:Uid="SettingsPageShowLayoutDragger">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.ShowLayoutIndicator, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <TextBlock x:Uid="SettingsPageGeneralLayoutFactor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <dev:SettingsCard x:Uid="SettingsPageLeftGapFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LeftGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <dev:SettingsCard x:Uid="SettingsPageTopGapFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.TopGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <dev:SettingsCard x:Uid="SettingsPageRightGapFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.RightGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <dev:SettingsCard x:Uid="SettingsPageBottomGapFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.BottomGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <TextBlock x:Uid="SettingsPageHorizontalLayoutFactor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <dev:SettingsCard x:Uid="SettingsPageTrackSummaryColFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.TrackSummaryColGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <dev:SettingsCard x:Uid="SettingsPageMiddleGapColFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MiddleColGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <dev:SettingsCard x:Uid="SettingsPageLyricsColFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsColGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <TextBlock x:Uid="SettingsPageVerticalLayoutFactor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <dev:SettingsCard x:Uid="SettingsPageTrackSummaryRowFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.TrackSummaryRowGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <dev:SettingsCard x:Uid="SettingsPageMiddleGapRowFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.MiddleRowGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                                <dev:SettingsCard x:Uid="SettingsPageLyricsRowFactor">
+                                    <NumberBox
+                                        LargeChange="10"
+                                        Minimum="1"
+                                        SmallChange="1"
+                                        SpinButtonPlacementMode="Inline"
+                                        Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsRowGapFactor, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </controls:Case>
+
+                <!--  Album art area style  -->
+                <controls:Case Value="AlbumArtStyle">
+                    <uc:AlbumArtLayoutSettingsControl AlbumArtLayoutSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Lyrics style  -->
+                <controls:Case Value="LyricsStyle">
+                    <uc:LyricsStyleSettingsControl LyricsStyleSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Lyrics  effect  -->
+                <controls:Case Value="LyricsEffect">
+                    <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Lyrics background  -->
+                <controls:Case Value="LyricsBackground">
+                    <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
                 </controls:Case>
 
             </controls:SwitchPresenter>

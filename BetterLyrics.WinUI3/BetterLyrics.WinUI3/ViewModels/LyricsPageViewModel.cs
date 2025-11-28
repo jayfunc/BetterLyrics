@@ -26,34 +26,13 @@ using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class LyricsPageViewModel : BaseViewModel,
-        IRecipient<PropertyChangedMessage<BitmapImage?>>,
-        IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
-        IRecipient<PropertyChangedMessage<LyricsDisplayType>>
+    public partial class LyricsPageViewModel : BaseViewModel
     {
         public IMediaSessionsService MediaSessionsService { get; private set; }
         private readonly ILiveStatesService _liveStatesService;
 
-        private readonly ThrottleHelper _timelineThrottle = new(TimeSpan.FromSeconds(1));
-
-        [ObservableProperty] public partial double AlbumArtWithSongInfoStackPanelHeight { get; set; } = 0;
-
-        [ObservableProperty] public partial double LastAlbumArtOpacity { get; set; } = 1;
-        [ObservableProperty] public partial double AlbumArtOpacity { get; set; } = 1;
-        [ObservableProperty] public partial BitmapImage? LastAlbumArtBitmapImage { get; set; }
-        [ObservableProperty] public partial BitmapImage? AlbumArtBitmapImage { get; set; }
-
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsX { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsY { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsWidth { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsOpacity { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Matrix4x4 Lyrics3DMatrix { get; set; } = Matrix4x4.Identity;
-
         [ObservableProperty]
         public partial LiveStates LiveStates { get; set; }
-
-        [ObservableProperty]
-        public partial double TimelinePositionSeconds { get; set; }
 
         [ObservableProperty]
         public partial int Volume { get; set; }
@@ -72,9 +51,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial double TimelineSliderThumbSeconds { get; set; } = 0;
-
-        [ObservableProperty]
-        public partial double SongInfoOpacity { get; set; } = 1;
 
         public LyricsPageViewModel(IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
         {
@@ -125,48 +101,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private async Task NextSongAsync()
         {
             await MediaSessionsService.NextAsync();
-        }
-
-        public async void Receive(PropertyChangedMessage<BitmapImage?> message)
-        {
-            if (message.Sender is IMediaSessionsService)
-            {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
-                {
-                    LastAlbumArtBitmapImage = AlbumArtBitmapImage;
-                    LastAlbumArtOpacity = 1;
-                    await Task.Delay(Constants.Time.AnimationDuration);
-
-                    AlbumArtOpacity = 0;
-                    await Task.Delay(Constants.Time.AnimationDuration);
-                    AlbumArtBitmapImage = message.NewValue;
-
-                    LastAlbumArtOpacity = 0;
-                    AlbumArtOpacity = 1;
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsLayoutOrientation> message)
-        {
-            if (message.Sender is LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsLayoutOrientation))
-                {
-                    //OnLayoutChanged();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
-        {
-            if (message.Sender is LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsDisplayType))
-                {
-                    //OnLayoutChanged();
-                }
-            }
         }
 
     }
