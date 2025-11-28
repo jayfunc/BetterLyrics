@@ -23,9 +23,9 @@
 
                     <dev:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsLeft" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsCenter" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsRight" />
+                            <ComboBoxItem x:Uid="SettingsPageLeft" />
+                            <ComboBoxItem x:Uid="SettingsPageCenter" />
+                            <ComboBoxItem x:Uid="SettingsPageRight" />
                         </ComboBox>
                     </dev:SettingsCard>
 

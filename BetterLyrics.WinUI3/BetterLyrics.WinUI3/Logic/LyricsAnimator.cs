@@ -54,9 +54,7 @@ namespace BetterLyrics.WinUI3.Logic
 
                     line.BlurAmountTransition.StartTransition(5 * distanceFactor);
                     line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
-                    line.PhoneticTextOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.3 : (1 - distanceFactor) * 0.3);
-                    line.OriginalTextOpacityTransition.StartTransition(absLineCountDelta == 0 ? 1 : (1 - distanceFactor) * 0.3);
-                    line.TranslatedTextOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.3 : (1 - distanceFactor) * 0.3);
+                    line.OpacityTransition.StartTransition(absLineCountDelta == 0 ? 1 : (1 - distanceFactor) * 0.3);
 
                     double yScrollDuration;
                     double yScrollDelay;
@@ -88,16 +86,13 @@ namespace BetterLyrics.WinUI3.Logic
                     line.YOffsetTransition.SetEasingType(canvasYScrollTransition.EasingType);
                     line.YOffsetTransition.SetDuration(yScrollDuration);
                     line.YOffsetTransition.SetDelay(yScrollDelay);
-                    //line.YOffsetTransition.StartTransition(_canvasTargetYScrollOffset, _isLayoutChanged);
                     line.YOffsetTransition.StartTransition(targetYScrollOffset);
                 }
 
                 line.AngleTransition.Update(elapsedTime);
                 line.ScaleTransition.Update(elapsedTime);
                 line.BlurAmountTransition.Update(elapsedTime);
-                line.PhoneticTextOpacityTransition.Update(elapsedTime);
-                line.OriginalTextOpacityTransition.Update(elapsedTime);
-                line.TranslatedTextOpacityTransition.Update(elapsedTime);
+                line.OpacityTransition.Update(elapsedTime);
                 line.YOffsetTransition.Update(elapsedTime);
             }
         }

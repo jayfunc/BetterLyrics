@@ -19,13 +19,13 @@ namespace BetterLyrics.WinUI3.Logic
             if (lyricsData == null || lyricsData.LyricsLines.Count == 0) return 0;
             var lines = lyricsData.LyricsLines;
 
-            //// Cache hit
-            //if (IsTimeInLine(currentTimeMs, lines, _lastFoundIndex)) return _lastFoundIndex;
-            //if (_lastFoundIndex + 1 < lines.Count && IsTimeInLine(currentTimeMs, lines, _lastFoundIndex + 1))
-            //{
-            //    _lastFoundIndex++;
-            //    return _lastFoundIndex;
-            //}
+            // Cache hit
+            if (IsTimeInLine(currentTimeMs, lines, _lastFoundIndex)) return _lastFoundIndex;
+            if (_lastFoundIndex + 1 < lines.Count && IsTimeInLine(currentTimeMs, lines, _lastFoundIndex + 1))
+            {
+                _lastFoundIndex++;
+                return _lastFoundIndex;
+            }
 
             // Cache miss
             for (int i = 0; i < lines.Count; i++)

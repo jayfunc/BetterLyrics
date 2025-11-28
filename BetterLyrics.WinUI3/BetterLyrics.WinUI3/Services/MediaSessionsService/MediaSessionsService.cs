@@ -335,6 +335,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                                 .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
                                 .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
                         }
+                        else if (sessionId == PlayerID.QQMusic)
+                        {
+                            songId = mediaProperties?.Genres
+                                .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.QQMusicTrackID))?
+                                .Replace(ExtendedGenreFiled.QQMusicTrackID, "");
+                        }
 
                         var linkedFileName = mediaProperties?.Genres
                             .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?

@@ -130,7 +130,7 @@
     <value>画中画模式</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>通用</value>
+    <value>窗口</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>键入多位艺术家时请以下述一种分隔符分隔（不要混用）</value>
@@ -607,6 +607,9 @@
   <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>专辑区域样式</value>
   </data>
+  <data name="SettingsPageAlignment.Header" xml:space="preserve">
+    <value>对齐方式</value>
+  </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>基本 URL</value>
   </data>
@@ -664,11 +667,17 @@
   <data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
     <value>无边框歌词窗口快捷方式</value>
   </data>
+  <data name="SettingsPageBottomGapFactor.Header" xml:space="preserve">
+    <value>底部间隙高度因子</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>包括日志文件，网络歌词缓存</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>缓存</value>
+  </data>
+  <data name="SettingsPageCenter.Content" xml:space="preserve">
+    <value>居中</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中文注音</value>
@@ -859,6 +868,9 @@
   <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
     <value>全屏模式</value>
   </data>
+  <data name="SettingsPageGeneralLayoutFactor.Text" xml:space="preserve">
+    <value>一般布局系数</value>
+  </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>高度</value>
   </data>
@@ -870,6 +882,9 @@
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>按住此处并拖动以排序</value>
+  </data>
+  <data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
+    <value>水平布局系数</value>
   </data>
   <data name="SettingsPageImport.Content" xml:space="preserve">
     <value>导入</value>
@@ -925,6 +940,9 @@
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
     <value>用户名</value>
   </data>
+  <data name="SettingsPageLayout.Text" xml:space="preserve">
+    <value>布局</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>布局方向</value>
   </data>
@@ -933,6 +951,9 @@
   </data>
   <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
     <value>垂直</value>
+  </data>
+  <data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
+    <value>左间隙区域宽度因子</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>服务器地址</value>
@@ -982,8 +1003,8 @@
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>粗体</value>
   </data>
-  <data name="SettingsPageLyricsCenter.Content" xml:space="preserve">
-    <value>居中</value>
+  <data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
+    <value>歌词区域宽度因子</value>
   </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>歌词动效</value>
@@ -1045,9 +1066,6 @@
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>原文高亮显示范围</value>
   </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>靠左</value>
-  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>细体</value>
   </data>
@@ -1075,8 +1093,14 @@
   <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
     <value>当前歌词开始到当前字符</value>
   </data>
-  <data name="SettingsPageLyricsRight.Content" xml:space="preserve">
-    <value>靠右</value>
+  <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
+    <value>歌词区域高度因子</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <value>为持续时间较长的音节启用缩放</value>
+  </data>
+  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>缩放效果</value>
   </data>
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
     <value>最佳匹配</value>
@@ -1158,6 +1182,12 @@
   </data>
   <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
     <value>云母（替代样式）</value>
+  </data>
+  <data name="SettingsPageMiddleGapColFactor.Header" xml:space="preserve">
+    <value>中间区域间隙宽度系数</value>
+  </data>
+  <data name="SettingsPageMiddleGapRowFactor.Header" xml:space="preserve">
+    <value>中间间隙区域高度系数</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>播放测试音乐</value>
@@ -1276,6 +1306,9 @@
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>重启应用以应用更改</value>
   </data>
+  <data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
+    <value>右间隙区域宽度因子</value>
+  </data>
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>日语注音</value>
   </data>
@@ -1345,6 +1378,9 @@
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>在系统环境中显示</value>
   </data>
+  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
+    <value>显示布局拆分器</value>
+  </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>显示标题</value>
   </data>
@@ -1357,16 +1393,10 @@
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>歌曲信息</value>
   </data>
-  <data name="SettingsPageSongInfoAlignment.Header" xml:space="preserve">
-    <value>对齐方式</value>
-  </data>
-  <data name="SettingsPageSongInfoCenter.Content" xml:space="preserve">
-    <value>居中</value>
-  </data>
-  <data name="SettingsPageSongInfoLeft.Content" xml:space="preserve">
+  <data name="SettingsPageLeft.Content" xml:space="preserve">
     <value>靠左</value>
   </data>
-  <data name="SettingsPageSongInfoRight.Content" xml:space="preserve">
+  <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>靠右</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
@@ -1429,6 +1459,15 @@
   <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
     <value>切入与切出快捷键</value>
   </data>
+  <data name="SettingsPageTopGapFactor.Header" xml:space="preserve">
+    <value>顶部间隙区域高度因子</value>
+  </data>
+  <data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
+    <value>曲目摘要区域宽度因子</value>
+  </data>
+  <data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
+    <value>曲目摘要区域高度系数</value>
+  </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>译文</value>
   </data>
@@ -1446,6 +1485,9 @@
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>版本号</value>
+  </data>
+  <data name="SettingsPageVerticalLayoutFactor.Text" xml:space="preserve">
+    <value>垂直布局系数</value>
   </data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve">
     <value>拉丁字母</value>
@@ -1512,5 +1554,8 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>靠左</value>
   </data>
 </root>

@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml;
 using System;
 using Windows.Foundation;
 
@@ -35,10 +36,27 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowX { get; set; } = 100;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowY { get; set; } = 100;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowWidth { get; set; } = 800;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowHeight { get; set; } = 500;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LeftGapFactor { get; set; } = 12;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double TopGapFactor { get; set; } = 12;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double RightGapFactor { get; set; } = 12;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double BottomGapFactor { get; set; } = 12;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double MiddleColGapFactor { get; set; } = 12;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double MiddleRowGapFactor { get; set; } = 12;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double TrackSummaryColGapFactor { get; set; } = 38;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double TrackSummaryRowGapFactor { get; set; } = 19;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsColGapFactor { get; set; } = 38;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsRowGapFactor { get; set; } = 57;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowLayoutIndicator { get; set; } = false;
 
         public LyricsWindowStatus()
         {
@@ -191,11 +209,27 @@ namespace BetterLyrics.WinUI3.Models
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
                 TitleBarArea = this.TitleBarArea,
+
                 WindowX = this.WindowX,
                 WindowY = this.WindowY,
                 WindowWidth = this.WindowWidth,
                 WindowHeight = this.WindowHeight,
+
+                LeftGapFactor = this.LeftGapFactor,
+                TopGapFactor = this.TopGapFactor,
+                RightGapFactor = this.RightGapFactor,
+                BottomGapFactor = this.BottomGapFactor,
+
+                MiddleColGapFactor = this.MiddleColGapFactor,
+                MiddleRowGapFactor = this.MiddleRowGapFactor,
+
+                TrackSummaryColGapFactor = this.TrackSummaryColGapFactor,
+                TrackSummaryRowGapFactor = this.TrackSummaryRowGapFactor,
+
+                LyricsColGapFactor = this.LyricsColGapFactor,
+                LyricsRowGapFactor = this.LyricsRowGapFactor,
             };
+
         }
     }
 }

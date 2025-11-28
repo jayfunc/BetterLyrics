@@ -17,9 +17,7 @@ namespace BetterLyrics.WinUI3.Models
         public double AnimationDuration { get; set; } = 0.3;
         public ValueTransition<double> AngleTransition { get; set; }
         public ValueTransition<double> BlurAmountTransition { get; set; }
-        public ValueTransition<double> PhoneticTextOpacityTransition { get; set; }
-        public ValueTransition<double> OriginalTextOpacityTransition { get; set; }
-        public ValueTransition<double> TranslatedTextOpacityTransition { get; set; }
+        public ValueTransition<double> OpacityTransition { get; set; }
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> YOffsetTransition { get; set; }
 
@@ -27,19 +25,31 @@ namespace BetterLyrics.WinUI3.Models
         public CanvasTextLayout? TranslatedCanvasTextLayout { get; private set; }
         public CanvasTextLayout? PhoneticCanvasTextLayout { get; private set; }
 
-        public Vector2 CenterPosition { get; private set; }
         /// <summary>
-        /// 原文位置
+        /// 原文坐标（相对于坐标原点）
         /// </summary>
         public Vector2 OriginalPosition { get; set; }
         /// <summary>
-        /// 译文位置
+        /// 译文坐标（相对于坐标原点）
         /// </summary>
         public Vector2 TranslatedPosition { get; set; }
         /// <summary>
-        /// 注音位置
+        /// 注音坐标（相对于坐标原点）
         /// </summary>
         public Vector2 PhoneticPosition { get; set; }
+
+        /// <summary>
+        /// 顶部坐标（相对于坐标原点）
+        /// </summary>
+        public Vector2 TopPosition { get; set; }
+        /// <summary>
+        /// 中心坐标（相对于坐标原点）
+        /// </summary>
+        public Vector2 CenterPosition { get; private set; }
+        /// <summary>
+        /// 底部坐标（相对于坐标原点）
+        /// </summary>
+        public Vector2 BottomPosition { get; set; }
 
         public List<LyricsSyllable> LyricsSyllables { get; set; } = [];
 
@@ -76,17 +86,7 @@ namespace BetterLyrics.WinUI3.Models
                  durationSeconds: AnimationDuration,
                  easingType: EasingType.EaseInOutQuad
              );
-            PhoneticTextOpacityTransition = new(
-                initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutQuad
-            );
-            OriginalTextOpacityTransition = new(
-                initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutQuad
-            );
-            TranslatedTextOpacityTransition = new(
+            OpacityTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
                 easingType: EasingType.EaseInOutQuad
@@ -110,13 +110,13 @@ namespace BetterLyrics.WinUI3.Models
                 return;
             }
 
-            double centerY = OriginalPosition.Y + (OriginalCanvasTextLayout?.LayoutBounds.Height ?? 0) / 2;
+            double centerY = (TopPosition.Y + BottomPosition.Y) / 2;
 
             CenterPosition = type switch
             {
-                TextAlignmentType.Left => new Vector2(OriginalPosition.X, (float)centerY),
-                TextAlignmentType.Center => new Vector2((float)(OriginalPosition.X + maxWidth / 2.0), (float)centerY),
-                TextAlignmentType.Right => new Vector2((float)(OriginalPosition.X + maxWidth), (float)centerY),
+                TextAlignmentType.Left => new Vector2(0, (float)centerY),
+                TextAlignmentType.Center => new Vector2((float)(0 + maxWidth / 2.0), (float)centerY),
+                TextAlignmentType.Right => new Vector2((float)(0 + maxWidth), (float)centerY),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(type), type, null),
             };
         }

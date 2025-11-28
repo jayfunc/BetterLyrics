@@ -562,7 +562,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             ISearchResult? result;
             if (searcher == Searchers.Netease && songInfo.SongId != null)
             {
-                result = new NeteaseSearchResult(songInfo.Title, songInfo.Artists, songInfo.Album, songInfo.Artists, (int)songInfo.DurationMs, songInfo.SongId);
+                result = new NeteaseSearchResult("", [], "", [], 0, songInfo.SongId);
+            }
+            else if (searcher == Searchers.QQMusic && songInfo.SongId != null)
+            {
+                result = new QQMusicSearchResult("", [], "", [], 0, songInfo.SongId, "");
             }
             else
             {

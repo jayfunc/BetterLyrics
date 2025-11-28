@@ -15,6 +15,7 @@ namespace BetterLyrics.WinUI3.Renderer
             LyricsLine line)
         {
             var blurAmount = (float)line.BlurAmountTransition.Value;
+            var opacity = line.OpacityTransition.Value;
 
             if (line.PhoneticCanvasTextLayout != null)
             {
@@ -22,7 +23,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     line.PhoneticCanvasTextLayout,
                     line.PhoneticPosition,
                     blurAmount,
-                    (float)line.PhoneticTextOpacityTransition.Value);
+                    (float)opacity * 0.3f);
             }
 
             if (line.OriginalCanvasTextLayout != null)
@@ -31,7 +32,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     line.OriginalCanvasTextLayout,
                     line.OriginalPosition,
                     blurAmount,
-                    (float)line.OriginalTextOpacityTransition.Value);
+                    (float)opacity);
             }
 
             if (line.TranslatedCanvasTextLayout != null)
@@ -40,7 +41,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     line.TranslatedCanvasTextLayout,
                     line.TranslatedPosition,
                     blurAmount,
-                    (float)line.TranslatedTextOpacityTransition.Value);
+                    (float)opacity * 0.3f);
             }
         }
 

@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             TranslationSearchProvider = null;
             _lyricsDataArr.ElementAtOrDefault(0)?.ClearTranslatedText();
 
-            SetCurrentLyricsData();
+            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
 
             IsTranslating = true;
 
@@ -55,7 +55,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
             IsTranslating = false;
 
-            SetCurrentLyricsData();
+            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
 
         }
 
@@ -153,7 +153,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             CurrentLyricsSearchResult = null;
             _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
 
-            SetCurrentLyricsData();
+            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
 
             if (CurrentSongInfo != null)
             {
@@ -176,10 +176,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             // Show original first while loading phonetic and translated
             ApplyChinesePreference();
 
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-            {
-                LyricsChanged?.Invoke(this, new LyricsChangedEventArgs(CurrentLyricsData));
-            });
+            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
 
             UpdateTranslations();
         }
