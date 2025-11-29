@@ -50,16 +50,14 @@
                 x:Name="TrackSummaryGrid"
                 Grid.Row="1"
                 Grid.Column="1"
-                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.AlbumArtAlignmentType, Mode=OneWay}"
-                VerticalAlignment="Center"
                 SizeChanged="TrackSummaryGrid_SizeChanged">
                 <Grid.RowDefinitions>
                     <RowDefinition x:Name="AlbumArtRowDef" Height="*" />
-                    <RowDefinition x:Name="SongInfoRowDef" Height="Auto" />
+                    <RowDefinition x:Name="SongInfoRowDef" Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="AlbumArtColDef" Width="*" />
-                    <ColumnDefinition x:Name="SongInfoColDef" Width="Auto" />
+                    <ColumnDefinition x:Name="SongInfoColDef" Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
@@ -69,8 +67,9 @@
                 <Grid
                     x:Name="AlbumArtGrid"
                     Grid.Row="0"
+                    Margin="-32"
                     Padding="32"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.AlbumArtAlignmentType, Mode=OneWay}">
                     <Grid.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </Grid.OpacityTransition>
@@ -99,12 +98,12 @@
                 </Grid>
 
                 <!--  Song info  -->
-                <StackPanel x:Name="SongInfoStackPanel">
+                <StackPanel x:Name="SongInfoStackPanel" HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </StackPanel.OpacityTransition>
 
-                    <dev:OpacityMaskView>
+                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                         <dev:OpacityMaskView.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Offset="0" Color="Transparent" />
@@ -122,14 +121,13 @@
                             ScrollingPixelsPreSecond="20">
                             <TextBlock
                                 x:Name="TitleTextBlock"
-                                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
                                 FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 TextTrimming="None"
                                 Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </dev:AutoScrollView>
                     </dev:OpacityMaskView>
 
-                    <dev:OpacityMaskView>
+                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                         <dev:OpacityMaskView.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Offset="0" Color="Transparent" />
@@ -147,7 +145,6 @@
                             ScrollingPixelsPreSecond="20">
                             <TextBlock
                                 x:Name="ArtistsTextBlock"
-                                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
                                 FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.5"
                                 TextTrimming="None"
@@ -155,7 +152,7 @@
                         </dev:AutoScrollView>
                     </dev:OpacityMaskView>
 
-                    <dev:OpacityMaskView>
+                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                         <dev:OpacityMaskView.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Offset="0" Color="Transparent" />
@@ -173,7 +170,6 @@
                             ScrollingPixelsPreSecond="20">
                             <TextBlock
                                 x:Name="AlbumTextBlock"
-                                HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}, Mode=OneWay}"
                                 FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.5"
                                 TextTrimming="None"
@@ -191,99 +187,178 @@
                 Grid.Column="3"
                 SizeChanged="LyricsPlaceholder_SizeChanged" />
 
-            <uc:Dragger
-                x:Name="LeftGapDragger"
-                Grid.RowSpan="5"
-                Grid.Column="0"
-                Margin="0,0,-8,0"
-                HorizontalAlignment="Right"
-                DragDelta="LeftGapDragger_DragDelta">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
-            <uc:Dragger
-                x:Name="TrackSummaryColDragger"
-                Grid.RowSpan="5"
-                Grid.Column="1"
-                Margin="0,0,-8,0"
-                HorizontalAlignment="Right"
-                DragDelta="TrackSummaryColDragger_DragDelta">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
-            <uc:Dragger
-                x:Name="MiddleColDragger"
-                Grid.RowSpan="5"
-                Grid.Column="2"
-                Margin="0,0,-8,0"
-                HorizontalAlignment="Right"
-                DragDelta="MiddleColDragger_DragDelta">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
-            <uc:Dragger
-                x:Name="LyricsColDragger"
-                Grid.RowSpan="5"
-                Grid.Column="3"
-                Margin="0,0,-8,0"
-                HorizontalAlignment="Right"
-                DragDelta="LyricsColDragger_DragDelta">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
+        </Grid>
 
-            <uc:Dragger
-                x:Name="TopGapDragger"
+        <!--  布局因子调控指示器  -->
+        <Grid Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.ShowLayoutIndicator, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding ElementName=TopGapDef, Path=Height, Mode=OneWay}" />
+                <RowDefinition Height="{Binding ElementName=TrackSummaryRowDef, Path=Height, Mode=OneWay}" />
+                <RowDefinition Height="{Binding ElementName=MiddleGapRowDef, Path=Height, Mode=OneWay}" />
+                <RowDefinition Height="{Binding ElementName=LyricsRowDef, Path=Height, Mode=OneWay}" />
+                <RowDefinition Height="{Binding ElementName=BottomGapDef, Path=Height, Mode=OneWay}" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{Binding ElementName=LeftGapDef, Path=Width, Mode=OneWay}" />
+                <ColumnDefinition Width="{Binding ElementName=TrackSummaryColDef, Path=Width, Mode=OneWay}" />
+                <ColumnDefinition Width="{Binding ElementName=MiddleGapColDef, Path=Width, Mode=OneWay}" />
+                <ColumnDefinition Width="{Binding ElementName=LyricsColDef, Path=Width, Mode=OneWay}" />
+                <ColumnDefinition Width="{Binding ElementName=RightGapDef, Path=Width, Mode=OneWay}" />
+            </Grid.ColumnDefinitions>
+
+            <!--  通用指示器  -->
+            <Grid
                 Grid.Row="0"
                 Grid.ColumnSpan="5"
-                Margin="0,0,0,-8"
-                VerticalAlignment="Bottom"
-                DragDelta="TopGapDragger_DragDelta"
-                Orientation="Horizontal">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
-            <uc:Dragger
-                x:Name="TrackSummaryRowDragger"
+                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
+            <Grid
+                Grid.Row="4"
+                Grid.ColumnSpan="5"
+                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
+            <Grid
+                Grid.RowSpan="5"
+                Grid.Column="0"
+                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
+            <Grid
+                Grid.RowSpan="5"
+                Grid.Column="4"
+                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
+
+            <!--  垂直布局指示器  -->
+            <Grid
                 Grid.Row="1"
-                Grid.ColumnSpan="5"
-                Margin="0,0,0,-8"
-                VerticalAlignment="Bottom"
-                DragDelta="TrackSummaryRowDragger_DragDelta"
-                Orientation="Horizontal">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
-            <uc:Dragger
-                x:Name="MiddleRowDragger"
-                Grid.Row="2"
-                Grid.ColumnSpan="5"
-                Margin="0,0,0,-8"
-                VerticalAlignment="Bottom"
-                DragDelta="MiddleRowDragger_DragDelta"
-                Orientation="Horizontal">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
-            <uc:Dragger
-                x:Name="LyricsRowDragger"
-                Grid.Row="3"
-                Grid.ColumnSpan="5"
-                Margin="0,0,0,-8"
-                VerticalAlignment="Bottom"
-                DragDelta="LyricsRowDragger_DragDelta"
-                Orientation="Horizontal">
-                <uc:Dragger.OpacityTransition>
-                    <ScalarTransition />
-                </uc:Dragger.OpacityTransition>
-            </uc:Dragger>
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="1">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding ElementName=TrackSummaryRowDef, Path=Height, Mode=OneWay}" />
+                    <RowDefinition Height="{Binding ElementName=MiddleGapRowDef, Path=Height, Mode=OneWay}" />
+                    <RowDefinition Height="{Binding ElementName=LyricsRowDef, Path=Height, Mode=OneWay}" />
+                </Grid.RowDefinitions>
+                <Grid
+                    Grid.Row="1"
+                    Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
+                    Opacity="0.5" />
+                <Grid
+                    Grid.Row="2"
+                    Background="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}"
+                    Opacity="0.5" />
+            </Grid>
+
+            <!--  水平布局指示器  -->
+            <Grid
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="1">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding ElementName=TrackSummaryColDef, Path=Width, Mode=OneWay}" />
+                    <ColumnDefinition Width="{Binding ElementName=MiddleGapColDef, Path=Width, Mode=OneWay}" />
+                    <ColumnDefinition Width="{Binding ElementName=LyricsColDef, Path=Width, Mode=OneWay}" />
+                </Grid.ColumnDefinitions>
+                <Grid
+                    Grid.Column="1"
+                    Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
+                    Opacity="0.5" />
+                <Grid
+                    Grid.Column="2"
+                    Background="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}"
+                    Opacity="0.5" />
+            </Grid>
+
+            <!--  垂直专辑区域布局指示器  -->
+            <Grid
+                Grid.Row="1"
+                Grid.RowSpan="3"
+                Grid.Column="1">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="1">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding ElementName=AlbumArtRowDef, Path=Height, Mode=OneWay}" />
+                    <RowDefinition Height="{Binding ElementName=SongInfoRowDef, Path=Height, Mode=OneWay}" />
+                </Grid.RowDefinitions>
+                <Grid
+                    Grid.Row="0"
+                    Background="{ThemeResource AccentAAFillColorSecondaryBrush}"
+                    Opacity="0.5" />
+                <Grid
+                    Grid.Row="1"
+                    Background="{ThemeResource AccentAAFillColorTertiaryBrush}"
+                    Opacity="0.5" />
+            </Grid>
+
+            <!--  水平专辑区域布局指示器  -->
+            <Grid
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="3">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="1">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{Binding ElementName=AlbumArtColDef, Path=Width, Mode=OneWay}" />
+                    <ColumnDefinition Width="{Binding ElementName=SongInfoColDef, Path=Width, Mode=OneWay}" />
+                </Grid.ColumnDefinitions>
+                <Grid
+                    Grid.Column="0"
+                    Background="{ThemeResource AccentAAFillColorSecondaryBrush}"
+                    Opacity="0.5" />
+                <Grid
+                    Grid.Column="1"
+                    Background="{ThemeResource AccentAAFillColorTertiaryBrush}"
+                    Opacity="0.5" />
+            </Grid>
 
         </Grid>
 

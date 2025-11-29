@@ -448,14 +448,32 @@
 
                                 <TextBlock x:Uid="SettingsPageHorizontalLayoutFactor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                                <dev:SettingsCard x:Uid="SettingsPageTrackSummaryColFactor">
+                                <dev:SettingsExpander x:Uid="SettingsPageTrackSummaryColFactor">
                                     <NumberBox
                                         LargeChange="10"
                                         Minimum="1"
                                         SmallChange="1"
                                         SpinButtonPlacementMode="Inline"
                                         Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.TrackSummaryColGapFactor, Mode=TwoWay}" />
-                                </dev:SettingsCard>
+                                    <dev:SettingsExpander.Items>
+                                        <dev:SettingsCard x:Uid="SettingsPageAlbumArtRowFacor">
+                                            <NumberBox
+                                                LargeChange="10"
+                                                Minimum="1"
+                                                SmallChange="1"
+                                                SpinButtonPlacementMode="Inline"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtRowGapFactor, Mode=TwoWay}" />
+                                        </dev:SettingsCard>
+                                        <dev:SettingsCard x:Uid="SettingsPageSongInfoRowFacor">
+                                            <NumberBox
+                                                LargeChange="10"
+                                                Minimum="1"
+                                                SmallChange="1"
+                                                SpinButtonPlacementMode="Inline"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.SongInfoRowGapFactor, Mode=TwoWay}" />
+                                        </dev:SettingsCard>
+                                    </dev:SettingsExpander.Items>
+                                </dev:SettingsExpander>
 
                                 <dev:SettingsCard x:Uid="SettingsPageMiddleGapColFactor">
                                     <NumberBox
@@ -477,14 +495,32 @@
 
                                 <TextBlock x:Uid="SettingsPageVerticalLayoutFactor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                                <dev:SettingsCard x:Uid="SettingsPageTrackSummaryRowFactor">
+                                <dev:SettingsExpander x:Uid="SettingsPageTrackSummaryRowFactor">
                                     <NumberBox
                                         LargeChange="10"
                                         Minimum="1"
                                         SmallChange="1"
                                         SpinButtonPlacementMode="Inline"
                                         Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.TrackSummaryRowGapFactor, Mode=TwoWay}" />
-                                </dev:SettingsCard>
+                                    <dev:SettingsExpander.Items>
+                                        <dev:SettingsCard x:Uid="SettingsPageAlbumArtColFacor">
+                                            <NumberBox
+                                                LargeChange="10"
+                                                Minimum="1"
+                                                SmallChange="1"
+                                                SpinButtonPlacementMode="Inline"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtColGapFactor, Mode=TwoWay}" />
+                                        </dev:SettingsCard>
+                                        <dev:SettingsCard x:Uid="SettingsPageSongInfoColFacor">
+                                            <NumberBox
+                                                LargeChange="10"
+                                                Minimum="1"
+                                                SmallChange="1"
+                                                SpinButtonPlacementMode="Inline"
+                                                Value="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.SongInfoColGapFactor, Mode=TwoWay}" />
+                                        </dev:SettingsCard>
+                                    </dev:SettingsExpander.Items>
+                                </dev:SettingsExpander>
 
                                 <dev:SettingsCard x:Uid="SettingsPageMiddleGapRowFactor">
                                     <NumberBox

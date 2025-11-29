@@ -3,11 +3,12 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public struct LyricsThemeColors
+    public struct AlbumArtThemeColors
     {
         public Color BgFontColor;
         public Color FgFontColor;
         public Color StrokeFontColor;
+        public Color EnvColor;
 
         public Color AccentColor1;
         public Color AccentColor2;

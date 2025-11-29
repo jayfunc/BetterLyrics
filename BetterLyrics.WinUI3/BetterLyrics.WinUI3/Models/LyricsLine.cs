@@ -7,8 +7,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI;
 using System.Collections.Generic;
 using System.Numerics;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -20,6 +22,7 @@ namespace BetterLyrics.WinUI3.Models
         public ValueTransition<double> OpacityTransition { get; set; }
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> YOffsetTransition { get; set; }
+        public ValueTransition<Color> ColorTransition { get; set; }
 
         public CanvasTextLayout? OriginalCanvasTextLayout { get; private set; }
         public CanvasTextLayout? TranslatedCanvasTextLayout { get; private set; }
@@ -79,27 +82,32 @@ namespace BetterLyrics.WinUI3.Models
             AngleTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutQuad
+                easingType: EasingType.EaseInOutSine
             );
             BlurAmountTransition = new(
                  initialValue: 0,
                  durationSeconds: AnimationDuration,
-                 easingType: EasingType.EaseInOutQuad
+                 easingType: EasingType.EaseInOutSine
              );
             OpacityTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutQuad
+                easingType: EasingType.EaseInOutSine
             );
             ScaleTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutQuad
+                easingType: EasingType.EaseInOutSine
             );
             YOffsetTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutQuad
+                easingType: EasingType.EaseInOutSine
+            );
+            ColorTransition = new(
+                initialValue: Colors.Transparent,
+                durationSeconds: 0.3f,
+                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
             );
         }
 

@@ -26,6 +26,7 @@ using CommunityToolkit.WinUI;
 using EvtSource;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ using System.Threading.Tasks;
 using Vanara.Windows.Shell;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
+using Windows.UI;
 using WindowsMediaController;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
@@ -46,7 +48,10 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         IRecipient<PropertyChangedMessage<LyricsWindowStatus>>,
         IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
-        IRecipient<PropertyChangedMessage<List<string>>>
+        IRecipient<PropertyChangedMessage<List<string>>>,
+        IRecipient<PropertyChangedMessage<Color>>,
+        IRecipient<PropertyChangedMessage<ElementTheme>>,
+        IRecipient<PropertyChangedMessage<LyricsFontColorType>>
     {
         private EventSourceReader? _sse = null;
         private readonly MediaManager _mediaManager = new();
@@ -760,6 +765,63 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
                 {
                     UpdateAlbumArt();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<Color> message)
+        {
+            if (message.Sender is LyricsWindowViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsWindowViewModel.BackdropAccentColor))
+                {
+                    _envColor = message.NewValue;
+                    UpdateAlbumArtThemeColors();
+                }
+            }
+            else if (message.Sender is LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCustomBgFontColor))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCustomFgFontColor))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCustomStrokeFontColor))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            if (message.Sender is LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsFontColorType> message)
+        {
+            if (message.Sender is LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsBgFontColorType))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFgFontColorType))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsStrokeFontColorType))
+                {
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }
