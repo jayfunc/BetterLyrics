@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         LyricsData? CurrentLyricsData { get; }
 
         BitmapImage? AlbumArtBitmapImage { get; }
-        List<Color> LightAccentColors { get; }
-        List<Color> DarkAccentColors { get; }
+        AlbumArtThemeColors AlbumArtThemeColors { get; }
 
         TranslationSearchProvider? TranslationSearchProvider { get; }
         LyricsSearchResult? CurrentLyricsSearchResult { get; }

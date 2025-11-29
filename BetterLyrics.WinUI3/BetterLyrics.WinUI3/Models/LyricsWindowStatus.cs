@@ -55,6 +55,13 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsColGapFactor { get; set; } = 38;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsRowGapFactor { get; set; } = 57;
+        
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double AlbumArtColGapFactor { get; set; } = 4;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double AlbumArtRowGapFactor { get; set; } = 4;
+        
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double SongInfoColGapFactor { get; set; } = 1;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double SongInfoRowGapFactor { get; set; } = 1;
+
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowLayoutIndicator { get; set; } = false;
 
@@ -225,6 +232,12 @@ namespace BetterLyrics.WinUI3.Models
 
                 TrackSummaryColGapFactor = this.TrackSummaryColGapFactor,
                 TrackSummaryRowGapFactor = this.TrackSummaryRowGapFactor,
+
+                AlbumArtColGapFactor = this.AlbumArtColGapFactor,
+                AlbumArtRowGapFactor = this.AlbumArtRowGapFactor,
+
+                SongInfoColGapFactor = this.SongInfoColGapFactor,
+                SongInfoRowGapFactor = this.SongInfoRowGapFactor,
 
                 LyricsColGapFactor = this.LyricsColGapFactor,
                 LyricsRowGapFactor = this.LyricsRowGapFactor,

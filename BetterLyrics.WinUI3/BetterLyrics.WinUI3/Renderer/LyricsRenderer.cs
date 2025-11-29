@@ -36,6 +36,7 @@ namespace BetterLyrics.WinUI3.Renderer
             LyricsWindowStatus windowStatus,
             Color strokeColor,
             Color bgColor,
+            Color fgColor,
             Func<int, LinePlaybackState> getPlaybackState)
         {
             using (var opacityLayer = ds.CreateLayer((float)lyricsOpacity))
@@ -60,6 +61,7 @@ namespace BetterLyrics.WinUI3.Renderer
                                 windowStatus,
                                 strokeColor,
                                 bgColor,
+                                fgColor,
                                 getPlaybackState);
                         }
 
@@ -86,6 +88,7 @@ namespace BetterLyrics.WinUI3.Renderer
                         windowStatus,
                         strokeColor,
                         bgColor,
+                        fgColor,
                         getPlaybackState);
                 }
             }
@@ -105,6 +108,7 @@ namespace BetterLyrics.WinUI3.Renderer
             LyricsWindowStatus windowStatus,
             Color strokeColor,
             Color bgColor,
+            Color fgColor,
             Func<int, LinePlaybackState> getPlaybackState)
         {
             if (lyricsData == null) return;
@@ -134,13 +138,13 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 ds.Transform = transform;
 
-                using (var textOnlyLayer = RenderBaseTextLayer(control, line, styleSettings.LyricsFontStrokeWidth, strokeColor, bgColor))
+                using (var textOnlyLayer = RenderBaseTextLayer(control, line, styleSettings.LyricsFontStrokeWidth, strokeColor, line.ColorTransition.Value))
                 {
                     if (i == playingLineIndex)
                     {
                         var state = getPlaybackState(i);
 
-                        _playingRenderer.Draw(control, ds, textOnlyLayer, line, state, effectSettings);
+                        _playingRenderer.Draw(control, ds, textOnlyLayer, line, state, bgColor, fgColor, effectSettings);
                     }
                     else
                     {
