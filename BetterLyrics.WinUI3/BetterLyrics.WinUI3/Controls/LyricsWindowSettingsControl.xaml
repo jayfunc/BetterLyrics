@@ -404,10 +404,6 @@
                                     </dev:SettingsExpander.Items>
                                 </dev:SettingsExpander>
 
-                                <dev:SettingsCard x:Uid="SettingsPageShowLayoutDragger">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.ShowLayoutIndicator, Mode=TwoWay}" />
-                                </dev:SettingsCard>
-
                             </StackPanel>
                         </Grid>
                     </ScrollViewer>

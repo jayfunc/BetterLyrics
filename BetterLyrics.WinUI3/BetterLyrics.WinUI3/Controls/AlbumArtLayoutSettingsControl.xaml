@@ -16,15 +16,17 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
-                        <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.AlbumArtAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                        <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
                             <ComboBoxItem x:Uid="SettingsPageRight" />
                         </ComboBox>
                     </dev:SettingsCard>
+
+                    <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3A;}">
                         <local:ExtendedSlider
@@ -44,14 +46,6 @@
                     </dev:SettingsCard>
 
                     <TextBlock x:Uid="SettingsPageSongInfo" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                    <dev:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
-                        <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLeft" />
-                            <ComboBoxItem x:Uid="SettingsPageCenter" />
-                            <ComboBoxItem x:Uid="SettingsPageRight" />
-                        </ComboBox>
-                    </dev:SettingsCard>
 
                     <dev:SettingsExpander
                         x:Uid="SettingsPageLyricsFontSize"

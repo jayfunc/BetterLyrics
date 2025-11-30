@@ -42,8 +42,6 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowWidth { get; set; } = 800;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowHeight { get; set; } = 500;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowLayoutIndicator { get; set; } = false;
-
         public LyricsWindowStatus()
         {
             UpdateMonitorNameAndBounds();

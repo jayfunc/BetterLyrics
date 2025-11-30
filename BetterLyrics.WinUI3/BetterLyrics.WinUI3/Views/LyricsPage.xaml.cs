@@ -21,6 +21,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace BetterLyrics.WinUI3.Views
 {
@@ -235,8 +236,8 @@ namespace BetterLyrics.WinUI3.Views
                     Grid.SetColumnSpan(SongInfoStackPanel, 3);
                     break;
                 case LyricsLayoutOrientation.Vertical:
-                    Grid.SetRow(SongInfoStackPanel, 0);
-                    Grid.SetRowSpan(SongInfoStackPanel, 5);
+                    Grid.SetRow(SongInfoStackPanel, 1);
+                    Grid.SetRowSpan(SongInfoStackPanel, 3);
                     Grid.SetColumn(SongInfoStackPanel, 2);
                     Grid.SetColumnSpan(SongInfoStackPanel, 1);
                     break;
@@ -259,8 +260,8 @@ namespace BetterLyrics.WinUI3.Views
                     Grid.SetColumnSpan(AlbumArtGrid, 3);
                     break;
                 case LyricsLayoutOrientation.Vertical:
-                    Grid.SetRow(AlbumArtGrid, 0);
-                    Grid.SetRowSpan(AlbumArtGrid, 5);
+                    Grid.SetRow(AlbumArtGrid, 1);
+                    Grid.SetRowSpan(AlbumArtGrid, 3);
                     Grid.SetColumn(AlbumArtGrid, 0);
                     Grid.SetColumnSpan(AlbumArtGrid, 1);
                     break;
@@ -296,7 +297,7 @@ namespace BetterLyrics.WinUI3.Views
                     break;
                 case LyricsDisplayType.LyricsOnly:
                     NowPlayingCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                    NowPlayingCanvas.LyricsStartY = TopGapDef.ActualHeight;
+                    NowPlayingCanvas.LyricsStartY = 0;
                     NowPlayingCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
                     NowPlayingCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
                     break;
@@ -305,13 +306,13 @@ namespace BetterLyrics.WinUI3.Views
                     {
                         case LyricsLayoutOrientation.Horizontal:
                             NowPlayingCanvas.LyricsStartX = LeftGapDef.ActualWidth + TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth;
-                            NowPlayingCanvas.LyricsStartY = TopGapDef.ActualHeight;
+                            NowPlayingCanvas.LyricsStartY = 0;
                             NowPlayingCanvas.LyricsWidth = LyricsColDef.ActualWidth;
                             NowPlayingCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
                             break;
                         case LyricsLayoutOrientation.Vertical:
                             NowPlayingCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                            NowPlayingCanvas.LyricsStartY = TopGapDef.ActualHeight + TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight;
+                            NowPlayingCanvas.LyricsStartY = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight;
                             NowPlayingCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
                             NowPlayingCanvas.LyricsHeight = LyricsRowDef.ActualHeight;
                             break;
@@ -326,31 +327,12 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        private void OnLayoutChanged()
+        private void UpdateGap()
         {
-            UpdateSongInfoOpacity();
+            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
 
-            UpdateAlbumArtShadow();
-            UpdateAlbumArtOpacity();
-
-            UpdateTrackSummaryGridSpan();
-
-            UpdateAlbumArtGridSpan();
-
-            UpdateSongInfoStackPanelSpan();
-
-            UpdateLyricsOpacity();
-            UpdateLyricsLayout();
-
-            UpdateAlbumArtCornerRadius();
-        }
-
-        // ====
-
-        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            var width = e.NewSize.Width;
-            var height = e.NewSize.Height;
+            double height = RootGrid.ActualHeight;
+            double width = RootGrid.ActualWidth;
 
             double xMargin = 0;
             double yMargin = 0;
@@ -375,14 +357,54 @@ namespace BetterLyrics.WinUI3.Views
                 gapBetweenAlbumArtAndSongInfo = GetTitleFontSize() / 2;
             }
 
-            xMargin = Math.Max(16, width * 0.1);
-            yMargin = Math.Max(16, height * 0.15);
+            switch (status.LyricsLayoutOrientation)
+            {
+                case LyricsLayoutOrientation.Horizontal:
+                    xMargin = Math.Max(16, Math.Min(width, height) * 0.3);
+                    yMargin = Math.Max(16, Math.Min(width, height) * 0.15);
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    xMargin = Math.Max(16, Math.Min(width, height) * 0.05);
+                    yMargin = xMargin;
+                    break;
+                default:
+                    break;
+            }
 
-            LeftGapDef.Width = RightGapDef.Width = new(xMargin);
             MiddleGapColDef.Width = new(middleGapCol);
 
             TrackSummaryGridRow0.Height = TrackSummaryGridRow4.Height = new(yMargin);
-            TrackSummaryGridRow2.Height = new(gapBetweenAlbumArtAndSongInfo);
+            LeftGapDef.Width = RightGapDef.Width = new(xMargin);
+            TrackSummaryGridCol1.Width = TrackSummaryGridRow2.Height = new(gapBetweenAlbumArtAndSongInfo);
+        }
+
+        private void OnLayoutChanged()
+        {
+            UpdateSongInfoOpacity();
+
+            UpdateAlbumArtShadow();
+            UpdateAlbumArtOpacity();
+
+            UpdateTrackSummaryGridSpan();
+
+            UpdateAlbumArtGridSpan();
+
+            UpdateSongInfoStackPanelSpan();
+
+            UpdateLyricsOpacity();
+            UpdateLyricsLayout();
+
+            UpdateAlbumArtCornerRadius();
+
+            UpdateGap();
+        }
+
+        // ====
+
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var width = e.NewSize.Width;
+            var height = e.NewSize.Height;
 
             RenderSongInfo();
             OnLayoutChanged();
