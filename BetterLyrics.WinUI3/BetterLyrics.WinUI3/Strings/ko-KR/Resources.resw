@@ -1414,11 +1414,20 @@
   <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
     <value>스펙트럼 위치</value>
   </data>
+  <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
+    <value>스펙트럼 스타일</value>
+  </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>맨 아래</value>
   </data>
   <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
     <value>맨 위</value>
+  </data>
+  <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
+    <value>기둥</value>
+  </data>
+  <data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
+    <value>곡선</value>
   </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>모션</value>
