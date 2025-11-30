@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Models;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
@@ -73,20 +74,22 @@ namespace BetterLyrics.WinUI3.Renderer
                 bounds.Height
             );
 
-            using (var opacityLayer = ds.CreateLayer((float)opacity))
+
+            ds.DrawImage(new OpacityEffect
             {
-                ds.DrawImage(new GaussianBlurEffect
+                Source = new GaussianBlurEffect
                 {
                     BlurAmount = blur,
                     Source = new CropEffect
                     {
                         Source = source,
                         SourceRectangle = destRect,
-                        BorderMode = EffectBorderMode.Soft,
+                        BorderMode = EffectBorderMode.Hard,
                     },
                     BorderMode = EffectBorderMode.Soft
-                });
-            }
+                },
+                Opacity = opacity
+            });
         }
     }
 }

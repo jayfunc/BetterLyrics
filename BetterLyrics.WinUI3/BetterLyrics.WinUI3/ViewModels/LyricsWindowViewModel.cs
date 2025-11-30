@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3
         : BaseWindowViewModel,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<List<string>>>,
-            IRecipient<PropertyChangedMessage<ElementTheme>>
+            IRecipient<PropertyChangedMessage<AlbumArtThemeColors>>
     {
         private readonly ISettingsService _settingsService;
         private readonly ILiveStatesService _liveStatesService;
@@ -208,15 +208,15 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<AlbumArtThemeColors> message)
         {
-            //if (message.Sender is LyricsRendererViewModel)
-            //{
-            //    if (message.PropertyName == nameof(LyricsRendererViewModel.ThemeTypeSent))
-            //    {
-            //        ThemeType = message.NewValue;
-            //    }
-            //}
+            if (message.Sender is IMediaSessionsService)
+            {
+                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtThemeColors))
+                {
+                    ThemeType = message.NewValue.ThemeType;
+                }
+            }
         }
 
         public void Receive(PropertyChangedMessage<bool> message)
