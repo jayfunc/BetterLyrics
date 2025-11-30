@@ -24,6 +24,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public bool IsTransitioning => _isTransitioning;
         public T Value => _currentValue;
+        public T StartValue => _startValue;
         public T TargetValue => _targetValue;
         public EasingType? EasingType => _easingType;
 

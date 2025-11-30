@@ -7,13 +7,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
     public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
-
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsScaleEffectEnabled { get; set; } = true;
-
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsShadowEnabled { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LineRenderingType LyricsShadowScope { get; set; } = LineRenderingType.LineStartToCurrentChar;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsShadowAmount { get; set; } = 8;
-
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFloatAnimationEnabled { get; set; } = true;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial EasingType LyricsScrollEasingType { get; set; }
@@ -45,13 +39,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
             return new LyricsEffectSettings(this.LyricsScrollTopDuration, this.LyricsScrollDuration, this.LyricsScrollBottomDuration, this.LyricsScrollEasingType)
             {
                 IsLyricsGlowEffectEnabled = this.IsLyricsGlowEffectEnabled,
-
                 IsLyricsScaleEffectEnabled = this.IsLyricsScaleEffectEnabled,
-
-                IsLyricsShadowEnabled = this.IsLyricsShadowEnabled,
-                LyricsShadowScope = this.LyricsShadowScope,
-                LyricsShadowAmount = this.LyricsShadowAmount,
-
                 IsLyricsFloatAnimationEnabled = this.IsLyricsFloatAnimationEnabled,
 
                 LyricsScrollEasingType = this.LyricsScrollEasingType,

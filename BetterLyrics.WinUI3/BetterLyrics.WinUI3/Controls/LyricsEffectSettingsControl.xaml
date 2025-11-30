@@ -23,31 +23,6 @@
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                         Text="Effect" />
 
-                    <!--  阴影  -->
-                    <dev:SettingsExpander
-                        x:Uid="SettingsPageLyricsShadow"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xF5EF;}"
-                        IsExpanded="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=OneWay}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageScope" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=OneWay}">
-                                <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsShadowScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentChar" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeLineStartToCurrentChar" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsRendingScopeCurrentLine" />
-                                </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsShadowEnabled, Mode=OneWay}">
-                                <local:ExtendedSlider
-                                    Default="8"
-                                    Maximum="20"
-                                    Minimum="1"
-                                    Value="{x:Bind LyricsEffectSettings.LyricsShadowAmount, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
-
                     <!--  辉光效果  -->
                     <dev:SettingsCard x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
