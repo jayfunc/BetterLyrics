@@ -1414,11 +1414,20 @@
   <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
     <value>Spectrum placement</value>
   </data>
+  <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
+    <value>Spectrum style</value>
+  </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>Bottom</value>
   </data>
   <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
     <value>Top</value>
+  </data>
+  <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
+    <value>Bar</value>
+  </data>
+  <data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
+    <value>Curve</value>
   </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>모션</value>
