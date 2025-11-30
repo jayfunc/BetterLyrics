@@ -52,20 +52,21 @@ namespace BetterLyrics.WinUI3.Renderer
                 bounds.Height
             );
 
-            using (var opacityLayer = ds.CreateLayer((float)opacity))
+            ds.DrawImage(new OpacityEffect
             {
-                ds.DrawImage(new GaussianBlurEffect
+                Source = new GaussianBlurEffect
                 {
                     BlurAmount = (float)blur,
                     Source = new CropEffect
                     {
                         Source = source,
-                        BorderMode = EffectBorderMode.Soft,
+                        BorderMode = EffectBorderMode.Hard,
                         SourceRectangle = destRect,
                     },
                     BorderMode = EffectBorderMode.Soft
-                });
-            }
+                },
+                Opacity = (float)opacity,
+            });
         }
 
         private void DrawTranslated(CanvasDrawingSession ds, ICanvasImage source, LyricsLine line)
@@ -83,20 +84,21 @@ namespace BetterLyrics.WinUI3.Renderer
                 bounds.Height
             );
 
-            using (var opacityLayer = ds.CreateLayer((float)opacity))
+            ds.DrawImage(new OpacityEffect
             {
-                ds.DrawImage(new GaussianBlurEffect
+                Source = new GaussianBlurEffect
                 {
                     BlurAmount = (float)blur,
                     Source = new CropEffect
                     {
                         Source = source,
-                        BorderMode = EffectBorderMode.Soft,
+                        BorderMode = EffectBorderMode.Hard,
                         SourceRectangle = destRect,
                     },
                     BorderMode = EffectBorderMode.Soft
-                });
-            }
+                },
+                Opacity = (float)opacity,
+            });
         }
 
         private void DrawOriginalText(
@@ -179,10 +181,17 @@ namespace BetterLyrics.WinUI3.Renderer
                     Sources = { gradientLayer, source }
                 })
                 {
-                    int endCharIndex = subLineRegion.CharacterIndex + subLineRegion.CharacterCount;
-                    for (int i = subLineRegion.CharacterIndex; i < endCharIndex; i++)
+                    if (!settings.IsLyricsFloatAnimationEnabled && !settings.IsLyricsGlowEffectEnabled && !settings.IsLyricsScaleEffectEnabled)
                     {
-                        DrawSingleCharacter(ds, line, i, curCharIndex, textWithColorLayer, state, settings);
+                        ds.DrawImage(textWithColorLayer);
+                    }
+                    else
+                    {
+                        int endCharIndex = subLineRegion.CharacterIndex + subLineRegion.CharacterCount;
+                        for (int i = subLineRegion.CharacterIndex; i < endCharIndex; i++)
+                        {
+                            DrawSingleCharacter(ds, line, i, curCharIndex, textWithColorLayer, state, settings);
+                        }
                     }
                 }
             }
@@ -271,7 +280,8 @@ namespace BetterLyrics.WinUI3.Renderer
                     Source = new CropEffect
                     {
                         Source = source,
-                        SourceRectangle = sourcePlayedCharRect
+                        SourceRectangle = sourcePlayedCharRect,
+                        BorderMode = EffectBorderMode.Hard
                     },
                     BlurAmount = (float)glow,
                     BorderMode = EffectBorderMode.Soft
@@ -281,12 +291,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 }
             }
 
-            ds.DrawImage(new CropEffect
-            {
-                Source = source,
-                SourceRectangle = sourceCharRect,
-                BorderMode = EffectBorderMode.Soft
-            }, destCharRect, sourceCharRect);
+            ds.DrawImage(source, destCharRect, sourceCharRect);
         }
     }
 
