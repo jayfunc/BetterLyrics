@@ -117,6 +117,21 @@
                                 </ComboBox>
                             </dev:SettingsCard>
 
+                            <dev:SettingsCard x:Uid="SettingsPageSpectrumLayerStyle" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                                <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.SpectrumStyle, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageSpectrumStyleCurve" />
+                                    <ComboBoxItem x:Uid="SettingsPageSpectrumStyleBar" />
+                                </ComboBox>
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Default="128"
+                                    Maximum="1024"
+                                    Minimum="1"
+                                    Value="{x:Bind LyricsBackgroundSettings.SpectrumCount, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 

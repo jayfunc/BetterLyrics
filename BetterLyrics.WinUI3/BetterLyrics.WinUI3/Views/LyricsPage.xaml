@@ -75,7 +75,10 @@
                     <Grid.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </Grid.OpacityTransition>
-                    <Grid x:Name="ShadowCastGrid" CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}">
+                    <Grid
+                        x:Name="ShadowCastGrid"
+                        CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}"
+                        SizeChanged="ShadowCastGrid_SizeChanged">
                         <Image x:Name="LastAlbumArtImage" Stretch="Uniform">
                             <Image.OpacityTransition>
                                 <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
