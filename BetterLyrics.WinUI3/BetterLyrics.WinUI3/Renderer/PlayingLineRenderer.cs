@@ -54,17 +54,18 @@ namespace BetterLyrics.WinUI3.Renderer
 
             using (var opacityLayer = ds.CreateLayer((float)opacity))
             {
-                using (var blurEffect = new GaussianBlurEffect
+                ds.DrawImage(new GaussianBlurEffect
                 {
                     BlurAmount = (float)blur,
-                    Source = source,
+                    Source = new CropEffect
+                    {
+                        Source = source,
+                        BorderMode = EffectBorderMode.Soft,
+                        SourceRectangle = destRect,
+                    },
                     BorderMode = EffectBorderMode.Soft
-                })
-                {
-                    ds.DrawImage(blurEffect);
-                }
+                });
             }
-
         }
 
         private void DrawTranslated(CanvasDrawingSession ds, ICanvasImage source, LyricsLine line)
@@ -84,15 +85,17 @@ namespace BetterLyrics.WinUI3.Renderer
 
             using (var opacityLayer = ds.CreateLayer((float)opacity))
             {
-                using (var blurEffect = new GaussianBlurEffect
+                ds.DrawImage(new GaussianBlurEffect
                 {
                     BlurAmount = (float)blur,
-                    Source = source,
+                    Source = new CropEffect
+                    {
+                        Source = source,
+                        BorderMode = EffectBorderMode.Soft,
+                        SourceRectangle = destRect,
+                    },
                     BorderMode = EffectBorderMode.Soft
-                })
-                {
-                    ds.DrawImage(blurEffect);
-                }
+                });
             }
         }
 
@@ -158,7 +161,8 @@ namespace BetterLyrics.WinUI3.Renderer
                         [
                             new CanvasGradientStop { Position = 0, Color = stop1 },
                             new CanvasGradientStop { Position = progressInRegion, Color = stop1 },
-                            new CanvasGradientStop { Position = progressInRegion + fadeWidth, Color = stop2 },
+                            // 这里做判断是防止子行未播放时左侧出现渐变的问题
+                            new CanvasGradientStop { Position = progressInRegion == 0 ? 0 : (progressInRegion + fadeWidth), Color = stop2 },
                             new CanvasGradientStop { Position = 1 + fadeWidth, Color = stop2 }
                         ]))
                     {
@@ -168,6 +172,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     }
                 }
 
+                // 这里 gradientLayer 上色的时候已经限制了 Rect 区域，不用再套一个 CropEffect
                 using (var textWithColorLayer = new CompositeEffect
                 {
                     Mode = CanvasComposite.DestinationIn,
@@ -242,28 +247,46 @@ namespace BetterLyrics.WinUI3.Renderer
 
             var destCharRect = sourceCharRect.Scale(scale).AddY(-floatOffset);
 
-            using (var singleCharCrop = new CropEffect
+            if (drawGlow)
+            {
+                var sourcePlayedCharRect = new Rect(
+                    sourceCharRect.X,
+                    sourceCharRect.Y,
+                    sourceCharRect.Width,
+                    sourceCharRect.Height
+                );
+
+                if (charIndex == curCharIndexInt)
+                {
+                    var p = exactProgressIndex - curCharIndexInt;
+                    sourcePlayedCharRect.Width *= p;
+                }
+                else if (charIndex > curCharIndexInt)
+                {
+                    sourcePlayedCharRect.Width = 0;
+                }
+
+                using (var glowEffect = new GaussianBlurEffect
+                {
+                    Source = new CropEffect
+                    {
+                        Source = source,
+                        SourceRectangle = sourcePlayedCharRect
+                    },
+                    BlurAmount = (float)glow,
+                    BorderMode = EffectBorderMode.Soft
+                })
+                {
+                    ds.DrawImage(glowEffect, destCharRect.Extend(sourceCharRect.Height), sourceCharRect.Extend(sourceCharRect.Height));
+                }
+            }
+
+            ds.DrawImage(new CropEffect
             {
                 Source = source,
                 SourceRectangle = sourceCharRect,
                 BorderMode = EffectBorderMode.Soft
-            })
-            {
-                if (drawGlow)
-                {
-                    using (var glowEffect = new GaussianBlurEffect
-                    {
-                        Source = singleCharCrop,
-                        BlurAmount = (float)glow,
-                        BorderMode = EffectBorderMode.Soft
-                    })
-                    {
-                        ds.DrawImage(glowEffect, destCharRect.Extend(sourceCharRect.Height), sourceCharRect.Extend(sourceCharRect.Height));
-                    }
-                }
-
-                ds.DrawImage(singleCharCrop, destCharRect, sourceCharRect);
-            }
+            }, destCharRect, sourceCharRect);
         }
     }
 

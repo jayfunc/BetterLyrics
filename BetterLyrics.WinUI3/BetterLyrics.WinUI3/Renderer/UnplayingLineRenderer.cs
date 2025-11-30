@@ -73,14 +73,19 @@ namespace BetterLyrics.WinUI3.Renderer
                 bounds.Height
             );
 
-            using (var blurEffect = new GaussianBlurEffect
+            using (var opacityLayer = ds.CreateLayer((float)opacity))
             {
-                BlurAmount = blur,
-                Source = source,
-                BorderMode = EffectBorderMode.Soft
-            })
-            {
-                ds.DrawImage(blurEffect, destRect, destRect, opacity);
+                ds.DrawImage(new GaussianBlurEffect
+                {
+                    BlurAmount = blur,
+                    Source = new CropEffect
+                    {
+                        Source = source,
+                        SourceRectangle = destRect,
+                        BorderMode = EffectBorderMode.Soft,
+                    },
+                    BorderMode = EffectBorderMode.Soft
+                });
             }
         }
     }
