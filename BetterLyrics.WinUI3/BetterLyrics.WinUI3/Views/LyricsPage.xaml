@@ -92,7 +92,6 @@
                     </Grid>
                     <Border
                         x:Name="ShadowRect"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}"
                         Loaded="ShadowRect_Loaded"
                         Translation="0,0,0">
