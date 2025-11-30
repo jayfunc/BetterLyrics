@@ -8,7 +8,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
     public partial class AlbumArtLayoutSettings : ObservableRecipient, ICloneable
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType SongInfoAlignmentType { get; set; } = TextAlignmentType.Left;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial HorizontalAlignment AlbumArtAlignmentType { get; set; } = HorizontalAlignment.Center;
         
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverImageRadius { get; set; } = 12; // 12 % of the cover image size
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverImageShadowAmount { get; set; } = 12;
@@ -26,7 +25,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
             return new AlbumArtLayoutSettings
             {
                 SongInfoAlignmentType = this.SongInfoAlignmentType,
-                AlbumArtAlignmentType = this.AlbumArtAlignmentType,
                 CoverImageRadius = this.CoverImageRadius,
                 CoverImageShadowAmount = this.CoverImageShadowAmount,
                 IsAutoSongInfoFontSize = this.IsAutoSongInfoFontSize,

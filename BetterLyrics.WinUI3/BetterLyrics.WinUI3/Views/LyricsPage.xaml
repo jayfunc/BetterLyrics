@@ -31,11 +31,9 @@
 
         <Grid x:Name="TrackSummaryGridContainer" Loaded="TrackSummaryGridContainer_Loaded">
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="TopGapDef" Height="0" />
                 <RowDefinition x:Name="TrackSummaryRowDef" Height="*" />
                 <RowDefinition x:Name="MiddleGapRowDef" Height="0" />
-                <RowDefinition x:Name="LyricsRowDef" Height="4*" />
-                <RowDefinition x:Name="BottomGapDef" Height="0" />
+                <RowDefinition x:Name="LyricsRowDef" Height="2.5*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftGapDef" Width="0" />
@@ -48,7 +46,7 @@
             <!--  Album art and song info area  -->
             <Grid
                 x:Name="TrackSummaryGrid"
-                Grid.Row="1"
+                Grid.Row="0"
                 Grid.Column="1"
                 VerticalAlignment="Center"
                 SizeChanged="TrackSummaryGrid_SizeChanged">
@@ -73,7 +71,7 @@
                     x:Name="AlbumArtGrid"
                     Margin="-32"
                     Padding="32"
-                    HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.AlbumArtAlignmentType, Mode=OneWay}">
+                    HorizontalAlignment="{Binding ElementName=SongInfoStackPanel, Path=HorizontalAlignment, Mode=OneWay}">
                     <Grid.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </Grid.OpacityTransition>
@@ -187,164 +185,9 @@
 
             <Grid
                 x:Name="LyricsPlaceholder"
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="3"
                 SizeChanged="LyricsPlaceholder_SizeChanged" />
-
-        </Grid>
-
-        <!--  布局因子调控指示器  -->
-        <Grid Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.ShowLayoutIndicator, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="{Binding ElementName=TopGapDef, Path=Height, Mode=OneWay}" />
-                <RowDefinition Height="{Binding ElementName=TrackSummaryRowDef, Path=Height, Mode=OneWay}" />
-                <RowDefinition Height="{Binding ElementName=MiddleGapRowDef, Path=Height, Mode=OneWay}" />
-                <RowDefinition Height="{Binding ElementName=LyricsRowDef, Path=Height, Mode=OneWay}" />
-                <RowDefinition Height="{Binding ElementName=BottomGapDef, Path=Height, Mode=OneWay}" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding ElementName=LeftGapDef, Path=Width, Mode=OneWay}" />
-                <ColumnDefinition Width="{Binding ElementName=TrackSummaryColDef, Path=Width, Mode=OneWay}" />
-                <ColumnDefinition Width="{Binding ElementName=MiddleGapColDef, Path=Width, Mode=OneWay}" />
-                <ColumnDefinition Width="{Binding ElementName=LyricsColDef, Path=Width, Mode=OneWay}" />
-                <ColumnDefinition Width="{Binding ElementName=RightGapDef, Path=Width, Mode=OneWay}" />
-            </Grid.ColumnDefinitions>
-
-            <!--  垂直布局指示器  -->
-            <Grid
-                Grid.Row="1"
-                Grid.RowSpan="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="3">
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{Binding ElementName=TrackSummaryRowDef, Path=Height, Mode=OneWay}" />
-                    <RowDefinition Height="{Binding ElementName=MiddleGapRowDef, Path=Height, Mode=OneWay}" />
-                    <RowDefinition Height="{Binding ElementName=LyricsRowDef, Path=Height, Mode=OneWay}" />
-                </Grid.RowDefinitions>
-                <Grid
-                    Grid.Row="1"
-                    Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
-                    Opacity="0.5" />
-                <Grid
-                    Grid.Row="2"
-                    Background="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}"
-                    Opacity="0.5" />
-            </Grid>
-
-            <!--  水平布局指示器  -->
-            <Grid
-                Grid.Row="1"
-                Grid.RowSpan="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="3">
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{Binding ElementName=TrackSummaryColDef, Path=Width, Mode=OneWay}" />
-                    <ColumnDefinition Width="{Binding ElementName=MiddleGapColDef, Path=Width, Mode=OneWay}" />
-                    <ColumnDefinition Width="{Binding ElementName=LyricsColDef, Path=Width, Mode=OneWay}" />
-                </Grid.ColumnDefinitions>
-                <Grid
-                    Grid.Column="1"
-                    Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
-                    Opacity="0.5" />
-                <Grid
-                    Grid.Column="2"
-                    Background="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}"
-                    Opacity="0.5" />
-            </Grid>
-
-            <!--  垂直专辑区域布局指示器  -->
-            <Grid
-                Grid.Row="1"
-                Grid.RowSpan="3"
-                Grid.Column="1">
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{Binding ElementName=AlbumArtRowDef, Path=Height, Mode=OneWay}" />
-                    <RowDefinition Height="{Binding ElementName=SongInfoRowDef, Path=Height, Mode=OneWay}" />
-                </Grid.RowDefinitions>
-                <Grid
-                    Grid.Row="0"
-                    Background="{ThemeResource AccentAAFillColorSecondaryBrush}"
-                    Opacity="0.5" />
-                <Grid
-                    Grid.Row="1"
-                    Background="{ThemeResource AccentAAFillColorTertiaryBrush}"
-                    Opacity="0.5" />
-            </Grid>
-
-            <!--  水平专辑区域布局指示器  -->
-            <Grid
-                Grid.Row="1"
-                Grid.Column="1"
-                Grid.ColumnSpan="3">
-                <interactivity:Interaction.Behaviors>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="1">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                    </interactivity:DataTriggerBehavior>
-                    <interactivity:DataTriggerBehavior
-                        Binding="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Converter={StaticResource EnumToIntConverter}, Mode=OneWay}"
-                        ComparisonCondition="Equal"
-                        Value="0">
-                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                    </interactivity:DataTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{Binding ElementName=AlbumArtColDef, Path=Width, Mode=OneWay}" />
-                    <ColumnDefinition Width="{Binding ElementName=SongInfoColDef, Path=Width, Mode=OneWay}" />
-                </Grid.ColumnDefinitions>
-                <Grid
-                    Grid.Column="0"
-                    Background="{ThemeResource AccentAAFillColorSecondaryBrush}"
-                    Opacity="0.5" />
-                <Grid
-                    Grid.Column="1"
-                    Background="{ThemeResource AccentAAFillColorTertiaryBrush}"
-                    Opacity="0.5" />
-            </Grid>
 
         </Grid>
 
