@@ -9,6 +9,6 @@ namespace BetterLyrics.WinUI3.Models
         public int StartMs { get; set; }
         public string Text { get; set; } = string.Empty;
         public int? DurationMs => EndMs - StartMs;
-        public bool IsLongDuration => DurationMs >= 600;
+        public bool IsLongDuration => DurationMs >= 700;
     }
 }
