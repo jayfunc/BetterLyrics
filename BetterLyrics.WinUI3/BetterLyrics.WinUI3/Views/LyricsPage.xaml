@@ -33,7 +33,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="TrackSummaryRowDef" Height="*" />
                 <RowDefinition x:Name="MiddleGapRowDef" Height="0" />
-                <RowDefinition x:Name="LyricsRowDef" Height="2.5*" />
+                <RowDefinition x:Name="LyricsRowDef" Height="2*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftGapDef" Width="0" />
@@ -48,8 +48,7 @@
                 x:Name="TrackSummaryGrid"
                 Grid.Row="0"
                 Grid.Column="1"
-                VerticalAlignment="Center"
-                SizeChanged="TrackSummaryGrid_SizeChanged">
+                VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition x:Name="TrackSummaryGridRow0" Height="0" />
                     <RowDefinition x:Name="TrackSummaryGridRow1" Height="*" />
