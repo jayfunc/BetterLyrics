@@ -7,6 +7,8 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using Microsoft.UI.Composition;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +41,7 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (line.PhoneticCanvasTextLayout == null) return;
 
-            var opacity = line.OpacityTransition.Value * 0.3;
+            var opacity = line.UnplayingOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.PhoneticCanvasTextLayout.LayoutBounds;
 
@@ -50,22 +52,26 @@ namespace BetterLyrics.WinUI3.Renderer
                 bounds.Height
             );
 
-            using (var blurEffect = new GaussianBlurEffect
+            using (var opacityLayer = ds.CreateLayer((float)opacity))
             {
-                BlurAmount = (float)blur,
-                Source = source,
-                BorderMode = EffectBorderMode.Soft
-            })
-            {
-                ds.DrawImage(blurEffect, destRect, destRect, (float)opacity);
+                using (var blurEffect = new GaussianBlurEffect
+                {
+                    BlurAmount = (float)blur,
+                    Source = source,
+                    BorderMode = EffectBorderMode.Soft
+                })
+                {
+                    ds.DrawImage(blurEffect);
+                }
             }
+
         }
 
         private void DrawTranslated(CanvasDrawingSession ds, ICanvasImage source, LyricsLine line)
         {
             if (line.TranslatedCanvasTextLayout == null) return;
 
-            var opacity = line.OpacityTransition.Value * 0.3;
+            var opacity = line.UnplayingOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.TranslatedCanvasTextLayout.LayoutBounds;
 
@@ -76,14 +82,17 @@ namespace BetterLyrics.WinUI3.Renderer
                 bounds.Height
             );
 
-            using (var blurEffect = new GaussianBlurEffect
+            using (var opacityLayer = ds.CreateLayer((float)opacity))
             {
-                BlurAmount = (float)blur,
-                Source = source,
-                BorderMode = EffectBorderMode.Soft
-            })
-            {
-                ds.DrawImage(blurEffect, destRect, destRect, (float)opacity);
+                using (var blurEffect = new GaussianBlurEffect
+                {
+                    BlurAmount = (float)blur,
+                    Source = source,
+                    BorderMode = EffectBorderMode.Soft
+                })
+                {
+                    ds.DrawImage(blurEffect);
+                }
             }
         }
 
@@ -99,8 +108,6 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (line.OriginalCanvasTextLayout == null) return;
 
-            var opacity = line.OpacityTransition.Value;
-
             var curCharIndex = state.SyllableStartIndex + state.SyllableLength * state.SyllableProgress;
             float fadeWidth = (1f / Math.Max(1, line.OriginalText.Length)) * 0.5f;
 
@@ -108,7 +115,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             foreach (var subLineRegion in lineRegions)
             {
-                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, curCharIndex, fadeWidth, opacity, bgColor, fgColor, state, settings);
+                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, curCharIndex, fadeWidth, bgColor, fgColor, state, settings);
             }
         }
 
@@ -120,13 +127,14 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasTextLayoutRegion subLineRegion,
             double curCharIndex,
             float fadeWidth,
-            double opacity,
             Color bgColor,
             Color fgColor,
             LinePlaybackState state,
             LyricsEffectSettings settings)
         {
             var blur = line.BlurAmountTransition.Value;
+            var playingOpacity = line.PlayingOpacityTransition.Value;
+            var unplayingOpacity = line.UnplayingOpacityTransition.Value;
 
             var subLineLayoutBounds = subLineRegion.LayoutBounds;
             Rect subLineRect = new(
@@ -136,17 +144,17 @@ namespace BetterLyrics.WinUI3.Renderer
                 subLineLayoutBounds.Height
             );
 
-            using (var maskLayer = new CanvasCommandList(resourceCreator))
+            using (var gradientLayer = new CanvasCommandList(resourceCreator))
             {
-                using (var maskLayerDs = maskLayer.CreateDrawingSession())
+                using (var gradientLayerDs = gradientLayer.CreateDrawingSession())
                 {
                     float progressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / subLineRegion.CharacterCount);
                     progressInRegion = Math.Clamp(progressInRegion, 0, 1 + fadeWidth);
 
-                    var stop1 = fgColor.WithAlpha((byte)(255 * opacity));
-                    var stop2 = bgColor.WithAlpha((byte)(255 * Math.Min(0.3, opacity)));
+                    var stop1 = fgColor.WithAlpha((byte)(255 * playingOpacity));
+                    var stop2 = bgColor.WithAlpha((byte)(255 * unplayingOpacity));
 
-                    using (var maskBrush = new CanvasLinearGradientBrush(resourceCreator,
+                    using (var gradientBrush = new CanvasLinearGradientBrush(resourceCreator,
                         [
                             new CanvasGradientStop { Position = 0, Color = stop1 },
                             new CanvasGradientStop { Position = progressInRegion, Color = stop1 },
@@ -154,34 +162,22 @@ namespace BetterLyrics.WinUI3.Renderer
                             new CanvasGradientStop { Position = 1 + fadeWidth, Color = stop2 }
                         ]))
                     {
-                        maskBrush.StartPoint = new Vector2((float)subLineRect.X, (float)subLineRect.Y);
-                        maskBrush.EndPoint = new Vector2((float)(subLineRect.X + subLineRect.Width), (float)subLineRect.Y);
-                        maskLayerDs.FillRectangle(subLineRect, maskBrush);
+                        gradientBrush.StartPoint = new Vector2((float)subLineRect.X, (float)subLineRect.Y);
+                        gradientBrush.EndPoint = new Vector2((float)(subLineRect.X + subLineRect.Width), (float)subLineRect.Y);
+                        gradientLayerDs.FillRectangle(subLineRect, gradientBrush);
                     }
                 }
 
-                using var cropEffect = new CropEffect
-                {
-                    Source = source,
-                    SourceRectangle = subLineRect,
-                    BorderMode = EffectBorderMode.Soft
-                };
                 using (var textWithColorLayer = new CompositeEffect
                 {
                     Mode = CanvasComposite.DestinationIn,
-                    Sources = { maskLayer, cropEffect }
-                })
-                using (var textWithBlurLayer = new GaussianBlurEffect
-                {
-                    Source = textWithColorLayer,
-                    BorderMode = EffectBorderMode.Soft,
-                    BlurAmount = (float)blur,
+                    Sources = { gradientLayer, source }
                 })
                 {
                     int endCharIndex = subLineRegion.CharacterIndex + subLineRegion.CharacterCount;
                     for (int i = subLineRegion.CharacterIndex; i < endCharIndex; i++)
                     {
-                        DrawSingleCharacter(ds, line, i, curCharIndex, textWithBlurLayer, state, settings);
+                        DrawSingleCharacter(ds, line, i, curCharIndex, textWithColorLayer, state, settings);
                     }
                 }
             }
@@ -192,7 +188,7 @@ namespace BetterLyrics.WinUI3.Renderer
             LyricsLine line,
             int charIndex,
             double exactProgressIndex,
-            ICanvasImage maskedSource,
+            ICanvasImage source,
             LinePlaybackState state,
             LyricsEffectSettings settings)
         {
@@ -214,6 +210,8 @@ namespace BetterLyrics.WinUI3.Renderer
             double floatOffset = 0;
             double scale = 1;
             double glow = 0;
+
+            bool drawGlow = false;
 
             if (settings.IsLyricsFloatAnimationEnabled)
             {
@@ -238,6 +236,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 if (settings.IsLyricsGlowEffectEnabled)
                 {
                     glow = Math.Sin(state.SyllableProgress * Math.PI) * sourceCharRect.Height * 0.2;
+                    drawGlow = true;
                 }
             }
 
@@ -245,20 +244,22 @@ namespace BetterLyrics.WinUI3.Renderer
 
             using (var singleCharCrop = new CropEffect
             {
-                Source = maskedSource,
+                Source = source,
                 SourceRectangle = sourceCharRect,
                 BorderMode = EffectBorderMode.Soft
             })
             {
-                // 这里不做 glow > 0 的判断而总是加入辉光效果是为了平滑不断层
-                using (var glowEffect = new GaussianBlurEffect
+                if (drawGlow)
                 {
-                    Source = singleCharCrop,
-                    BlurAmount = (float)glow,
-                    BorderMode = EffectBorderMode.Soft
-                })
-                {
-                    ds.DrawImage(glowEffect, destCharRect.Extend(sourceCharRect.Height), sourceCharRect.Extend(sourceCharRect.Height));
+                    using (var glowEffect = new GaussianBlurEffect
+                    {
+                        Source = singleCharCrop,
+                        BlurAmount = (float)glow,
+                        BorderMode = EffectBorderMode.Soft
+                    })
+                    {
+                        ds.DrawImage(glowEffect, destCharRect.Extend(sourceCharRect.Height), sourceCharRect.Extend(sourceCharRect.Height));
+                    }
                 }
 
                 ds.DrawImage(singleCharCrop, destCharRect, sourceCharRect);

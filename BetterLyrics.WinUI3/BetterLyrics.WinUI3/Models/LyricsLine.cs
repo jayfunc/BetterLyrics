@@ -19,7 +19,8 @@ namespace BetterLyrics.WinUI3.Models
         public double AnimationDuration { get; set; } = 0.3;
         public ValueTransition<double> AngleTransition { get; set; }
         public ValueTransition<double> BlurAmountTransition { get; set; }
-        public ValueTransition<double> OpacityTransition { get; set; }
+        public ValueTransition<double> UnplayingOpacityTransition { get; set; }
+        public ValueTransition<double> PlayingOpacityTransition { get; set; }
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> YOffsetTransition { get; set; }
         public ValueTransition<Color> ColorTransition { get; set; }
@@ -89,7 +90,12 @@ namespace BetterLyrics.WinUI3.Models
                  durationSeconds: AnimationDuration,
                  easingType: EasingType.EaseInOutSine
              );
-            OpacityTransition = new(
+            UnplayingOpacityTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutSine
+            );
+            PlayingOpacityTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
                 easingType: EasingType.EaseInOutSine

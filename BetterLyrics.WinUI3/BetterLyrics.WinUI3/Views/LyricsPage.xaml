@@ -31,18 +31,18 @@
 
         <Grid x:Name="TrackSummaryGridContainer" Loaded="TrackSummaryGridContainer_Loaded">
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="TopGapDef" Height="*" />
+                <RowDefinition x:Name="TopGapDef" Height="0" />
                 <RowDefinition x:Name="TrackSummaryRowDef" Height="*" />
-                <RowDefinition x:Name="MiddleGapRowDef" Height="*" />
-                <RowDefinition x:Name="LyricsRowDef" Height="*" />
-                <RowDefinition x:Name="BottomGapDef" Height="*" />
+                <RowDefinition x:Name="MiddleGapRowDef" Height="0" />
+                <RowDefinition x:Name="LyricsRowDef" Height="4*" />
+                <RowDefinition x:Name="BottomGapDef" Height="0" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="LeftGapDef" Width="*" />
+                <ColumnDefinition x:Name="LeftGapDef" Width="0" />
                 <ColumnDefinition x:Name="TrackSummaryColDef" Width="*" />
-                <ColumnDefinition x:Name="MiddleGapColDef" Width="*" />
+                <ColumnDefinition x:Name="MiddleGapColDef" Width="0" />
                 <ColumnDefinition x:Name="LyricsColDef" Width="*" />
-                <ColumnDefinition x:Name="RightGapDef" Width="*" />
+                <ColumnDefinition x:Name="RightGapDef" Width="0" />
             </Grid.ColumnDefinitions>
 
             <!--  Album art and song info area  -->
@@ -50,14 +50,19 @@
                 x:Name="TrackSummaryGrid"
                 Grid.Row="1"
                 Grid.Column="1"
+                VerticalAlignment="Center"
                 SizeChanged="TrackSummaryGrid_SizeChanged">
                 <Grid.RowDefinitions>
-                    <RowDefinition x:Name="AlbumArtRowDef" Height="*" />
-                    <RowDefinition x:Name="SongInfoRowDef" Height="*" />
+                    <RowDefinition x:Name="TrackSummaryGridRow0" Height="0" />
+                    <RowDefinition x:Name="TrackSummaryGridRow1" Height="*" />
+                    <RowDefinition x:Name="TrackSummaryGridRow2" Height="0" />
+                    <RowDefinition x:Name="TrackSummaryGridRow3" Height="Auto" />
+                    <RowDefinition x:Name="TrackSummaryGridRow4" Height="0" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="AlbumArtColDef" Width="*" />
-                    <ColumnDefinition x:Name="SongInfoColDef" Width="*" />
+                    <ColumnDefinition x:Name="TrackSummaryGridCol0" Width="Auto" />
+                    <ColumnDefinition x:Name="TrackSummaryGridCol1" Width="0" />
+                    <ColumnDefinition x:Name="TrackSummaryGridCol2" Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
@@ -66,7 +71,6 @@
                 <!--  Album art  -->
                 <Grid
                     x:Name="AlbumArtGrid"
-                    Grid.Row="0"
                     Margin="-32"
                     Padding="32"
                     HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.AlbumArtAlignmentType, Mode=OneWay}">
@@ -205,24 +209,6 @@
                 <ColumnDefinition Width="{Binding ElementName=LyricsColDef, Path=Width, Mode=OneWay}" />
                 <ColumnDefinition Width="{Binding ElementName=RightGapDef, Path=Width, Mode=OneWay}" />
             </Grid.ColumnDefinitions>
-
-            <!--  通用指示器  -->
-            <Grid
-                Grid.Row="0"
-                Grid.ColumnSpan="5"
-                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
-            <Grid
-                Grid.Row="4"
-                Grid.ColumnSpan="5"
-                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
-            <Grid
-                Grid.RowSpan="5"
-                Grid.Column="0"
-                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
-            <Grid
-                Grid.RowSpan="5"
-                Grid.Column="4"
-                Background="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
 
             <!--  垂直布局指示器  -->
             <Grid

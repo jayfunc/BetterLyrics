@@ -78,9 +78,13 @@ namespace BetterLyrics.WinUI3.Logic
                     line.ScaleTransition.SetDelay(yScrollDelay);
                     line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
 
-                    line.OpacityTransition.SetDuration(yScrollDuration);
-                    line.OpacityTransition.SetDelay(yScrollDelay);
-                    line.OpacityTransition.StartTransition(absLineCountDelta == 0 ? 1 : (1 - distanceFactor) * 0.3);
+                    line.UnplayingOpacityTransition.SetDuration(yScrollDuration);
+                    line.UnplayingOpacityTransition.SetDelay(yScrollDelay);
+                    line.UnplayingOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.3 : (1 - distanceFactor) * 0.3);
+
+                    line.PlayingOpacityTransition.SetDuration(yScrollDuration);
+                    line.PlayingOpacityTransition.SetDelay(yScrollDelay);
+                    line.PlayingOpacityTransition.StartTransition(absLineCountDelta == 0 ? 1 : (1 - distanceFactor) * 0.3);
 
                     line.ColorTransition.SetDuration(yScrollDuration);
                     line.ColorTransition.SetDelay(yScrollDelay);
@@ -101,7 +105,8 @@ namespace BetterLyrics.WinUI3.Logic
                 line.AngleTransition.Update(elapsedTime);
                 line.ScaleTransition.Update(elapsedTime);
                 line.BlurAmountTransition.Update(elapsedTime);
-                line.OpacityTransition.Update(elapsedTime);
+                line.PlayingOpacityTransition.Update(elapsedTime);
+                line.UnplayingOpacityTransition.Update(elapsedTime);
                 line.YOffsetTransition.Update(elapsedTime);
                 line.ColorTransition.Update(elapsedTime);
             }
