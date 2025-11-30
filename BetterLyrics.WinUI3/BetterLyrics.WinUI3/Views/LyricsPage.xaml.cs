@@ -778,5 +778,9 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        private void ShadowCastGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateAlbumArtCornerRadius();
+        }
     }
 }

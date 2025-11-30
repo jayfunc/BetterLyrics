@@ -13,7 +13,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public class FluidBackgroundRenderer : IDisposable
+    public partial class FluidBackgroundRenderer : IDisposable
     {
         private PixelShaderEffect? _fluidEffect;
         private float _timeAccumulator = 0f;

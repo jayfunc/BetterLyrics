@@ -6,7 +6,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public class SnowRenderer : IDisposable
+    public partial class SnowRenderer : IDisposable
     {
         private PixelShaderEffect<SnowEffect>? _snowEffect;
         private float _timeAccumulator = 0f;

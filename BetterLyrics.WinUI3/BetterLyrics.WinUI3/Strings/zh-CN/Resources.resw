@@ -952,6 +952,9 @@
   <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
     <value>垂直</value>
   </data>
+  <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>靠左</value>
+  </data>
   <data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
     <value>左间隙区域宽度因子</value>
   </data>
@@ -1065,6 +1068,9 @@
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>原文高亮显示范围</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>靠左</value>
   </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>细体</value>
@@ -1306,6 +1312,9 @@
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>重启应用以应用更改</value>
   </data>
+  <data name="SettingsPageRight.Content" xml:space="preserve">
+    <value>靠右</value>
+  </data>
   <data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
     <value>右间隙区域宽度因子</value>
   </data>
@@ -1392,12 +1401,6 @@
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>歌曲信息</value>
-  </data>
-  <data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>靠左</value>
-  </data>
-  <data name="SettingsPageRight.Content" xml:space="preserve">
-    <value>靠右</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
     <value>当前歌曲</value>
@@ -1554,8 +1557,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
-  </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>靠左</value>
   </data>
 </root>

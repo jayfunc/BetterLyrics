@@ -301,9 +301,10 @@ namespace BetterLyrics.WinUI3.Controls
                     resourceCreator: sender,
                     ds: args.DrawingSession,
                     spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
-                    barCount: _spectrumAnalyzer?.BarCount ?? 0,
+                    barCount: _spectrumAnalyzer?.BarCount ?? 1,
                     isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
                     placement: lyricsBg.SpectrumPlacement,
+                    style: lyricsBg.SpectrumStyle,
                     canvasWidth: sender.Size.Width,
                     canvasHeight: sender.Size.Height,
                     fillColor: lyricsThemeColors.BgFontColor
@@ -422,7 +423,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (lyricsBg.IsSpectrumOverlayEnabled && !_spectrumAnalyzer.IsCapturing)
             {
-                _spectrumAnalyzer.BarCount = 64;
+                _spectrumAnalyzer.BarCount = lyricsBg.SpectrumCount;
                 _spectrumAnalyzer.StartCapture();
             }
             else if (!lyricsBg.IsSpectrumOverlayEnabled && _spectrumAnalyzer.IsCapturing)

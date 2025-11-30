@@ -952,6 +952,9 @@
   <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
     <value>세로</value>
   </data>
+  <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
   <data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
     <value>왼쪽 갭 영역 너비 계수</value>
   </data>
@@ -1065,6 +1068,9 @@
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>원래 하이라이트 범위</value>
+  </data>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>왼쪽</value>
   </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>빛</value>
@@ -1306,6 +1312,9 @@
   <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>변경 사항을 적용하려면 앱을 다시 시작하십시오</value>
   </data>
+  <data name="SettingsPageRight.Content" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
   <data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
     <value>오른쪽 간격 영역 너비 계수</value>
   </data>
@@ -1392,12 +1401,6 @@
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>노래 정보</value>
-  </data>
-  <data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>왼쪽</value>
-  </data>
-  <data name="SettingsPageRight.Content" xml:space="preserve">
-    <value>오른쪽</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
     <value>현재 노래</value>
@@ -1554,8 +1557,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>사용 안내서</value>
-  </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>왼쪽</value>
   </data>
 </root>

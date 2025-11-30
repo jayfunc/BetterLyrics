@@ -6,7 +6,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public class FogRenderer : IDisposable
+    public partial class FogRenderer : IDisposable
     {
         private PixelShaderEffect<FogEffect>? _fogEffect;
         private float _timeAccumulator = 0f;

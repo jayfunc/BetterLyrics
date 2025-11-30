@@ -11,7 +11,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public class SpectrumRenderer : IDisposable
+    public partial class SpectrumRenderer : IDisposable
     {
         private CanvasGeometry? _spectrumGeometry;
 
@@ -22,6 +22,7 @@ namespace BetterLyrics.WinUI3.Renderer
             int barCount,
             bool isEnabled,
             SpectrumPlacement placement,
+            SpectrumStyle style,
             double canvasWidth,
             double canvasHeight,
             Color fillColor
@@ -32,7 +33,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (!isEnabled || spectrumData == null || spectrumData.Length == 0) return;
 
-            _spectrumGeometry = CreateGeometry(resourceCreator, spectrumData, barCount, placement, canvasWidth, canvasHeight);
+            _spectrumGeometry = CreateGeometry(resourceCreator, spectrumData, barCount, placement, style, canvasWidth, canvasHeight);
 
             if (_spectrumGeometry != null)
             {
@@ -45,69 +46,115 @@ namespace BetterLyrics.WinUI3.Renderer
             float[] data,
             int barCount,
             SpectrumPlacement placement,
+            SpectrumStyle style,
             double width,
             double height)
         {
             if (barCount < 2) return null;
 
-            var points = new Vector2[barCount];
-            float pointSpacing = (float)width / (barCount - 1);
+            float maxDataVal = 0;
 
-            for (int i = 0; i < barCount; i++)
+            int checkCount = Math.Min(barCount, data.Length);
+            for (int i = 0; i < checkCount; i++)
             {
-                float val = i < data.Length ? data[i] : 0;
-                points[i] = new Vector2(i * pointSpacing, val);
+                if (data[i] > maxDataVal) maxDataVal = data[i];
             }
 
-            // 限制高度
-            float maxY = 0;
-            foreach (var p in points) if (p.Y > maxY) maxY = p.Y;
+            float limitY = (float)height * 0.2f; // 高度限制为总高度的 20%
+            float scaleRatio = 1.0f;
 
-            float limitY = (float)height * 0.2f;
-            if (maxY > limitY)
+            if (maxDataVal > limitY)
             {
-                float ratio = limitY / maxY;
-                for (int i = 0; i < points.Length; i++) points[i].Y *= ratio;
-            }
-
-            // 翻转 Y 轴
-            if (placement == SpectrumPlacement.Bottom)
-            {
-                for (int i = 0; i < points.Length; i++)
-                {
-                    points[i].Y = (float)height - points[i].Y;
-                }
+                scaleRatio = limitY / maxDataVal;
             }
 
             using var pathBuilder = new CanvasPathBuilder(creator);
-            pathBuilder.BeginFigure(points[0]);
 
-            for (int i = 0; i < barCount - 1; i++)
+            if (style == SpectrumStyle.Bar)
             {
-                Vector2 p0 = points[Math.Max(i - 1, 0)];
-                Vector2 p1 = points[i];
-                Vector2 p2 = points[i + 1];
-                Vector2 p3 = points[Math.Min(i + 2, barCount - 1)];
+                float totalStep = (float)width / barCount;
+                float gap = 2.0f;
+                float barWidth = totalStep - gap;
+                if (barWidth < 1.0f) { barWidth = totalStep; gap = 0f; }
 
-                Vector2 cp1 = p1 + (p2 - p0) / 6.0f;
-                Vector2 cp2 = p2 - (p3 - p1) / 6.0f;
+                for (int i = 0; i < barCount; i++)
+                {
+                    float rawVal = i < data.Length ? data[i] : 0;
+                    float barHeight = rawVal * scaleRatio;
+                    if (barHeight < 0.5f) continue;
 
-                pathBuilder.AddCubicBezier(cp1, cp2, p2);
-            }
+                    float x = i * totalStep;
+                    float topY, bottomY;
 
-            // 封口
-            if (placement == SpectrumPlacement.Top)
-            {
-                pathBuilder.AddLine(new Vector2(points[barCount - 1].X, 0));
-                pathBuilder.AddLine(new Vector2(points[0].X, 0));
+                    if (placement == SpectrumPlacement.Top)
+                    {
+                        topY = 0;
+                        bottomY = barHeight;
+                    }
+                    else // Bottom
+                    {
+                        topY = (float)height - barHeight;
+                        bottomY = (float)height;
+                    }
+
+                    // 绘制独立矩形
+                    pathBuilder.BeginFigure(new Vector2(x, topY));
+                    pathBuilder.AddLine(new Vector2(x + barWidth, topY));
+                    pathBuilder.AddLine(new Vector2(x + barWidth, bottomY));
+                    pathBuilder.AddLine(new Vector2(x, bottomY));
+                    pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+                }
             }
             else
             {
-                pathBuilder.AddLine(new Vector2(points[barCount - 1].X, (float)height));
-                pathBuilder.AddLine(new Vector2(points[0].X, (float)height));
+                var points = new Vector2[barCount];
+                float pointSpacing = (float)width / (barCount - 1);
+
+                for (int i = 0; i < barCount; i++)
+                {
+                    float rawVal = i < data.Length ? data[i] : 0;
+                    float y = rawVal * scaleRatio;
+
+                    // 处理翻转
+                    if (placement == SpectrumPlacement.Bottom)
+                    {
+                        y = (float)height - y;
+                    }
+
+                    points[i] = new Vector2(i * pointSpacing, y);
+                }
+
+                // 绘制曲线
+                pathBuilder.BeginFigure(points[0]);
+
+                for (int i = 0; i < barCount - 1; i++)
+                {
+                    Vector2 p0 = points[Math.Max(i - 1, 0)];
+                    Vector2 p1 = points[i];
+                    Vector2 p2 = points[i + 1];
+                    Vector2 p3 = points[Math.Min(i + 2, barCount - 1)];
+
+                    Vector2 cp1 = p1 + (p2 - p0) / 6.0f;
+                    Vector2 cp2 = p2 - (p3 - p1) / 6.0f;
+
+                    pathBuilder.AddCubicBezier(cp1, cp2, p2);
+                }
+
+                // 封口
+                if (placement == SpectrumPlacement.Top)
+                {
+                    pathBuilder.AddLine(new Vector2(points[barCount - 1].X, 0));
+                    pathBuilder.AddLine(new Vector2(points[0].X, 0));
+                }
+                else
+                {
+                    pathBuilder.AddLine(new Vector2(points[barCount - 1].X, (float)height));
+                    pathBuilder.AddLine(new Vector2(points[0].X, (float)height));
+                }
+
+                pathBuilder.EndFigure(CanvasFigureLoop.Closed);
             }
 
-            pathBuilder.EndFigure(CanvasFigureLoop.Closed);
             return CanvasGeometry.CreatePath(pathBuilder);
         }
 
