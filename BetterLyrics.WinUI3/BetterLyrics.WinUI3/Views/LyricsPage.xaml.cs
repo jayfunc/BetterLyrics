@@ -345,7 +345,7 @@ namespace BetterLyrics.WinUI3.Views
             }
             else
             {
-                middleGapCol = Math.Max(16, width * 0.1);
+                middleGapCol = Math.Max(16, width * 0.15);
             }
 
             if (height < 100)
@@ -360,12 +360,12 @@ namespace BetterLyrics.WinUI3.Views
             switch (status.LyricsLayoutOrientation)
             {
                 case LyricsLayoutOrientation.Horizontal:
-                    xMargin = Math.Max(16, Math.Min(width, height) * 0.3);
+                    xMargin = Math.Max(16, Math.Min(width, height) * 0.25);
                     yMargin = Math.Max(16, Math.Min(width, height) * 0.15);
                     break;
                 case LyricsLayoutOrientation.Vertical:
-                    xMargin = Math.Max(16, Math.Min(width, height) * 0.05);
-                    yMargin = xMargin;
+                    xMargin = Math.Max(16, Math.Min(width, height) * 0.15);
+                    yMargin = Math.Max(16, Math.Min(width, height) * 0.10);
                     break;
                 default:
                     break;
@@ -629,26 +629,6 @@ namespace BetterLyrics.WinUI3.Views
         private void TrackSummaryGridContainer_Loaded(object sender, RoutedEventArgs e)
         {
             OnLayoutChanged();
-        }
-
-        private void TrackSummaryGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            //var status = _liveStatesService.LiveStates.LyricsWindowStatus;
-            //switch (status.LyricsLayoutOrientation)
-            //{
-            //    case LyricsLayoutOrientation.Horizontal:
-            //        TitleAutoScrollHoverEffectView.Width = AlbumArtImage.ActualWidth;
-            //        ArtistsAutoScrollHoverEffectView.Width = AlbumArtImage.ActualWidth;
-            //        AlbumAutoScrollHoverEffectView.Width = AlbumArtImage.ActualWidth;
-            //        break;
-            //    case LyricsLayoutOrientation.Vertical:
-            //        TitleAutoScrollHoverEffectView.Width = AlbumArtImage.ActualWidth * 3;
-            //        ArtistsAutoScrollHoverEffectView.Width = AlbumArtImage.ActualWidth * 3;
-            //        AlbumAutoScrollHoverEffectView.Width = AlbumArtImage.ActualWidth * 3;
-            //        break;
-            //    default:
-            //        break;
-            //}
         }
 
         private void ShadowCastGrid_SizeChanged(object sender, SizeChangedEventArgs e)
