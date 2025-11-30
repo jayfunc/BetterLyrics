@@ -175,22 +175,22 @@ namespace BetterLyrics.WinUI3.Renderer
                 }
 
                 // 这里 gradientLayer 上色的时候已经限制了 Rect 区域，不用再套一个 CropEffect
-                using (var textWithColorLayer = new CompositeEffect
+                using (var textWithOpacityLayer = new AlphaMaskEffect
                 {
-                    Mode = CanvasComposite.DestinationIn,
-                    Sources = { gradientLayer, source }
+                    Source = source,
+                    AlphaMask = gradientLayer
                 })
                 {
                     if (!settings.IsLyricsFloatAnimationEnabled && !settings.IsLyricsGlowEffectEnabled && !settings.IsLyricsScaleEffectEnabled)
                     {
-                        ds.DrawImage(textWithColorLayer);
+                        ds.DrawImage(textWithOpacityLayer);
                     }
                     else
                     {
                         int endCharIndex = subLineRegion.CharacterIndex + subLineRegion.CharacterCount;
                         for (int i = subLineRegion.CharacterIndex; i < endCharIndex; i++)
                         {
-                            DrawSingleCharacter(ds, line, i, curCharIndex, textWithColorLayer, state, settings);
+                            DrawSingleCharacter(ds, line, i, curCharIndex, textWithOpacityLayer, state, settings);
                         }
                     }
                 }
