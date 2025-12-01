@@ -60,10 +60,11 @@
                     <Button
                         x:Name="SettingsWindowButton"
                         Click="SettingsWindowButton_Click"
-                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                              FontSize=12,
-                                              Glyph=&#xE713;}"
                         Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE713;" />
                         <ToolTipService.ToolTip>
                             <ToolTip x:Uid="HostWindowSettingsButtonToolTip" />
                         </ToolTipService.ToolTip>
@@ -92,16 +93,26 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
+                    <!--  Window Minimize  -->
+                    <Button
+                        x:Name="MinimizeButton"
+                        Click="MinimizeButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            Glyph="&#xE738;" />
+                    </Button>
+
                     <!--  Window Close  -->
                     <Button
                         x:Name="CloseButton"
                         Click="CloseButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}"
-                        Visibility="{x:Bind ViewModel.CloseButtonVisibility, Mode=OneWay}">
+                        Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
-                            Glyph="&#xE653;" />
+                            Glyph="&#xE711;" />
                     </Button>
 
                 </StackPanel>

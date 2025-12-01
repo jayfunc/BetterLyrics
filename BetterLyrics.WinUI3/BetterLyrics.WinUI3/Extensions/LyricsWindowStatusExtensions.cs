@@ -70,7 +70,7 @@ namespace BetterLyrics.WinUI3.Extensions
             {
                 Name = _resourceService.GetLocalizedString("FullscreenMode"),
                 IsBorderless = true,
-                IsAlwaysOnTop = false,
+                IsAlwaysOnTop = true,
                 TitleBarArea = TitleBarArea.None,
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings

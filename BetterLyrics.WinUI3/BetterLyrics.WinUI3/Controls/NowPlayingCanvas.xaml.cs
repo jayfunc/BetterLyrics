@@ -389,7 +389,8 @@ namespace BetterLyrics.WinUI3.Controls
                 albumArtThemeColors.BgFontColor,
                 albumArtThemeColors.FgFontColor,
                 elapsedTime,
-                isPlayingLineChanged || _isLayoutChanged
+                _isLayoutChanged,
+                isPlayingLineChanged
             );
 
             _lyricsRenderer.CalculateLyrics3DMatrix(
