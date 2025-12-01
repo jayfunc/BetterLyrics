@@ -566,7 +566,7 @@
     <value>亚克力（薄层）</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>同时，将歌词背景中的纯色图层不透明度和专辑美术图层不透明度设置为 0 ，以获得正确的效果</value>
+    <value>Turning this on will override the theme settings in the lyric background settings</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>适应环境色彩</value>
@@ -986,10 +986,7 @@
     <value>歌词背景</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>非当前播放区域</value>
-  </data>
-  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
-    <value>字体不透明度（非当前播放区域）</value>
+    <value>Not the current play line</value>
   </data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>黑体</value>
@@ -1022,7 +1019,7 @@
     <value>超细</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>当前播放区域</value>
+    <value>Current Play Row</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>适应歌词背景（彩色）</value>
@@ -1089,15 +1086,6 @@
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>常规</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
-    <value>当前字符</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
-    <value>当前行</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>当前歌词开始到当前字符</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>Lyrics area height factor</value>
