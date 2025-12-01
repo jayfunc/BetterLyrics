@@ -376,7 +376,7 @@ namespace BetterLyrics.WinUI3.Views
                 case LyricsLayoutOrientation.Vertical:
                     xMargin = Math.Max(16, Math.Min(width, height) * 0.05);
                     yMargin = Math.Max(16, Math.Min(width, height) * 0.05);
-                    trackSummaryRowHeight = Math.Max(64, Math.Min(width, height) * 0.25);
+                    trackSummaryRowHeight = Math.Max(64, height * 0.25);
                     break;
                 default:
                     break;
