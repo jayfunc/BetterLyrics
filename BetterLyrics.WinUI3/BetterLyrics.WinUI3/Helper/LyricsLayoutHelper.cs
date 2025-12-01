@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Models;
-using Microsoft.UI.Xaml;
 using System;
 
 namespace BetterLyrics.WinUI3.Helper

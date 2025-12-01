@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using Lyricify.Lyrics.Providers.Web.Netease;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;

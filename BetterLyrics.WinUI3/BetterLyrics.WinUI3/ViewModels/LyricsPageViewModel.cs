@@ -1,28 +1,13 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using DevWinUI;
-using Lyricify.Lyrics.Providers.Web.Netease;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Documents;
-using Microsoft.UI.Xaml.Media.Imaging;
-using System;
-using System.Numerics;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

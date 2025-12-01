@@ -14,7 +14,6 @@ using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
-using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
 using BetterLyrics.WinUI3.ViewModels;

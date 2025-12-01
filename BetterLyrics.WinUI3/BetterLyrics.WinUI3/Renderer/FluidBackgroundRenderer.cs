@@ -1,9 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
