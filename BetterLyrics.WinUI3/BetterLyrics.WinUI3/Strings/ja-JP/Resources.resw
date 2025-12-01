@@ -566,7 +566,7 @@
     <value>アクリル薄い</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>同時に、歌詞の背景のピュアカラーレイヤーの不透明度とアルバムアートレイヤーの不透明度を0に設定して、正しい効果を得ます</value>
+    <value>Turning this on will override the theme settings in the lyric background settings</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>環境の色に適応しましょう</value>
@@ -986,10 +986,7 @@
     <value>歌詞の背景</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>非電流再生エリア</value>
-  </data>
-  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
-    <value>フォントの不透明度（非電流再生エリア）</value>
+    <value>Not the current play line</value>
   </data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>黒</value>
@@ -1022,7 +1019,7 @@
     <value>余分な光</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>現在の再生エリア</value>
+    <value>Current Play Row</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>歌詞の背景に適応する（色付き）</value>
@@ -1089,15 +1086,6 @@
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>普通</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
-    <value>現在の文字</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
-    <value>現在の行</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>現在のラインが現在の文字から始まります</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>Lyrics area height factor</value>
