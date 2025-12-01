@@ -34,7 +34,9 @@ namespace BetterLyrics.WinUI3.Controls
         IRecipient<PropertyChangedMessage<double>>,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<TextAlignmentType>>,
-        IRecipient<PropertyChangedMessage<SongInfo?>>
+        IRecipient<PropertyChangedMessage<SongInfo?>>,
+        IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
+        IRecipient<PropertyChangedMessage<string>>
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
@@ -171,6 +173,8 @@ namespace BetterLyrics.WinUI3.Controls
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<bool>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<TextAlignmentType>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<SongInfo?>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsFontWeight>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<string>>(this);
         }
 
         private static void OnLayoutPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -699,5 +703,30 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
+        public void Receive(PropertyChangedMessage<LyricsFontWeight> message)
+        {
+            if (message.Sender is LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontWeight))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<string> message)
+        {
+            if (message.Sender is LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+        }
     }
 }
