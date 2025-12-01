@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Models;
 using F23.StringSimilarity;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;

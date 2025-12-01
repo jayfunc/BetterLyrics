@@ -3,14 +3,10 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
-using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {

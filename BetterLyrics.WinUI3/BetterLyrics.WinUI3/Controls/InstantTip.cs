@@ -5,8 +5,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System.Collections.Generic;
 using System.Numerics;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Controls

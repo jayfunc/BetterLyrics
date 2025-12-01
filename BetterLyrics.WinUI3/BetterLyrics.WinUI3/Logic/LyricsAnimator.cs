@@ -1,11 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using Microsoft.UI.Xaml.Media.Animation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Logic

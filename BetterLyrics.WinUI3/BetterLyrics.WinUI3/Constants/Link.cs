@@ -3,7 +3,7 @@
     public static class Link
     {
         public const string MicrosoftStore = "https://apps.microsoft.com/detail/9p1wcd1p597r";
-        
+
         public const string GitHub = "https://github.com/jayfunc/BetterLyrics";
         public const string ShareHub = $"{GitHub}/blob/dev/ShareHub/index.md";
         public const string TermsOfService = $"{GitHub}/blob/dev/TermsofService.md";

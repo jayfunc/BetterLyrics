@@ -6,17 +6,11 @@ using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
-using Microsoft.UI.Composition;
-using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 using Windows.Foundation;
 using Windows.UI;
-using static Vanara.PInvoke.Kernel32;
 
 namespace BetterLyrics.WinUI3.Renderer
 {

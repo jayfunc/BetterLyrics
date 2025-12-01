@@ -32,10 +32,10 @@ namespace BetterLyrics.WinUI3.Renderer
             float width = control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
             float height = control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
 
-           _fogEffect.ConstantBuffer = new FogEffect(
-                _timeAccumulator,
-                new float2(width, height)
-            );
+            _fogEffect.ConstantBuffer = new FogEffect(
+                 _timeAccumulator,
+                 new float2(width, height)
+             );
 
             ds.DrawImage(_fogEffect);
         }

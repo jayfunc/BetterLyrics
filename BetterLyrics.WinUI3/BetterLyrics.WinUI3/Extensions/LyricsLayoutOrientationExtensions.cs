@@ -1,8 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
