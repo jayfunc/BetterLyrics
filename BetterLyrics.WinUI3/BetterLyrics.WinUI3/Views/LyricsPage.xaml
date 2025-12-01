@@ -31,9 +31,9 @@
 
         <Grid x:Name="TrackSummaryGridContainer" Loaded="TrackSummaryGridContainer_Loaded">
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="TrackSummaryRowDef" Height="*" />
+                <RowDefinition x:Name="TrackSummaryRowDef" Height="0" />
                 <RowDefinition x:Name="MiddleGapRowDef" Height="0" />
-                <RowDefinition x:Name="LyricsRowDef" Height="2*" />
+                <RowDefinition x:Name="LyricsRowDef" Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftGapDef" Width="0" />
@@ -184,11 +184,14 @@
 
             </Grid>
 
-            <Grid
-                x:Name="LyricsPlaceholder"
-                Grid.Row="2"
-                Grid.Column="3"
-                SizeChanged="LyricsPlaceholder_SizeChanged" />
+            <Grid x:Name="LyricsPlaceholder" SizeChanged="LyricsPlaceholder_SizeChanged">
+                <ScrollViewer
+                    x:Name="LyricsScrollViewer"
+                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged"
+                    Visibility="Collapsed">
+                    <Grid />
+                </ScrollViewer>
+            </Grid>
 
         </Grid>
 

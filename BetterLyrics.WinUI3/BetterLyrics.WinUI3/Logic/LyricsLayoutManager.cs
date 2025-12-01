@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -41,13 +42,16 @@ namespace BetterLyrics.WinUI3.Logic
 
             if (style.IsDynamicLyricsFontSize)
             {
-                originalFontSize = (int)Math.Clamp(Math.Min(canvasHeight, canvasWidth) / 15, 18, 96);
-                translatedFontSize = phoneticFontSize = (int)(originalFontSize * 2.0 / 3.0);
+                var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(canvasWidth, canvasHeight);
+
+                phoneticFontSize = (int)lyricsLayoutMetrics.TransliterationSize;
+                originalFontSize = (int)lyricsLayoutMetrics.MainLyricsSize;
+                translatedFontSize = (int)lyricsLayoutMetrics.TranslationSize;
             }
             else
             {
-                originalFontSize = style.OriginalLyricsFontSize;
                 phoneticFontSize = style.PhoneticLyricsFontSize;
+                originalFontSize = style.OriginalLyricsFontSize;
                 translatedFontSize = style.TranslatedLyricsFontSize;
             }
 
