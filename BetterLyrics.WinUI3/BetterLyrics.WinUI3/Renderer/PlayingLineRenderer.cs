@@ -230,12 +230,18 @@ namespace BetterLyrics.WinUI3.Renderer
             if (settings.IsLyricsFloatAnimationEnabled)
             {
                 double targetFloatOffset = sourceCharRect.Height * 0.1;
-                if (charIndex < curCharIndexInt) floatOffset = 0;
+                // 已经浮完了的
+                if (charIndex < curCharIndexInt)
+                {
+                    floatOffset = 0;
+                }
+                // 正在浮的
                 else if (charIndex == curCharIndexInt)
                 {
                     var p = exactProgressIndex - curCharIndexInt;
                     floatOffset = -targetFloatOffset + p * targetFloatOffset;
                 }
+                // 还没浮的
                 else
                 {
                     floatOffset = -targetFloatOffset;
