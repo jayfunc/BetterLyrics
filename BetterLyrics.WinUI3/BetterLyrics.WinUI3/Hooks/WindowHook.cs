@@ -55,6 +55,15 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
+        public static void MinimizeWindow<T>()
+        {
+            var window = _activeWindows.Find(w => w is T);
+            if (window is Window w)
+            {
+                w.Minimize();
+            }
+        }
+
         public static T? GetWindow<T>()
         {
             foreach (var window in _activeWindows)

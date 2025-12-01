@@ -27,7 +27,8 @@ namespace BetterLyrics.WinUI3.Logic
             Color bgColor,
             Color fgColor,
             TimeSpan elapsedTime,
-            bool isForceUpdate) // 对应 _isLayoutChanged || _isPlayingLineChanged
+            bool isLayoutChanged,
+            bool isPlayingLineChanged)
         {
             if (lyricsData == null) return;
 
@@ -40,7 +41,7 @@ namespace BetterLyrics.WinUI3.Logic
                 var line = lyricsData.LyricsLines.ElementAtOrDefault(i);
                 if (line == null) continue;
 
-                if (isForceUpdate)
+                if (isLayoutChanged || isPlayingLineChanged)
                 {
                     int lineCountDelta = i - playingLineIndex;
                     int absLineCountDelta = Math.Abs(lineCountDelta);
@@ -99,6 +100,8 @@ namespace BetterLyrics.WinUI3.Logic
                     line.YOffsetTransition.SetEasingType(canvasYScrollTransition.EasingType);
                     line.YOffsetTransition.SetDuration(yScrollDuration);
                     line.YOffsetTransition.SetDelay(yScrollDelay);
+                    // 设计之初是当 isLayoutChanged 为真时 jumpTo
+                    // 但考虑到动画视觉，强制使用动画
                     line.YOffsetTransition.StartTransition(targetYScrollOffset);
                 }
 

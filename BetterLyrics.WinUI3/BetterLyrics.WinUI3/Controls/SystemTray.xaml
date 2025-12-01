@@ -48,7 +48,7 @@
                     x:Uid="SystemTrayMusicGallery"
                     Command="{x:Bind ViewModel.OpenMusicGalleryCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xEA69;}" />
+                                       Glyph=&#xE8F1;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTraySettings"
                     Command="{x:Bind ViewModel.OpenSettingsCommand}"

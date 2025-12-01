@@ -123,5 +123,9 @@ namespace BetterLyrics.WinUI3.Views
             WindowHook.OpenOrShowWindow<SettingsWindow>();
         }
 
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowHook.MinimizeWindow<LyricsWindow>();
+        }
     }
 }
