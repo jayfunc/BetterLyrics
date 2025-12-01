@@ -229,14 +229,19 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (settings.IsLyricsFloatAnimationEnabled)
             {
-                double targetFloatOffset = sourceCharRect.Height * 0.05;
+                double targetFloatOffset = sourceCharRect.Height * 0.1;
                 if (charIndex < curCharIndexInt) floatOffset = 0;
                 else if (charIndex == curCharIndexInt)
                 {
                     var p = exactProgressIndex - curCharIndexInt;
                     floatOffset = -targetFloatOffset + p * targetFloatOffset;
                 }
-                else floatOffset = -targetFloatOffset;
+                else
+                {
+                    floatOffset = -targetFloatOffset;
+                }
+                // 制造句间上浮过度动画，这里用任何一个 Transition 都行，主要是获取当前行的进入视野的 Progress
+                floatOffset *= line.YOffsetTransition.Progress;
             }
 
             var parentSyllable = line.LyricsSyllables.FirstOrDefault(x => x.StartIndex <= charIndex && charIndex < x.StartIndex + x.Text.Length);

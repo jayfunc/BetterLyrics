@@ -12,7 +12,8 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using DevWinUI;
+using CommunityToolkit.WinUI;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
@@ -21,7 +22,6 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
 
 namespace BetterLyrics.WinUI3.Views
 {
@@ -39,6 +39,8 @@ namespace BetterLyrics.WinUI3.Views
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
 
+        private readonly DispatcherQueueTimer _timer = App.Current.Resources.DispatcherQueue.CreateTimer();
+
         public CornerRadius AlbumArtCornerRadius
         {
             get { return (CornerRadius)GetValue(AlbumArtCornerRadiusProperty); }
@@ -47,16 +49,6 @@ namespace BetterLyrics.WinUI3.Views
 
         public static readonly DependencyProperty AlbumArtCornerRadiusProperty =
             DependencyProperty.Register(nameof(AlbumArtCornerRadius), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(new CornerRadius(0)));
-
-
-        public double AlbumArtSize
-        {
-            get { return (double)GetValue(AlbumArtSizeProperty); }
-            set { SetValue(AlbumArtSizeProperty, value); }
-        }
-
-        public static readonly DependencyProperty AlbumArtSizeProperty =
-            DependencyProperty.Register(nameof(AlbumArtSize), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0));
 
         public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
 
@@ -85,25 +77,7 @@ namespace BetterLyrics.WinUI3.Views
 
         // ==== SongInfo
 
-        private int GetTitleFontSize()
-        {
-            var albumArtLayoutSettings = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings;
-            if (albumArtLayoutSettings.IsAutoSongInfoFontSize)
-            {
-                return (int)Math.Clamp(Math.Min(RootGrid.ActualHeight, RootGrid.ActualWidth) / 20, 8, 72);
-            }
-            else
-            {
-                return albumArtLayoutSettings.SongInfoFontSize;
-            }
-        }
-
-        private int GetArtistsAlbumFontSize()
-        {
-            return (int)(GetTitleFontSize() * 0.8);
-        }
-
-        private void RenderTextBlock(TextBlock? sender, string? text, int fontSize)
+        private void RenderTextBlock(TextBlock? sender, string? text, double fontSize)
         {
             if (sender == null || string.IsNullOrEmpty(text) || fontSize == 0) return;
 
@@ -115,28 +89,23 @@ namespace BetterLyrics.WinUI3.Views
                 var fontFamilyName = LanguageHelper.IsCJK(ch) ? lyricsStyleSettings.LyricsCJKFontFamily : lyricsStyleSettings.LyricsWesternFontFamily;
                 sender.Inlines.Add(new Run { Text = $"{ch}", FontFamily = new FontFamily(fontFamilyName) });
             }
-            sender.FontSize = fontSize;
+            sender.FontSize = (int)fontSize;
             sender.Foreground = new SolidColorBrush(_mediaSessionsService.AlbumArtThemeColors.BgFontColor);
-        }
-
-        private void RenderTextBlock(AnimatedTextBlock? sender, string? text, int fontSize)
-        {
-            if (sender == null || string.IsNullOrEmpty(text) || fontSize == 0) return;
-
-            var lyricsStyleSettings = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings;
-            var fontFamilyName = LanguageHelper.IsCJK(text) ? lyricsStyleSettings.LyricsCJKFontFamily : lyricsStyleSettings.LyricsWesternFontFamily;
-
-            sender.FontFamily = new Microsoft.UI.Xaml.Media.FontFamily(fontFamilyName);
-            sender.FontSize = fontSize;
-
-            sender.Text = text;
         }
 
         private void RenderSongInfo()
         {
-            RenderTextBlock(TitleTextBlock, _mediaSessionsService.CurrentSongInfo?.Title, GetTitleFontSize());
-            RenderTextBlock(ArtistsTextBlock, _mediaSessionsService.CurrentSongInfo?.DisplayArtists, GetArtistsAlbumFontSize());
-            RenderTextBlock(AlbumTextBlock, _mediaSessionsService.CurrentSongInfo?.Album, GetArtistsAlbumFontSize());
+            var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
+
+            var albumArtLayoutSettings = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings;
+
+            var titleFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.SongTitleSize : albumArtLayoutSettings.SongInfoFontSize;
+            var artistsFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.ArtistNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
+            var albumFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.AlbumNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
+
+            RenderTextBlock(TitleTextBlock, _mediaSessionsService.CurrentSongInfo?.Title, titleFontSize);
+            RenderTextBlock(ArtistsTextBlock, _mediaSessionsService.CurrentSongInfo?.DisplayArtists, artistsFontSize);
+            RenderTextBlock(AlbumTextBlock, _mediaSessionsService.CurrentSongInfo?.Album, albumFontSize);
         }
 
         private void UpdateSongInfoOpacity()
@@ -246,6 +215,43 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        private void UpdateLyricsPlaceholderSpan()
+        {
+            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
+            switch (status.LyricsDisplayType)
+            {
+                case LyricsDisplayType.AlbumArtOnly:
+                    break;
+                case LyricsDisplayType.LyricsOnly:
+                    Grid.SetRow(LyricsPlaceholder, 0);
+                    Grid.SetRowSpan(LyricsPlaceholder, 3);
+                    Grid.SetColumn(LyricsPlaceholder, 1);
+                    Grid.SetColumnSpan(LyricsPlaceholder, 3);
+                    break;
+                case LyricsDisplayType.SplitView:
+                    switch (status.LyricsLayoutOrientation)
+                    {
+                        case LyricsLayoutOrientation.Horizontal:
+                            Grid.SetRow(LyricsPlaceholder, 0);
+                            Grid.SetRowSpan(LyricsPlaceholder, 3);
+                            Grid.SetColumn(LyricsPlaceholder, 3);
+                            Grid.SetColumnSpan(LyricsPlaceholder, 1);
+                            break;
+                        case LyricsLayoutOrientation.Vertical:
+                            Grid.SetRow(LyricsPlaceholder, 2);
+                            Grid.SetRowSpan(LyricsPlaceholder, 1);
+                            Grid.SetColumn(LyricsPlaceholder, 1);
+                            Grid.SetColumnSpan(LyricsPlaceholder, 3);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
         // ====
 
         private void UpdateAlbumArtGridSpan()
@@ -329,15 +335,19 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateGap()
         {
+            var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
+
             var status = _liveStatesService.LiveStates.LyricsWindowStatus;
 
             double height = RootGrid.ActualHeight;
             double width = RootGrid.ActualWidth;
 
-            double xMargin = 0;
-            double yMargin = 0;
             double middleGapCol = 0;
             double gapBetweenAlbumArtAndSongInfo = 0;
+            double trackSummaryRowHeight = 0;
+
+            double xMargin = 0;
+            double yMargin = 0;
 
             if (height < 400)
             {
@@ -354,18 +364,19 @@ namespace BetterLyrics.WinUI3.Views
             }
             else
             {
-                gapBetweenAlbumArtAndSongInfo = GetTitleFontSize() / 2;
+                gapBetweenAlbumArtAndSongInfo = lyricsLayoutMetrics.SongTitleSize / 2;
             }
 
             switch (status.LyricsLayoutOrientation)
             {
                 case LyricsLayoutOrientation.Horizontal:
-                    xMargin = Math.Max(16, Math.Min(width, height) * 0.25);
-                    yMargin = Math.Max(16, Math.Min(width, height) * 0.15);
+                    xMargin = Math.Clamp(Math.Min(width, height) * 0.25, 16, 128);
+                    yMargin = Math.Max(32, Math.Min(width, height) * 0.15);
                     break;
                 case LyricsLayoutOrientation.Vertical:
-                    xMargin = Math.Max(16, Math.Min(width, height) * 0.15);
-                    yMargin = Math.Max(16, Math.Min(width, height) * 0.10);
+                    xMargin = Math.Max(16, Math.Min(width, height) * 0.05);
+                    yMargin = Math.Max(16, Math.Min(width, height) * 0.05);
+                    trackSummaryRowHeight = Math.Max(64, Math.Min(width, height) * 0.25);
                     break;
                 default:
                     break;
@@ -373,30 +384,36 @@ namespace BetterLyrics.WinUI3.Views
 
             MiddleGapColDef.Width = new(middleGapCol);
 
-            TrackSummaryGridRow0.Height = TrackSummaryGridRow4.Height = new(yMargin);
+            TrackSummaryGridRow0.Height = new(yMargin);
+            TrackSummaryGridRow4.Height = new(yMargin);
             LeftGapDef.Width = RightGapDef.Width = new(xMargin);
+
+            TrackSummaryRowDef.Height = new(trackSummaryRowHeight);
+
             TrackSummaryGridCol1.Width = TrackSummaryGridRow2.Height = new(gapBetweenAlbumArtAndSongInfo);
         }
 
         private void OnLayoutChanged()
         {
-            UpdateSongInfoOpacity();
+            _timer.Debounce(() =>
+            {
+                UpdateGap();
 
-            UpdateAlbumArtShadow();
-            UpdateAlbumArtOpacity();
+                UpdateSongInfoOpacity();
+                UpdateLyricsOpacity();
+                UpdateAlbumArtOpacity();
 
-            UpdateTrackSummaryGridSpan();
+                UpdateAlbumArtShadow();
 
-            UpdateAlbumArtGridSpan();
+                UpdateTrackSummaryGridSpan();
+                UpdateAlbumArtGridSpan();
+                UpdateSongInfoStackPanelSpan();
+                UpdateLyricsPlaceholderSpan();
 
-            UpdateSongInfoStackPanelSpan();
+                UpdateAlbumArtCornerRadius();
 
-            UpdateLyricsOpacity();
-            UpdateLyricsLayout();
-
-            UpdateAlbumArtCornerRadius();
-
-            UpdateGap();
+                UpdateLyricsLayout();
+            }, Constants.Time.DebounceTimeout);
         }
 
         // ====
@@ -763,5 +780,11 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        private void LyricsScrollViewer_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
+            int mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
+            NowPlayingCanvas.LyricsStartY += mouseWheelDelta;
+        }
     }
 }
