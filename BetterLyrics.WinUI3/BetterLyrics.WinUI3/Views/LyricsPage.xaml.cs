@@ -238,8 +238,8 @@ namespace BetterLyrics.WinUI3.Views
                             Grid.SetColumnSpan(LyricsPlaceholder, 1);
                             break;
                         case LyricsLayoutOrientation.Vertical:
-                            Grid.SetRow(LyricsPlaceholder, 2);
-                            Grid.SetRowSpan(LyricsPlaceholder, 1);
+                            Grid.SetRow(LyricsPlaceholder, 0);
+                            Grid.SetRowSpan(LyricsPlaceholder, 3);
                             Grid.SetColumn(LyricsPlaceholder, 1);
                             Grid.SetColumnSpan(LyricsPlaceholder, 3);
                             break;
@@ -318,9 +318,9 @@ namespace BetterLyrics.WinUI3.Views
                             break;
                         case LyricsLayoutOrientation.Vertical:
                             NowPlayingCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                            NowPlayingCanvas.LyricsStartY = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight;
+                            NowPlayingCanvas.LyricsStartY = 0;
                             NowPlayingCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
-                            NowPlayingCanvas.LyricsHeight = LyricsRowDef.ActualHeight;
+                            NowPlayingCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
                             break;
                         default:
                             break;
@@ -710,6 +710,7 @@ namespace BetterLyrics.WinUI3.Views
                     await Task.Delay(Constants.Time.AnimationDuration);
                     RenderSongInfo();
                     SongInfoStackPanel.Opacity = 1;
+                    UpdateSongInfoOpacity();
                 }
             }
         }
