@@ -566,7 +566,7 @@
     <value>아크릴 얇은</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>동시에 가사 배경의 순수 컬러 레이어 불투명도와 앨범 아트 레이어 불투명도를 0으로 설정하면 정확한 효과를 얻을 수 있습니다</value>
+    <value>이 기능을 켜면 가사 배경 설정의 테마 설정이 재정의됩니다</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>환경 색상에 적응하세요</value>
@@ -986,10 +986,7 @@
     <value>가사 배경</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>비 전류 재생 영역</value>
-  </data>
-  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
-    <value>글꼴 불투명 (비 전류 재생 영역)</value>
+    <value>현재 플레이 라인이 아닙니다</value>
   </data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>검은색</value>
@@ -1022,7 +1019,7 @@
     <value>여분의 빛</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>현재 재생 영역</value>
+    <value>현재 플레이 행</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>가사 배경 (색상)에 적응</value>
@@ -1089,15 +1086,6 @@
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>정상</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
-    <value>현재 숯</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
-    <value>현재 라인</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>현재 라인은 현재 숯으로 시작합니다</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>가사 영역 높이 계수</value>

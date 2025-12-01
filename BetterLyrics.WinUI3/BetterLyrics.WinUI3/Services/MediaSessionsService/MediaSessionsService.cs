@@ -741,6 +741,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 if (message.PropertyName == nameof(LiveStates.LyricsWindowStatus))
                 {
+                    UpdateAlbumArtThemeColors();
                     UpdateTranslations();
                 }
             }

@@ -566,7 +566,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Acrylic Thin</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>At the same time, set the pure color layer opacity and the album art layer opacity in the lyrics background to 0 to get the correct effect</value>
+    <value>Turning this on will override the theme settings in the lyric background settings</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>Adapt to environmental color</value>
@@ -986,10 +986,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Lyrics background</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>Non-current playback area</value>
-  </data>
-  <data name="SettingsPageLyricsBgFontOpacity.Header" xml:space="preserve">
-    <value>Font opacity (Non-current playback area)</value>
+    <value>Not the current play line</value>
   </data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>Black</value>
@@ -1022,7 +1019,7 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
     <value>Extra Light</value>
   </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>Current playback area</value>
+    <value>Current Play Row</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>Adaptive to lyrics background (Colored)</value>
@@ -1089,15 +1086,6 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>Normal</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentChar.Content" xml:space="preserve">
-    <value>Current char</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeCurrentLine.Content" xml:space="preserve">
-    <value>Current line</value>
-  </data>
-  <data name="SettingsPageLyricsRendingScopeLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>Current line start to current char</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>Lyrics area height factor</value>
