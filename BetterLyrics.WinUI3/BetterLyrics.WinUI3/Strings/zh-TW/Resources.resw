@@ -166,7 +166,7 @@
     <value>導出成功</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>無法連接到 LX 音樂服務器，請轉到設置 - 高級選項以檢查是否正確輸入鏈接</value>
+    <value>Unable to connect to LX Music Server, please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全螢幕模式</value>
@@ -383,10 +383,6 @@
   </data>
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>分割畫面視圖</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>單擊左上按鈕以啟用沉浸式模式。
-如果遇到任何問題，請轉到“設置”頁面，關於標籤，查看常見問題解答或聯繫作者以獲取反饋</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>歡迎使用 BetterLyrics</value>
@@ -679,6 +675,9 @@
   <data name="SettingsPageCenter.Content" xml:space="preserve">
     <value>Center</value>
   </data>
+  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>Check shortcut</value>
+  </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中文注音</value>
   </data>
@@ -691,6 +690,9 @@
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>中日韓統一表意文字</value>
   </data>
+  <data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
     <value>清除快取檔案</value>
   </data>
@@ -699,6 +701,9 @@
   </data>
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>點選穿透快捷鍵</value>
+  </data>
+  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>Collapse dropdown</value>
   </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>緊湊</value>
@@ -1287,6 +1292,9 @@
   </data>
   <data name="SettingsPageReference.Header" xml:space="preserve">
     <value>Reference link</value>
+  </data>
+  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>Refresh dropdown</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>路徑中的原始檔案和資料夾不會被刪除</value>
