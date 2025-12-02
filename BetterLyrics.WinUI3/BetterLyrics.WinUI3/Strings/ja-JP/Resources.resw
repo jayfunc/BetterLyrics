@@ -166,7 +166,7 @@
     <value>出力が完了しました</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>LX Music Serverに接続できない場合は、設定に移動してください。リンクが正しく入力されているかどうかを確認するための高度なオプションに移動してください</value>
+    <value>Unable to connect to LX Music Server, please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>フルスクリーンモード</value>
@@ -383,10 +383,6 @@
   </data>
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>分割ビュー</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>左上ボタンをクリックして、没入型モードを有効にします。
-問題が発生した場合は、[設定]ページ、[タブについて]にアクセスして、FAQを表示するか、フィードバックについて著者に連絡してください</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>BetterLyrics へようこそ</value>
@@ -679,6 +675,9 @@
   <data name="SettingsPageCenter.Content" xml:space="preserve">
     <value>Center</value>
   </data>
+  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>Check shortcut</value>
+  </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中国の発音</value>
   </data>
@@ -691,6 +690,9 @@
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK統一漢字</value>
   </data>
+  <data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
     <value>キャッシュファイルをクリア</value>
   </data>
@@ -699,6 +701,9 @@
   </data>
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>クリックスルーショートカットキー</value>
+  </data>
+  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>Collapse dropdown</value>
   </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>コンパクト</value>
@@ -1287,6 +1292,9 @@
   </data>
   <data name="SettingsPageReference.Header" xml:space="preserve">
     <value>Reference link</value>
+  </data>
+  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>Refresh dropdown</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>このパスの元のファイルとフォルダーは、このアプリから削除するときに削除されません</value>
