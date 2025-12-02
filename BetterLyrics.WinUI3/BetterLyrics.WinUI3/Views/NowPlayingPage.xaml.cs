@@ -203,7 +203,7 @@ namespace BetterLyrics.WinUI3.Views
                     Grid.SetRow(SongInfoStackPanel, 3);
                     Grid.SetRowSpan(SongInfoStackPanel, 1);
                     Grid.SetColumn(SongInfoStackPanel, 0);
-                    Grid.SetColumnSpan(SongInfoStackPanel, 3);
+                    Grid.SetColumnSpan(SongInfoStackPanel, 2);
                     break;
                 case LyricsLayoutOrientation.Vertical:
                     Grid.SetRow(SongInfoStackPanel, 1);
@@ -264,7 +264,7 @@ namespace BetterLyrics.WinUI3.Views
                     Grid.SetRow(AlbumArtGrid, 1);
                     Grid.SetRowSpan(AlbumArtGrid, 1);
                     Grid.SetColumn(AlbumArtGrid, 0);
-                    Grid.SetColumnSpan(AlbumArtGrid, 3);
+                    Grid.SetColumnSpan(AlbumArtGrid, 2);
                     break;
                 case LyricsLayoutOrientation.Vertical:
                     Grid.SetRow(AlbumArtGrid, 1);
@@ -343,20 +343,48 @@ namespace BetterLyrics.WinUI3.Views
             double height = RootGrid.ActualHeight;
             double width = RootGrid.ActualWidth;
 
-            double middleGapCol = 0;
+            double minSize = Math.Min(width, height);
+
+            double gapBetweenTrackSummaryAndLyrics = 0;
             double gapBetweenAlbumArtAndSongInfo = 0;
             double trackSummaryRowHeight = 0;
 
             double xMargin = 0;
             double yMargin = 0;
 
-            if (height < 400)
+            switch (status.LyricsLayoutOrientation)
             {
-                middleGapCol = Math.Max(16, height * 0.1);
-            }
-            else
-            {
-                middleGapCol = Math.Max(16, width * 0.15);
+                case LyricsLayoutOrientation.Horizontal:
+                    if (width < 800)
+                    {
+                        xMargin = Math.Clamp(minSize * 0.15, 16, 128);
+                    }
+                    else
+                    {
+                        xMargin = Math.Clamp(minSize * 0.25, 16, 128);
+                    }
+                    yMargin = Math.Max(32, Math.Min(width, height) * 0.15);
+                    if (height < 100)
+                    {
+                        gapBetweenTrackSummaryAndLyrics = Math.Max(16, height * 0.1);
+                    }
+                    else
+                    {
+                        gapBetweenTrackSummaryAndLyrics = 0;
+                    }
+                    TrackSummaryGridCol0.Width = new(1, GridUnitType.Star);
+                    TrackSummaryGridCol2.Width = new(xMargin);
+                    break;
+                case LyricsLayoutOrientation.Vertical:
+                    xMargin = Math.Max(16, minSize * 0.05);
+                    yMargin = Math.Max(16, minSize * 0.05);
+                    trackSummaryRowHeight = Math.Max(64, minSize * 0.25);
+                    gapBetweenTrackSummaryAndLyrics = Math.Max(16, width * 0.15);
+                    TrackSummaryGridCol0.Width = new(1, GridUnitType.Auto);
+                    TrackSummaryGridCol2.Width = new(1, GridUnitType.Star);
+                    break;
+                default:
+                    break;
             }
 
             if (height < 100)
@@ -368,22 +396,7 @@ namespace BetterLyrics.WinUI3.Views
                 gapBetweenAlbumArtAndSongInfo = lyricsLayoutMetrics.SongTitleSize / 2;
             }
 
-            switch (status.LyricsLayoutOrientation)
-            {
-                case LyricsLayoutOrientation.Horizontal:
-                    xMargin = Math.Clamp(Math.Min(width, height) * 0.25, 16, 128);
-                    yMargin = Math.Max(32, Math.Min(width, height) * 0.15);
-                    break;
-                case LyricsLayoutOrientation.Vertical:
-                    xMargin = Math.Max(16, Math.Min(width, height) * 0.05);
-                    yMargin = Math.Max(16, Math.Min(width, height) * 0.05);
-                    trackSummaryRowHeight = Math.Max(64, height * 0.25);
-                    break;
-                default:
-                    break;
-            }
-
-            MiddleGapColDef.Width = new(middleGapCol);
+            MiddleGapColDef.Width = new(gapBetweenTrackSummaryAndLyrics);
 
             TrackSummaryGridRow0.Height = new(yMargin);
             TrackSummaryGridRow4.Height = new(yMargin);
@@ -640,11 +653,6 @@ namespace BetterLyrics.WinUI3.Views
         }
 
         private void LyricsPlaceholder_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            OnLayoutChanged();
-        }
-
-        private void TrackSummaryGridContainer_Loaded(object sender, RoutedEventArgs e)
         {
             OnLayoutChanged();
         }

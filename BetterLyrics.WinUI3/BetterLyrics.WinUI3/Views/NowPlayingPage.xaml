@@ -29,7 +29,7 @@
         <!--  Win2D drawing area  -->
         <uc:LyricsCanvas x:Name="LyricsCanvas" />
 
-        <Grid x:Name="TrackSummaryGridContainer" Loaded="TrackSummaryGridContainer_Loaded">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="TrackSummaryRowDef" Height="0" />
                 <RowDefinition x:Name="MiddleGapRowDef" Height="0" />
@@ -149,7 +149,7 @@
                             <TextBlock
                                 x:Name="ArtistsTextBlock"
                                 FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                                Opacity="0.5"
+                                Opacity="0.6"
                                 TextTrimming="None"
                                 Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </dev:AutoScrollView>
@@ -174,7 +174,7 @@
                             <TextBlock
                                 x:Name="AlbumTextBlock"
                                 FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                                Opacity="0.5"
+                                Opacity="0.3"
                                 TextTrimming="None"
                                 Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </dev:AutoScrollView>
@@ -187,8 +187,8 @@
             <Grid x:Name="LyricsPlaceholder" SizeChanged="LyricsPlaceholder_SizeChanged">
                 <ScrollViewer
                     x:Name="LyricsScrollViewer"
-                    PointerExited="LyricsScrollViewer_PointerExited"
                     PointerEntered="LyricsScrollViewer_PointerEntered"
+                    PointerExited="LyricsScrollViewer_PointerExited"
                     PointerMoved="LyricsScrollViewer_PointerMoved"
                     PointerPressed="LyricsScrollViewer_PointerPressed"
                     PointerReleased="LyricsScrollViewer_PointerReleased"
