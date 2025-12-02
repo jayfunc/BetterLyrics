@@ -166,7 +166,7 @@
     <value>수출 성공</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>LX Music Server에 연결할 수 없습니다. 설정으로 이동하십시오 - 고급 옵션이 링크가 올바르게 입력되었는지 확인하십시오.</value>
+    <value>Unable to connect to LX Music Server, please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>전체화면 모드</value>
@@ -383,10 +383,6 @@
   </data>
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>분할보기</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>몰입 형 모드를 활성화하려면 왼쪽 상단 버튼을 클릭하십시오.
-문제가 발생하면 설정 페이지, 탭 정보로 이동하여 FAQ를보고 저자에게 연락하여 피드백을 받으십시오.</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>Betterlyrics에 오신 것을 환영합니다</value>
@@ -679,6 +675,9 @@
   <data name="SettingsPageCenter.Content" xml:space="preserve">
     <value>Center</value>
   </data>
+  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>Check shortcut</value>
+  </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>화음</value>
   </data>
@@ -691,6 +690,9 @@
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>한중일 통합 이데오그래프</value>
   </data>
+  <data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
     <value>캐시 파일을 지웁니다</value>
   </data>
@@ -699,6 +701,9 @@
   </data>
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>바로 가기 키를 클릭하세요</value>
+  </data>
+  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>Collapse dropdown</value>
   </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>콤팩트</value>
@@ -1287,6 +1292,9 @@
   </data>
   <data name="SettingsPageReference.Header" xml:space="preserve">
     <value>Reference link</value>
+  </data>
+  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>Refresh dropdown</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>이 경로의 원본 파일과 폴더는이 앱에서 제거 할 때 삭제되지 않습니다.</value>
