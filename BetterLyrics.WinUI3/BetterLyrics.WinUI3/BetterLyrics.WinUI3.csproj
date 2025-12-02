@@ -26,7 +26,6 @@
 		<None Remove="Controls\AlbumArtLayoutSettingsControl.xaml" />
 		<None Remove="Controls\AppSettingsControl.xaml" />
 		<None Remove="Controls\DemoWindowGrid.xaml" />
-		<None Remove="Controls\Dragger.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
 		<None Remove="Controls\FontFamilyAutoSuggestBox.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
@@ -58,7 +57,6 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
@@ -335,11 +333,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="TemplateSelector\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Page Update="Controls\Dragger.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\PropertyRow.xaml">
