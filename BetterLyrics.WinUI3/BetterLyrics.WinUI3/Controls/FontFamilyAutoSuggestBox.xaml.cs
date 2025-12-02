@@ -1,8 +1,15 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.SettingsService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -11,11 +18,14 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class FontFamilyAutoSuggestBox : UserControl
     {
-        private List<string> SystemFontNames { get; set; } = [.. FontHelper.SystemFontFamilies];
+        private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
+        private List<ExtendedFontFamily> FontFamilies { get; set; } = [];
 
         public FontFamilyAutoSuggestBox()
         {
             InitializeComponent();
+            RefreshFontFamilies();
         }
 
         public static readonly DependencyProperty SelectedFontFamilyProperty =
@@ -27,21 +37,38 @@ namespace BetterLyrics.WinUI3.Controls
             set => SetValue(SelectedFontFamilyProperty, value);
         }
 
+        private void RefreshFontFamilies()
+        {
+            Task.Run(() =>
+            {
+                var fontFamilies = FontHelper.SystemFontFamilies.Select(x => new ExtendedFontFamily()
+                {
+                    FontFamily = x,
+                    LocalizedFontFamily = FontHelper.GetLocalizedFontFamilyName(x, _settingsService.AppSettings.GeneralSettings.LanguageCode)
+                }).OrderBy(x => x.LocalizedFontFamily).ToList();
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    FontFamilies = fontFamilies;
+                });
+            });
+        }
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            SelectedFontFamily = args.SelectedItem.ToString() ?? "";
+            SelectedFontFamily = ((ExtendedFontFamily)args.SelectedItem).FontFamily ?? "";
         }
 
-        private void UpdateAutoSuggestBoxItemsSource()
+        private void UpdateAutoSuggestBoxItemsSource(string? query = null)
         {
-            var suitableItems = new List<string>();
-            var splitText = AutoSuggestBox.Text.ToLower().Split(" ");
-            foreach (var fontFamily in SystemFontNames)
+            query ??= AutoSuggestBox.Text;
+
+            var suitableItems = new List<ExtendedFontFamily>();
+            var splitText = query.ToLower().Split(" ");
+            foreach (var fontFamily in FontFamilies)
             {
-                var found = splitText.All((key) =>
+                bool found = splitText.All((key) =>
                 {
-                    return fontFamily.ToLower().Contains(key);
+                    return fontFamily.FontFamily.ToLower().Contains(key) || fontFamily.LocalizedFontFamily.ToLower().Contains(key);
                 });
                 if (found)
                 {
@@ -50,9 +77,13 @@ namespace BetterLyrics.WinUI3.Controls
             }
             if (suitableItems.Count == 0)
             {
-                suitableItems.Add("N/A");
+                suitableItems.Add(new ExtendedFontFamily()
+                {
+                    FontFamily = "",
+                    LocalizedFontFamily = "N/A"
+                });
             }
-            AutoSuggestBox.ItemsSource = suitableItems.Order();
+            AutoSuggestBox.ItemsSource = suitableItems.OrderBy(x => x.LocalizedFontFamily);
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -63,16 +94,18 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 UpdateAutoSuggestBoxItemsSource();
             }
+
+            SelectedLocalizedFontFamilyTextBlock.Text = FontHelper.GetLocalizedFontFamilyName(SelectedFontFamily, _settingsService.AppSettings.GeneralSettings.LanguageCode);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SystemFontNames = [.. FontHelper.SystemFontFamilies];
+            RefreshFontFamilies();
         }
 
         private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            UpdateAutoSuggestBoxItemsSource();
+            UpdateAutoSuggestBoxItemsSource("");
         }
 
         private void AutoSuggestBox_LostFocus(object sender, RoutedEventArgs e)
