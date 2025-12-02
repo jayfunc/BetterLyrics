@@ -166,7 +166,7 @@
     <value>导出成功</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>无法连接到 LX 音乐服务器，请转到设置 - 高级选项以检查是否正确输入链接</value>
+    <value>无法连接到 LX 音乐服务器，请转到设置 - 播放源 - LX Music - LX 音乐服务器以检查是否正确输入链接</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全屏模式</value>
@@ -383,10 +383,6 @@
   </data>
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>分屏视图</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>单击左上按钮以启用沉浸式模式。
-如果遇到任何问题，请转到“设置”页面，关于标签，查看常见问题解答或联系作者以获取反馈</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>欢迎使用 BetterLyrics</value>
@@ -679,6 +675,9 @@
   <data name="SettingsPageCenter.Content" xml:space="preserve">
     <value>居中</value>
   </data>
+  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>检查快捷方式</value>
+  </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中文注音</value>
   </data>
@@ -691,6 +690,9 @@
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>中日韩统一表意文字</value>
   </data>
+  <data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>清除</value>
+  </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
     <value>清除缓存文件</value>
   </data>
@@ -699,6 +701,9 @@
   </data>
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>点击穿透快捷键</value>
+  </data>
+  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>折叠下拉列表</value>
   </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>紧凑</value>
@@ -1287,6 +1292,9 @@
   </data>
   <data name="SettingsPageReference.Header" xml:space="preserve">
     <value>参考链接</value>
+  </data>
+  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>刷新下拉列表</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>路径中的原始文件和文件夹不会被删除</value>

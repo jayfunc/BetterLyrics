@@ -166,7 +166,7 @@
     <value>Export successful</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>Unable to connect to LX Music server, please go to Settings - Advanced options to check if the link is entered correctly</value>
+    <value>Unable to connect to LX Music Server, please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Fullscreen mode</value>
@@ -383,10 +383,6 @@
   </data>
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Split view</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Subtitle" xml:space="preserve">
-    <value>Click on the top-left button to enable immersive mode.
-If you encounter any problems, please go to the Settings page, About tab, and view the FAQ or contact the author for feedback</value>
   </data>
   <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>Welcome to BetterLyrics</value>
@@ -679,6 +675,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageCenter.Content" xml:space="preserve">
     <value>Center</value>
   </data>
+  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>Check shortcut</value>
+  </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>Chinese pronunciation</value>
   </data>
@@ -691,6 +690,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK Unified Ideograph</value>
   </data>
+  <data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
     <value>Clear cache files</value>
   </data>
@@ -699,6 +701,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>Click-through shortcut keys</value>
+  </data>
+  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>Collapse dropdown</value>
   </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>Compact</value>
@@ -1287,6 +1292,9 @@ If you encounter any problems, please go to the Settings page, About tab, and vi
   </data>
   <data name="SettingsPageReference.Header" xml:space="preserve">
     <value>Reference link</value>
+  </data>
+  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>Refresh dropdown</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>Original files and folders in this path will not be deleted when removing it from this app</value>

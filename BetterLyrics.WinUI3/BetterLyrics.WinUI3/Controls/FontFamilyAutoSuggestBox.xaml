@@ -44,8 +44,16 @@
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       FontSize=12,
                                       Glyph=&#xE72C;}"
-                Style="{StaticResource GhostButtonStyle}" />
-            <Button Content="收起" Style="{StaticResource GhostButtonStyle}" />
+                Style="{StaticResource GhostButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="SettingsPageRefreshDropdown" />
+                </ToolTipService.ToolTip>
+            </Button>
+            <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE74A;}" Style="{StaticResource GhostButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="SettingsPageCollapseDropdown" />
+                </ToolTipService.ToolTip>
+            </Button>
 
         </StackPanel>
     </Grid>
