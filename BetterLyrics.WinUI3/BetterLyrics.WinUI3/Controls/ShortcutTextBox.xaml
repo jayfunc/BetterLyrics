@@ -23,7 +23,11 @@
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       FontSize=12,
                                       Glyph=&#xE894;}"
-                Style="{StaticResource GhostButtonStyle}" />
+                Style="{StaticResource GhostButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="SettingsPageClear" />
+                </ToolTipService.ToolTip>
+            </Button>
             <Button
                 Margin="3,0,0,0"
                 HorizontalAlignment="Right"
@@ -31,7 +35,11 @@
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       FontSize=12,
                                       Glyph=&#xE721;}"
-                Style="{StaticResource GhostButtonStyle}" />
+                Style="{StaticResource GhostButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="SettingsPageCheckShortcut" />
+                </ToolTipService.ToolTip>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
