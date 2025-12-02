@@ -29,7 +29,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHook.OpenOrShowWindow<LyricsWindow>();
+            WindowHook.OpenOrShowWindow<NowPlayingWindow>();
         }
 
         private void SettingsWindowButton_Click(object sender, RoutedEventArgs e)

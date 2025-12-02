@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void CloseWindow<T>()
         {
-            if (typeof(T) == typeof(LyricsWindow))
+            if (typeof(T) == typeof(NowPlayingWindow))
             {
                 EnsureDockModeReleased();
             }
@@ -102,10 +102,10 @@ namespace BetterLyrics.WinUI3.Hooks
             var window = _activeWindows.Find(w => w is T);
             if (window == null)
             {
-                if (typeof(T) == typeof(LyricsWindow))
+                if (typeof(T) == typeof(NowPlayingWindow))
                 {
-                    window = new LyricsWindow();
-                    ((LyricsWindow)window).SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
+                    window = new NowPlayingWindow();
+                    ((NowPlayingWindow)window).SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
                 }
                 else if (typeof(T) == typeof(SettingsWindow))
                 {
@@ -133,7 +133,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 castedWindow.Restore();
                 castedWindow.Activate();
 
-                if (typeof(T) == typeof(LyricsWindow))
+                if (typeof(T) == typeof(NowPlayingWindow))
                 {
                     _liveStatesService.InitLyricsWindowStatus();
 
@@ -141,7 +141,7 @@ namespace BetterLyrics.WinUI3.Hooks
                     _defaultWindowStyle.Add(hwnd, castedWindow.GetWindowStyle());
                     _defaultExtendedWindowStyle.Add(hwnd, castedWindow.GetExtendedWindowStyle());
 
-                    var lyricsWindow = (LyricsWindow)window;
+                    var lyricsWindow = (NowPlayingWindow)window;
                     lyricsWindow.ViewModel.InitShortcuts();
                     lyricsWindow.ViewModel.InitFgWindowWatcher();
 
@@ -195,7 +195,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private static void EnsureDockModeReleased()
         {
-            SetIsWorkArea<LyricsWindow>(false);
+            SetIsWorkArea<NowPlayingWindow>(false);
         }
 
         private static void TrackWindow(object window)
@@ -301,9 +301,9 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetTitleBarArea<T>(TitleBarArea titleBarArea)
         {
-            if (typeof(T) == typeof(LyricsWindow))
+            if (typeof(T) == typeof(NowPlayingWindow))
             {
-                LyricsWindow? lyricsWindow = GetWindow<LyricsWindow>();
+                NowPlayingWindow? lyricsWindow = GetWindow<NowPlayingWindow>();
                 lyricsWindow?.SetTitleBarArea(titleBarArea);
             }
             else
@@ -404,7 +404,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             _setLyricsWindowVisibilityByPlayingStatusTimer.Debounce(() =>
             {
-                var window = GetWindow<LyricsWindow>();
+                var window = GetWindow<NowPlayingWindow>();
                 if (window == null) return;
 
                 if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && !_mediaSessionsService.CurrentIsPlaying)
@@ -412,23 +412,23 @@ namespace BetterLyrics.WinUI3.Hooks
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
                         _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = true;
-                        SetIsWorkArea<LyricsWindow>(false);
+                        SetIsWorkArea<NowPlayingWindow>(false);
                         _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = false;
                     }
-                    HideWindow<LyricsWindow>();
+                    HideWindow<NowPlayingWindow>();
                 }
                 else if (_liveStatesService.LiveStates.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.CurrentIsPlaying)
                 {
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
                         _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = true;
-                        SetIsWorkArea<LyricsWindow>(true);
+                        SetIsWorkArea<NowPlayingWindow>(true);
                         _liveStatesService.LiveStates.IsLyricsWindowStatusRefreshing = false;
                     }
-                    OpenOrShowWindow<LyricsWindow>();
+                    OpenOrShowWindow<NowPlayingWindow>();
                     if (_liveStatesService.LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
-                        MoveAndResize<LyricsWindow>(_liveStatesService.LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+                        MoveAndResize<NowPlayingWindow>(_liveStatesService.LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                 }
             }, Constants.Time.DebounceTimeout);

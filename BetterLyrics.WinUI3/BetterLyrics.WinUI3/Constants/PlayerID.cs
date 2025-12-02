@@ -20,7 +20,8 @@
         public const string Edge = "MSEdge";
         public const string BetterLyrics = "37412.BetterLyrics_rd1g0rsrrtxw8!App";
         public const string BetterLyricsDebug = "37412.BetterLyrics_c8mj3v9sysxb4!App";
-        public const string SaltPlayerForWindows = "Sakawish.SaltPlayerforWindows_q65q631pyh094!SaltPlayerforWindows";
+        public const string SaltPlayerForWindowsMS = "Sakawish.SaltPlayerforWindows_q65q631pyh094!SaltPlayerforWindows";
+        public const string SaltPlayerForWindowsSteam = "Salt Player for Windows.exe";
         public const string MoeKoeMusic = "cn.MoeKoe.Music";
         public const string MoeKoeMusicAlternative = "electron.app.MoeKoe Music";
         public const string Listen1 = "com.listen1.listen1";

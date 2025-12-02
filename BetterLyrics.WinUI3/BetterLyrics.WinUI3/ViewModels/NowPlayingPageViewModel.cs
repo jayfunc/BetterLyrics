@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class LyricsPageViewModel : BaseViewModel
+    public partial class NowPlayingPageViewModel : BaseViewModel
     {
         public IMediaSessionsService MediaSessionsService { get; private set; }
         private readonly ILiveStatesService _liveStatesService;
@@ -37,7 +37,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial double TimelineSliderThumbSeconds { get; set; } = 0;
 
-        public LyricsPageViewModel(IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
+        public NowPlayingPageViewModel(IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
         {
             _liveStatesService = liveStatesService;
             MediaSessionsService = mediaSessionsService;

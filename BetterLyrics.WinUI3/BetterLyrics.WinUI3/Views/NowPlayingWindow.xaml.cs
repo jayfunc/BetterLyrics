@@ -13,15 +13,15 @@ using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.Views
 {
-    public sealed partial class LyricsWindow : Window
+    public sealed partial class NowPlayingWindow : Window
     {
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
 
         private readonly WindowMessageMonitor _wmm;
 
-        public LyricsWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<LyricsWindowViewModel>();
+        public NowPlayingWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<NowPlayingWindowViewModel>();
 
-        public LyricsWindow()
+        public NowPlayingWindow()
         {
             this.InitializeComponent();
 
@@ -122,7 +122,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHook.MinimizeWindow<LyricsWindow>();
+            WindowHook.MinimizeWindow<NowPlayingWindow>();
         }
     }
 }

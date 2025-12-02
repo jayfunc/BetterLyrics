@@ -25,12 +25,15 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasDrawingSession ds,
             LyricsData? lyricsData,
             int playingLineIndex,
+            int mouseHoverLineIndex,
+            bool isMousePressing,
             int startVisibleIndex,
             int endVisibleIndex,
             double lyricsX,
             double lyricsY,
             double lyricsWidth,
             double lyricsHeight,
+            double userScrollOffset,
             double lyricsOpacity,
             LyricsWindowStatus windowStatus,
             Color strokeColor,
@@ -51,12 +54,15 @@ namespace BetterLyrics.WinUI3.Renderer
                                 layerDs,
                                 lyricsData,
                                 playingLineIndex,
+                                mouseHoverLineIndex,
+                                isMousePressing,
                                 startVisibleIndex,
                                 endVisibleIndex,
                                 lyricsX,
                                 lyricsY,
                                 lyricsWidth,
                                 lyricsHeight,
+                                userScrollOffset,
                                 windowStatus,
                                 strokeColor,
                                 bgColor,
@@ -78,12 +84,15 @@ namespace BetterLyrics.WinUI3.Renderer
                         ds,
                         lyricsData,
                         playingLineIndex,
+                        mouseHoverLineIndex,
+                        isMousePressing,
                         startVisibleIndex,
                         endVisibleIndex,
                         lyricsX,
                         lyricsY,
                         lyricsWidth,
                         lyricsHeight,
+                        userScrollOffset,
                         windowStatus,
                         strokeColor,
                         bgColor,
@@ -98,12 +107,15 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasDrawingSession ds,
             LyricsData? lyricsData,
             int playingLineIndex,
+            int mouseHoverLineIndex,
+            bool isMousePressing,
             int startVisibleIndex,
             int endVisibleIndex,
             double lyricsX,
             double lyricsY,
             double lyricsWidth,
             double lyricsHeight,
+            double userScrollOffset,
             LyricsWindowStatus windowStatus,
             Color strokeColor,
             Color bgColor,
@@ -128,7 +140,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 if (line.OriginalCanvasTextLayout == null) continue;
                 if (line.OriginalCanvasTextLayout.LayoutBounds.Width <= 0) continue;
 
-                double yOffset = line.YOffsetTransition.Value + lyricsY + lyricsHeight / 2;
+                double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight / 2;
 
                 var transform =
                     Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition) *
@@ -148,6 +160,15 @@ namespace BetterLyrics.WinUI3.Renderer
                     else
                     {
                         _unplayingRenderer.Draw(ds, textOnlyLayer, line);
+                    }
+
+                    if (i == mouseHoverLineIndex)
+                    {
+                        byte opacity = isMousePressing ? (byte)32 : (byte)16;
+                        double scale = isMousePressing ? 1.09 : 1.10;
+                        ds.FillRoundedRectangle(
+                            new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()).Scale(scale),
+                            8, 8, Color.FromArgb(opacity, 255, 255, 255));
                     }
                 }
 

@@ -15,7 +15,14 @@ namespace BetterLyrics.WinUI3.Extensions
             {
                 if (track.Path is string path)
                 {
-                    return TagLib.File.Create(path).Tag.Lyrics;
+                    try
+                    {
+                        return TagLib.File.Create(path).Tag.Lyrics;
+                    }
+                    catch (System.Exception)
+                    {
+                        return "";
+                    }
                 }
                 return "";
             }

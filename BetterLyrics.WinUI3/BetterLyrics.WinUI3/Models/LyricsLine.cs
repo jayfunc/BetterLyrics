@@ -18,8 +18,10 @@ namespace BetterLyrics.WinUI3.Models
         public double AnimationDuration { get; set; } = 0.3;
         public ValueTransition<double> AngleTransition { get; set; }
         public ValueTransition<double> BlurAmountTransition { get; set; }
-        public ValueTransition<double> UnplayingOpacityTransition { get; set; }
-        public ValueTransition<double> PlayingOpacityTransition { get; set; }
+        public ValueTransition<double> PhoneticOpacityTransition { get; set; }
+        public ValueTransition<double> PlayedOriginalOpacityTransition { get; set; }
+        public ValueTransition<double> UnplayedOriginalOpacityTransition { get; set; }
+        public ValueTransition<double> TranslatedOpacityTransition { get; set; }
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> YOffsetTransition { get; set; }
         public ValueTransition<Color> ColorTransition { get; set; }
@@ -44,7 +46,7 @@ namespace BetterLyrics.WinUI3.Models
         /// <summary>
         /// 顶部坐标（相对于坐标原点）
         /// </summary>
-        public Vector2 TopPosition { get; set; }
+        public Vector2 TopLeftPosition { get; set; }
         /// <summary>
         /// 中心坐标（相对于坐标原点）
         /// </summary>
@@ -52,7 +54,7 @@ namespace BetterLyrics.WinUI3.Models
         /// <summary>
         /// 底部坐标（相对于坐标原点）
         /// </summary>
-        public Vector2 BottomPosition { get; set; }
+        public Vector2 BottomRightPosition { get; set; }
 
         public List<LyricsSyllable> LyricsSyllables { get; set; } = [];
 
@@ -89,12 +91,22 @@ namespace BetterLyrics.WinUI3.Models
                  durationSeconds: AnimationDuration,
                  easingType: EasingType.EaseInOutSine
              );
-            UnplayingOpacityTransition = new(
+            PhoneticOpacityTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
                 easingType: EasingType.EaseInOutSine
             );
-            PlayingOpacityTransition = new(
+            PlayedOriginalOpacityTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutSine
+            );
+            UnplayedOriginalOpacityTransition = new(
+                initialValue: 0,
+                durationSeconds: AnimationDuration,
+                easingType: EasingType.EaseInOutSine
+            );
+            TranslatedOpacityTransition = new(
                 initialValue: 0,
                 durationSeconds: AnimationDuration,
                 easingType: EasingType.EaseInOutSine
@@ -123,7 +135,7 @@ namespace BetterLyrics.WinUI3.Models
                 return;
             }
 
-            double centerY = (TopPosition.Y + BottomPosition.Y) / 2;
+            double centerY = (TopLeftPosition.Y + BottomRightPosition.Y) / 2;
 
             CenterPosition = type switch
             {

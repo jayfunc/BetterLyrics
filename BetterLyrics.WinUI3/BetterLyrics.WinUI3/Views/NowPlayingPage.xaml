@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Page
-    x:Class="BetterLyrics.WinUI3.Views.LyricsPage"
+    x:Class="BetterLyrics.WinUI3.Views.NowPlayingPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
@@ -27,7 +27,7 @@
         SizeChanged="RootGrid_SizeChanged">
 
         <!--  Win2D drawing area  -->
-        <uc:NowPlayingCanvas x:Name="NowPlayingCanvas" />
+        <uc:LyricsCanvas x:Name="LyricsCanvas" />
 
         <Grid x:Name="TrackSummaryGridContainer" Loaded="TrackSummaryGridContainer_Loaded">
             <Grid.RowDefinitions>
@@ -187,8 +187,12 @@
             <Grid x:Name="LyricsPlaceholder" SizeChanged="LyricsPlaceholder_SizeChanged">
                 <ScrollViewer
                     x:Name="LyricsScrollViewer"
-                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged"
-                    Visibility="Collapsed">
+                    PointerExited="LyricsScrollViewer_PointerExited"
+                    PointerEntered="LyricsScrollViewer_PointerEntered"
+                    PointerMoved="LyricsScrollViewer_PointerMoved"
+                    PointerPressed="LyricsScrollViewer_PointerPressed"
+                    PointerReleased="LyricsScrollViewer_PointerReleased"
+                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged">
                     <Grid />
                 </ScrollViewer>
             </Grid>

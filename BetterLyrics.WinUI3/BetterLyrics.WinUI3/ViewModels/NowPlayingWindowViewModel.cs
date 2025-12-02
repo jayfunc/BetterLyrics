@@ -24,7 +24,7 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
-    public partial class LyricsWindowViewModel
+    public partial class NowPlayingWindowViewModel
         : BaseWindowViewModel,
             IRecipient<PropertyChangedMessage<bool>>,
             IRecipient<PropertyChangedMessage<List<string>>>,
@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
-        public LyricsWindowViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService)
+        public NowPlayingWindowViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService)
         {
             _settingsService = settingsService;
             _liveStatesService = liveStatesService;
@@ -70,11 +70,11 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowShowHideShortcut()
         {
-            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.LyricsWindowShowOrHide,
+            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.LyricsWindowShowOrHide,
                 _settingsService.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut,
                 () =>
                 {
-                    var window = WindowHook.GetWindow<LyricsWindow>();
+                    var window = WindowHook.GetWindow<NowPlayingWindow>();
                     if (window == null) return;
 
                     if (window.Visible)
@@ -83,7 +83,7 @@ namespace BetterLyrics.WinUI3
                     }
                     else
                     {
-                        WindowHook.OpenOrShowWindow<LyricsWindow>();
+                        WindowHook.OpenOrShowWindow<NowPlayingWindow>();
                     }
                 }
             );
@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowBorderlessShortcut()
         {
-            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.Borderless,
+            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.Borderless,
                 _settingsService.AppSettings.GeneralSettings.BorderlessShortcut,
                 () =>
                 {
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowClickThroughShortcut()
         {
-            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.ClickThrough,
+            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.ClickThrough,
                 _settingsService.AppSettings.GeneralSettings.ClickThroughShortcut,
                 () =>
                 {
@@ -113,7 +113,7 @@ namespace BetterLyrics.WinUI3
 
         private void UpdateLyricsWindowSwitchShortcut()
         {
-            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.LyricsWindowSwitch,
+            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.LyricsWindowSwitch,
                 _settingsService.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut,
                 () =>
                 {
@@ -124,7 +124,7 @@ namespace BetterLyrics.WinUI3
 
         public void InitFgWindowWatcher()
         {
-            var window = WindowHook.GetWindow<LyricsWindow>();
+            var window = WindowHook.GetWindow<NowPlayingWindow>();
             if (window == null) return;
 
             var hwnd = WindowNative.GetWindowHandle(window);
@@ -169,7 +169,7 @@ namespace BetterLyrics.WinUI3
             }
             else
             {
-                var window = WindowHook.GetWindow<LyricsWindow>();
+                var window = WindowHook.GetWindow<NowPlayingWindow>();
                 window?.Hide();
             }
         }

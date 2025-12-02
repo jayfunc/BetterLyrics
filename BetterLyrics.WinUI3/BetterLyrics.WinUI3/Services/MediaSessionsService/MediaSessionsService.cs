@@ -130,7 +130,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void UpdatePlayOrPauseSongShortcut()
         {
-            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
+            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
             {
                 if (CurrentIsPlaying)
                 {
@@ -145,7 +145,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void UpdatePreviousSongShortcut()
         {
-            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
+            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
             {
                 _ = PreviousAsync();
             });
@@ -153,7 +153,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void UpdateNextSongShortcut()
         {
-            GlobalHotKeyHook.UpdateHotKey<LyricsWindow>(ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
+            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
             {
                 _ = NextAsync();
             });
@@ -653,9 +653,17 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
+        public async Task ChangeLyricsLine(int index)
+        {
+            if (CurrentLyricsData?.LyricsLines?.ElementAtOrDefault(index)?.StartMs is int startMs)
+            {
+                await ChangePosition(startMs / 1000.0);
+            }
+        }
+
         partial void OnCurrentIsPlayingChanged(bool value)
         {
-            if (WindowHook.GetWindowHandle<LyricsWindow>() is IntPtr hwnd)
+            if (WindowHook.GetWindowHandle<NowPlayingWindow>() is IntPtr hwnd)
             {
                 TaskbarList.SetProgressState(hwnd, value ? TaskbarButtonProgressState.Normal : TaskbarButtonProgressState.Paused);
             }
@@ -663,7 +671,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         partial void OnCurrentPositionChanged(TimeSpan value)
         {
-            if (WindowHook.GetWindowHandle<LyricsWindow>() is IntPtr hwnd)
+            if (WindowHook.GetWindowHandle<NowPlayingWindow>() is IntPtr hwnd)
             {
                 TaskbarList.SetProgressValue(hwnd, (ulong)value.TotalSeconds, (ulong)(CurrentSongInfo?.Duration ?? value.TotalSeconds));
             }
@@ -771,9 +779,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         public void Receive(PropertyChangedMessage<Color> message)
         {
-            if (message.Sender is LyricsWindowViewModel)
+            if (message.Sender is NowPlayingWindowViewModel)
             {
-                if (message.PropertyName == nameof(LyricsWindowViewModel.BackdropAccentColor))
+                if (message.PropertyName == nameof(NowPlayingWindowViewModel.BackdropAccentColor))
                 {
                     _envColor = message.NewValue;
                     UpdateAlbumArtThemeColors();

@@ -103,7 +103,7 @@ namespace BetterLyrics.WinUI3.Models
 
         public void UpdateMonitorNameAndBounds()
         {
-            var lyricsWindow = WindowHook.GetWindow<LyricsWindow>();
+            var lyricsWindow = WindowHook.GetWindow<NowPlayingWindow>();
             if (lyricsWindow == null) return;
 
             var mointor = MonitorHook.GetMonitorInfoExFromWindow(lyricsWindow);

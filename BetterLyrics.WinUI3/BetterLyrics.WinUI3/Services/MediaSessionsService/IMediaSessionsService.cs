@@ -19,6 +19,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         Task PreviousAsync();
         Task NextAsync();
         Task ChangePosition(double seconds);
+        Task ChangeLyricsLine(int index);
 
         void UpdateLyrics();
         void UpdateTranslations();

@@ -2,9 +2,11 @@
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Logic
 {
@@ -56,6 +58,7 @@ namespace BetterLyrics.WinUI3.Logic
 
             // 排版
             double currentY = 0;
+            double actualWidth = 0;
 
             foreach (var line in lyricsData.LyricsLines)
             {
@@ -73,16 +76,17 @@ namespace BetterLyrics.WinUI3.Logic
 
                 line.RecreateTextGeometry();
 
-                // 顶部坐标
-                line.TopPosition = new Vector2(0, (float)currentY);
-
+                // 左上角坐标
+                line.TopLeftPosition = new Vector2(0, (float)currentY);
                 // 注音层
-                line.PhoneticPosition = line.TopPosition;
+                line.PhoneticPosition = line.TopLeftPosition;
                 if (line.PhoneticCanvasTextLayout != null)
                 {
                     currentY += line.PhoneticCanvasTextLayout.LayoutBounds.Height;
                     // 间距
                     currentY += (line.PhoneticCanvasTextLayout.LayoutBounds.Height / line.PhoneticCanvasTextLayout.LineCount) * 0.1;
+
+                    actualWidth = Math.Max(actualWidth, line.PhoneticCanvasTextLayout.LayoutBounds.Width);
                 }
 
                 // 原文层
@@ -90,6 +94,8 @@ namespace BetterLyrics.WinUI3.Logic
                 if (line.OriginalCanvasTextLayout != null)
                 {
                     currentY += line.OriginalCanvasTextLayout.LayoutBounds.Height;
+
+                    actualWidth = Math.Max(actualWidth, line.OriginalCanvasTextLayout.LayoutBounds.Width);
                 }
 
                 // 翻译层
@@ -102,10 +108,12 @@ namespace BetterLyrics.WinUI3.Logic
                 if (line.TranslatedCanvasTextLayout != null)
                 {
                     currentY += line.TranslatedCanvasTextLayout.LayoutBounds.Height;
+
+                    actualWidth = Math.Max(actualWidth, line.TranslatedCanvasTextLayout.LayoutBounds.Width);
                 }
 
-                // 底部坐标
-                line.BottomPosition = new Vector2(0, (float)currentY);
+                // 右下角坐标
+                line.BottomRightPosition = new Vector2(0 + (float)actualWidth, (float)currentY);
 
                 // 行间距
                 if (line.OriginalCanvasTextLayout != null)
@@ -167,6 +175,48 @@ namespace BetterLyrics.WinUI3.Logic
             return (start, end);
         }
 
+        public (int Start, int End) CalculateMaxRange(IList<LyricsLine>? lines)
+        {
+            if (lines == null || lines.Count == 0) return (-1, -1);
+
+            return (0, lines.Count - 1);
+        }
+
+        public double CalculateActualHeight(IList<LyricsLine>? lines)
+        {
+            if (lines == null || lines.Count == 0) return 0;
+
+            return lines.Last().BottomRightPosition.Y;
+        }
+
+        public int FindMouseHoverLineIndex(
+            IList<LyricsLine>? lines,
+            bool isMouseInLyricsArea,
+            Point mousePosition,
+            double currentScrollOffset,
+            double lyricsY,
+            double lyricsHeight
+        )
+        {
+            if (!isMouseInLyricsArea) return -1;
+
+            if (lines == null || lines.Count == 0) return -1;
+
+            double offset = currentScrollOffset + lyricsY + lyricsHeight / 2;
+
+            int left = 0, right = lines.Count - 1, result = -1;
+            while (left <= right)
+            {
+                int mid = (left + right) / 2;
+                var line = lines[mid];
+                if (line.OriginalCanvasTextLayout == null) break;
+                double value = offset + line.BottomRightPosition.Y;
+                if (value >= mousePosition.Y) { result = mid; right = mid - 1; }
+                else { left = mid + 1; }
+            }
+            return result;
+        }
+
         private int FindFirstVisibleLine(IList<LyricsLine> lines, double offset, double lyricsY)
         {
             int left = 0, right = lines.Count - 1, result = -1;
@@ -175,7 +225,7 @@ namespace BetterLyrics.WinUI3.Logic
                 int mid = (left + right) / 2;
                 var line = lines[mid];
                 if (line.OriginalCanvasTextLayout == null) break;
-                double value = offset + line.BottomPosition.Y;
+                double value = offset + line.BottomRightPosition.Y;
                 // 理论上说应该使用下面这一行来精确计算视野内的首个可见行，但是考虑到动画视觉效果，还是注释掉了
                 //if (value >= lyricsY) { result = mid; right = mid - 1; }
                 if (value >= 0) { result = mid; right = mid - 1; }
@@ -192,7 +242,7 @@ namespace BetterLyrics.WinUI3.Logic
                 int mid = (left + right) / 2;
                 var line = lines[mid];
                 if (line.OriginalCanvasTextLayout == null) break;
-                double value = offset + line.BottomPosition.Y;
+                double value = offset + line.BottomRightPosition.Y;
                 // 同理
                 //if (value >= lyricsY + lyricsHeight) { result = mid; right = mid - 1; }
                 if (value >= canvasHeight) { result = mid; right = mid - 1; }
