@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Views
 {
-    public sealed partial class LyricsPage : Page,
+    public sealed partial class NowPlayingPage : Page,
         IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
@@ -39,7 +39,8 @@ namespace BetterLyrics.WinUI3.Views
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
         private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
 
-        private readonly DispatcherQueueTimer _timer = App.Current.Resources.DispatcherQueue.CreateTimer();
+        private readonly DispatcherQueueTimer _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
+        private readonly DispatcherQueueTimer _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
 
         public CornerRadius AlbumArtCornerRadius
         {
@@ -48,15 +49,15 @@ namespace BetterLyrics.WinUI3.Views
         }
 
         public static readonly DependencyProperty AlbumArtCornerRadiusProperty =
-            DependencyProperty.Register(nameof(AlbumArtCornerRadius), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(new CornerRadius(0)));
+            DependencyProperty.Register(nameof(AlbumArtCornerRadius), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(new CornerRadius(0)));
 
-        public LyricsPageViewModel ViewModel => (LyricsPageViewModel)DataContext;
+        public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
-        public LyricsPage()
+        public NowPlayingPage()
         {
             this.InitializeComponent();
 
-            DataContext = Ioc.Default.GetRequiredService<LyricsPageViewModel>();
+            DataContext = Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
 
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<int>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<bool>>(this);
@@ -71,7 +72,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void CompositionTarget_Rendering(object? sender, object e)
         {
-            var currentTime = NowPlayingCanvas.SongPosition.TotalSeconds;
+            var currentTime = LyricsCanvas.SongPosition.TotalSeconds;
             TimelineSlider.Value = currentTime;
         }
 
@@ -283,11 +284,11 @@ namespace BetterLyrics.WinUI3.Views
             switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
-                    NowPlayingCanvas.LyricsOpacity = 0;
+                    LyricsCanvas.LyricsOpacity = 0;
                     break;
                 case LyricsDisplayType.LyricsOnly:
                 case LyricsDisplayType.SplitView:
-                    NowPlayingCanvas.LyricsOpacity = 1;
+                    LyricsCanvas.LyricsOpacity = 1;
                     break;
                 default:
                     break;
@@ -302,25 +303,25 @@ namespace BetterLyrics.WinUI3.Views
                 case LyricsDisplayType.AlbumArtOnly:
                     break;
                 case LyricsDisplayType.LyricsOnly:
-                    NowPlayingCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                    NowPlayingCanvas.LyricsStartY = 0;
-                    NowPlayingCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
-                    NowPlayingCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
+                    LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
+                    LyricsCanvas.LyricsStartY = 0;
+                    LyricsCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
+                    LyricsCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
                     break;
                 case LyricsDisplayType.SplitView:
                     switch (status.LyricsLayoutOrientation)
                     {
                         case LyricsLayoutOrientation.Horizontal:
-                            NowPlayingCanvas.LyricsStartX = LeftGapDef.ActualWidth + TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth;
-                            NowPlayingCanvas.LyricsStartY = 0;
-                            NowPlayingCanvas.LyricsWidth = LyricsColDef.ActualWidth;
-                            NowPlayingCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
+                            LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth + TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth;
+                            LyricsCanvas.LyricsStartY = 0;
+                            LyricsCanvas.LyricsWidth = LyricsColDef.ActualWidth;
+                            LyricsCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
                             break;
                         case LyricsLayoutOrientation.Vertical:
-                            NowPlayingCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                            NowPlayingCanvas.LyricsStartY = 0;
-                            NowPlayingCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
-                            NowPlayingCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
+                            LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
+                            LyricsCanvas.LyricsStartY = 0;
+                            LyricsCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
+                            LyricsCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
                             break;
                         default:
                             break;
@@ -395,7 +396,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnLayoutChanged()
         {
-            _timer.Debounce(() =>
+            _layoutChangedTimer.Debounce(() =>
             {
                 UpdateGap();
 
@@ -777,15 +778,64 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(LiveStates.LyricsWindowStatus))
                 {
                     OnLayoutChanged();
+                    RenderSongInfo();
                 }
             }
         }
 
         private void LyricsScrollViewer_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
+            LyricsCanvas.IsMouseScrolling = true;
+
             var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
             int mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
-            NowPlayingCanvas.LyricsStartY += mouseWheelDelta;
+
+            var value = LyricsCanvas.MouseScrollOffset + mouseWheelDelta;
+            // 阻止向上滚动超过歌词最大边界
+            if (value > 0)
+            {
+                value = Math.Min(-LyricsCanvas.CurrentCanvasYScroll, value);
+            }
+            // 阻止向下滚动超过歌词最大边界
+            else
+            {
+                value = Math.Max(-LyricsCanvas.CurrentCanvasYScroll - LyricsCanvas.ActualLyricsHeight, value);
+            }
+            LyricsCanvas.MouseScrollOffset = value;
+
+            _scrollChangedTimer.Debounce(() =>
+            {
+                LyricsCanvas.MouseScrollOffset = 0;
+                LyricsCanvas.IsMouseScrolling = false;
+            }, TimeSpan.FromSeconds(3));
+        }
+
+        private void LyricsScrollViewer_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
+
+            LyricsCanvas.MousePosition = pointerPoint.Position;
+        }
+
+        private void LyricsScrollViewer_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMousePressing = false;
+            _mediaSessionsService.ChangeLyricsLine(LyricsCanvas.CurrentHoveringLineIndex);
+        }
+
+        private void LyricsScrollViewer_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMouseInLyricsArea = false;
+        }
+
+        private void LyricsScrollViewer_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMouseInLyricsArea = true;
+        }
+
+        private void LyricsScrollViewer_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMousePressing = true;
         }
     }
 }

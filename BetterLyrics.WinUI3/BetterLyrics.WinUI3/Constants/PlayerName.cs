@@ -20,7 +20,8 @@
         public const string Edge = "Microsoft Edge";
         public const string BetterLyrics = "BetterLyrics";
         public const string BetterLyricsDebug = "BetterLyrics (Debug)";
-        public const string SaltPlayerForWindows = "Salt Player for Windows";
+        public const string SaltPlayerForWindowsMS = "Salt Player for Windows (Microsoft Store)";
+        public const string SaltPlayerForWindowsSteam = "Salt Player for Windows (Steam)";
         public const string MoeKoeMusic = "MoeKoe Music";
         public const string Listen1 = "Listen 1";
     }

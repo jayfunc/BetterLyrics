@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Window
-    x:Class="BetterLyrics.WinUI3.Views.LyricsWindow"
+    x:Class="BetterLyrics.WinUI3.Views.NowPlayingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
@@ -20,7 +20,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom" />
 
-        <local:LyricsPage />
+        <local:NowPlayingPage />
 
         <!--  Top command  -->
         <Grid

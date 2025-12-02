@@ -45,21 +45,21 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
 
             LiveStates.LyricsWindowStatus.UpdateMonitorBounds();
 
-            WindowHook.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
+            WindowHook.SetIsWorkArea<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
             if (LiveStates.LyricsWindowStatus.IsWorkArea)
             {
-                WindowHook.UpdateWorkArea<LyricsWindow>();
+                WindowHook.UpdateWorkArea<NowPlayingWindow>();
             }
             await Task.Delay(300);
 
-            WindowHook.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
-            WindowHook.SetIsAlwaysOnTop<LyricsWindow>(LiveStates.LyricsWindowStatus.IsAlwaysOnTop);
+            WindowHook.SetIsShowInSwitchers<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
+            WindowHook.SetIsAlwaysOnTop<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsAlwaysOnTop);
 
-            WindowHook.SetIsClickThrough<LyricsWindow>(LiveStates.LyricsWindowStatus.IsClickThrough);
-            WindowHook.SetIsBorderless<LyricsWindow>(LiveStates.LyricsWindowStatus.IsBorderless);
+            WindowHook.SetIsClickThrough<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsClickThrough);
+            WindowHook.SetIsBorderless<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsBorderless);
 
             WindowHook.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);
-            WindowHook.SetTitleBarArea<LyricsWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
+            WindowHook.SetTitleBarArea<NowPlayingWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
 
             // 下述代码可以删除，但是为了避免给用户造成操作上的疑虑，暂时保留
             if (LiveStates.LyricsWindowStatus.IsWorkArea)
@@ -67,7 +67,7 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                 LiveStates.LyricsWindowStatus.WindowBounds = LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea();
             }
 
-            WindowHook.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds);
+            WindowHook.MoveAndResize<NowPlayingWindow>(LiveStates.LyricsWindowStatus.WindowBounds);
             LiveStates.LyricsWindowStatus.WindowX = LiveStates.LyricsWindowStatus.WindowBounds.X;
             LiveStates.LyricsWindowStatus.WindowY = LiveStates.LyricsWindowStatus.WindowBounds.Y;
             LiveStates.LyricsWindowStatus.WindowWidth = LiveStates.LyricsWindowStatus.WindowBounds.Width;
@@ -84,11 +84,11 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
             {
                 case nameof(LyricsWindowStatus.IsWorkArea):
                     LiveStates.IsLyricsWindowStatusRefreshing = true;
-                    WindowHook.SetIsWorkArea<LyricsWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
+                    WindowHook.SetIsWorkArea<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsWorkArea);
                     LiveStates.IsLyricsWindowStatusRefreshing = false;
                     if (LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
-                        WindowHook.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+                        WindowHook.MoveAndResize<NowPlayingWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
                 case nameof(LyricsWindowStatus.DockHeight):
@@ -98,37 +98,37 @@ namespace BetterLyrics.WinUI3.Services.LiveStatesService
                     if (LiveStates.LyricsWindowStatus.IsWorkArea)
                     {
                         LiveStates.IsLyricsWindowStatusRefreshing = true;
-                        WindowHook.UpdateWorkArea<LyricsWindow>();
+                        WindowHook.UpdateWorkArea<NowPlayingWindow>();
                         LiveStates.IsLyricsWindowStatusRefreshing = false;
-                        WindowHook.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+                        WindowHook.MoveAndResize<NowPlayingWindow>(LiveStates.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
                 case nameof(LyricsWindowStatus.IsShownInSwitchers):
-                    WindowHook.SetIsShowInSwitchers<LyricsWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
+                    WindowHook.SetIsShowInSwitchers<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsShownInSwitchers);
                     break;
                 case nameof(LyricsWindowStatus.IsAlwaysOnTop):
-                    WindowHook.SetIsAlwaysOnTop<LyricsWindow>(LiveStates.LyricsWindowStatus.IsAlwaysOnTop);
+                    WindowHook.SetIsAlwaysOnTop<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsAlwaysOnTop);
                     break;
                 case nameof(LyricsWindowStatus.IsClickThrough):
-                    WindowHook.SetIsClickThrough<LyricsWindow>(LiveStates.LyricsWindowStatus.IsClickThrough);
+                    WindowHook.SetIsClickThrough<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsClickThrough);
                     break;
                 case nameof(LyricsWindowStatus.IsBorderless):
-                    WindowHook.SetIsBorderless<LyricsWindow>(LiveStates.LyricsWindowStatus.IsBorderless);
+                    WindowHook.SetIsBorderless<NowPlayingWindow>(LiveStates.LyricsWindowStatus.IsBorderless);
                     break;
                 case nameof(LyricsWindowStatus.WindowX):
-                    WindowHook.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithX(LiveStates.LyricsWindowStatus.WindowX));
+                    WindowHook.MoveAndResize<NowPlayingWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithX(LiveStates.LyricsWindowStatus.WindowX));
                     break;
                 case nameof(LyricsWindowStatus.WindowY):
-                    WindowHook.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithY(LiveStates.LyricsWindowStatus.WindowY));
+                    WindowHook.MoveAndResize<NowPlayingWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithY(LiveStates.LyricsWindowStatus.WindowY));
                     break;
                 case nameof(LyricsWindowStatus.WindowWidth):
-                    WindowHook.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithWidth(LiveStates.LyricsWindowStatus.WindowWidth));
+                    WindowHook.MoveAndResize<NowPlayingWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithWidth(LiveStates.LyricsWindowStatus.WindowWidth));
                     break;
                 case nameof(LyricsWindowStatus.WindowHeight):
-                    WindowHook.MoveAndResize<LyricsWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithHeight(LiveStates.LyricsWindowStatus.WindowHeight));
+                    WindowHook.MoveAndResize<NowPlayingWindow>(LiveStates.LyricsWindowStatus.WindowBounds.WithHeight(LiveStates.LyricsWindowStatus.WindowHeight));
                     break;
                 case nameof(LyricsWindowStatus.TitleBarArea):
-                    WindowHook.SetTitleBarArea<LyricsWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
+                    WindowHook.SetTitleBarArea<NowPlayingWindow>(LiveStates.LyricsWindowStatus.TitleBarArea);
                     break;
                 case nameof(LyricsWindowStatus.AutoShowOrHideWindow):
                     WindowHook.SetLyricsWindowVisibilityByPlayingStatus(_dispatcherQueue);

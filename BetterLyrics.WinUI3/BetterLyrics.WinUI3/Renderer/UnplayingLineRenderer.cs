@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (line.PhoneticCanvasTextLayout != null)
             {
-                var opacity = line.UnplayingOpacityTransition.Value;
+                var opacity = line.PhoneticOpacityTransition.Value;
                 DrawPart(ds, textOnlyLayer,
                     line.PhoneticCanvasTextLayout,
                     line.PhoneticPosition,
@@ -29,13 +29,13 @@ namespace BetterLyrics.WinUI3.Renderer
             if (line.OriginalCanvasTextLayout != null)
             {
                 double opacity;
-                if (line.PlayingOpacityTransition.StartValue > line.UnplayingOpacityTransition.StartValue)
+                if (line.PlayedOriginalOpacityTransition.StartValue > line.UnplayedOriginalOpacityTransition.StartValue)
                 {
-                    opacity = line.PlayingOpacityTransition.Value;
+                    opacity = line.PlayedOriginalOpacityTransition.Value;
                 }
                 else
                 {
-                    opacity = line.UnplayingOpacityTransition.Value;
+                    opacity = line.UnplayedOriginalOpacityTransition.Value;
                 }
                 DrawPart(ds, textOnlyLayer,
                     line.OriginalCanvasTextLayout,
@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (line.TranslatedCanvasTextLayout != null)
             {
-                var opacity = line.UnplayingOpacityTransition.Value;
+                var opacity = line.TranslatedOpacityTransition.Value;
                 DrawPart(ds, textOnlyLayer,
                     line.TranslatedCanvasTextLayout,
                     line.TranslatedPosition,

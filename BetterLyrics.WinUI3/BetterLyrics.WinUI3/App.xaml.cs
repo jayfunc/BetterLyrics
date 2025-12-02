@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            WindowHook.OpenOrShowWindow<LyricsWindow>();
+            WindowHook.OpenOrShowWindow<NowPlayingWindow>();
             if (Ioc.Default.GetRequiredService<ISettingsService>().AppSettings.MusicGallerySettings.AutoOpen)
             {
                 WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
@@ -109,11 +109,11 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<LyricsWindowSettingsControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchWindowViewModel>()
-                    .AddSingleton<LyricsWindowViewModel>()
+                    .AddSingleton<NowPlayingWindowViewModel>()
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
-                    .AddSingleton<LyricsPageViewModel>()
+                    .AddSingleton<NowPlayingPageViewModel>()
                     .AddSingleton<MusicGalleryViewModel>()
                     .AddSingleton<AboutControlViewModel>()
                     .BuildServiceProvider()

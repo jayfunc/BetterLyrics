@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (line.PhoneticCanvasTextLayout == null) return;
 
-            var opacity = line.UnplayingOpacityTransition.Value;
+            var opacity = line.PhoneticOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.PhoneticCanvasTextLayout.LayoutBounds;
 
@@ -67,7 +67,7 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (line.TranslatedCanvasTextLayout == null) return;
 
-            var opacity = line.UnplayingOpacityTransition.Value;
+            var opacity = line.TranslatedOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.TranslatedCanvasTextLayout.LayoutBounds;
 
@@ -132,8 +132,8 @@ namespace BetterLyrics.WinUI3.Renderer
             LyricsEffectSettings settings)
         {
             var blur = line.BlurAmountTransition.Value;
-            var playingOpacity = line.PlayingOpacityTransition.Value;
-            var unplayingOpacity = line.UnplayingOpacityTransition.Value;
+            var playedOpacity = line.PlayedOriginalOpacityTransition.Value;
+            var unplayedOpacity = line.UnplayedOriginalOpacityTransition.Value;
 
             var subLineLayoutBounds = subLineRegion.LayoutBounds;
             Rect subLineRect = new(
@@ -150,8 +150,8 @@ namespace BetterLyrics.WinUI3.Renderer
                     float progressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / subLineRegion.CharacterCount);
                     progressInRegion = Math.Clamp(progressInRegion, 0, 1 + fadeWidth);
 
-                    var stop1 = fgColor.WithAlpha((byte)(255 * playingOpacity));
-                    var stop2 = bgColor.WithAlpha((byte)(255 * unplayingOpacity));
+                    var stop1 = fgColor.WithAlpha((byte)(255 * playedOpacity));
+                    var stop2 = bgColor.WithAlpha((byte)(255 * unplayedOpacity));
 
                     using (var gradientBrush = new CanvasLinearGradientBrush(resourceCreator,
                         [

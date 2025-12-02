@@ -1,6 +1,7 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Logic;
 using BetterLyrics.WinUI3.Models;
@@ -25,7 +26,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Controls
 {
-    public sealed partial class NowPlayingCanvas : UserControl,
+    public sealed partial class LyricsCanvas : UserControl,
         IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<AlbumArtThemeColors>>,
         IRecipient<PropertyChangedMessage<TimeSpan>>,
@@ -90,6 +91,11 @@ namespace BetterLyrics.WinUI3.Controls
             durationSeconds: 0.3f,
             easingType: EasingType.EaseInOutSine
         );
+        private readonly ValueTransition<double> _mouseYScrollTransition = new(
+            initialValue: 0f,
+            durationSeconds: 0.3f,
+            easingType: EasingType.EaseInOutSine
+        );
 
         private TimeSpan _songPosition; // 当前歌曲时刻
         private TimeSpan _totalPlayedTime; // 当前歌曲播放总时长（包括来来回回重复播放的时间）
@@ -101,14 +107,25 @@ namespace BetterLyrics.WinUI3.Controls
         private double _renderLyricsHeight = 0;
         private double _renderLyricsOpacity = 0;
 
+        private Point _mousePosition = new(0, 0);
+        private int _mouseHoverLineIndex = -1;
+        private bool _isMouseInLyricsArea = false;
+        private bool _isMousePressing = false;
+        private bool _isMouseScrolling = false;
+
         private LyricsData? _lyricsData;
 
         private bool _isLayoutChanged = true;
+        private bool _isMouseScrollingChanged = false;
+
         private int _playingLineIndex;
         private (int Start, int End) _visibleRange;
         private double _canvasTargetScrollOffset;
 
         public TimeSpan SongPosition => _songPosition;
+        public double CurrentCanvasYScroll => _canvasYScrollTransition.Value;
+        public double ActualLyricsHeight => _layoutManager.CalculateActualHeight(_lyricsData?.LyricsLines);
+        public int CurrentHoveringLineIndex => _mouseHoverLineIndex;
 
         // 歌词区域起始横 X 坐标
         public double LyricsStartX
@@ -118,7 +135,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsStartXProperty =
-            DependencyProperty.Register(nameof(LyricsStartX), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
+            DependencyProperty.Register(nameof(LyricsStartX), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
 
         // 歌词区域起始 Y 坐标
         public double LyricsStartY
@@ -128,7 +145,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsStartYProperty =
-            DependencyProperty.Register(nameof(LyricsStartY), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
+            DependencyProperty.Register(nameof(LyricsStartY), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
 
         // 歌词区域最大宽度
         public double LyricsWidth
@@ -138,7 +155,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsWidthProperty =
-            DependencyProperty.Register(nameof(LyricsWidth), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
+            DependencyProperty.Register(nameof(LyricsWidth), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
 
         // 歌词区域最大高度
         public double LyricsHeight
@@ -148,7 +165,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsHeightProperty =
-            DependencyProperty.Register(nameof(LyricsHeight), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
+            DependencyProperty.Register(nameof(LyricsHeight), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
 
         // 歌词区域不透明度
         public double LyricsOpacity
@@ -158,9 +175,60 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsOpacityProperty =
-            DependencyProperty.Register(nameof(LyricsOpacity), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
+            DependencyProperty.Register(nameof(LyricsOpacity), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
 
-        public NowPlayingCanvas()
+        /// <summary>
+        /// 用户操控鼠标已滚动的距离（从 0 开始算）
+        /// </summary>
+        public double MouseScrollOffset
+        {
+            get { return (double)GetValue(MouseScrollOffsetProperty); }
+            set { SetValue(MouseScrollOffsetProperty, value); }
+        }
+
+        public static readonly DependencyProperty MouseScrollOffsetProperty =
+            DependencyProperty.Register(nameof(MouseScrollOffset), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnLayoutPropChanged));
+
+        /// <summary>
+        /// 用户鼠标当前的位置（相对于歌词区域左上角）
+        /// </summary>
+        public Point MousePosition
+        {
+            get { return (Point)GetValue(MousePositionProperty); }
+            set { SetValue(MousePositionProperty, value); }
+        }
+
+        public static readonly DependencyProperty MousePositionProperty =
+            DependencyProperty.Register(nameof(MousePosition), typeof(Point), typeof(LyricsCanvas), new PropertyMetadata(new Point(0, 0), OnLayoutPropChanged));
+
+        public bool IsMouseInLyricsArea
+        {
+            get { return (bool)GetValue(IsMouseInLyricsAreaProperty); }
+            set { SetValue(IsMouseInLyricsAreaProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsMouseInLyricsAreaProperty =
+            DependencyProperty.Register(nameof(IsMouseInLyricsArea), typeof(bool), typeof(LyricsCanvas), new PropertyMetadata(false, OnLayoutPropChanged));
+
+        public bool IsMousePressing
+        {
+            get { return (bool)GetValue(IsMousePressingProperty); }
+            set { SetValue(IsMousePressingProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsMousePressingProperty =
+            DependencyProperty.Register(nameof(IsMousePressing), typeof(bool), typeof(LyricsCanvas), new PropertyMetadata(false, OnLayoutPropChanged));
+
+        public bool IsMouseScrolling
+        {
+            get { return (bool)GetValue(IsMouseScrollingProperty); }
+            set { SetValue(IsMouseScrollingProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsMouseScrollingProperty =
+            DependencyProperty.Register(nameof(IsMouseScrolling), typeof(bool), typeof(LyricsCanvas), new PropertyMetadata(false, OnLayoutPropChanged));
+
+        public LyricsCanvas()
         {
             InitializeComponent();
 
@@ -179,30 +247,58 @@ namespace BetterLyrics.WinUI3.Controls
 
         private static void OnLayoutPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is NowPlayingCanvas canvas)
+            if (d is LyricsCanvas canvas)
             {
                 if (e.Property == LyricsStartXProperty)
                 {
                     canvas._renderLyricsStartX = Convert.ToDouble(e.NewValue);
+                    canvas._isLayoutChanged = true;
                 }
                 else if (e.Property == LyricsStartYProperty)
                 {
                     canvas._renderLyricsStartY = Convert.ToDouble(e.NewValue);
+                    canvas._isLayoutChanged = true;
                 }
                 else if (e.Property == LyricsWidthProperty)
                 {
                     canvas._renderLyricsWidth = Convert.ToDouble(e.NewValue);
+                    canvas._isLayoutChanged = true;
                 }
                 else if (e.Property == LyricsHeightProperty)
                 {
                     canvas._renderLyricsHeight = Convert.ToDouble(e.NewValue);
+                    canvas._isLayoutChanged = true;
                 }
                 else if (e.Property == LyricsOpacityProperty)
                 {
                     canvas._renderLyricsOpacity = Convert.ToDouble(e.NewValue);
+                    canvas._isLayoutChanged = true;
                 }
-
-                canvas._isLayoutChanged = true;
+                else if (e.Property == MouseScrollOffsetProperty)
+                {
+                    canvas._mouseYScrollTransition.StartTransition(Convert.ToDouble(e.NewValue));
+                }
+                else if (e.Property == MousePositionProperty)
+                {
+                    canvas._mousePosition = (Point)e.NewValue;
+                }
+                else if (e.Property == IsMouseInLyricsAreaProperty)
+                {
+                    canvas._isMouseInLyricsArea = (bool)e.NewValue;
+                }
+                else if (e.Property == IsMousePressingProperty)
+                {
+                    canvas._isMousePressing = (bool)e.NewValue;
+                }
+                else if (e.Property == IsMouseScrollingProperty)
+                {
+                    var value = (bool)e.NewValue;
+                    if (canvas._isMouseScrolling != value)
+                    {
+                        canvas._isMouseScrollingChanged = true;
+                    }
+                    canvas._isMouseScrolling = value;
+                }
             }
         }
 
@@ -218,7 +314,6 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsStyle = status.LyricsStyleSettings;
             var lyricsEffect = status.LyricsEffectSettings;
 
-            var lyricsData = _lyricsData;
             double songDuration = _mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0;
             bool isForceWordByWord = _settingsService.AppSettings.GeneralSettings.IsForceWordByWordEffect;
 
@@ -263,12 +358,15 @@ namespace BetterLyrics.WinUI3.Controls
                 ds: args.DrawingSession,
                 lyricsData: _lyricsData,
                 playingLineIndex: _playingLineIndex,
+                mouseHoverLineIndex: _mouseHoverLineIndex,
+                isMousePressing: _isMousePressing,
                 startVisibleIndex: _visibleRange.Start,
                 endVisibleIndex: _visibleRange.End,
                 lyricsX: _renderLyricsStartX,
                 lyricsY: _renderLyricsStartY,
                 lyricsWidth: _renderLyricsWidth,
                 lyricsHeight: _renderLyricsHeight,
+                userScrollOffset: _mouseYScrollTransition.Value,
                 lyricsOpacity: _renderLyricsOpacity,
                 windowStatus: status,
                 strokeColor: lyricsThemeColors.StrokeFontColor,
@@ -276,12 +374,12 @@ namespace BetterLyrics.WinUI3.Controls
                 fgColor: lyricsThemeColors.FgFontColor,
                 getPlaybackState: (lineIndex) =>
                 {
-                    if (lyricsData == null) return new LinePlaybackState();
+                    if (_lyricsData == null) return new LinePlaybackState();
 
-                    var line = lyricsData.LyricsLines.ElementAtOrDefault(lineIndex);
+                    var line = _lyricsData.LyricsLines.ElementAtOrDefault(lineIndex);
                     if (line == null) return new LinePlaybackState();
 
-                    var nextLine = lyricsData.LyricsLines.ElementAtOrDefault(lineIndex + 1);
+                    var nextLine = _lyricsData.LyricsLines.ElementAtOrDefault(lineIndex + 1);
 
                     return _synchronizer.GetLinePlayingProgress(
                         fixedSongPositionMs,
@@ -311,15 +409,17 @@ namespace BetterLyrics.WinUI3.Controls
 
 #if DEBUG
             args.DrawingSession.DrawText(
-                $"[DEBUG]\n" +
-                    $"Lyrics start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
-                    $"Lyrics size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
+                    $"Lyrics render start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
+                    $"Lyrics render size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
+                    $"Lyrics actual height: {_layoutManager.CalculateActualHeight(_lyricsData?.LyricsLines)}\n" +
                     $"Playing line (idx): {_playingLineIndex}\n" +
+                    $"Mouse hovering line (idx): {_mouseHoverLineIndex}\n" +
                     $"Visible lines range (idx): [{_visibleRange.Start}, {_visibleRange.End}]\n" +
-                    $"Total line count: {GetMaxLyricsLineIndexBoundaries().Item2 + 1}\n" +
+                    $"Total line count: {_layoutManager.CalculateMaxRange(_lyricsData?.LyricsLines).End + 1}\n" +
                     $"Played: {TimeSpan.FromMilliseconds(fixedSongPositionMs)} / {TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0)}\n" +
-                    $"Y offset: {_canvasYScrollTransition.Value}",
-                new Vector2(10, 40), Colors.Red);
+                    $"Y offset: {_canvasYScrollTransition.Value}\n" +
+                    $"User scroll offset: {_mouseYScrollTransition.Value}",
+                new Vector2(0, 0), Colors.Red);
 #endif
 
         }
@@ -367,18 +467,31 @@ namespace BetterLyrics.WinUI3.Controls
 
             #endregion
 
+            _mouseYScrollTransition.Update(elapsedTime);
+
+            _mouseHoverLineIndex = _layoutManager.FindMouseHoverLineIndex(
+                _lyricsData?.LyricsLines, 
+                _isMouseInLyricsArea,
+                _mousePosition, 
+                _canvasYScrollTransition.Value + _mouseYScrollTransition.Value, 
+                _renderLyricsStartY, 
+                _renderLyricsHeight
+            );
+
             _visibleRange = _layoutManager.CalculateVisibleRange(
                 _lyricsData?.LyricsLines,
-                _canvasYScrollTransition.Value, // 当前滚动位置
+                _canvasYScrollTransition.Value + _mouseYScrollTransition.Value, // 当前滚动位置
                 _renderLyricsStartY,
                 _renderLyricsHeight,
                 sender.Size.Height
             );
 
-            _animator.UpdateVisibleLines(
+            var maxRange = _layoutManager.CalculateMaxRange(_lyricsData?.LyricsLines);
+
+            _animator.UpdateLines(
                 _lyricsData,
-                _visibleRange.Start,
-                _visibleRange.End,
+                _isMouseScrolling ? maxRange.Start : _visibleRange.Start,
+                _isMouseScrolling ? maxRange.End : _visibleRange.End,
                 _playingLineIndex,
                 sender.Size.Height,
                 _canvasTargetScrollOffset,
@@ -387,9 +500,13 @@ namespace BetterLyrics.WinUI3.Controls
                 albumArtThemeColors.BgFontColor,
                 albumArtThemeColors.FgFontColor,
                 elapsedTime,
+                _isMouseScrolling,
                 _isLayoutChanged,
-                isPlayingLineChanged
+                isPlayingLineChanged,
+                _isMouseScrollingChanged
             );
+
+            _isMouseScrollingChanged = false;
 
             _lyricsRenderer.CalculateLyrics3DMatrix(
                 lyricsEffect: lyricsEffect,
@@ -514,18 +631,6 @@ namespace BetterLyrics.WinUI3.Controls
             _totalPlayedTime = TimeSpan.Zero;
             _totalPlayedTime = TimeSpan.Zero;
             _isLastFMTracked = false;
-        }
-
-        private Tuple<int, int> GetMaxLyricsLineIndexBoundaries()
-        {
-            if (_mediaSessionsService.CurrentSongInfo == null
-                || _lyricsData == null
-                || _lyricsData.LyricsLines.Count == 0)
-            {
-                return new Tuple<int, int>(-1, -1);
-            }
-
-            return new Tuple<int, int>(0, _lyricsData.LyricsLines.Count - 1);
         }
 
         public void Receive(PropertyChangedMessage<AlbumArtThemeColors> message)

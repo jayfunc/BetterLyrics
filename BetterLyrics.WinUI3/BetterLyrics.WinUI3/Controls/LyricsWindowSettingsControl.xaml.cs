@@ -73,7 +73,7 @@ namespace BetterLyrics.WinUI3.Controls
                     StorageFile? file;
                     if (this.Parent is FlyoutPresenter)
                     {
-                        file = await PickerHelper.PickSaveFileAsync<LyricsWindow>(fileTypeChoices);
+                        file = await PickerHelper.PickSaveFileAsync<NowPlayingWindow>(fileTypeChoices);
                     }
                     else
                     {
@@ -132,7 +132,7 @@ namespace BetterLyrics.WinUI3.Controls
             StorageFile? file;
             if (this.Parent is FlyoutPresenter)
             {
-                file = await PickerHelper.PickSingleFileAsync<LyricsWindow>(fileTypeFilter);
+                file = await PickerHelper.PickSingleFileAsync<NowPlayingWindow>(fileTypeFilter);
             }
             else
             {
