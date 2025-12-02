@@ -654,6 +654,61 @@ namespace BetterLyrics.WinUI3.Views
             UpdateAlbumArtCornerRadius();
         }
 
+        private void LyricsScrollViewer_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMouseScrolling = true;
+
+            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
+            int mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
+
+            var value = LyricsCanvas.MouseScrollOffset + mouseWheelDelta;
+            // 阻止向上滚动超过歌词最大边界
+            if (value > 0)
+            {
+                value = Math.Min(-LyricsCanvas.CurrentCanvasYScroll, value);
+            }
+            // 阻止向下滚动超过歌词最大边界
+            else
+            {
+                value = Math.Max(-LyricsCanvas.CurrentCanvasYScroll - LyricsCanvas.ActualLyricsHeight, value);
+            }
+            LyricsCanvas.MouseScrollOffset = value;
+
+            _scrollChangedTimer.Debounce(() =>
+            {
+                LyricsCanvas.MouseScrollOffset = 0;
+                LyricsCanvas.IsMouseScrolling = false;
+            }, TimeSpan.FromSeconds(3));
+        }
+
+        private void LyricsScrollViewer_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
+
+            LyricsCanvas.MousePosition = pointerPoint.Position;
+        }
+
+        private void LyricsScrollViewer_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMousePressing = false;
+            _mediaSessionsService.ChangeLyricsLine(LyricsCanvas.CurrentHoveringLineIndex);
+        }
+
+        private void LyricsScrollViewer_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMouseInLyricsArea = false;
+        }
+
+        private void LyricsScrollViewer_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMouseInLyricsArea = true;
+        }
+
+        private void LyricsScrollViewer_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            LyricsCanvas.IsMousePressing = true;
+        }
+
         // ====
 
         public void Receive(PropertyChangedMessage<int> message)
@@ -781,61 +836,6 @@ namespace BetterLyrics.WinUI3.Views
                     RenderSongInfo();
                 }
             }
-        }
-
-        private void LyricsScrollViewer_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            LyricsCanvas.IsMouseScrolling = true;
-
-            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
-            int mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
-
-            var value = LyricsCanvas.MouseScrollOffset + mouseWheelDelta;
-            // 阻止向上滚动超过歌词最大边界
-            if (value > 0)
-            {
-                value = Math.Min(-LyricsCanvas.CurrentCanvasYScroll, value);
-            }
-            // 阻止向下滚动超过歌词最大边界
-            else
-            {
-                value = Math.Max(-LyricsCanvas.CurrentCanvasYScroll - LyricsCanvas.ActualLyricsHeight, value);
-            }
-            LyricsCanvas.MouseScrollOffset = value;
-
-            _scrollChangedTimer.Debounce(() =>
-            {
-                LyricsCanvas.MouseScrollOffset = 0;
-                LyricsCanvas.IsMouseScrolling = false;
-            }, TimeSpan.FromSeconds(3));
-        }
-
-        private void LyricsScrollViewer_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
-
-            LyricsCanvas.MousePosition = pointerPoint.Position;
-        }
-
-        private void LyricsScrollViewer_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            LyricsCanvas.IsMousePressing = false;
-            _mediaSessionsService.ChangeLyricsLine(LyricsCanvas.CurrentHoveringLineIndex);
-        }
-
-        private void LyricsScrollViewer_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            LyricsCanvas.IsMouseInLyricsArea = false;
-        }
-
-        private void LyricsScrollViewer_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            LyricsCanvas.IsMouseInLyricsArea = true;
-        }
-
-        private void LyricsScrollViewer_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            LyricsCanvas.IsMousePressing = true;
         }
     }
 }

@@ -78,9 +78,9 @@ namespace BetterLyrics.WinUI3.Logic
                     line.ScaleTransition.SetDelay(yScrollDelay);
                     line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
 
-                    line.UnplayedOriginalOpacityTransition.SetDuration(yScrollDuration);
-                    line.UnplayedOriginalOpacityTransition.SetDelay(yScrollDelay);
-                    line.UnplayedOriginalOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.6 : (isMouseScrolling ? 0.3 : (1 - distanceFactor) * 0.3));
+                    line.PhoneticOpacityTransition.SetDuration(yScrollDuration);
+                    line.PhoneticOpacityTransition.SetDelay(yScrollDelay);
+                    line.PhoneticOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.6 : (isMouseScrolling ? 0.3 : (1 - distanceFactor) * 0.3));
 
                     line.PlayedOriginalOpacityTransition.SetDuration(yScrollDuration);
                     line.PlayedOriginalOpacityTransition.SetDelay(yScrollDelay);
