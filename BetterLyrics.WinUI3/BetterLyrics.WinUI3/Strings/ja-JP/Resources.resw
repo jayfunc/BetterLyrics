@@ -582,6 +582,9 @@
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>アルバムアート</value>
   </data>
+  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+    <value>Album image height</value>
+  </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>アルバムアートレイヤー</value>
   </data>
@@ -653,9 +656,6 @@
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌詞の背景</value>
-  </data>
-  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
-    <value>ぼやけの量</value>
   </data>
   <data name="SettingsPageBorderless.Header" xml:space="preserve">
     <value>ボーダーレスウィンドウ</value>
@@ -996,14 +996,11 @@
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>黒</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
-    <value>ぼやけの量</value>
+  <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <value>Enable blur for non-current rows</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
-    <value>この値を調整すると、アルバム画像のバックグラウンドブラー強度も増加します。</value>
-  </data>
-  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
-    <value>ぼかしが有効になっている場合のGPU使用量が大幅に高くなります（&gt; 0）</value>
+  <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <value>Blur Effect</value>
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>大胆な</value>
