@@ -19,6 +19,7 @@ namespace BetterLyrics.WinUI3.Logic
             int playingLineIndex,
             double canvasHeight,
             double targetYScrollOffset,
+            double playingLineTopOffsetFactor,
             LyricsEffectSettings lyricsEffect,
             ValueTransition<double> canvasYScrollTransition,
             Color bgColor,
@@ -45,7 +46,16 @@ namespace BetterLyrics.WinUI3.Logic
                     int lineCountDelta = i - playingLineIndex;
                     int absLineCountDelta = Math.Abs(lineCountDelta);
                     double distanceFromPlayingLine = Math.Abs(line.OriginalPosition.Y - currentPlayingLine.OriginalPosition.Y);
-                    double distanceFactor = Math.Clamp(distanceFromPlayingLine / (canvasHeight / 2), 0, 1);
+
+                    double distanceFactor = 0;
+                    if (lineCountDelta < 0)
+                    {
+                        distanceFactor = Math.Clamp(distanceFromPlayingLine / (canvasHeight * playingLineTopOffsetFactor), 0, 1);
+                    }
+                    else
+                    {
+                        distanceFactor = Math.Clamp(distanceFromPlayingLine / (canvasHeight * (1 - playingLineTopOffsetFactor)), 0, 1);
+                    }
 
                     double yScrollDuration;
                     double yScrollDelay;

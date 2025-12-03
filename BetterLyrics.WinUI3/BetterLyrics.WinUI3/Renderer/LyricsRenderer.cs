@@ -35,6 +35,7 @@ namespace BetterLyrics.WinUI3.Renderer
             double lyricsHeight,
             double userScrollOffset,
             double lyricsOpacity,
+            double playingLineTopOffsetFactor,
             LyricsWindowStatus windowStatus,
             Color strokeColor,
             Color bgColor,
@@ -63,6 +64,7 @@ namespace BetterLyrics.WinUI3.Renderer
                                 lyricsWidth,
                                 lyricsHeight,
                                 userScrollOffset,
+                                playingLineTopOffsetFactor,
                                 windowStatus,
                                 strokeColor,
                                 bgColor,
@@ -93,6 +95,7 @@ namespace BetterLyrics.WinUI3.Renderer
                         lyricsWidth,
                         lyricsHeight,
                         userScrollOffset,
+                        playingLineTopOffsetFactor,
                         windowStatus,
                         strokeColor,
                         bgColor,
@@ -116,6 +119,7 @@ namespace BetterLyrics.WinUI3.Renderer
             double lyricsWidth,
             double lyricsHeight,
             double userScrollOffset,
+            double playingLineTopOffsetFactor,
             LyricsWindowStatus windowStatus,
             Color strokeColor,
             Color bgColor,
@@ -140,7 +144,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 if (line.OriginalCanvasTextLayout == null) continue;
                 if (line.OriginalCanvasTextLayout.LayoutBounds.Width <= 0) continue;
 
-                double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight / 2;
+                double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
 
                 var transform =
                     Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition) *

@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Logic
         /// <param name="canvasHeight"></param>
         /// <param name="lyricsWidth"></param>
         /// <param name="lyricsHeight"></param>
-        public void MeasureAndArrange(
+        public static void MeasureAndArrange(
             ICanvasAnimatedControl resourceCreator,
             LyricsData? lyricsData,
             LyricsWindowStatus status,
@@ -129,7 +129,7 @@ namespace BetterLyrics.WinUI3.Logic
         /// <summary>
         /// 计算为了让当前歌词行的竖直几何中心点对齐到 0（原点），画布应该移动的距离（从画布最初始状态计算的值）
         /// </summary>
-        public double? CalculateTargetScrollOffset(
+        public static double? CalculateTargetScrollOffset(
             LyricsData? lyricsData,
             int playingLineIndex)
         {
@@ -141,27 +141,26 @@ namespace BetterLyrics.WinUI3.Logic
 
             if (currentLine?.OriginalCanvasTextLayout == null || firstLine == null) return null;
 
-            return -currentLine.OriginalPosition.Y
-                + firstLine.OriginalPosition.Y
-                - (currentLine.TranslatedPosition.Y
-                    + (currentLine.TranslatedCanvasTextLayout?.LayoutBounds.Height ?? 0)
-                    - currentLine.PhoneticPosition.Y) / 2.0;
+            return -currentLine.OriginalPosition.Y + firstLine.OriginalPosition.Y
+                - (currentLine.BottomRightPosition.Y - currentLine.TopLeftPosition.Y) / 2.0;
         }
 
         /// <summary>
         /// 计算当前屏幕可见的行范围
         /// 返回值: (StartVisibleIndex, EndVisibleIndex)
         /// </summary>
-        public (int Start, int End) CalculateVisibleRange(
+        public static (int Start, int End) CalculateVisibleRange(
             IList<LyricsLine>? lines,
             double currentScrollOffset,
             double lyricsY,
             double lyricsHeight,
-            double canvasHeight)
+            double canvasHeight,
+            double playingLineTopOffsetFactor
+        )
         {
             if (lines == null || lines.Count == 0) return (-1, -1);
 
-            double offset = currentScrollOffset + lyricsY + lyricsHeight / 2;
+            double offset = currentScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
 
             int start = FindFirstVisibleLine(lines, offset, lyricsY);
             int end = FindLastVisibleLine(lines, offset, lyricsY, lyricsHeight, canvasHeight);
@@ -175,34 +174,35 @@ namespace BetterLyrics.WinUI3.Logic
             return (start, end);
         }
 
-        public (int Start, int End) CalculateMaxRange(IList<LyricsLine>? lines)
+        public static (int Start, int End) CalculateMaxRange(IList<LyricsLine>? lines)
         {
             if (lines == null || lines.Count == 0) return (-1, -1);
 
             return (0, lines.Count - 1);
         }
 
-        public double CalculateActualHeight(IList<LyricsLine>? lines)
+        public static double CalculateActualHeight(IList<LyricsLine>? lines)
         {
             if (lines == null || lines.Count == 0) return 0;
 
             return lines.Last().BottomRightPosition.Y;
         }
 
-        public int FindMouseHoverLineIndex(
+        public static int FindMouseHoverLineIndex(
             IList<LyricsLine>? lines,
             bool isMouseInLyricsArea,
             Point mousePosition,
             double currentScrollOffset,
             double lyricsY,
-            double lyricsHeight
+            double lyricsHeight,
+            double playingLineTopOffsetFactor
         )
         {
             if (!isMouseInLyricsArea) return -1;
 
             if (lines == null || lines.Count == 0) return -1;
 
-            double offset = currentScrollOffset + lyricsY + lyricsHeight / 2;
+            double offset = currentScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
 
             int left = 0, right = lines.Count - 1, result = -1;
             while (left <= right)
@@ -217,7 +217,7 @@ namespace BetterLyrics.WinUI3.Logic
             return result;
         }
 
-        private int FindFirstVisibleLine(IList<LyricsLine> lines, double offset, double lyricsY)
+        private static int FindFirstVisibleLine(IList<LyricsLine> lines, double offset, double lyricsY)
         {
             int left = 0, right = lines.Count - 1, result = -1;
             while (left <= right)
@@ -234,7 +234,7 @@ namespace BetterLyrics.WinUI3.Logic
             return result;
         }
 
-        private int FindLastVisibleLine(IList<LyricsLine> lines, double offset, double lyricsY, double lyricsHeight, double canvasHeight)
+        private static int FindLastVisibleLine(IList<LyricsLine> lines, double offset, double lyricsY, double lyricsHeight, double canvasHeight)
         {
             int left = 0, right = lines.Count - 1, result = -1;
             while (left <= right)
