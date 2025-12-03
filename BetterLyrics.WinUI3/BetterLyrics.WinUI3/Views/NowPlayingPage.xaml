@@ -66,38 +66,22 @@
                 </Grid.OpacityTransition>
 
                 <!--  Album art  -->
-                <Grid
-                    x:Name="AlbumArtGrid"
-                    Margin="-32"
-                    Padding="32"
-                    HorizontalAlignment="{Binding ElementName=SongInfoStackPanel, Path=HorizontalAlignment, Mode=OneWay}">
+                <Grid x:Name="AlbumArtGrid" HorizontalAlignment="{Binding ElementName=SongInfoStackPanel, Path=HorizontalAlignment, Mode=OneWay}">
                     <Grid.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </Grid.OpacityTransition>
-                    <Grid
-                        x:Name="ShadowCastGrid"
-                        CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}"
-                        SizeChanged="ShadowCastGrid_SizeChanged">
-                        <Image x:Name="LastAlbumArtImage" Stretch="Uniform">
-                            <Image.OpacityTransition>
-                                <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
-                            </Image.OpacityTransition>
-                        </Image>
-                        <Image x:Name="AlbumArtImage" Stretch="Uniform">
-                            <Image.OpacityTransition>
-                                <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
-                            </Image.OpacityTransition>
-                        </Image>
-                    </Grid>
-                    <Border
-                        x:Name="ShadowRect"
-                        CornerRadius="{x:Bind AlbumArtCornerRadius, Mode=OneWay}"
-                        Loaded="ShadowRect_Loaded"
-                        Translation="0,0,0">
-                        <Border.Shadow>
-                            <ThemeShadow x:Name="Shadow" />
-                        </Border.Shadow>
-                    </Border>
+                    <uc:ShadowImage
+                        x:Name="LastAlbumArtImage"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        CornerRadiusAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
+                        ShadowAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}" />
+                    <uc:ShadowImage
+                        x:Name="AlbumArtImage"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        CornerRadiusAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
+                        ShadowAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}" />
                 </Grid>
 
                 <!--  Song info  -->

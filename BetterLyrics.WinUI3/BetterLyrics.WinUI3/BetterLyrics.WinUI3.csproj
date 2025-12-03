@@ -335,6 +335,11 @@
 	  <Folder Include="TemplateSelector\" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Page Update="Controls\ShadowImage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
 	  <Page Update="Controls\PropertyRow.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>

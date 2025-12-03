@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.ShadowImage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:const="using:BetterLyrics.WinUI3.Constants"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.OpacityTransition>
+        <ScalarTransition />
+    </UserControl.OpacityTransition>
+
+    <Grid Margin="-32" Padding="32">
+        <Grid
+            x:Name="ShadowCastGrid"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            SizeChanged="ShadowCastGrid_SizeChanged">
+            <Image Source="{x:Bind ImageSource, Mode=OneWay}" Stretch="Uniform" />
+        </Grid>
+        <Border
+            x:Name="ShadowRect"
+            Loaded="ShadowRect_Loaded"
+            SizeChanged="ShadowRect_SizeChanged"
+            Translation="0,0,0">
+            <Border.Shadow>
+                <ThemeShadow x:Name="Shadow" />
+            </Border.Shadow>
+        </Border>
+    </Grid>
+
+</UserControl>
