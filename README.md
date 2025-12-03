@@ -153,6 +153,10 @@ You can donate via:
   
   </details>
 
+## 📄 License
+
+This project is licensed under the GNU General Public License v3.0. See the [LICENSE](https://github.com/jayfunc/BetterLyrics/blob/dev/LICENSE) file for details.
+
 ## 💖 Many thanks to
 
 Some functions and code are referenced or modified from public repositories, including but not limited to the following open source projects/packages, tutorials, etc., and we would like to express our gratitude to them here.
