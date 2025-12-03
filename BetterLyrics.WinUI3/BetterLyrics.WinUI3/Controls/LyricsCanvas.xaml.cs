@@ -776,6 +776,10 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     _isLayoutChanged = true;
                 }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsBlurEffectEnabled))
+                {
+                    _isLayoutChanged = true;
+                }
             }
             else if (message.Sender is LyricsStyleSettings)
             {

@@ -23,6 +23,11 @@
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                         Text="Effect" />
 
+                    <!--  模糊效果  -->
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsBlurEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBlurEffectEnabled, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <!--  辉光效果  -->
                     <dev:SettingsCard x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />

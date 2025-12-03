@@ -16,8 +16,9 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="SettingsPageAlbumStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <!--  整体对齐  -->
                     <dev:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
@@ -28,6 +29,27 @@
 
                     <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <!--  专辑高度  -->
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageAlbumArtHeight"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE784;}"
+                        IsExpanded="True">
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                                <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Maximum="512"
+                                    Minimum="0"
+                                    Unit="px"
+                                    Value="{x:Bind AlbumArtLayoutSettings.CoverImageHeight, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <!--  专辑圆角  -->
                     <dev:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3A;}">
                         <local:ExtendedSlider
                             Default="12"
@@ -37,6 +59,7 @@
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageRadius, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <!--  专辑阴影  -->
                     <dev:SettingsCard x:Uid="SettingsPageAlbumShadowAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF5EF;}">
                         <local:ExtendedSlider
                             Default="12"

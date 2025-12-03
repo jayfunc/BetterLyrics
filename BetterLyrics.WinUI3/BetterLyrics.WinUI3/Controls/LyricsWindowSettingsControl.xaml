@@ -234,7 +234,7 @@
                         <Grid Style="{StaticResource SettingsGridStyle}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                                <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <TextBlock x:Uid="AppSettingsControlGeneral" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                                 <dev:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8AC;}">
                                     <StackPanel
@@ -386,7 +386,7 @@
                         <Grid Style="{StaticResource SettingsGridStyle}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                                <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <TextBlock x:Uid="SettingsPageLayout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                                 <dev:SettingsExpander x:Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">

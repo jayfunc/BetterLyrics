@@ -6,6 +6,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     {
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsBlurEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsScaleEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFloatAnimationEnabled { get; set; } = true;
@@ -38,6 +39,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         {
             return new LyricsEffectSettings(this.LyricsScrollTopDuration, this.LyricsScrollDuration, this.LyricsScrollBottomDuration, this.LyricsScrollEasingType)
             {
+                IsLyricsBlurEffectEnabled = this.IsLyricsBlurEffectEnabled,
                 IsLyricsGlowEffectEnabled = this.IsLyricsGlowEffectEnabled,
                 IsLyricsScaleEffectEnabled = this.IsLyricsScaleEffectEnabled,
                 IsLyricsFloatAnimationEnabled = this.IsLyricsFloatAnimationEnabled,

@@ -582,6 +582,9 @@
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>Album art</value>
   </data>
+  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+    <value>Album image height</value>
+  </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>Album art layer</value>
   </data>
@@ -653,9 +656,6 @@
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Lyrics background</value>
-  </data>
-  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
-    <value>Blur amount</value>
   </data>
   <data name="SettingsPageBorderless.Header" xml:space="preserve">
     <value>Borderless window</value>
@@ -996,14 +996,11 @@
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>Black</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
-    <value>Blur amount</value>
+  <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <value>Enable blur for non-current rows</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
-    <value>Adjusting this value will also increase the background blur intensity of the album image.</value>
-  </data>
-  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
-    <value>Significantly higher GPU usage when blur is enabled (&gt; 0)</value>
+  <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <value>Blur Effect</value>
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>Bold</value>
