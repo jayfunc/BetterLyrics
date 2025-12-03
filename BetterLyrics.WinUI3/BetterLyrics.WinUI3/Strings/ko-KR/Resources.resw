@@ -582,6 +582,9 @@
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>앨범 아트</value>
   </data>
+  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+    <value>Album image height</value>
+  </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>앨범 아트 레이어</value>
   </data>
@@ -653,9 +656,6 @@
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>가사 배경</value>
-  </data>
-  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
-    <value>흐림 금액</value>
   </data>
   <data name="SettingsPageBorderless.Header" xml:space="preserve">
     <value>창문</value>
@@ -996,14 +996,11 @@
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>검은색</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
-    <value>흐림 금액</value>
+  <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <value>Enable blur for non-current rows</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
-    <value>이 값을 조정하면 앨범 이미지의 배경 흐림 강도가 증가합니다.</value>
-  </data>
-  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
-    <value>Blur가 활성화 될 때 상당히 높은 GPU 사용량 (&gt; 0)</value>
+  <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <value>Blur Effect</value>
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>용감한</value>
