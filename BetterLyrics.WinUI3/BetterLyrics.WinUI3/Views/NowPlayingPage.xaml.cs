@@ -80,7 +80,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RenderTextBlock(TextBlock? sender, string? text, double fontSize)
         {
-            if (sender == null || string.IsNullOrEmpty(text) || fontSize == 0) return;
+            if (sender == null || text == null || fontSize == 0) return;
 
             var lyricsStyleSettings = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings;
 
