@@ -17,7 +17,7 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="SettingsPageBackgroundOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE790;}">
                         <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind LyricsBackgroundSettings.LyricsBackgroundTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">

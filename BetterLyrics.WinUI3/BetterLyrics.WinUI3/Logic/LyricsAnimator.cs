@@ -72,7 +72,7 @@ namespace BetterLyrics.WinUI3.Logic
 
                     line.BlurAmountTransition.SetDuration(yScrollDuration);
                     line.BlurAmountTransition.SetDelay(yScrollDelay);
-                    line.BlurAmountTransition.StartTransition(isMouseScrolling ? 0 : (5 * distanceFactor));
+                    line.BlurAmountTransition.StartTransition(isMouseScrolling ? 0 : (lyricsEffect.IsLyricsBlurEffectEnabled ? (5 * distanceFactor) : 0));
 
                     line.ScaleTransition.SetDuration(yScrollDuration);
                     line.ScaleTransition.SetDelay(yScrollDelay);

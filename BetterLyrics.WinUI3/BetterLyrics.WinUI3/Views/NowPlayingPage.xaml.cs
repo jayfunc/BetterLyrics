@@ -374,11 +374,14 @@ namespace BetterLyrics.WinUI3.Views
                     }
                     TrackSummaryGridCol0.Width = new(1, GridUnitType.Star);
                     TrackSummaryGridCol2.Width = new(xMargin);
+                    TrackSummaryGridRow1.Height =
+                        status.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? new(1, GridUnitType.Star) : new(status.AlbumArtLayoutSettings.CoverImageHeight);
                     break;
                 case LyricsLayoutOrientation.Vertical:
                     xMargin = Math.Max(16, minSize * 0.05);
                     yMargin = Math.Max(16, minSize * 0.05);
-                    trackSummaryRowHeight = Math.Max(64, minSize * 0.25);
+                    trackSummaryRowHeight =
+                        status.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? Math.Max(64, minSize * 0.25) : status.AlbumArtLayoutSettings.CoverImageHeight;
                     gapBetweenTrackSummaryAndLyrics = Math.Max(16, width * 0.15);
                     TrackSummaryGridCol0.Width = new(1, GridUnitType.Auto);
                     TrackSummaryGridCol2.Width = new(1, GridUnitType.Star);
@@ -735,6 +738,10 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     UpdateAlbumArtShadow();
                 }
+                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.CoverImageHeight))
+                {
+                    OnLayoutChanged();
+                }
             }
         }
 
@@ -745,6 +752,10 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(AlbumArtLayoutSettings.IsAutoSongInfoFontSize))
                 {
                     RenderSongInfo();
+                }
+                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.IsAutoCoverImageHeight))
+                {
+                    OnLayoutChanged();
                 }
             }
         }
