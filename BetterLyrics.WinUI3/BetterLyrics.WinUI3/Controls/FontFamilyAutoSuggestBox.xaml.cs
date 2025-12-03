@@ -20,7 +20,8 @@ namespace BetterLyrics.WinUI3.Controls
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-        private List<ExtendedFontFamily> FontFamilies { get; set; } = [];
+        //private List<ExtendedFontFamily> FontFamilies { get; set; } = [];
+        private List<string> FontFamilies { get; set; } = [];
 
         public FontFamilyAutoSuggestBox()
         {
@@ -39,36 +40,46 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void RefreshFontFamilies()
         {
-            Task.Run(() =>
-            {
-                var fontFamilies = FontHelper.SystemFontFamilies.Select(x => new ExtendedFontFamily()
-                {
-                    FontFamily = x,
-                    LocalizedFontFamily = FontHelper.GetLocalizedFontFamilyName(x, _settingsService.AppSettings.GeneralSettings.LanguageCode)
-                }).OrderBy(x => x.LocalizedFontFamily).ToList();
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    FontFamilies = fontFamilies;
-                });
-            });
+            //Task.Run(() =>
+            //{
+            //    var fontFamilies = FontHelper.SystemFontFamilies.Select(x => new ExtendedFontFamily()
+            //    {
+            //        FontFamily = x,
+            //        LocalizedFontFamily = FontHelper.GetLocalizedFontFamilyName(x, _settingsService.AppSettings.GeneralSettings.LanguageCode)
+            //    }).OrderBy(x => x.LocalizedFontFamily).ToList();
+            //    DispatcherQueue.TryEnqueue(() =>
+            //    {
+            //        FontFamilies = fontFamilies;
+            //    });
+            //});
+            FontFamilies = FontHelper.SystemFontFamilies.OrderBy(x => x).ToList();
         }
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            SelectedFontFamily = ((ExtendedFontFamily)args.SelectedItem).FontFamily ?? "";
+            if (args.SelectedItem is ExtendedFontFamily extendedFontFamily)
+            {
+                SelectedFontFamily = extendedFontFamily.FontFamily;
+            }
+            else
+            {
+                SelectedFontFamily = args.SelectedItem.ToString() ?? "";
+            }
         }
 
         private void UpdateAutoSuggestBoxItemsSource(string? query = null)
         {
             query ??= AutoSuggestBox.Text;
 
-            var suitableItems = new List<ExtendedFontFamily>();
+            //var suitableItems = new List<ExtendedFontFamily>();
+            var suitableItems = new List<string>();
             var splitText = query.ToLower().Split(" ");
             foreach (var fontFamily in FontFamilies)
             {
                 bool found = splitText.All((key) =>
                 {
-                    return fontFamily.FontFamily.ToLower().Contains(key) || fontFamily.LocalizedFontFamily.ToLower().Contains(key);
+                    //return fontFamily.FontFamily.ToLower().Contains(key) || fontFamily.LocalizedFontFamily.ToLower().Contains(key);
+                    return fontFamily.ToLower().Contains(key);
                 });
                 if (found)
                 {
@@ -77,13 +88,15 @@ namespace BetterLyrics.WinUI3.Controls
             }
             if (suitableItems.Count == 0)
             {
-                suitableItems.Add(new ExtendedFontFamily()
-                {
-                    FontFamily = "",
-                    LocalizedFontFamily = "N/A"
-                });
+                //suitableItems.Add(new ExtendedFontFamily()
+                //{
+                //    FontFamily = "",
+                //    LocalizedFontFamily = "N/A"
+                //});
+                suitableItems.Add("N/A");
             }
-            AutoSuggestBox.ItemsSource = suitableItems.OrderBy(x => x.LocalizedFontFamily);
+            //AutoSuggestBox.ItemsSource = suitableItems.OrderBy(x => x.LocalizedFontFamily);
+            AutoSuggestBox.ItemsSource = suitableItems.OrderBy(x => x);
         }
 
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

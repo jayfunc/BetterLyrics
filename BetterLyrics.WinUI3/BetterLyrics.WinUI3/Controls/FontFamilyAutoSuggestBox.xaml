@@ -21,14 +21,13 @@
                 x:Name="AutoSuggestBox"
                 MinWidth="180"
                 GotFocus="AutoSuggestBox_GotFocus"
-                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                 LostFocus="AutoSuggestBox_LostFocus"
                 SuggestionChosen="AutoSuggestBox_SuggestionChosen"
                 Text="{x:Bind SelectedFontFamily, Mode=OneWay}"
                 TextChanged="AutoSuggestBox_TextChanged">
-                <AutoSuggestBox.ItemTemplate>
+                <!--<AutoSuggestBox.ItemTemplate>
                     <DataTemplate x:DataType="models:ExtendedFontFamily">
-                        <StackPanel Padding="8,4">
+                        <StackPanel>
                             <TextBlock Text="{x:Bind LocalizedFontFamily}" TextWrapping="Wrap" />
                             <TextBlock
                                 FontSize="12"
@@ -37,7 +36,7 @@
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </DataTemplate>
-                </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox.ItemTemplate>-->
             </AutoSuggestBox>
             <Button
                 Click="Button_Click"
