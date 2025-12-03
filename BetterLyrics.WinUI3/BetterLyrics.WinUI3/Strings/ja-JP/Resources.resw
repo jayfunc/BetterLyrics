@@ -1005,6 +1005,9 @@
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>大胆な</value>
   </data>
+  <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
+    <value>Current line position</value>
+  </data>
   <data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
     <value>Lyrics area width factor</value>
   </data>
