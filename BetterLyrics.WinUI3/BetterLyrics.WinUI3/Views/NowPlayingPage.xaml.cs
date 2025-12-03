@@ -30,7 +30,6 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<SongInfo?>>,
-        IRecipient<PropertyChangedMessage<BitmapImage?>>,
         IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
         IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
         IRecipient<PropertyChangedMessage<AlbumArtThemeColors>>,
@@ -54,7 +53,6 @@ namespace BetterLyrics.WinUI3.Views
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<bool>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<string>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<SongInfo?>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<BitmapImage?>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsLayoutOrientation>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsDisplayType>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<AlbumArtThemeColors>>(this);
@@ -688,13 +686,13 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender is AlbumArtLayoutSettings)
+            if (message.Sender is AlbumArtAreaStyleSettings)
             {
-                if (message.PropertyName == nameof(AlbumArtLayoutSettings.SongInfoFontSize))
+                if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.SongInfoFontSize))
                 {
                     RenderSongInfo();
                 }
-                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.CoverImageHeight))
+                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.CoverImageHeight))
                 {
                     OnLayoutChanged();
                 }
@@ -703,13 +701,13 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
-            if (message.Sender is AlbumArtLayoutSettings)
+            if (message.Sender is AlbumArtAreaStyleSettings)
             {
-                if (message.PropertyName == nameof(AlbumArtLayoutSettings.IsAutoSongInfoFontSize))
+                if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoSongInfoFontSize))
                 {
                     RenderSongInfo();
                 }
-                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.IsAutoCoverImageHeight))
+                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
                 {
                     OnLayoutChanged();
                 }
@@ -742,26 +740,6 @@ namespace BetterLyrics.WinUI3.Views
                     RenderSongInfo();
                     SongInfoStackPanel.Opacity = 1;
                     UpdateSongInfoOpacity();
-                }
-            }
-        }
-
-        public async void Receive(PropertyChangedMessage<BitmapImage?> message)
-        {
-            if (message.Sender is IMediaSessionsService)
-            {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
-                {
-                    LastAlbumArtImage.ImageSource = AlbumArtImage.ImageSource;
-                    LastAlbumArtImage.Opacity = 1;
-                    await Task.Delay(Constants.Time.AnimationDuration);
-
-                    AlbumArtImage.Opacity = 0;
-                    await Task.Delay(Constants.Time.AnimationDuration);
-                    AlbumArtImage.ImageSource = message.NewValue;
-
-                    LastAlbumArtImage.Opacity = 0;
-                    AlbumArtImage.Opacity = 1;
                 }
             }
         }

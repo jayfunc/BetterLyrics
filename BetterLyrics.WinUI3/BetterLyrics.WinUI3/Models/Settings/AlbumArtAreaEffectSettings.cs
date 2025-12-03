@@ -1,0 +1,21 @@
+﻿using BetterLyrics.WinUI3.Enums;
+using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BetterLyrics.WinUI3.Models.Settings
+{
+    public partial class AlbumArtAreaEffectSettings : ObservableRecipient, ICloneable
+    {
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial ImageSwitchType ImageSwitchType { get; set; } = ImageSwitchType.Slide;
+
+        public object Clone()
+        {
+            return new AlbumArtAreaEffectSettings()
+            {
+                ImageSwitchType = this.ImageSwitchType,
+            };
+        }
+    }
+}

@@ -38,14 +38,14 @@ namespace BetterLyrics.WinUI3.Controls
         public static readonly DependencyProperty ShadowAmountProperty =
             DependencyProperty.Register(nameof(ShadowAmount), typeof(int), typeof(ShadowImage), new PropertyMetadata(0, OnDependencyPropertyChanged));
 
-        public ImageSource? ImageSource
+        public ImageSource? Source
         {
-            get { return (ImageSource?)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
+            get { return (ImageSource?)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
         }
 
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register(nameof(ImageSource), typeof(ImageSource), typeof(ShadowImage), new PropertyMetadata(null));
+        public static readonly DependencyProperty SourceProperty =
+            DependencyProperty.Register(nameof(Source), typeof(ImageSource), typeof(ShadowImage), new PropertyMetadata(null));
 
         public ShadowImage()
         {

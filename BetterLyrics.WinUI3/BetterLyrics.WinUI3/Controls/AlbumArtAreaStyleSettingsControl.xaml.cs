@@ -7,18 +7,18 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Controls
 {
-    public sealed partial class AlbumArtLayoutSettingsControl : UserControl
+    public sealed partial class AlbumArtAreaStyleSettingsControl : UserControl
     {
         public static readonly DependencyProperty AlbumArtLayoutSettingsProperty =
-            DependencyProperty.Register(nameof(AlbumArtLayoutSettings), typeof(AlbumArtLayoutSettings), typeof(AlbumArtLayoutSettingsControl), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(AlbumArtLayoutSettings), typeof(AlbumArtAreaStyleSettings), typeof(AlbumArtAreaStyleSettingsControl), new PropertyMetadata(default));
 
-        public AlbumArtLayoutSettings AlbumArtLayoutSettings
+        public AlbumArtAreaStyleSettings AlbumArtLayoutSettings
         {
-            get => (AlbumArtLayoutSettings)GetValue(AlbumArtLayoutSettingsProperty);
+            get => (AlbumArtAreaStyleSettings)GetValue(AlbumArtLayoutSettingsProperty);
             set => SetValue(AlbumArtLayoutSettingsProperty, value);
         }
 
-        public AlbumArtLayoutSettingsControl()
+        public AlbumArtAreaStyleSettingsControl()
         {
             InitializeComponent();
         }

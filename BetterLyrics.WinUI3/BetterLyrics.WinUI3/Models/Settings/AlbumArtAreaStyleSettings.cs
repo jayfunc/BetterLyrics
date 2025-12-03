@@ -4,7 +4,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
-    public partial class AlbumArtLayoutSettings : ObservableRecipient, ICloneable
+    public partial class AlbumArtAreaStyleSettings : ObservableRecipient, ICloneable
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType SongInfoAlignmentType { get; set; } = TextAlignmentType.Left;
 
@@ -19,11 +19,11 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowArtists { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowAlbum { get; set; } = false;
 
-        public AlbumArtLayoutSettings() { }
+        public AlbumArtAreaStyleSettings() { }
 
         public object Clone()
         {
-            return new AlbumArtLayoutSettings
+            return new AlbumArtAreaStyleSettings
             {
                 SongInfoAlignmentType = this.SongInfoAlignmentType,
 

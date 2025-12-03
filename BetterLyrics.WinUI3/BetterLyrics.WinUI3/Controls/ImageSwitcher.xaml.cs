@@ -1,0 +1,145 @@
+using BetterLyrics.WinUI3.Enums;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
+namespace BetterLyrics.WinUI3.Controls;
+
+public sealed partial class ImageSwitcher : UserControl
+{
+    public int CornerRadiusAmount
+    {
+        get { return (int)GetValue(CornerRadiusAmountProperty); }
+        set { SetValue(CornerRadiusAmountProperty, value); }
+    }
+
+    public static readonly DependencyProperty CornerRadiusAmountProperty =
+        DependencyProperty.Register(nameof(CornerRadiusAmount), typeof(int), typeof(ImageSwitcher), new PropertyMetadata(0));
+
+    public int ShadowAmount
+    {
+        get { return (int)GetValue(ShadowAmountProperty); }
+        set { SetValue(ShadowAmountProperty, value); }
+    }
+
+    public static readonly DependencyProperty ShadowAmountProperty =
+        DependencyProperty.Register(nameof(ShadowAmount), typeof(int), typeof(ImageSwitcher), new PropertyMetadata(0));
+
+    public ImageSource? Source
+    {
+        get { return (ImageSource?)GetValue(SourceProperty); }
+        set { SetValue(SourceProperty, value); }
+    }
+
+    public static readonly DependencyProperty SourceProperty =
+        DependencyProperty.Register(nameof(Source), typeof(ImageSource), typeof(ImageSwitcher), new PropertyMetadata(null, OnDependencyPropertyChanged));
+
+    public ImageSwitchType SwitchType
+    {
+        get { return (ImageSwitchType)GetValue(SwitchTypeProperty); }
+        set { SetValue(SwitchTypeProperty, value); }
+    }
+
+    public static readonly DependencyProperty SwitchTypeProperty =
+        DependencyProperty.Register(nameof(SwitchType), typeof(ImageSwitchType), typeof(ImageSwitcher), new PropertyMetadata(ImageSwitchType.Crossfade));
+
+    public ImageSwitcher()
+    {
+        InitializeComponent();
+    }
+
+    private void UpdateSource()
+    {
+        switch (SwitchType)
+        {
+            case ImageSwitchType.Crossfade:
+                UpdateSourceCrossfade();
+                break;
+            case ImageSwitchType.Slide:
+                UpdateSourceSlide();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void UpdateSourceCrossfade()
+    {
+        // 为背景图片设置旧源
+        LastAlbumArtImage.Source = AlbumArtImage.Source;
+        // 使其立即可见
+        LastAlbumArtImage.TranslationTransition = null;
+        LastAlbumArtImage.OpacityTransition = null;
+        LastAlbumArtImage.Translation = new();
+        LastAlbumArtImage.Opacity = 1;
+        LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
+
+        // 使前景图片立即不可见
+        AlbumArtImage.TranslationTransition = null;
+        AlbumArtImage.OpacityTransition = null;
+        AlbumArtImage.Translation = new();
+        AlbumArtImage.Opacity = 0;
+        AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
+        // 之后为其设置新源
+        AlbumArtImage.Source = Source;
+
+        // 交叉淡出淡入
+        LastAlbumArtImage.Opacity = 0;
+        AlbumArtImage.Opacity = 1;
+    }
+
+    private void UpdateSourceSlide()
+    {
+        // 为背景图片设置旧源
+        LastAlbumArtImage.Source = AlbumArtImage.Source;
+        // 使其归位
+        LastAlbumArtImage.TranslationTransition = null;
+        LastAlbumArtImage.OpacityTransition = null;
+        LastAlbumArtImage.Translation = new();
+        LastAlbumArtImage.Opacity = 1;
+        LastAlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Constants.Time.AnimationDuration };
+        LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
+
+        // 使前景图片立即不可见
+        AlbumArtImage.TranslationTransition = null;
+        AlbumArtImage.OpacityTransition = null;
+        AlbumArtImage.Translation = new(-(float)ActualWidth, 0, 0);
+        AlbumArtImage.Opacity = 0;
+        AlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Constants.Time.AnimationDuration };
+        AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
+        // 之后为其设置新源
+        AlbumArtImage.Source = Source;
+
+        // 滑动
+        LastAlbumArtImage.Opacity = 0;
+        AlbumArtImage.Opacity = 1;
+        LastAlbumArtImage.Translation = new(-(float)ActualWidth, 0, 0);
+        AlbumArtImage.Translation = new();
+    }
+
+    private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is ImageSwitcher imageSwitcher)
+        {
+            if (e.Property == SourceProperty)
+            {
+                imageSwitcher.UpdateSource();
+            }
+        }
+    }
+}

@@ -70,18 +70,11 @@
                     <Grid.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </Grid.OpacityTransition>
-                    <uc:ShadowImage
-                        x:Name="LastAlbumArtImage"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
+                    <uc:ImageSwitcher
                         CornerRadiusAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
-                        ShadowAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}" />
-                    <uc:ShadowImage
-                        x:Name="AlbumArtImage"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        CornerRadiusAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
-                        ShadowAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}" />
+                        ShadowAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
+                        Source="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
+                        SwitchType="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=OneWay}" />
                 </Grid>
 
                 <!--  Song info  -->

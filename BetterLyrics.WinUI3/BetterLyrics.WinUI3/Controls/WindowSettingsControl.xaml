@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.WindowSettingsControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+            <Grid Style="{StaticResource SettingsGridStyle}">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                    <TextBlock x:Uid="AppSettingsControlGeneral" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <dev:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8AC;}">
+                        <StackPanel
+                            Margin="0,6,0,0"
+                            Orientation="Horizontal"
+                            Spacing="6">
+                            <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay}" TextWrapping="Wrap" />
+                            <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
+                        </StackPanel>
+                    </dev:SettingsCard>
+
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageWorkArea"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE78B;}"
+                        IsExpanded="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageWorkAreaHeight" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="64"
+                                    Maximum="{x:Bind LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}"
+                                    Minimum="64"
+                                    Unit="px"
+                                    Value="{x:Bind LyricsWindowStatus.DockHeight, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageDockPlacement" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
+                                    <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
+                                </ComboBox>
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageDockMonitor" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox ItemsSource="{x:Bind MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
+                                    <Button
+                                        Click="RefreshMonitorButton_Click"
+                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                              FontSize=12,
+                                                              Glyph=&#xE72C;}"
+                                        Style="{StaticResource GhostButtonStyle}" />
+                                </StackPanel>
+                            </dev:SettingsCard>
+
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageAdaptEnvColor"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE88F;}"
+                        IsExpanded="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard
+                                x:Uid="SettingsPageEnvColorSample"
+                                Header="Environment color sample mode"
+                                IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
+                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
+                                </ComboBox>
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageWindowBounds"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xF16B;}"
+                        IsExpanded="True">
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard Header="X">
+                                <NumberBox
+                                    SmallChange="10"
+                                    SpinButtonPlacementMode="Inline"
+                                    Value="{x:Bind LyricsWindowStatus.WindowX, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard Header="Y">
+                                <NumberBox
+                                    SmallChange="10"
+                                    SpinButtonPlacementMode="Inline"
+                                    Value="{x:Bind LyricsWindowStatus.WindowY, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageWidth">
+                                <NumberBox
+                                    SmallChange="10"
+                                    SpinButtonPlacementMode="Inline"
+                                    Value="{x:Bind LyricsWindowStatus.WindowWidth, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageHeight">
+                                <NumberBox
+                                    SmallChange="10"
+                                    SpinButtonPlacementMode="Inline"
+                                    Value="{x:Bind LyricsWindowStatus.WindowHeight, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageAOT"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE718;}"
+                        IsExpanded="True">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageForceAlwaysOnTop" IsEnabled="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=OneWay}">
+                                <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPolling, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <dev:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED1A;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <dev:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C4;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <dev:SettingsCard x:Uid="SettingsPageClickThrough" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C9;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsClickThrough, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <dev:SettingsCard x:Uid="SettingsPageBorderless" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B2;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsBorderless, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <dev:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB41;}">
+                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageTitleBarAreaNone" />
+                            <ComboBoxItem x:Uid="SettingsPageTitleBarAreaTop" />
+                            <ComboBoxItem x:Uid="SettingsPageTitleBarAreaWhole" />
+                        </ComboBox>
+                    </dev:SettingsCard>
+
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>
