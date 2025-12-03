@@ -147,6 +147,10 @@ BetterLyrics
   
   </details>
 
+## 📄 许可证
+
+本项目采用 GNU 通用公共许可证 v3.0 授权。详情请参阅 [LICENSE](https://github.com/jayfunc/BetterLyrics/blob/dev/LICENSE) 文件。
+
 ## 💖 感谢
 
 部分功能及代码引用或修改自公开资料库，包括但不限于下述开源项目/包、教程等，在此一并感谢。
