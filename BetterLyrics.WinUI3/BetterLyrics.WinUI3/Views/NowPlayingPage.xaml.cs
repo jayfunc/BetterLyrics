@@ -42,15 +42,6 @@ namespace BetterLyrics.WinUI3.Views
         private readonly DispatcherQueueTimer _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
         private readonly DispatcherQueueTimer _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
 
-        public CornerRadius AlbumArtCornerRadius
-        {
-            get { return (CornerRadius)GetValue(AlbumArtCornerRadiusProperty); }
-            set { SetValue(AlbumArtCornerRadiusProperty, value); }
-        }
-
-        public static readonly DependencyProperty AlbumArtCornerRadiusProperty =
-            DependencyProperty.Register(nameof(AlbumArtCornerRadius), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(new CornerRadius(0)));
-
         public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
         public NowPlayingPage()
@@ -128,19 +119,6 @@ namespace BetterLyrics.WinUI3.Views
         }
 
         // ==== AlbumArt
-
-        private void UpdateAlbumArtCornerRadius()
-        {
-            var factor = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius / 100.0;
-            AlbumArtCornerRadius = new((AlbumArtImage.ActualHeight / 2) * factor);
-        }
-
-        private void UpdateAlbumArtShadow()
-        {
-            var amount = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount;
-            ShadowRect.Translation = new(0, 0, amount);
-        }
-
         private void UpdateAlbumArtOpacity()
         {
             switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
@@ -420,14 +398,10 @@ namespace BetterLyrics.WinUI3.Views
                 UpdateLyricsOpacity();
                 UpdateAlbumArtOpacity();
 
-                UpdateAlbumArtShadow();
-
                 UpdateTrackSummaryGridSpan();
                 UpdateAlbumArtGridSpan();
                 UpdateSongInfoStackPanelSpan();
                 UpdateLyricsPlaceholderSpan();
-
-                UpdateAlbumArtCornerRadius();
 
                 UpdateLyricsLayout();
             }, Constants.Time.DebounceTimeout);
@@ -595,11 +569,6 @@ namespace BetterLyrics.WinUI3.Views
             SystemVolumeHook.MasterVolume = ViewModel.Volume;
         }
 
-        private void ShadowRect_Loaded(object sender, RoutedEventArgs e)
-        {
-            Shadow.Receivers.Add(ShadowCastGrid);
-        }
-
         private void TitleAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             TitleAutoScrollHoverEffectView.IsPlaying = false;
@@ -658,11 +627,6 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsPlaceholder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             OnLayoutChanged();
-        }
-
-        private void ShadowCastGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateAlbumArtCornerRadius();
         }
 
         private void LyricsScrollViewer_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -730,14 +694,6 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     RenderSongInfo();
                 }
-                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.CoverImageRadius))
-                {
-                    UpdateAlbumArtCornerRadius();
-                }
-                else if (message.PropertyName == nameof(AlbumArtLayoutSettings.CoverImageShadowAmount))
-                {
-                    UpdateAlbumArtShadow();
-                }
                 else if (message.PropertyName == nameof(AlbumArtLayoutSettings.CoverImageHeight))
                 {
                     OnLayoutChanged();
@@ -796,18 +752,16 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
                 {
-                    LastAlbumArtImage.Source = AlbumArtImage.Source;
+                    LastAlbumArtImage.ImageSource = AlbumArtImage.ImageSource;
                     LastAlbumArtImage.Opacity = 1;
                     await Task.Delay(Constants.Time.AnimationDuration);
 
                     AlbumArtImage.Opacity = 0;
                     await Task.Delay(Constants.Time.AnimationDuration);
-                    AlbumArtImage.Source = message.NewValue;
+                    AlbumArtImage.ImageSource = message.NewValue;
 
                     LastAlbumArtImage.Opacity = 0;
                     AlbumArtImage.Opacity = 1;
-
-                    UpdateAlbumArtCornerRadius();
                 }
             }
         }
@@ -856,5 +810,6 @@ namespace BetterLyrics.WinUI3.Views
                 }
             }
         }
+
     }
 }
