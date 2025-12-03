@@ -29,6 +29,26 @@
                         </ComboBox>
                     </dev:SettingsCard>
 
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsCenterTopOffset" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE78A;}">
+                        <local:ExtendedSlider
+                            Default="50"
+                            Maximum="100"
+                            Minimum="0"
+                            Unit="%"
+                            Value="{x:Bind LyricsStyleSettings.PlayingLineTopOffset, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF579;}">
+                        <local:ExtendedSlider
+                            x:Uid="SettingsPageLyricsLineSpacingFactorSlider"
+                            Default="0.5"
+                            Frequency="0.1"
+                            Maximum="2"
+                            Minimum="0"
+                            Unit="x"
+                            Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <dev:SettingsExpander x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageCJK">
@@ -206,17 +226,6 @@
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
-
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF579;}">
-                        <local:ExtendedSlider
-                            x:Uid="SettingsPageLyricsLineSpacingFactorSlider"
-                            Default="0.5"
-                            Frequency="0.1"
-                            Maximum="2"
-                            Minimum="0"
-                            Unit="x"
-                            Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
-                    </dev:SettingsCard>
 
                 </StackPanel>
             </Grid>

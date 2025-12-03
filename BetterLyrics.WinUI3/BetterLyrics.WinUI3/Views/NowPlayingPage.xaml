@@ -192,7 +192,8 @@
                     PointerMoved="LyricsScrollViewer_PointerMoved"
                     PointerPressed="LyricsScrollViewer_PointerPressed"
                     PointerReleased="LyricsScrollViewer_PointerReleased"
-                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged">
+                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged"
+                    VerticalScrollBarVisibility="Hidden">
                     <Grid />
                 </ScrollViewer>
             </Grid>
