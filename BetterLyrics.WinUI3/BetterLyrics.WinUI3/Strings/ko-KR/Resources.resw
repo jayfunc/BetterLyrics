@@ -594,6 +594,9 @@
   <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
     <value>앨범 아트 크기</value>
   </data>
+  <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
+    <value>앨범 지역 애니메이션</value>
+  </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>앨범 아트 소스</value>
   </data>
@@ -719,6 +722,9 @@
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>템플릿에서 만들기</value>
+  </data>
+  <data name="SettingsPageCrossfade.Content" xml:space="preserve">
+    <value>크로스 페이드</value>
   </data>
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>현재 가사 창 상태</value>
@@ -890,6 +896,9 @@
   </data>
   <data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
     <value>수평 레이아웃 요소</value>
+  </data>
+  <data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
+    <value>앨범 다이어그램 토글 애니메이션</value>
   </data>
   <data name="SettingsPageImport.Content" xml:space="preserve">
     <value>가져오기</value>
@@ -1388,6 +1397,9 @@
   </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>제목 표시</value>
+  </data>
+  <data name="SettingsPageSlide.Content" xml:space="preserve">
+    <value>살짝 밀기</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>현재 가치 : </value>

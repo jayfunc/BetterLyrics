@@ -27,9 +27,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial object ListViewSelectedItemTag { get; set; } = "General";
 
         [ObservableProperty]
-        public partial ObservableCollection<string> MonitorDeviceNames { get; set; }
-
-        [ObservableProperty]
         public partial bool IsConfigPanelOpened { get; set; } = false;
 
         [ObservableProperty]
@@ -45,14 +42,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             AppSettings = _settingsService.AppSettings;
             LiveStates = _liveStatesService.LiveStates;
-            MonitorDeviceNames = [.. MonitorHook.GetAllMonitorDeviceNames()];
-        }
-
-        [RelayCommand]
-        private void RefreshMonitorDeviceNames()
-        {
-            MonitorDeviceNames = [.. MonitorHook.GetAllMonitorDeviceNames()];
-            LiveStates.LyricsWindowStatus?.MonitorDeviceName = MonitorDeviceNames.FirstOrDefault() ?? "";
         }
 
         [RelayCommand]

@@ -23,11 +23,12 @@
 		<None Remove="Assets\Segoe Fluent Icons.ttf" />
 		<None Remove="Assets\Wiki82.profile.xml" />
 		<None Remove="Controls\AboutControl.xaml" />
-		<None Remove="Controls\AlbumArtLayoutSettingsControl.xaml" />
+		<None Remove="Controls\AlbumArtAreaEffectSettingsControl.xaml" />
 		<None Remove="Controls\AppSettingsControl.xaml" />
 		<None Remove="Controls\DemoWindowGrid.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
 		<None Remove="Controls\FontFamilyAutoSuggestBox.xaml" />
+		<None Remove="Controls\ImageSwitcher.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
 		<None Remove="Controls\LyricsStyleSettingsControl.xaml" />
 		<None Remove="Controls\LyricsWindowSettingsControl.xaml" />
@@ -37,6 +38,7 @@
 		<None Remove="Controls\PropertyRow.xaml" />
 		<None Remove="Controls\ShortcutTextBox.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
+		<None Remove="Controls\WindowSettingsControl.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
 		<None Remove="Views\LyricsWindowSwitchWindow.xaml" />
 		<None Remove="Views\MusicGalleryPage.xaml" />
@@ -292,7 +294,7 @@
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\AlbumArtLayoutSettingsControl.xaml">
+	  <Page Update="Controls\AlbumArtAreaStyleSettingsControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>
@@ -333,6 +335,21 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="TemplateSelector\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\WindowSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\AlbumArtAreaEffectSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\ImageSwitcher.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\ShadowImage.xaml">

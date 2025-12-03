@@ -18,7 +18,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             SizeChanged="ShadowCastGrid_SizeChanged">
-            <Image Source="{x:Bind ImageSource, Mode=OneWay}" Stretch="Uniform" />
+            <Image Source="{x:Bind Source, Mode=OneWay}" Stretch="Uniform" />
         </Grid>
         <Border
             x:Name="ShadowRect"

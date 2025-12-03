@@ -30,7 +30,8 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty] public partial LyricsStyleSettings LyricsStyleSettings { get; set; } = new();
         [ObservableProperty] public partial LyricsEffectSettings LyricsEffectSettings { get; set; } = new(500, 500, 500, EasingType.EaseInOutQuad);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsBackgroundSettings LyricsBackgroundSettings { get; set; } = new();
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial AlbumArtLayoutSettings AlbumArtLayoutSettings { get; set; } = new();
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial AlbumArtAreaStyleSettings AlbumArtLayoutSettings { get; set; } = new();
+        [ObservableProperty] public partial AlbumArtAreaEffectSettings AlbumArtAreaEffectSettings { get; set; } = new();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAdaptToEnvironment { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
@@ -65,7 +66,7 @@ namespace BetterLyrics.WinUI3.Models
             newValue.PropertyChanged += OldLyricsBackgroundSettings_PropertyChanged;
         }
 
-        partial void OnAlbumArtLayoutSettingsChanged(AlbumArtLayoutSettings oldValue, AlbumArtLayoutSettings newValue)
+        partial void OnAlbumArtLayoutSettingsChanged(AlbumArtAreaStyleSettings oldValue, AlbumArtAreaStyleSettings newValue)
         {
             oldValue.PropertyChanged -= OldAlbumArtLayoutSettings_PropertyChanged;
             newValue.PropertyChanged += OldAlbumArtLayoutSettings_PropertyChanged;
@@ -184,10 +185,13 @@ namespace BetterLyrics.WinUI3.Models
                 MonitorBounds = this.MonitorBounds,
                 DemoMonitorBounds = this.DemoMonitorBounds,
                 DockPlacement = this.DockPlacement,
+
                 LyricsStyleSettings = (LyricsStyleSettings)this.LyricsStyleSettings.Clone(),
                 LyricsEffectSettings = (LyricsEffectSettings)this.LyricsEffectSettings.Clone(),
                 LyricsBackgroundSettings = (LyricsBackgroundSettings)this.LyricsBackgroundSettings.Clone(),
-                AlbumArtLayoutSettings = (AlbumArtLayoutSettings)this.AlbumArtLayoutSettings.Clone(),
+                AlbumArtLayoutSettings = (AlbumArtAreaStyleSettings)this.AlbumArtLayoutSettings.Clone(),
+                AlbumArtAreaEffectSettings = (AlbumArtAreaEffectSettings)this.AlbumArtAreaEffectSettings.Clone(),
+
                 IsAdaptToEnvironment = this.IsAdaptToEnvironment,
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
