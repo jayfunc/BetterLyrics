@@ -594,6 +594,9 @@
   <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
     <value>专辑封面尺寸</value>
   </data>
+  <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
+    <value>Album art area effect</value>
+  </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>专辑封面源</value>
   </data>
@@ -719,6 +722,9 @@
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>从模板创建</value>
+  </data>
+  <data name="SettingsPageCrossfade.Content" xml:space="preserve">
+    <value>Crossfade</value>
   </data>
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>当前歌词窗口状态</value>
@@ -890,6 +896,9 @@
   </data>
   <data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
     <value>Horizontal layout factor</value>
+  </data>
+  <data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
+    <value>Album art toggle animation</value>
   </data>
   <data name="SettingsPageImport.Content" xml:space="preserve">
     <value>Import</value>
@@ -1388,6 +1397,9 @@
   </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>显示标题</value>
+  </data>
+  <data name="SettingsPageSlide.Content" xml:space="preserve">
+    <value>Slide</value>
   </data>
   <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>当前值： </value>
