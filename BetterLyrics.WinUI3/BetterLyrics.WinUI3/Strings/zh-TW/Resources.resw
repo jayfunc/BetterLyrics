@@ -582,6 +582,9 @@
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>專輯</value>
   </data>
+  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+    <value>Album image height</value>
+  </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>相簿藝術圖層</value>
   </data>
@@ -653,9 +656,6 @@
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌詞背景</value>
-  </data>
-  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
-    <value>模糊度</value>
   </data>
   <data name="SettingsPageBorderless.Header" xml:space="preserve">
     <value>無邊框窗口</value>
@@ -996,14 +996,11 @@
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>黑體</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmount.Header" xml:space="preserve">
-    <value>模糊度</value>
+  <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <value>Enable blur for non-current rows</value>
   </data>
-  <data name="SettingsPageLyricsBlurAmountSideEffect.Text" xml:space="preserve">
-    <value>調整此數值將同步提升專輯圖片背景模糊強度</value>
-  </data>
-  <data name="SettingsPageLyricsBlurHighGPUUsage.Text" xml:space="preserve">
-    <value>啟用模糊（&gt; 0）時將顯著提升 GPU 佔用率</value>
+  <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <value>Blur Effect</value>
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>粗體</value>
