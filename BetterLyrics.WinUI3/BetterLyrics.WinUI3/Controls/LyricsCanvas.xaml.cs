@@ -19,6 +19,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
@@ -96,6 +97,7 @@ namespace BetterLyrics.WinUI3.Controls
             easingType: EasingType.EaseInOutSine
         );
 
+        private TimeSpan _songPositionWithOffset;
         private TimeSpan _songPosition; // 当前歌曲时刻
         private TimeSpan _totalPlayedTime; // 当前歌曲播放总时长（包括来来回回重复播放的时间）
         private bool _isLastFMTracked = false;
@@ -112,7 +114,7 @@ namespace BetterLyrics.WinUI3.Controls
         private bool _isMousePressing = false;
         private bool _isMouseScrolling = false;
 
-        private LyricsData? _lyricsData;
+        private List<RenderLyricsLine>? _renderLyricsLines = null;
 
         private bool _isLayoutChanged = true;
         private bool _isMouseScrollingChanged = false;
@@ -123,7 +125,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         public TimeSpan SongPosition => _songPosition;
         public double CurrentCanvasYScroll => _canvasYScrollTransition.Value;
-        public double ActualLyricsHeight => LyricsLayoutManager.CalculateActualHeight(_lyricsData?.LyricsLines);
+        public double ActualLyricsHeight => LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines);
         public int CurrentHoveringLineIndex => _mouseHoverLineIndex;
 
         // 歌词区域起始横 X 坐标
@@ -316,8 +318,6 @@ namespace BetterLyrics.WinUI3.Controls
             double songDuration = _mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0;
             bool isForceWordByWord = _settingsService.AppSettings.GeneralSettings.IsForceWordByWordEffect;
 
-            double fixedSongPositionMs = _songPosition.TotalMilliseconds + (_mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
-
             var lyricsThemeColors = _mediaSessionsService.AlbumArtThemeColors;
 
             Color overlayColor;
@@ -355,7 +355,7 @@ namespace BetterLyrics.WinUI3.Controls
             _lyricsRenderer.Draw(
                 control: sender,
                 ds: args.DrawingSession,
-                lyricsData: _lyricsData,
+                lines: _renderLyricsLines,
                 playingLineIndex: _playingLineIndex,
                 mouseHoverLineIndex: _mouseHoverLineIndex,
                 isMousePressing: _isMousePressing,
@@ -374,15 +374,15 @@ namespace BetterLyrics.WinUI3.Controls
                 fgColor: lyricsThemeColors.FgFontColor,
                 getPlaybackState: (lineIndex) =>
                 {
-                    if (_lyricsData == null) return new LinePlaybackState();
+                    if (_renderLyricsLines == null) return new LinePlaybackState();
 
-                    var line = _lyricsData.LyricsLines.ElementAtOrDefault(lineIndex);
+                    var line = _renderLyricsLines.ElementAtOrDefault(lineIndex);
                     if (line == null) return new LinePlaybackState();
 
-                    var nextLine = _lyricsData.LyricsLines.ElementAtOrDefault(lineIndex + 1);
+                    var nextLine = _renderLyricsLines.ElementAtOrDefault(lineIndex + 1);
 
                     return _synchronizer.GetLinePlayingProgress(
-                        fixedSongPositionMs,
+                        _songPositionWithOffset.TotalMilliseconds,
                         line,
                         nextLine,
                         songDuration,
@@ -411,12 +411,12 @@ namespace BetterLyrics.WinUI3.Controls
             args.DrawingSession.DrawText(
                     $"Lyrics render start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
                     $"Lyrics render size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
-                    $"Lyrics actual height: {LyricsLayoutManager.CalculateActualHeight(_lyricsData?.LyricsLines)}\n" +
+                    $"Lyrics actual height: {LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines)}\n" +
                     $"Playing line (idx): {_playingLineIndex}\n" +
                     $"Mouse hovering line (idx): {_mouseHoverLineIndex}\n" +
                     $"Visible lines range (idx): [{_visibleRange.Start}, {_visibleRange.End}]\n" +
-                    $"Total line count: {LyricsLayoutManager.CalculateMaxRange(_lyricsData?.LyricsLines).End + 1}\n" +
-                    $"Played: {TimeSpan.FromMilliseconds(fixedSongPositionMs)} / {TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0)}\n" +
+                    $"Total line count: {LyricsLayoutManager.CalculateMaxRange(_renderLyricsLines).End + 1}\n" +
+                    $"Played: {_songPosition} / {TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0)}\n" +
                     $"Y offset: {_canvasYScrollTransition.Value}\n" +
                     $"User scroll offset: {_mouseYScrollTransition.Value}",
                 new Vector2(0, 0), Colors.Red);
@@ -430,6 +430,7 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsStyle = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings;
             var lyricsEffect = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsEffectSettings;
             var albumArtThemeColors = _mediaSessionsService.AlbumArtThemeColors;
+            var lyricsData = _mediaSessionsService.CurrentLyricsData;
 
             TimeSpan elapsedTime = args.Timing.ElapsedTime;
 
@@ -447,7 +448,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             #region UpdatePlayingLineIndex
 
-            int newPlayingIndex = _synchronizer.GetCurrentLineIndex(_songPosition.TotalMilliseconds, _lyricsData);
+            int newPlayingIndex = _synchronizer.GetCurrentLineIndex(_songPositionWithOffset.TotalMilliseconds, lyricsData);
             bool isPlayingLineChanged = newPlayingIndex != _playingLineIndex;
             _playingLineIndex = newPlayingIndex;
 
@@ -457,7 +458,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (isPlayingLineChanged || _isLayoutChanged)
             {
-                var targetScroll = LyricsLayoutManager.CalculateTargetScrollOffset(_lyricsData, _playingLineIndex);
+                var targetScroll = LyricsLayoutManager.CalculateTargetScrollOffset(_renderLyricsLines, _playingLineIndex);
                 if (targetScroll.HasValue) _canvasTargetScrollOffset = targetScroll.Value;
 
                 _canvasYScrollTransition.SetEasingType(lyricsEffect.LyricsScrollEasingType);
@@ -471,7 +472,7 @@ namespace BetterLyrics.WinUI3.Controls
             _mouseYScrollTransition.Update(elapsedTime);
 
             _mouseHoverLineIndex = LyricsLayoutManager.FindMouseHoverLineIndex(
-                _lyricsData?.LyricsLines,
+                _renderLyricsLines,
                 _isMouseInLyricsArea,
                 _mousePosition,
                 _canvasYScrollTransition.Value + _mouseYScrollTransition.Value,
@@ -481,7 +482,7 @@ namespace BetterLyrics.WinUI3.Controls
             );
 
             _visibleRange = LyricsLayoutManager.CalculateVisibleRange(
-                _lyricsData?.LyricsLines,
+                _renderLyricsLines,
                 _canvasYScrollTransition.Value + _mouseYScrollTransition.Value, // 当前滚动位置
                 _renderLyricsStartY,
                 _renderLyricsHeight,
@@ -489,10 +490,10 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsStyle.PlayingLineTopOffset / 100.0
             );
 
-            var maxRange = LyricsLayoutManager.CalculateMaxRange(_lyricsData?.LyricsLines);
+            var maxRange = LyricsLayoutManager.CalculateMaxRange(_renderLyricsLines);
 
             _animator.UpdateLines(
-                _lyricsData,
+                _renderLyricsLines,
                 _isMouseScrolling ? maxRange.Start : _visibleRange.Start,
                 _isMouseScrolling ? maxRange.End : _visibleRange.End,
                 _playingLineIndex,
@@ -591,11 +592,11 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void TriggerRelayout()
         {
-            if (_lyricsData == null || !_isLayoutChanged) return;
+            if (_renderLyricsLines == null || !_isLayoutChanged) return;
 
             LyricsLayoutManager.MeasureAndArrange(
                 resourceCreator: Canvas,
-                lyricsData: _lyricsData,
+                lines: _renderLyricsLines,
                 status: _liveStatesService.LiveStates.LyricsWindowStatus,
                 appSettings: _settingsService.AppSettings,
                 canvasWidth: Canvas.Size.Width,
@@ -611,6 +612,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 _songPosition += elapsedTime;
                 _totalPlayedTime += elapsedTime;
+                _songPositionWithOffset = _songPosition + TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
                 CheckAndScrobbleLastFM();
             }
         }
@@ -632,7 +634,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ResetPlaybackState()
         {
-            _totalPlayedTime = TimeSpan.Zero;
+            _songPosition = TimeSpan.Zero;
             _totalPlayedTime = TimeSpan.Zero;
             _isLastFMTracked = false;
         }
@@ -694,7 +696,19 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (message.PropertyName == nameof(IMediaSessionsService.CurrentLyricsData))
                 {
-                    _lyricsData = message.NewValue;
+                    _renderLyricsLines = null;
+                    if (_mediaSessionsService.CurrentLyricsData is LyricsData lyricsData)
+                    {
+                        _renderLyricsLines = lyricsData.LyricsLines.Select(x => new RenderLyricsLine()
+                        {
+                            LyricsSyllables = x.LyricsSyllables,
+                            StartMs = x.StartMs,
+                            EndMs = x.EndMs,
+                            PhoneticText = x.PhoneticText,
+                            OriginalText = x.OriginalText,
+                            TranslatedText = x.TranslatedText
+                        }).ToList();
+                    }
                     _isLayoutChanged = true;
                 }
             }

@@ -12,7 +12,7 @@ namespace BetterLyrics.WinUI3.Renderer
         public void Draw(
             CanvasDrawingSession ds,
             ICanvasImage textOnlyLayer,
-            LyricsLine line)
+            RenderLyricsLine line)
         {
             var blurAmount = (float)line.BlurAmountTransition.Value;
 

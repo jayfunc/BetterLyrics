@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
 
@@ -13,7 +14,7 @@ namespace BetterLyrics.WinUI3.Logic
         private readonly double _highlightedScale = 1.0f;
 
         public void UpdateLines(
-            LyricsData? lyricsData,
+            IList<RenderLyricsLine>? lines,
             int startIndex,
             int endIndex,
             int playingLineIndex,
@@ -31,14 +32,14 @@ namespace BetterLyrics.WinUI3.Logic
             bool isMouseScrollingChanged
         )
         {
-            if (lyricsData == null) return;
+            if (lines == null) return;
 
-            var currentPlayingLine = lyricsData.LyricsLines.ElementAtOrDefault(playingLineIndex);
+            var currentPlayingLine = lines.ElementAtOrDefault(playingLineIndex);
             if (currentPlayingLine == null) return;
 
             for (int i = startIndex; i <= endIndex + 1; i++)
             {
-                var line = lyricsData.LyricsLines.ElementAtOrDefault(i);
+                var line = lines.ElementAtOrDefault(i);
                 if (line == null) continue;
 
                 if (isLayoutChanged || isPlayingLineChanged || isMouseScrollingChanged)

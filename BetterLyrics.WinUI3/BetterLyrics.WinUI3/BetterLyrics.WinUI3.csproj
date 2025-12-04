@@ -44,6 +44,7 @@
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
 		<None Remove="Views\SettingsWindow.xaml" />
+		<None Remove="Views\SystemTrayWindow.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="Logo.ico" />
@@ -67,10 +68,10 @@
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
 		<PackageReference Include="csharp-kana" Version="1.0.2" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
-		<PackageReference Include="DevWinUI.Controls" Version="9.6.0" />
+		<PackageReference Include="DevWinUI.Controls" Version="9.7.0" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
-		<PackageReference Include="F23.StringSimilarity" Version="7.0.0" />
-		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.2" />
+		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
+		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
 		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
@@ -335,6 +336,11 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="TemplateSelector\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\SystemTrayWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\WindowSettingsControl.xaml">

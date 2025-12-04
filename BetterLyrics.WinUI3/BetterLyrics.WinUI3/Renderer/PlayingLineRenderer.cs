@@ -20,7 +20,7 @@ namespace BetterLyrics.WinUI3.Renderer
             ICanvasAnimatedControl control,
             CanvasDrawingSession ds,
             ICanvasImage textOnlyLayer,
-            LyricsLine line,
+            RenderLyricsLine line,
             LinePlaybackState playbackState,
             Color bgColor,
             Color fgColor,
@@ -31,7 +31,7 @@ namespace BetterLyrics.WinUI3.Renderer
             DrawTranslated(ds, textOnlyLayer, line);
         }
 
-        private void DrawPhonetic(CanvasDrawingSession ds, ICanvasImage source, LyricsLine line)
+        private void DrawPhonetic(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
         {
             if (line.PhoneticCanvasTextLayout == null) return;
 
@@ -63,7 +63,7 @@ namespace BetterLyrics.WinUI3.Renderer
             });
         }
 
-        private void DrawTranslated(CanvasDrawingSession ds, ICanvasImage source, LyricsLine line)
+        private void DrawTranslated(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
         {
             if (line.TranslatedCanvasTextLayout == null) return;
 
@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.Renderer
             ICanvasResourceCreator resourceCreator,
             CanvasDrawingSession ds,
             ICanvasImage source,
-            LyricsLine line,
+            RenderLyricsLine line,
             LinePlaybackState state,
             Color bgColor,
             Color fgColor,
@@ -122,7 +122,7 @@ namespace BetterLyrics.WinUI3.Renderer
             ICanvasResourceCreator resourceCreator,
             CanvasDrawingSession ds,
             ICanvasImage source,
-            LyricsLine line,
+            RenderLyricsLine line,
             CanvasTextLayoutRegion subLineRegion,
             double curCharIndex,
             float fadeWidth,
@@ -193,7 +193,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
         private void DrawSingleCharacter(
             CanvasDrawingSession ds,
-            LyricsLine line,
+            RenderLyricsLine line,
             int charIndex,
             double exactProgressIndex,
             ICanvasImage source,
