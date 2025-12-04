@@ -25,6 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
@@ -68,6 +69,10 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+            // 设置托盘
+            WindowHook.OpenOrShowWindow<SystemTrayWindow>();
+            WindowHook.HideWindow<SystemTrayWindow>();
+
             WindowHook.OpenOrShowWindow<NowPlayingWindow>();
             if (Ioc.Default.GetRequiredService<ISettingsService>().AppSettings.MusicGallerySettings.AutoOpen)
             {
@@ -109,11 +114,13 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<LyricsWindowSettingsControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchWindowViewModel>()
+                    
                     .AddSingleton<NowPlayingWindowViewModel>()
+                    .AddSingleton<NowPlayingPageViewModel>()
+
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
-                    .AddSingleton<NowPlayingPageViewModel>()
                     .AddSingleton<MusicGalleryViewModel>()
                     .AddSingleton<AboutControlViewModel>()
                     .BuildServiceProvider()

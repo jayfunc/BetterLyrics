@@ -100,6 +100,7 @@ namespace BetterLyrics.WinUI3.Hooks
         public static void OpenOrShowWindow<T>()
         {
             var window = _activeWindows.Find(w => w is T);
+            //window = null;
             if (window == null)
             {
                 if (typeof(T) == typeof(NowPlayingWindow))
@@ -122,6 +123,10 @@ namespace BetterLyrics.WinUI3.Hooks
                 else if (typeof(T) == typeof(LyricsWindowSwitchWindow))
                 {
                     window = new LyricsWindowSwitchWindow();
+                }
+                else if (typeof(T) == typeof(SystemTrayWindow))
+                {
+                    window = new SystemTrayWindow();
                 }
                 else
                 {

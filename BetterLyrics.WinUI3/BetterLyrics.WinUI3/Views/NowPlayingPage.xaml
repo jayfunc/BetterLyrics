@@ -18,6 +18,7 @@
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="Page_Loaded"
+    NavigationCacheMode="Disabled"
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
@@ -534,8 +535,6 @@
                 </Flyout>
             </Grid.ContextFlyout>
         </Grid>
-
-        <uc:SystemTray />
 
     </Grid>
 </Page>

@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Windows.UI;
@@ -23,7 +24,7 @@ namespace BetterLyrics.WinUI3.Renderer
         public void Draw(
             ICanvasAnimatedControl control,
             CanvasDrawingSession ds,
-            LyricsData? lyricsData,
+            IList<RenderLyricsLine>? lines,
             int playingLineIndex,
             int mouseHoverLineIndex,
             bool isMousePressing,
@@ -53,7 +54,7 @@ namespace BetterLyrics.WinUI3.Renderer
                             DrawLyrics(
                                 control,
                                 layerDs,
-                                lyricsData,
+                                lines,
                                 playingLineIndex,
                                 mouseHoverLineIndex,
                                 isMousePressing,
@@ -84,7 +85,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     DrawLyrics(
                         control,
                         ds,
-                        lyricsData,
+                        lines,
                         playingLineIndex,
                         mouseHoverLineIndex,
                         isMousePressing,
@@ -108,7 +109,7 @@ namespace BetterLyrics.WinUI3.Renderer
         private void DrawLyrics(
             ICanvasAnimatedControl control,
             CanvasDrawingSession ds,
-            LyricsData? lyricsData,
+            IList<RenderLyricsLine>? lines,
             int playingLineIndex,
             int mouseHoverLineIndex,
             bool isMousePressing,
@@ -126,9 +127,9 @@ namespace BetterLyrics.WinUI3.Renderer
             Color fgColor,
             Func<int, LinePlaybackState> getPlaybackState)
         {
-            if (lyricsData == null) return;
+            if (lines == null) return;
 
-            var currentPlayingLine = lyricsData.LyricsLines.ElementAtOrDefault(playingLineIndex);
+            var currentPlayingLine = lines.ElementAtOrDefault(playingLineIndex);
             if (currentPlayingLine == null) return;
 
             var effectSettings = windowStatus.LyricsEffectSettings;
@@ -138,7 +139,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             for (int i = startVisibleIndex; i <= endVisibleIndex; i++)
             {
-                var line = lyricsData.LyricsLines.ElementAtOrDefault(i);
+                var line = lines.ElementAtOrDefault(i);
                 if (line == null) continue;
 
                 if (line.OriginalCanvasTextLayout == null) continue;
@@ -171,7 +172,7 @@ namespace BetterLyrics.WinUI3.Renderer
                         byte opacity = isMousePressing ? (byte)32 : (byte)16;
                         double scale = isMousePressing ? 1.09 : 1.10;
                         ds.FillRoundedRectangle(
-                            new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()).Scale(scale),
+                            new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint().WithX(0), line.BottomRightPosition.ToPoint().WithX(lyricsWidth)).Scale(scale),
                             8, 8, Color.FromArgb(opacity, 255, 255, 255));
                     }
                 }
@@ -182,7 +183,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
         private CanvasCommandList RenderBaseTextLayer(
             ICanvasResourceCreator resourceCreator,
-            LyricsLine line,
+            RenderLyricsLine line,
             double strokeWidth,
             Color strokeColor,
             Color fillColor)

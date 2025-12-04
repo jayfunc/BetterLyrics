@@ -11,6 +11,9 @@ namespace BetterLyrics.WinUI3.Extensions
 
             public Point AddX(double deltaX) => new(point.X + deltaX, point.Y);
             public Point AddY(double deltaY) => new(point.X, point.Y + deltaY);
+
+            public Point WithX(double x) => new(x, point.Y);
+            public Point WithY(double y) => new(point.X, y);
         }
     }
 }
