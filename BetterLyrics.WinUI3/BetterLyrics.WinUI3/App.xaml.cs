@@ -6,7 +6,6 @@ using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
-using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.ResourceService;
@@ -21,6 +20,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -69,12 +69,15 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            // 设置托盘
-            WindowHook.OpenOrShowWindow<SystemTrayWindow>();
-            WindowHook.HideWindow<SystemTrayWindow>();
+            // 先获取一个实例，确保初始化 LyricsWindowStatus
+            var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-            WindowHook.OpenOrShowWindow<NowPlayingWindow>();
-            if (Ioc.Default.GetRequiredService<ISettingsService>().AppSettings.MusicGallerySettings.AutoOpen)
+            // 设置托盘
+            var systemTrayWindow = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
+            systemTrayWindow.HideWindow();
+
+            WindowHook.OpenOrShowWindow<NowPlayingWindow>(settingsService.AppSettings.WindowBoundsRecords.FirstOrDefault(x => x.IsDefault));
+            if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
             {
                 WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
             }
@@ -96,7 +99,6 @@ namespace BetterLyrics.WinUI3
                         loggingBuilder.AddSerilog();
                     })
                     // Services
-                    .AddSingleton<ILiveStatesService, LiveStatesService>()
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IMediaSessionsService, MediaSessionsService>()
                     .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
@@ -114,9 +116,9 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<LyricsWindowSettingsControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchWindowViewModel>()
-                    
-                    .AddSingleton<NowPlayingWindowViewModel>()
-                    .AddSingleton<NowPlayingPageViewModel>()
+
+                    .AddTransient<NowPlayingWindowViewModel>()
+                    .AddTransient<NowPlayingPageViewModel>()
 
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()

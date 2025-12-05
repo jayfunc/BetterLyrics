@@ -12,7 +12,7 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
-using BetterLyrics.WinUI3.Services.LiveStatesService;
+
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
@@ -44,13 +44,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<LyricsWindowStatus>>,
-        IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
-        IRecipient<PropertyChangedMessage<List<string>>>,
-        IRecipient<PropertyChangedMessage<Color>>,
-        IRecipient<PropertyChangedMessage<ElementTheme>>,
-        IRecipient<PropertyChangedMessage<LyricsFontColorType>>
+        IRecipient<PropertyChangedMessage<List<string>>>
     {
         private EventSourceReader? _sse = null;
         private readonly MediaManager _mediaManager = new();
@@ -61,7 +56,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly ITranslateService _translateService;
         private readonly ISettingsService _settingsService;
         private readonly ILibWatcherService _libWatcherService;
-        private readonly ILiveStatesService _liveStatesService;
         private readonly IDiscordService _discordService;
         private readonly ILogger<MediaSessionsService> _logger;
 
@@ -81,7 +75,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             IAlbumArtSearchService albumArtSearchService,
             ILyricsSearchService musicSearchService,
             ILibWatcherService libWatcherService,
-            ILiveStatesService liveStatesService,
             IDiscordService discordService,
             ITranslateService libreTranslateService,
             ILogger<MediaSessionsService> logger)
@@ -91,7 +84,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _lyrcsSearchService = musicSearchService;
             _libWatcherService = libWatcherService;
             _translateService = libreTranslateService;
-            _liveStatesService = liveStatesService;
             _discordService = discordService;
             _logger = logger;
 
@@ -743,17 +735,18 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         }
 
-        public void Receive(PropertyChangedMessage<LyricsWindowStatus> message)
-        {
-            if (message.Sender is LiveStates)
-            {
-                if (message.PropertyName == nameof(LiveStates.LyricsWindowStatus))
-                {
-                    UpdateAlbumArtThemeColors();
-                    UpdateTranslations();
-                }
-            }
-        }
+        // TODO  需要在此处更新翻译？
+        //public void Receive(PropertyChangedMessage<LyricsWindowStatus> message)
+        //{
+        //    if (message.Sender is LiveStates)
+        //    {
+        //        if (message.PropertyName == nameof(LiveStates.LyricsWindowStatus))
+        //        {
+        //            UpdateAlbumArtThemeColors();
+        //            UpdateTranslations();
+        //        }
+        //    }
+        //}
 
         public void Receive(PropertyChangedMessage<ChineseRomanization> message)
         {
@@ -766,72 +759,5 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
-        public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
-        {
-            if (message.Sender is LyricsBackgroundSettings)
-            {
-                if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
-                {
-                    UpdateAlbumArt();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<Color> message)
-        {
-            if (message.Sender is NowPlayingWindowViewModel)
-            {
-                if (message.PropertyName == nameof(NowPlayingWindowViewModel.BackdropAccentColor))
-                {
-                    _envColor = message.NewValue;
-                    UpdateAlbumArtThemeColors();
-                }
-            }
-            else if (message.Sender is LyricsStyleSettings)
-            {
-                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCustomBgFontColor))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCustomFgFontColor))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCustomStrokeFontColor))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
-        {
-            if (message.Sender is LyricsBackgroundSettings)
-            {
-                if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsFontColorType> message)
-        {
-            if (message.Sender is LyricsStyleSettings)
-            {
-                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsBgFontColorType))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFgFontColorType))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsStrokeFontColorType))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-            }
-        }
     }
 }

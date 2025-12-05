@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Windows.Graphics.Imaging;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
@@ -33,8 +34,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         TimeSpan CurrentPosition { get; }
         LyricsData? CurrentLyricsData { get; }
 
+        BitmapDecoder? AlbumArtBitmapDecoder { get; }
         BitmapImage? AlbumArtBitmapImage { get; }
-        AlbumArtThemeColors AlbumArtThemeColors { get; }
 
         TranslationSearchProvider? TranslationSearchProvider { get; }
         LyricsSearchResult? CurrentLyricsSearchResult { get; }

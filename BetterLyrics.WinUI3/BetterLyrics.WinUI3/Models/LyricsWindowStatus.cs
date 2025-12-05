@@ -3,7 +3,9 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Dispatching;
 using System;
+using System.Text.Json.Serialization;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Models
@@ -41,6 +43,15 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowY { get; set; } = 100;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowWidth { get; set; } = 800;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowHeight { get; set; } = 500;
+
+        [JsonIgnore][ObservableProperty] public partial bool IsOpened { get; set; } = false;
+
+        [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
+
+        /// <summary>
+        /// 在需要暂时禁用监听歌词窗口位置大小变化时使用
+        /// </summary>
+        [JsonIgnore] public bool IsLyricsWindowStatusRefreshing { get; set; } = false;
 
         public LyricsWindowStatus()
         {
