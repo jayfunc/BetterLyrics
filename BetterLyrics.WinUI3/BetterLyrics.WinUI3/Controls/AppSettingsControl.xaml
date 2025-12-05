@@ -75,10 +75,6 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard Header="Multi lyrics window status">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.MultiNowPlayingWindowMode, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-
                     <dev:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
                     </dev:SettingsCard>

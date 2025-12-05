@@ -1200,6 +1200,9 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>テスト音楽を再生します</value>
   </data>
+  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+    <value>マルチウィンドウ共存モード</value>
+  </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>音楽や歌詞を保存するフォルダーを追加します</value>
   </data>
