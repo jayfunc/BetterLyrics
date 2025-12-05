@@ -53,42 +53,13 @@ namespace BetterLyrics.WinUI3.Helper
             return buffer;
         }
 
-        public static async Task<BitmapDecoder> MakeSquareWithThemeColor(IBuffer buffer, PaletteGeneratorType generatorType)
+        public static async Task<BitmapDecoder> GetBitmapDecoder(IBuffer buffer)
         {
             using var stream = new InMemoryRandomAccessStream();
             await stream.WriteAsync(buffer);
             var decoder = await BitmapDecoder.CreateAsync(stream);
 
-            if (decoder.PixelWidth == decoder.PixelHeight)
-            {
-                // 已经是正方形，直接返回
-                return decoder;
-            }
-
-            using var device = CanvasDevice.GetSharedDevice();
-            using var canvasBitmap = await CanvasBitmap.LoadAsync(device, stream);
-            var size = Math.Max(decoder.PixelWidth, decoder.PixelHeight);
-
-            var result = await GetAccentColorAsync(decoder, generatorType);
-            var color = Windows.UI.Color.FromArgb(255, (byte)result.Color.X, (byte)result.Color.Y, (byte)result.Color.Z);
-            using var renderTarget = new CanvasRenderTarget(device, size, size, 96);
-
-            int offsetX = (int)(size - decoder.PixelWidth) / 2;
-            int offsetY = (int)(size - decoder.PixelHeight) / 2;
-            using (var ds = renderTarget.CreateDrawingSession())
-            {
-                ds.FillRectangle(0, 0, size, size, color);
-                ds.DrawImage(canvasBitmap, offsetX, offsetY);
-            }
-
-            // 保存为 PNG 并转为 byte[]
-            stream.Seek(0);
-            stream.Size = 0;
-            await renderTarget.SaveAsync(stream, CanvasBitmapFileFormat.Png);
-            stream.Seek(0);
-            var newDecoder = await BitmapDecoder.CreateAsync(stream);
-            return newDecoder;
-
+            return decoder;
         }
 
         public static byte[] GenerateNoiseBGRA(int width, int height)

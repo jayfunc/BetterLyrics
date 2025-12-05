@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
@@ -56,6 +57,22 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.Version = MetadataHelper.AppVersion;
 
             EnsureMediaSourceProvidersInfo();
+            EnsureLyricsWindowStatus();
+        }
+
+        public void EnsureLyricsWindowStatus()
+        {
+            var defaultLyricsWindowStatus = AppSettings.WindowBoundsRecords.FirstOrDefault(x => x.IsDefault);
+            if (defaultLyricsWindowStatus == null)
+            {
+                defaultLyricsWindowStatus = LyricsWindowStatusExtensions.StandardMode();
+                defaultLyricsWindowStatus.IsDefault = true;
+                AppSettings.WindowBoundsRecords.Add(defaultLyricsWindowStatus);
+                AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.DesktopMode());
+                AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.DockedMode());
+                AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.NarrowMode());
+                AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.FullscreenMode());
+            }
         }
 
         private void EnsureMediaSourceProvidersInfo()

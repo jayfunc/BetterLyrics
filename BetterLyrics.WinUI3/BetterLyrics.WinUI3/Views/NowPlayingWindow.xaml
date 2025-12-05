@@ -12,7 +12,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" RequestedTheme="{x:Bind ViewModel.ThemeType, Mode=OneWay}">
+    <Grid x:Name="RootGrid">
         <Grid
             x:Name="PlaceholderGrid"
             Width="1"
@@ -20,7 +20,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom" />
 
-        <local:NowPlayingPage />
+        <local:NowPlayingPage x:Name="NowPlayingPage" />
 
         <!--  Top command  -->
         <Grid

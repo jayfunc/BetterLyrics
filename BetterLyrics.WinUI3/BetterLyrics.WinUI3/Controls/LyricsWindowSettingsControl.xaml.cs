@@ -1,7 +1,6 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
-using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -25,7 +24,15 @@ namespace BetterLyrics.WinUI3.Controls
         public LyricsWindowSettingsControlViewModel ViewModel => (LyricsWindowSettingsControlViewModel)DataContext;
 
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
+
+        public LyricsWindowStatus LyricsWindowStatus
+        {
+            get { return (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty); }
+            set { SetValue(LyricsWindowStatusProperty, value); }
+        }
+
+        public static readonly DependencyProperty LyricsWindowStatusProperty =
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LyricsWindowSettingsControl), new PropertyMetadata(default));
 
         public LyricsWindowSettingsControl()
         {
@@ -39,10 +46,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
                 {
-                    if (_liveStatesService.LiveStates.LyricsWindowStatus == data)
-                    {
-                        _liveStatesService.LiveStates.LyricsWindowStatus = ViewModel.AppSettings.WindowBoundsRecords.First();
-                    }
+                    // TODO  处理状态被删除后的逻辑：提示用户？直接关闭对应窗口如果已经打开？
                     ViewModel.AppSettings.WindowBoundsRecords.Remove(data);
                 }
             }

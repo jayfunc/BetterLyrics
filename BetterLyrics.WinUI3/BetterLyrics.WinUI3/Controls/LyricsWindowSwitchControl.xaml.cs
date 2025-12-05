@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -24,6 +25,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            WindowHook.OpenOrShowWindow<NowPlayingWindow>((LyricsWindowStatus)(((FrameworkElement)sender).DataContext));
             await HideAsync();
         }
 
@@ -37,7 +39,7 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsWindowSwitchWindow = WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             lyricsWindowSwitchWindow?.ViewModel.RootGridOpacity = 0;
             await Task.Delay(300);
-            WindowHook.HideWindow<LyricsWindowSwitchWindow>();
+            lyricsWindowSwitchWindow?.HideWindow();
         }
 
         private void ShadowRect_Loaded(object sender, RoutedEventArgs e)

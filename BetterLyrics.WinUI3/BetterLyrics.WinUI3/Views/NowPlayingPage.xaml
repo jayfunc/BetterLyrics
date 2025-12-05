@@ -28,7 +28,10 @@
         SizeChanged="RootGrid_SizeChanged">
 
         <!--  Win2D drawing area  -->
-        <uc:LyricsCanvas x:Name="LyricsCanvas" />
+        <uc:LyricsCanvas
+            x:Name="LyricsCanvas"
+            AlbumArtThemeColors="{x:Bind AlbumArtThemeColors, Mode=OneWay}"
+            LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
 
         <Grid>
             <Grid.RowDefinitions>
@@ -72,19 +75,19 @@
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </Grid.OpacityTransition>
                     <uc:ImageSwitcher
-                        CornerRadiusAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
-                        ShadowAmount="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
+                        CornerRadiusAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
+                        ShadowAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
                         Source="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
-                        SwitchType="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=OneWay}" />
+                        SwitchType="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=OneWay}" />
                 </Grid>
 
                 <!--  Song info  -->
-                <StackPanel x:Name="SongInfoStackPanel" HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
+                <StackPanel x:Name="SongInfoStackPanel" HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </StackPanel.OpacityTransition>
 
-                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
+                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                         <dev:OpacityMaskView.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Offset="0" Color="Transparent" />
@@ -102,13 +105,13 @@
                             ScrollingPixelsPreSecond="20">
                             <TextBlock
                                 x:Name="TitleTextBlock"
-                                FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 TextTrimming="None"
-                                Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </dev:AutoScrollView>
                     </dev:OpacityMaskView>
 
-                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
+                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                         <dev:OpacityMaskView.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Offset="0" Color="Transparent" />
@@ -126,14 +129,14 @@
                             ScrollingPixelsPreSecond="20">
                             <TextBlock
                                 x:Name="ArtistsTextBlock"
-                                FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.6"
                                 TextTrimming="None"
-                                Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </dev:AutoScrollView>
                     </dev:OpacityMaskView>
 
-                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
+                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
                         <dev:OpacityMaskView.OpacityMask>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Offset="0" Color="Transparent" />
@@ -151,10 +154,10 @@
                             ScrollingPixelsPreSecond="20">
                             <TextBlock
                                 x:Name="AlbumTextBlock"
-                                FontWeight="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.3"
                                 TextTrimming="None"
-                                Visibility="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </dev:AutoScrollView>
                     </dev:OpacityMaskView>
 

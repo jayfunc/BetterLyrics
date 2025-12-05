@@ -2,7 +2,7 @@
 
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.LiveStatesService;
+
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,10 +14,6 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class NowPlayingPageViewModel : BaseViewModel
     {
         public IMediaSessionsService MediaSessionsService { get; private set; }
-        private readonly ILiveStatesService _liveStatesService;
-
-        [ObservableProperty]
-        public partial LiveStates LiveStates { get; set; }
 
         [ObservableProperty]
         public partial int Volume { get; set; }
@@ -37,12 +33,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial double TimelineSliderThumbSeconds { get; set; } = 0;
 
-        public NowPlayingPageViewModel(IMediaSessionsService mediaSessionsService, ILiveStatesService liveStatesService)
+        public NowPlayingPageViewModel(IMediaSessionsService mediaSessionsService)
         {
-            _liveStatesService = liveStatesService;
             MediaSessionsService = mediaSessionsService;
-
-            LiveStates = _liveStatesService.LiveStates;
 
             Volume = SystemVolumeHook.MasterVolume;
             SystemVolumeHook.VolumeNotification += SystemVolumeHelper_VolumeNotification;

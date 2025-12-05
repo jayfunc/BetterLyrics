@@ -87,7 +87,7 @@
                                 Padding="0,12"
                                 CornerRadius="4"
                                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
-                                SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus, Mode=TwoWay}">
+                                SelectionMode="None">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0" />
@@ -239,7 +239,7 @@
 
                 <!--  Window  -->
                 <controls:Case Value="Window">
-                    <uc:WindowSettingsControl LyricsWindowStatus="{x:Bind ViewModel.LiveStates.LyricsWindowStatus, Mode=OneWay}" />
+                    <uc:WindowSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                 </controls:Case>
 
                 <!--  Layout  -->
@@ -251,14 +251,14 @@
                                 <TextBlock x:Uid="SettingsPageLayout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                                 <dev:SettingsExpander x:Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
-                                    <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                         <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
                                         <ComboBoxItem x:Uid="MainPageLyriscOnly" />
                                         <ComboBoxItem x:Uid="MainPageSplitView" />
                                     </ComboBox>
                                     <dev:SettingsExpander.Items>
                                         <dev:SettingsCard x:Uid="SettingsPageLayoutOrientation">
-                                            <ComboBox SelectedIndex="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                            <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                                 <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
                                                 <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
                                             </ComboBox>
@@ -273,27 +273,27 @@
 
                 <!--  Album art area style  -->
                 <controls:Case Value="AlbumArtStyle">
-                    <uc:AlbumArtAreaStyleSettingsControl AlbumArtLayoutSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings, Mode=OneWay}" />
+                    <uc:AlbumArtAreaStyleSettingsControl AlbumArtLayoutSettings="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings, Mode=OneWay}" />
                 </controls:Case>
 
                 <!--  Album art area effect  -->
                 <controls:Case Value="AlbumArtEffect">
-                    <uc:AlbumArtAreaEffectSettingsControl AlbumArtAreaEffectSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.AlbumArtAreaEffectSettings, Mode=OneWay}" />
+                    <uc:AlbumArtAreaEffectSettingsControl AlbumArtAreaEffectSettings="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings, Mode=OneWay}" />
                 </controls:Case>
 
                 <!--  Lyrics style  -->
                 <controls:Case Value="LyricsStyle">
-                    <uc:LyricsStyleSettingsControl LyricsStyleSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
+                    <uc:LyricsStyleSettingsControl LyricsStyleSettings="{x:Bind LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
                 </controls:Case>
 
                 <!--  Lyrics  effect  -->
                 <controls:Case Value="LyricsEffect">
-                    <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
+                    <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
                 </controls:Case>
 
                 <!--  Lyrics background  -->
                 <controls:Case Value="LyricsBackground">
-                    <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind ViewModel.LiveStates.LyricsWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
+                    <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind LyricsWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
                 </controls:Case>
 
             </controls:SwitchPresenter>

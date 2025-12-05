@@ -44,8 +44,9 @@
 
             <ListView
                 Margin="48,56"
+                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
-                SelectedItem="{x:Bind ViewModel.LiveStates.LyricsWindowStatus, Mode=TwoWay}">
+                SelectionMode="None">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0" />
@@ -56,10 +57,20 @@
                         <Grid
                             Margin="0,10"
                             Padding="5"
-                            AllowFocusOnInteraction="True"
                             CornerRadius="4"
                             Tapped="Grid_Tapped">
+                            <Grid.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Switch to this status in current window" />
+                                    <MenuFlyoutItem Text="Open this status in new window" />
+                                </MenuFlyout>
+                            </Grid.ContextFlyout>
                             <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                            <Border
+                                BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
+                                BorderThickness="4"
+                                CornerRadius="4"
+                                Visibility="{Binding IsOpened, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

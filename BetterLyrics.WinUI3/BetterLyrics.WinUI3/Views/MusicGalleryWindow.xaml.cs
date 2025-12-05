@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            WindowHook.CloseWindow<MusicGalleryWindow>();
+            this.CloseWindow();
         }
 
         private void LyricsWindowButton_Click(object sender, RoutedEventArgs e)

@@ -3,8 +3,6 @@
     public enum ShortcutID
     {
         LyricsWindowShowOrHide,
-        Borderless,
-        ClickThrough,
         LyricsWindowSwitch,
         PlayOrPauseSong,
         NextSong,

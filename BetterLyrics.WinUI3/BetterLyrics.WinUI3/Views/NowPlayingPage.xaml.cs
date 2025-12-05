@@ -6,7 +6,6 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -26,22 +25,32 @@ using System.Threading.Tasks;
 namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class NowPlayingPage : Page,
-        IRecipient<PropertyChangedMessage<int>>,
-        IRecipient<PropertyChangedMessage<bool>>,
-        IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<SongInfo?>>,
-        IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
-        IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
-        IRecipient<PropertyChangedMessage<AlbumArtThemeColors>>,
-        IRecipient<PropertyChangedMessage<LyricsWindowStatus>>
+        IRecipient<PropertyChangedMessage<SongInfo?>>
     {
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
-        private readonly ILiveStatesService _liveStatesService = Ioc.Default.GetRequiredService<ILiveStatesService>();
 
         private readonly DispatcherQueueTimer _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
         private readonly DispatcherQueueTimer _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
 
         public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
+
+        public LyricsWindowStatus LyricsWindowStatus
+        {
+            get { return (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty); }
+            set { SetValue(LyricsWindowStatusProperty, value); }
+        }
+
+        public static readonly DependencyProperty LyricsWindowStatusProperty =
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingPage), new PropertyMetadata(default, OnDependencyPropertyChanged));
+
+        public AlbumArtThemeColors AlbumArtThemeColors
+        {
+            get { return (AlbumArtThemeColors)GetValue(AlbumArtThemeColorsProperty); }
+            set { SetValue(AlbumArtThemeColorsProperty, value); }
+        }
+
+        public static readonly DependencyProperty AlbumArtThemeColorsProperty =
+            DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(AlbumArtThemeColors), typeof(NowPlayingPage), new PropertyMetadata(new AlbumArtThemeColors(), OnDependencyPropertyChanged));
 
         public NowPlayingPage()
         {
@@ -49,14 +58,33 @@ namespace BetterLyrics.WinUI3.Views
 
             DataContext = Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
 
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<int>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<bool>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<string>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<SongInfo?>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsLayoutOrientation>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsDisplayType>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<AlbumArtThemeColors>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsWindowStatus>>(this);
+        }
+
+        private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is NowPlayingPage page)
+            {
+                if (e.Property == LyricsWindowStatusProperty)
+                {
+                    var oldValue = (LyricsWindowStatus?)e.OldValue;
+                    oldValue?.PropertyChanged -= page.LyricsWindowStatus_PropertyChanged;
+                    var newValue = (LyricsWindowStatus?)e.NewValue;
+                    newValue?.PropertyChanged += page.LyricsWindowStatus_PropertyChanged;
+                    page.OnLayoutChanged();
+                    page.RenderSongInfo();
+                }
+                else if (e.Property == AlbumArtThemeColorsProperty)
+                {
+                    page.RenderSongInfo();
+                }
+            }
+        }
+
+        private void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnLayoutChanged();
+            RenderSongInfo();
         }
 
         private void CompositionTarget_Rendering(object? sender, object e)
@@ -71,7 +99,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (sender == null || text == null || fontSize == 0) return;
 
-            var lyricsStyleSettings = _liveStatesService.LiveStates.LyricsWindowStatus.LyricsStyleSettings;
+            var lyricsStyleSettings = LyricsWindowStatus.LyricsStyleSettings;
 
             sender.Inlines.Clear();
             foreach (var ch in text)
@@ -80,14 +108,14 @@ namespace BetterLyrics.WinUI3.Views
                 sender.Inlines.Add(new Run { Text = $"{ch}", FontFamily = new FontFamily(fontFamilyName) });
             }
             sender.FontSize = (int)fontSize;
-            sender.Foreground = new SolidColorBrush(_mediaSessionsService.AlbumArtThemeColors.BgFontColor);
+            sender.Foreground = new SolidColorBrush(AlbumArtThemeColors.BgFontColor);
         }
 
         private void RenderSongInfo()
         {
             var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
 
-            var albumArtLayoutSettings = _liveStatesService.LiveStates.LyricsWindowStatus.AlbumArtLayoutSettings;
+            var albumArtLayoutSettings = LyricsWindowStatus.AlbumArtLayoutSettings;
 
             var titleFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.SongTitleSize : albumArtLayoutSettings.SongInfoFontSize;
             var artistsFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.ArtistNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
@@ -100,7 +128,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateSongInfoOpacity()
         {
-            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+            switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
                     SongInfoStackPanel.Opacity = 1;
@@ -119,7 +147,7 @@ namespace BetterLyrics.WinUI3.Views
         // ==== AlbumArt
         private void UpdateAlbumArtOpacity()
         {
-            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+            switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
                     AlbumArtGrid.Opacity = 1;
@@ -139,7 +167,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateTrackSummaryGridSpan()
         {
-            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
+            var status = LyricsWindowStatus;
             switch (status.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -172,7 +200,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateSongInfoStackPanelSpan()
         {
-            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
+            var status = LyricsWindowStatus;
             switch (status.LyricsLayoutOrientation)
             {
                 case LyricsLayoutOrientation.Horizontal:
@@ -194,7 +222,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateLyricsPlaceholderSpan()
         {
-            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
+            var status = LyricsWindowStatus;
             switch (status.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -233,7 +261,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateAlbumArtGridSpan()
         {
-            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
+            var status = LyricsWindowStatus;
             switch (status.LyricsLayoutOrientation)
             {
                 case LyricsLayoutOrientation.Horizontal:
@@ -257,7 +285,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateLyricsOpacity()
         {
-            switch (_liveStatesService.LiveStates.LyricsWindowStatus.LyricsDisplayType)
+            switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
                     LyricsCanvas.LyricsOpacity = 0;
@@ -273,7 +301,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateLyricsLayout()
         {
-            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
+            var status = LyricsWindowStatus;
             switch (status.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -314,7 +342,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
 
-            var status = _liveStatesService.LiveStates.LyricsWindowStatus;
+            var status = LyricsWindowStatus;
 
             double height = RootGrid.ActualHeight;
             double width = RootGrid.ActualWidth;
@@ -684,51 +712,6 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        public void Receive(PropertyChangedMessage<int> message)
-        {
-            if (message.Sender is AlbumArtAreaStyleSettings)
-            {
-                if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.SongInfoFontSize))
-                {
-                    RenderSongInfo();
-                }
-                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.CoverImageHeight))
-                {
-                    OnLayoutChanged();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<bool> message)
-        {
-            if (message.Sender is AlbumArtAreaStyleSettings)
-            {
-                if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoSongInfoFontSize))
-                {
-                    RenderSongInfo();
-                }
-                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
-                {
-                    OnLayoutChanged();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<string> message)
-        {
-            if (message.Sender is LyricsStyleSettings)
-            {
-                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
-                {
-                    RenderSongInfo();
-                }
-                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
-                {
-                    RenderSongInfo();
-                }
-            }
-        }
-
         public async void Receive(PropertyChangedMessage<SongInfo?> message)
         {
             if (message.Sender is IMediaSessionsService)
@@ -740,51 +723,6 @@ namespace BetterLyrics.WinUI3.Views
                     RenderSongInfo();
                     SongInfoStackPanel.Opacity = 1;
                     UpdateSongInfoOpacity();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsLayoutOrientation> message)
-        {
-            if (message.Sender is LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsLayoutOrientation))
-                {
-                    OnLayoutChanged();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
-        {
-            if (message.Sender is LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsDisplayType))
-                {
-                    OnLayoutChanged();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<AlbumArtThemeColors> message)
-        {
-            if (message.Sender is IMediaSessionsService)
-            {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtThemeColors))
-                {
-                    RenderSongInfo();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsWindowStatus> message)
-        {
-            if (message.Sender is LiveStates)
-            {
-                if (message.PropertyName == nameof(LiveStates.LyricsWindowStatus))
-                {
-                    OnLayoutChanged();
-                    RenderSongInfo();
                 }
             }
         }

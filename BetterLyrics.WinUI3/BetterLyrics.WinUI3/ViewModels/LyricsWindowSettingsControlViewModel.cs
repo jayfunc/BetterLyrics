@@ -2,7 +2,6 @@
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.LiveStatesService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -15,10 +14,6 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class LyricsWindowSettingsControlViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
-        private readonly ILiveStatesService _liveStatesService;
-
-        [ObservableProperty]
-        public partial LiveStates LiveStates { get; set; }
 
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
@@ -35,13 +30,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial double DisplayPanelHeight { get; set; } = 0;
 
-        public LyricsWindowSettingsControlViewModel(ISettingsService settingsService, ILiveStatesService liveStatesService)
+        public LyricsWindowSettingsControlViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _liveStatesService = liveStatesService;
 
             AppSettings = _settingsService.AppSettings;
-            LiveStates = _liveStatesService.LiveStates;
         }
 
         [RelayCommand]
