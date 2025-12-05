@@ -1200,6 +1200,9 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>播放测试音乐</value>
   </data>
+  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+    <value>Multi-window coexistence mode</value>
+  </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>添加存放音乐或歌词的文件夹</value>
   </data>
