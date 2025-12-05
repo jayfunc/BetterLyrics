@@ -102,7 +102,17 @@
                                                         IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
                                                 </MenuBarItemFlyout>
                                             </StackPanel.ContextFlyout>
-                                            <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                                            <Grid>
+                                                <Border
+                                                    BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
+                                                    BorderThickness="4"
+                                                    CornerRadius="4"
+                                                    Visibility="{Binding IsOpened, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                <uc:DemoWindowGrid
+                                                    Margin="4"
+                                                    LyricsWindowStatus="{Binding}"
+                                                    Tapped="DemoWindowGrid_Tapped" />
+                                            </Grid>
                                             <Grid ColumnSpacing="4">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
@@ -128,6 +138,10 @@
                                 </ListView.ItemTemplate>
                             </ListView>
                         </StackPanel>
+
+                        <dev:SettingsCard x:Uid="SettingsPageMultiNowPlayingWindows" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE81E;}">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.MultiNowPlayingWindowMode, Mode=TwoWay}" />
+                        </dev:SettingsCard>
 
                     </StackPanel>
 

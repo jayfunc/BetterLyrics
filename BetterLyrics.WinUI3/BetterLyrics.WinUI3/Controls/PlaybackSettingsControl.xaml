@@ -51,7 +51,7 @@
                 CanReorderItems="True"
                 DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
                 ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
-                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.HorizontalScrollMode="Enabled"
                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                 ScrollViewer.VerticalScrollMode="Disabled"

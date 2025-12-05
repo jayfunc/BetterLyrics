@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -163,6 +164,26 @@ namespace BetterLyrics.WinUI3.Controls
         {
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
             ViewModel.OpenConfigPanel();
+        }
+
+        private void DemoWindowGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var status = (LyricsWindowStatus)(((FrameworkElement)sender).DataContext);
+            // 多开模式
+            if (_settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
+            {
+                WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
+            }
+            // 单例模式
+            else
+            {
+                var openedWindows = WindowHook.GetWindows<NowPlayingWindow>();
+                foreach (var item in openedWindows.Where(x => x.Status != status))
+                {
+                    item.CloseWindow();
+                }
+                WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
+            }
         }
     }
 }

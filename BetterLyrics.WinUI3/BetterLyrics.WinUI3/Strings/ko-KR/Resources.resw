@@ -1200,6 +1200,9 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>테스트 음악을 재생하십시오</value>
   </data>
+  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+    <value>다중 창 공존 모드</value>
+  </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>음악이나 가사를 저장하는 폴더 추가</value>
   </data>
