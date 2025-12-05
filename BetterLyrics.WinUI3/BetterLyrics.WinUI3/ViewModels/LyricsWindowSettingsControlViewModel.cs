@@ -67,8 +67,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.NarrowMode());
         }
 
-        [RelayCommand]
-        private void OpenConfigPanel()
+        public void OpenConfigPanel()
         {
             IsConfigPanelOpened = true;
             ConfigPanelTranslation = new();

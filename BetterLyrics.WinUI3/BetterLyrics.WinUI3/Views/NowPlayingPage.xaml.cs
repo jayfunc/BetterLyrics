@@ -377,7 +377,18 @@ namespace BetterLyrics.WinUI3.Views
                         gapBetweenTrackSummaryAndLyrics = 0;
                     }
                     TrackSummaryGridCol0.Width = new(1, GridUnitType.Star);
-                    TrackSummaryGridCol2.Width = new(xMargin);
+                    switch (status.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.AlbumArtOnly:
+                            TrackSummaryGridCol2.Width = new(0);
+                            break;
+                        case LyricsDisplayType.LyricsOnly:
+                        case LyricsDisplayType.SplitView:
+                            TrackSummaryGridCol2.Width = new(xMargin);
+                            break;
+                        default:
+                            break;
+                    }
                     TrackSummaryGridRow1.Height =
                         status.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? new(1, GridUnitType.Star) : new(status.AlbumArtLayoutSettings.CoverImageHeight);
                     break;
@@ -388,7 +399,18 @@ namespace BetterLyrics.WinUI3.Views
                         status.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? Math.Max(64, minSize * 0.25) : status.AlbumArtLayoutSettings.CoverImageHeight;
                     gapBetweenTrackSummaryAndLyrics = Math.Max(16, width * 0.15);
                     TrackSummaryGridCol0.Width = new(1, GridUnitType.Auto);
-                    TrackSummaryGridCol2.Width = new(1, GridUnitType.Star);
+                    switch (status.LyricsDisplayType)
+                    {
+                        case LyricsDisplayType.AlbumArtOnly:
+                            TrackSummaryGridCol2.Width = new(0);
+                            break;
+                        case LyricsDisplayType.LyricsOnly:
+                        case LyricsDisplayType.SplitView:
+                            TrackSummaryGridCol2.Width = new(1, GridUnitType.Star);
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;

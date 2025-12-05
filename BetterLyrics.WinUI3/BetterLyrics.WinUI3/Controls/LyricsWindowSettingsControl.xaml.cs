@@ -27,7 +27,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         public LyricsWindowStatus LyricsWindowStatus
         {
-            get { return (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty); }
+            get { return (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty); }
             set { SetValue(LyricsWindowStatusProperty, value); }
         }
 
@@ -54,9 +54,9 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void SetDefaultMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuFlyoutItem menuFlyoutItem)
+            if (sender is FrameworkElement element)
             {
-                if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
+                if (element.DataContext is LyricsWindowStatus data)
                 {
                     ViewModel.AppSettings.WindowBoundsRecords.ForEach(x => x.IsDefault = false);
                     data.IsDefault = true;
@@ -157,6 +157,12 @@ namespace BetterLyrics.WinUI3.Controls
         private void DisplayGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             ViewModel.DisplayPanelHeight = e.NewSize.Height;
+        }
+
+        private void ConfigButton_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
+            ViewModel.OpenConfigPanel();
         }
     }
 }

@@ -342,8 +342,8 @@
   <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
     <value>没入モード</value>
   </data>
-  <data name="LyricsWindowSettingsControlCurrentLyricsWindowConfig.Text" xml:space="preserve">
-    <value>現在の歌詞ウィンドウ設定</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
+    <value>構成</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
     <value>歌詞ウィンドウモード</value>

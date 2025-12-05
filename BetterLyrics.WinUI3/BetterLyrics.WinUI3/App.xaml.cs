@@ -73,8 +73,7 @@ namespace BetterLyrics.WinUI3
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
             // 设置托盘
-            var systemTrayWindow = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
-            systemTrayWindow.HideWindow();
+            WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
             WindowHook.OpenOrShowWindow<NowPlayingWindow>(settingsService.AppSettings.WindowBoundsRecords.FirstOrDefault(x => x.IsDefault));
             if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)

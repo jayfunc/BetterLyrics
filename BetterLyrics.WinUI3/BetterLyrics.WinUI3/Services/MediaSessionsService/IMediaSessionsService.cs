@@ -25,8 +25,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         void UpdateLyrics();
         void UpdateTranslations();
 
-        void InitPlaybackShortcuts();
-
         MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; }
 
         bool CurrentIsPlaying { get; }

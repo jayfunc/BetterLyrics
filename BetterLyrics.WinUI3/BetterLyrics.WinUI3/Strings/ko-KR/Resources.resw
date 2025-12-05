@@ -342,8 +342,8 @@
   <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
     <value>몰입 형 모드</value>
   </data>
-  <data name="LyricsWindowSettingsControlCurrentLyricsWindowConfig.Text" xml:space="preserve">
-    <value>현재 가사 창 구성</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
+    <value>배 치</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
     <value>가사 창 모드</value>

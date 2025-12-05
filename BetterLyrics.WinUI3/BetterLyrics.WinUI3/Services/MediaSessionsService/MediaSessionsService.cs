@@ -44,8 +44,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<ChineseRomanization>>,
-        IRecipient<PropertyChangedMessage<List<string>>>
+        IRecipient<PropertyChangedMessage<ChineseRomanization>>
     {
         private EventSourceReader? _sse = null;
         private readonly MediaManager _mediaManager = new();
@@ -100,7 +99,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
 
             InitMediaManager();
-            InitPlaybackShortcuts();
         }
 
         private void MappedSongSearchQueries_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
@@ -111,44 +109,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private void MappedSongSearchQueries_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             UpdateLyrics();
-        }
-
-        public void InitPlaybackShortcuts()
-        {
-            UpdatePlayOrPauseSongShortcut();
-            UpdatePreviousSongShortcut();
-            UpdateNextSongShortcut();
-        }
-
-        private void UpdatePlayOrPauseSongShortcut()
-        {
-            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
-            {
-                if (CurrentIsPlaying)
-                {
-                    _ = PauseAsync();
-                }
-                else
-                {
-                    _ = PlayAsync();
-                }
-            }));
-        }
-
-        private void UpdatePreviousSongShortcut()
-        {
-            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
-            {
-                _ = PreviousAsync();
-            });
-        }
-
-        private void UpdateNextSongShortcut()
-        {
-            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
-            {
-                _ = NextAsync();
-            });
         }
 
         private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
@@ -699,25 +659,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 else if (message.PropertyName == nameof(TranslationSettings.IsTraditionalChineseEnabled))
                 {
                     UpdateLyrics();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<List<string>> message)
-        {
-            if (message.Sender is GeneralSettings)
-            {
-                if (message.PropertyName == nameof(GeneralSettings.PlayOrPauseShortcut))
-                {
-                    UpdatePlayOrPauseSongShortcut();
-                }
-                else if (message.PropertyName == nameof(GeneralSettings.PreviousSongShortcut))
-                {
-                    UpdatePreviousSongShortcut();
-                }
-                else if (message.PropertyName == nameof(GeneralSettings.NextSongShortcut))
-                {
-                    UpdateNextSongShortcut();
                 }
             }
         }

@@ -1,11 +1,13 @@
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System.Linq;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -17,6 +19,8 @@ namespace BetterLyrics.WinUI3.Controls
     {
         public LyricsWindowSwitchControlViewModel ViewModel => (LyricsWindowSwitchControlViewModel)DataContext;
 
+        private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
         public LyricsWindowSwitchControl()
         {
             InitializeComponent();
@@ -25,7 +29,22 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            WindowHook.OpenOrShowWindow<NowPlayingWindow>((LyricsWindowStatus)(((FrameworkElement)sender).DataContext));
+            var status = (LyricsWindowStatus)(((FrameworkElement)sender).DataContext);
+            // 多开模式
+            if (_settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
+            {
+                WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
+            }
+            // 单例模式
+            else
+            {
+                var openedWindows = WindowHook.GetWindows<NowPlayingWindow>();
+                foreach (var item in openedWindows.Where(x => x.Status != status))
+                {
+                    item.CloseWindow();
+                }
+                WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
+            }
             await HideAsync();
         }
 
