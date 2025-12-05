@@ -342,8 +342,8 @@
   <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
     <value>沉浸模式</value>
   </data>
-  <data name="LyricsWindowSettingsControlCurrentLyricsWindowConfig.Text" xml:space="preserve">
-    <value>当前歌词窗口配置</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
+    <value>配置</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
     <value>歌词窗口模式</value>

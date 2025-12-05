@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             _hooks.Clear();
 
-            //_timer.Stop();
+            _timer.Stop();
         }
 
         private void Timer_Tick(object? sender, object e)

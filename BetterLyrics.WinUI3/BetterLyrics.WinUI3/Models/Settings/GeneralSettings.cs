@@ -13,10 +13,13 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnLyricsWindowClosed { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ListenOnNewPlaybackSource { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IgnoreCacheWhenSearching { get; set; } = false;
+        
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> LyricsWindowSwitchShortcut { get; set; } = new List<string>() { "Ctrl", "Alt", "S" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> PlayOrPauseShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "P" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> NextSongShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "Right" };
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> PreviousSongShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "Left" };
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool MultiNowPlayingWindowMode { get; set; } = false;
 
         public GeneralSettings() { }
     }

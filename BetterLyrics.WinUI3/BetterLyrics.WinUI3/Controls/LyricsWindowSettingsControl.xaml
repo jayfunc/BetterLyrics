@@ -31,13 +31,6 @@
                                 x:Uid="SettingsPageRecordedWindowStatus"
                                 Grid.Column="0"
                                 Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                            <Button
-                                Grid.Column="2"
-                                Margin="0,30,0,0"
-                                Command="{x:Bind ViewModel.OpenConfigPanelCommand}"
-                                Style="{StaticResource AccentButtonStyle}">
-                                <TextBlock x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig" />
-                            </Button>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Spacing="3">
@@ -101,10 +94,6 @@
                                             Spacing="6">
                                             <StackPanel.ContextFlyout>
                                                 <MenuBarItemFlyout>
-                                                    <MenuFlyoutItem
-                                                        x:Uid="LyricsWindowSettingsControlSetDefault"
-                                                        Click="SetDefaultMenuFlyoutItem_Click"
-                                                        IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
                                                     <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem
@@ -114,6 +103,26 @@
                                                 </MenuBarItemFlyout>
                                             </StackPanel.ContextFlyout>
                                             <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                                            <Grid ColumnSpacing="4">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Button
+                                                    Grid.Column="0"
+                                                    HorizontalAlignment="Stretch"
+                                                    Click="SetDefaultMenuFlyoutItem_Click"
+                                                    IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                                    <TextBlock x:Uid="LyricsWindowSettingsControlSetDefault" />
+                                                </Button>
+                                                <Button
+                                                    x:Name="ConfigButton"
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Stretch"
+                                                    Click="ConfigButton_Click">
+                                                    <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
+                                                </Button>
+                                            </Grid>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -147,9 +156,9 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
-                            x:Uid="LyricsWindowSettingsControlCurrentLyricsWindowConfig"
                             Grid.Column="0"
-                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
+                            Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}" />
                         <Button
                             Grid.Column="2"
                             Margin="0,30,0,0"

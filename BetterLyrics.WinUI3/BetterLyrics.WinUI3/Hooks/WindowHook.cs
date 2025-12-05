@@ -53,16 +53,12 @@ namespace BetterLyrics.WinUI3.Hooks
                 UnregisterWorkArea(hwnd);
             }
             window.Status.IsOpened = false;
-            window.CloseWindow();
+            window.Close();
         }
 
-        public static void MinimizeWindow<T>()
+        public static void MinimizeWindow(this Window window)
         {
-            var window = _activeWindows.Find(w => w is T);
-            if (window is Window w)
-            {
-                w.Minimize();
-            }
+            window.Minimize();
         }
 
         public static T? GetWindow<T>()
@@ -75,6 +71,19 @@ namespace BetterLyrics.WinUI3.Hooks
                 }
             }
             return default;
+        }
+
+        public static List<T> GetWindows<T>()
+        {
+            var windows = new List<T>();
+            foreach (var window in _activeWindows)
+            {
+                if (window is T castedWindow)
+                {
+                    windows.Add(castedWindow);
+                }
+            }
+            return windows;
         }
 
         public static IntPtr? GetWindowHandle(object? obj)
@@ -134,6 +143,8 @@ namespace BetterLyrics.WinUI3.Hooks
                 else if (typeof(T) == typeof(SystemTrayWindow))
                 {
                     window = new SystemTrayWindow();
+                    var systemTrayWindow = (SystemTrayWindow)window;
+                    systemTrayWindow.InitShortcuts();
                 }
                 else
                 {
@@ -152,10 +163,8 @@ namespace BetterLyrics.WinUI3.Hooks
                     _defaultExtendedWindowStyle.Add(hwnd, castedWindow.GetExtendedWindowStyle());
 
                     var lyricsWindow = (NowPlayingWindow)window;
-                    lyricsWindow.ViewModel.InitShortcuts();
                     lyricsWindow.InitFgWindowWatcher();
-
-                    _mediaSessionsService.InitPlaybackShortcuts();
+                    _ = lyricsWindow.InitStatus();
 
                     //TaskbarList.ThumbBarAddButtons(hwnd,
                     //    [
@@ -167,6 +176,10 @@ namespace BetterLyrics.WinUI3.Hooks
                     //        }
                     //    ]
                     //);
+                }
+                else if (typeof(T) == typeof(SystemTrayWindow))
+                {
+                    castedWindow.HideWindow();
                 }
             }
             else
@@ -180,7 +193,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 ((NowPlayingWindow)window).Status.IsOpened = true;
             }
-            
+
             return (T)window;
         }
 
@@ -206,10 +219,11 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void ExitApp()
         {
+            EnsureAllWorkAreasReleased();
             Environment.Exit(0);
         }
 
-        private static void EnsureDockModeReleased()
+        private static void EnsureAllWorkAreasReleased()
         {
             foreach (var item in _workAreas)
             {

@@ -24,9 +24,7 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
-    public partial class NowPlayingWindowViewModel
-        : BaseWindowViewModel,
-            IRecipient<PropertyChangedMessage<List<string>>>
+    public partial class NowPlayingWindowViewModel : BaseWindowViewModel
     {
         private readonly ISettingsService _settingsService;
 
@@ -42,63 +40,6 @@ namespace BetterLyrics.WinUI3
         [ObservableProperty] public partial double TopCommandGridOpacity { get; set; } = 0;
 
         [ObservableProperty] public partial double TitleBarFontSize { get; set; } = 14;
-
-        public void InitShortcuts()
-        {
-            // TODO 这里最好移到另一个单例的地方做初始化
-            UpdateLyricsWindowShowHideShortcut();
-            UpdateLyricsWindowSwitchShortcut();
-        }
-
-        private void UpdateLyricsWindowShowHideShortcut()
-        {
-            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.LyricsWindowShowOrHide,
-                _settingsService.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut,
-                () =>
-                {
-                    var window = WindowHook.GetWindow<NowPlayingWindow>();
-                    if (window == null) return;
-
-                    if (window.Visible)
-                    {
-                        window.Hide();
-                    }
-                    else
-                    {
-                        WindowHook.OpenOrShowWindow<NowPlayingWindow>();
-                    }
-                }
-            );
-        }
-
-        private void UpdateLyricsWindowSwitchShortcut()
-        {
-            GlobalHotKeyHook.UpdateHotKey<NowPlayingWindow>(ShortcutID.LyricsWindowSwitch,
-                _settingsService.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut,
-                () =>
-                {
-                    WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
-                }
-            );
-        }
-
-        public void Receive(PropertyChangedMessage<List<string>> message)
-        {
-            if (message.Sender is GeneralSettings)
-            {
-                if (message.PropertyName == nameof(GeneralSettings.ShowOrHideLyricsWindowShortcut))
-                {
-                    UpdateLyricsWindowShowHideShortcut();
-                }
-            }
-            else if (message.Sender is GeneralSettings)
-            {
-                if (message.PropertyName == nameof(GeneralSettings.LyricsWindowSwitchShortcut))
-                {
-                    UpdateLyricsWindowSwitchShortcut();
-                }
-            }
-        }
 
     }
 }

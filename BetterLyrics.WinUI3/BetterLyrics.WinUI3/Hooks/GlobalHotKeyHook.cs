@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using Vanara.PInvoke;
@@ -19,12 +20,9 @@ namespace BetterLyrics.WinUI3.Hooks
         /// <param name="id"></param>
         /// <param name="keys"></param>
         /// <param name="action"></param>
-        private static void RegisterHotKey<T>(ShortcutID id, List<string> keys, Action action)
+        private static void RegisterHotKey(Window window, ShortcutID id, List<string> keys, Action action)
         {
             if (keys.Count == 0) return;
-
-            var window = WindowHook.GetWindow<T>();
-            if (window == null) return;
 
             HWND hwnd = WindowNative.GetWindowHandle(window);
             User32.HotKeyModifiers modifiers = User32.HotKeyModifiers.MOD_NONE;
@@ -60,21 +58,18 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
-        private static void UnregisterHotKey<T>(ShortcutID id)
+        private static void UnregisterHotKey(Window window, ShortcutID id)
         {
-            var window = WindowHook.GetWindow<T>();
-            if (window == null) return;
-
             HWND hwnd = WindowNative.GetWindowHandle(window);
             User32.UnregisterHotKey(hwnd, (int)id);
             _actions.Remove((int)id);
             _keys.Remove((int)id);
         }
 
-        public static void UpdateHotKey<T>(ShortcutID id, List<string> keys, Action action)
+        public static void UpdateHotKey(Window window, ShortcutID id, List<string> keys, Action action)
         {
-            UnregisterHotKey<T>(id);
-            RegisterHotKey<T>(id, keys, action);
+            UnregisterHotKey(window, id);
+            RegisterHotKey(window, id, keys, action);
         }
 
         public static bool IsHotKeyRegistered(ShortcutID id)

@@ -35,7 +35,6 @@ namespace BetterLyrics.WinUI3.Views
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
-        private readonly WindowMessageMonitor _wmm;
 
         private Color _backdropAccentColor = Colors.Transparent;
 
@@ -57,17 +56,10 @@ namespace BetterLyrics.WinUI3.Views
             Status = status;
             NowPlayingPage.LyricsWindowStatus = Status;
 
-            Status.PropertyChanged += LyricsWindowStatus_PropertyChanged;
-
-            _wmm = new WindowMessageMonitor(this);
-            _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
-
             this.Init("LyricsPageTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
 
             AppWindow.Changed += AppWindow_Changed;
             AppWindow.Closing += AppWindow_Closing;
-
-            _ = InitStatus();
 
             SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
 
@@ -77,8 +69,10 @@ namespace BetterLyrics.WinUI3.Views
             _ = UpdateAlbumArtThemeColorsAsync();
         }
 
-        private async Task InitStatus()
+        public async Task InitStatus()
         {
+            Status.PropertyChanged += LyricsWindowStatus_PropertyChanged;
+
             Status.IsLyricsWindowStatusRefreshing = true;
 
             Status.UpdateMonitorBounds();
@@ -200,6 +194,7 @@ namespace BetterLyrics.WinUI3.Views
                     {
                         if (Status.IsAlwaysOnTop &&
                             Status.IsAlwaysOnTopPolling &&
+                            this.AppWindow != null &&
                             this.AppWindow.Presenter is OverlappedPresenter presenter)
                         {
                             presenter.IsAlwaysOnTop = true;
@@ -347,15 +342,23 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
+            ExitOrClose();
+            args.Cancel = true;
+        }
+
+        private void ExitOrClose()
+        {
+            _fgWindowWatcherTimer = null;
+            _fgWindowWatcher?.Stop();
+            _fgWindowWatcher = null;
             if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
             {
                 WindowHook.ExitApp();
             }
             else
             {
-                this.Close();
+                this.CloseWindow();
             }
-            args.Cancel = true;
         }
 
         public void SetTitleBarArea(TitleBarArea titleBarArea)
@@ -373,15 +376,6 @@ namespace BetterLyrics.WinUI3.Views
                     break;
                 default:
                     break;
-            }
-        }
-
-        private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
-        {
-            if (e.Message.MessageId == (uint)User32.WindowMessage.WM_HOTKEY)
-            {
-                int id = (int)e.Message.WParam;
-                GlobalHotKeyHook.TryInvokeAction(id);
             }
         }
 
@@ -425,7 +419,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            ExitOrClose();
         }
 
         private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)
@@ -440,7 +434,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowHook.MinimizeWindow<NowPlayingWindow>();
+            this.MinimizeWindow();
         }
 
         public void Receive(PropertyChangedMessage<bool> message)
