@@ -44,9 +44,9 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <!--  App behavior  -->
+                    <!--  Startup  -->
 
-                    <TextBlock x:Uid="SettingsPageAppBehavior" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="SettingsPageStartup" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF71C;}">
                         <ToggleSwitch
@@ -59,21 +59,29 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoOpen, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <dev:SettingsCard x:Uid="SettingsPageAutoOpenLyricsWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE90B;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.AutoStartLyricsWindow, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <!--  Music gallery window  -->
+
+                    <TextBlock x:Uid="SettingsPageMusicGallery" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
                     <dev:SettingsCard x:Uid="SettingsPageAutoPlayWhenOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE768;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoPlay, Mode=TwoWay}" />
                     </dev:SettingsCard>
+
+                    <!--  Lyrics window  -->
+
+                    <TextBlock x:Uid="SettingsPageLyricsWindow" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE711;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageListenNewSession" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF270;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    <!--  Playback shortcut  -->
 
-                    <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D8;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    <TextBlock x:Uid="SettingsPageShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
@@ -82,10 +90,6 @@
                     <dev:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut, Mode=TwoWay}" />
                     </dev:SettingsCard>
-
-                    <!--  Playback shortcut  -->
-
-                    <TextBlock x:Uid="SettingsPagePlaybackShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />

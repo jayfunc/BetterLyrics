@@ -4,7 +4,9 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using System;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Windows.Foundation;
 
@@ -16,11 +18,12 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty] public partial bool IsDefault { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string MonitorDeviceName { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsWorkArea { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsBorderless { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTop { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTopPolling { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsShownInSwitchers { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsClickThrough { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLocked { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMaximized { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFullscreen { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsLayoutOrientation LyricsLayoutOrientation { get; set; } = LyricsLayoutOrientation.Horizontal;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType LyricsDisplayType { get; set; } = LyricsDisplayType.SplitView;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 800, 500);
@@ -39,11 +42,6 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowX { get; set; } = 100;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowY { get; set; } = 100;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowWidth { get; set; } = 800;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double WindowHeight { get; set; } = 500;
-
         [JsonIgnore][ObservableProperty] public partial bool IsOpened { get; set; } = false;
 
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
@@ -55,70 +53,27 @@ namespace BetterLyrics.WinUI3.Models
 
         public LyricsWindowStatus()
         {
-            UpdateMonitorNameAndBounds();
+
+        }
+
+        public LyricsWindowStatus(Window? targetWindow = null)
+        {
+            UpdateMonitorNameAndBounds(targetWindow);
             UpdateDemoWindowAndMonitorBounds();
-        }
-
-        partial void OnLyricsStyleSettingsChanged(LyricsStyleSettings oldValue, LyricsStyleSettings newValue)
-        {
-            oldValue.PropertyChanged -= OldLyricsStyleSettings_PropertyChanged;
-            newValue.PropertyChanged += OldLyricsStyleSettings_PropertyChanged;
-        }
-
-        partial void OnLyricsEffectSettingsChanged(LyricsEffectSettings oldValue, LyricsEffectSettings newValue)
-        {
-            oldValue.PropertyChanged -= OldLyricsEffectSettings_PropertyChanged;
-            newValue.PropertyChanged += OldLyricsEffectSettings_PropertyChanged;
-        }
-
-        partial void OnLyricsBackgroundSettingsChanged(LyricsBackgroundSettings oldValue, LyricsBackgroundSettings newValue)
-        {
-            oldValue.PropertyChanged -= OldLyricsBackgroundSettings_PropertyChanged;
-            newValue.PropertyChanged += OldLyricsBackgroundSettings_PropertyChanged;
-        }
-
-        partial void OnAlbumArtLayoutSettingsChanged(AlbumArtAreaStyleSettings oldValue, AlbumArtAreaStyleSettings newValue)
-        {
-            oldValue.PropertyChanged -= OldAlbumArtLayoutSettings_PropertyChanged;
-            newValue.PropertyChanged += OldAlbumArtLayoutSettings_PropertyChanged;
         }
 
         partial void OnWindowBoundsChanged(Rect value)
         {
             UpdateMonitorNameAndBounds();
             UpdateDemoWindowAndMonitorBounds();
-            WindowX = WindowBounds.X;
-            WindowY = WindowBounds.Y;
-            WindowWidth = WindowBounds.Width;
-            WindowHeight = WindowBounds.Height;
         }
 
-        private void OldLyricsStyleSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void UpdateMonitorNameAndBounds(Window? targetWindow = null)
         {
-            this.OnPropertyChanged(nameof(LyricsStyleSettings));
-        }
+            targetWindow ??= WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == this);
+            if (targetWindow == null) return;
 
-        private void OldLyricsEffectSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            this.OnPropertyChanged(nameof(LyricsEffectSettings));
-        }
-
-        private void OldLyricsBackgroundSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            this.OnPropertyChanged(nameof(LyricsBackgroundSettings));
-        }
-
-        private void OldAlbumArtLayoutSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            this.OnPropertyChanged(nameof(AlbumArtLayoutSettings));
-        }
-
-        public void UpdateMonitorNameAndBounds()
-        {
-            var lyricsWindow = WindowHook.GetWindow<NowPlayingWindow>();
-            if (lyricsWindow == null) return;
-
-            var mointor = MonitorHook.GetMonitorInfoExFromWindow(lyricsWindow);
+            var mointor = MonitorHook.GetMonitorInfoExFromWindow(targetWindow);
             MonitorDeviceName = mointor.szDevice;
             MonitorBounds = new Rect(
                 mointor.rcMonitor.Left,
@@ -177,17 +132,19 @@ namespace BetterLyrics.WinUI3.Models
 
         public object Clone()
         {
-            return new LyricsWindowStatus
+            return new LyricsWindowStatus(null)
             {
                 Name = this.Name,
                 IsDefault = this.IsDefault,
                 MonitorDeviceName = this.MonitorDeviceName,
                 IsWorkArea = this.IsWorkArea,
-                IsBorderless = this.IsBorderless,
                 IsAlwaysOnTop = this.IsAlwaysOnTop,
                 IsAlwaysOnTopPolling = this.IsAlwaysOnTopPolling,
                 IsShownInSwitchers = this.IsShownInSwitchers,
-                IsClickThrough = this.IsClickThrough,
+                IsLocked = this.IsLocked,
+                IsMaximized = this.IsMaximized,
+                IsFullscreen = this.IsFullscreen,
+
                 LyricsLayoutOrientation = this.LyricsLayoutOrientation,
                 LyricsDisplayType = this.LyricsDisplayType,
                 WindowBounds = this.WindowBounds,
@@ -207,11 +164,6 @@ namespace BetterLyrics.WinUI3.Models
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
                 TitleBarArea = this.TitleBarArea,
-
-                WindowX = this.WindowX,
-                WindowY = this.WindowY,
-                WindowWidth = this.WindowWidth,
-                WindowHeight = this.WindowHeight,
             };
 
         }

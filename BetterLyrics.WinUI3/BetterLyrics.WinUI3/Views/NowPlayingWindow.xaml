@@ -12,7 +12,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
         <Grid
             x:Name="PlaceholderGrid"
             Width="1"
@@ -25,7 +25,6 @@
         <!--  Top command  -->
         <Grid
             x:Name="TopCommandGrid"
-            Margin="6"
             VerticalAlignment="Top"
             Background="Transparent"
             Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}"
@@ -93,6 +92,51 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
+                    <!--  Always on top  -->
+                    <Button
+                        x:Name="AOTButton"
+                        Click="AOTButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <Grid>
+                            <FontIcon
+                                FontFamily="{StaticResource IconFontFamily}"
+                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                Glyph="&#xE840;" />
+                            <FontIcon
+                                x:Name="PinFillFontIcon"
+                                FontFamily="{StaticResource IconFontFamily}"
+                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                Glyph="&#xE841;">
+                                <FontIcon.OpacityTransition>
+                                    <ScalarTransition />
+                                </FontIcon.OpacityTransition>
+                            </FontIcon>
+                        </Grid>
+                    </Button>
+
+                    <!--  Fullscreen  -->
+                    <Button
+                        x:Name="FullscreenButton"
+                        Click="FullscreenButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <Grid>
+                            <FontIcon
+                                x:Name="EnterFullscreenFontIcon"
+                                FontFamily="{StaticResource IconFontFamily}"
+                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                Glyph="&#xE740;" />
+                            <FontIcon
+                                x:Name="ExitFullscreenFontIcon"
+                                FontFamily="{StaticResource IconFontFamily}"
+                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                Glyph="&#xE73F;">
+                                <FontIcon.OpacityTransition>
+                                    <ScalarTransition />
+                                </FontIcon.OpacityTransition>
+                            </FontIcon>
+                        </Grid>
+                    </Button>
+
                     <!--  Window Minimize  -->
                     <Button
                         x:Name="MinimizeButton"
@@ -102,6 +146,33 @@
                             FontFamily="{StaticResource IconFontFamily}"
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                             Glyph="&#xE738;" />
+                    </Button>
+
+                    <!--  Window Maxmize  -->
+                    <Button
+                        x:Name="MaximizeButton"
+                        Click="MaximizeButton_Click"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <Grid>
+                            <FontIcon
+                                x:Name="EnterMaximizeFontIcon"
+                                FontFamily="{StaticResource IconFontFamily}"
+                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                Glyph="&#xE71A;">
+                                <FontIcon.OpacityTransition>
+                                    <ScalarTransition />
+                                </FontIcon.OpacityTransition>
+                            </FontIcon>
+                            <FontIcon
+                                x:Name="ExitMaximizeFontIcon"
+                                FontFamily="{StaticResource IconFontFamily}"
+                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                Glyph="&#xE744;">
+                                <FontIcon.OpacityTransition>
+                                    <ScalarTransition />
+                                </FontIcon.OpacityTransition>
+                            </FontIcon>
+                        </Grid>
                     </Button>
 
                     <!--  Window Close  -->
@@ -118,6 +189,36 @@
                 </StackPanel>
             </Grid>
 
+        </Grid>
+
+        <!--  Bottom command  -->
+        <Grid VerticalAlignment="Bottom">
+            <uc:NowPlayingBar
+                x:Name="NowPlayingBar"
+                IsAutoHideEnabled="True"
+                ShowTime="True" />
+        </Grid>
+
+        <Grid
+            x:Name="LockToggleButtonContainer"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top">
+            <!--  Lock button  -->
+            <ToggleButton
+                x:Name="LockToggleButton"
+                Click="LockToggleButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      FontSize=12,
+                                      Glyph=&#xE72E;}"
+                IsHitTestVisible="True"
+                Opacity="0"
+                PointerEntered="LockToggleButton_PointerEntered"
+                PointerExited="LockToggleButton_PointerExited"
+                Style="{StaticResource TitleBarToggleButtonStyle}">
+                <ToggleButton.OpacityTransition>
+                    <ScalarTransition />
+                </ToggleButton.OpacityTransition>
+            </ToggleButton>
         </Grid>
 
     </Grid>

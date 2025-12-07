@@ -40,10 +40,9 @@
                                 <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Mode=TwoWay}" />
                             </dev:SettingsCard>
                             <dev:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
-                                <local:ExtendedSlider
-                                    Maximum="512"
+                                <NumberBox
                                     Minimum="0"
-                                    Unit="px"
+                                    SpinButtonPlacementMode="Inline"
                                     Value="{x:Bind AlbumArtLayoutSettings.CoverImageHeight, Mode=TwoWay}" />
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>

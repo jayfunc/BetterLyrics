@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
@@ -61,6 +62,138 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (token.IsCancellationRequested) return;
 
             AlbumArtBitmapImage = bitmapImage;
+        }
+
+        public async Task<AlbumArtThemeColors> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor)
+        {
+            List<Color> lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+            List<Color> darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+
+            if (AlbumArtBitmapDecoder is BitmapDecoder decoder)
+            {
+                var lightPalette = await ImageHelper.GetAccentColorsAsync(AlbumArtBitmapDecoder, 4, lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false);
+                var darkPalette = await ImageHelper.GetAccentColorsAsync(AlbumArtBitmapDecoder, 4, lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true);
+                lightAccentColors = lightPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+                darkAccentColors = darkPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            }
+
+            var result = new AlbumArtThemeColors();
+            result.EnvColor = backdropAccentColor;
+
+            ElementTheme themeTypeSent;
+            if (lyricsWindowStatus.IsAdaptToEnvironment)
+            {
+                themeTypeSent = Helper.ColorHelper.GetElementThemeFromBackgroundColor(result.EnvColor);
+            }
+            else
+            {
+                themeTypeSent = lyricsWindowStatus.LyricsBackgroundSettings.LyricsBackgroundTheme;
+            }
+
+            bool isLight = themeTypeSent switch
+            {
+                ElementTheme.Default => Application.Current.RequestedTheme == ApplicationTheme.Light,
+                ElementTheme.Light => true,
+                ElementTheme.Dark => false,
+                _ => false
+            };
+
+            Color adaptiveGrayedFontColor;
+            Color grayedEnvironmentalColor;
+            Color? adaptiveColoredFontColor;
+
+            Color darkColor = Colors.Black;
+            Color lightColor = Colors.White;
+
+            if (isLight)
+            {
+                adaptiveGrayedFontColor = darkColor;
+                // brightness = 0.7f;
+                grayedEnvironmentalColor = lightColor;
+
+                result.AccentColor1 = lightAccentColors.ElementAtOrDefault(0);
+                result.AccentColor2 = lightAccentColors.ElementAtOrDefault(1);
+                result.AccentColor3 = lightAccentColors.ElementAtOrDefault(2);
+                result.AccentColor4 = lightAccentColors.ElementAtOrDefault(3);
+            }
+            else
+            {
+                adaptiveGrayedFontColor = lightColor;
+                // brightness = 0.3f;
+                grayedEnvironmentalColor = darkColor;
+
+                result.AccentColor1 = darkAccentColors.ElementAtOrDefault(0);
+                result.AccentColor2 = darkAccentColors.ElementAtOrDefault(1);
+                result.AccentColor3 = darkAccentColors.ElementAtOrDefault(2);
+                result.AccentColor4 = darkAccentColors.ElementAtOrDefault(3);
+            }
+
+            if (lyricsWindowStatus.IsAdaptToEnvironment)
+            {
+                adaptiveColoredFontColor = Helper.ColorHelper.GetForegroundColor(result.EnvColor);
+            }
+            else
+            {
+                if (isLight)
+                    adaptiveColoredFontColor = darkAccentColors.ElementAtOrDefault(0);
+                else
+                    adaptiveColoredFontColor = lightAccentColors.ElementAtOrDefault(0);
+            }
+
+            result.ThemeType = themeTypeSent;
+
+            // 背景字色
+            switch (lyricsWindowStatus.LyricsStyleSettings.LyricsBgFontColorType)
+            {
+                case LyricsFontColorType.AdaptiveGrayed:
+                    result.BgFontColor = adaptiveGrayedFontColor;
+                    break;
+                case LyricsFontColorType.AdaptiveColored:
+                    result.BgFontColor = adaptiveColoredFontColor ?? adaptiveGrayedFontColor;
+                    break;
+                case LyricsFontColorType.Custom:
+                    result.BgFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsCustomBgFontColor;
+                    break;
+                default:
+                    result.BgFontColor = adaptiveGrayedFontColor;
+                    break;
+            }
+
+            // 前景字色
+            switch (lyricsWindowStatus.LyricsStyleSettings.LyricsFgFontColorType)
+            {
+                case LyricsFontColorType.AdaptiveGrayed:
+                    result.FgFontColor = adaptiveGrayedFontColor;
+                    break;
+                case LyricsFontColorType.AdaptiveColored:
+                    result.FgFontColor = adaptiveColoredFontColor ?? adaptiveGrayedFontColor;
+                    break;
+                case LyricsFontColorType.Custom:
+                    result.FgFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsCustomFgFontColor;
+                    break;
+                default:
+                    result.FgFontColor = adaptiveGrayedFontColor;
+                    break;
+            }
+
+            // 描边颜色
+            switch (lyricsWindowStatus.LyricsStyleSettings.LyricsStrokeFontColorType)
+            {
+                case LyricsFontColorType.AdaptiveGrayed:
+                    result.StrokeFontColor = grayedEnvironmentalColor.WithBrightness(0.7);
+                    break;
+                case LyricsFontColorType.AdaptiveColored:
+                    result.StrokeFontColor = result.EnvColor.WithBrightness(0.7);
+                    break;
+                case LyricsFontColorType.Custom:
+                    result.StrokeFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsCustomStrokeFontColor;
+                    break;
+                default:
+                    result.StrokeFontColor = Colors.Transparent;
+                    break;
+            }
+
+            return result;
         }
 
     }

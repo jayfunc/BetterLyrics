@@ -75,7 +75,10 @@ namespace BetterLyrics.WinUI3
             // 设置托盘
             WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
-            WindowHook.OpenOrShowWindow<NowPlayingWindow>(settingsService.AppSettings.WindowBoundsRecords.FirstOrDefault(x => x.IsDefault));
+            if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
+            {
+                WindowHook.OpenOrShowWindow<NowPlayingWindow>(settingsService.AppSettings.WindowBoundsRecords.FirstOrDefault(x => x.IsDefault));
+            }
             if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
             {
                 WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
@@ -115,15 +118,17 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<LyricsWindowSettingsControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchWindowViewModel>()
-
-                    .AddTransient<NowPlayingWindowViewModel>()
-                    .AddTransient<NowPlayingPageViewModel>()
-
                     .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
-                    .AddSingleton<MusicGalleryViewModel>()
+                    .AddSingleton<MusicGalleryPageViewModel>()
                     .AddSingleton<AboutControlViewModel>()
+                    .AddSingleton<MusicGalleryWindowViewModel>()
+
+                    .AddTransient<NowPlayingWindowViewModel>()
+                    .AddTransient<NowPlayingPageViewModel>()
+                    .AddTransient<NowPlayingBarViewModel>()
+
                     .BuildServiceProvider()
             );
         }

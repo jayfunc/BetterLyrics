@@ -29,19 +29,77 @@
                     </dev:SettingsCard>
 
                     <!--  辉光效果  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE9A9;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageScope">
+                                <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageEffectScopeLongDurationSyllable" />
+                                    <ComboBoxItem x:Uid="SettingsPageEffectLineStartToCurrentChar" />
+                                </ComboBox>
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageLongSyllableDuration">
+                                <local:ExtendedSlider
+                                    Default="700"
+                                    Maximum="1000"
+                                    Minimum="0"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                                <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectAmountAutoAdjust, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Maximum="16"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsGlowEffectAmount, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
                     <!--  缩放效果  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsScaleEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8A3;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsScaleEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8A3;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageLongSyllableDuration">
+                                <local:ExtendedSlider
+                                    Default="700"
+                                    Maximum="1000"
+                                    Minimum="0"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsScaleEffectLongSyllableDuration, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                                <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectAmountAutoAdjust, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="115"
+                                    Maximum="200"
+                                    Minimum="100"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsScaleEffectAmount, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
                     <!--  浮动动画  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8C5;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8C5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                                <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationAmountAutoAdjust, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="4"
+                                    Maximum="16"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsFloatAnimationAmount, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
 
                     <!--  扇形歌词  -->
                     <dev:SettingsExpander

@@ -1,8 +1,11 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.ResourceService;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Extensions
@@ -11,17 +14,17 @@ namespace BetterLyrics.WinUI3.Extensions
     {
         private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
-        public static LyricsWindowStatus DesktopMode()
+        public static LyricsWindowStatus DesktopMode(Window? window = null)
         {
-            return new LyricsWindowStatus
+            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            return new LyricsWindowStatus(window)
             {
                 Name = _resourceService.GetLocalizedString("DesktopMode"),
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 WindowBounds = new Rect(100, 100, 600, 250),
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
-                IsBorderless = true,
-                IsClickThrough = true,
+                IsLocked = true,
                 IsAdaptToEnvironment = true,
                 IsShownInSwitchers = false,
                 EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
@@ -36,15 +39,15 @@ namespace BetterLyrics.WinUI3.Extensions
             };
         }
 
-        public static LyricsWindowStatus DockedMode()
+        public static LyricsWindowStatus DockedMode(Window? window = null)
         {
-            var status = new LyricsWindowStatus
+            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            var status = new LyricsWindowStatus(window)
             {
                 Name = _resourceService.GetLocalizedString("DockedMode"),
                 IsWorkArea = true,
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
-                IsBorderless = true,
                 IsAdaptToEnvironment = true,
                 IsShownInSwitchers = false,
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
@@ -64,12 +67,12 @@ namespace BetterLyrics.WinUI3.Extensions
             return status;
         }
 
-        public static LyricsWindowStatus FullscreenMode()
+        public static LyricsWindowStatus FullscreenMode(Window? window = null)
         {
-            var status = new LyricsWindowStatus
+            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            var status = new LyricsWindowStatus(window)
             {
                 Name = _resourceService.GetLocalizedString("FullscreenMode"),
-                IsBorderless = true,
                 IsAlwaysOnTop = true,
                 TitleBarArea = TitleBarArea.None,
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
@@ -77,6 +80,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
                 },
+                IsFullscreen = true,
             };
             status.WindowBounds = new Rect(
                 status.MonitorBounds.X,
@@ -87,17 +91,19 @@ namespace BetterLyrics.WinUI3.Extensions
             return status;
         }
 
-        public static LyricsWindowStatus StandardMode()
+        public static LyricsWindowStatus StandardMode(Window? window = null)
         {
-            return new LyricsWindowStatus
+            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            return new LyricsWindowStatus(window)
             {
                 Name = _resourceService.GetLocalizedString("StandardMode"),
             };
         }
 
-        public static LyricsWindowStatus NarrowMode()
+        public static LyricsWindowStatus NarrowMode(Window? window = null)
         {
-            return new LyricsWindowStatus
+            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            return new LyricsWindowStatus(window)
             {
                 Name = _resourceService.GetLocalizedString("NarrowMode"),
                 WindowBounds = new Rect(100, 100, 400, 800),

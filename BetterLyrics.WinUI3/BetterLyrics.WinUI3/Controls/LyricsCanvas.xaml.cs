@@ -31,7 +31,13 @@ namespace BetterLyrics.WinUI3.Controls
     public sealed partial class LyricsCanvas : UserControl,
         IRecipient<PropertyChangedMessage<TimeSpan>>,
         IRecipient<PropertyChangedMessage<LyricsData?>>,
-        IRecipient<PropertyChangedMessage<SongInfo?>>
+        IRecipient<PropertyChangedMessage<SongInfo?>>,
+        IRecipient<PropertyChangedMessage<int>>,
+        IRecipient<PropertyChangedMessage<double>>,
+        IRecipient<PropertyChangedMessage<bool>>,
+        IRecipient<PropertyChangedMessage<TextAlignmentType>>,
+        IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
+        IRecipient<PropertyChangedMessage<string>>
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
@@ -123,14 +129,14 @@ namespace BetterLyrics.WinUI3.Controls
         public double ActualLyricsHeight => LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines);
         public int CurrentHoveringLineIndex => _mouseHoverLineIndex;
 
-        public LyricsWindowStatus LyricsWindowStatus
+        public LyricsWindowStatus? LyricsWindowStatus
         {
-            get { return (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty); }
+            get { return (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty); }
             set { SetValue(LyricsWindowStatusProperty, value); }
         }
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
-            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LyricsCanvas), new PropertyMetadata(default, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LyricsCanvas), new PropertyMetadata(null, OnDependencyPropertyChanged));
 
         public AlbumArtThemeColors AlbumArtThemeColors
         {
@@ -249,6 +255,12 @@ namespace BetterLyrics.WinUI3.Controls
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<TimeSpan>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsData?>>(this);
             WeakReferenceMessenger.Default.Register<PropertyChangedMessage<SongInfo?>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<int>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<double>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<bool>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<TextAlignmentType>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsFontWeight>>(this);
+            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<string>>(this);
 
             UpdateRenderLyricsLines();
         }
@@ -259,10 +271,6 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (e.Property == LyricsWindowStatusProperty)
                 {
-                    var oldValue = (LyricsWindowStatus?)e.OldValue;
-                    oldValue?.PropertyChanged -= canvas.LyricsWindowStatus_PropertyChanged;
-                    var newValue = (LyricsWindowStatus?)e.NewValue;
-                    newValue?.PropertyChanged += canvas.LyricsWindowStatus_PropertyChanged;
                     canvas._lyricsWindowStatus = (LyricsWindowStatus)e.NewValue;
                     canvas._isLayoutChanged = true;
                 }
@@ -331,11 +339,6 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        private void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            _isLayoutChanged = true;
-        }
-
         // ====
 
         private void Canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -376,7 +379,7 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsBg.IsPureColorOverlayEnabled
             );
 
-            _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity;
+            _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
             _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
             _fluidRenderer.Draw(sender, args.DrawingSession);
 
@@ -592,14 +595,17 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void Canvas_Unloaded(object sender, RoutedEventArgs e)
         {
-            Canvas.RemoveFromVisualTree();
-            Canvas = null;
-
             _fluidRenderer.Dispose();
             _snowRenderer.Dispose();
             _fogRenderer.Dispose();
             _spectrumRenderer.Dispose();
+
+            _renderLyricsLines = null;
+
             DisposeAnalyzer();
+
+            Canvas.RemoveFromVisualTree();
+            Canvas = null;
         }
 
         private async void Canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
@@ -741,6 +747,130 @@ namespace BetterLyrics.WinUI3.Controls
                 if (message.PropertyName == nameof(IMediaSessionsService.CurrentSongInfo))
                 {
                     ResetPlaybackState();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<int> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.PhoneticLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.OriginalLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.TranslatedLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontStrokeWidth))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.PlayingLineTopOffset))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
+            {
+                if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollDuration))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollTopDuration))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollBottomDuration))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollTopDelay))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollBottomDelay))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.FanLyricsAngle))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<double> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineSpacingFactor))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
+            {
+                if (message.PropertyName == nameof(LyricsEffectSettings.IsFanLyricsEnabled))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsBlurEffectEnabled))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.IsDynamicLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<TextAlignmentType> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsAlignmentType))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsFontWeight> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontWeight))
+                {
+                    _isLayoutChanged = true;
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<string> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
+                {
+                    _isLayoutChanged = true;
                 }
             }
         }

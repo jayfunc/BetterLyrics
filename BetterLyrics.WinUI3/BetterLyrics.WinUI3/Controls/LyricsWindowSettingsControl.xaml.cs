@@ -47,7 +47,9 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
                 {
-                    // TODO  处理状态被删除后的逻辑：提示用户？直接关闭对应窗口如果已经打开？
+                    var windows = WindowHook.GetWindows<NowPlayingWindow>();
+                    var window = windows.FirstOrDefault(x => x.LyricsWindowStatus == data);
+                    window?.CloseWindow();
                     ViewModel.AppSettings.WindowBoundsRecords.Remove(data);
                 }
             }
@@ -178,7 +180,7 @@ namespace BetterLyrics.WinUI3.Controls
             else
             {
                 var openedWindows = WindowHook.GetWindows<NowPlayingWindow>();
-                foreach (var item in openedWindows.Where(x => x.Status != status))
+                foreach (var item in openedWindows.Where(x => x.LyricsWindowStatus != status))
                 {
                     item.CloseWindow();
                 }

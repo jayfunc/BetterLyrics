@@ -14,17 +14,17 @@
         <Frame x:Name="RootFrame" Margin="0,40,0,0" />
 
         <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-            <Button
-                x:Name="LyricsWindowButton"
-                Click="LyricsWindowButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                      FontSize=12,
-                                      Glyph=&#xE90B;}"
-                Style="{StaticResource TitleBarButtonStyle}">
+
+            <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
+                <FontIcon
+                    FontFamily="{StaticResource IconFontFamily}"
+                    FontSize="12"
+                    Glyph="&#xE8AB;" />
                 <ToolTipService.ToolTip>
-                    <ToolTip x:Uid="SettingsPageLyricsWindowToolTip" />
+                    <ToolTip x:Uid="LyricsWindowSwitchButtonToolTip" />
                 </ToolTipService.ToolTip>
             </Button>
+
             <Button
                 Click="MusicGalleryButton_Click"
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},

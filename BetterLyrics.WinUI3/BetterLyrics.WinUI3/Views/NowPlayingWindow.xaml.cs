@@ -16,12 +16,15 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
+using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 using WinRT.Interop;
@@ -34,14 +37,12 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<BitmapDecoder?>>
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
+        private OverlayInputHelper? _overlayInputHelper = null;
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
         private Color _backdropAccentColor = Colors.Transparent;
 
-        private List<Color> _lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-        private List<Color> _darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-
-        public LyricsWindowStatus Status { get; private set; }
+        public LyricsWindowStatus LyricsWindowStatus { get; private set; }
 
         public NowPlayingWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<NowPlayingWindowViewModel>();
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
@@ -53,8 +54,8 @@ namespace BetterLyrics.WinUI3.Views
 
             _fgWindowWatcherTimer = DispatcherQueue.CreateTimer();
 
-            Status = status;
-            NowPlayingPage.LyricsWindowStatus = Status;
+            LyricsWindowStatus = status;
+            NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
 
             this.Init("LyricsPageTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
 
@@ -71,101 +72,119 @@ namespace BetterLyrics.WinUI3.Views
 
         public async Task InitStatus()
         {
-            Status.PropertyChanged += LyricsWindowStatus_PropertyChanged;
+            LyricsWindowStatus.PropertyChanged += LyricsWindowStatus_PropertyChanged;
 
-            Status.IsLyricsWindowStatusRefreshing = true;
+            LyricsWindowStatus.IsLyricsWindowStatusRefreshing = true;
 
-            Status.UpdateMonitorBounds();
+            LyricsWindowStatus.UpdateMonitorBounds();
 
-            this.SetIsWorkArea(Status.IsWorkArea);
-            if (Status.IsWorkArea)
+            this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
+            if (LyricsWindowStatus.IsWorkArea)
             {
                 this.UpdateWorkArea();
             }
             await Task.Delay(300);
 
-            this.SetIsShowInSwitchers(Status.IsShownInSwitchers);
-            this.SetIsAlwaysOnTop(Status.IsAlwaysOnTop);
+            this.SetIsShowInSwitchers(LyricsWindowStatus.IsShownInSwitchers);
+            this.SetIsAlwaysOnTop(LyricsWindowStatus.IsAlwaysOnTop);
+            PinFillFontIcon.Opacity = LyricsWindowStatus.IsAlwaysOnTop ? 1 : 0;
 
-            this.SetIsClickThrough(Status.IsClickThrough);
-            this.SetIsBorderless(Status.IsBorderless);
+            this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen);
+            EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
+            ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
 
-            this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
-            this.SetTitleBarArea(Status.TitleBarArea);
+            this.SetIsMaximized(LyricsWindowStatus.IsMaximized);
+            EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
+            ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
 
-            // 下述代码可以删除，但是为了避免给用户造成操作上的疑虑，暂时保留
-            if (Status.IsWorkArea)
+            this.SetIsLocked(LyricsWindowStatus.IsLocked);
+            if (LyricsWindowStatus.IsLocked)
             {
-                Status.WindowBounds = Status.GetWindowBoundsWhenWorkArea();
+                LockToggleButton.IsChecked = true;
+                StartOverlayInputHelper();
+            }
+            else
+            {
+                LockToggleButton.IsChecked = false;
+                StopOverlayInputHelper();
             }
 
-            this.MoveAndResize(Status.WindowBounds);
-            Status.WindowX = Status.WindowBounds.X;
-            Status.WindowY = Status.WindowBounds.Y;
-            Status.WindowWidth = Status.WindowBounds.Width;
-            Status.WindowHeight = Status.WindowBounds.Height;
+            this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
+            this.SetTitleBarArea(LyricsWindowStatus.TitleBarArea);
 
-            Status.UpdateDemoWindowAndMonitorBounds();
+            // 下述代码可以删除，但是为了避免给用户造成操作上的疑虑，暂时保留
+            if (LyricsWindowStatus.IsWorkArea)
+            {
+                LyricsWindowStatus.WindowBounds = LyricsWindowStatus.GetWindowBoundsWhenWorkArea();
+            }
 
-            Status.IsLyricsWindowStatusRefreshing = false;
+            this.MoveAndResize(LyricsWindowStatus.WindowBounds);
+
+            LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
+
+            LyricsWindowStatus.IsLyricsWindowStatusRefreshing = false;
         }
 
         private async void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(LyricsWindowStatus.IsWorkArea):
-                    Status.IsLyricsWindowStatusRefreshing = true;
-                    this.SetIsWorkArea(Status.IsWorkArea);
-                    Status.IsLyricsWindowStatusRefreshing = false;
-                    if (Status.IsWorkArea)
+                case nameof(Models.LyricsWindowStatus.IsWorkArea):
+                    LyricsWindowStatus.IsLyricsWindowStatusRefreshing = true;
+                    this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
+                    LyricsWindowStatus.IsLyricsWindowStatusRefreshing = false;
+                    if (LyricsWindowStatus.IsWorkArea)
                     {
-                        this.MoveAndResize(Status.GetWindowBoundsWhenWorkArea());
+                        this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
-                case nameof(LyricsWindowStatus.DockHeight):
-                case nameof(LyricsWindowStatus.DockPlacement):
-                case nameof(LyricsWindowStatus.MonitorDeviceName):
-                    Status.UpdateMonitorBounds();
-                    if (Status.IsWorkArea)
+                case nameof(Models.LyricsWindowStatus.DockHeight):
+                case nameof(Models.LyricsWindowStatus.DockPlacement):
+                case nameof(Models.LyricsWindowStatus.MonitorDeviceName):
+                    LyricsWindowStatus.UpdateMonitorBounds();
+                    if (LyricsWindowStatus.IsWorkArea)
                     {
-                        Status.IsLyricsWindowStatusRefreshing = true;
+                        LyricsWindowStatus.IsLyricsWindowStatusRefreshing = true;
                         this.UpdateWorkArea();
-                        Status.IsLyricsWindowStatusRefreshing = false;
-                        this.MoveAndResize(Status.GetWindowBoundsWhenWorkArea());
+                        LyricsWindowStatus.IsLyricsWindowStatusRefreshing = false;
+                        this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                     break;
-                case nameof(LyricsWindowStatus.IsShownInSwitchers):
-                    this.SetIsShowInSwitchers(Status.IsShownInSwitchers);
+                case nameof(Models.LyricsWindowStatus.IsShownInSwitchers):
+                    this.SetIsShowInSwitchers(LyricsWindowStatus.IsShownInSwitchers);
                     break;
-                case nameof(LyricsWindowStatus.IsAlwaysOnTop):
-                    this.SetIsAlwaysOnTop(Status.IsAlwaysOnTop);
+                case nameof(Models.LyricsWindowStatus.IsAlwaysOnTop):
+                    this.SetIsAlwaysOnTop(LyricsWindowStatus.IsAlwaysOnTop);
+                    PinFillFontIcon.Opacity = LyricsWindowStatus.IsAlwaysOnTop ? 1 : 0;
                     break;
-                case nameof(LyricsWindowStatus.IsClickThrough):
-                    this.SetIsClickThrough(Status.IsClickThrough);
+                case nameof(Models.LyricsWindowStatus.IsLocked):
+                    this.SetIsLocked(LyricsWindowStatus.IsLocked);
+                    if (LyricsWindowStatus.IsLocked)
+                    {
+                        StartOverlayInputHelper();
+                    }
+                    else
+                    {
+                        StopOverlayInputHelper();
+                    }
                     break;
-                case nameof(LyricsWindowStatus.IsBorderless):
-                    this.SetIsBorderless(Status.IsBorderless);
+                case nameof(Models.LyricsWindowStatus.IsFullscreen):
+                    this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen);
+                    EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
+                    ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
                     break;
-                case nameof(LyricsWindowStatus.WindowX):
-                    this.MoveAndResize(Status.WindowBounds.WithX(Status.WindowX));
+                case nameof(Models.LyricsWindowStatus.IsMaximized):
+                    this.SetIsMaximized(LyricsWindowStatus.IsMaximized);
+                    EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
+                    ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
                     break;
-                case nameof(LyricsWindowStatus.WindowY):
-                    this.MoveAndResize(Status.WindowBounds.WithY(Status.WindowY));
+                case nameof(Models.LyricsWindowStatus.TitleBarArea):
+                    this.SetTitleBarArea(LyricsWindowStatus.TitleBarArea);
                     break;
-                case nameof(LyricsWindowStatus.WindowWidth):
-                    this.MoveAndResize(Status.WindowBounds.WithWidth(Status.WindowWidth));
-                    break;
-                case nameof(LyricsWindowStatus.WindowHeight):
-                    this.MoveAndResize(Status.WindowBounds.WithHeight(Status.WindowHeight));
-                    break;
-                case nameof(LyricsWindowStatus.TitleBarArea):
-                    this.SetTitleBarArea(Status.TitleBarArea);
-                    break;
-                case nameof(LyricsWindowStatus.AutoShowOrHideWindow):
+                case nameof(Models.LyricsWindowStatus.AutoShowOrHideWindow):
                     this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
                     break;
-                case nameof(LyricsWindowStatus.LyricsBackgroundSettings):
+                case nameof(Models.LyricsWindowStatus.LyricsBackgroundSettings):
                     await UpdateAlbumArtThemeColorsAsync();
                     break;
                 default:
@@ -177,8 +196,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             _backdropAccentColor = Helper.ColorHelper.GetAccentColor(
                 hwnd,
-                Status.MonitorDeviceName,
-                Status.EnvironmentSampleMode);
+                LyricsWindowStatus.MonitorDeviceName,
+                LyricsWindowStatus.EnvironmentSampleMode);
             UpdateAlbumArtThemeColorsAsync();
         }
 
@@ -192,14 +211,14 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     _fgWindowWatcherTimer?.Debounce(() =>
                     {
-                        if (Status.IsAlwaysOnTop &&
-                            Status.IsAlwaysOnTopPolling &&
+                        if (LyricsWindowStatus.IsAlwaysOnTop &&
+                            LyricsWindowStatus.IsAlwaysOnTopPolling &&
                             this.AppWindow != null &&
                             this.AppWindow.Presenter is OverlappedPresenter presenter)
                         {
                             presenter.IsAlwaysOnTop = true;
                         }
-                        if (Status.IsAdaptToEnvironment)
+                        if (LyricsWindowStatus.IsAdaptToEnvironment)
                         {
                             UpdateBackdropAccentColor(hwnd);
                         }
@@ -212,129 +231,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private async Task UpdateAlbumArtThemeColorsAsync()
         {
-            if (_mediaSessionsService.AlbumArtBitmapDecoder is BitmapDecoder decoder)
-            {
-                var lightPalette = await ImageHelper.GetAccentColorsAsync(_mediaSessionsService.AlbumArtBitmapDecoder, 4, Status.LyricsBackgroundSettings.PaletteGeneratorType, false);
-                var darkPalette = await ImageHelper.GetAccentColorsAsync(_mediaSessionsService.AlbumArtBitmapDecoder, 4, Status.LyricsBackgroundSettings.PaletteGeneratorType, true);
-                _lightAccentColors = lightPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-                _darkAccentColors = darkPalette.Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            }
-
-            var result = new AlbumArtThemeColors();
-            result.EnvColor = _backdropAccentColor;
-
-            ElementTheme themeTypeSent;
-            if (Status.IsAdaptToEnvironment)
-            {
-                themeTypeSent = Helper.ColorHelper.GetElementThemeFromBackgroundColor(result.EnvColor);
-            }
-            else
-            {
-                themeTypeSent = Status.LyricsBackgroundSettings.LyricsBackgroundTheme;
-            }
-
-            bool isLight = themeTypeSent switch
-            {
-                ElementTheme.Default => Application.Current.RequestedTheme == ApplicationTheme.Light,
-                ElementTheme.Light => true,
-                ElementTheme.Dark => false,
-                _ => false
-            };
-
-            Color adaptiveGrayedFontColor;
-            Color grayedEnvironmentalColor;
-            Color? adaptiveColoredFontColor;
-
-            Color darkColor = Colors.Black;
-            Color lightColor = Colors.White;
-
-            if (isLight)
-            {
-                adaptiveGrayedFontColor = darkColor;
-                // brightness = 0.7f;
-                grayedEnvironmentalColor = lightColor;
-
-                result.AccentColor1 = _lightAccentColors.ElementAtOrDefault(0);
-                result.AccentColor2 = _lightAccentColors.ElementAtOrDefault(1);
-                result.AccentColor3 = _lightAccentColors.ElementAtOrDefault(2);
-                result.AccentColor4 = _lightAccentColors.ElementAtOrDefault(3);
-            }
-            else
-            {
-                adaptiveGrayedFontColor = lightColor;
-                // brightness = 0.3f;
-                grayedEnvironmentalColor = darkColor;
-
-                result.AccentColor1 = _darkAccentColors.ElementAtOrDefault(0);
-                result.AccentColor2 = _darkAccentColors.ElementAtOrDefault(1);
-                result.AccentColor3 = _darkAccentColors.ElementAtOrDefault(2);
-                result.AccentColor4 = _darkAccentColors.ElementAtOrDefault(3);
-            }
-
-            if (Status.IsAdaptToEnvironment)
-            {
-                adaptiveColoredFontColor = Helper.ColorHelper.GetForegroundColor(result.EnvColor);
-            }
-            else
-            {
-                if (isLight)
-                    adaptiveColoredFontColor = _darkAccentColors.ElementAtOrDefault(0);
-                else
-                    adaptiveColoredFontColor = _lightAccentColors.ElementAtOrDefault(0);
-            }
-
-            result.ThemeType = themeTypeSent;
-
-            // 背景字色
-            switch (Status.LyricsStyleSettings.LyricsBgFontColorType)
-            {
-                case LyricsFontColorType.AdaptiveGrayed:
-                    result.BgFontColor = adaptiveGrayedFontColor;
-                    break;
-                case LyricsFontColorType.AdaptiveColored:
-                    result.BgFontColor = adaptiveColoredFontColor ?? adaptiveGrayedFontColor;
-                    break;
-                case LyricsFontColorType.Custom:
-                    result.BgFontColor = Status.LyricsStyleSettings.LyricsCustomBgFontColor;
-                    break;
-                default:
-                    result.BgFontColor = adaptiveGrayedFontColor;
-                    break;
-            }
-
-            // 前景字色
-            switch (Status.LyricsStyleSettings.LyricsFgFontColorType)
-            {
-                case LyricsFontColorType.AdaptiveGrayed:
-                    result.FgFontColor = adaptiveGrayedFontColor;
-                    break;
-                case LyricsFontColorType.AdaptiveColored:
-                    result.FgFontColor = adaptiveColoredFontColor ?? adaptiveGrayedFontColor;
-                    break;
-                case LyricsFontColorType.Custom:
-                    result.FgFontColor = Status.LyricsStyleSettings.LyricsCustomFgFontColor;
-                    break;
-                default:
-                    result.FgFontColor = adaptiveGrayedFontColor;
-                    break;
-            }
-
-            // 描边颜色
-            switch (Status.LyricsStyleSettings.LyricsStrokeFontColorType)
-            {
-                case LyricsFontColorType.AdaptiveGrayed:
-                    result.StrokeFontColor = grayedEnvironmentalColor.WithBrightness(0.7);
-                    break;
-                case LyricsFontColorType.AdaptiveColored:
-                    result.StrokeFontColor = result.EnvColor.WithBrightness(0.7);
-                    break;
-                case LyricsFontColorType.Custom:
-                    result.StrokeFontColor = Status.LyricsStyleSettings.LyricsCustomStrokeFontColor;
-                    break;
-                default:
-                    result.StrokeFontColor = Colors.Transparent;
-                    break;
-            }
+            var result = await _mediaSessionsService.CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus, _backdropAccentColor);
 
             NowPlayingPage.AlbumArtThemeColors = result;
             RootGrid.RequestedTheme = result.ThemeType;
@@ -381,7 +278,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
-            if (Status.IsLyricsWindowStatusRefreshing)
+            if (LyricsWindowStatus.IsLyricsWindowStatusRefreshing)
             {
                 return;
             }
@@ -397,7 +294,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    Status.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                    LyricsWindowStatus.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
                 }
             }
         }
@@ -435,6 +332,78 @@ namespace BetterLyrics.WinUI3.Views
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
             this.MinimizeWindow();
+        }
+
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 300 || RootGrid.ActualHeight < 100;
+        }
+
+        private void StartOverlayInputHelper()
+        {
+            _overlayInputHelper = new(this);
+            _overlayInputHelper.Register(RootGrid);
+            _overlayInputHelper.Register(LockToggleButtonContainer);
+            _overlayInputHelper.OnInteractiveAreaMoved = (args) =>
+            {
+                if (args.Elements.Contains(LockToggleButtonContainer))
+                {
+                    this.SetIsClickThrough(false);
+                }
+                else
+                {
+                    LockToggleButton.Opacity = 1;
+                    this.SetIsClickThrough(true);
+                }
+            };
+            _overlayInputHelper.OnInteractiveAreaExited = () =>
+            {
+                LockToggleButton.Opacity = 0;
+            };
+            _overlayInputHelper.Start();
+        }
+
+        private void StopOverlayInputHelper()
+        {
+            _overlayInputHelper?.Stop();
+            _overlayInputHelper = null;
+        }
+
+        private void LockToggleButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            LockToggleButton.Opacity = 1;
+        }
+
+        private void LockToggleButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            LockToggleButton.Opacity = 0;
+        }
+
+        private void LockToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LockToggleButton.IsChecked == true)
+            {
+                LyricsWindowStatus.IsLocked = true;
+            }
+            else
+            {
+                LyricsWindowStatus.IsLocked = false;
+            }
+        }
+
+        private void AOTButton_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsWindowStatus.IsAlwaysOnTop = !LyricsWindowStatus.IsAlwaysOnTop;
+        }
+
+        private void FullscreenButton_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsWindowStatus.IsFullscreen = !LyricsWindowStatus.IsFullscreen;
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsWindowStatus.IsMaximized = !LyricsWindowStatus.IsMaximized;
         }
 
         public void Receive(PropertyChangedMessage<bool> message)

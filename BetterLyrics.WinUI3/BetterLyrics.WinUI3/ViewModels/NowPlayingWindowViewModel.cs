@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3
 
         [ObservableProperty] public partial double TopCommandGridOpacity { get; set; } = 0;
 
-        [ObservableProperty] public partial double TitleBarFontSize { get; set; } = 14;
+        [ObservableProperty] public partial double TitleBarFontSize { get; set; } = 12;
 
     }
 }
