@@ -240,22 +240,22 @@
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>가사 제공자</value>
   </data>
-  <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
+  <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
     <value>가사를 수동으로 검색합니다</value>
   </data>
-  <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
+  <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
     <value>가사 창 관리 바로 가기 설정</value>
   </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>매치 퍼센트</value>
   </data>
-  <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
+  <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
     <value>재생 소스 빠른 설정</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>노래를 전환 할 때 0 으로 재설정하십시오</value>
   </data>
-  <data name="LyricsPageSettingsButtonToolTip.Content" xml:space="preserve">
+  <data name="LyricsPageSettings.Text" xml:space="preserve">
     <value>설정</value>
   </data>
   <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
@@ -513,6 +513,12 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리 - BetterLyrics</value>
   </data>
+  <data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
+    <value>다시 가져가세요</value>
+  </data>
+  <data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
+    <value>펼치기</value>
+  </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>협폭 조명</value>
   </data>
@@ -638,6 +644,9 @@
   </data>
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>자동 조정</value>
+  </data>
+  <data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
+    <value>프로그램이 시작되면 기본 가사 창이 자동으로 열립니다</value>
   </data>
   <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>앱이 시작되면 음악 라이브러리 창을 여세요</value>
@@ -813,6 +822,12 @@
   <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
     <value>부드러운 단계</value>
   </data>
+  <data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>현재 문자로 줄 시작</value>
+  </data>
+  <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
+    <value>긴 지속 시간 음절</value>
+  </data>
   <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
@@ -987,6 +1002,9 @@
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>로그 레코드</value>
   </data>
+  <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
+    <value>긴 음절 임계값</value>
+  </data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX 음악 서버</value>
   </data>
@@ -1067,9 +1085,6 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>글꼴 무게</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffect.Description" xml:space="preserve">
-    <value>지속 시간이 긴 음절에 대해 발광 효과를 활성화합니다</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>글로우 효과</value>
@@ -1158,6 +1173,9 @@
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>상단 및 하단 가장자리 불투명도</value>
   </data>
+  <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
+    <value>가사 창</value>
+  </data>
   <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
     <value>가사 창 관리자</value>
   </data>
@@ -1202,6 +1220,9 @@
   </data>
   <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
     <value>다중 창 공존 모드</value>
+  </data>
+  <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
+    <value>음악 갤러리</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>음악이나 가사를 저장하는 폴더 추가</value>
@@ -1265,9 +1286,6 @@
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>재생 소스가 캡처되지 않았습니다</value>
-  </data>
-  <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
-    <value>놀다</value>
   </data>
   <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
     <value>재생 소스</value>
@@ -1374,6 +1392,9 @@
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>온라인 리소스 공유 허브를 둘러보세요</value>
   </data>
+  <data name="SettingsPageShortcut.Text" xml:space="preserve">
+    <value>단축키</value>
+  </data>
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>이 핫키는 성공적으로 등록되지 않았습니다</value>
   </data>
@@ -1445,6 +1466,9 @@
   </data>
   <data name="SettingsPageStandardMode.Text" xml:space="preserve">
     <value>표준 모드</value>
+  </data>
+  <data name="SettingsPageStartup.Text" xml:space="preserve">
+    <value>시작</value>
   </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>윤곽선 색상</value>

@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 UnregisterWorkArea(hwnd);
             }
-            window.Status.IsOpened = false;
+            window.LyricsWindowStatus.IsOpened = false;
             window.Close();
         }
 
@@ -111,7 +111,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             var window = _activeWindows.Find(w =>
                 (typeof(T) != typeof(NowPlayingWindow) && w is T) ||
-                (typeof(T) == typeof(NowPlayingWindow) && w is T && ((NowPlayingWindow)w).Status == status)
+                (typeof(T) == typeof(NowPlayingWindow) && w is T && ((NowPlayingWindow)w).LyricsWindowStatus == status)
             );
 
             if (window == null)
@@ -144,6 +144,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     window = new SystemTrayWindow();
                     var systemTrayWindow = (SystemTrayWindow)window;
+                    systemTrayWindow.EnsureLyricsWindowStatus();
                     systemTrayWindow.InitShortcuts();
                 }
                 else
@@ -191,7 +192,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (typeof(T) == typeof(NowPlayingWindow))
             {
-                ((NowPlayingWindow)window).Status.IsOpened = true;
+                ((NowPlayingWindow)window).LyricsWindowStatus.IsOpened = true;
             }
 
             return (T)window;
@@ -256,20 +257,6 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
-        public static void SetIsClickThrough(this Window window, bool enable)
-        {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
-            if (enable)
-            {
-                window.SetExtendedWindowStyle(_defaultExtendedWindowStyle[hwnd] | ExtendedWindowStyle.Transparent | ExtendedWindowStyle.Layered);
-            }
-            else
-            {
-                window.SetExtendedWindowStyle(_defaultExtendedWindowStyle[hwnd]);
-            }
-        }
-
         public static void SetIsWorkArea(this NowPlayingWindow window, bool enable)
         {
             if (window == null) return;
@@ -278,11 +265,36 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (enable)
             {
-                RegisterWorkArea(hwnd, window.Status);
+                RegisterWorkArea(hwnd, window.LyricsWindowStatus);
             }
             else
             {
                 UnregisterWorkArea(hwnd);
+            }
+
+            SetIsBorderless(window, enable);
+        }
+
+        public static void SetIsLocked(this Window window, bool enable)
+        {
+            SetIsBorderless(window, enable);
+            SetIsClickThrough(window, enable);
+        }
+
+        public static void SetIsClickThrough(this Window window, bool enable)
+        {
+            IntPtr hwnd = WindowNative.GetWindowHandle(window);
+
+            if (_defaultExtendedWindowStyle.TryGetValue(hwnd, out var style))
+            {
+                if (enable)
+                {
+                    window.SetExtendedWindowStyle(style | ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
+                }
+                else
+                {
+                    window.SetExtendedWindowStyle(style);
+                }
             }
         }
 
@@ -290,13 +302,40 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             var hwnd = WindowNative.GetWindowHandle(window);
 
+            if (_defaultWindowStyle.TryGetValue(hwnd, out var style))
+            {
+                if (enable)
+                {
+                    window.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
+                }
+                else
+                {
+                    window.SetWindowStyle(style);
+                }
+            }
+        }
+
+        public static void SetIsFullscreen(this Window window, bool enable)
+        {
             if (enable)
             {
-                window.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
+                window.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             }
             else
             {
-                window.SetWindowStyle(_defaultWindowStyle[hwnd]);
+                window.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+            }
+        }
+
+        public static void SetIsMaximized(this Window window, bool enable)
+        {
+            if (enable)
+            {
+                window.Maximize();
+            }
+            else
+            {
+                window.Restore();
             }
         }
 
@@ -377,7 +416,7 @@ namespace BetterLyrics.WinUI3.Hooks
             if (!_workAreas.Contains(hwnd))
                 return;
 
-            var status = window.Status;
+            var status = window.LyricsWindowStatus;
 
             var uEdge = status.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
 
@@ -411,7 +450,7 @@ namespace BetterLyrics.WinUI3.Hooks
         /// <param name="dispatcherQueue">请确保此参数指向同一个对象，建议传值 BaseViewModel._dispatcherQueue</param>
         public static void SetLyricsWindowVisibilityByPlayingStatus(this NowPlayingWindow window, DispatcherQueue dispatcherQueue)
         {
-            var status = window.Status;
+            var status = window.LyricsWindowStatus;
 
             status.VisibilityTimer ??= dispatcherQueue.CreateTimer();
 
@@ -430,18 +469,18 @@ namespace BetterLyrics.WinUI3.Hooks
                     }
                     window.HideWindow();
                 }
-                else if (window.Status.AutoShowOrHideWindow && _mediaSessionsService.CurrentIsPlaying)
+                else if (window.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.CurrentIsPlaying)
                 {
-                    if (window.Status.IsWorkArea)
+                    if (window.LyricsWindowStatus.IsWorkArea)
                     {
                         status.IsLyricsWindowStatusRefreshing = true;
                         window.SetIsWorkArea(true);
                         status.IsLyricsWindowStatusRefreshing = false;
                     }
-                    OpenOrShowWindow<NowPlayingWindow>();
-                    if (window.Status.IsWorkArea)
+                    OpenOrShowWindow<NowPlayingWindow>(status);
+                    if (window.LyricsWindowStatus.IsWorkArea)
                     {
-                        window.MoveAndResize(window.Status.GetWindowBoundsWhenWorkArea());
+                        window.MoveAndResize(window.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                     }
                 }
             }, Constants.Time.DebounceTimeout);

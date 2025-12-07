@@ -28,12 +28,12 @@ namespace BetterLyrics.WinUI3.Views
     {
         private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
-        public MusicGalleryViewModel ViewModel => (MusicGalleryViewModel)DataContext;
+        public MusicGalleryPageViewModel ViewModel => (MusicGalleryPageViewModel)DataContext;
 
         public MusicGalleryPage()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<MusicGalleryViewModel>();
+            DataContext = Ioc.Default.GetRequiredService<MusicGalleryPageViewModel>();
             ViewModel.AppSettings.MusicGallerySettings.PropertyChanged += MusicGallerySettings_PropertyChanged;
         }
 
@@ -272,5 +272,6 @@ namespace BetterLyrics.WinUI3.Views
         {
             ScrollToPlayingItem();
         }
+
     }
 }

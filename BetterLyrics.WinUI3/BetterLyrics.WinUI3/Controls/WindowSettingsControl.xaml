@@ -87,39 +87,6 @@
                     </dev:SettingsExpander>
 
                     <dev:SettingsExpander
-                        x:Uid="SettingsPageWindowBounds"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xF16B;}"
-                        IsExpanded="True">
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard Header="X">
-                                <NumberBox
-                                    SmallChange="10"
-                                    SpinButtonPlacementMode="Inline"
-                                    Value="{x:Bind LyricsWindowStatus.WindowX, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Header="Y">
-                                <NumberBox
-                                    SmallChange="10"
-                                    SpinButtonPlacementMode="Inline"
-                                    Value="{x:Bind LyricsWindowStatus.WindowY, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageWidth">
-                                <NumberBox
-                                    SmallChange="10"
-                                    SpinButtonPlacementMode="Inline"
-                                    Value="{x:Bind LyricsWindowStatus.WindowWidth, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageHeight">
-                                <NumberBox
-                                    SmallChange="10"
-                                    SpinButtonPlacementMode="Inline"
-                                    Value="{x:Bind LyricsWindowStatus.WindowHeight, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
-
-                    <dev:SettingsExpander
                         x:Uid="SettingsPageAOT"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xE718;}"
@@ -138,14 +105,6 @@
 
                     <dev:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C4;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-
-                    <dev:SettingsCard x:Uid="SettingsPageClickThrough" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C9;}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsClickThrough, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-
-                    <dev:SettingsCard x:Uid="SettingsPageBorderless" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B2;}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsBorderless, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
                     <dev:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB41;}">

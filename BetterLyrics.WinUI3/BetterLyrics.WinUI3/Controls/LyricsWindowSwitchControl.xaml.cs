@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.Controls
             else
             {
                 var openedWindows = WindowHook.GetWindows<NowPlayingWindow>();
-                foreach (var item in openedWindows.Where(x => x.Status != status))
+                foreach (var item in openedWindows.Where(x => x.LyricsWindowStatus != status))
                 {
                     item.CloseWindow();
                 }

@@ -676,19 +676,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         }
 
-        // TODO  需要在此处更新翻译？
-        //public void Receive(PropertyChangedMessage<LyricsWindowStatus> message)
-        //{
-        //    if (message.Sender is LiveStates)
-        //    {
-        //        if (message.PropertyName == nameof(LiveStates.LyricsWindowStatus))
-        //        {
-        //            UpdateAlbumArtThemeColors();
-        //            UpdateTranslations();
-        //        }
-        //    }
-        //}
-
         public void Receive(PropertyChangedMessage<ChineseRomanization> message)
         {
             if (message.Sender is TranslationSettings)

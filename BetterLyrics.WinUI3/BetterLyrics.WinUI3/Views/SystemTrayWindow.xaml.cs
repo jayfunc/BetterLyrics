@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
@@ -66,6 +67,27 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
             int id = (int)e.Message.WParam;
             GlobalHotKeyHook.TryInvokeAction(id);
         }
+        else if (e.Message.MessageId == (uint)User32.WindowMessage.WM_WININICHANGE)
+        {
+            Debug.WriteLine("==========");
+        }
+    }
+
+    public void EnsureLyricsWindowStatus()
+    {
+        var records = _settingsService.AppSettings.WindowBoundsRecords;
+        var defaultLyricsWindowStatus = records.FirstOrDefault(x => x.IsDefault);
+        if (defaultLyricsWindowStatus == null)
+        {
+            defaultLyricsWindowStatus = LyricsWindowStatusExtensions.StandardMode(this);
+            defaultLyricsWindowStatus.IsDefault = true;
+            records.Add(defaultLyricsWindowStatus);
+            records.Add(LyricsWindowStatusExtensions.DesktopMode(this));
+            records.Add(LyricsWindowStatusExtensions.DockedMode(this));
+            records.Add(LyricsWindowStatusExtensions.NarrowMode(this));
+            records.Add(LyricsWindowStatusExtensions.FullscreenMode(this));
+            _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus = new(this);
+        }
     }
 
     private void UpdateLyricsWindowSwitchShortcut()
@@ -126,7 +148,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
                     }
                     else
                     {
-                        WindowHook.OpenOrShowWindow<NowPlayingWindow>(window.Status);
+                        WindowHook.OpenOrShowWindow<NowPlayingWindow>(window.LyricsWindowStatus);
                     }
                 }
             }

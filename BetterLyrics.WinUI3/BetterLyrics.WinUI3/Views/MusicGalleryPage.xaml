@@ -29,7 +29,7 @@
     </Page.Resources>
 
     <Grid>
-        <Grid Padding="12,0,12,0" ColumnSpacing="12">
+        <Grid Padding="12,0,12,64" ColumnSpacing="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
@@ -397,7 +397,11 @@
                                             <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Grid Grid.Column="0" CornerRadius="6">
+                                        <Grid
+                                            Grid.Column="0"
+                                            MaxWidth="48"
+                                            MaxHeight="48"
+                                            CornerRadius="4">
                                             <Image Source="{x:Bind EmbeddedPictures, Mode=OneWay, Converter={StaticResource PictureInfosToImageSourceConverter}}" Stretch="Uniform" />
                                         </Grid>
 

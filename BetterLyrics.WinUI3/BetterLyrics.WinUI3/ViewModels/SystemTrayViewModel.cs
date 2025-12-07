@@ -44,12 +44,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private static void OpenLyrics()
-        {
-            WindowHook.OpenOrShowWindow<NowPlayingWindow>();
-        }
-
-        [RelayCommand]
         private static void OpenLyricsWindowSwitch()
         {
             WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();

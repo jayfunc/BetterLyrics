@@ -95,8 +95,7 @@
                 <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="16,9,16,11" />
-                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="14,6,14,9" />
                 <Setter Property="Background" Value="Transparent" />
             </Style>
             <Style x:Key="GhostButtonStyle" TargetType="Button">
@@ -110,10 +109,10 @@
                 x:Key="TitleBarToggleButtonStyle"
                 BasedOn="{StaticResource ToggleButtonRevealStyle}"
                 TargetType="ToggleButton">
+                <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="VerticalAlignment" Value="Stretch" />
                 <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="16,9,16,11" />
+                <Setter Property="Padding" Value="14,6,14,9" />
                 <Setter Property="Background" Value="Transparent" />
             </Style>
             <Style x:Key="GhostToggleButtonStyle" TargetType="ToggleButton">

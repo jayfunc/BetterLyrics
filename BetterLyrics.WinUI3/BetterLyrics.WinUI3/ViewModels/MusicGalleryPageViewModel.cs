@@ -30,7 +30,7 @@ using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class MusicGalleryViewModel : BaseViewModel
+    public partial class MusicGalleryPageViewModel : BaseViewModel
     {
         private readonly ILibWatcherService _libWatcherService;
         private readonly ISettingsService _settingsService;
@@ -73,6 +73,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public PlayQueueItem? PlayingQueueItem => TrackPlayingQueue.ElementAtOrDefault(AppSettings.MusicGallerySettings.PlayQueueIndex);
 
         [ObservableProperty]
+        public partial Track? PlayingTrack { get; set; } = null;
+
+        [ObservableProperty]
         public partial CommonSongProperty SongOrderType { get; set; } = CommonSongProperty.Title;
 
         [ObservableProperty]
@@ -92,7 +95,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
 
-        public MusicGalleryViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, IResourceService resourceService)
+        public MusicGalleryPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, IResourceService resourceService)
         {
             _refreshSongsTimer = _dispatcherQueue.CreateTimer();
 
@@ -440,20 +443,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                var track = playQueueItem.Track;
+                PlayingTrack = playQueueItem.Track;
 
                 var updater = _smtc.DisplayUpdater;
                 updater.ClearAll();
 
                 _smtc.IsEnabled = true;
-                _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(track.Path));
+                _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(PlayingTrack.Path));
 
-                var storageFile = await StorageFile.GetFileFromPathAsync(track.Path);
+                var storageFile = await StorageFile.GetFileFromPathAsync(PlayingTrack.Path);
 
                 await updater.CopyFromFileAsync(MediaPlaybackType.Music, storageFile);
                 updater.AppMediaId = Package.Current.Id.FullName;
-                updater.MusicProperties.AlbumTitle = track.Album;
-                updater.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(track.Path)}");
+                updater.MusicProperties.AlbumTitle = PlayingTrack.Album;
+                updater.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(PlayingTrack.Path)}");
                 updater.Update();
             }
         }

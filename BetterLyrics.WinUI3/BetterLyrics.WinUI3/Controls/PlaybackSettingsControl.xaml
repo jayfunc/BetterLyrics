@@ -359,6 +359,10 @@
                             </StackPanel>
                         </Expander>
 
+                        <dev:SettingsCard x:Uid="SettingsPageListenNewSession">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
+                        </dev:SettingsCard>
+
                         <dev:SettingsCard x:Uid="SettingsPageForceWordByWordEffect">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsForceWordByWordEffect, Mode=TwoWay}" />
                         </dev:SettingsCard>

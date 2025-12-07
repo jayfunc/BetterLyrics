@@ -34,14 +34,14 @@ namespace BetterLyrics.WinUI3.Views
 
         public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
-        public LyricsWindowStatus LyricsWindowStatus
+        public LyricsWindowStatus? LyricsWindowStatus
         {
-            get { return (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty); }
+            get { return (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty); }
             set { SetValue(LyricsWindowStatusProperty, value); }
         }
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
-            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingPage), new PropertyMetadata(default, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingPage), new PropertyMetadata(null, OnDependencyPropertyChanged));
 
         public AlbumArtThemeColors AlbumArtThemeColors
         {
@@ -67,10 +67,6 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (e.Property == LyricsWindowStatusProperty)
                 {
-                    var oldValue = (LyricsWindowStatus?)e.OldValue;
-                    oldValue?.PropertyChanged -= page.LyricsWindowStatus_PropertyChanged;
-                    var newValue = (LyricsWindowStatus?)e.NewValue;
-                    newValue?.PropertyChanged += page.LyricsWindowStatus_PropertyChanged;
                     page.OnLayoutChanged();
                     page.RenderSongInfo();
                 }
@@ -81,23 +77,11 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            OnLayoutChanged();
-            RenderSongInfo();
-        }
-
-        private void CompositionTarget_Rendering(object? sender, object e)
-        {
-            var currentTime = LyricsCanvas.SongPosition.TotalSeconds;
-            TimelineSlider.Value = currentTime;
-        }
-
         // ==== SongInfo
 
         private void RenderTextBlock(TextBlock? sender, string? text, double fontSize)
         {
-            if (sender == null || text == null || fontSize == 0) return;
+            if (sender == null || text == null || fontSize == 0 || LyricsWindowStatus == null) return;
 
             var lyricsStyleSettings = LyricsWindowStatus.LyricsStyleSettings;
 
@@ -113,6 +97,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RenderSongInfo()
         {
+            if (LyricsWindowStatus == null) return;
+
             var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
 
             var albumArtLayoutSettings = LyricsWindowStatus.AlbumArtLayoutSettings;
@@ -128,6 +114,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateSongInfoOpacity()
         {
+            if (LyricsWindowStatus == null) return;
+
             switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -147,6 +135,8 @@ namespace BetterLyrics.WinUI3.Views
         // ==== AlbumArt
         private void UpdateAlbumArtOpacity()
         {
+            if (LyricsWindowStatus == null) return;
+
             switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -167,8 +157,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateTrackSummaryGridSpan()
         {
-            var status = LyricsWindowStatus;
-            switch (status.LyricsDisplayType)
+            if (LyricsWindowStatus == null) return;
+
+            switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
                     Grid.SetRowSpan(TrackSummaryGrid, 3);
@@ -177,7 +168,7 @@ namespace BetterLyrics.WinUI3.Views
                 case LyricsDisplayType.LyricsOnly:
                     break;
                 case LyricsDisplayType.SplitView:
-                    switch (status.LyricsLayoutOrientation)
+                    switch (LyricsWindowStatus.LyricsLayoutOrientation)
                     {
                         case LyricsLayoutOrientation.Horizontal:
                             Grid.SetRowSpan(TrackSummaryGrid, 3);
@@ -200,8 +191,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateSongInfoStackPanelSpan()
         {
-            var status = LyricsWindowStatus;
-            switch (status.LyricsLayoutOrientation)
+            if (LyricsWindowStatus == null) return;
+
+            switch (LyricsWindowStatus.LyricsLayoutOrientation)
             {
                 case LyricsLayoutOrientation.Horizontal:
                     Grid.SetRow(SongInfoStackPanel, 3);
@@ -222,8 +214,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateLyricsPlaceholderSpan()
         {
-            var status = LyricsWindowStatus;
-            switch (status.LyricsDisplayType)
+            if (LyricsWindowStatus == null) return;
+
+            switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
                     break;
@@ -234,7 +227,7 @@ namespace BetterLyrics.WinUI3.Views
                     Grid.SetColumnSpan(LyricsPlaceholder, 3);
                     break;
                 case LyricsDisplayType.SplitView:
-                    switch (status.LyricsLayoutOrientation)
+                    switch (LyricsWindowStatus.LyricsLayoutOrientation)
                     {
                         case LyricsLayoutOrientation.Horizontal:
                             Grid.SetRow(LyricsPlaceholder, 0);
@@ -261,8 +254,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateAlbumArtGridSpan()
         {
-            var status = LyricsWindowStatus;
-            switch (status.LyricsLayoutOrientation)
+            if (LyricsWindowStatus == null) return;
+
+            switch (LyricsWindowStatus.LyricsLayoutOrientation)
             {
                 case LyricsLayoutOrientation.Horizontal:
                     Grid.SetRow(AlbumArtGrid, 1);
@@ -285,6 +279,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateLyricsOpacity()
         {
+            if (LyricsWindowStatus == null) return;
+
             switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -301,8 +297,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateLyricsLayout()
         {
-            var status = LyricsWindowStatus;
-            switch (status.LyricsDisplayType)
+            if (LyricsWindowStatus == null) return;
+
+            switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
                     break;
@@ -313,7 +310,7 @@ namespace BetterLyrics.WinUI3.Views
                     LyricsCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
                     break;
                 case LyricsDisplayType.SplitView:
-                    switch (status.LyricsLayoutOrientation)
+                    switch (LyricsWindowStatus.LyricsLayoutOrientation)
                     {
                         case LyricsLayoutOrientation.Horizontal:
                             LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth + TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth;
@@ -340,9 +337,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateGap()
         {
-            var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
+            if (LyricsWindowStatus == null) return;
 
-            var status = LyricsWindowStatus;
+            var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
 
             double height = RootGrid.ActualHeight;
             double width = RootGrid.ActualWidth;
@@ -356,7 +353,7 @@ namespace BetterLyrics.WinUI3.Views
             double xMargin = 0;
             double yMargin = 0;
 
-            switch (status.LyricsLayoutOrientation)
+            switch (LyricsWindowStatus.LyricsLayoutOrientation)
             {
                 case LyricsLayoutOrientation.Horizontal:
                     if (width < 800)
@@ -377,7 +374,7 @@ namespace BetterLyrics.WinUI3.Views
                         gapBetweenTrackSummaryAndLyrics = 0;
                     }
                     TrackSummaryGridCol0.Width = new(1, GridUnitType.Star);
-                    switch (status.LyricsDisplayType)
+                    switch (LyricsWindowStatus.LyricsDisplayType)
                     {
                         case LyricsDisplayType.AlbumArtOnly:
                             TrackSummaryGridCol2.Width = new(0);
@@ -390,16 +387,16 @@ namespace BetterLyrics.WinUI3.Views
                             break;
                     }
                     TrackSummaryGridRow1.Height =
-                        status.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? new(1, GridUnitType.Star) : new(status.AlbumArtLayoutSettings.CoverImageHeight);
+                        LyricsWindowStatus.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? new(1, GridUnitType.Star) : new(LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageHeight);
                     break;
                 case LyricsLayoutOrientation.Vertical:
                     xMargin = Math.Max(16, minSize * 0.05);
                     yMargin = Math.Max(16, minSize * 0.05);
                     trackSummaryRowHeight =
-                        status.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? Math.Max(64, minSize * 0.25) : status.AlbumArtLayoutSettings.CoverImageHeight;
+                        LyricsWindowStatus.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? Math.Max(64, minSize * 0.25) : LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageHeight;
                     gapBetweenTrackSummaryAndLyrics = Math.Max(16, width * 0.15);
                     TrackSummaryGridCol0.Width = new(1, GridUnitType.Auto);
-                    switch (status.LyricsDisplayType)
+                    switch (LyricsWindowStatus.LyricsDisplayType)
                     {
                         case LyricsDisplayType.AlbumArtOnly:
                             TrackSummaryGridCol2.Width = new(0);
@@ -459,162 +456,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var width = e.NewSize.Width;
-            var height = e.NewSize.Height;
-
             RenderSongInfo();
             OnLayoutChanged();
-
-            if (width < 500 || height < 100)
-            {
-                if (BottomCommandGrid.Children.Count != 0)
-                {
-                    BottomCommandGrid.Children.Remove(BottomCommandContent);
-                    BottomCommandFlyoutContainer.Children.Add(BottomCommandContent);
-                }
-                BottomCommandFlyoutTriggerHint.Translation = new Vector3(0, 0, 0);
-            }
-            else
-            {
-                if (BottomCommandFlyoutContainer.Children.Count != 0)
-                {
-                    BottomCommandFlyout.Hide();
-                    BottomCommandFlyoutContainer.Children.Remove(BottomCommandContent);
-                    BottomCommandGrid.Children.Add(BottomCommandContent);
-                }
-                BottomCommandFlyoutTriggerHint.Translation = new Vector3(0, 12, 0);
-            }
-        }
-
-        private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (BottomCommandGrid.Children.Count != 0)
-            {
-                ViewModel.BottomCommandGridOpacity = 1f;
-            }
-            e.Handled = true;
-        }
-
-        private void BottomCommandGrid_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (BottomCommandGrid.Children.Count != 0)
-            {
-                ViewModel.BottomCommandGridOpacity = 0f;
-            }
-            e.Handled = true;
-        }
-
-        private void PlaybackSettingsShortcutButton_Click(object sender, RoutedEventArgs e)
-        {
-            PlaybackSettingsFlyout.Content = new PlaybackSettingsControl
-            {
-                MaxHeight = 500,
-                MaxWidth = 850,
-            };
-            PlaybackSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
-        }
-
-        private void VolumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            VolumeFlyout.ShowAt(BottomLeftCommandStackPanel);
-        }
-
-        private void BottomCommandFlyoutTrigger_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (BottomCommandFlyoutContainer.Children.Count != 0)
-            {
-                ViewModel.BottomCommandFlyoutTriggerOpacity = 1f;
-            }
-        }
-
-        private void BottomCommandFlyoutTrigger_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (BottomCommandFlyoutContainer.Children.Count != 0)
-            {
-                ViewModel.BottomCommandFlyoutTriggerOpacity = 0f;
-            }
-        }
-
-        private void BottomCommandFlyoutTrigger_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            if (BottomCommandFlyoutContainer.Children.Count != 0)
-            {
-                BottomCommandFlyout.ShowAt(BottomCommandFlyoutTrigger);
-            }
-        }
-
-        private void PlaybackSettingsFlyout_Closed(object sender, object e)
-        {
-            PlaybackSettingsFlyout.Content = null;
-        }
-
-        private void LyricsSettingsFlyout_Closed(object sender, object e)
-        {
-            LyricsSettingsFlyout.Content = null;
-        }
-
-        private void LyricsSettingsShortcutButton_Click(object sender, RoutedEventArgs e)
-        {
-            LyricsSettingsFlyout.Content = new LyricsWindowSettingsControl
-            {
-                MaxHeight = 500,
-                MaxWidth = 850,
-            };
-            LyricsSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
-        }
-
-        private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
-        }
-
-        private void TimelineSliderOverlay_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            var grid = (Grid)sender;
-            var pos = e.GetCurrentPoint(grid).Position;
-            var ratio = pos.X / grid.ActualWidth;
-            _mediaSessionsService.ChangePosition(TimelineSlider.Maximum * ratio);
-        }
-
-        private void TimelineSliderOverlay_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            float targetX;
-            var grid = (Grid)sender;
-            var pos = e.GetCurrentPoint(grid).Position;
-            var ratio = pos.X / grid.ActualWidth;
-            ViewModel.TimelineSliderThumbSeconds = TimelineSlider.Maximum * ratio;
-            if (pos.X + TimelineSliderLyricsLineInfo.ActualWidth > grid.ActualWidth)
-            {
-                targetX = (float)(grid.ActualWidth - TimelineSliderLyricsLineInfo.ActualWidth);
-            }
-            else
-            {
-                targetX = (float)pos.X;
-            }
-            TimelineSliderLyricsLineInfo.Translation = new Vector3(targetX, 0, 0);
-        }
-
-        private void TimelineSliderOverlay_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            ViewModel.TimelineSliderThumbOpacity = 0.7f;
-        }
-
-        private void TimelineSliderOverlay_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            ViewModel.TimelineSliderThumbOpacity = 0f;
-        }
-
-        private void RootGrid_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
-        {
-            if (BottomCommandFlyoutContainer.Children.Count != 0)
-            {
-                BottomCommandFlyout.ShowAt(BottomCommandFlyoutTrigger);
-            }
-        }
-
-        private void ExtendedSlider_ValueChangedByUser(object sender, Events.ExtendedSliderValueChangedByUserEventArgs e)
-        {
-            SystemVolumeHook.MasterVolume = ViewModel.Volume;
         }
 
         private void TitleAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -660,16 +503,6 @@ namespace BetterLyrics.WinUI3.Views
         private void AlbumAutoScrollHoverEffectView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             AlbumAutoScrollHoverEffectView.IsPlaying = false;
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            CompositionTarget.Rendering += CompositionTarget_Rendering;
-        }
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            CompositionTarget.Rendering -= CompositionTarget_Rendering;
         }
 
         private void LyricsPlaceholder_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -745,6 +578,73 @@ namespace BetterLyrics.WinUI3.Views
                     RenderSongInfo();
                     SongInfoStackPanel.Opacity = 1;
                     UpdateSongInfoOpacity();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsLayoutOrientation> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsLayoutOrientation))
+                {
+                    OnLayoutChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsDisplayType))
+                {
+                    OnLayoutChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<int> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
+            {
+                if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.SongInfoFontSize))
+                {
+                    RenderSongInfo();
+                }
+                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.CoverImageHeight))
+                {
+                    OnLayoutChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
+            {
+                if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoSongInfoFontSize))
+                {
+                    RenderSongInfo();
+                }
+                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
+                {
+                    OnLayoutChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<string> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
+                {
+                    RenderSongInfo();
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
+                {
+                    RenderSongInfo();
                 }
             }
         }

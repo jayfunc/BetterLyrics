@@ -14,9 +14,9 @@
         x:Name="TrayIcon"
         x:FieldModifier="public"
         ContextMenuMode="SecondWindow"
-        DoubleClickCommand="{x:Bind ViewModel.OpenLyricsCommand}"
+        DoubleClickCommand="{x:Bind ViewModel.OpenLyricsWindowSwitchCommand}"
         IconSource="ms-appx:///Assets/Logo.ico"
-        LeftClickCommand="{x:Bind ViewModel.OpenLyricsCommand}"
+        LeftClickCommand="{x:Bind ViewModel.OpenLyricsWindowSwitchCommand}"
         NoLeftClickDelay="True"
         ToolTipText="{x:Bind ViewModel.ToolTipText, Mode=OneWay}">
         <tb:TaskbarIcon.ContextFlyout>
@@ -39,11 +39,6 @@
                     Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE721;}" />
-                <MenuFlyoutItem
-                    x:Uid="SystemTrayLyrics"
-                    Command="{x:Bind ViewModel.OpenLyricsCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                       Glyph=&#xE90B;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayMusicGallery"
                     Command="{x:Bind ViewModel.OpenMusicGalleryCommand}"

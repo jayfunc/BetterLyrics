@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using DevWinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -131,7 +132,6 @@ namespace BetterLyrics.WinUI3.Renderer
             LinePlaybackState state,
             LyricsEffectSettings settings)
         {
-            var blur = line.BlurAmountTransition.Value;
             var playedOpacity = line.PlayedOriginalOpacityTransition.Value;
             var unplayedOpacity = line.UnplayedOriginalOpacityTransition.Value;
 
@@ -191,6 +191,16 @@ namespace BetterLyrics.WinUI3.Renderer
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ds"></param>
+        /// <param name="line"></param>
+        /// <param name="charIndex">遍历的字符索引</param>
+        /// <param name="exactProgressIndex">当前播放字符相对于整行的索引</param>
+        /// <param name="source"></param>
+        /// <param name="state"></param>
+        /// <param name="settings"></param>
         private void DrawSingleCharacter(
             CanvasDrawingSession ds,
             RenderLyricsLine line,
@@ -223,7 +233,16 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (settings.IsLyricsFloatAnimationEnabled)
             {
-                double targetFloatOffset = sourceCharRect.Height * 0.1;
+                double targetFloatOffset;
+                if (settings.IsLyricsFloatAnimationAmountAutoAdjust)
+                {
+                    targetFloatOffset = sourceCharRect.Height * 0.1;
+                }
+                else
+                {
+                    targetFloatOffset = settings.LyricsFloatAnimationAmount;
+                }
+
                 // 已经浮完了的
                 if (charIndex < curCharIndexInt)
                 {
@@ -240,22 +259,74 @@ namespace BetterLyrics.WinUI3.Renderer
                 {
                     floatOffset = -targetFloatOffset;
                 }
+
                 // 制造句间上浮过度动画，这里用任何一个 Transition 都行，主要是获取当前行的进入视野的 Progress
                 floatOffset *= line.YOffsetTransition.Progress;
             }
 
             var parentSyllable = line.LyricsSyllables.FirstOrDefault(x => x.StartIndex <= charIndex && charIndex < x.StartIndex + x.Text.Length);
 
-            if (parentSyllable != null && parentSyllable.IsLongDuration && parentSyllable.StartIndex == state.SyllableStartIndex)
+            if (settings.IsLyricsScaleEffectEnabled)
             {
-                if (settings.IsLyricsScaleEffectEnabled)
+                if (parentSyllable != null && parentSyllable.StartIndex == state.SyllableStartIndex)
                 {
-                    scale += Math.Sin(state.SyllableProgress * Math.PI) * 0.15;
+                    if (parentSyllable.DurationMs >= settings.LyricsScaleEffectLongSyllableDuration)
+                    {
+                        if (settings.IsLyricsScaleEffectAmountAutoAdjust)
+                        {
+                            scale += Math.Sin(state.SyllableProgress * Math.PI) * 0.15;
+                        }
+                        else
+                        {
+                            scale += Math.Sin(state.SyllableProgress * Math.PI) * (settings.LyricsScaleEffectAmount / 100.0 - 1);
+                        }
+                    }
                 }
-                if (settings.IsLyricsGlowEffectEnabled)
+            }
+
+            if (settings.IsLyricsGlowEffectEnabled)
+            {
+                double maxGlow;
+                if (settings.IsLyricsGlowEffectAmountAutoAdjust)
                 {
-                    glow = Math.Sin(state.SyllableProgress * Math.PI) * sourceCharRect.Height * 0.2;
-                    drawGlow = true;
+                    maxGlow = sourceCharRect.Height * 0.2;
+                }
+                else
+                {
+                    maxGlow = settings.LyricsGlowEffectAmount;
+                }
+                switch (settings.LyricsGlowEffectScope)
+                {
+                    case Enums.LyricsEffectScope.LongDurationSyllable:
+                        if (parentSyllable != null && parentSyllable.StartIndex == state.SyllableStartIndex)
+                        {
+                            if (parentSyllable.DurationMs >= settings.LyricsGlowEffectLongSyllableDuration)
+                            {
+                                glow = maxGlow * Math.Sin(state.SyllableProgress * Math.PI);
+                                drawGlow = true;
+                            }
+                        }
+                        break;
+                    case Enums.LyricsEffectScope.LineStartToCurrentChar:
+                        // 已经唱了的
+                        if (charIndex < curCharIndexInt)
+                        {
+                            glow = maxGlow;
+                            drawGlow = true;
+                        }
+                        // 正在唱的
+                        else if (charIndex == curCharIndexInt)
+                        {
+                            var p = exactProgressIndex - curCharIndexInt;
+                            glow = p * maxGlow;
+                            drawGlow = true;
+                        }
+                        // 还没唱的
+                        else { }
+                        glow *= Math.Clamp(line.OriginalText.Length - exactProgressIndex, 0, 1);
+                        break;
+                    default:
+                        break;
                 }
             }
 

@@ -168,6 +168,10 @@
                                 Style="{StaticResource AccentButtonStyle}" />
                         </dev:SettingsCard>
 
+                        <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                        </dev:SettingsCard>
+
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

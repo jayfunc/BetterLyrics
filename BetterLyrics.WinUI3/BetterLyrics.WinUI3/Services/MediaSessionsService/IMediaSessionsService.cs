@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
@@ -34,6 +35,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         BitmapDecoder? AlbumArtBitmapDecoder { get; }
         BitmapImage? AlbumArtBitmapImage { get; }
+
+        Task<AlbumArtThemeColors> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
 
         TranslationSearchProvider? TranslationSearchProvider { get; }
         LyricsSearchResult? CurrentLyricsSearchResult { get; }

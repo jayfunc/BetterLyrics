@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial List<string> PreviousSongShortcut { get; set; } = new List<string> { "Ctrl", "Alt", "Left" };
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool MultiNowPlayingWindowMode { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoStartLyricsWindow { get; set; } = true;
 
         public GeneralSettings() { }
     }
