@@ -178,6 +178,7 @@ namespace BetterLyrics.WinUI3.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             ViewModel.CancelRefreshSongs();
+            ViewModel.StopTrackCommand.Execute(null);
         }
 
         private void PlaylistFavButton_Click(object sender, RoutedEventArgs e)
@@ -270,6 +271,11 @@ namespace BetterLyrics.WinUI3.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            var settings = ViewModel.AppSettings.MusicGallerySettings;
+            if (settings.AutoPlay)
+            {
+                _ = ViewModel.PlayTrackAtAsync(settings.PlayQueueIndex);
+            }
             ScrollToPlayingItem();
         }
 

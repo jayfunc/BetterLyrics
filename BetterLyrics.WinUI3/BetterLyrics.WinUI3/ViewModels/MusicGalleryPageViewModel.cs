@@ -130,11 +130,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _libWatcherService = libWatcherService;
             _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
-
-            if (AppSettings.MusicGallerySettings.AutoPlay)
-            {
-                _ = PlayTrackAtAsync(AppSettings.MusicGallerySettings.PlayQueueIndex);
-            }
         }
 
         private void TrackPlayingQueue_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
