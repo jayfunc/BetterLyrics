@@ -240,23 +240,23 @@
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>
-  <data name="LyricsPageLyricsSearchButtonToolTip.Content" xml:space="preserve">
-    <value>手動檢索歌詞</value>
+  <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
+    <value>Manually search lyrics</value>
   </data>
-  <data name="LyricsPageLyricsSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>歌詞視窗管理快捷設定</value>
+  <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
+    <value>Lyrics Window Management Shortcut Settings</value>
   </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>Match percentage</value>
   </data>
-  <data name="LyricsPagePlaybackSourceButtonToolTip.Content" xml:space="preserve">
-    <value>播放源快捷設置</value>
+  <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
+    <value>Play source shortcut settings</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>切換歌曲時重置為 0</value>
   </data>
-  <data name="LyricsPageSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>設定</value>
+  <data name="LyricsPageSettings.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
     <value>歌詞時間偏移</value>
@@ -513,6 +513,12 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音樂庫 - BetterLyrics</value>
   </data>
+  <data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
+    <value>Retract</value>
+  </data>
+  <data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
+    <value>Unwrap</value>
+  </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>窄螢幕模式</value>
   </data>
@@ -638,6 +644,9 @@
   </data>
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>自動調整</value>
+  </data>
+  <data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
+    <value>Automatically opens the default lyrics window when the program starts</value>
   </data>
   <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>Open the music library window when the app starts</value>
@@ -813,6 +822,12 @@
   <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
     <value>平滑步進</value>
   </data>
+  <data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>Line start to current char</value>
+  </data>
+  <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
+    <value>Long duration syllable</value>
+  </data>
   <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
@@ -987,6 +1002,9 @@
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>日誌記錄</value>
   </data>
+  <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
+    <value>Long syllable threshold</value>
+  </data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX Music Server</value>
   </data>
@@ -1067,9 +1085,6 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>字體粗細</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffect.Description" xml:space="preserve">
-    <value>Enable glow effect for syllables with long duration</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>輝光效果</value>
@@ -1158,6 +1173,9 @@
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>上下邊緣不透明度</value>
   </data>
+  <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
+    <value>Lyrics window</value>
+  </data>
   <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
     <value>歌詞視窗管理</value>
   </data>
@@ -1202,6 +1220,9 @@
   </data>
   <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
     <value>Multi-window coexistence mode</value>
+  </data>
+  <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
+    <value>Music gallery</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>新增存放音樂或歌詞的資料夾</value>
@@ -1265,9 +1286,6 @@
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>沒有捕獲的播放源</value>
-  </data>
-  <data name="SettingsPagePlaybackShortcut.Text" xml:space="preserve">
-    <value>播放</value>
   </data>
   <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
     <value>Playback source</value>
@@ -1374,6 +1392,9 @@
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Browse online resources sharing hub</value>
   </data>
+  <data name="SettingsPageShortcut.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>該熱鍵未成功註冊</value>
   </data>
@@ -1445,6 +1466,9 @@
   </data>
   <data name="SettingsPageStandardMode.Text" xml:space="preserve">
     <value>標準模式</value>
+  </data>
+  <data name="SettingsPageStartup.Text" xml:space="preserve">
+    <value>Start</value>
   </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>描邊顏色</value>
