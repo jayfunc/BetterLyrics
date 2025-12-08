@@ -198,6 +198,9 @@
   <data name="Jyutping" xml:space="preserve">
     <value>광둥어 병음</value>
   </data>
+  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
+    <value>Please make sure at least one status is set to default</value>
+  </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>승인이 실패했습니다. 다시 시도하십시오</value>
   </data>
@@ -1223,6 +1226,9 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Music gallery</value>
+  </data>
+  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+    <value>Embedded lyrics window in music library</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>음악이나 가사를 저장하는 폴더 추가</value>
