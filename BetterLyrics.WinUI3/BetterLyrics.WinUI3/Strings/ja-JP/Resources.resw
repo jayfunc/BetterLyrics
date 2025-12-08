@@ -849,6 +849,9 @@
   <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>窓の中だ</value>
   </data>
+  <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>Exit the program when closing the music library window</value>
+  </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>歌詞ウィンドウを閉じてプログラムを終了してください</value>
   </data>
