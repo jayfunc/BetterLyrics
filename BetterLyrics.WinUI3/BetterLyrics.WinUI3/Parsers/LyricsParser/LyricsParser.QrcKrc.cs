@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 }
             }
 
-            LyricsDataArr.Add(new LyricsData(lyricsLines));
+            _lyricsDataArr.Add(new LyricsData(lyricsLines));
         }
 
     }

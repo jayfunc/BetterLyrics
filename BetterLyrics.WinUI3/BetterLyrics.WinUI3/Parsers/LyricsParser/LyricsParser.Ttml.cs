@@ -85,14 +85,14 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     ParseTtmlXRole(spans, romanLines, "x-roman", pStartMs, pEndMs);
                 }
 
-                LyricsDataArr.Add(new LyricsData(originalLines));
+                _lyricsDataArr.Add(new LyricsData(originalLines));
                 if (translationLines.Count > 0)
                 {
-                    LyricsDataArr.Add(new LyricsData(translationLines));
+                    _lyricsDataArr.Add(new LyricsData(translationLines));
                 }
                 if (romanLines.Count > 0)
                 {
-                    LyricsDataArr.Add(new LyricsData(romanLines) { LanguageCode = PhoneticHelper.RomanCode });
+                    _lyricsDataArr.Add(new LyricsData(romanLines) { LanguageCode = PhoneticHelper.RomanCode });
                 }
             }
             catch
