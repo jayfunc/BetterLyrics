@@ -670,18 +670,15 @@ namespace BetterLyrics.WinUI3.Controls
         private void UpdateRenderLyricsLines()
         {
             _renderLyricsLines = null;
-            if (_mediaSessionsService.CurrentLyricsData is LyricsData lyricsData)
+            _renderLyricsLines = _mediaSessionsService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine()
             {
-                _renderLyricsLines = lyricsData.LyricsLines.Select(x => new RenderLyricsLine()
-                {
-                    LyricsSyllables = x.LyricsSyllables,
-                    StartMs = x.StartMs,
-                    EndMs = x.EndMs,
-                    PhoneticText = x.PhoneticText,
-                    OriginalText = x.OriginalText,
-                    TranslatedText = x.TranslatedText
-                }).ToList();
-            }
+                LyricsSyllables = x.LyricsSyllables,
+                StartMs = x.StartMs,
+                EndMs = x.EndMs,
+                PhoneticText = x.PhoneticText,
+                OriginalText = x.OriginalText,
+                TranslatedText = x.TranslatedText
+            }).ToList();
         }
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)

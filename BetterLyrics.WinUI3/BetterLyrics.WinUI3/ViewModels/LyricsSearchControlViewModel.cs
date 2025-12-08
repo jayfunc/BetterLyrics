@@ -180,8 +180,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (value?.Raw != null)
             {
                 var lyricsParser = new LyricsParser();
-                lyricsParser.Parse(_mediaSessionsService.CurrentSongInfo, value);
-                LyricsDataArr = [.. lyricsParser.LyricsDataArr];
+                LyricsDataArr = [.. lyricsParser.Parse(value)];
             }
             else
             {

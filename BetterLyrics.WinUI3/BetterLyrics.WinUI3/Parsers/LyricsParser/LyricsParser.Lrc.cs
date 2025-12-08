@@ -73,7 +73,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 
             if (single)
             {
-                LyricsDataArr.Add(new LyricsData(lrcLines));
+                _lyricsDataArr.Add(new LyricsData(lrcLines));
             }
             else
             {
@@ -87,8 +87,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 }
 
                 // 初始化每种语言的歌词列表
-                int langStartIndex = LyricsDataArr.Count;
-                for (int i = 0; i < languageCount; i++) LyricsDataArr.Add(new LyricsData());
+                int langStartIndex = _lyricsDataArr.Count;
+                for (int i = 0; i < languageCount; i++) _lyricsDataArr.Add(new LyricsData());
 
                 // 遍历每个时间分组
                 if (grouped != null)
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                             if (langIdx < linesInGroup.Count)
                             {
                                 var lyricsLine = linesInGroup[langIdx];
-                                LyricsDataArr[langStartIndex + langIdx].LyricsLines.Add(lyricsLine);
+                                _lyricsDataArr[langStartIndex + langIdx].LyricsLines.Add(lyricsLine);
                             }
                             // 没有翻译行则不补原文，直接跳过
                         }
