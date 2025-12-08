@@ -1,11 +1,9 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using Microsoft.Win32;
 
 namespace BetterLyrics.WinUI3.Views
 {

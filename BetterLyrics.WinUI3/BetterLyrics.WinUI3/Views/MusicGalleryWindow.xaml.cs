@@ -1,6 +1,5 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -12,7 +11,6 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
-using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

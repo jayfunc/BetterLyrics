@@ -717,6 +717,9 @@
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>바로 가기 키를 클릭하세요</value>
   </data>
+  <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+    <value>닫기</value>
+  </data>
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>드롭다운 접기</value>
   </data>
@@ -728,6 +731,9 @@
   </data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>환경 설정</value>
+  </data>
+  <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <value>재생 소스 구성</value>
   </data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
     <value>접수</value>

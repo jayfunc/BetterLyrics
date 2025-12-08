@@ -53,7 +53,7 @@
             <!--  播放源列表  -->
             <Grid Grid.Row="1" Margin="36,0,36,4">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Config playback source" />
+                    <TextBlock x:Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                     <ComboBox
                         x:Name="MediaSourceProvidersListView"
                         HorizontalAlignment="Stretch"

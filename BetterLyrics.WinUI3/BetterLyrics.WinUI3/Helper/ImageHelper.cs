@@ -2,7 +2,6 @@
 
 using BetterLyrics.WinUI3.Enums;
 using Impressionist.Abstractions;
-using Microsoft.Graphics.Canvas;
 using System;
 using System.IO;
 using System.Linq;

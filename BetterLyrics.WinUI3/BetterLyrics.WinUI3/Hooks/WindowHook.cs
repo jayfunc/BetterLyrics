@@ -1,13 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;

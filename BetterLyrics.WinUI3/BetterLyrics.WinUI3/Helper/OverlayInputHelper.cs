@@ -2,9 +2,6 @@
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Text;
 using Vanara.PInvoke;
 using Windows.Foundation;
 
@@ -57,7 +54,7 @@ namespace BetterLyrics.WinUI3.Helper
             _timer.Stop();
         }
 
-        private void Timer_Tick(object sender, object e)
+        private void Timer_Tick(object? sender, object e)
         {
             User32.GetCursorPos(out var mousePoint);
 

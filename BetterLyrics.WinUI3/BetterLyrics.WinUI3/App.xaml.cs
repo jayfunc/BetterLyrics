@@ -25,7 +25,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
-using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {

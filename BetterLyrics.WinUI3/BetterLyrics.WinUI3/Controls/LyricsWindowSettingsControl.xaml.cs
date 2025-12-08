@@ -9,11 +9,9 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using NTextCat.Commons;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -194,6 +192,18 @@ namespace BetterLyrics.WinUI3.Controls
                 if (bar.SelectedItem is SelectorBarItem item)
                 {
                     ViewModel?.SelectorBarSelectedItemTag = item.Tag;
+                }
+            }
+        }
+
+        private void CloseStatusButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element)
+            {
+                if (element.DataContext is LyricsWindowStatus data)
+                {
+                    var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == data);
+                    window?.CloseWindow();
                 }
             }
         }

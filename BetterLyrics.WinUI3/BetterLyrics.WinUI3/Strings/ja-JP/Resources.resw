@@ -717,6 +717,9 @@
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>クリックスルーショートカットキー</value>
   </data>
+  <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>ドロップダウンを折りたたみます</value>
   </data>
@@ -728,6 +731,9 @@
   </data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>設定名</value>
+  </data>
+  <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <value>再生ソースを設定します</value>
   </data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
     <value>コピー</value>
