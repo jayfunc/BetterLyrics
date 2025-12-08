@@ -54,6 +54,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             await SetTranslatedTextAsync(settings, token);
             if (token.IsCancellationRequested) return;
 
+            SetCurrentLyricsData();
+
             IsTranslating = false;
         }
 
@@ -177,8 +179,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             SetCurrentLyricsData();
 
             await RefreshTranslationAsync(settings, token);
-
-            SetCurrentLyricsData();
         }
 
         private void ApplyChinesePreference()

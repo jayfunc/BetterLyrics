@@ -1,6 +1,4 @@
 ﻿using Microsoft.Graphics.Canvas.Text;
-using Microsoft.UI.Xaml;
-using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Markup;

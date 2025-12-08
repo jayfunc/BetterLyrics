@@ -24,10 +24,8 @@ using CommunityToolkit.WinUI;
 using EvtSource;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
@@ -35,7 +33,6 @@ using System.Threading.Tasks;
 using Vanara.Windows.Shell;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
-using Windows.UI;
 using WindowsMediaController;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
@@ -71,7 +68,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         public MediaSessionsService(
             ISettingsService settingsService,
             IAlbumArtSearchService albumArtSearchService,
-            ILyricsSearchService musicSearchService,
+            ILyricsSearchService lyricsSearchService,
             ILibWatcherService libWatcherService,
             IDiscordService discordService,
             ITranslateService libreTranslateService,
@@ -79,7 +76,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             _settingsService = settingsService;
             _albumArtSearchService = albumArtSearchService;
-            _lyrcsSearchService = musicSearchService;
+            _lyrcsSearchService = lyricsSearchService;
             _libWatcherService = libWatcherService;
             _translateService = libreTranslateService;
             _discordService = discordService;

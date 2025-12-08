@@ -717,6 +717,9 @@
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>点击穿透快捷键</value>
   </data>
+  <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+    <value>关闭</value>
+  </data>
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>折叠下拉列表</value>
   </data>
@@ -728,6 +731,9 @@
   </data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>配置名称</value>
+  </data>
+  <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <value>配置播放源</value>
   </data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
     <value>拷贝</value>

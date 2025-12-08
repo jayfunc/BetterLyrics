@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using DevWinUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;

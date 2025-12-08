@@ -10,7 +10,6 @@ using BetterLyrics.WinUI3.Renderer;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -20,9 +19,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
 

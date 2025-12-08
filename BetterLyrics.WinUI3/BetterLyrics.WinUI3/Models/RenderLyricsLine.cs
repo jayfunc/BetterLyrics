@@ -5,10 +5,7 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
-using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models

@@ -16,19 +16,11 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 using WinRT.Interop;
-using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.Views
 {

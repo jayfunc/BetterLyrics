@@ -1,16 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
-using Microsoft.Graphics.Canvas.Geometry;
-using Microsoft.Graphics.Canvas.Text;
-using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
-using System;
 using System.Collections.Generic;
-using System.Numerics;
-using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models
 {
