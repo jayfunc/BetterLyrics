@@ -59,6 +59,21 @@ namespace BetterLyrics.WinUI3.Extensions
                 LyricsSearchProvider.LocalTtmlFile => TranslationSearchProvider.LocalTtmlFile,
                 _ => null,
             };
+
+            public TransliterationSearchProvider? ToTransliterationSearchProvider() => provider switch
+            {
+                LyricsSearchProvider.LrcLib => TransliterationSearchProvider.LrcLib,
+                LyricsSearchProvider.QQ => TransliterationSearchProvider.QQ,
+                LyricsSearchProvider.Kugou => TransliterationSearchProvider.Kugou,
+                LyricsSearchProvider.Netease => TransliterationSearchProvider.Netease,
+                LyricsSearchProvider.AmllTtmlDb => TransliterationSearchProvider.AmllTtmlDb,
+                LyricsSearchProvider.AppleMusic => TransliterationSearchProvider.AppleMusic,
+                LyricsSearchProvider.LocalMusicFile => TransliterationSearchProvider.LocalMusicFile,
+                LyricsSearchProvider.LocalLrcFile => TransliterationSearchProvider.LocalLrcFile,
+                LyricsSearchProvider.LocalEslrcFile => TransliterationSearchProvider.LocalEslrcFile,
+                LyricsSearchProvider.LocalTtmlFile => TransliterationSearchProvider.LocalTtmlFile,
+                _ => null,
+            };
         }
     }
 }

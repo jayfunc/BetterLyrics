@@ -37,7 +37,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         Task<AlbumArtThemeColors> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
 
-        TranslationSearchProvider? TranslationSearchProvider { get; }
         LyricsSearchResult? CurrentLyricsSearchResult { get; }
     }
 }

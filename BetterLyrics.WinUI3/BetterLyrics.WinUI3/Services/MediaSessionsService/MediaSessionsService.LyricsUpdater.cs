@@ -27,10 +27,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         [ObservableProperty] public partial LyricsSearchResult? CurrentLyricsSearchResult { get; private set; }
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial TranslationSearchProvider? TranslationSearchProvider { get; private set; }
-
-        [ObservableProperty] public partial bool IsTranslating { get; set; } = false;
-
         private async Task RefreshLyricsAsync(CancellationToken token)
         {
             _logger.LogInformation("RefreshLyricsAsync");
@@ -42,7 +38,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
                     CurrentSongInfo,
-                    !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching,
+                    true,
                     CurrentMediaSourceProviderInfo?.LyricsSearchType,
                     token),
                 token);
