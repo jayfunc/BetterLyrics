@@ -143,6 +143,7 @@ namespace BetterLyrics.WinUI3.Views
             this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
             if (LyricsWindowStatus.IsWorkArea)
             {
+                LyricsWindowStatus.IsLocked = true;
                 this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
             }
         }
@@ -163,10 +164,12 @@ namespace BetterLyrics.WinUI3.Views
             this.SetIsLocked(LyricsWindowStatus.IsLocked);
             if (LyricsWindowStatus.IsLocked)
             {
+                LockToggleButton.IsChecked = true;
                 StartOverlayInputHelper();
             }
             else
             {
+                LockToggleButton.IsChecked = false;
                 StopOverlayInputHelper();
             }
         }
