@@ -252,15 +252,7 @@ namespace BetterLyrics.WinUI3.Controls
         {
             InitializeComponent();
 
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<TimeSpan>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsData?>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<SongInfo?>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<int>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<double>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<bool>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<TextAlignmentType>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<LyricsFontWeight>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<string>>(this);
+            WeakReferenceMessenger.Default.RegisterAll(this);
 
             UpdateRenderLyricsLines();
         }

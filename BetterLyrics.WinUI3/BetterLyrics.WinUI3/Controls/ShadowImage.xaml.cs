@@ -76,13 +76,13 @@ namespace BetterLyrics.WinUI3.Controls
         private void UpdateShadowCastGridCornerRadius()
         {
             var minSize = Math.Min(ShadowCastGrid.ActualHeight, ShadowCastGrid.ActualWidth);
-            ShadowCastGrid.CornerRadius = new(CornerRadiusAmount / 100.0 * minSize);
+            ShadowCastGrid.CornerRadius = new(CornerRadiusAmount / 100.0 * (minSize / 2));
         }
 
         private void UpdateShadowRectCornerRadius()
         {
             var minSize = Math.Min(ShadowRect.ActualHeight, ShadowRect.ActualWidth);
-            ShadowRect.CornerRadius = new(CornerRadiusAmount / 100.0 * minSize);
+            ShadowRect.CornerRadius = new(CornerRadiusAmount / 100.0 * (minSize / 2));
         }
 
         private void ShadowCastGrid_SizeChanged(object sender, SizeChangedEventArgs e)

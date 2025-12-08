@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -34,11 +35,11 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchType LyricsSearchType { get; set; } = LyricsSearchType.Sequential;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int MatchingThreshold { get; set; } = 0;
 
-        public string LogoPath => PlayerIDHelper.GetLogoPath(Provider);
+        [JsonIgnore] public string LogoPath => PlayerIDHelper.GetLogoPath(Provider);
 
-        public string? DisplayName => PlayerIDHelper.GetDisplayName(Provider);
+        [JsonIgnore] public string? DisplayName => PlayerIDHelper.GetDisplayName(Provider);
 
-        public bool IsLXMusic => PlayerIDHelper.IsLXMusic(Provider);
+        [JsonIgnore] public bool IsLXMusic => PlayerIDHelper.IsLXMusic(Provider);
 
         public MediaSourceProviderInfo()
         {

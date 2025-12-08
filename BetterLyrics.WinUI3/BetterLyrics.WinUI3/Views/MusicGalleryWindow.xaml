@@ -11,7 +11,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid">
+    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" Unloaded="RootGrid_Unloaded">
 
         <local:MusicGalleryPage x:Name="MusicGalleryPage" Margin="0,40,0,0" />
 

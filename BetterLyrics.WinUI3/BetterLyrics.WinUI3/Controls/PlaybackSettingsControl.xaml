@@ -22,8 +22,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" RowSpacing="18">
+        <Grid Grid.Column="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -42,51 +43,53 @@
                 </interactivity:DataTriggerBehavior>
             </interactivity:Interaction.Behaviors>
 
-            <!--  播放源列表  -->
-            <ListView
-                x:Name="MediaSourceProvidersListView"
+            <InfoBar
                 Grid.Row="0"
-                AllowDrop="True"
-                CanDragItems="True"
-                CanReorderItems="True"
-                DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
-                ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.HorizontalScrollMode="Enabled"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                ScrollViewer.VerticalScrollMode="Disabled"
-                SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:MediaSourceProviderInfo">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <ToolTipService.ToolTip>
-                                <ToolTip Content="{Binding Provider, Mode=OneWay}" />
-                            </ToolTipService.ToolTip>
-                            <FontIcon
-                                FontFamily="Segoe UI Symbol"
-                                FontSize="12"
-                                Glyph="&#x283F;" />
-                            <Grid
-                                Width="16"
-                                Height="16"
-                                CornerRadius="4">
-                                <ImageIcon Source="{Binding LogoPath}" />
-                            </Grid>
-                            <TextBlock
-                                MaxWidth="200"
-                                Text="{Binding DisplayName, Mode=OneWay}"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                IsClosable="False"
+                IsOpen="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened, Mode=OneWay}"
+                Message="音乐库窗口已打开，将忽略对其他播放源的监听"
+                Severity="Informational" />
 
-            <ScrollViewer Grid.Row="1" Style="{StaticResource SettingsScrollViewerStyle}">
+            <!--  播放源列表  -->
+            <Grid Grid.Row="1" Margin="36,0,36,4">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Config playback source" />
+                    <ComboBox
+                        x:Name="MediaSourceProvidersListView"
+                        HorizontalAlignment="Stretch"
+                        ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
+                        SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:MediaSourceProviderInfo">
+                                <Grid Padding="2,4" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <ToolTipService.ToolTip>
+                                        <ToolTip Content="{Binding Provider, Mode=OneWay}" />
+                                    </ToolTipService.ToolTip>
+                                    <Grid
+                                        Grid.Column="0"
+                                        Width="16"
+                                        Height="16"
+                                        CornerRadius="4">
+                                        <ImageIcon Source="{Binding LogoPath}" />
+                                    </Grid>
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding DisplayName, Mode=OneWay}"
+                                        TextWrapping="Wrap" />
+                                </Grid>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+
+            <!--  播放源配置  -->
+            <ScrollViewer Grid.Row="2" Style="{StaticResource SettingsScrollViewerStyle}">
                 <Grid Style="{StaticResource SettingsGridStyle}">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -269,6 +272,7 @@
 
         </Grid>
 
+        <!--  播放源空白占位  -->
         <StackPanel
             Grid.Column="0"
             HorizontalAlignment="Center"
@@ -294,6 +298,8 @@
                 HorizontalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
         </StackPanel>
+
+        <!--  右侧杂项设置  -->
         <Grid Grid.Column="1">
             <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                 <Grid Style="{StaticResource SettingsGridStyle}">
@@ -518,6 +524,7 @@
                 </Grid>
             </ScrollViewer>
         </Grid>
+
     </Grid>
 
 </UserControl>

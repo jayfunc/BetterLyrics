@@ -849,6 +849,9 @@
   <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>창문 안쪽</value>
   </data>
+  <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>음악 라이브러리 창을 닫을 때 프로그램을 종료하십시오</value>
+  </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>가사 창을 닫으면 프로그램을 종료하세요</value>
   </data>

@@ -12,7 +12,6 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
-
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslateService;
@@ -158,7 +157,22 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private bool IsMediaSourceEnabled(string id)
         {
-            return _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id)?.IsEnabled ?? true;
+            var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id);
+            if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened)
+            {
+                if (PlayerIDHelper.IsBetterLyrics(found?.Provider))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return found?.IsEnabled ?? true;
+            }
         }
 
         private bool IsMediaSourceTimelineSyncEnabled(string? id)
@@ -453,14 +467,12 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProps = null;
 
             var desiredSession = GetCurrentSession();
-            //if (desiredSession == null || desiredSession.ControlSession == null) return;
 
             try
             {
                 mediaProps = await desiredSession?.ControlSession?.TryGetMediaPropertiesAsync();
             }
             catch (Exception) { }
-            //if (desiredSession == null || desiredSession.ControlSession == null) return;
 
             MediaManager_OnAnyTimelinePropertyChanged(desiredSession, desiredSession?.ControlSession?.GetTimelineProperties());
             MediaManager_OnAnyMediaPropertyChanged(desiredSession, mediaProps);
@@ -642,23 +654,30 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 if (message.PropertyName == nameof(TranslationSettings.IsLibreTranslateEnabled))
                 {
-                    UpdateTranslations();
+                    UpdateLyrics();
                 }
                 else if (message.PropertyName == nameof(TranslationSettings.IsTranslationEnabled))
                 {
-                    UpdateTranslations();
+                    UpdateLyrics();
                 }
                 else if (message.PropertyName == nameof(TranslationSettings.IsChineseRomanizationEnabled))
                 {
-                    UpdateTranslations();
+                    UpdateLyrics();
                 }
                 else if (message.PropertyName == nameof(TranslationSettings.IsJapaneseRomanizationEnabled))
                 {
-                    UpdateTranslations();
+                    UpdateLyrics();
                 }
                 else if (message.PropertyName == nameof(TranslationSettings.IsTraditionalChineseEnabled))
                 {
                     UpdateLyrics();
+                }
+            }
+            else if (message.Sender is LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(MusicGallerySettings.LyricsWindowStatus.IsOpened))
+                {
+                    MediaManager_OnFocusedSessionChanged(null);
                 }
             }
         }
@@ -670,7 +689,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageCode))
                 {
                     _logger.LogInformation("Target LibreTranslate language code changed: {code}", _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
-                    UpdateTranslations();
+                    UpdateLyrics();
                 }
             }
 
@@ -682,7 +701,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 if (message.PropertyName == nameof(TranslationSettings.ChineseRomanization))
                 {
-                    UpdateTranslations();
+                    UpdateLyrics();
                 }
             }
         }

@@ -69,11 +69,9 @@ namespace BetterLyrics.WinUI3
 
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            // 先获取一个实例，确保初始化 LyricsWindowStatus
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-            // 设置托盘
-            WindowHook.OpenOrShowWindow<SystemTrayWindow>();
+            _ = new SystemTrayWindow();
 
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
             {

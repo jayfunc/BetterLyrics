@@ -155,8 +155,15 @@
             <Grid.TranslationTransition>
                 <Vector3Transition />
             </Grid.TranslationTransition>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <Grid Padding="36,0" Style="{StaticResource SettingsGridStyle}">
+            <Grid
+                Grid.Row="0"
+                Padding="36,0"
+                Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -178,77 +185,31 @@
                             Style="{StaticResource AccentButtonStyle}" />
                     </Grid>
 
-                    <Pivot x:Name="ConfigPivot" SelectionChanged="Pivot_SelectionChanged">
+                    <SelectorBar x:Name="ConfigSelectorBar" SelectionChanged="ConfigSelectorBar_SelectionChanged">
 
-                        <PivotItem x:Name="WindowPivotItem" Tag="Window">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="AppSettingsControlGeneral"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
+                        <SelectorBarItem
+                            x:Name="WindowSelectorBarItem"
+                            x:Uid="AppSettingsControlGeneral"
+                            Tag="Window" />
+                        <SelectorBarItem
+                            x:Name="LayoutSelectorBarItem"
+                            x:Uid="SettingsPageLayout"
+                            Tag="Layout" />
+                        <SelectorBarItem
+                            x:Name="AlbumArtStyleSelectorBarItem"
+                            x:Uid="SettingsPageAlbumStyle"
+                            Tag="AlbumArtStyle" />
+                        <SelectorBarItem x:Uid="SettingsPageAlbumEffect" Tag="AlbumArtEffect" />
+                        <SelectorBarItem x:Uid="SettingsPageLyricsStyle" Tag="LyricsStyle" />
+                        <SelectorBarItem x:Uid="SettingsPageLyricsEffect" Tag="LyricsEffect" />
+                        <SelectorBarItem x:Uid="SettingsPageBackgroundOverlay" Tag="LyricsBackground" />
 
-                        <PivotItem Tag="Layout">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="SettingsPageLayout"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Tag="AlbumArtStyle">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="SettingsPageAlbumStyle"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Tag="AlbumArtEffect">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="SettingsPageAlbumEffect"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Tag="LyricsStyle">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="SettingsPageLyricsStyle"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Tag="LyricsEffect">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="SettingsPageLyricsEffect"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Tag="LyricsBackground">
-                            <PivotItem.Header>
-                                <TextBlock
-                                    x:Uid="SettingsPageBackgroundOverlay"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource BodyTextBlockStyle}" />
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                    </Pivot>
+                    </SelectorBar>
 
                 </StackPanel>
             </Grid>
 
-            <controls:SwitchPresenter Margin="0,110,0,0" Value="{x:Bind ViewModel.ListViewSelectedItemTag, Mode=OneWay}">
+            <controls:SwitchPresenter Grid.Row="1" Value="{x:Bind ViewModel.SelectorBarSelectedItemTag, Mode=OneWay}">
                 <controls:SwitchPresenter.ContentTransitions>
                     <TransitionCollection>
                         <PopupThemeTransition />

@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Parsers.LyricsParser;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Lyricify.Lyrics.Helpers.General;
@@ -19,7 +20,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     public partial class MediaSessionsService : IMediaSessionsService
     {
         private LatestOnlyTaskRunner _refreshLyricsRunner = new();
-        private LatestOnlyTaskRunner _refreshTranslationRunner = new();
 
         private int _langIndex = 0;
         private List<LyricsData> _lyricsDataArr = [];
@@ -36,34 +36,33 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void SetCurrentLyricsData()
         {
-            CurrentLyricsData = _lyricsDataArr.ElementAtOrDefault(_langIndex);
+            App.Current.Resources.DispatcherQueue.TryEnqueue(() =>
+            {
+                CurrentLyricsData = _lyricsDataArr.ElementAtOrDefault(_langIndex);
+            });
         }
 
-        private async Task RefreshTranslationAsync(CancellationToken token)
+        private async Task RefreshTranslationAsync(TranslationSettings settings, CancellationToken token)
         {
             TranslationSearchProvider = null;
             _lyricsDataArr.ElementAtOrDefault(0)?.ClearTranslatedText();
 
-            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
-
             IsTranslating = true;
 
-            await SetPhoneticTextAsync(token);
-            await SetTranslatedTextAsync(token);
+            SetPhoneticText();
+
+            await SetTranslatedTextAsync(settings, token);
             if (token.IsCancellationRequested) return;
 
             IsTranslating = false;
-
-            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
-
         }
 
-        private async Task SetTranslatedTextAsync(CancellationToken token)
+        private async Task SetTranslatedTextAsync(TranslationSettings settings, CancellationToken token)
         {
-            if (!_settingsService.AppSettings.TranslationSettings.IsTranslationEnabled) return;
+            if (!settings.IsTranslationEnabled) return;
 
             _logger.LogInformation("SetTranslatedTextAsync");
-            string targetLangCode = _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode;
+            string targetLangCode = settings.SelectedTargetLanguageCode;
             _logger.LogInformation("Target language code: {TargetLangCode}", targetLangCode);
             string? originalText = _lyricsDataArr.FirstOrDefault()?.WrappedOriginalText;
             if (originalText == null) return;
@@ -88,7 +87,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _lyricsDataArr.FirstOrDefault()?.SetTranslatedText(_lyricsDataArr[found], 50);
                     TranslationSearchProvider = CurrentLyricsSearchResult?.Provider.ToTranslationSearchProvider();
                 }
-                else if (_settingsService.AppSettings.TranslationSettings.IsLibreTranslateEnabled)
+                else if (settings.IsLibreTranslateEnabled)
                 {
                     _logger.LogInformation("LibreTranslate is enabled, trying to translate lyrics...");
                     string translated = string.Empty;
@@ -110,7 +109,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
-        private async Task SetPhoneticTextAsync(CancellationToken token)
+        private void SetPhoneticText()
         {
             _logger.LogInformation("Showing phonetic text for lyrics...");
             string targetPhoneticCode = "";
@@ -145,14 +144,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         }
 
-        private async Task RefreshLyricsAsync(CancellationToken token)
+        private async Task RefreshLyricsAsync(TranslationSettings settings, CancellationToken token)
         {
             _logger.LogInformation("RefreshLyricsAsync");
 
             CurrentLyricsSearchResult = null;
             _lyricsDataArr = [LyricsData.GetLoadingPlaceholder()];
 
-            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
+            SetCurrentLyricsData();
 
             if (CurrentSongInfo != null)
             {
@@ -175,9 +174,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             // Show original first while loading phonetic and translated
             ApplyChinesePreference();
 
-            App.Current.Resources.DispatcherQueue.TryEnqueue(SetCurrentLyricsData);
+            SetCurrentLyricsData();
 
-            UpdateTranslations();
+            await RefreshTranslationAsync(settings, token);
+
+            SetCurrentLyricsData();
         }
 
         private void ApplyChinesePreference()
@@ -193,14 +194,13 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
-        public void UpdateLyrics()
+        public async void UpdateLyrics()
         {
-            _ = _refreshLyricsRunner.RunAsync(RefreshLyricsAsync);
+            await _refreshLyricsRunner.RunAsync(async (token) =>
+            {
+                await RefreshLyricsAsync(_settingsService.AppSettings.TranslationSettings, token);
+            });
         }
 
-        public void UpdateTranslations()
-        {
-            _ = _refreshTranslationRunner.RunAsync(RefreshTranslationAsync);
-        }
     }
 }

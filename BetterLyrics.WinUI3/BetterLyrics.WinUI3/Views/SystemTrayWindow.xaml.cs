@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -36,22 +37,27 @@ namespace BetterLyrics.WinUI3.Views;
 /// </summary>
 public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChangedMessage<List<string>>>
 {
-    private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+    private ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
 
-    private readonly WindowMessageMonitor _wmm;
+    private WindowMessageMonitor _wmm;
 
     public SystemTrayWindow()
     {
         InitializeComponent();
-        WeakReferenceMessenger.Default.Register<PropertyChangedMessage<List<string>>>(this);
         SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
 
         _wmm = new WindowMessageMonitor(this);
         _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
+
+        WeakReferenceMessenger.Default.RegisterAll(this);
+
+        InitShortcuts();
+
+        EnsureLyricsWindowStatus();
     }
 
-    public void InitShortcuts()
+    private void InitShortcuts()
     {
         UpdateLyricsWindowSwitchShortcut();
         UpdatePlayOrPauseSongShortcut();
@@ -67,13 +73,9 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
             int id = (int)e.Message.WParam;
             GlobalHotKeyHook.TryInvokeAction(id);
         }
-        else if (e.Message.MessageId == (uint)User32.WindowMessage.WM_WININICHANGE)
-        {
-            Debug.WriteLine("==========");
-        }
     }
 
-    public void EnsureLyricsWindowStatus()
+    private void EnsureLyricsWindowStatus()
     {
         var records = _settingsService.AppSettings.WindowBoundsRecords;
         if (records.Count == 0)
