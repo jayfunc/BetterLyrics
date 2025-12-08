@@ -279,6 +279,9 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>Translation provider</value>
   </data>
+  <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
+    <value>Transliteration source</value>
+  </data>
   <data name="LyricsParseError" xml:space="preserve">
     <value>Lyrics parsing failed</value>
   </data>
