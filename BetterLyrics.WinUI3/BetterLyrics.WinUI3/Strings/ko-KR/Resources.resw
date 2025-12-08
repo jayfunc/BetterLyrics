@@ -279,6 +279,9 @@
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>번역 제공자</value>
   </data>
+  <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
+    <value>음역 소스</value>
+  </data>
   <data name="LyricsParseError" xml:space="preserve">
     <value>가사 구문 분석에 실패했습니다</value>
   </data>

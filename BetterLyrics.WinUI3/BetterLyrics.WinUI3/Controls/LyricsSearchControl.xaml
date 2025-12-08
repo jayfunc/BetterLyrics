@@ -105,14 +105,6 @@
                                         <Run Text="*" />
                                         <Run x:Uid="ArtistsSplitHint" />
                                     </Paragraph>
-                                </RichTextBlock>
-
-                                <RichTextBlock
-                                    FontSize="12"
-                                    FontWeight="Bold"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Loaded="ArtistsSplitHintRichTextBlock_Loaded"
-                                    TextWrapping="Wrap">
                                     <Paragraph>
                                         <Run Text=";    ,    /    ；    、    ，" />
                                     </Paragraph>

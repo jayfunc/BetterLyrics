@@ -9,6 +9,8 @@ namespace BetterLyrics.WinUI3.Models
     public partial class LyricsSearchResult : ObservableObject, ICloneable
     {
         public LyricsSearchProvider Provider { get; set; }
+        public TranslationSearchProvider? TranslationProvider { get; set; }
+        public TransliterationSearchProvider? TransliterationProvider { get; set; }
 
         public string? Raw { get; set; }
 

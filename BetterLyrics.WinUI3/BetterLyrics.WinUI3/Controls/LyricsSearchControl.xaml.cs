@@ -25,25 +25,5 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.SelectedLyricsLine = e.OriginalSource as LyricsLine;
         }
 
-        private void ArtistsSplitHintRichTextBlock_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
-            if (sender is RichTextBlock richTextBlock)
-            {
-                TextHighlighter highlighter = new()
-                {
-                    Background = App.Current.Resources["AccentTextFillColorPrimaryBrush"] as SolidColorBrush,
-                    Ranges =
-                    {
-                        new() { StartIndex = 0, Length = 1 },
-                        new() { StartIndex = 5, Length = 1 },
-                        new() { StartIndex = 10, Length = 1 },
-                        new() { StartIndex = 15, Length = 1 },
-                        new() { StartIndex = 20, Length = 1 },
-                        new() { StartIndex = 25, Length = 1 },
-                    }
-                };
-                richTextBlock.TextHighlighters.Add(highlighter);
-            }
-        }
     }
 }
