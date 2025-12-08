@@ -6,13 +6,16 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class LyricsWindowSettingsControlViewModel : BaseViewModel
+    public partial class LyricsWindowSettingsControlViewModel : BaseViewModel,
+        IRecipient<PropertyChangedMessage<bool>>
     {
         private readonly ISettingsService _settingsService;
 
@@ -90,6 +93,28 @@ namespace BetterLyrics.WinUI3.ViewModels
             else
             {
                 CloseConfigPanel();
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is GeneralSettings)
+            {
+                if (message.PropertyName == nameof(GeneralSettings.MultiNowPlayingWindowMode))
+                {
+                    if (!message.NewValue && AppSettings.WindowBoundsRecords.Count(x => x.IsOpened) > 0)
+                    {
+                        var windows = WindowHook.GetWindows<NowPlayingWindow>();
+                        var latest = windows.Last();
+                        foreach (var item in windows)
+                        {
+                            if (item != latest)
+                            {
+                                item.CloseWindow();
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -198,6 +198,9 @@
   <data name="Jyutping" xml:space="preserve">
     <value>広東語のピンイン</value>
   </data>
+  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
+    <value>少なくとも1つのステータスがデフォルトに設定されていることを確認してください</value>
+  </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>承認が失敗しました、もう一度やり直してください</value>
   </data>
@@ -1223,6 +1226,9 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>ミュージックギャラリー</value>
+  </data>
+  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+    <value>歌詞ウィンドウが埋め込まれた音楽ライブラリ</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>音楽や歌詞を保存するフォルダーを追加します</value>

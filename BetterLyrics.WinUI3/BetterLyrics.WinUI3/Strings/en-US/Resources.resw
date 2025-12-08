@@ -198,6 +198,9 @@
   <data name="Jyutping" xml:space="preserve">
     <value>Cantonese pinyin</value>
   </data>
+  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
+    <value>Please make sure at least one status is set to default</value>
+  </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>Authorization failed, please try again</value>
   </data>
@@ -1223,6 +1226,9 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Music gallery</value>
+  </data>
+  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+    <value>Embedded lyrics window in music library</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Add folders storing music or lyrics</value>

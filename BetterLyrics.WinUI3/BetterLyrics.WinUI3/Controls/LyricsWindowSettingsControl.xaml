@@ -21,17 +21,7 @@
 
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                x:Uid="SettingsPageRecordedWindowStatus"
-                                Grid.Column="0"
-                                Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        </Grid>
+                        <TextBlock x:Uid="SettingsPageRecordedWindowStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <StackPanel Orientation="Horizontal" Spacing="3">
 
@@ -118,15 +108,14 @@
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Button
+                                                <ToggleButton
                                                     Grid.Column="0"
                                                     HorizontalAlignment="Stretch"
                                                     Click="SetDefaultMenuFlyoutItem_Click"
-                                                    IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                                    IsChecked="{Binding IsDefault, Mode=OneWay}">
                                                     <TextBlock x:Uid="LyricsWindowSettingsControlSetDefault" />
-                                                </Button>
+                                                </ToggleButton>
                                                 <Button
-                                                    x:Name="ConfigButton"
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Stretch"
                                                     Click="ConfigButton_Click">
@@ -139,8 +128,14 @@
                             </ListView>
                         </StackPanel>
 
-                        <dev:SettingsCard x:Uid="SettingsPageMultiNowPlayingWindows" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE81E;}">
+                        <dev:SettingsCard x:Uid="SettingsPageMultiNowPlayingWindows">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.MultiNowPlayingWindowMode, Mode=TwoWay}" />
+                        </dev:SettingsCard>
+
+                        <dev:SettingsCard x:Uid="SettingsPageMusicGalleryLyrics">
+                            <Button HorizontalAlignment="Stretch" Click="EmbeddedConfigButton_Click">
+                                <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
+                            </Button>
                         </dev:SettingsCard>
 
                     </StackPanel>
@@ -183,9 +178,9 @@
                             Style="{StaticResource AccentButtonStyle}" />
                     </Grid>
 
-                    <Pivot SelectionChanged="Pivot_SelectionChanged">
+                    <Pivot x:Name="ConfigPivot" SelectionChanged="Pivot_SelectionChanged">
 
-                        <PivotItem Tag="Window">
+                        <PivotItem x:Name="WindowPivotItem" Tag="Window">
                             <PivotItem.Header>
                                 <TextBlock
                                     x:Uid="AppSettingsControlGeneral"

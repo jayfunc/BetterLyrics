@@ -13,6 +13,7 @@ using NTextCat.Commons;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -61,8 +62,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (element.DataContext is LyricsWindowStatus data)
                 {
-                    ViewModel.AppSettings.WindowBoundsRecords.ForEach(x => x.IsDefault = false);
-                    data.IsDefault = true;
+                    data.IsDefault = !data.IsDefault;
                 }
             }
         }
@@ -164,7 +164,15 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
+            WindowPivotItem.Visibility = Visibility.Visible;
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
+            ViewModel.OpenConfigPanel();
+        }
+
+        private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowPivotItem.Visibility = Visibility.Collapsed;
+            LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
             ViewModel.OpenConfigPanel();
         }
 
@@ -187,5 +195,6 @@ namespace BetterLyrics.WinUI3.Controls
                 WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
             }
         }
+
     }
 }
