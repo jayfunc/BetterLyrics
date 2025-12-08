@@ -849,6 +849,9 @@
   <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>視窗內部</value>
   </data>
+  <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>Exit the program when closing the music library window</value>
+  </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>關閉歌詞視窗時退出程式</value>
   </data>
