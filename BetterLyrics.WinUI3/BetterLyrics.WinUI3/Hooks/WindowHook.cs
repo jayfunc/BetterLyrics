@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
@@ -30,8 +31,6 @@ namespace BetterLyrics.WinUI3.Hooks
         private static readonly Dictionary<HWND, WindowStyle> _defaultWindowStyle = [];
         private static readonly Dictionary<HWND, ExtendedWindowStyle> _defaultExtendedWindowStyle = [];
 
-        private static readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
-
         public static void HideWindow(this Window window)
         {
             window.Hide();
@@ -39,21 +38,16 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void CloseWindow(this Window window)
         {
-            if (window is Window w)
+            if (window is NowPlayingWindow nowPlayingWindow)
             {
-                w.Close();
-                _activeWindows.Remove(w);
+                if (GetWindowHandle(window) is IntPtr hwnd)
+                {
+                    UnregisterWorkArea(hwnd);
+                }
+                nowPlayingWindow.LyricsWindowStatus.IsOpened = false;
             }
-        }
-
-        public static void CloseWindow(this NowPlayingWindow window)
-        {
-            if (GetWindowHandle(window) is IntPtr hwnd)
-            {
-                UnregisterWorkArea(hwnd);
-            }
-            window.LyricsWindowStatus.IsOpened = false;
-            ((Window)window).CloseWindow();
+            window.Close();
+            _activeWindows.Remove(window);
         }
 
         public static void MinimizeWindow(this Window window)
@@ -140,13 +134,6 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     window = new LyricsWindowSwitchWindow();
                 }
-                else if (typeof(T) == typeof(SystemTrayWindow))
-                {
-                    window = new SystemTrayWindow();
-                    var systemTrayWindow = (SystemTrayWindow)window;
-                    systemTrayWindow.EnsureLyricsWindowStatus();
-                    systemTrayWindow.InitShortcuts();
-                }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));
@@ -155,14 +142,8 @@ namespace BetterLyrics.WinUI3.Hooks
                 TrackWindow(window);
                 var castedWindow = (Window)window;
 
-                if (typeof(T) == typeof(SystemTrayWindow))
-                {
-                }
-                else
-                {
-                    castedWindow.Restore();
-                    castedWindow.Activate();
-                }
+                castedWindow.Restore();
+                castedWindow.Activate();
 
                 if (typeof(T) == typeof(NowPlayingWindow))
                 {
@@ -438,7 +419,7 @@ namespace BetterLyrics.WinUI3.Hooks
         /// 
         /// </summary>
         /// <param name="dispatcherQueue">请确保此参数指向同一个对象，建议传值 BaseViewModel._dispatcherQueue</param>
-        public static void SetLyricsWindowVisibilityByPlayingStatus(this NowPlayingWindow window, DispatcherQueue dispatcherQueue)
+        public static void SetLyricsWindowVisibilityByPlayingStatus(this NowPlayingWindow window, bool isPlaying, DispatcherQueue dispatcherQueue)
         {
             var status = window.LyricsWindowStatus;
 
@@ -449,7 +430,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 var window = GetWindow<NowPlayingWindow>();
                 if (window == null) return;
 
-                if (status.AutoShowOrHideWindow && !_mediaSessionsService.CurrentIsPlaying)
+                if (status.AutoShowOrHideWindow && !isPlaying)
                 {
                     if (status.IsWorkArea)
                     {
@@ -457,7 +438,7 @@ namespace BetterLyrics.WinUI3.Hooks
                     }
                     window.HideWindow();
                 }
-                else if (window.LyricsWindowStatus.AutoShowOrHideWindow && _mediaSessionsService.CurrentIsPlaying)
+                else if (window.LyricsWindowStatus.AutoShowOrHideWindow && isPlaying)
                 {
                     if (window.LyricsWindowStatus.IsWorkArea)
                     {

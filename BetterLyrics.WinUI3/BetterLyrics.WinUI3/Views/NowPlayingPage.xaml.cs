@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Views
 
             DataContext = Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
 
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<SongInfo?>>(this);
+            WeakReferenceMessenger.Default.RegisterAll(this);
         }
 
         private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

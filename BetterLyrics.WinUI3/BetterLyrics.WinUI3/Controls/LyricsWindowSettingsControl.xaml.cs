@@ -122,17 +122,6 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender is Pivot pivot)
-            {
-                if (pivot.SelectedItem is PivotItem pivotItem)
-                {
-                    ViewModel?.ListViewSelectedItemTag = pivotItem.Tag;
-                }
-            }
-        }
-
         private async void ImportButton_Click(object sender, RoutedEventArgs e)
         {
             string[] fileTypeFilter = [".json"];
@@ -164,14 +153,16 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowPivotItem.Visibility = Visibility.Visible;
+            WindowSelectorBarItem.Visibility = LayoutSelectorBarItem.Visibility = Visibility.Visible;
+            ConfigSelectorBar.SelectedItem = WindowSelectorBarItem;
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
             ViewModel.OpenConfigPanel();
         }
 
         private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowPivotItem.Visibility = Visibility.Collapsed;
+            WindowSelectorBarItem.Visibility = LayoutSelectorBarItem.Visibility = Visibility.Collapsed;
+            ConfigSelectorBar.SelectedItem = AlbumArtStyleSelectorBarItem;
             LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
             ViewModel.OpenConfigPanel();
         }
@@ -196,5 +187,15 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
+        private void ConfigSelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        {
+            if (sender is SelectorBar bar)
+            {
+                if (bar.SelectedItem is SelectorBarItem item)
+                {
+                    ViewModel?.SelectorBarSelectedItemTag = item.Tag;
+                }
+            }
+        }
     }
 }

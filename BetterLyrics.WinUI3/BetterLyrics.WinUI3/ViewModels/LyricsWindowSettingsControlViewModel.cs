@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial AppSettings AppSettings { get; set; }
 
         [ObservableProperty]
-        public partial object ListViewSelectedItemTag { get; set; } = "General";
+        public partial object SelectorBarSelectedItemTag { get; set; } = "AlbumArtStyle";
 
         [ObservableProperty]
         public partial bool IsConfigPanelOpened { get; set; } = false;

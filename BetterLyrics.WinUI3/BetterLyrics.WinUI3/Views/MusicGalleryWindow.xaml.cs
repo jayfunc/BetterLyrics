@@ -38,8 +38,7 @@ namespace BetterLyrics.WinUI3.Views
 
             AppWindow.Closing += AppWindow_Closing;
 
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<BitmapDecoder?>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<ElementTheme>>(this);
+            WeakReferenceMessenger.Default.RegisterAll(this);
 
             _ = UpdateAlbumArtThemeColorsAsync();
         }
@@ -56,7 +55,14 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            this.CloseWindow();
+            if (ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed)
+            {
+                WindowHook.ExitApp();
+            }
+            else
+            {
+                this.CloseWindow();
+            }
         }
 
         public async void Receive(PropertyChangedMessage<BitmapDecoder?> message)
@@ -101,6 +107,16 @@ namespace BetterLyrics.WinUI3.Views
             NowPlayingPage.Opacity = 0;
             await Task.Delay(Constants.Time.AnimationDuration);
             NowPlayingPage.Visibility = Visibility.Collapsed;
+        }
+
+        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened = true;
+        }
+
+        private void RootGrid_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened = false;
         }
     }
 }

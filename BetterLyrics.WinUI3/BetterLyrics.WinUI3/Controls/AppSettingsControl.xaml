@@ -71,12 +71,8 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoPlay, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard Header="[待实现] 音乐库打开状态下忽略其他播放源" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE71A;}">
-                        <ToggleSwitch />
-                    </dev:SettingsCard>
-
-                    <dev:SettingsCard Header="[待实现] 关闭音乐库窗口时退出程序" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE711;}">
-                        <ToggleSwitch />
+                    <dev:SettingsCard x:Uid="SettingsPageExitOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE711;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
                     <!--  Lyrics window  -->

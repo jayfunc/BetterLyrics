@@ -8,11 +8,13 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService
@@ -20,7 +22,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
     // 新建一个 AppSettings 类
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
-        private DispatcherQueueTimer _writeAppSettingsTimer;
+        private readonly DispatcherQueueTimer _writeAppSettingsTimer;
 
         public AppSettings AppSettings { get; set; }
 

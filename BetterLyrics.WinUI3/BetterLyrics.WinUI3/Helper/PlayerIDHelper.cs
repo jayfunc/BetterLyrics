@@ -29,6 +29,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static bool IsAppleMusic(string? id) => id is PlayerID.AppleMusic or PlayerID.AppleMusicAlternative;
 
+        public static bool IsBetterLyrics(string? id) => id is PlayerID.BetterLyrics or PlayerID.BetterLyricsDebug;
+
         public static string? GetDisplayName(string? id) => id switch
         {
             PlayerID.Spotify => PlayerName.Spotify,

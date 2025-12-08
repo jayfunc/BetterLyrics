@@ -187,7 +187,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnAutoShowOrHideWindowChanged()
         {
-            this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
+            this.SetLyricsWindowVisibilityByPlayingStatus(_mediaSessionsService.CurrentIsPlaying, DispatcherQueue);
         }
 
         private void OnWorkAreaChanged()
@@ -378,7 +378,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(IMediaSessionsService.CurrentIsPlaying))
                 {
-                    this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
+                    this.SetLyricsWindowVisibilityByPlayingStatus(_mediaSessionsService.CurrentIsPlaying, DispatcherQueue);
                 }
             }
             else if (message.Sender == LyricsWindowStatus)

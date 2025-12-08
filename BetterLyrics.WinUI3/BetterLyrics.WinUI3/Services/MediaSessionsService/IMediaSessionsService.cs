@@ -24,7 +24,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         Task ChangeLyricsLine(int index);
 
         void UpdateLyrics();
-        void UpdateTranslations();
 
         MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; }
 
