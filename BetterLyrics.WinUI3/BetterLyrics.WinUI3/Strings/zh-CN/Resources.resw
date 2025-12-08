@@ -198,6 +198,9 @@
   <data name="Jyutping" xml:space="preserve">
     <value>粤语拼音</value>
   </data>
+  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
+    <value>请确保至少有一个状态被设为默认</value>
+  </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>授权失败，请重试</value>
   </data>
@@ -1223,6 +1226,9 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>音乐库</value>
+  </data>
+  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+    <value>音乐库内嵌歌词窗口</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>添加存放音乐或歌词的文件夹</value>

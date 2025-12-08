@@ -76,17 +76,15 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
     public void EnsureLyricsWindowStatus()
     {
         var records = _settingsService.AppSettings.WindowBoundsRecords;
-        var defaultLyricsWindowStatus = records.FirstOrDefault(x => x.IsDefault);
-        if (defaultLyricsWindowStatus == null)
+        if (records.Count == 0)
         {
-            defaultLyricsWindowStatus = LyricsWindowStatusExtensions.StandardMode(this);
-            defaultLyricsWindowStatus.IsDefault = true;
-            records.Add(defaultLyricsWindowStatus);
+            var defaultStatus = LyricsWindowStatusExtensions.StandardMode(this);
+            defaultStatus.IsDefault = true;
+            records.Add(defaultStatus);
             records.Add(LyricsWindowStatusExtensions.DesktopMode(this));
             records.Add(LyricsWindowStatusExtensions.DockedMode(this));
             records.Add(LyricsWindowStatusExtensions.NarrowMode(this));
             records.Add(LyricsWindowStatusExtensions.FullscreenMode(this));
-            _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus = new(this);
         }
     }
 

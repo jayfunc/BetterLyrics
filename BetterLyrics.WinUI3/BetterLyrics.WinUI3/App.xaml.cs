@@ -77,7 +77,18 @@ namespace BetterLyrics.WinUI3
 
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
             {
-                WindowHook.OpenOrShowWindow<NowPlayingWindow>(settingsService.AppSettings.WindowBoundsRecords.FirstOrDefault(x => x.IsDefault));
+                var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
+                if (defaultStatus != null)
+                {
+                    foreach (var item in defaultStatus)
+                    {
+                        WindowHook.OpenOrShowWindow<NowPlayingWindow>(item);
+                        if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
+                        {
+                            break;
+                        }
+                    }
+                }
             }
             if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
             {

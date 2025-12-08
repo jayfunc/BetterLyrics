@@ -34,6 +34,11 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class NowPlayingWindow : Window,
         IRecipient<PropertyChangedMessage<bool>>,
+        IRecipient<PropertyChangedMessage<double>>,
+        IRecipient<PropertyChangedMessage<string>>,
+        IRecipient<PropertyChangedMessage<DockPlacement>>,
+        IRecipient<PropertyChangedMessage<TitleBarArea>>,
+        IRecipient<PropertyChangedMessage<ElementTheme>>,
         IRecipient<PropertyChangedMessage<BitmapDecoder?>>
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
@@ -64,141 +69,35 @@ namespace BetterLyrics.WinUI3.Views
 
             SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
 
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<bool>>(this);
-            WeakReferenceMessenger.Default.Register<PropertyChangedMessage<BitmapDecoder?>>(this);
+            WeakReferenceMessenger.Default.RegisterAll(this);
 
             _ = UpdateAlbumArtThemeColorsAsync();
         }
 
-        public async Task InitStatus()
+        public void InitStatus()
         {
-            LyricsWindowStatus.PropertyChanged += LyricsWindowStatus_PropertyChanged;
-
-            LyricsWindowStatus.IsLyricsWindowStatusRefreshing = true;
-
             LyricsWindowStatus.UpdateMonitorBounds();
 
-            this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
-            if (LyricsWindowStatus.IsWorkArea)
-            {
-                this.UpdateWorkArea();
-            }
-            await Task.Delay(300);
-
-            this.SetIsShowInSwitchers(LyricsWindowStatus.IsShownInSwitchers);
-            this.SetIsAlwaysOnTop(LyricsWindowStatus.IsAlwaysOnTop);
-            PinFillFontIcon.Opacity = LyricsWindowStatus.IsAlwaysOnTop ? 1 : 0;
-
-            this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen);
-            EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
-            ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
-
-            this.SetIsMaximized(LyricsWindowStatus.IsMaximized);
-            EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
-            ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
-
-            this.SetIsLocked(LyricsWindowStatus.IsLocked);
-            if (LyricsWindowStatus.IsLocked)
-            {
-                LockToggleButton.IsChecked = true;
-                StartOverlayInputHelper();
-            }
-            else
-            {
-                LockToggleButton.IsChecked = false;
-                StopOverlayInputHelper();
-            }
-
-            this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
-            this.SetTitleBarArea(LyricsWindowStatus.TitleBarArea);
-
-            // 下述代码可以删除，但是为了避免给用户造成操作上的疑虑，暂时保留
-            if (LyricsWindowStatus.IsWorkArea)
-            {
-                LyricsWindowStatus.WindowBounds = LyricsWindowStatus.GetWindowBoundsWhenWorkArea();
-            }
-
+            OnIsWorkAreaChanged();
             this.MoveAndResize(LyricsWindowStatus.WindowBounds);
+            OnIsShownInSwitchersChanged();
+            OnIsAlwaysOnTopChanged();
+            OnIsMaximizedChanged();
+            OnIsFullscreenChanged();
+            OnIsLockedChanged();
+            OnAutoShowOrHideWindowChanged();
+            OnTitleBarAreaChanged();
 
             LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
-
-            LyricsWindowStatus.IsLyricsWindowStatusRefreshing = false;
         }
 
-        private async void LyricsWindowStatus_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(Models.LyricsWindowStatus.IsWorkArea):
-                    LyricsWindowStatus.IsLyricsWindowStatusRefreshing = true;
-                    this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
-                    LyricsWindowStatus.IsLyricsWindowStatusRefreshing = false;
-                    if (LyricsWindowStatus.IsWorkArea)
-                    {
-                        this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
-                    }
-                    break;
-                case nameof(Models.LyricsWindowStatus.DockHeight):
-                case nameof(Models.LyricsWindowStatus.DockPlacement):
-                case nameof(Models.LyricsWindowStatus.MonitorDeviceName):
-                    LyricsWindowStatus.UpdateMonitorBounds();
-                    if (LyricsWindowStatus.IsWorkArea)
-                    {
-                        LyricsWindowStatus.IsLyricsWindowStatusRefreshing = true;
-                        this.UpdateWorkArea();
-                        LyricsWindowStatus.IsLyricsWindowStatusRefreshing = false;
-                        this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
-                    }
-                    break;
-                case nameof(Models.LyricsWindowStatus.IsShownInSwitchers):
-                    this.SetIsShowInSwitchers(LyricsWindowStatus.IsShownInSwitchers);
-                    break;
-                case nameof(Models.LyricsWindowStatus.IsAlwaysOnTop):
-                    this.SetIsAlwaysOnTop(LyricsWindowStatus.IsAlwaysOnTop);
-                    PinFillFontIcon.Opacity = LyricsWindowStatus.IsAlwaysOnTop ? 1 : 0;
-                    break;
-                case nameof(Models.LyricsWindowStatus.IsLocked):
-                    this.SetIsLocked(LyricsWindowStatus.IsLocked);
-                    if (LyricsWindowStatus.IsLocked)
-                    {
-                        StartOverlayInputHelper();
-                    }
-                    else
-                    {
-                        StopOverlayInputHelper();
-                    }
-                    break;
-                case nameof(Models.LyricsWindowStatus.IsFullscreen):
-                    this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen);
-                    EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
-                    ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
-                    break;
-                case nameof(Models.LyricsWindowStatus.IsMaximized):
-                    this.SetIsMaximized(LyricsWindowStatus.IsMaximized);
-                    EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
-                    ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
-                    break;
-                case nameof(Models.LyricsWindowStatus.TitleBarArea):
-                    this.SetTitleBarArea(LyricsWindowStatus.TitleBarArea);
-                    break;
-                case nameof(Models.LyricsWindowStatus.AutoShowOrHideWindow):
-                    this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
-                    break;
-                case nameof(Models.LyricsWindowStatus.LyricsBackgroundSettings):
-                    await UpdateAlbumArtThemeColorsAsync();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void UpdateBackdropAccentColor(nint hwnd)
+        public async Task UpdateBackdropAccentColorAsync(nint hwnd)
         {
             _backdropAccentColor = Helper.ColorHelper.GetAccentColor(
                 hwnd,
                 LyricsWindowStatus.MonitorDeviceName,
                 LyricsWindowStatus.EnvironmentSampleMode);
-            UpdateAlbumArtThemeColorsAsync();
+            await UpdateAlbumArtThemeColorsAsync();
         }
 
         public void InitFgWindowWatcher()
@@ -209,7 +108,7 @@ namespace BetterLyrics.WinUI3.Views
                 hwnd,
                 fgHwnd =>
                 {
-                    _fgWindowWatcherTimer?.Debounce(() =>
+                    _fgWindowWatcherTimer?.Debounce(async () =>
                     {
                         if (LyricsWindowStatus.IsAlwaysOnTop &&
                             LyricsWindowStatus.IsAlwaysOnTopPolling &&
@@ -220,13 +119,13 @@ namespace BetterLyrics.WinUI3.Views
                         }
                         if (LyricsWindowStatus.IsAdaptToEnvironment)
                         {
-                            UpdateBackdropAccentColor(hwnd);
+                            await UpdateBackdropAccentColorAsync(hwnd);
                         }
                     }, Constants.Time.DebounceTimeout);
                 }
             );
             _fgWindowWatcher.Start();
-            UpdateBackdropAccentColor(hwnd);
+            _ = UpdateBackdropAccentColorAsync(hwnd);
         }
 
         private async Task UpdateAlbumArtThemeColorsAsync()
@@ -237,11 +136,77 @@ namespace BetterLyrics.WinUI3.Views
             RootGrid.RequestedTheme = result.ThemeType;
         }
 
-        private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+        // ====
+
+        private void OnIsWorkAreaChanged()
         {
-            ExitOrClose();
-            args.Cancel = true;
+            this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
+            if (LyricsWindowStatus.IsWorkArea)
+            {
+                this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+            }
         }
+
+        private void OnIsShownInSwitchersChanged()
+        {
+            this.SetIsShowInSwitchers(LyricsWindowStatus.IsShownInSwitchers);
+        }
+
+        private void OnIsAlwaysOnTopChanged()
+        {
+            this.SetIsAlwaysOnTop(LyricsWindowStatus.IsAlwaysOnTop);
+            PinFillFontIcon.Opacity = LyricsWindowStatus.IsAlwaysOnTop ? 1 : 0;
+        }
+
+        private void OnIsLockedChanged()
+        {
+            this.SetIsLocked(LyricsWindowStatus.IsLocked);
+            if (LyricsWindowStatus.IsLocked)
+            {
+                StartOverlayInputHelper();
+            }
+            else
+            {
+                StopOverlayInputHelper();
+            }
+        }
+
+        private void OnIsFullscreenChanged()
+        {
+            this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen);
+            EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
+            ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
+        }
+
+        private void OnIsMaximizedChanged()
+        {
+            this.SetIsMaximized(LyricsWindowStatus.IsMaximized);
+            EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
+            ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
+        }
+
+        private void OnAutoShowOrHideWindowChanged()
+        {
+            this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
+        }
+
+        private void OnWorkAreaChanged()
+        {
+            LyricsWindowStatus.UpdateMonitorBounds();
+            if (LyricsWindowStatus.IsWorkArea)
+            {
+                this.UpdateWorkArea();
+                LyricsWindowStatus.IsLocked = true;
+                this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+            }
+        }
+
+        private void OnTitleBarAreaChanged()
+        {
+            this.SetTitleBarArea(LyricsWindowStatus.TitleBarArea);
+        }
+
+        // ====
 
         private void ExitOrClose()
         {
@@ -276,13 +241,14 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+        {
+            ExitOrClose();
+            args.Cancel = true;
+        }
+
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
-            if (LyricsWindowStatus.IsLyricsWindowStatusRefreshing)
-            {
-                return;
-            }
-
             if (args.DidPositionChange || args.DidSizeChange)
             {
                 var size = AppWindow.Size;
@@ -294,7 +260,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    LyricsWindowStatus.WindowBounds = new Windows.Foundation.Rect(rect.X, rect.Y, size.Width, size.Height);
+                    LyricsWindowStatus.WindowBounds = new Rect(rect.X, rect.Y, size.Width, size.Height);
                 }
             }
         }
@@ -415,6 +381,37 @@ namespace BetterLyrics.WinUI3.Views
                     this.SetLyricsWindowVisibilityByPlayingStatus(DispatcherQueue);
                 }
             }
+            else if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.IsWorkArea))
+                {
+                    OnIsWorkAreaChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsShownInSwitchers))
+                {
+                    OnIsShownInSwitchersChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysOnTop))
+                {
+                    OnIsAlwaysOnTopChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsLocked))
+                {
+                    OnIsLockedChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsFullscreen))
+                {
+                    OnIsFullscreenChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsMaximized))
+                {
+                    OnIsMaximizedChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.AutoShowOrHideWindow))
+                {
+                    OnAutoShowOrHideWindowChanged();
+                }
+            }
         }
 
         public async void Receive(PropertyChangedMessage<BitmapDecoder?> message)
@@ -423,10 +420,65 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapDecoder))
                 {
-                    if (message.NewValue is BitmapDecoder decoder)
+                    if (message.NewValue is BitmapDecoder)
                     {
                         await UpdateAlbumArtThemeColorsAsync();
                     }
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<double> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.DockHeight))
+                {
+                    OnWorkAreaChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<string> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.MonitorDeviceName))
+                {
+                    OnWorkAreaChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<DockPlacement> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.DockPlacement))
+                {
+                    OnWorkAreaChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<TitleBarArea> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.TitleBarArea))
+                {
+                    OnTitleBarAreaChanged();
+                }
+            }
+        }
+
+        public async void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.LyricsBackgroundTheme))
+                {
+                    await UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }
