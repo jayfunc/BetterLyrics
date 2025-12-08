@@ -717,6 +717,9 @@
   <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
     <value>點選穿透快捷鍵</value>
   </data>
+  <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>Collapse dropdown</value>
   </data>
@@ -728,6 +731,9 @@
   </data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>配置名稱</value>
+  </data>
+  <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <value>Configure playback source</value>
   </data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
     <value>Copy</value>
