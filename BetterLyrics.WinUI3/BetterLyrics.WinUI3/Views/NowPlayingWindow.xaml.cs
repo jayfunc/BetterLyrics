@@ -116,8 +116,8 @@ namespace BetterLyrics.WinUI3.Views
                     }, Constants.Time.DebounceTimeout);
                 }
             );
-            _fgWindowWatcher.Start();
-            _ = UpdateBackdropAccentColorAsync(hwnd);
+
+            OnIsAdaptToEnvironmentChanged();
         }
 
         private async Task UpdateAlbumArtThemeColorsAsync()
@@ -183,6 +183,15 @@ namespace BetterLyrics.WinUI3.Views
         private void OnAutoShowOrHideWindowChanged()
         {
             this.SetLyricsWindowVisibilityByPlayingStatus(_mediaSessionsService.CurrentIsPlaying, DispatcherQueue);
+        }
+
+        private void OnIsAdaptToEnvironmentChanged()
+        {
+            _fgWindowWatcher?.Stop();
+            if (LyricsWindowStatus.IsAdaptToEnvironment)
+            {
+                _fgWindowWatcher?.Start();
+            }
         }
 
         private void OnWorkAreaChanged()
@@ -405,6 +414,10 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(LyricsWindowStatus.AutoShowOrHideWindow))
                 {
                     OnAutoShowOrHideWindowChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsAdaptToEnvironment))
+                {
+                    OnIsAdaptToEnvironmentChanged();
                 }
             }
         }
