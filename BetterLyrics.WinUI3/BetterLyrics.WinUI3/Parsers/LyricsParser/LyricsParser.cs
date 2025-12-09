@@ -134,11 +134,12 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             }
 
             // 应用简体中文/繁体中文
-            foreach (var item in main.LyricsLines)
+            if (main.LanguageCode == LanguageHelper.ChineseCode)
             {
-                item.PhoneticText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.PhoneticText) : ChineseHelper.ToSC(item.PhoneticText);
-                item.OriginalText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.OriginalText) : ChineseHelper.ToSC(item.OriginalText);
-                item.TranslatedText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.TranslatedText) : ChineseHelper.ToSC(item.TranslatedText);
+                foreach (var item in main.LyricsLines)
+                {
+                    item.OriginalText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.OriginalText) : ChineseHelper.ToSC(item.OriginalText);
+                }
             }
 
             return (main, transliterationSearchProvider, translationSearchProvider);
