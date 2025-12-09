@@ -116,7 +116,10 @@ namespace BetterLyrics.WinUI3.Views
                     }, Constants.Time.DebounceTimeout);
                 }
             );
-
+            if (LyricsWindowStatus.IsAdaptToEnvironment)
+            {
+                _ = UpdateBackdropAccentColorAsync(hwnd);
+            }
             OnIsAdaptToEnvironmentChanged();
         }
 
