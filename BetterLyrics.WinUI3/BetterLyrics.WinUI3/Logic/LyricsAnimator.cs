@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.Logic
             double canvasHeight,
             double targetYScrollOffset,
             double playingLineTopOffsetFactor,
+            LyricsStyleSettings lyricsStyle,
             LyricsEffectSettings lyricsEffect,
             ValueTransition<double> canvasYScrollTransition,
             Color bgColor,
@@ -36,6 +37,10 @@ namespace BetterLyrics.WinUI3.Logic
 
             var currentPlayingLine = lines.ElementAtOrDefault(playingLineIndex);
             if (currentPlayingLine == null) return;
+
+            var phoneticOpacity = lyricsStyle.PhoneticLyricsOpacity / 100.0;
+            var originalOpacity = lyricsStyle.OriginalLyricsOpacity / 100.0;
+            var translatedOpacity = lyricsStyle.TranslatedLyricsOpacity / 100.0;
 
             for (int i = startIndex; i <= endIndex + 1; i++)
             {
@@ -91,19 +96,23 @@ namespace BetterLyrics.WinUI3.Logic
 
                     line.PhoneticOpacityTransition.SetDuration(yScrollDuration);
                     line.PhoneticOpacityTransition.SetDelay(yScrollDelay);
-                    line.PhoneticOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.6 : (isMouseScrolling ? 0.3 : (1 - distanceFactor) * 0.3));
+                    line.PhoneticOpacityTransition.StartTransition(
+                        absLineCountDelta == 0 ? phoneticOpacity : (isMouseScrolling ? phoneticOpacity : (1 - distanceFactor) * phoneticOpacity));
 
                     line.PlayedOriginalOpacityTransition.SetDuration(yScrollDuration);
                     line.PlayedOriginalOpacityTransition.SetDelay(yScrollDelay);
-                    line.PlayedOriginalOpacityTransition.StartTransition(absLineCountDelta == 0 ? 1 : (isMouseScrolling ? 0.3 : (1 - distanceFactor) * 0.3));
+                    line.PlayedOriginalOpacityTransition.StartTransition(
+                        absLineCountDelta == 0 ? 1 : (isMouseScrolling ? 1.0 : (1 - distanceFactor) * originalOpacity));
 
                     line.UnplayedOriginalOpacityTransition.SetDuration(yScrollDuration);
                     line.UnplayedOriginalOpacityTransition.SetDelay(yScrollDelay);
-                    line.UnplayedOriginalOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.3 : (isMouseScrolling ? 0.3 : (1 - distanceFactor) * 0.3));
+                    line.UnplayedOriginalOpacityTransition.StartTransition(
+                        absLineCountDelta == 0 ? originalOpacity : (isMouseScrolling ? originalOpacity : (1 - distanceFactor) * originalOpacity));
 
                     line.TranslatedOpacityTransition.SetDuration(yScrollDuration);
                     line.TranslatedOpacityTransition.SetDelay(yScrollDelay);
-                    line.TranslatedOpacityTransition.StartTransition(absLineCountDelta == 0 ? 0.6 : (isMouseScrolling ? 0.3 : (1 - distanceFactor) * 0.3));
+                    line.TranslatedOpacityTransition.StartTransition(
+                        absLineCountDelta == 0 ? translatedOpacity : (isMouseScrolling ? translatedOpacity : (1 - distanceFactor) * translatedOpacity));
 
                     line.ColorTransition.SetDuration(yScrollDuration);
                     line.ColorTransition.SetDelay(yScrollDelay);

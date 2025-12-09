@@ -15,6 +15,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int OriginalLyricsFontSize { get; set; } = 24;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsFontSize { get; set; } = 12;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PhoneticLyricsOpacity { get; set; } = 60; // 60 %
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int OriginalLyricsOpacity { get; set; } = 30; // 30 %
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsOpacity { get; set; } = 60; // 60 %
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontStrokeWidth { get; set; } = 0;
 
@@ -45,6 +49,11 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 PhoneticLyricsFontSize = this.PhoneticLyricsFontSize,
                 OriginalLyricsFontSize = this.OriginalLyricsFontSize,
                 TranslatedLyricsFontSize = this.TranslatedLyricsFontSize,
+
+                PhoneticLyricsOpacity = this.PhoneticLyricsOpacity,
+                OriginalLyricsOpacity = this.OriginalLyricsOpacity,
+                TranslatedLyricsOpacity = this.TranslatedLyricsOpacity,
+
                 LyricsAlignmentType = this.LyricsAlignmentType,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
                 LyricsCustomBgFontColor = this.LyricsCustomBgFontColor,

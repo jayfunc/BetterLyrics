@@ -227,6 +227,36 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
+                    <!--  字体不透明度  -->
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE65C;}">
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPagePhoneticText">
+                                <local:ExtendedSlider
+                                    Default="60"
+                                    Frequency="1"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsStyleSettings.PhoneticLyricsOpacity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageOriginalText">
+                                <local:ExtendedSlider
+                                    Default="30"
+                                    Frequency="1"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsStyleSettings.OriginalLyricsOpacity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageTranslatedText">
+                                <local:ExtendedSlider
+                                    Default="60"
+                                    Frequency="1"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsStyleSettings.TranslatedLyricsOpacity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>

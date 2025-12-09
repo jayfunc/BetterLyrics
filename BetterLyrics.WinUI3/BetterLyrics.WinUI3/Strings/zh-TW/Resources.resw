@@ -117,6 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ActionCompleted" xml:space="preserve">
     <value>操作完成</value>
   </data>
@@ -1090,7 +1091,7 @@
     <value>自定義</value>
   </data>
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>歌詞字體</value>
+    <value>字體家族</value>
   </data>
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>字體大小</value>
@@ -1130,6 +1131,9 @@
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>常規</value>
+  </data>
+  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>字體不透明度</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>歌詞區域高度因子</value>
@@ -1264,7 +1268,7 @@
     <value>激進</value>
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
-    <value>專輯背景層不透明度</value>
+    <value>不透明度</value>
   </data>
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>在檔案總管中開啟</value>
