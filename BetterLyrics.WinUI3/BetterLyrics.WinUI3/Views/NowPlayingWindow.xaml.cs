@@ -168,10 +168,12 @@ namespace BetterLyrics.WinUI3.Views
             this.SetIsLocked(LyricsWindowStatus.IsLocked);
             if (LyricsWindowStatus.IsLocked)
             {
+                LockToggleButtonContainer.Visibility = Visibility.Visible;
                 StartOverlayInputHelper();
             }
             else
             {
+                LockToggleButtonContainer.Visibility = Visibility.Collapsed;
                 UnlockButton.Opacity = 0;
                 StopOverlayInputHelper();
             }
@@ -185,6 +187,7 @@ namespace BetterLyrics.WinUI3.Views
             MaximizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
             AOTButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
             MinimizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
+            LockButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void OnIsMaximizedChanged()
