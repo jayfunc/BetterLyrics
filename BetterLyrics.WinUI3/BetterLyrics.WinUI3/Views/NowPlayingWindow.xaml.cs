@@ -436,7 +436,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(IMediaSessionsService.CurrentIsPlaying))
                 {
-                    this.SetLyricsWindowVisibilityByPlayingStatus(_mediaSessionsService.CurrentIsPlaying, DispatcherQueue);
+                    OnAutoShowOrHideWindowChanged();
                 }
             }
             else if (message.Sender == LyricsWindowStatus)
