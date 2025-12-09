@@ -1090,7 +1090,7 @@
     <value>自定义</value>
   </data>
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>歌词字体</value>
+    <value>Font family</value>
   </data>
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>字体大小</value>
@@ -1265,6 +1265,9 @@
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>不透明度</value>
+  </data>
+  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>Font opacity</value>
   </data>
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>在文件资源管理器中打开</value>
