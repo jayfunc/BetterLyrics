@@ -14,8 +14,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 {
     public interface IMediaSessionsService : INotifyPropertyChanged
     {
-        event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
-
         Task PlayAsync();
         Task PauseAsync();
         Task PreviousAsync();

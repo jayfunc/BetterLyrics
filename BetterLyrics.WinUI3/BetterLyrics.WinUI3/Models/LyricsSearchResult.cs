@@ -3,14 +3,15 @@ using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using NTextCat.Commons;
 using System;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.WinUI3.Models
 {
     public partial class LyricsSearchResult : ObservableObject, ICloneable
     {
         public LyricsSearchProvider Provider { get; set; }
-        public TranslationSearchProvider? TranslationProvider { get; set; }
-        public TransliterationSearchProvider? TransliterationProvider { get; set; }
+        [ObservableProperty] public partial TranslationSearchProvider? TranslationProvider { get; set; }
+        [ObservableProperty] public partial TransliterationSearchProvider? TransliterationProvider { get; set; }
 
         public string? Raw { get; set; }
 
@@ -33,11 +34,11 @@ namespace BetterLyrics.WinUI3.Models
 
         public string? SelfPath { get; set; }
 
-        public bool IsFound => !string.IsNullOrEmpty(Raw);
+        [JsonIgnore] public bool IsFound => !string.IsNullOrEmpty(Raw);
 
-        public LyricsSearchProvider? ProviderIfFound => IsFound ? Provider : null;
+        [JsonIgnore] public LyricsSearchProvider? ProviderIfFound => IsFound ? Provider : null;
 
-        public string? DisplayArtists => Artists?.Join("; ");
+        [JsonIgnore] public string? DisplayArtists => Artists?.Join("; ");
 
         public object Clone()
         {

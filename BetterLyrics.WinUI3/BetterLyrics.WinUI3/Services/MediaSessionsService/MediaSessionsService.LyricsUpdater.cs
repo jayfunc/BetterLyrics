@@ -23,8 +23,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsData? CurrentLyricsData { get; private set; }
 
-        public event EventHandler<LyricsChangedEventArgs>? LyricsChanged;
-
         [ObservableProperty] public partial LyricsSearchResult? CurrentLyricsSearchResult { get; private set; }
 
         private async Task RefreshLyricsAsync(CancellationToken token)
@@ -44,14 +42,18 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 token);
                 if (token.IsCancellationRequested) return;
 
-                var lyricsParser = new LyricsParser();
+                if (CurrentLyricsSearchResult != null)
+                {
+                    var lyricsParser = new LyricsParser();
 
-                CurrentLyricsData = await Task.Run(async () => await lyricsParser.Parse(
-                    _translateService,
-                    _settingsService.AppSettings.TranslationSettings,
-                    CurrentLyricsSearchResult,
-                    token),
-                token);
+                    (CurrentLyricsData, CurrentLyricsSearchResult.TransliterationProvider, CurrentLyricsSearchResult.TranslationProvider) =
+                        await Task.Run(async () => await lyricsParser.Parse(
+                            _translateService,
+                            _settingsService.AppSettings.TranslationSettings,
+                            CurrentLyricsSearchResult,
+                            token),
+                    token);
+                }
             }
         }
 

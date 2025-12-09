@@ -22,7 +22,12 @@ using System.Threading.Tasks;
 namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class NowPlayingPage : Page,
-        IRecipient<PropertyChangedMessage<SongInfo?>>
+        IRecipient<PropertyChangedMessage<SongInfo?>>,
+        IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
+        IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
+        IRecipient<PropertyChangedMessage<int>>,
+        IRecipient<PropertyChangedMessage<bool>>,
+        IRecipient<PropertyChangedMessage<string>>
     {
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
 
@@ -405,6 +410,7 @@ namespace BetterLyrics.WinUI3.Views
                         default:
                             break;
                     }
+                    TrackSummaryGridRow1.Height = new(1, GridUnitType.Star);
                     break;
                 default:
                     break;
