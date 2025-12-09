@@ -31,7 +31,9 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<DockPlacement>>,
         IRecipient<PropertyChangedMessage<TitleBarArea>>,
         IRecipient<PropertyChangedMessage<ElementTheme>>,
-        IRecipient<PropertyChangedMessage<BitmapDecoder?>>
+        IRecipient<PropertyChangedMessage<BitmapDecoder?>>,
+        IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
+        IRecipient<PropertyChangedMessage<Color>>
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private OverlayInputHelper? _overlayInputHelper = null;
@@ -485,7 +487,7 @@ namespace BetterLyrics.WinUI3.Views
 
         public async void Receive(PropertyChangedMessage<ElementTheme> message)
         {
-            if (message.Sender == LyricsWindowStatus)
+            if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.LyricsBackgroundTheme))
                 {
@@ -494,5 +496,42 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        public async void Receive(PropertyChangedMessage<LyricsFontColorType> message)
+        {
+            if (message.Sender == LyricsWindowStatus.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsBgFontColorType))
+                {
+                    await UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsFgFontColorType))
+                {
+                    await UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsStrokeFontColorType))
+                {
+                    await UpdateAlbumArtThemeColorsAsync();
+                }
+            }
+        }
+
+        public async void Receive(PropertyChangedMessage<Color> message)
+        {
+            if (message.Sender == LyricsWindowStatus.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomBgFontColor))
+                {
+                    await UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomFgFontColor))
+                {
+                    await UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomStrokeFontColor))
+                {
+                    await UpdateAlbumArtThemeColorsAsync();
+                }
+            }
+        }
     }
 }
