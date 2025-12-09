@@ -63,14 +63,14 @@ namespace BetterLyrics.WinUI3.Renderer
 
             _timeAccumulator += (float)deltaTime.TotalSeconds;
 
-            _fluidEffect.Properties["iTime"] = _timeAccumulator;
+            _fluidEffect?.Properties["iTime"] = _timeAccumulator;
 
-            _fluidEffect.Properties["color1"] = _c1;
-            _fluidEffect.Properties["color2"] = _c2;
-            _fluidEffect.Properties["color3"] = _c3;
-            _fluidEffect.Properties["color4"] = _c4;
+            _fluidEffect?.Properties["color1"] = _c1;
+            _fluidEffect?.Properties["color2"] = _c2;
+            _fluidEffect?.Properties["color3"] = _c3;
+            _fluidEffect?.Properties["color4"] = _c4;
 
-            _fluidEffect.Properties["EnableLightWave"] = EnableLightWave;
+            _fluidEffect?.Properties["EnableLightWave"] = EnableLightWave;
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)

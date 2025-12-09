@@ -129,6 +129,10 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     window = new LyricsWindowSwitchWindow();
                 }
+                else if (typeof(T) == typeof(SystemTrayWindow))
+                {
+                    window = new SystemTrayWindow();
+                }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));
@@ -137,8 +141,11 @@ namespace BetterLyrics.WinUI3.Hooks
                 TrackWindow(window);
                 var castedWindow = (Window)window;
 
-                castedWindow.Restore();
-                castedWindow.Activate();
+                if (typeof(T) != typeof(SystemTrayWindow))
+                {
+                    castedWindow.Restore();
+                    castedWindow.Activate();
+                }
 
                 if (typeof(T) == typeof(NowPlayingWindow))
                 {
