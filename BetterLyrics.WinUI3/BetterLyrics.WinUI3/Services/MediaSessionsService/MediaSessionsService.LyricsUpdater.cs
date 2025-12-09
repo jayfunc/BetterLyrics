@@ -1,17 +1,9 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Events;
-using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Parsers.LyricsParser;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Lyricify.Lyrics.Helpers.General;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Xaml.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
