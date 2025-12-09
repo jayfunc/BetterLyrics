@@ -428,9 +428,6 @@ namespace BetterLyrics.WinUI3.Hooks
 
             status.VisibilityTimer.Debounce(() =>
             {
-                var window = GetWindow<NowPlayingWindow>();
-                if (window == null) return;
-
                 if (status.AutoShowOrHideWindow && !isPlaying)
                 {
                     if (status.IsWorkArea)
@@ -439,16 +436,16 @@ namespace BetterLyrics.WinUI3.Hooks
                     }
                     window.HideWindow();
                 }
-                else if (window.LyricsWindowStatus.AutoShowOrHideWindow && isPlaying)
+                else if (status.AutoShowOrHideWindow && isPlaying)
                 {
-                    if (window.LyricsWindowStatus.IsWorkArea)
+                    if (status.IsWorkArea)
                     {
                         window.SetIsWorkArea(true);
                     }
                     OpenOrShowWindow<NowPlayingWindow>(status);
-                    if (window.LyricsWindowStatus.IsWorkArea)
+                    if (status.IsWorkArea)
                     {
-                        window.MoveAndResize(window.LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+                        window.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
                     }
                 }
             }, Constants.Time.DebounceTimeout);
