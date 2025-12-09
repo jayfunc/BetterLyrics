@@ -493,7 +493,7 @@
     <value>Single loop</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search for song title, artist, album or folder path</value>
+    <value>Search for the song name, artist, album, file name, or folder path where the file is located</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>アルバム</value>
@@ -1131,6 +1131,9 @@
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>普通</value>
   </data>
+  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>Font opacity</value>
+  </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>Lyrics area height factor</value>
   </data>
@@ -1265,9 +1268,6 @@
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>不透明度</value>
-  </data>
-  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
-    <value>Font opacity</value>
   </data>
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>ファイルエクスプローラーで開きます</value>
