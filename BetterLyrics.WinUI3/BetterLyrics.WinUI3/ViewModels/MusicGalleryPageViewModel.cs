@@ -374,6 +374,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                     t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                    // 文件名（包含后缀）
+                    t.GetFileName().Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                    // 文件所在文件夹的路径
                     t.GetParentFolderPath().Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 

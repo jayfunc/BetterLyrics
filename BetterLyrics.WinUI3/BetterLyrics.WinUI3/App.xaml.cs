@@ -70,7 +70,7 @@ namespace BetterLyrics.WinUI3
         {
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-            _ = new SystemTrayWindow();
+            WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
             {

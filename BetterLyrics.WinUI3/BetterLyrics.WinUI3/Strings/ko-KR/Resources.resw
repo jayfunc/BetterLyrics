@@ -493,7 +493,7 @@
     <value>단일 루프</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>노래 제목, 아티스트, 앨범 또는 폴더 경로를 검색하세요</value>
+    <value>파일이 있는 노래 이름, 아티스트, 앨범, 파일 이름 또는 폴더 경로를 검색하세요</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>앨범</value>

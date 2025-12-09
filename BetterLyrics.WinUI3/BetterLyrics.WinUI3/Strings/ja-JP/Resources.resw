@@ -493,7 +493,7 @@
     <value>シングルループ</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>曲名、アーティスト、アルバム、フォルダパスを検索してください</value>
+    <value>ファイルが置かれている曲名、アーティスト、アルバム、ファイル名、またはフォルダパスを検索します</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>アルバム</value>

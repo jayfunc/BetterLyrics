@@ -492,9 +492,6 @@
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>单曲循环</value>
   </data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>搜索歌曲名、艺术家、专辑或所在文件夹路径</value>
-  </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>专辑</value>
   </data>
@@ -1622,5 +1619,8 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
+  </data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <value>搜索歌曲名、艺术家、专辑、文件名或文件所在文件夹路径</value>
   </data>
 </root>

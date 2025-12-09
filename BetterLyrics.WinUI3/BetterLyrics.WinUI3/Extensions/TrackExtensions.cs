@@ -26,6 +26,8 @@ namespace BetterLyrics.WinUI3.Extensions
                 }
                 return "";
             }
+
+            public string GetFileName() => Path.GetFileName(track.Path);
         }
     }
 }

@@ -494,7 +494,7 @@
     <value>單曲循環</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>搜尋歌曲名稱、藝人、專輯或所在資料夾路徑</value>
+    <value>搜尋歌曲名稱、藝人、專輯、檔案名稱或檔案所在資料夾路徑</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>專輯</value>
