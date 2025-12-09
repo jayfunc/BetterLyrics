@@ -283,6 +283,8 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsFullscreen(this Window window, bool enable)
         {
+            if (window.AppWindow == null) return;
+
             if (enable)
             {
                 window.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
@@ -295,6 +297,8 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsMaximized(this Window window, bool enable)
         {
+            if (window.AppWindow == null) return;
+
             if (enable)
             {
                 window.Maximize();
@@ -312,6 +316,8 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsAlwaysOnTop(this Window window, bool enable)
         {
+            if (window.AppWindow == null) return;
+
             if (window.AppWindow.Presenter is OverlappedPresenter presenter)
             {
                 presenter.IsAlwaysOnTop = enable;

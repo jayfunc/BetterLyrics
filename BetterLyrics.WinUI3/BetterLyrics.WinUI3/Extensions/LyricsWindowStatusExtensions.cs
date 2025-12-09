@@ -73,8 +73,6 @@ namespace BetterLyrics.WinUI3.Extensions
             var status = new LyricsWindowStatus(window)
             {
                 Name = _resourceService.GetLocalizedString("FullscreenMode"),
-                IsAlwaysOnTop = true,
-                TitleBarArea = TitleBarArea.None,
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
