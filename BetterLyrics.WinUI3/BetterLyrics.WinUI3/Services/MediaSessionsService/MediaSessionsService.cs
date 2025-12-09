@@ -159,7 +159,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             {
                 if (PlayerIDHelper.IsBetterLyrics(found?.Provider))
                 {
-                    return true;
+                    return found?.IsEnabled ?? true;
                 }
                 else
                 {
@@ -202,7 +202,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties? timelineProperties)
         {
             if (!_mediaManager.IsStarted) return;
-            if (mediaSession == null) return;
+            if (mediaSession == null)
+            {
+                CurrentPosition = TimeSpan.Zero;
+                return;
+            }
 
             var desiredSession = GetCurrentSession();
 
@@ -226,7 +230,11 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, (() =>
             {
                 if (!_mediaManager.IsStarted) return;
-                if (mediaSession == null) return;
+                if (mediaSession == null)
+                {
+                    CurrentIsPlaying = false;
+                    return;
+                }
 
                 var desiredSession = GetCurrentSession();
 

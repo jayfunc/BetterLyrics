@@ -10,7 +10,7 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEnabled { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchProvider Provider { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMatchingThresholdOverwritten { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int MatchingThreshold { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int MatchingThreshold { get; set; } = 40;
 
         public LyricsSearchProviderInfo() { }
 

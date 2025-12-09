@@ -42,7 +42,7 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
 
-        [JsonIgnore][ObservableProperty] public partial bool IsOpened { get; set; } = false;
+        [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsOpened { get; set; } = false;
 
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
 
