@@ -228,7 +228,7 @@
                     </dev:SettingsExpander>
 
                     <!--  字体不透明度  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE65C;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEF20;}">
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPagePhoneticText">
                                 <local:ExtendedSlider
