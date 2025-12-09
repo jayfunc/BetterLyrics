@@ -525,6 +525,7 @@ namespace BetterLyrics.WinUI3.Controls
                 sender.Size.Height,
                 _canvasTargetScrollOffset,
                 lyricsStyle.PlayingLineTopOffset / 100.0,
+                _lyricsWindowStatus.LyricsStyleSettings,
                 _lyricsWindowStatus.LyricsEffectSettings,
                 _canvasYScrollTransition,
                 _albumArtThemeColors.BgFontColor,
@@ -758,6 +759,18 @@ namespace BetterLyrics.WinUI3.Controls
                     _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(LyricsStyleSettings.PlayingLineTopOffset))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.PhoneticLyricsOpacity))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.OriginalLyricsOpacity))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.TranslatedLyricsOpacity))
                 {
                     _isLayoutChanged = true;
                 }

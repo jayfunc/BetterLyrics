@@ -1090,7 +1090,7 @@
     <value>カスタマイズ</value>
   </data>
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>歌詞フォントファミリー</value>
+    <value>フォントファミリー</value>
   </data>
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>フォントサイズ</value>
@@ -1130,6 +1130,9 @@
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>普通</value>
+  </data>
+  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>フォントの不透明度</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>歌詞エリアの高さ係数</value>
