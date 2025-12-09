@@ -33,7 +33,7 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchType LyricsSearchType { get; set; } = LyricsSearchType.Sequential;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int MatchingThreshold { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int MatchingThreshold { get; set; } = 40;
 
         [JsonIgnore] public string LogoPath => PlayerIDHelper.GetLogoPath(Provider);
 
