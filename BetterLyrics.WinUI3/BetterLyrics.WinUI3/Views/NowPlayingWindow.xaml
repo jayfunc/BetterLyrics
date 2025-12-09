@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -26,7 +27,7 @@
         <Grid
             x:Name="TopCommandGrid"
             VerticalAlignment="Top"
-            Background="Transparent"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}"
             PointerEntered="TopCommandGrid_PointerEntered"
             PointerExited="TopCommandGrid_PointerExited">
@@ -34,9 +35,11 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <Grid Padding="3" HorizontalAlignment="Left">
+            <Grid
+                x:Name="TopLeftCommandGrid"
+                Padding="3"
+                HorizontalAlignment="Left">
                 <StackPanel
-                    x:Name="TopLeftCommandStackPanel"
                     HorizontalAlignment="Left"
                     Orientation="Horizontal"
                     Spacing="3">
@@ -83,14 +86,30 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Padding="3" HorizontalAlignment="Right">
+            <Grid
+                x:Name="TopRightCommandGrid"
+                Padding="3"
+                HorizontalAlignment="Right">
                 <StackPanel
-                    x:Name="TopRightCommandStackPanel"
+                    HorizontalAlignment="Right"
                     Orientation="Horizontal"
                     Spacing="3">
                     <StackPanel.OpacityTransition>
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
+
+                    <!--  Lock button  -->
+                    <Button
+                        x:Name="LockButton"
+                        Click="LockButton_Click"
+                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                              FontSize=12,
+                                              Glyph=&#xE72E;}"
+                        Style="{StaticResource TitleBarButtonStyle}">
+                        <Button.OpacityTransition>
+                            <ScalarTransition />
+                        </Button.OpacityTransition>
+                    </Button>
 
                     <!--  Always on top  -->
                     <Button
@@ -189,6 +208,30 @@
                 </StackPanel>
             </Grid>
 
+            <Grid
+                x:Name="TopCenterCommandGrid"
+                Padding="3"
+                HorizontalAlignment="Stretch">
+                <Button
+                    HorizontalAlignment="Stretch"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          FontSize=12,
+                                          Glyph=&#xE712;}"
+                    Style="{StaticResource TitleBarButtonStyle}">
+                    <Button.OpacityTransition>
+                        <ScalarTransition />
+                    </Button.OpacityTransition>
+                    <Button.Flyout>
+                        <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}" ShouldConstrainToRootBounds="False">
+                            <Grid
+                                x:Name="TopCommandFlyoutContainer"
+                                Width="400"
+                                Height="36" />
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+
         </Grid>
 
         <!--  Bottom command  -->
@@ -201,24 +244,27 @@
 
         <Grid
             x:Name="LockToggleButtonContainer"
+            Padding="3"
             HorizontalAlignment="Center"
-            VerticalAlignment="Top">
-            <!--  Lock button  -->
-            <ToggleButton
-                x:Name="LockToggleButton"
-                Click="LockToggleButton_Click"
+            VerticalAlignment="Center">
+
+            <!--  Unlock button  -->
+            <Button
+                x:Name="UnlockButton"
+                Click="UnlockButton_Click"
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       FontSize=12,
-                                      Glyph=&#xE72E;}"
+                                      Glyph=&#xE785;}"
                 IsHitTestVisible="True"
                 Opacity="0"
-                PointerEntered="LockToggleButton_PointerEntered"
-                PointerExited="LockToggleButton_PointerExited"
-                Style="{StaticResource TitleBarToggleButtonStyle}">
-                <ToggleButton.OpacityTransition>
+                PointerEntered="UnlockButton_PointerEntered"
+                PointerExited="UnlockButton_PointerExited"
+                Style="{StaticResource AccentButtonStyle}">
+                <Button.OpacityTransition>
                     <ScalarTransition />
-                </ToggleButton.OpacityTransition>
-            </ToggleButton>
+                </Button.OpacityTransition>
+            </Button>
+
         </Grid>
 
     </Grid>

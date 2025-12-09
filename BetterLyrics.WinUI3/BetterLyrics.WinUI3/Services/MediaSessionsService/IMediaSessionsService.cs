@@ -28,10 +28,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         TimeSpan CurrentPosition { get; }
         LyricsData? CurrentLyricsData { get; }
 
-        BitmapDecoder? AlbumArtBitmapDecoder { get; }
         BitmapImage? AlbumArtBitmapImage { get; }
 
-        Task<AlbumArtThemeColors> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
+        AlbumArtThemeColors CalculateAlbumArtThemeColors(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
 
         LyricsSearchResult? CurrentLyricsSearchResult { get; }
     }
