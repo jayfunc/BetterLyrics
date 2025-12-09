@@ -1,7 +1,5 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
