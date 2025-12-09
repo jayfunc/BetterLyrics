@@ -141,6 +141,13 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     item.OriginalText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.OriginalText) : ChineseHelper.ToSC(item.OriginalText);
                 }
             }
+            if (settings.SelectedTargetLanguageCode == LanguageHelper.ChineseCode)
+            {
+                foreach (var item in main.LyricsLines)
+                {
+                    item.TranslatedText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.TranslatedText) : ChineseHelper.ToSC(item.TranslatedText);
+                }
+            }
 
             return (main, transliterationSearchProvider, translationSearchProvider);
         }
