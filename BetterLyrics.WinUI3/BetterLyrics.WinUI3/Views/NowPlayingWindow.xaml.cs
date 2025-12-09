@@ -16,6 +16,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
@@ -31,7 +32,7 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<DockPlacement>>,
         IRecipient<PropertyChangedMessage<TitleBarArea>>,
         IRecipient<PropertyChangedMessage<ElementTheme>>,
-        IRecipient<PropertyChangedMessage<BitmapDecoder?>>,
+        IRecipient<PropertyChangedMessage<BitmapImage?>>,
         IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
         IRecipient<PropertyChangedMessage<Color>>
     {
@@ -65,7 +66,7 @@ namespace BetterLyrics.WinUI3.Views
 
             WeakReferenceMessenger.Default.RegisterAll(this);
 
-            _ = UpdateAlbumArtThemeColorsAsync();
+            UpdateAlbumArtThemeColors();
         }
 
         public void InitStatus()
@@ -85,13 +86,19 @@ namespace BetterLyrics.WinUI3.Views
             LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
         }
 
-        public async Task UpdateBackdropAccentColorAsync(nint hwnd)
+        public void UpdateBackdropAccentColor(nint hwnd)
         {
-            _backdropAccentColor = Helper.ColorHelper.GetAccentColor(
+            var oldValue = _backdropAccentColor;
+            var newValue = Helper.ColorHelper.GetAccentColor(
                 hwnd,
                 LyricsWindowStatus.MonitorDeviceName,
                 LyricsWindowStatus.EnvironmentSampleMode);
-            await UpdateAlbumArtThemeColorsAsync();
+            // 防止不必要刷新导致界面不流畅
+            if (newValue != oldValue)
+            {
+                _backdropAccentColor = newValue;
+                UpdateAlbumArtThemeColors();
+            }
         }
 
         public void InitFgWindowWatcher()
@@ -102,7 +109,7 @@ namespace BetterLyrics.WinUI3.Views
                 hwnd,
                 fgHwnd =>
                 {
-                    _fgWindowWatcherTimer?.Debounce(async () =>
+                    _fgWindowWatcherTimer?.Debounce(() =>
                     {
                         if (LyricsWindowStatus.IsAlwaysOnTop &&
                             LyricsWindowStatus.IsAlwaysOnTopPolling &&
@@ -113,21 +120,21 @@ namespace BetterLyrics.WinUI3.Views
                         }
                         if (LyricsWindowStatus.IsAdaptToEnvironment)
                         {
-                            await UpdateBackdropAccentColorAsync(hwnd);
+                            UpdateBackdropAccentColor(hwnd);
                         }
                     }, Constants.Time.DebounceTimeout);
                 }
             );
             if (LyricsWindowStatus.IsAdaptToEnvironment)
             {
-                _ = UpdateBackdropAccentColorAsync(hwnd);
+                UpdateBackdropAccentColor(hwnd);
             }
             OnIsAdaptToEnvironmentChanged();
         }
 
-        private async Task UpdateAlbumArtThemeColorsAsync()
+        private void UpdateAlbumArtThemeColors()
         {
-            var result = await _mediaSessionsService.CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus, _backdropAccentColor);
+            var result = _mediaSessionsService.CalculateAlbumArtThemeColors(LyricsWindowStatus, _backdropAccentColor);
 
             NowPlayingPage.AlbumArtThemeColors = result;
             RootGrid.RequestedTheme = result.ThemeType;
@@ -161,12 +168,11 @@ namespace BetterLyrics.WinUI3.Views
             this.SetIsLocked(LyricsWindowStatus.IsLocked);
             if (LyricsWindowStatus.IsLocked)
             {
-                LockToggleButton.IsChecked = true;
                 StartOverlayInputHelper();
             }
             else
             {
-                LockToggleButton.IsChecked = false;
+                UnlockButton.Opacity = 0;
                 StopOverlayInputHelper();
             }
         }
@@ -314,7 +320,40 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 300 || RootGrid.ActualHeight < 100;
+            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 400 || RootGrid.ActualHeight < 100;
+            if (RootGrid.ActualWidth < 400)
+            {
+                TopCenterCommandGrid.Visibility = Visibility.Visible;
+                if (TopCommandGrid.Children.Contains(TopLeftCommandGrid))
+                {
+                    TopCommandGrid.Children.Remove(TopLeftCommandGrid);
+                }
+                if (TopCommandGrid.Children.Contains(TopRightCommandGrid))
+                {
+                    TopCommandGrid.Children.Remove(TopRightCommandGrid);
+                }
+                if (!TopCommandFlyoutContainer.Children.Contains(TopLeftCommandGrid))
+                {
+                    TopCommandFlyoutContainer.Children.Add(TopLeftCommandGrid);
+                }
+                if (!TopCommandFlyoutContainer.Children.Contains(TopRightCommandGrid))
+                {
+                    TopCommandFlyoutContainer.Children.Add(TopRightCommandGrid);
+                }
+            }
+            else
+            {
+                TopCenterCommandGrid.Visibility = Visibility.Collapsed;
+                TopCommandFlyoutContainer.Children.Clear();
+                if (!TopCommandGrid.Children.Contains(TopLeftCommandGrid))
+                {
+                    TopCommandGrid.Children.Add(TopLeftCommandGrid);
+                }
+                if (!TopCommandGrid.Children.Contains(TopRightCommandGrid))
+                {
+                    TopCommandGrid.Children.Add(TopRightCommandGrid);
+                }
+            }
         }
 
         private void StartOverlayInputHelper()
@@ -330,13 +369,13 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else
                 {
-                    LockToggleButton.Opacity = 1;
+                    UnlockButton.Opacity = 1;
                     this.SetIsClickThrough(true);
                 }
             };
             _overlayInputHelper.OnInteractiveAreaExited = () =>
             {
-                LockToggleButton.Opacity = 0;
+                UnlockButton.Opacity = 0;
             };
             _overlayInputHelper.Start();
         }
@@ -347,26 +386,30 @@ namespace BetterLyrics.WinUI3.Views
             _overlayInputHelper = null;
         }
 
-        private void LockToggleButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        private void UnlockButton_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            LockToggleButton.Opacity = 1;
+            if (LyricsWindowStatus.IsLocked)
+            {
+                UnlockButton.Opacity = 1;
+            }
         }
 
-        private void LockToggleButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        private void UnlockButton_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            LockToggleButton.Opacity = 0;
+            if (LyricsWindowStatus.IsLocked)
+            {
+                UnlockButton.Opacity = 0;
+            }
         }
 
-        private void LockToggleButton_Click(object sender, RoutedEventArgs e)
+        private void UnlockButton_Click(object sender, RoutedEventArgs e)
         {
-            if (LockToggleButton.IsChecked == true)
-            {
-                LyricsWindowStatus.IsLocked = true;
-            }
-            else
-            {
-                LyricsWindowStatus.IsLocked = false;
-            }
+            LyricsWindowStatus.IsLocked = false;
+        }
+
+        private void LockButton_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsWindowStatus.IsLocked = true;
         }
 
         private void AOTButton_Click(object sender, RoutedEventArgs e)
@@ -430,16 +473,13 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public async void Receive(PropertyChangedMessage<BitmapDecoder?> message)
+        public void Receive(PropertyChangedMessage<BitmapImage?> message)
         {
             if (message.Sender is IMediaSessionsService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapDecoder))
+                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
                 {
-                    if (message.NewValue is BitmapDecoder)
-                    {
-                        await UpdateAlbumArtThemeColorsAsync();
-                    }
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }
@@ -488,53 +528,54 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public async void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
         {
             if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.LyricsBackgroundTheme))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }
 
-        public async void Receive(PropertyChangedMessage<LyricsFontColorType> message)
+        public void Receive(PropertyChangedMessage<LyricsFontColorType> message)
         {
             if (message.Sender == LyricsWindowStatus.LyricsStyleSettings)
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsBgFontColorType))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsFgFontColorType))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsStrokeFontColorType))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }
 
-        public async void Receive(PropertyChangedMessage<Color> message)
+        public void Receive(PropertyChangedMessage<Color> message)
         {
             if (message.Sender == LyricsWindowStatus.LyricsStyleSettings)
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomBgFontColor))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomFgFontColor))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomStrokeFontColor))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }
+
     }
 }

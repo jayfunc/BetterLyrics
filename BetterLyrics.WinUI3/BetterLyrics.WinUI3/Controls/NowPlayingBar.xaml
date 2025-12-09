@@ -10,11 +10,11 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" Background="{x:Bind Background, Mode=OneWay}">
+    <Grid x:Name="RootGrid">
 
         <Grid
             x:Name="BottomCommandGrid"
-            Background="Transparent"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
             Opacity="{x:Bind ViewModel.BottomCommandGridOpacity, Mode=OneWay}"
             PointerEntered="BottomCommandGrid_PointerEntered"
             PointerExited="BottomCommandGrid_PointerExited">
@@ -417,7 +417,7 @@
                     <Flyout.FlyoutPresenterStyle>
                         <Style TargetType="FlyoutPresenter">
                             <Setter Property="Padding" Value="0" />
-                            <Setter Property="MinWidth" Value="500" />
+                            <Setter Property="MinWidth" Value="400" />
                             <Setter Property="MinHeight" Value="100" />
                             <Setter Property="CornerRadius" Value="12" />
                         </Style>

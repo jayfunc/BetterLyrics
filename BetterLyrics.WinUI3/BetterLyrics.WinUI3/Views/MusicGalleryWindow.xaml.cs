@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 
@@ -21,7 +22,7 @@ namespace BetterLyrics.WinUI3.Views
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MusicGalleryWindow : Window,
-         IRecipient<PropertyChangedMessage<BitmapDecoder?>>,
+         IRecipient<PropertyChangedMessage<BitmapImage?>>,
          IRecipient<PropertyChangedMessage<ElementTheme>>
     {
         public MusicGalleryWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
@@ -38,12 +39,12 @@ namespace BetterLyrics.WinUI3.Views
 
             WeakReferenceMessenger.Default.RegisterAll(this);
 
-            _ = UpdateAlbumArtThemeColorsAsync();
+            UpdateAlbumArtThemeColors();
         }
 
-        private async Task UpdateAlbumArtThemeColorsAsync()
+        private void UpdateAlbumArtThemeColors()
         {
-            var result = await _mediaSessionsService.CalculateAlbumArtThemeColorsAsync(
+            var result = _mediaSessionsService.CalculateAlbumArtThemeColors(
                 ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
             NowPlayingPage.AlbumArtThemeColors = result;
@@ -63,27 +64,24 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public async void Receive(PropertyChangedMessage<BitmapDecoder?> message)
+        public void Receive(PropertyChangedMessage<BitmapImage?> message)
         {
             if (message.Sender is IMediaSessionsService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapDecoder))
+                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
                 {
-                    if (message.NewValue is BitmapDecoder decoder)
-                    {
-                        await UpdateAlbumArtThemeColorsAsync();
-                    }
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }
 
-        public async void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
         {
             if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
             {
                 if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
                 {
-                    await UpdateAlbumArtThemeColorsAsync();
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }
