@@ -1090,7 +1090,7 @@
     <value>사용자 정의하십시오</value>
   </data>
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>가사 글꼴 가족</value>
+    <value>Font family</value>
   </data>
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>글꼴 크기</value>
@@ -1265,6 +1265,9 @@
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>투명도</value>
+  </data>
+  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>Font opacity</value>
   </data>
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>파일 탐색기에서 열립니다</value>
