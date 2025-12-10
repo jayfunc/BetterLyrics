@@ -117,7 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ActionCompleted" xml:space="preserve">
     <value>操作完成</value>
   </data>
@@ -153,9 +152,6 @@
   </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>預設</value>
-  </data>
-  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
-    <value>依賴</value>
   </data>
   <data name="DesktopMode" xml:space="preserve">
     <value>桌面模式（透明）</value>
@@ -547,6 +543,9 @@
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>貢獻者</value>
   </data>
+  <data name="SetingsPageDeps.Text" xml:space="preserve">
+    <value>依賴包</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>捐贈</value>
   </data>
@@ -915,6 +914,9 @@
   </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>高度</value>
+  </data>
+  <data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>您好</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>音樂未播放/播放時自動隱藏/顯示歌詞視窗</value>
@@ -1294,6 +1296,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>無法在您的電腦中找到該路徑</value>
   </data>
+  <data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <value>特別鳴謝</value>
+  </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>歌詞注音</value>
   </data>
@@ -1507,6 +1512,12 @@
   <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
+  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+    <value>感謝您購買 BetterLyrics</value>
+  </data>
+  <data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>致謝名單</value>
+  </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
     <value>歌詞背景主題</value>
   </data>
@@ -1575,6 +1586,9 @@
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
     <value>工作區域高度</value>
+  </data>
+  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <value>正在使用該軟體的你</value>
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>標準模式</value>

@@ -28,30 +28,37 @@
                             </StackPanel>
                         </dev:SettingsExpander.Header>
                         <dev:SettingsExpander.Description>
-                            <StackPanel
-                                Margin="0,2,0,0"
-                                Orientation="Horizontal"
-                                Spacing="2">
-                                <TextBlock Text="©" />
-                                <HyperlinkButton
-                                    Margin="0,-1,0,0"
-                                    Content="Zhe Fang"
-                                    NavigateUri="https://github.com/jayfunc" />
-                                <TextBlock Text="2025" />
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel
+                                    Margin="0,2,0,0"
+                                    Orientation="Horizontal"
+                                    Spacing="2">
+                                    <TextBlock Text="©" />
+                                    <HyperlinkButton
+                                        Margin="0,-1,0,0"
+                                        Content="{x:Bind const:App.AppAuthor}"
+                                        NavigateUri="https://github.com/jayfunc" />
+                                    <TextBlock Text="2025" />
+                                </StackPanel>
                             </StackPanel>
                         </dev:SettingsExpander.Description>
-                        <RichTextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                            <Paragraph>
-                                <Run x:Uid="SettingsPageVersion" />
-                                <Run Text="{x:Bind helper:MetadataHelper.AppVersion}" />
-                            </Paragraph>
-                        </RichTextBlock>
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <RichTextBlock
+                                Margin="0,-1,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                <Paragraph>
+                                    <Run x:Uid="SettingsPageVersion" />
+                                    <Run Text="{x:Bind helper:MetadataHelper.AppVersion}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                        </StackPanel>
                         <dev:SettingsExpander.Items>
 
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.GitHub}" />
+                                        <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
                                         <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
                                         <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
                                         <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
@@ -75,14 +82,14 @@
                                 <StackPanel Spacing="6">
                                     <TextBlock x:Uid="SetingsPageDonation" />
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="https://buymeacoffee.com/founchoo" />
-                                        <HyperlinkButton Content="PayPal" NavigateUri="https://paypal.me/zhefangpay" />
-                                        <Button
-                                            Content="支付宝"
-                                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                            Style="{StaticResource GhostButtonStyle}">
-                                            <Button.Flyout>
-                                                <Flyout>
+                                        <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
+                                        <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
+                                        <HyperlinkButton
+                                            x:Name="AlipayButton"
+                                            Click="AlipayButton_Click"
+                                            Content="支付宝">
+                                            <HyperlinkButton.ContextFlyout>
+                                                <Flyout x:Name="AlipayFlyout">
                                                     <Flyout.FlyoutPresenterStyle>
                                                         <Style TargetType="FlyoutPresenter">
                                                             <Setter Property="CornerRadius" Value="12" />
@@ -91,14 +98,14 @@
                                                     </Flyout.FlyoutPresenterStyle>
                                                     <Image Height="300" Source="/Assets/Alipay.jpg" />
                                                 </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
-                                        <Button
-                                            Content="微信"
-                                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                            Style="{StaticResource GhostButtonStyle}">
-                                            <Button.Flyout>
-                                                <Flyout>
+                                            </HyperlinkButton.ContextFlyout>
+                                        </HyperlinkButton>
+                                        <HyperlinkButton
+                                            x:Name="WeChatButton"
+                                            Click="WeChat_Click"
+                                            Content="微信">
+                                            <HyperlinkButton.ContextFlyout>
+                                                <Flyout x:Name="WeChatFlyout">
                                                     <Flyout.FlyoutPresenterStyle>
                                                         <Style TargetType="FlyoutPresenter">
                                                             <Setter Property="CornerRadius" Value="12" />
@@ -107,8 +114,9 @@
                                                     </Flyout.FlyoutPresenterStyle>
                                                     <Image Height="300" Source="/Assets/WeChatReward.png" />
                                                 </Flyout>
-                                            </Button.Flyout>
-                                        </Button>
+                                            </HyperlinkButton.ContextFlyout>
+                                        </HyperlinkButton>
+                                        <HyperlinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="*" />
@@ -120,16 +128,13 @@
                                 </StackPanel>
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageContributors" />
-                                    <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="jayfunc" NavigateUri="https://github.com/jayfunc" />
-                                        <HyperlinkButton Content="Raspberry-Monster" NavigateUri="https://github.com/Raspberry-Monster" />
-                                        <HyperlinkButton Content="ZHider" NavigateUri="https://github.com/ZHider" />
-                                        <HyperlinkButton Content="kusutori" NavigateUri="https://github.com/kusutori" />
-                                    </StackPanel>
-                                </StackPanel>
+                            <dev:SettingsCard x:Uid="SettingsPageThanksList">
+                                <Button
+                                    Click="Patron_Click"
+                                    Content="{ui:FontIcon FontSize=16,
+                                                          FontFamily={StaticResource IconFontFamily},
+                                                          Glyph=&#xE7FD;}"
+                                    Style="{StaticResource AccentButtonStyle}" />
                             </dev:SettingsCard>
 
                         </dev:SettingsExpander.Items>
@@ -177,10 +182,6 @@
                         </dev:SettingsExpander.ItemsHeader>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageDebugOverlay">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.IsDebugOverlayEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-
                     <dev:SettingsCard x:Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.IsFixedTimeStep, Mode=TwoWay}" />
                     </dev:SettingsCard>
@@ -197,6 +198,328 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
+
+        <Grid
+            x:Name="CreditsReel"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            Opacity="0"
+            SizeChanged="CreditsReel_SizeChanged"
+            Tapped="CreditsReel_Tapped"
+            Visibility="Collapsed">
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
+            <ScrollViewer
+                x:Name="CreditsReelScrollViewer"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                ScrollViewer.VerticalScrollMode="Disabled">
+                <RichTextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalTextAlignment="Center"
+                    LineHeight="28"
+                    PointerEntered="RichTextBlock_PointerEntered"
+                    PointerExited="RichTextBlock_PointerExited">
+
+                    <Paragraph x:Name="CreditsReelHeader" />
+
+                    <!--  贡献者  -->
+                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
+                        <Run x:Uid="SetingsPageContributors" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://github.com/jayfunc">
+                            <Run Text="jayfunc" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://github.com/Raspberry-Monster">
+                            <Run Text="Raspberry-Monster" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://github.com/ZHider">
+                            <Run Text="ZHider" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://github.com/kusutori">
+                            <Run Text="kusutori" />
+                        </Hyperlink>
+                    </Paragraph>
+
+                    <!--  打赏者  -->
+                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
+                        <Run x:Uid="SettingsPagePatrons" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run Text="YE" />
+                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Dec 3, 2025" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run Text="**玄" />
+                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 23, 2025" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run Text="**智" />
+                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 21, 2025" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run Text="*鹤" />
+                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 17, 2025" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run Text="借过" />
+                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 2, 2025" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run Text="**华" />
+                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Aug 28, 2025" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run x:Uid="SettingsPageYouNowUsing" FontStyle="Italic" />
+                    </Paragraph>
+
+                    <!--  依赖包  -->
+                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
+                        <Run x:Uid="SetingsPageDeps" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/3v.EvtSource">
+                            <Run Text="3v.EvtSource" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView">
+                            <Run Text="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.Labs.WinUI.Shimmer">
+                            <Run Text="CommunityToolkit.Labs.WinUI.Shimmer" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.Mvvm">
+                            <Run Text="CommunityToolkit.Mvvm" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Behaviors">
+                            <Run Text="CommunityToolkit.WinUI.Behaviors" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Controls.Primitives">
+                            <Run Text="CommunityToolkit.WinUI.Controls.Primitives" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Controls.Segmented">
+                            <Run Text="CommunityToolkit.WinUI.Controls.Segmented" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Converters">
+                            <Run Text="CommunityToolkit.WinUI.Converters" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Extensions">
+                            <Run Text="CommunityToolkit.WinUI.Extensions" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Helpers">
+                            <Run Text="CommunityToolkit.WinUI.Helpers" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Media">
+                            <Run Text="CommunityToolkit.WinUI.Media" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Triggers">
+                            <Run Text="CommunityToolkit.WinUI.Triggers" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/ComputeSharp.D2D1.WinUI">
+                            <Run Text="ComputeSharp.D2D1.WinUI" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/csharp-kana">
+                            <Run Text="csharp-kana" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/csharp-pinyin">
+                            <Run Text="csharp-pinyin" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/DevWinUI.Controls">
+                            <Run Text="DevWinUI.Controls" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Dubya.WindowsMediaController">
+                            <Run Text="Dubya.WindowsMediaController" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/F23.StringSimilarity">
+                            <Run Text="F23.StringSimilarity" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/H.NotifyIcon.WinUI">
+                            <Run Text="H.NotifyIcon.WinUI" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Hqub.Last.fm">
+                            <Run Text="Hqub.Last.fm" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Lyricify.Lyrics.Helper-NativeAot">
+                            <Run Text="Lyricify.Lyrics.Helper-NativeAot" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection">
+                            <Run Text="Microsoft.Extensions.DependencyInjection" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Extensions.Logging">
+                            <Run Text="Microsoft.Extensions.Logging" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Graphics.Win2D">
+                            <Run Text="Microsoft.Graphics.Win2D" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools">
+                            <Run Text="Microsoft.Windows.SDK.BuildTools" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.WindowsAppSDK">
+                            <Run Text="Microsoft.WindowsAppSDK" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/NAudio.Wasapi">
+                            <Run Text="NAudio.Wasapi" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Nito.AsyncEx">
+                            <Run Text="Nito.AsyncEx" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Nito.AsyncEx.Tasks">
+                            <Run Text="Nito.AsyncEx.Tasks" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/NTextCat">
+                            <Run Text="NTextCat" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Serilog.Extensions.Logging">
+                            <Run Text="Serilog.Extensions.Logging" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Serilog.Sinks.File">
+                            <Run Text="Serilog.Sinks.File" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/System.Drawing.Common">
+                            <Run Text="System.Drawing.Common" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/System.Text.Encoding.CodePages">
+                            <Run Text="System.Text.Encoding.CodePages" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/TagLibSharp">
+                            <Run Text="TagLibSharp" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Ude.NetStandard">
+                            <Run Text="Ude.NetStandard" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.DwmApi">
+                            <Run Text="Vanara.PInvoke.DwmApi" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.Gdi32">
+                            <Run Text="Vanara.PInvoke.Gdi32" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.Shell32">
+                            <Run Text="Vanara.PInvoke.Shell32" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.User32">
+                            <Run Text="Vanara.PInvoke.User32" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.Windows.Shell">
+                            <Run Text="Vanara.Windows.Shell" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/VCollab.DiscordRichPresence">
+                            <Run Text="VCollab.DiscordRichPresence" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/WinUIEx">
+                            <Run Text="WinUIEx" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/z440.atl.core">
+                            <Run Text="z440.atl.core" />
+                        </Hyperlink>
+                    </Paragraph>
+
+                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
+                        <Run Text="{x:Bind const:App.AppName}" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run Text="Proudly built by" />
+                        <Hyperlink NavigateUri="{x:Bind const:Link.AuthorGitHub}">
+                            <Run Text="{x:Bind const:App.AppAuthor}" />
+                        </Hyperlink>
+                    </Paragraph>
+
+                    <Paragraph x:Name="CreditsReelFooter" />
+
+                </RichTextBlock>
+            </ScrollViewer>
+        </Grid>
 
     </Grid>
 </UserControl>

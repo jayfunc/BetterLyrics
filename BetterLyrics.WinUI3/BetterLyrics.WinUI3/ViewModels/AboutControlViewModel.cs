@@ -10,33 +10,28 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
+using Windows.Services.Store;
+using Windows.System;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class AboutControlViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
-        private readonly IResourceService _resourceService;
-
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial bool IsDebugOverlayEnabled { get; set; } = false;
 
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
 
-        public AboutControlViewModel(ISettingsService settingsService, IResourceService resourceService)
+        public AboutControlViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _resourceService = resourceService;
-
             AppSettings = _settingsService.AppSettings;
         }
 
         [RelayCommand]
         private async Task LaunchProjectGitHubPageAsync()
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.GitHub));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.BetterLyricsGitHub));
         }
 
         [RelayCommand]
