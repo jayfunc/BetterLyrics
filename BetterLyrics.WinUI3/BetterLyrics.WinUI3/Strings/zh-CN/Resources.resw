@@ -1512,6 +1512,9 @@
   <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>任务栏模式</value>
   </data>
+  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value>任务栏固定位置</value>
+  </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>

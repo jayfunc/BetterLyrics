@@ -35,7 +35,8 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<ElementTheme>>,
         IRecipient<PropertyChangedMessage<BitmapImage?>>,
         IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
-        IRecipient<PropertyChangedMessage<Color>>
+        IRecipient<PropertyChangedMessage<Color>>,
+        IRecipient<PropertyChangedMessage<TaskbarPlacement>>
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private OverlayInputHelper? _overlayInputHelper;
@@ -56,10 +57,11 @@ namespace BetterLyrics.WinUI3.Views
             this.InitializeComponent();
 
             _fgWindowWatcherTimer = DispatcherQueue.CreateTimer();
-            _taskbarHook = new TaskbarHook(OnTaskbarFreeBoundsChanged);
 
             LyricsWindowStatus = status;
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
+
+            _taskbarHook = new TaskbarHook(LyricsWindowStatus.TaskbarPlacement, OnTaskbarFreeBoundsChanged);
 
             this.Init("LyricsPageTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
 
@@ -196,14 +198,12 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsPinToTaskbarChanged()
         {
+            _taskbarHook?.Dispose();
+            _taskbarHook = null;
+
             if (LyricsWindowStatus.IsPinToTaskbar)
             {
-                _taskbarHook = new(OnTaskbarFreeBoundsChanged);
-            }
-            else
-            {
-                _taskbarHook?.Dispose();
-                _taskbarHook = null;
+                _taskbarHook = new(LyricsWindowStatus.TaskbarPlacement, OnTaskbarFreeBoundsChanged);
             }
         }
 
@@ -614,5 +614,15 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        public void Receive(PropertyChangedMessage<TaskbarPlacement> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.TaskbarPlacement))
+                {
+                    _taskbarHook?.UpdatePlacement(LyricsWindowStatus.TaskbarPlacement);
+                }
+            }
+        }
     }
 }

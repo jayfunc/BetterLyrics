@@ -1512,6 +1512,9 @@
   <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>Taskbar mode</value>
   </data>
+  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
