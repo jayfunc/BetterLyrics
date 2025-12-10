@@ -544,7 +544,7 @@
     <value>贡献者</value>
   </data>
   <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>依赖包</value>
+    <value>代码参考</value>
   </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>捐贈</value>
@@ -555,8 +555,14 @@
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
     <value>操作指南</value>
   </data>
+  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>特别鸣谢</value>
+  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的生命并鼓励进一步的发展。</value>
+  </data>
+  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+    <value>UI/UX 设计参考</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[实验性] 纵深效果</value>
@@ -1297,7 +1303,7 @@
     <value>无法在您的计算机中找到该路径</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
-    <value>特别鸣谢</value>
+    <value>赞助</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>歌词注音</value>
@@ -1571,6 +1577,9 @@
   </data>
   <data name="SettingsPageTransparent.Content" xml:space="preserve">
     <value>透明</value>
+  </data>
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+    <value>以及购买支持 BetterLyrics 的用户</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>版本号</value>
