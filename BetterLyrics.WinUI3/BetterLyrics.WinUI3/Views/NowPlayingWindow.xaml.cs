@@ -61,8 +61,6 @@ namespace BetterLyrics.WinUI3.Views
             LyricsWindowStatus = status;
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
 
-            _taskbarHook = new TaskbarHook(LyricsWindowStatus.TaskbarPlacement, OnTaskbarFreeBoundsChanged);
-
             this.Init("LyricsPageTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
 
             AppWindow.Changed += AppWindow_Changed;
