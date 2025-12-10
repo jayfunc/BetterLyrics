@@ -166,6 +166,11 @@ namespace BetterLyrics.WinUI3.Views
                 LyricsWindowStatus.IsLocked = true;
                 this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
             }
+            else
+            {
+                // 强制触发一次更新，刷新解锁图标可见性状态
+                OnIsLockedChanged();
+            }
         }
 
         private void OnIsShownInSwitchersChanged()
@@ -182,7 +187,7 @@ namespace BetterLyrics.WinUI3.Views
         private void OnIsLockedChanged()
         {
             this.SetIsLocked(LyricsWindowStatus.IsLocked);
-            if (LyricsWindowStatus.IsLocked)
+            if (LyricsWindowStatus.IsLocked && !LyricsWindowStatus.IsWorkArea)
             {
                 LockToggleButtonContainer.Visibility = Visibility.Visible;
                 StartOverlayInputHelper();

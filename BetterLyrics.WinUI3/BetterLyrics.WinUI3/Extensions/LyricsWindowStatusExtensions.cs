@@ -52,7 +52,6 @@ namespace BetterLyrics.WinUI3.Extensions
                 IsShownInSwitchers = false,
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 EnvironmentSampleMode = WindowPixelSampleMode.BelowWindow,
-                TitleBarArea = TitleBarArea.None,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
