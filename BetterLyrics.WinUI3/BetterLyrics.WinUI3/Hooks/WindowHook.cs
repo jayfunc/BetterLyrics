@@ -9,6 +9,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;
@@ -23,8 +24,8 @@ namespace BetterLyrics.WinUI3.Hooks
         private static List<object> _activeWindows = [];
         private static List<object> _workAreas = [];
 
-        private static readonly Dictionary<HWND, WindowStyle> _defaultWindowStyle = [];
-        private static readonly Dictionary<HWND, ExtendedWindowStyle> _defaultExtendedWindowStyle = [];
+        private static WindowStyle? _defaultWindowStyle;
+        private static ExtendedWindowStyle? _defaultExtendedWindowStyle;
 
         public static void HideWindow(this Window window)
         {
@@ -141,17 +142,19 @@ namespace BetterLyrics.WinUI3.Hooks
                 TrackWindow(window);
                 var castedWindow = (Window)window;
 
-                if (typeof(T) != typeof(SystemTrayWindow))
+                castedWindow.Restore();
+                castedWindow.Activate();
+
+                if (typeof(T) == typeof(SystemTrayWindow))
                 {
-                    castedWindow.Restore();
-                    castedWindow.Activate();
+                    _defaultWindowStyle = castedWindow.GetWindowStyle();
+                    _defaultExtendedWindowStyle = castedWindow.GetExtendedWindowStyle();
+                    castedWindow.HideWindow();
                 }
 
                 if (typeof(T) == typeof(NowPlayingWindow))
                 {
                     var hwnd = WindowNative.GetWindowHandle(castedWindow);
-                    _defaultWindowStyle.Add(hwnd, castedWindow.GetWindowStyle());
-                    _defaultExtendedWindowStyle.Add(hwnd, castedWindow.GetExtendedWindowStyle());
 
                     var lyricsWindow = (NowPlayingWindow)window;
                     lyricsWindow.InitStatus();
@@ -225,10 +228,6 @@ namespace BetterLyrics.WinUI3.Hooks
             if (_activeWindows.Contains(sender))
             {
                 _activeWindows.Remove(sender);
-
-                var hwnd = WindowNative.GetWindowHandle(sender);
-                _defaultWindowStyle.Remove(hwnd);
-                _defaultExtendedWindowStyle.Remove(hwnd);
             }
         }
 
@@ -256,9 +255,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsClickThrough(this Window window, bool enable)
         {
-            IntPtr hwnd = WindowNative.GetWindowHandle(window);
-
-            if (_defaultExtendedWindowStyle.TryGetValue(hwnd, out var style))
+            if (_defaultExtendedWindowStyle is ExtendedWindowStyle style)
             {
                 if (enable)
                 {
@@ -273,9 +270,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsBorderless(this Window window, bool enable)
         {
-            var hwnd = WindowNative.GetWindowHandle(window);
-
-            if (_defaultWindowStyle.TryGetValue(hwnd, out var style))
+            if (_defaultWindowStyle is WindowStyle style)
             {
                 if (enable)
                 {

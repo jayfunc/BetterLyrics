@@ -22,6 +22,7 @@ using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 using WinRT.Interop;
+using WinUIEx.Messaging;
 
 namespace BetterLyrics.WinUI3.Views
 {
@@ -38,7 +39,7 @@ namespace BetterLyrics.WinUI3.Views
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private OverlayInputHelper? _overlayInputHelper;
-        private readonly TaskbarHook _taskbarHook = new();
+        private TaskbarHook? _taskbarHook;
 
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
@@ -55,7 +56,7 @@ namespace BetterLyrics.WinUI3.Views
             this.InitializeComponent();
 
             _fgWindowWatcherTimer = DispatcherQueue.CreateTimer();
-            _taskbarHook.OnTaskbarBoundsChanged = TaskbarHook_OnTaskbarBoundsChanged;
+            _taskbarHook = new TaskbarHook(OnTaskbarFreeBoundsChanged);
 
             LyricsWindowStatus = status;
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
@@ -72,16 +73,9 @@ namespace BetterLyrics.WinUI3.Views
             UpdateAlbumArtThemeColors();
         }
 
-        private void TaskbarHook_OnTaskbarBoundsChanged(Events.TaskbarBoundsChangedEventArgs obj)
+        private void OnTaskbarFreeBoundsChanged(Events.TaskbarFreeBoundsChangedEventArgs obj)
         {
-            this.MoveAndResize(
-                new Rect(
-                    LyricsWindowStatus.WindowBounds.Left,
-                    obj.TaskbarBounds.Top,
-                    LyricsWindowStatus.WindowBounds.Width,
-                    obj.TaskbarBounds.Height
-                )
-            );
+            this.MoveAndResize(obj.TaskbarFreeBounds);
         }
 
         public void InitStatus()
@@ -186,7 +180,6 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsLockedChanged()
         {
-            this.SetIsLocked(LyricsWindowStatus.IsLocked);
             if (LyricsWindowStatus.IsLocked && !LyricsWindowStatus.IsWorkArea)
             {
                 LockToggleButtonContainer.Visibility = Visibility.Visible;
@@ -198,17 +191,19 @@ namespace BetterLyrics.WinUI3.Views
                 UnlockButton.Opacity = 0;
                 StopOverlayInputHelper();
             }
+            this.SetIsLocked(LyricsWindowStatus.IsLocked);
         }
 
         private void OnIsPinToTaskbarChanged()
         {
             if (LyricsWindowStatus.IsPinToTaskbar)
             {
-                _taskbarHook.Start();
+                _taskbarHook = new(OnTaskbarFreeBoundsChanged);
             }
             else
             {
-                _taskbarHook.Stop();
+                _taskbarHook?.Dispose();
+                _taskbarHook = null;
             }
         }
 
@@ -394,6 +389,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void StartOverlayInputHelper()
         {
+            if (_overlayInputHelper != null) return;
+
             _overlayInputHelper = new(this);
             _overlayInputHelper.Register(RootGrid);
             _overlayInputHelper.Register(LockToggleButtonContainer);
