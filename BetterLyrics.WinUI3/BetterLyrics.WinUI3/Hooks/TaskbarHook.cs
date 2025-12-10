@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Events;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Extensions;
 using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
@@ -21,19 +22,29 @@ namespace BetterLyrics.WinUI3.Hooks
         private StructureChangedEventHandlerBase? _structureHandler;
         private PropertyChangedEventHandlerBase? _propertyHandler;
 
+        private TaskbarPlacement _currentPlacement;
+
         private readonly DispatcherQueue _dispatcherQueue;
         private readonly Action<TaskbarFreeBoundsChangedEventArgs> _onLayoutChanged;
         private Timer? _debounceTimer;
         private const int DebounceDelay = 150;
         private bool _isDisposed;
 
-        public TaskbarHook(Action<TaskbarFreeBoundsChangedEventArgs> onLayoutChanged)
+        public TaskbarHook(TaskbarPlacement placement, Action<TaskbarFreeBoundsChangedEventArgs> onLayoutChanged)
         {
             _automation = new UIA3Automation();
             _onLayoutChanged = onLayoutChanged;
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
+            _currentPlacement = placement;
+
             StartHook();
+        }
+
+        public void UpdatePlacement(TaskbarPlacement newPlacement)
+        {
+            _currentPlacement = newPlacement;
+            RequestUpdate(); // 立即刷新位置
         }
 
         private void StartHook()
@@ -71,7 +82,7 @@ namespace BetterLyrics.WinUI3.Hooks
             _debounceTimer?.Dispose();
             _debounceTimer = new Timer(_ =>
             {
-                Rectangle voidRect = CalculateVoidRect();
+                Rectangle voidRect = CalculateVoidRect(_currentPlacement);
                 _dispatcherQueue.TryEnqueue(() =>
                 {
                     if (!_isDisposed && voidRect != Rectangle.Empty)
@@ -82,13 +93,12 @@ namespace BetterLyrics.WinUI3.Hooks
             }, null, DebounceDelay, Timeout.Infinite);
         }
 
-        private Rectangle CalculateVoidRect()
+        private Rectangle CalculateVoidRect(TaskbarPlacement placement)
         {
             try
             {
                 if (_taskbar == null) return Rectangle.Empty;
 
-                // 重新获取任务栏边界
                 try { var _ = _taskbar.BoundingRectangle; }
                 catch
                 {
@@ -99,68 +109,86 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 Rectangle taskbarRect = _taskbar.BoundingRectangle;
 
-                // 确定右边界
-                int gapRight = taskbarRect.Right;
-
+                // 绝对右边界：托盘
+                int barrierRight = taskbarRect.Right;
                 var tray = _taskbar.FindFirstDescendant(cf => cf.ByAutomationId("SystemTrayIcon")); // Win11
                 if (tray == null) tray = _taskbar.FindFirstDescendant(cf => cf.ByClassName("TrayNotifyWnd")); // Win10
+                if (tray != null) barrierRight = tray.BoundingRectangle.Left;
 
-                if (tray != null)
+                // 绝对左边界：任务栏左边缘 或 小组件(Win11)
+                int barrierLeft = taskbarRect.Left;
+                var widgets = _taskbar.FindFirstDescendant(cf => cf.ByAutomationId("WidgetsButton"));
+
+                // 只有当小组件确实在最左侧时 (Win11默认)，它才构成左边界
+                // 如果用户把任务栏设为靠左对齐，小组件会在开始按钮右边，这时候不把它当做左边界
+                if (widgets != null && widgets.BoundingRectangle.Left < taskbarRect.Left + 100)
                 {
-                    gapRight = tray.BoundingRectangle.Left;
+                    barrierLeft = (int)widgets.BoundingRectangle.Right;
                 }
 
-                int gapLeft = taskbarRect.Left;
 
-                // 系统按钮
+                // 寻找 中间内容区域 (Start + Search + Apps) 的 左右极值
+                int contentMinLeft = barrierRight;
+                int contentMaxRight = barrierLeft;
+
+                // 定义所有中间元素
                 string[] systemButtonIds = new[] {
-                    "StartButton",
-                    "SearchButton",
-                    "TaskViewButton",
-                    "WidgetsButton",
-                    "ChatButton"
+                    "StartButton", "SearchButton", "TaskViewButton", "ChatButton"
                 };
 
+                // 系统按钮
                 foreach (var id in systemButtonIds)
                 {
                     var btn = _taskbar.FindFirstDescendant(cf => cf.ByAutomationId(id));
                     if (btn != null)
                     {
                         var rect = btn.BoundingRectangle;
-                        // 只有当按钮在托盘左侧时，才计算它
-                        if (rect.Right < gapRight && rect.Right > gapLeft)
-                        {
-                            gapLeft = (int)rect.Right;
-                        }
+                        // 排除不可见的
+                        if (rect.Width <= 0) continue;
+
+                        // 更新极值
+                        if (rect.Left < contentMinLeft) contentMinLeft = (int)rect.Left;
+                        if (rect.Right > contentMaxRight) contentMaxRight = (int)rect.Right;
                     }
                 }
 
-                // 遍历图标
+                // App 图标
                 var appIcons = _taskbar.FindAllDescendants(cf => cf.ByClassName("Taskbar.TaskListButtonAutomationPeer"));
-
                 foreach (var icon in appIcons)
                 {
                     var rect = icon.BoundingRectangle;
+                    if (rect.Width <= 0) continue;
 
-                    // 过滤无效的图标 (宽高为 0 的隐藏图标)
-                    if (rect.Width <= 0 || rect.Height <= 0) continue;
-
-                    // 如果这个图标确实在托盘左边，更新 gapLeft
-                    if (rect.Right < gapRight && rect.Right > gapLeft)
-                    {
-                        gapLeft = (int)rect.Right;
-                    }
+                    if (rect.Left < contentMinLeft) contentMinLeft = (int)rect.Left;
+                    if (rect.Right > contentMaxRight) contentMaxRight = (int)rect.Right;
                 }
 
-                // 增加一点点间距
-                gapLeft += 10;
-                gapRight -= 10;
+                // 如果完全没找到内容，重置为中间
+                if (contentMinLeft == barrierRight) contentMinLeft = taskbarRect.Left;
+                if (contentMaxRight == barrierLeft) contentMaxRight = taskbarRect.Left;
 
-                int width = gapRight - gapLeft;
+                int finalLeft, finalRight;
+                int padding = 10;
+
+                if (placement == TaskbarPlacement.Left)
+                {
+                    // 【小组件】... [空隙] ...【开始按钮】
+                    // 如果是 Win10 或 Win11左对齐，contentMinLeft 几乎等于 barrierLeft，空隙为0
+                    finalLeft = barrierLeft + padding;
+                    finalRight = contentMinLeft - padding;
+                }
+                else // Right
+                {
+                    // 【最后一个图标】... [空隙] ...【托盘】
+                    finalLeft = contentMaxRight + padding;
+                    finalRight = barrierRight - padding;
+                }
+
+                int width = finalRight - finalLeft;
 
                 if (width < 20) return Rectangle.Empty;
 
-                return new Rectangle(gapLeft, taskbarRect.Top, width, taskbarRect.Height);
+                return new Rectangle(finalLeft, taskbarRect.Top, width, taskbarRect.Height);
             }
             catch (Exception ex)
             {
