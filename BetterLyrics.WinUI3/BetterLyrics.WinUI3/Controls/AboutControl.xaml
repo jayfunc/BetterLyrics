@@ -248,7 +248,7 @@
                         </Hyperlink>
                     </Paragraph>
 
-                    <!--  打赏者  -->
+                    <!--  赞助  -->
                     <Paragraph Margin="0,20,0,0" FontWeight="Bold">
                         <Run x:Uid="SettingsPagePatrons" />
                     </Paragraph>
@@ -277,236 +277,94 @@
                         <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Aug 28, 2025" />
                     </Paragraph>
                     <Paragraph>
-                        <Run x:Uid="SettingsPageYouNowUsing" FontStyle="Italic" />
+                        <Run x:Uid="SettingsPageUserWhoPurchased" />
                     </Paragraph>
 
-                    <!--  依赖包  -->
+                    <!--  特别鸣谢  -->
+                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
+                        <Run x:Uid="SetingsPageSpecialThanks" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Run x:Uid="SettingsPageYouNowUsing" />
+                    </Paragraph>
+
+                    <!--  代码参考  -->
                     <Paragraph Margin="0,20,0,0" FontWeight="Bold">
                         <Run x:Uid="SetingsPageDeps" />
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/3v.EvtSource">
-                            <Run Text="3v.EvtSource" />
+                        <Hyperlink NavigateUri="https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce">
+                            <Run Text="Get album artwork from ITunes (with Python3 or C#)" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView">
-                            <Run Text="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" />
+                        <Hyperlink NavigateUri="https://stackoverflow.com/a/32013610/11048731">
+                            <Run Text="FullyObservableCollection" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.Labs.WinUI.Shimmer">
-                            <Run Text="CommunityToolkit.Labs.WinUI.Shimmer" />
+                        <Hyperlink NavigateUri="https://github.com/Storyteller-Studios/Impressionist">
+                            <Run Text="Impressionist" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.Mvvm">
-                            <Run Text="CommunityToolkit.Mvvm" />
+                        <Hyperlink NavigateUri="https://github.com/Storyteller-Studios/ColorThief.WinUI3">
+                            <Run Text="ColorThief.WinUI3" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Behaviors">
-                            <Run Text="CommunityToolkit.WinUI.Behaviors" />
+                        <Hyperlink NavigateUri="https://github.com/Johnwikix/SpectrumVisualization">
+                            <Run Text="SpectrumVisualization" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Controls.Primitives">
-                            <Run Text="CommunityToolkit.WinUI.Controls.Primitives" />
+                        <Hyperlink NavigateUri="https://www.shadertoy.com/view/Mdt3Df">
+                            <Run Text="Snow (as shown in sweden)" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Controls.Segmented">
-                            <Run Text="CommunityToolkit.WinUI.Controls.Segmented" />
+                        <Hyperlink NavigateUri="https://www.shadertoy.com/view/lllSR2">
+                            <Run Text="w10" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Converters">
-                            <Run Text="CommunityToolkit.WinUI.Converters" />
+                        <Hyperlink NavigateUri="https://github.com/mo-jinran/Taskbar-Lyrics">
+                            <Run Text="Taskbar-Lyrics" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Extensions">
-                            <Run Text="CommunityToolkit.WinUI.Extensions" />
+                        <Hyperlink NavigateUri="https://github.com/jayfunc/BetterLyrics/network/dependencies">
+                            <Run Text="..." />
+                        </Hyperlink>
+                    </Paragraph>
+
+                    <!--  UI/UX 设计参考  -->
+                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
+                        <Run x:Uid="SetingsPageUIUXRef" />
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink NavigateUri="https://github.com/solstice23/refined-now-playing-netease">
+                            <Run Text="refined-now-playing-netease" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Helpers">
-                            <Run Text="CommunityToolkit.WinUI.Helpers" />
+                        <Hyperlink NavigateUri="https://github.com/WXRIW/Lyricify-App">
+                            <Run Text="Lyricify" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Media">
-                            <Run Text="CommunityToolkit.WinUI.Media" />
+                        <Hyperlink NavigateUri="https://moriafly.com/program/salt-player">
+                            <Run Text="椒盐音乐 Salt Player" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/CommunityToolkit.WinUI.Triggers">
-                            <Run Text="CommunityToolkit.WinUI.Triggers" />
+                        <Hyperlink NavigateUri="https://github.com/TwilightLemon/MyToolBar">
+                            <Run Text="MyToolBar" />
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/ComputeSharp.D2D1.WinUI">
-                            <Run Text="ComputeSharp.D2D1.WinUI" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/csharp-kana">
-                            <Run Text="csharp-kana" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/csharp-pinyin">
-                            <Run Text="csharp-pinyin" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/DevWinUI.Controls">
-                            <Run Text="DevWinUI.Controls" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Dubya.WindowsMediaController">
-                            <Run Text="Dubya.WindowsMediaController" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/F23.StringSimilarity">
-                            <Run Text="F23.StringSimilarity" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/FlaUI.UIA3">
-                            <Run Text="FlaUI.UIA3" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/H.NotifyIcon.WinUI">
-                            <Run Text="H.NotifyIcon.WinUI" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Hqub.Last.fm">
-                            <Run Text="Hqub.Last.fm" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Lyricify.Lyrics.Helper-NativeAot">
-                            <Run Text="Lyricify.Lyrics.Helper-NativeAot" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection">
-                            <Run Text="Microsoft.Extensions.DependencyInjection" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Extensions.Logging">
-                            <Run Text="Microsoft.Extensions.Logging" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Graphics.Win2D">
-                            <Run Text="Microsoft.Graphics.Win2D" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.Windows.SDK.BuildTools">
-                            <Run Text="Microsoft.Windows.SDK.BuildTools" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Microsoft.WindowsAppSDK">
-                            <Run Text="Microsoft.WindowsAppSDK" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/NAudio.Wasapi">
-                            <Run Text="NAudio.Wasapi" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Nito.AsyncEx">
-                            <Run Text="Nito.AsyncEx" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Nito.AsyncEx.Tasks">
-                            <Run Text="Nito.AsyncEx.Tasks" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/NTextCat">
-                            <Run Text="NTextCat" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Serilog.Extensions.Logging">
-                            <Run Text="Serilog.Extensions.Logging" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Serilog.Sinks.File">
-                            <Run Text="Serilog.Sinks.File" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/System.Drawing.Common">
-                            <Run Text="System.Drawing.Common" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/System.Text.Encoding.CodePages">
-                            <Run Text="System.Text.Encoding.CodePages" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/TagLibSharp">
-                            <Run Text="TagLibSharp" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Ude.NetStandard">
-                            <Run Text="Ude.NetStandard" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.DwmApi">
-                            <Run Text="Vanara.PInvoke.DwmApi" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.Gdi32">
-                            <Run Text="Vanara.PInvoke.Gdi32" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.Shell32">
-                            <Run Text="Vanara.PInvoke.Shell32" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.PInvoke.User32">
-                            <Run Text="Vanara.PInvoke.User32" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/Vanara.Windows.Shell">
-                            <Run Text="Vanara.Windows.Shell" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/VCollab.DiscordRichPresence">
-                            <Run Text="VCollab.DiscordRichPresence" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/WinUIEx">
-                            <Run Text="WinUIEx" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.nuget.org/packages/z440.atl.core">
-                            <Run Text="z440.atl.core" />
+                        <Hyperlink NavigateUri="">
+                            <Run Text="" />
                         </Hyperlink>
                     </Paragraph>
 

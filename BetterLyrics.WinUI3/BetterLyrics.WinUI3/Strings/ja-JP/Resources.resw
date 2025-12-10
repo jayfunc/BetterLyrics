@@ -544,7 +544,7 @@
     <value>投稿者</value>
   </data>
   <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>依存パッケージ</value>
+    <value>コードリファレンス</value>
   </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>寄付</value>
@@ -555,8 +555,14 @@
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
     <value>手順</value>
   </data>
+  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>スペシャルサンクス</value>
+  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>このプロジェクトが気に入っている場合は、寄付してサポートすることを検討してください。あなたのサポートは、プロジェクトを生かし続け、さらなる開発を促進するのに役立ちます。</value>
+  </data>
+  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+    <value>UI/UXデザインリファレンス</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[実験的] 奥行き効果</value>
@@ -1297,7 +1303,7 @@
     <value>パスはコンピューターでは見つかりません</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
-    <value>スペシャルサンクス</value>
+    <value>後援しました</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>リリックアノテーション</value>
@@ -1512,6 +1518,9 @@
   <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>タスクバーモード</value>
   </data>
+  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value>タスクバーの位置が固定されました</value>
+  </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
@@ -1568,6 +1577,9 @@
   </data>
   <data name="SettingsPageTransparent.Content" xml:space="preserve">
     <value>透明</value>
+  </data>
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+    <value>そして、BetterLyricsをサポートするユーザーを購入しましょう</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>バージョン</value>

@@ -544,7 +544,7 @@
     <value>貢獻者</value>
   </data>
   <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>依賴包</value>
+    <value>代碼參考</value>
   </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>捐贈</value>
@@ -555,8 +555,14 @@
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
     <value>說明</value>
   </data>
+  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>特别鸣谢</value>
+  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>如果您喜歡這個項目，請考慮通過捐贈來支持它。您的支持將有助於保持項目的生命並鼓勵進一步的發展。</value>
+  </data>
+  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+    <value>UI/UX 設計參考</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[實驗性] 縱深效果</value>
@@ -1297,7 +1303,7 @@
     <value>無法在您的電腦中找到該路徑</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
-    <value>特別鳴謝</value>
+    <value>贊助</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>歌詞注音</value>
@@ -1512,6 +1518,9 @@
   <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>任務列模式</value>
   </data>
+  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value>工作列固定位置</value>
+  </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
@@ -1568,6 +1577,9 @@
   </data>
   <data name="SettingsPageTransparent.Content" xml:space="preserve">
     <value>透明</value>
+  </data>
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+    <value>以及購買支援BetterLyrics 的用戶</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>版本號</value>

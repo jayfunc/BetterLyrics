@@ -544,7 +544,7 @@
     <value>기여자</value>
   </data>
   <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>종속 패키지</value>
+    <value>코드 참조</value>
   </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>기부</value>
@@ -555,8 +555,14 @@
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
     <value>지침</value>
   </data>
+  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>특별 감사 인사</value>
+  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>이 프로젝트가 마음에 들면 기부하여 지원을 고려하십시오. 귀하의 지원은 프로젝트를 계속 유지하고 추가 개발을 장려하는 데 도움이 될 것입니다.</value>
+  </data>
+  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+    <value>UI/UX 디자인 참조</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[실험] 깊이 효과</value>
@@ -1297,7 +1303,7 @@
     <value>경로는 컴퓨터에서 찾을 수 없습니다</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
-    <value>특별 감사 인사</value>
+    <value>스폰서</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>가사 주석</value>
@@ -1512,6 +1518,9 @@
   <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>작업 표시줄</value>
   </data>
+  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value>작업 표시줄 고정 위치</value>
+  </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
@@ -1568,6 +1577,9 @@
   </data>
   <data name="SettingsPageTransparent.Content" xml:space="preserve">
     <value>투명한</value>
+  </data>
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+    <value>그리고 BetterLyrics를 지원하는 사용자를 구입하세요</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>버전</value>
