@@ -153,9 +153,6 @@
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>默认</value>
   </data>
-  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
-    <value>依赖</value>
-  </data>
   <data name="DesktopMode" xml:space="preserve">
     <value>桌面模式（透明）</value>
   </data>
@@ -546,6 +543,9 @@
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>贡献者</value>
   </data>
+  <data name="SetingsPageDeps.Text" xml:space="preserve">
+    <value>Dependent package</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>捐贈</value>
   </data>
@@ -914,6 +914,9 @@
   </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>高度</value>
+  </data>
+  <data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>Hello</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>音乐未播放/播放时自动隐藏/显示歌词窗口</value>
@@ -1293,6 +1296,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>无法在您的计算机中找到该路径</value>
   </data>
+  <data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <value>Special Thanks</value>
+  </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>歌词注音</value>
   </data>
@@ -1506,6 +1512,12 @@
   <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
+  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+    <value>Thank you for purchasing BetterLyrics</value>
+  </data>
+  <data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>Credits</value>
+  </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
     <value>歌词背景主题</value>
   </data>
@@ -1574,6 +1586,9 @@
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
     <value>工作区高度</value>
+  </data>
+  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <value>You who are using the software</value>
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>标准模式</value>
