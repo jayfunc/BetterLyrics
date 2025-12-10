@@ -375,6 +375,11 @@
                         </Hyperlink>
                     </Paragraph>
                     <Paragraph>
+                        <Hyperlink NavigateUri="https://www.nuget.org/packages/FlaUI.UIA3">
+                            <Run Text="FlaUI.UIA3" />
+                        </Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
                         <Hyperlink NavigateUri="https://www.nuget.org/packages/H.NotifyIcon.WinUI">
                             <Run Text="H.NotifyIcon.WinUI" />
                         </Hyperlink>

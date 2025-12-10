@@ -24,7 +24,6 @@ namespace BetterLyrics.WinUI3.Extensions
                 WindowBounds = new Rect(100, 100, 600, 250),
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
-                IsLocked = true,
                 IsAdaptToEnvironment = true,
                 IsShownInSwitchers = false,
                 EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,

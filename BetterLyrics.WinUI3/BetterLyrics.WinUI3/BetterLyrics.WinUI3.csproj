@@ -72,6 +72,7 @@
 		<PackageReference Include="DevWinUI.Controls" Version="9.7.0" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.5" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
+		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
 		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
@@ -115,6 +116,7 @@
 	</ItemGroup>
 	<!--Disable Trimming for Specific Packages-->
 	<ItemGroup>
+		<TrimmerRootAssembly Include="FlaUI.UIA3" />
 		<TrimmerRootAssembly Include="NAudio.Wasapi" />
 		<TrimmerRootAssembly Include="TagLibSharp" />
 		<TrimmerRootAssembly Include="Vanara.PInvoke.DwmApi" />
