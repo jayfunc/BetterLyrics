@@ -22,6 +22,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 Name = _resourceService.GetLocalizedString("DesktopMode"),
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 WindowBounds = new Rect(100, 100, 600, 250),
+                IsLocked = true,
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
                 IsAdaptToEnvironment = true,
@@ -104,6 +105,31 @@ namespace BetterLyrics.WinUI3.Extensions
                 Name = _resourceService.GetLocalizedString("NarrowMode"),
                 WindowBounds = new Rect(100, 100, 400, 800),
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
+            };
+        }
+
+        public static LyricsWindowStatus TaskbarMode(Window? window = null)
+        {
+            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            return new LyricsWindowStatus(window)
+            {
+                Name = _resourceService.GetLocalizedString("TaskbarMode"),
+                LyricsDisplayType = LyricsDisplayType.LyricsOnly,
+                IsPinToTaskbar = true,
+                IsLocked = true,
+                IsAlwaysOnTop = true,
+                IsAlwaysOnTopPolling = true,
+                IsAdaptToEnvironment = true,
+                IsShownInSwitchers = false,
+                EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
+                LyricsStyleSettings = new()
+                {
+                    LyricsAlignmentType = TextAlignmentType.Center,
+                },
+                LyricsBackgroundSettings = new LyricsBackgroundSettings
+                {
+                    IsFluidOverlayEnabled = false,
+                }
             };
         }
     }

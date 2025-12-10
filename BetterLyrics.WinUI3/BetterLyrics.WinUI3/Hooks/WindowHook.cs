@@ -313,6 +313,8 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void SetIsShowInSwitchers(this Window window, bool enable)
         {
+            if (window.AppWindow == null) return;
+
             window.AppWindow.IsShownInSwitchers = enable;
         }
 
@@ -328,6 +330,8 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static void MoveAndResize(this Window window, Rect rect)
         {
+            if (window.AppWindow == null) return;
+
             window.AppWindow.Move(new Windows.Graphics.PointInt32((int)rect.X, (int)rect.Y));
             window.AppWindow.Resize(new Windows.Graphics.SizeInt32((int)rect.Width, (int)rect.Height));
         }

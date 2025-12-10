@@ -37,6 +37,7 @@
                                         <MenuFlyoutItem x:Uid="SettingsPageDockedMode" Command="{x:Bind ViewModel.CreateDockedLyricsWindowStatusCommand}" />
                                         <MenuFlyoutItem x:Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
                                         <MenuFlyoutItem x:Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem x:Uid="SettingsPageTaskbarMode" Command="{x:Bind ViewModel.CreateTaskbarLyricsWindowStatusCommand}" />
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
