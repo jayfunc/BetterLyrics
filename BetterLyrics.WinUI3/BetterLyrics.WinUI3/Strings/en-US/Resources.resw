@@ -1509,6 +1509,9 @@
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
     <value>Target language</value>
   </data>
+  <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
+    <value>Taskbar mode</value>
+  </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
@@ -1622,6 +1625,9 @@
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>Lyrics window switcher</value>
+  </data>
+  <data name="TaskbarMode" xml:space="preserve">
+    <value>Taskbar mode</value>
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Terms of service</value>
