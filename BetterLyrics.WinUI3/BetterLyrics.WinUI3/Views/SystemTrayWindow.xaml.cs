@@ -73,7 +73,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
             records.Add(LyricsWindowStatusExtensions.DockedMode(this));
             records.Add(LyricsWindowStatusExtensions.NarrowMode(this));
             records.Add(LyricsWindowStatusExtensions.FullscreenMode(this));
-            records.Add(LyricsWindowStatusExtensions.TaskbarMode(this));
+            //records.Add(LyricsWindowStatusExtensions.TaskbarMode(this));
         }
     }
 
