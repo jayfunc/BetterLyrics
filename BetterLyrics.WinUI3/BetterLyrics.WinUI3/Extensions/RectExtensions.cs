@@ -1,4 +1,5 @@
-﻿using Windows.Foundation;
+﻿using Vanara.PInvoke;
+using Windows.Foundation;
 using Windows.Graphics;
 
 namespace BetterLyrics.WinUI3.Extensions
@@ -76,6 +77,16 @@ namespace BetterLyrics.WinUI3.Extensions
                     scaledHeight
                 );
             }
+        }
+
+        extension(RECT rect)
+        {
+            public Rect ToRect() => new(
+                rect.Left,
+                rect.Top,
+                rect.Right - rect.Left,
+                rect.Bottom - rect.Top
+            );
         }
     }
 }

@@ -1305,6 +1305,9 @@
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>발성</value>
   </data>
+  <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
+    <value>작업 표시줄에 고정</value>
+  </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>만다린의 피니 인</value>
   </data>
