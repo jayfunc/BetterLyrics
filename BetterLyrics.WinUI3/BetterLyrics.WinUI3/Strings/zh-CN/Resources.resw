@@ -153,9 +153,6 @@
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>默认</value>
   </data>
-  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
-    <value>依赖</value>
-  </data>
   <data name="DesktopMode" xml:space="preserve">
     <value>桌面模式（透明）</value>
   </data>
@@ -492,6 +489,9 @@
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>单曲循环</value>
   </data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <value>搜索歌曲名、艺术家、专辑、文件名或文件所在文件夹路径</value>
+  </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>专辑</value>
   </data>
@@ -542,6 +542,9 @@
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>贡献者</value>
+  </data>
+  <data name="SetingsPageDeps.Text" xml:space="preserve">
+    <value>依赖包</value>
   </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>捐贈</value>
@@ -912,6 +915,9 @@
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>高度</value>
   </data>
+  <data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>您好</value>
+  </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>音乐未播放/播放时自动隐藏/显示歌词窗口</value>
   </data>
@@ -1128,6 +1134,9 @@
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>常规</value>
   </data>
+  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>字体不透明度</value>
+  </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>歌词区域高度因子</value>
   </data>
@@ -1263,9 +1272,6 @@
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>不透明度</value>
   </data>
-  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
-    <value>字体不透明度</value>
-  </data>
   <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>在文件资源管理器中打开</value>
   </data>
@@ -1289,6 +1295,9 @@
   </data>
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>无法在您的计算机中找到该路径</value>
+  </data>
+  <data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <value>特别鸣谢</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>歌词注音</value>
@@ -1503,6 +1512,12 @@
   <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
+  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+    <value>感谢您购买 BetterLyrics</value>
+  </data>
+  <data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>致谢名单</value>
+  </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
     <value>歌词背景主题</value>
   </data>
@@ -1572,6 +1587,9 @@
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
     <value>工作区高度</value>
   </data>
+  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <value>正在使用该软件的你</value>
+  </data>
   <data name="StandardMode" xml:space="preserve">
     <value>标准模式</value>
   </data>
@@ -1619,8 +1637,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
-  </data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>搜索歌曲名、艺术家、专辑、文件名或文件所在文件夹路径</value>
   </data>
 </root>

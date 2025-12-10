@@ -153,9 +153,6 @@
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>デフォルト</value>
   </data>
-  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
-    <value>依存関係</value>
-  </data>
   <data name="DesktopMode" xml:space="preserve">
     <value>デスクトップモード（透明） </value>
   </data>
@@ -546,6 +543,9 @@
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>投稿者</value>
   </data>
+  <data name="SetingsPageDeps.Text" xml:space="preserve">
+    <value>依存パッケージ</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>寄付</value>
   </data>
@@ -914,6 +914,9 @@
   </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>高さ</value>
+  </data>
+  <data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>こんにちは</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>音楽が再生されていないときに、自動的に歌詞ウィンドウを非表示/表示します</value>
@@ -1293,6 +1296,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>パスはコンピューターでは見つかりません</value>
   </data>
+  <data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <value>スペシャルサンクス</value>
+  </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>リリックアノテーション</value>
   </data>
@@ -1506,6 +1512,12 @@
   <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
+  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+    <value>BetterLyrics をご購入いただきありがとうございます</value>
+  </data>
+  <data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>ありがとうございました</value>
+  </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
     <value>歌詞の背景テーマ</value>
   </data>
@@ -1574,6 +1586,9 @@
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
     <value>作業エリアの高さ</value>
+  </data>
+  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <value>ソフトウェアを使用しているあなた</value>
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>標準モード</value>
