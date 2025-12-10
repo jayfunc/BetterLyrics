@@ -544,7 +544,7 @@
     <value>貢獻者</value>
   </data>
   <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>Dependent package</value>
+    <value>Code Reference</value>
   </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>捐贈</value>
@@ -555,8 +555,14 @@
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
     <value>說明</value>
   </data>
+  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>Special Thanks</value>
+  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>如果您喜歡這個項目，請考慮通過捐贈來支持它。您的支持將有助於保持項目的生命並鼓勵進一步的發展。</value>
+  </data>
+  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+    <value>UI/UX Design Reference</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[Experimental] Depth effect</value>
@@ -1297,7 +1303,7 @@
     <value>無法在您的電腦中找到該路徑</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
-    <value>Special Thanks</value>
+    <value>Sponsor</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>歌詞注音</value>
@@ -1509,6 +1515,12 @@
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
     <value>目標語言</value>
   </data>
+  <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
+    <value>Taskbar mode</value>
+  </data>
+  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value>Taskbar fixed position</value>
+  </data>
   <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
@@ -1566,6 +1578,9 @@
   <data name="SettingsPageTransparent.Content" xml:space="preserve">
     <value>透明</value>
   </data>
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+    <value>And buy users who support BetterLyrics</value>
+  </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>版本號</value>
   </data>
@@ -1622,6 +1637,9 @@
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>歌詞視窗切換器</value>
+  </data>
+  <data name="TaskbarMode" xml:space="preserve">
+    <value>Taskbar mode</value>
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Terms of service</value>
