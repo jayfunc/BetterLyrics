@@ -1305,6 +1305,9 @@
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>注音</value>
   </data>
+  <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>普通話拼音</value>
   </data>
