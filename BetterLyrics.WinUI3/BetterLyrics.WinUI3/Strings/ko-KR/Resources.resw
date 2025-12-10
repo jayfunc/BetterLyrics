@@ -153,9 +153,6 @@
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>기본</value>
   </data>
-  <data name="DependenciesSettingsExpander.Header" xml:space="preserve">
-    <value>의존성</value>
-  </data>
   <data name="DesktopMode" xml:space="preserve">
     <value>데스크톱 모드 (투명)</value>
   </data>
@@ -546,6 +543,9 @@
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>기여자</value>
   </data>
+  <data name="SetingsPageDeps.Text" xml:space="preserve">
+    <value>Dependent package</value>
+  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>기부</value>
   </data>
@@ -914,6 +914,9 @@
   </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>신장</value>
+  </data>
+  <data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>Hello</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>음악이 재생되지 않을 때 자동으로 가사 창 숨기기/표시</value>
@@ -1293,6 +1296,9 @@
   <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>경로는 컴퓨터에서 찾을 수 없습니다</value>
   </data>
+  <data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <value>Special Thanks</value>
+  </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>가사 주석</value>
   </data>
@@ -1506,6 +1512,12 @@
   <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
+  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+    <value>Thank you for purchasing BetterLyrics</value>
+  </data>
+  <data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>Credits</value>
+  </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
     <value>가사 배경 테마</value>
   </data>
@@ -1574,6 +1586,9 @@
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
     <value>작업 영역 높이</value>
+  </data>
+  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <value>You who are using the software</value>
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>표준 모드</value>
