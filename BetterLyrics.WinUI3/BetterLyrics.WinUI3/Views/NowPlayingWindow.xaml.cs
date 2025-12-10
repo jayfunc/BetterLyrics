@@ -37,7 +37,9 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<Color>>
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
-        private OverlayInputHelper? _overlayInputHelper = null;
+        private OverlayInputHelper? _overlayInputHelper;
+        private readonly TaskbarHook _taskbarHook = new();
+
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
         private Color _backdropAccentColor = Colors.Transparent;
@@ -53,6 +55,7 @@ namespace BetterLyrics.WinUI3.Views
             this.InitializeComponent();
 
             _fgWindowWatcherTimer = DispatcherQueue.CreateTimer();
+            _taskbarHook.OnTaskbarBoundsChanged = TaskbarHook_OnTaskbarBoundsChanged;
 
             LyricsWindowStatus = status;
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
@@ -69,6 +72,18 @@ namespace BetterLyrics.WinUI3.Views
             UpdateAlbumArtThemeColors();
         }
 
+        private void TaskbarHook_OnTaskbarBoundsChanged(Events.TaskbarBoundsChangedEventArgs obj)
+        {
+            this.MoveAndResize(
+                new Rect(
+                    LyricsWindowStatus.WindowBounds.Left,
+                    obj.TaskbarBounds.Top,
+                    LyricsWindowStatus.WindowBounds.Width,
+                    obj.TaskbarBounds.Height
+                )
+            );
+        }
+
         public void InitStatus()
         {
             LyricsWindowStatus.UpdateMonitorBounds();
@@ -82,6 +97,7 @@ namespace BetterLyrics.WinUI3.Views
             OnIsLockedChanged();
             OnAutoShowOrHideWindowChanged();
             OnTitleBarAreaChanged();
+            OnIsPinToTaskbarChanged();
 
             LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
         }
@@ -176,6 +192,18 @@ namespace BetterLyrics.WinUI3.Views
                 LockToggleButtonContainer.Visibility = Visibility.Collapsed;
                 UnlockButton.Opacity = 0;
                 StopOverlayInputHelper();
+            }
+        }
+
+        private void OnIsPinToTaskbarChanged()
+        {
+            if (LyricsWindowStatus.IsPinToTaskbar)
+            {
+                _taskbarHook.Start();
+            }
+            else
+            {
+                _taskbarHook.Stop();
             }
         }
 
@@ -472,6 +500,10 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAdaptToEnvironment))
                 {
                     OnIsAdaptToEnvironmentChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsPinToTaskbar))
+                {
+                    OnIsPinToTaskbarChanged();
                 }
             }
         }

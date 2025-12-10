@@ -86,6 +86,10 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
+                    <dev:SettingsCard x:Uid="SettingsPagePinToTaskbar" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C4;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsPinToTaskbar, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <dev:SettingsExpander
                         x:Uid="SettingsPageAOT"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},

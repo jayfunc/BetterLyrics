@@ -81,9 +81,9 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 return frameworkElement.XamlRoot.ContentIslandEnvironment.AppWindowId.GetWindowHandle();
             }
-            else if (obj != null)
+            else if (obj is Window window)
             {
-                return WindowNative.GetWindowHandle(obj);
+                return WindowNative.GetWindowHandle(window);
             }
             else
             {

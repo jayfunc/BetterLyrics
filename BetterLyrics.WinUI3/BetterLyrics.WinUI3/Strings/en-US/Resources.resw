@@ -1305,6 +1305,9 @@
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>Phonetic symbols</value>
   </data>
+  <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
+    <value>Pin to taskbar</value>
+  </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>Pinyin of Mandarin</value>
   </data>
