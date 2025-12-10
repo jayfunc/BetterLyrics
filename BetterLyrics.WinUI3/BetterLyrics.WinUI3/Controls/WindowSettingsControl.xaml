@@ -86,7 +86,7 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <!--<dev:SettingsExpander
+                    <dev:SettingsExpander
                         x:Uid="SettingsPagePinToTaskbar"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xE7C4;}"
@@ -100,7 +100,7 @@
                                 </ComboBox>
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>-->
+                    </dev:SettingsExpander>
 
                     <dev:SettingsExpander
                         x:Uid="SettingsPageAOT"
