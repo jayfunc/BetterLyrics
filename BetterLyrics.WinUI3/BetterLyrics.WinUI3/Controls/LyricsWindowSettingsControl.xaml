@@ -195,26 +195,34 @@
                             Style="{StaticResource AccentButtonStyle}" />
                     </Grid>
 
-                    <SelectorBar x:Name="ConfigSelectorBar" SelectionChanged="ConfigSelectorBar_SelectionChanged">
+                    <controls:Segmented
+                        x:Name="ConfigSegmented"
+                        SelectionChanged="ConfigSegmented_SelectionChanged"
+                        Style="{StaticResource PivotSegmentedStyle}">
 
-                        <SelectorBarItem
-                            x:Name="WindowSelectorBarItem"
-                            x:Uid="AppSettingsControlGeneral"
-                            Tag="Window" />
-                        <SelectorBarItem
-                            x:Name="LayoutSelectorBarItem"
-                            x:Uid="SettingsPageLayout"
-                            Tag="Layout" />
-                        <SelectorBarItem
-                            x:Name="AlbumArtStyleSelectorBarItem"
-                            x:Uid="SettingsPageAlbumStyle"
-                            Tag="AlbumArtStyle" />
-                        <SelectorBarItem x:Uid="SettingsPageAlbumEffect" Tag="AlbumArtEffect" />
-                        <SelectorBarItem x:Uid="SettingsPageLyricsStyle" Tag="LyricsStyle" />
-                        <SelectorBarItem x:Uid="SettingsPageLyricsEffect" Tag="LyricsEffect" />
-                        <SelectorBarItem x:Uid="SettingsPageBackgroundOverlay" Tag="LyricsBackground" />
+                        <controls:SegmentedItem x:Name="WindowSegmentedItem" Tag="Window">
+                            <TextBlock x:Uid="AppSettingsControlGeneral" />
+                        </controls:SegmentedItem>
+                        <controls:SegmentedItem x:Name="LayoutSegmentedItem" Tag="Layout">
+                            <TextBlock x:Uid="SettingsPageLayout" />
+                        </controls:SegmentedItem>
+                        <controls:SegmentedItem x:Name="AlbumArtStyleSegmentedItem" Tag="AlbumArtStyle">
+                            <TextBlock x:Uid="SettingsPageAlbumStyle" />
+                        </controls:SegmentedItem>
+                        <controls:SegmentedItem Tag="AlbumArtEffect">
+                            <TextBlock x:Uid="SettingsPageAlbumEffect" />
+                        </controls:SegmentedItem>
+                        <controls:SegmentedItem Tag="LyricsStyle">
+                            <TextBlock x:Uid="SettingsPageLyricsStyle" />
+                        </controls:SegmentedItem>
+                        <controls:SegmentedItem Tag="LyricsEffect">
+                            <TextBlock x:Uid="SettingsPageLyricsEffect" />
+                        </controls:SegmentedItem>
+                        <controls:SegmentedItem Tag="LyricsBackground">
+                            <TextBlock x:Uid="SettingsPageBackgroundOverlay" />
+                        </controls:SegmentedItem>
 
-                    </SelectorBar>
+                    </controls:Segmented>
 
                 </StackPanel>
             </Grid>

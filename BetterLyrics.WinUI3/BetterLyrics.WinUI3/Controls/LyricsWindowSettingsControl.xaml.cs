@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -151,16 +152,16 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowSelectorBarItem.IsEnabled = LayoutSelectorBarItem.IsEnabled = true;
-            ConfigSelectorBar.SelectedItem = WindowSelectorBarItem;
+            WindowSegmentedItem.IsEnabled = LayoutSegmentedItem.IsEnabled = true;
+            ConfigSegmented.SelectedItem = WindowSegmentedItem;
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
             ViewModel.OpenConfigPanel();
         }
 
         private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowSelectorBarItem.IsEnabled = LayoutSelectorBarItem.IsEnabled = false;
-            ConfigSelectorBar.SelectedItem = AlbumArtStyleSelectorBarItem;
+            WindowSegmentedItem.IsEnabled = LayoutSegmentedItem.IsEnabled = false;
+            ConfigSegmented.SelectedItem = AlbumArtStyleSegmentedItem;
             LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
             ViewModel.OpenConfigPanel();
         }
@@ -206,6 +207,11 @@ namespace BetterLyrics.WinUI3.Controls
                     window?.CloseWindow();
                 }
             }
+        }
+
+        private void ConfigSegmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.SelectorBarSelectedItemTag = (string)((SegmentedItem)((Segmented)sender).SelectedItem).Tag;
         }
     }
 }
