@@ -681,6 +681,9 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌词背景</value>
   </data>
+  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>模糊度</value>
+  </data>
   <data name="SettingsPageBorderless.Header" xml:space="preserve">
     <value>无边框窗口</value>
   </data>
