@@ -17,6 +17,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
@@ -75,6 +76,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnTaskbarFreeBoundsChanged(Events.TaskbarFreeBoundsChangedEventArgs obj)
         {
+            Debug.WriteLine(obj.TaskbarFreeBounds);
             this.MoveAndResize(obj.TaskbarFreeBounds);
         }
 

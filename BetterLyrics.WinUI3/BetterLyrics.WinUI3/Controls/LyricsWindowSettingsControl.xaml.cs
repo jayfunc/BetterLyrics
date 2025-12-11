@@ -151,7 +151,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowSelectorBarItem.Visibility = LayoutSelectorBarItem.Visibility = Visibility.Visible;
+            WindowSelectorBarItem.IsEnabled = LayoutSelectorBarItem.IsEnabled = true;
             ConfigSelectorBar.SelectedItem = WindowSelectorBarItem;
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
             ViewModel.OpenConfigPanel();
@@ -159,7 +159,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowSelectorBarItem.Visibility = LayoutSelectorBarItem.Visibility = Visibility.Collapsed;
+            WindowSelectorBarItem.IsEnabled = LayoutSelectorBarItem.IsEnabled = false;
             ConfigSelectorBar.SelectedItem = AlbumArtStyleSelectorBarItem;
             LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
             ViewModel.OpenConfigPanel();
