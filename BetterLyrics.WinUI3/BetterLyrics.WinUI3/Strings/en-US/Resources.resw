@@ -681,6 +681,9 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Lyrics background</value>
   </data>
+  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>Blur amount</value>
+  </data>
   <data name="SettingsPageBorderless.Header" xml:space="preserve">
     <value>Borderless window</value>
   </data>
