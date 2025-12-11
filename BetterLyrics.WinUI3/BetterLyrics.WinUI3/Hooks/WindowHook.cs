@@ -9,7 +9,6 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;

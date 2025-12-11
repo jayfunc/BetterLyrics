@@ -5,9 +5,9 @@
         public const string MicrosoftStore = "https://apps.microsoft.com/detail/9p1wcd1p597r";
 
         public const string AuthorGitHub = "https://github.com/jayfunc";
-        
+
         public const string BetterLyricsGitHub = $"{AuthorGitHub}/BetterLyrics";
-        
+
         public const string ShareHub = $"{BetterLyricsGitHub}/blob/dev/ShareHub/index.md";
         public const string TermsOfService = $"{BetterLyricsGitHub}/blob/dev/TermsofService.md";
         public const string PrivacyPolicy = $"{BetterLyricsGitHub}/blob/dev/PrivacyPolicy.md";
