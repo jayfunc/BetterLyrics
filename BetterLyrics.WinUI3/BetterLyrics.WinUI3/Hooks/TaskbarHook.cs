@@ -1,12 +1,10 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Extensions;
-using FlaUI.Core;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Definitions;
 using FlaUI.Core.EventHandlers;
 using FlaUI.UIA3;
-using FlaUI.UIA3.Extensions;
 using Microsoft.UI.Dispatching;
 using System;
 using System.Drawing;

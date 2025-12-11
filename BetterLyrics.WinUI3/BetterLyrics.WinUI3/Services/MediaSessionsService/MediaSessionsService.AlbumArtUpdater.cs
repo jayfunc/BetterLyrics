@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Vanara.PInvoke;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI;
@@ -22,14 +21,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     public partial class MediaSessionsService : IMediaSessionsService
     {
         private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
-        
+
         private List<Color> _lightAccentColorsMedianCut = Enumerable.Repeat(Colors.Black, 4).ToList();
         private List<Color> _darkAccentColorsMedianCut = Enumerable.Repeat(Colors.Black, 4).ToList();
         private List<Color> _lightAccentColorsOctTree = Enumerable.Repeat(Colors.Black, 4).ToList();
         private List<Color> _darkAccentColorsOctTree = Enumerable.Repeat(Colors.Black, 4).ToList();
 
         private BitmapDecoder? _albumArtBitmapDecoder = null;
-        
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial BitmapImage? AlbumArtBitmapImage { get; set; }
 
         private void UpdateAlbumArt()
@@ -63,16 +62,16 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _albumArtBitmapDecoder = await ImageHelper.GetBitmapDecoder(buffer);
             if (token.IsCancellationRequested) return;
 
-            _lightAccentColorsMedianCut = 
+            _lightAccentColorsMedianCut =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.MedianCut, false))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            _darkAccentColorsMedianCut = 
+            _darkAccentColorsMedianCut =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.MedianCut, true))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            _lightAccentColorsOctTree = 
+            _lightAccentColorsOctTree =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.OctTree, false))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            _darkAccentColorsOctTree = 
+            _darkAccentColorsOctTree =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.OctTree, true))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
 

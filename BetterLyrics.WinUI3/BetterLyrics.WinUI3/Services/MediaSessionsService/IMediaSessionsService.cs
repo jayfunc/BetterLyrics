@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Windows.Graphics.Imaging;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService

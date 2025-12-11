@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Events
