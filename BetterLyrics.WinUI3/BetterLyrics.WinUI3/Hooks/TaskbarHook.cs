@@ -14,7 +14,7 @@ using System.Threading;
 
 namespace BetterLyrics.WinUI3.Hooks
 {
-    public class TaskbarHook : IDisposable
+    public partial class TaskbarHook : IDisposable
     {
         private readonly UIA3Automation _automation;
         private AutomationElement? _taskbar;
