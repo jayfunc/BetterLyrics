@@ -1,0 +1,291 @@
+{
+  "repo_notes": [
+    {
+      "content": "Always use the latest files in the repo to generate the wiki"
+    }
+  ],
+  "pages": [
+    {
+      "title": "Overview",
+      "purpose": "Introduce BetterLyrics, its purpose as a WinUI3 lyrics display application, key features, and supported music players",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Getting Started",
+      "purpose": "Guide users through installation, initial setup, and basic usage of BetterLyrics",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Installation and Deployment",
+      "purpose": "Explain how to install BetterLyrics from Microsoft Store or build from source, system requirements, and supported Windows versions",
+      "parent": "Getting Started",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Initial Configuration",
+      "purpose": "Walk through first-time setup including media player configuration, folder selection, and basic settings",
+      "parent": "Getting Started",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Architecture",
+      "purpose": "Provide technical overview of BetterLyrics' internal architecture, design patterns, and component organization",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Application Entry Point and Dependency Injection",
+      "purpose": "Document the App.xaml.cs entry point, service registration, and dependency injection container configuration",
+      "parent": "Architecture",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Service Layer Architecture",
+      "purpose": "Explain the service-oriented architecture, service interfaces, and their implementations including MediaSessionsService, LyricsSearchService, and SettingsService",
+      "parent": "Architecture",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Data Models",
+      "purpose": "Document core data models including LyricsLine, LyricsData, SongInfo, and configuration models",
+      "parent": "Architecture",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Multi-Window System",
+      "purpose": "Explain how BetterLyrics manages multiple simultaneous lyrics windows, window lifecycle, and state management",
+      "parent": "Architecture",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "User Interface",
+      "purpose": "Document the UI components, windows, and user interaction patterns in BetterLyrics",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Now Playing Window",
+      "purpose": "Detail the main lyrics display window, its components, and integration with the rendering system",
+      "parent": "User Interface",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Display Modes and Window Configurations",
+      "purpose": "Explain different display modes (Standard, Desktop, Docked, Fullscreen, Narrow, Taskbar) and how to configure them",
+      "parent": "User Interface",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Settings and Customization",
+      "purpose": "Document the settings interface, configuration options, and how to customize lyrics appearance and behavior",
+      "parent": "User Interface",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Music Gallery",
+      "purpose": "Explain the local music library management feature, including playback, playlist management, and integration with media controls",
+      "parent": "User Interface",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "System Tray and Global Controls",
+      "purpose": "Document the system tray integration, global hotkeys, and application-wide controls",
+      "parent": "User Interface",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Lyrics System",
+      "purpose": "Comprehensive documentation of the lyrics acquisition, processing, and display pipeline",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Lyrics Search and Providers",
+      "purpose": "Document the lyrics search system, supported providers (QQ Music, Netease, Kugou, LrcLib, Apple Music, local files), and search strategies",
+      "parent": "Lyrics System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Parsing and Translation",
+      "purpose": "Explain how lyrics are parsed from different formats (LRC, QRC, TTML), translation system using LibreTranslate, and metadata matching",
+      "parent": "Lyrics System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Rendering Pipeline",
+      "purpose": "Document the Win2D-based rendering system, LyricsCanvas, PlayingLineRenderer, UnplayingLineRenderer, and LyricsLayoutManager",
+      "parent": "Lyrics System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Visual Effects and Animation",
+      "purpose": "Explain character-level effects (glow, float, scale), background effects (fluid, snow, fog, spectrum), and the animation transition system",
+      "parent": "Lyrics System",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Media Integration",
+      "purpose": "Document how BetterLyrics integrates with music players and manages media sessions",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Windows Media Transport Controls Integration",
+      "purpose": "Explain how BetterLyrics uses Windows SMTC to work universally with media players",
+      "parent": "Media Integration",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Supported Players and Special Configurations",
+      "purpose": "List supported media players, document special configurations (Apple Music token, LX Music SSE), and player-specific handling",
+      "parent": "Media Integration",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Album Art and Theme Colors",
+      "purpose": "Document album art retrieval from multiple sources, color palette generation (MedianCut, OctTree), and adaptive theming",
+      "parent": "Media Integration",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Internationalization",
+      "purpose": "Explain the localization system, supported languages, and how resources are managed",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Development",
+      "purpose": "Technical documentation for developers contributing to or extending BetterLyrics",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Build Configuration and Deployment",
+      "purpose": "Document the build process, publish profiles for different architectures, CI/CD pipeline, and packaging for Microsoft Store",
+      "parent": "Development",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Helper Utilities and Extensions",
+      "purpose": "Document utility classes including TaskbarHook, WindowHook, ColorHelper, ImageHelper, and various extension methods",
+      "parent": "Development",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "External Dependencies and Libraries",
+      "purpose": "List and explain third-party dependencies including Win2D, NAudio, ATL.NET, FlaUI, and their usage in the application",
+      "parent": "Development",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    }
+  ]
+}
