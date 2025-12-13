@@ -52,7 +52,61 @@ namespace BetterLyrics.WinUI3.Models
 
         public LyricsWindowStatus()
         {
+        }
 
+        partial void OnLyricsStyleSettingsChanged(LyricsStyleSettings oldValue, LyricsStyleSettings newValue)
+        {
+            oldValue.PropertyChanged -= LyricsStyleSettings_PropertyChanged;
+            newValue.PropertyChanged += LyricsStyleSettings_PropertyChanged;
+        }
+
+        private void LyricsStyleSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(LyricsStyleSettings));
+        }
+
+        partial void OnLyricsEffectSettingsChanged(LyricsEffectSettings oldValue, LyricsEffectSettings newValue)
+        {
+            oldValue.PropertyChanged -= LyricsEffectSettings_PropertyChanged;
+            newValue.PropertyChanged += LyricsEffectSettings_PropertyChanged;
+        }
+
+        private void LyricsEffectSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(LyricsEffectSettings));
+        }
+
+        partial void OnLyricsBackgroundSettingsChanged(LyricsBackgroundSettings oldValue, LyricsBackgroundSettings newValue)
+        {
+            oldValue.PropertyChanged -= LyricsBackgroundSettings_PropertyChanged;
+            newValue.PropertyChanged += LyricsBackgroundSettings_PropertyChanged;
+        }
+
+        private void LyricsBackgroundSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(LyricsBackgroundSettings));
+        }
+
+        partial void OnAlbumArtLayoutSettingsChanged(AlbumArtAreaStyleSettings oldValue, AlbumArtAreaStyleSettings newValue)
+        {
+            oldValue.PropertyChanged -= AlbumArtLayoutSettings_PropertyChanged;
+            newValue.PropertyChanged += AlbumArtLayoutSettings_PropertyChanged;
+        }
+
+        private void AlbumArtLayoutSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(AlbumArtLayoutSettings));
+        }
+
+        partial void OnAlbumArtAreaEffectSettingsChanged(AlbumArtAreaEffectSettings oldValue, AlbumArtAreaEffectSettings newValue)
+        {
+            oldValue.PropertyChanged -= AlbumArtAreaEffectSettings_PropertyChanged;
+            newValue.PropertyChanged += AlbumArtAreaEffectSettings_PropertyChanged;
+        }
+
+        private void AlbumArtAreaEffectSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(AlbumArtAreaEffectSettings));
         }
 
         public LyricsWindowStatus(Window? targetWindow = null)

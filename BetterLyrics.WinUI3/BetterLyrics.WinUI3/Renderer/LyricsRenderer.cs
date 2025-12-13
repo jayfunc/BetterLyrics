@@ -146,17 +146,19 @@ namespace BetterLyrics.WinUI3.Renderer
                 if (line.OriginalCanvasTextLayout == null) continue;
                 if (line.OriginalCanvasTextLayout.LayoutBounds.Width <= 0) continue;
 
-                var rotationY = line.CenterPosition.Y;
-
-                double xOffset = lyricsX + Math.Abs(line.AngleTransition.Value) / (Math.PI / 2) * lyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
+                double xOffset = lyricsX;
                 double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
 
-                var transform =
-                    Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition) *
-                    Matrix3x2.CreateRotation((float)line.AngleTransition.Value, new Vector2((float)rotationX, rotationY)) *
-                    Matrix3x2.CreateTranslation((float)xOffset, (float)yOffset);
+                ds.Transform = Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition);
 
-                ds.Transform = transform;
+                if (effectSettings.IsFanLyricsEnabled)
+                {
+                    xOffset += Math.Abs(line.AngleTransition.Value) / (Math.PI / 2) * lyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
+                    var rotationY = line.CenterPosition.Y;
+                    ds.Transform *= Matrix3x2.CreateRotation((float)line.AngleTransition.Value, new Vector2((float)rotationX, rotationY));
+                }
+
+                ds.Transform *= Matrix3x2.CreateTranslation((float)xOffset, (float)yOffset);
 
                 using (var textOnlyLayer = RenderBaseTextLayer(control, line, styleSettings.LyricsFontStrokeWidth, strokeColor, line.ColorTransition.Value))
                 {
