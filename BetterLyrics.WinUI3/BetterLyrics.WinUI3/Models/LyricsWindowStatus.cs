@@ -52,6 +52,17 @@ namespace BetterLyrics.WinUI3.Models
 
         public LyricsWindowStatus()
         {
+            LyricsStyleSettings.PropertyChanged += LyricsStyleSettings_PropertyChanged;
+            LyricsEffectSettings.PropertyChanged += LyricsEffectSettings_PropertyChanged;
+            LyricsBackgroundSettings.PropertyChanged += LyricsBackgroundSettings_PropertyChanged;
+            AlbumArtLayoutSettings.PropertyChanged += AlbumArtLayoutSettings_PropertyChanged;
+            AlbumArtAreaEffectSettings.PropertyChanged += AlbumArtAreaEffectSettings_PropertyChanged;
+        }
+
+        public LyricsWindowStatus(Window? targetWindow = null) : this()
+        {
+            UpdateMonitorNameAndBounds(targetWindow);
+            UpdateDemoWindowAndMonitorBounds();
         }
 
         partial void OnLyricsStyleSettingsChanged(LyricsStyleSettings oldValue, LyricsStyleSettings newValue)
@@ -107,12 +118,6 @@ namespace BetterLyrics.WinUI3.Models
         private void AlbumArtAreaEffectSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             OnPropertyChanged(nameof(AlbumArtAreaEffectSettings));
-        }
-
-        public LyricsWindowStatus(Window? targetWindow = null)
-        {
-            UpdateMonitorNameAndBounds(targetWindow);
-            UpdateDemoWindowAndMonitorBounds();
         }
 
         partial void OnWindowBoundsChanged(Rect value)
