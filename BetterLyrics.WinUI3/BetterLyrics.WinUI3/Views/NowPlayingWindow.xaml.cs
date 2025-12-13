@@ -204,20 +204,24 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsFullscreenChanged()
         {
-            this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen);
-            EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
-            ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
-            MaximizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
-            AOTButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
-            MinimizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
-            LockButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
+            if (this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen))
+            {
+                EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
+                ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
+                MaximizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
+                AOTButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
+                MinimizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
+                LockButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
+            }
         }
 
         private void OnIsMaximizedChanged()
         {
-            this.SetIsMaximized(LyricsWindowStatus.IsMaximized);
-            EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
-            ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
+            if (this.SetIsMaximized(LyricsWindowStatus.IsMaximized))
+            {
+                EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
+                ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
+            }
         }
 
         private void OnAutoShowOrHideWindowChanged()

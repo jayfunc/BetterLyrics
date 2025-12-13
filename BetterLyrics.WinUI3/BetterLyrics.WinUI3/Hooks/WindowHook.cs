@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.UI.WindowManagement;
 using WinRT.Interop;
 using WinUIEx;
 
@@ -282,23 +283,27 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
-        public static void SetIsFullscreen(this Window window, bool enable)
+        public static bool SetIsFullscreen(this Window window, bool enable, bool defaultExtendsContentIntoTitleBar = true)
         {
-            if (window.AppWindow == null) return;
+            if (window.AppWindow == null) return false;
 
             if (enable)
             {
+                window.ExtendsContentIntoTitleBar = false;
                 window.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             }
             else
             {
+                window.ExtendsContentIntoTitleBar = defaultExtendsContentIntoTitleBar;
                 window.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
             }
+
+            return true;
         }
 
-        public static void SetIsMaximized(this Window window, bool enable)
+        public static bool SetIsMaximized(this Window window, bool enable)
         {
-            if (window.AppWindow == null) return;
+            if (window.AppWindow == null) return false;
 
             if (enable)
             {
@@ -308,6 +313,8 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 window.Restore();
             }
+
+            return true;
         }
 
         public static void SetIsShowInSwitchers(this Window window, bool enable)
