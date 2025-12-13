@@ -34,8 +34,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsLineSpacingFactor { get; set; } = 0.5;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCJKFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsWesternFontFamily { get; set; } = FontHelper.SystemFontFamilies.FirstOrDefault() ?? "";
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCJKFontFamily { get; set; } = "Arial";
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsWesternFontFamily { get; set; } = "Arial";
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PlayingLineTopOffset { get; set; } = 50; // 50 %
 

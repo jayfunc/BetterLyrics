@@ -1,6 +1,8 @@
 ﻿using Microsoft.Graphics.Canvas.Text;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
 
@@ -8,8 +10,6 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class FontHelper
     {
-        public static string[] SystemFontFamilies => CanvasTextFormat.GetSystemFontFamilies().Order().ToArray();
-
         public static string GetLocalizedFontFamilyName(string sourceName, string langCode)
         {
             if (langCode == "")
@@ -32,6 +32,21 @@ namespace BetterLyrics.WinUI3.Helper
             }
 
             return sourceName;
+        }
+
+        public static List<string> GetSystemFontFamilies()
+        {
+            List<string> fontFamilies = new();
+
+            foreach (var font in Fonts.SystemFontFamilies)
+            {
+                if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-us"), out string englishFamilyName))
+                {
+                    fontFamilies.Add(englishFamilyName);
+                }
+            }
+
+            return fontFamilies.Order().ToList();
         }
     }
 }

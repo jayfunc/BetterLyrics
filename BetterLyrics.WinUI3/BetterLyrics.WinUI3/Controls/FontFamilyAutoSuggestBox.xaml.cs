@@ -48,7 +48,7 @@ namespace BetterLyrics.WinUI3.Controls
             //        FontFamilies = fontFamilies;
             //    });
             //});
-            FontFamilies = FontHelper.SystemFontFamilies.OrderBy(x => x).ToList();
+            FontFamilies = FontHelper.GetSystemFontFamilies();
         }
 
         private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
