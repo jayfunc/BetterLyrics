@@ -135,7 +135,8 @@ namespace BetterLyrics.WinUI3.Renderer
             var effectSettings = windowStatus.LyricsEffectSettings;
             var styleSettings = windowStatus.LyricsStyleSettings;
 
-            var rotationY = currentPlayingLine.OriginalPosition.WithX(effectSettings.FanLyricsAngle < 0 ? (float)lyricsWidth : 0);
+            var rotationX = effectSettings.FanLyricsAngle < 0 ? lyricsWidth : 0;
+            rotationX += lyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
 
             for (int i = startVisibleIndex; i <= endVisibleIndex; i++)
             {
@@ -145,12 +146,15 @@ namespace BetterLyrics.WinUI3.Renderer
                 if (line.OriginalCanvasTextLayout == null) continue;
                 if (line.OriginalCanvasTextLayout.LayoutBounds.Width <= 0) continue;
 
+                var rotationY = line.CenterPosition.Y;
+
+                double xOffset = lyricsX + Math.Abs(line.AngleTransition.Value) / (Math.PI / 2) * lyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
                 double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
 
                 var transform =
                     Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition) *
-                    Matrix3x2.CreateRotation((float)line.AngleTransition.Value, rotationY) *
-                    Matrix3x2.CreateTranslation((float)lyricsX, (float)yOffset);
+                    Matrix3x2.CreateRotation((float)line.AngleTransition.Value, new Vector2((float)rotationX, rotationY)) *
+                    Matrix3x2.CreateTranslation((float)xOffset, (float)yOffset);
 
                 ds.Transform = transform;
 
