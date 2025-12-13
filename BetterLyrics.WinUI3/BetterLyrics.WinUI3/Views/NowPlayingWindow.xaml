@@ -14,6 +14,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+
         <Grid
             x:Name="PlaceholderGrid"
             Width="1"

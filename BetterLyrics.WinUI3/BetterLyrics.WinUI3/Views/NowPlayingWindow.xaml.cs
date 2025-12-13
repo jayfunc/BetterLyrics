@@ -63,8 +63,6 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.Changed += AppWindow_Changed;
             AppWindow.Closing += AppWindow_Closing;
 
-            SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
-
             WeakReferenceMessenger.Default.RegisterAll(this);
 
             UpdateAlbumArtThemeColors();
