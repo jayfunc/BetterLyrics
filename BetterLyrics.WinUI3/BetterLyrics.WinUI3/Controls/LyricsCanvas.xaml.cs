@@ -599,6 +599,7 @@ namespace BetterLyrics.WinUI3.Controls
         private void Canvas_Unloaded(object sender, RoutedEventArgs e)
         {
             _fluidRenderer.Dispose();
+            _coverRenderer.Dispose();
             _snowRenderer.Dispose();
             _fogRenderer.Dispose();
             _spectrumRenderer.Dispose();

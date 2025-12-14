@@ -47,7 +47,11 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageAlbumArtLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageAlbumArtLayer"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE93C;}"
+                        IsExpanded="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
@@ -72,7 +76,7 @@
                             <dev:SettingsCard x:Uid="SettingsPageBlurAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
-                                    Maximum="100"
+                                    Maximum="200"
                                     Minimum="0"
                                     Value="{x:Bind LyricsBackgroundSettings.CoverOverlayBlurAmount, Mode=TwoWay}" />
                             </dev:SettingsCard>
