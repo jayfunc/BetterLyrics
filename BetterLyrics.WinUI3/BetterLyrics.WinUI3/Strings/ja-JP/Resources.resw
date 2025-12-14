@@ -630,6 +630,9 @@
   <data name="SettingsPageAlignment.Header" xml:space="preserve">
     <value>アライメント</value>
   </data>
+  <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
+    <value>ロック解除ボタンは常に隠しておきましょう</value>
+  </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>ベースURL</value>
   </data>

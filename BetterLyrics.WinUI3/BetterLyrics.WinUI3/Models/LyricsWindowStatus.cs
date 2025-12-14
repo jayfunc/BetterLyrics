@@ -22,6 +22,7 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTopPolling { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsShownInSwitchers { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLocked { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHideUnlockButton { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsPinToTaskbar { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TaskbarPlacement TaskbarPlacement { get; set; } = TaskbarPlacement.Right;
@@ -200,6 +201,7 @@ namespace BetterLyrics.WinUI3.Models
                 IsAlwaysOnTopPolling = this.IsAlwaysOnTopPolling,
                 IsShownInSwitchers = this.IsShownInSwitchers,
                 IsLocked = this.IsLocked,
+                IsAlwaysHideUnlockButton = this.IsAlwaysHideUnlockButton,
 
                 IsPinToTaskbar = this.IsPinToTaskbar,
                 TaskbarPlacement = this.TaskbarPlacement,

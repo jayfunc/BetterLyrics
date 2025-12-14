@@ -630,6 +630,9 @@
   <data name="SettingsPageAlignment.Header" xml:space="preserve">
     <value>对齐方式</value>
   </data>
+  <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
+    <value>总是隐藏解锁按钮</value>
+  </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>基本 URL</value>
   </data>

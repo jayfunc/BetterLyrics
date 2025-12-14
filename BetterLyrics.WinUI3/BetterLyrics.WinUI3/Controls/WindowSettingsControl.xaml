@@ -102,6 +102,10 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
+                    <dev:SettingsCard x:Uid="SettingsPageAlwaysHideUnlockButton" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE785;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHideUnlockButton, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <dev:SettingsExpander
                         x:Uid="SettingsPageAOT"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
