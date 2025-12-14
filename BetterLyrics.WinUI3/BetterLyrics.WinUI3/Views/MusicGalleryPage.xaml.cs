@@ -178,7 +178,10 @@ namespace BetterLyrics.WinUI3.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             ViewModel.CancelRefreshSongs();
-            ViewModel.StopTrackCommand.Execute(null);
+            if (ViewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed)
+            {
+                ViewModel.StopTrackCommand.Execute(null);
+            }
         }
 
         private void PlaylistFavButton_Click(object sender, RoutedEventArgs e)
