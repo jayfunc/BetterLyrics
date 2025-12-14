@@ -10,6 +10,7 @@ using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,14 +27,14 @@ namespace BetterLyrics.WinUI3.Controls
 
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-        public LyricsWindowStatus LyricsWindowStatus
+        public LyricsWindowStatus? LyricsWindowStatus
         {
-            get { return (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty); }
+            get { return (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty); }
             set { SetValue(LyricsWindowStatusProperty, value); }
         }
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
-            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LyricsWindowSettingsControl), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LyricsWindowSettingsControl), new PropertyMetadata(null));
 
         public LyricsWindowSettingsControl()
         {
@@ -186,17 +187,6 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        private void ConfigSelectorBar_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            if (sender is SelectorBar bar)
-            {
-                if (bar.SelectedItem is SelectorBarItem item)
-                {
-                    ViewModel?.SelectorBarSelectedItemTag = item.Tag;
-                }
-            }
-        }
-
         private void CloseStatusButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is FrameworkElement element)
@@ -212,6 +202,11 @@ namespace BetterLyrics.WinUI3.Controls
         private void ConfigSegmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectorBarSelectedItemTag = (string)((SegmentedItem)((Segmented)sender).SelectedItem).Tag;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CloseConfigPanelCommand.Execute(null);
         }
     }
 }
