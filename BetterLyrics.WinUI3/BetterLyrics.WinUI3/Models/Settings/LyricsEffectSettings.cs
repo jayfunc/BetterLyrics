@@ -57,6 +57,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsGlowEffectLongSyllableDuration = this.LyricsGlowEffectLongSyllableDuration,
                 IsLyricsGlowEffectAmountAutoAdjust = this.IsLyricsGlowEffectAmountAutoAdjust,
                 LyricsGlowEffectAmount = this.LyricsGlowEffectAmount,
+                LyricsGlowEffectScope = this.LyricsGlowEffectScope,
 
                 IsLyricsScaleEffectEnabled = this.IsLyricsScaleEffectEnabled,
                 LyricsScaleEffectLongSyllableDuration = this.LyricsScaleEffectLongSyllableDuration,
