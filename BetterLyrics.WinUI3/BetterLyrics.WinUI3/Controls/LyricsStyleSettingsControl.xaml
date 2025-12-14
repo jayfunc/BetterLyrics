@@ -32,8 +32,8 @@
                     <dev:SettingsCard x:Uid="SettingsPageLyricsCenterTopOffset" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE78A;}">
                         <local:ExtendedSlider
                             Default="50"
-                            Maximum="100"
-                            Minimum="0"
+                            Maximum="99"
+                            Minimum="1"
                             Unit="%"
                             Value="{x:Bind LyricsStyleSettings.PlayingLineTopOffset, Mode=TwoWay}" />
                     </dev:SettingsCard>
