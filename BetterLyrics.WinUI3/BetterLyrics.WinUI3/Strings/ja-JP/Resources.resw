@@ -1509,6 +1509,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>Stop playing when music library is closed</value>
+  </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>ストロークカラー</value>
   </data>
