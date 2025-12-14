@@ -47,6 +47,47 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
+                    <dev:SettingsExpander x:Uid="SettingsPageAlbumArtLayer" IsExpanded="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+
+                            <dev:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Default="100"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsBackgroundSettings.CoverOverlayOpacity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Default="50"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsBackgroundSettings.CoverOverlaySpeed, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageBlurAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Default="100"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsBackgroundSettings.CoverOverlayBlurAmount, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <!--<dev:SettingsCard x:Uid="SettingsPageBackgroundAcrylicEffectAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Default="0"
+                                    Maximum="10"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsBackgroundSettings.CoverAcrylicEffectAmount, Mode=TwoWay}" />
+                            </dev:SettingsCard>-->
+
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
                     <dev:SettingsExpander
                         x:Uid="SettingsPageFluidLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},

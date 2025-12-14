@@ -13,15 +13,21 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Storage.Streams;
 using Windows.UI;
+using static Vanara.PInvoke.Ole32;
 
 namespace BetterLyrics.WinUI3.Controls
 {
@@ -34,7 +40,8 @@ namespace BetterLyrics.WinUI3.Controls
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<TextAlignmentType>>,
         IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
-        IRecipient<PropertyChangedMessage<string>>
+        IRecipient<PropertyChangedMessage<string>>,
+        IRecipient<PropertyChangedMessage<IRandomAccessStream?>>
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
@@ -42,6 +49,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private readonly LyricsRenderer _lyricsRenderer = new();
         private readonly FluidBackgroundRenderer _fluidRenderer = new();
+        private readonly CoverBackgroundRenderer _coverRenderer = new();
         private readonly PureColorBackgroundRenderer _pureColorRenderer = new();
         private readonly SnowRenderer _snowRenderer = new();
         private readonly FogRenderer _fogRenderer = new();
@@ -368,8 +376,8 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsBg.IsPureColorOverlayEnabled
             );
 
-            _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
-            _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
+            _coverRenderer.Draw(sender, args.DrawingSession);
+
             _fluidRenderer.Draw(sender, args.DrawingSession);
 
             _snowRenderer.Draw(sender, args.DrawingSession);
@@ -549,16 +557,21 @@ namespace BetterLyrics.WinUI3.Controls
 
             _isLayoutChanged = false;
 
-            if (_fluidRenderer.IsEnabled)
-            {
-                _fluidRenderer.UpdateColors(
-                    _accentColor1Transition.Value,
-                    _accentColor2Transition.Value,
-                    _accentColor3Transition.Value,
-                    _accentColor4Transition.Value
-                );
-                _fluidRenderer.Update(elapsedTime);
-            }
+            _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
+            _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
+            _fluidRenderer.UpdateColors(
+                _accentColor1Transition.Value,
+                _accentColor2Transition.Value,
+                _accentColor3Transition.Value,
+                _accentColor4Transition.Value
+            );
+            _fluidRenderer.Update(elapsedTime);
+
+            _coverRenderer.IsEnabled = lyricsBg.IsCoverOverlayEnabled;
+            _coverRenderer.Opacity = lyricsBg.CoverOverlayOpacity;
+            _coverRenderer.BlurAmount = lyricsBg.CoverOverlayBlurAmount;
+            _coverRenderer.Speed = lyricsBg.CoverOverlaySpeed;
+            _coverRenderer.Update(elapsedTime);
 
             _snowRenderer.IsEnabled = lyricsBg.IsSnowFlakeOverlayEnabled;
             _snowRenderer.Amount = lyricsBg.SnowFlakeOverlayAmount / 100f;
@@ -600,7 +613,13 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async void Canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
-            args.TrackAsyncAction(_fluidRenderer.LoadResourcesAsync().AsAsyncAction());
+            var tasks = new Task[]
+            {
+                _fluidRenderer.LoadResourcesAsync(),
+                ReloadCoverBackgroundResourcesAsync()
+            };
+            args.TrackAsyncAction(tasks.WhenAll().AsAsyncAction());
+
             _snowRenderer.LoadResources();
             _fogRenderer.LoadResources();
 
@@ -680,6 +699,16 @@ namespace BetterLyrics.WinUI3.Controls
                 OriginalText = x.OriginalText,
                 TranslatedText = x.TranslatedText
             }).ToList();
+        }
+
+        private async Task ReloadCoverBackgroundResourcesAsync()
+        {
+            if (_mediaSessionsService.AlbumArtBitmapStream is IRandomAccessStream stream)
+            {
+                stream.Seek(0);
+                CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(Canvas, stream);
+                _coverRenderer.SetCoverBitmap(bitmap);
+            }
         }
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)
@@ -874,5 +903,15 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
+        public void Receive(PropertyChangedMessage<IRandomAccessStream?> message)
+        {
+            if (message.Sender is IMediaSessionsService)
+            {
+                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapStream))
+                {
+                    _ = ReloadCoverBackgroundResourcesAsync();
+                }
+            }
+        }
     }
 }

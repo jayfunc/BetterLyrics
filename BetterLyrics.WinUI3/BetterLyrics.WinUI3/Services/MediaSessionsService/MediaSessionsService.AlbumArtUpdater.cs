@@ -30,6 +30,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private BitmapDecoder? _albumArtBitmapDecoder = null;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial BitmapImage? AlbumArtBitmapImage { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial IRandomAccessStream? AlbumArtBitmapStream { get; set; }
 
         private void UpdateAlbumArt()
         {
@@ -80,6 +81,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             if (token.IsCancellationRequested) return;
 
             AlbumArtBitmapImage = bitmapImage;
+            AlbumArtBitmapStream = ImageHelper.ToIRandomAccessStream(buffer);
         }
 
         public AlbumArtThemeColors CalculateAlbumArtThemeColors(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor)
