@@ -832,6 +832,14 @@ namespace BetterLyrics.WinUI3.Controls
                     _isLayoutChanged = true;
                 }
             }
+            else if(message.Sender == LyricsWindowStatus?.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumCount))
+                {
+                    _spectrumAnalyzer?.StopCapture();
+                    _spectrumAnalyzer?.StartCapture();
+                }
+            }
         }
 
         public void Receive(PropertyChangedMessage<double> message)
