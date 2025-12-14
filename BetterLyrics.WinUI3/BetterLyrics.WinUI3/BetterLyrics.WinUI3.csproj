@@ -83,8 +83,6 @@
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7175" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.251106002" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
-		<PackageReference Include="Nito.AsyncEx" Version="5.1.2" />
-		<PackageReference Include="Nito.AsyncEx.Tasks" Version="5.1.2" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
