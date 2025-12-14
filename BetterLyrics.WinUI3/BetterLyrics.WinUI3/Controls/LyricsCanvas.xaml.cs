@@ -13,6 +13,7 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Lyricify.Lyrics.Providers.Web.Netease;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
@@ -830,14 +831,6 @@ namespace BetterLyrics.WinUI3.Controls
                 else if (message.PropertyName == nameof(LyricsEffectSettings.FanLyricsAngle))
                 {
                     _isLayoutChanged = true;
-                }
-            }
-            else if(message.Sender == LyricsWindowStatus?.LyricsBackgroundSettings)
-            {
-                if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumCount))
-                {
-                    _spectrumAnalyzer?.StopCapture();
-                    _spectrumAnalyzer?.StartCapture();
                 }
             }
         }
