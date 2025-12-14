@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Windows.Storage.Streams;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Services.MediaSessionsService
@@ -28,6 +29,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         LyricsData? CurrentLyricsData { get; }
 
         BitmapImage? AlbumArtBitmapImage { get; }
+        IRandomAccessStream? AlbumArtBitmapStream { get; }
 
         AlbumArtThemeColors CalculateAlbumArtThemeColors(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
 

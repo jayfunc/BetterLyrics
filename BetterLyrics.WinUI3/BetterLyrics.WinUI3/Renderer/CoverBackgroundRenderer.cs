@@ -5,6 +5,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
@@ -13,17 +14,47 @@ namespace BetterLyrics.WinUI3.Renderer
         private CanvasBitmap? _currentBitmap;
         private CanvasBitmap? _previousBitmap;
 
-        private readonly ValueTransition<double> _crossfadeTransition;
+        private CanvasRenderTarget? _currentTargetCache;
+        private CanvasRenderTarget? _previousTargetCache;
 
+        private Size _lastScreenSize;
+        private bool _lastWasRotating = false;
+
+        private readonly ValueTransition<double> _crossfadeTransition;
         private float _rotationAngle = 0f;
 
         public bool IsEnabled { get; set; } = false;
-
         public int Opacity { get; set; } = 100;
 
-        public int BlurAmount { get; set; } = 100;
+        private bool _needsCacheUpdate = false;
 
-        public int Speed { get; set; } = 100;
+        private int _blurAmount = 100;
+        public int BlurAmount
+        {
+            get => _blurAmount;
+            set
+            {
+                if (_blurAmount != value)
+                {
+                    _blurAmount = value;
+                    _needsCacheUpdate = true;
+                }
+            }
+        }
+
+        private int _speed = 100;
+        public int Speed
+        {
+            get => _speed;
+            set
+            {
+                if (_speed != value)
+                {
+                    _speed = value;
+                    _needsCacheUpdate = true;
+                }
+            }
+        }
 
         public CoverBackgroundRenderer()
         {
@@ -34,26 +65,30 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (_currentBitmap == newBitmap) return;
 
-            if (_currentBitmap == null)
-            {
-                _currentBitmap = newBitmap;
-                _crossfadeTransition.StartTransition(1.0, jumpTo: true);
-                return;
-            }
-
             _previousBitmap = _currentBitmap;
+            _previousTargetCache = _currentTargetCache;
+            _currentTargetCache = null;
+
             _currentBitmap = newBitmap;
 
-            if (newBitmap != null)
+            if (_currentBitmap == null)
             {
-                _crossfadeTransition.Reset(0.0);
-                _crossfadeTransition.StartTransition(1.0);
+                _crossfadeTransition.StartTransition(1.0, jumpTo: true);
             }
             else
             {
-                _previousBitmap = null;
-                _crossfadeTransition.StartTransition(1.0, jumpTo: true);
+                if (_previousBitmap == null)
+                {
+                    _crossfadeTransition.StartTransition(1.0, jumpTo: true);
+                }
+                else
+                {
+                    _crossfadeTransition.Reset(0.0);
+                    _crossfadeTransition.StartTransition(1.0);
+                }
             }
+
+            _needsCacheUpdate = true;
         }
 
         public void Update(TimeSpan deltaTime)
@@ -64,17 +99,17 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (Speed > 0)
             {
-                float baseSpeed = 0.6f; // 弧度/秒
+                float baseSpeed = 0.6f;
                 float currentSpeed = (Speed / 100.0f) * baseSpeed;
-
                 _rotationAngle += currentSpeed * (float)deltaTime.TotalSeconds;
-
                 _rotationAngle %= (float)(2 * Math.PI);
             }
 
             if (_crossfadeTransition.Value >= 1.0 && _previousBitmap != null)
             {
                 _previousBitmap = null;
+                _previousTargetCache?.Dispose();
+                _previousTargetCache = null;
             }
         }
 
@@ -82,84 +117,133 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (!IsEnabled || Opacity <= 0) return;
 
+            if (_lastScreenSize != control.Size)
+            {
+                _lastScreenSize = control.Size;
+                _needsCacheUpdate = true;
+            }
+
+            bool isRotating = Speed > 0;
+            if (_lastWasRotating != isRotating)
+            {
+                _lastWasRotating = isRotating;
+                _needsCacheUpdate = true;
+            }
+
+            EnsureCachedLayer(control, _currentBitmap, ref _currentTargetCache);
+
             float baseAlpha = Opacity / 100.0f;
-            float currentBlur = BlurAmount;
-
-            float angle = Speed > 0 ? _rotationAngle : 0f;
-
+            float angle = isRotating ? _rotationAngle : 0f;
             double fadeProgress = _crossfadeTransition.Value;
-            bool isCrossfading = fadeProgress < 1.0 && _previousBitmap != null;
+            bool isCrossfading = fadeProgress < 1.0 && _previousTargetCache != null;
+
+            Vector2 screenCenter = new Vector2((float)control.Size.Width / 2f, (float)control.Size.Height / 2f);
 
             if (isCrossfading)
             {
-                DrawLayer(ds, control.Size, _previousBitmap, angle, currentBlur, baseAlpha);
+                DrawCachedLayer(ds, _previousTargetCache, screenCenter, angle, baseAlpha);
 
                 float newLayerAlpha = baseAlpha * (float)fadeProgress;
-                if (newLayerAlpha > 0.005f)
-                {
-                    DrawLayer(ds, control.Size, _currentBitmap, angle, currentBlur, newLayerAlpha);
-                }
+                DrawCachedLayer(ds, _currentTargetCache, screenCenter, angle, newLayerAlpha);
             }
-            else if (_currentBitmap != null)
+            else if (_currentTargetCache != null)
             {
-                DrawLayer(ds, control.Size, _currentBitmap, angle, currentBlur, baseAlpha);
+                DrawCachedLayer(ds, _currentTargetCache, screenCenter, angle, baseAlpha);
             }
         }
 
-        private void DrawLayer(CanvasDrawingSession ds, Windows.Foundation.Size screenSize, CanvasBitmap? bitmap, float rotationRadians, float blurAmount, float alpha)
+        private void EnsureCachedLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap? sourceBitmap, ref CanvasRenderTarget? targetCache)
         {
-            if (bitmap == null) return;
-
-            float imgW = bitmap.SizeInPixels.Width;
-            float imgH = bitmap.SizeInPixels.Height;
-            Vector2 screenCenter = new Vector2((float)screenSize.Width / 2f, (float)screenSize.Height / 2f);
-
-            float scale;
-            if (Speed > 0 && Math.Abs(rotationRadians) > 0.001f)
+            if (sourceBitmap == null)
             {
-                float screenDiagonal = (float)Math.Sqrt(screenSize.Width * screenSize.Width + screenSize.Height * screenSize.Height);
-
-                float scaleX = screenDiagonal / imgW;
-                float scaleY = screenDiagonal / imgH;
-                scale = Math.Max(scaleX, scaleY);
-            }
-            else
-            {
-                float scaleX = (float)screenSize.Width / imgW;
-                float scaleY = (float)screenSize.Height / imgH;
-                scale = Math.Max(scaleX, scaleY);
+                targetCache?.Dispose();
+                targetCache = null;
+                return;
             }
 
-            // 缩放图片 -> 将图片中心移动到 (0,0) 以便旋转 -> 旋转 ->将图片移回屏幕中心
-            Vector2 imgCenterOffset = new Vector2(
-                ((float)screenSize.Width - imgW * scale) / 2.0f,
-                ((float)screenSize.Height - imgH * scale) / 2.0f
-            );
+            bool deviceMismatch = targetCache != null && targetCache.Device != resourceCreator.Device;
+
+            if (_needsCacheUpdate || targetCache == null || deviceMismatch)
+            {
+                targetCache?.Dispose();
+
+                float imgW = sourceBitmap.SizeInPixels.Width;
+                float imgH = sourceBitmap.SizeInPixels.Height;
+                Size screenSize = _lastScreenSize;
+
+                float scale;
+                if (_lastWasRotating) // Speed > 0
+                {
+                    float screenDiagonal = (float)Math.Sqrt(screenSize.Width * screenSize.Width + screenSize.Height * screenSize.Height);
+                    scale = Math.Max(screenDiagonal / imgW, screenDiagonal / imgH);
+                }
+                else
+                {
+                    float scaleX = (float)screenSize.Width / imgW;
+                    float scaleY = (float)screenSize.Height / imgH;
+                    scale = Math.Max(scaleX, scaleY);
+                }
+
+                float targetW = imgW * scale;
+                float targetH = imgH * scale;
+
+                targetCache = new CanvasRenderTarget(resourceCreator, targetW, targetH, sourceBitmap.Dpi);
+
+                using (var ds = targetCache.CreateDrawingSession())
+                {
+                    ds.Clear(Windows.UI.Color.FromArgb(0, 0, 0, 0));
+
+                    using (var transformEffect = new Transform2DEffect())
+                    using (var blurEffect = new GaussianBlurEffect())
+                    {
+                        transformEffect.Source = sourceBitmap;
+                        transformEffect.TransformMatrix = Matrix3x2.CreateScale(scale);
+                        transformEffect.InterpolationMode = CanvasImageInterpolation.Linear;
+
+                        blurEffect.Source = transformEffect;
+                        blurEffect.BlurAmount = BlurAmount;
+                        blurEffect.BorderMode = EffectBorderMode.Hard;
+
+                        ds.DrawImage(blurEffect);
+                    }
+                }
+
+                if (sourceBitmap == _currentBitmap)
+                {
+                    _needsCacheUpdate = false;
+                }
+            }
+        }
+
+        private void DrawCachedLayer(CanvasDrawingSession ds, CanvasRenderTarget? cachedTexture, Vector2 screenCenter, float rotationRadians, float alpha)
+        {
+            if (cachedTexture == null) return;
+
+            Vector2 textureCenter = new Vector2((float)cachedTexture.Size.Width / 2f, (float)cachedTexture.Size.Height / 2f);
 
             Matrix3x2 transform =
-                Matrix3x2.CreateScale(scale) * Matrix3x2.CreateTranslation(imgCenterOffset) * Matrix3x2.CreateRotation(rotationRadians, screenCenter);
+                Matrix3x2.CreateTranslation(-textureCenter) * Matrix3x2.CreateRotation(rotationRadians) * Matrix3x2.CreateTranslation(screenCenter);
 
-            using (var transformEffect = new Transform2DEffect())
-            using (var blurEffect = new GaussianBlurEffect())
-            {
-                transformEffect.Source = bitmap;
-                transformEffect.TransformMatrix = transform;
-                transformEffect.InterpolationMode = CanvasImageInterpolation.Linear;
+            Matrix3x2 previousTransform = ds.Transform;
 
-                blurEffect.Source = transformEffect;
-                blurEffect.BlurAmount = blurAmount > 0 ? (blurAmount / 2.0f) : 0f;
-                blurEffect.BorderMode = EffectBorderMode.Hard;
+            ds.Transform = transform * previousTransform;
+            ds.DrawImage(cachedTexture, 0, 0, new Rect(0, 0, cachedTexture.Size.Width, cachedTexture.Size.Height), alpha);
 
-                ds.DrawImage(blurEffect, 0, 0, new Windows.Foundation.Rect(0, 0, screenSize.Width, screenSize.Height), alpha);
-            }
+            ds.Transform = previousTransform;
         }
 
         public void Dispose()
         {
             _currentBitmap?.Dispose();
-            _currentBitmap = null;
             _previousBitmap?.Dispose();
+
+            _currentTargetCache?.Dispose();
+            _previousTargetCache?.Dispose();
+
+            _currentBitmap = null;
             _previousBitmap = null;
+            _currentTargetCache = null;
+            _previousTargetCache = null;
         }
     }
 }
