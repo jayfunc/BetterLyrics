@@ -14,7 +14,7 @@
 
         <Grid
             x:Name="BottomCommandGrid"
-            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}"
             Opacity="{x:Bind ViewModel.BottomCommandGridOpacity, Mode=OneWay}"
             PointerEntered="BottomCommandGrid_PointerEntered"
             PointerExited="BottomCommandGrid_PointerExited">
