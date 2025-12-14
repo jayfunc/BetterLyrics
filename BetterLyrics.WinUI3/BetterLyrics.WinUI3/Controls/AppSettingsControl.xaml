@@ -71,6 +71,10 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoPlay, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <dev:SettingsCard x:Uid="SettingsPageStopTrackOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE71A;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <dev:SettingsCard x:Uid="SettingsPageExitOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE711;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed, Mode=TwoWay}" />
                     </dev:SettingsCard>
