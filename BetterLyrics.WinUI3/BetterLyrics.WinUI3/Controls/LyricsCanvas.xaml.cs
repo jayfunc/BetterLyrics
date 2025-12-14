@@ -19,7 +19,6 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -620,7 +619,7 @@ namespace BetterLyrics.WinUI3.Controls
                 _fluidRenderer.LoadResourcesAsync(),
                 ReloadCoverBackgroundResourcesAsync()
             };
-            args.TrackAsyncAction(tasks.WhenAll().AsAsyncAction());
+            args.TrackAsyncAction(Task.WhenAll(tasks).AsAsyncAction());
 
             _snowRenderer.LoadResources();
             _fogRenderer.LoadResources();
