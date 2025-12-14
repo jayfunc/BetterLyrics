@@ -87,6 +87,7 @@ namespace BetterLyrics.WinUI3.Views
             OnAutoShowOrHideWindowChanged();
             OnTitleBarAreaChanged();
             OnIsPinToTaskbarChanged();
+            OnIsAlwaysHideUnlockButtonChanged();
 
             LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
         }
@@ -198,6 +199,11 @@ namespace BetterLyrics.WinUI3.Views
             {
                 _taskbarHook = new(LyricsWindowStatus.TaskbarPlacement, OnTaskbarFreeBoundsChanged);
             }
+        }
+
+        private void OnIsAlwaysHideUnlockButtonChanged()
+        {
+            UnlockButton.Visibility = LyricsWindowStatus.IsAlwaysHideUnlockButton ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void OnIsFullscreenChanged()
@@ -503,6 +509,10 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsPinToTaskbar))
                 {
                     OnIsPinToTaskbarChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHideUnlockButton))
+                {
+                    OnIsAlwaysHideUnlockButtonChanged();
                 }
             }
         }

@@ -630,6 +630,9 @@
   <data name="SettingsPageAlignment.Header" xml:space="preserve">
     <value>조정</value>
   </data>
+  <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
+    <value>항상 잠금 해제 버튼을 숨깁니다</value>
+  </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>기본 URL</value>
   </data>

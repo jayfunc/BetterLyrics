@@ -44,14 +44,25 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsPureColorOverlayEnabled = this.IsPureColorOverlayEnabled,
                 PureColorOverlayOpacity = this.PureColorOverlayOpacity,
 
+                IsCoverOverlayEnabled = this.IsCoverOverlayEnabled,
+                CoverOverlayOpacity = this.CoverOverlayOpacity,
+                CoverOverlaySpeed = this.CoverOverlaySpeed,
+                CoverOverlayBlurAmount = this.CoverOverlayBlurAmount,
+
                 IsFluidOverlayEnabled = this.IsFluidOverlayEnabled,
                 FluidOverlayOpacity = this.FluidOverlayOpacity,
                 PaletteGeneratorType = this.PaletteGeneratorType,
 
                 IsSpectrumOverlayEnabled = this.IsSpectrumOverlayEnabled,
+                SpectrumPlacement = this.SpectrumPlacement,
+                SpectrumStyle = this.SpectrumStyle,
+                SpectrumCount = this.SpectrumCount,
 
                 IsSnowFlakeOverlayEnabled = this.IsSnowFlakeOverlayEnabled,
                 SnowFlakeOverlayAmount = this.SnowFlakeOverlayAmount,
+                SnowFlakeOverlaySpeed = this.SnowFlakeOverlaySpeed,
+
+                IsFogOverlayEnabled = this.IsFogOverlayEnabled,
             };
         }
     }
