@@ -150,6 +150,12 @@
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>播放列表创建成功</value>
   </data>
+  <data name="CutletDockerFailed" xml:space="preserve">
+    <value>向 cutlet-docker 请求音译失败，请检查设置或本机 cutlet-docker 配置</value>
+  </data>
+  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>例如 http://localhost:23333</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>默认</value>
   </data>
@@ -761,6 +767,9 @@
   </data>
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>当前歌词窗口状态</value>
+  </data>
+  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <value>cutlet-docker 音译服务</value>
   </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>深色</value>

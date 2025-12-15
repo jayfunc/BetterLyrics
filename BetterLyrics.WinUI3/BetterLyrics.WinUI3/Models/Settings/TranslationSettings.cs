@@ -13,6 +13,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial ChineseRomanization ChineseRomanization { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsChineseRomanizationEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsJapaneseRomanizationEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string CutletDockerServer { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsTraditionalChineseEnabled { get; set; } = false;
 
         public TranslationSettings() { }

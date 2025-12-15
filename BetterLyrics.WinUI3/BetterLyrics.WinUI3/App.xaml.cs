@@ -10,7 +10,8 @@ using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.TranslateService;
+using BetterLyrics.WinUI3.Services.TranslationService;
+using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -114,7 +115,8 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
                     .AddSingleton<ILyricsSearchService, LyricsSearchService>()
                     .AddSingleton<ILibWatcherService, LibWatcherService>()
-                    .AddSingleton<ITranslateService, TranslateService>()
+                    .AddSingleton<ITranslationService, TranslationService>()
+                    .AddSingleton<ITransliterationService, TransliterationService>()
                     .AddSingleton<ILastFMService, LastFMService>()
                     .AddSingleton<IResourceService, ResourceService>()
                     .AddSingleton<IDiscordService, DiscordService>()

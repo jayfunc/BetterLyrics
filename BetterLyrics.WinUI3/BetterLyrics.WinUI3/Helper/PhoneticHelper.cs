@@ -32,11 +32,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static string ToRomaji(string text)
-        {
-            return Kana.Kana.KanaToRomaji(text, Kana.Error.Ignore).ToStr();
-        }
-
         public static string ToPinyin(string text, Pinyin.ManTone.Style style = Pinyin.ManTone.Style.TONE)
         {
             return Pinyin.Pinyin.Instance.HanziToPinyin(text, style).ToStr();

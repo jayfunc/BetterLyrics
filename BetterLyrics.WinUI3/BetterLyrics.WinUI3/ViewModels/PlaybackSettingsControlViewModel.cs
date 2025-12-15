@@ -5,7 +5,8 @@ using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.ResourceService;
 using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.TranslateService;
+using BetterLyrics.WinUI3.Services.TranslationService;
+using BetterLyrics.WinUI3.Services.TransliterationService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Hqub.Lastfm.Entities;
@@ -20,10 +21,10 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class PlaybackSettingsControlViewModel : BaseViewModel
     {
         public IMediaSessionsService MediaSessionsService;
-        private readonly ITranslateService _libreTranslateService;
+        private readonly ITranslationService _translationService;
         private readonly ILastFMService _lastFMService;
         private readonly ISettingsService _settingsService;
-        private readonly IResourceService _resourceService;
+        private readonly ITransliterationService _transliterationService;
 
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
@@ -41,6 +42,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLibreTranslateServerTesting { get; set; } = false;
 
         [ObservableProperty]
+        public partial bool IsCutletDockerServerTesting { get; set; } = false;
+
+        [ObservableProperty]
         public partial bool IsLXMusicServerTesting { get; set; } = false;
 
         [ObservableProperty]
@@ -52,15 +56,15 @@ namespace BetterLyrics.WinUI3.ViewModels
         public PlaybackSettingsControlViewModel(
             ISettingsService settingsService,
             IMediaSessionsService mediaSessionsService,
-            ITranslateService libreTranslateService,
+            ITranslationService libreTranslationService,
             ILastFMService lastFMService,
-            IResourceService resourceService)
+            ITransliterationService transliterationService)
         {
             MediaSessionsService = mediaSessionsService;
 
             _settingsService = settingsService;
-            _libreTranslateService = libreTranslateService;
-            _resourceService = resourceService;
+            _translationService = libreTranslationService;
+            _transliterationService = transliterationService;
 
             _lastFMService = lastFMService;
             _lastFMService.UserChanged += LastFMService_UserChanged;
@@ -107,7 +111,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 try
                 {
-                    string result = await _libreTranslateService.TranslateTextAsync(
+                    string result = await _translationService.TranslateTextAsync(
                         "Hello, world!", AppSettings.TranslationSettings.SelectedTargetLanguageCode, new System.Threading.CancellationToken());
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
@@ -124,6 +128,35 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     IsLibreTranslateServerTesting = false;
+                });
+            });
+        }
+
+        [RelayCommand]
+        private void CutletDockerServerTest()
+        {
+            IsCutletDockerServerTesting = true;
+            Task.Run(async () =>
+            {
+                try
+                {
+                    string result = await _transliterationService.TransliterateText(
+                        "こんにちは", PhoneticHelper.RomanCode, new System.Threading.CancellationToken());
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        ToastHelper.ShowToast("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
+                    });
+                }
+                catch (Exception)
+                {
+                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    {
+                        ToastHelper.ShowToast("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
+                    });
+                }
+                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                {
+                    IsCutletDockerServerTesting = false;
                 });
             });
         }

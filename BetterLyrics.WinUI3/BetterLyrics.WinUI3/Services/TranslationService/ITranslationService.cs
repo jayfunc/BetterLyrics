@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Services.TranslateService
+namespace BetterLyrics.WinUI3.Services.TranslationService
 {
-    public interface ITranslateService
+    public interface ITranslationService
     {
         Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken token);
-
-        int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr, string targetLangCode);
     }
 }

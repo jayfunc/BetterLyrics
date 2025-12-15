@@ -27,6 +27,7 @@ namespace BetterLyrics.WinUI3.Converter
                     TransliterationSearchProvider.LocalEslrcFile => _resourceService.GetLocalizedString("LyricsSearchProviderEslrcFile"),
                     TransliterationSearchProvider.LocalTtmlFile => _resourceService.GetLocalizedString("LyricsSearchProviderTtmlFile"),
                     TransliterationSearchProvider.BetterLyrics => "BetterLyrics",
+                    TransliterationSearchProvider.CutletDocker => "cutlet-docker",
                     _ => "N/A",
                 };
             }

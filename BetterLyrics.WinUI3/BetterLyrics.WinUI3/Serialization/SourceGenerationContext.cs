@@ -7,7 +7,8 @@ using System.Text.Json.Serialization;
 
 namespace BetterLyrics.WinUI3.Serialization
 {
-    [JsonSerializable(typeof(TranslateResponse))]
+    [JsonSerializable(typeof(LibreTranslateResponse))]
+    [JsonSerializable(typeof(CutletDockerResponse))]
     [JsonSerializable(typeof(JsonElement))]
     [JsonSerializable(typeof(AppSettings))]
     [JsonSerializable(typeof(LyricsSearchResult))]

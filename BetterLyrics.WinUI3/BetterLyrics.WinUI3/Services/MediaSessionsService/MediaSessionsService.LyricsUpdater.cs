@@ -40,7 +40,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                     (CurrentLyricsData, CurrentLyricsSearchResult.TransliterationProvider, CurrentLyricsSearchResult.TranslationProvider) =
                         await Task.Run(async () => await lyricsParser.Parse(
-                            _translateService,
+                            _translationService,
+                            _transliterationService,
                             _settingsService.AppSettings.TranslationSettings,
                             CurrentLyricsSearchResult,
                             token),
