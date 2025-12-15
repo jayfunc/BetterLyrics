@@ -150,6 +150,12 @@
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>재생 목록이 성공적으로 생성되었습니다</value>
   </data>
+  <data name="CutletDockerFailed" xml:space="preserve">
+    <value>커틀릿 도커에서 음역을 요청하지 못했습니다. 설정 또는 기본 커틀릿 도커 구성을 확인하십시오</value>
+  </data>
+  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>예: http://localhost:23333</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>기본</value>
   </data>
@@ -762,6 +768,9 @@
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>현재 가사 창 상태</value>
   </data>
+  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <value>커틀릿 도커 음역 서비스</value>
+  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>어두운</value>
   </data>
@@ -957,6 +966,9 @@
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="SettingsPageJapanese.Description" xml:space="preserve">
+    <value>가사의 음역이 먼저 읽히고 일치하지 않으면 커틀릿 도커 서버에서 기계 음역이 요청됩니다</value>
+  </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>일본 주석</value>
   </data>
@@ -1039,7 +1051,7 @@
     <value>LX 음악 서버</value>
   </data>
   <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
-    <value>예: http://127.0.0.1: 23330</value>
+    <value>예: http://127.0.0.1:23330</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>조정</value>
