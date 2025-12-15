@@ -704,8 +704,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     _logger.LogInformation("Target LibreTranslate language code changed: {code}", _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
                     UpdateLyrics();
                 }
+                else if (message.PropertyName == nameof(TranslationSettings.CutletDockerServer))
+                {
+                    UpdateLyrics();
+                }
+                else if (message.PropertyName == nameof(TranslationSettings.LibreTranslateServer))
+                {
+                    UpdateLyrics();
+                }
             }
-
         }
 
         public void Receive(PropertyChangedMessage<ChineseRomanization> message)
