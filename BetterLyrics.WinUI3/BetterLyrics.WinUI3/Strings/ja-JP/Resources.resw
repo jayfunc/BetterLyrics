@@ -150,6 +150,12 @@
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>正常に作成されました</value>
   </data>
+  <data name="CutletDockerFailed" xml:space="preserve">
+    <value>cutlet - dockerからの音訳のリクエストに失敗しました。設定またはネイティブのcutlet - docker設定を確認してください</value>
+  </data>
+  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>たとえば、http://localhost:23333</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>デフォルト</value>
   </data>
@@ -762,6 +768,9 @@
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>現在の歌詞ウィンドウステータス</value>
   </data>
+  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <value>cutlet-docker 音声翻訳サービス</value>
+  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>暗い</value>
   </data>
@@ -957,6 +966,9 @@
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="SettingsPageJapanese.Description" xml:space="preserve">
+    <value>歌詞の音訳が最初に読み込まれ、一致しない場合は機械音訳がcutlet - dockerサーバーから要求されます</value>
+  </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>日本の注釈</value>
   </data>
@@ -1039,7 +1051,7 @@
     <value>LX Music Server</value>
   </data>
   <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
-    <value>例）http://127.0.0.1: 23330</value>
+    <value>例）http://127.0.0.1:23330</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>アライメント</value>

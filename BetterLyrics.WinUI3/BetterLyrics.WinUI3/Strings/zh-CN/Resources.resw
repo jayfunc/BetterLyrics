@@ -966,6 +966,9 @@
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
+  <data name="SettingsPageJapanese.Description" xml:space="preserve">
+    <value>将优先读取歌词内音译，若无匹配则向 cutlet-docker 服务器请求机器音译</value>
+  </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>日语注音</value>
   </data>
@@ -1048,7 +1051,7 @@
     <value>LX 音乐服务器</value>
   </data>
   <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
-    <value>例如 http://127.0.0.1: 23330</value>
+    <value>例如 http://127.0.0.1:23330</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>对齐方式</value>
