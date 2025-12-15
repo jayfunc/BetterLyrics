@@ -9,14 +9,14 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Services.TranslateService
+namespace BetterLyrics.WinUI3.Services.TranslationService
 {
-    public partial class TranslateService : BaseViewModel, ITranslateService
+    public partial class TranslationService : BaseViewModel, ITranslationService
     {
         private readonly ISettingsService _settingsService;
         private readonly HttpClient _httpClient;
 
-        public TranslateService(ISettingsService settingsService)
+        public TranslationService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
             _httpClient = new HttpClient();
@@ -51,31 +51,8 @@ namespace BetterLyrics.WinUI3.Services.TranslateService
             response.EnsureSuccessStatusCode();
             var json = await response.Content.ReadAsStringAsync(token);
 
-            var result = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.TranslateResponse);
+            var result = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LibreTranslateResponse);
             return result?.TranslatedText ?? string.Empty;
-        }
-
-        public int SearchTranslatedLyricsItself(List<LyricsData> lyricsDataArr, string targetLangCode)
-        {
-            int ret = -1;
-            float maxTranslatinRate = 0.0f;
-
-            if (lyricsDataArr.Count > 1)
-            {
-                for (int i = 1; i < lyricsDataArr.Count; i++)
-                {
-                    if (lyricsDataArr[i].LanguageCode == targetLangCode)
-                    {
-                        float translationRate = lyricsDataArr[i].LyricsLines.Count / (float)lyricsDataArr[0].LyricsLines.Count;
-                        if (translationRate > maxTranslatinRate)
-                        {
-                            maxTranslatinRate = translationRate;
-                            ret = i;
-                        }
-                    }
-                }
-            }
-            return ret;
         }
     }
 }

@@ -90,6 +90,24 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
+        public void SetTransliteration(string transliteration)
+        {
+            List<string> transliterationArr = transliteration.Split(StringHelper.NewLine).ToList();
+            int i = 0;
+            foreach (var line in LyricsLines)
+            {
+                if (i >= transliterationArr.Count)
+                {
+                    line.PhoneticText = ""; // No transliteration available, keep empty
+                }
+                else
+                {
+                    line.PhoneticText = transliterationArr[i];
+                }
+                i++;
+            }
+        }
+
         public static LyricsData GetNotfoundPlaceholder()
         {
             return new LyricsData([new LyricsLine

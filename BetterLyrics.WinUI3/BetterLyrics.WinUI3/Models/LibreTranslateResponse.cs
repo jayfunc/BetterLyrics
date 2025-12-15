@@ -2,7 +2,7 @@
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public class TranslateResponse
+    public class LibreTranslateResponse
     {
         [JsonPropertyName("translatedText")]
         public string TranslatedText { get; set; }

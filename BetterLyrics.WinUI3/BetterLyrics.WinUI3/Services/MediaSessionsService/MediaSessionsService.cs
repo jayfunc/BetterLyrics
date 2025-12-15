@@ -14,7 +14,8 @@ using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.TranslateService;
+using BetterLyrics.WinUI3.Services.TranslationService;
+using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -48,7 +49,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private readonly IAlbumArtSearchService _albumArtSearchService;
         private readonly ILyricsSearchService _lyrcsSearchService;
-        private readonly ITranslateService _translateService;
+        private readonly ITranslationService _translationService;
+        private readonly ITransliterationService _transliterationService;
         private readonly ISettingsService _settingsService;
         private readonly ILibWatcherService _libWatcherService;
         private readonly IDiscordService _discordService;
@@ -71,14 +73,16 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             ILyricsSearchService lyricsSearchService,
             ILibWatcherService libWatcherService,
             IDiscordService discordService,
-            ITranslateService libreTranslateService,
+            ITranslationService libreTranslateService,
+            ITransliterationService transliterationService,
             ILogger<MediaSessionsService> logger)
         {
             _settingsService = settingsService;
             _albumArtSearchService = albumArtSearchService;
             _lyrcsSearchService = lyricsSearchService;
             _libWatcherService = libWatcherService;
-            _translateService = libreTranslateService;
+            _translationService = libreTranslateService;
+            _transliterationService = transliterationService;
             _discordService = discordService;
             _logger = logger;
 

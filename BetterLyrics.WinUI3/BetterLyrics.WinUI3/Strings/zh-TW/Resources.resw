@@ -150,6 +150,13 @@
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>已成功建立播放清單</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="CutletDockerFailed" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="CutletServerTextBox.PlaceholderText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>預設</value>
   </data>

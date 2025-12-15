@@ -12,6 +12,7 @@
         LocalLrcFile,
         LocalEslrcFile,
         LocalTtmlFile,
-        BetterLyrics
+        BetterLyrics,
+        CutletDocker
     }
 }

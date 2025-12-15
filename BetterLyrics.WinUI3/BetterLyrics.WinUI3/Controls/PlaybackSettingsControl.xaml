@@ -397,16 +397,23 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=TwoWay}" />
                                 </dev:SettingsCard>
                                 <dev:SettingsCard x:Uid="SettingsPageLibreTranslateServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=OneWay}">
-                                    <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Grid ColumnSpacing="6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
                                         <TextBox
                                             x:Uid="LibreTranslateServerTextBox"
+                                            Grid.Column="0"
                                             IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                            Text="{x:Bind ViewModel.AppSettings.TranslationSettings.LibreTranslateServer, Mode=TwoWay}" />
+                                            Text="{x:Bind ViewModel.AppSettings.TranslationSettings.LibreTranslateServer, Mode=TwoWay}"
+                                            TextWrapping="Wrap" />
                                         <Button
                                             x:Uid="SettingsPageServerTestButton"
+                                            Grid.Column="1"
                                             Command="{x:Bind ViewModel.LibreTranslateServerTestCommand}"
                                             IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
-                                    </StackPanel>
+                                    </Grid>
                                 </dev:SettingsCard>
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
@@ -424,9 +431,33 @@
                                 </dev:SettingsCard>
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
-                        <dev:SettingsCard x:Uid="SettingsPageJapanese">
+                        <dev:SettingsExpander x:Uid="SettingsPageJapanese">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
-                        </dev:SettingsCard>
+                            <dev:SettingsExpander.Items>
+                                <dev:SettingsCard x:Uid="SettingsPageCutletDockerServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=OneWay}">
+                                    <dev:SettingsCard.Description>
+                                        <HyperlinkButton Content="https://github.com/jayfunc/cutlet-docker" NavigateUri="https://github.com/jayfunc/cutlet-docker" />
+                                    </dev:SettingsCard.Description>
+                                    <Grid ColumnSpacing="6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox
+                                            x:Uid="CutletServerTextBox"
+                                            Grid.Column="0"
+                                            IsEnabled="{x:Bind ViewModel.IsCutletDockerServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                            Text="{x:Bind ViewModel.AppSettings.TranslationSettings.CutletDockerServer, Mode=TwoWay}"
+                                            TextWrapping="Wrap" />
+                                        <Button
+                                            x:Uid="SettingsPageServerTestButton"
+                                            Grid.Column="1"
+                                            Command="{x:Bind ViewModel.CutletDockerServerTestCommand}"
+                                            IsEnabled="{x:Bind ViewModel.IsCutletDockerServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                                    </Grid>
+                                </dev:SettingsCard>
+                            </dev:SettingsExpander.Items>
+                        </dev:SettingsExpander>
 
                         <!--  中文简体繁体偏好  -->
                         <TextBlock x:Uid="SettingsPageChineseLyrics" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
