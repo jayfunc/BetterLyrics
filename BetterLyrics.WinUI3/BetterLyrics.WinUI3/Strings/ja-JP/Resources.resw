@@ -150,6 +150,12 @@
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>Playlist was created successfully</value>
   </data>
+  <data name="CutletDockerFailed" xml:space="preserve">
+    <value>Failed to request transliteration from cutlet-docker, please check settings or native cutlet-docker configuration</value>
+  </data>
+  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>For example http://localhost:23333</value>
+  </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>デフォルト</value>
   </data>
@@ -762,6 +768,9 @@
   <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
     <value>現在の歌詞ウィンドウステータス</value>
   </data>
+  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <value>cutlet-docker transliteration service</value>
+  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>暗い</value>
   </data>
@@ -956,6 +965,9 @@
   </data>
   <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
+  </data>
+  <data name="SettingsPageJapanese.Description" xml:space="preserve">
+    <value>The transliteration of the lyrics will be read first, and if there is no match, the machine transliteration will be requested from the cutlet-docker server</value>
   </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>日本の注釈</value>
