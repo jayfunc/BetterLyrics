@@ -342,7 +342,7 @@
 
                 <Slider
                     x:Name="TimelineSlider"
-                    Margin="0,-12,0,0"
+                    Margin="0,-14,0,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     Maximum="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
