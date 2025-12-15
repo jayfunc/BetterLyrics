@@ -290,10 +290,7 @@ public sealed partial class NowPlayingBar : UserControl,
         {
             if (message.PropertyName == nameof(IMediaSessionsService.CurrentPosition))
             {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    TimelineSlider.Value = message.NewValue.TotalSeconds;
-                });
+                TimelineSlider.Value = message.NewValue.TotalSeconds;
             }
         }
     }

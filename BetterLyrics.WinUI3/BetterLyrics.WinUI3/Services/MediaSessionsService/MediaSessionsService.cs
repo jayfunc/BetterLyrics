@@ -201,28 +201,32 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties? timelineProperties)
         {
-            if (!_mediaManager.IsStarted) return;
-            if (mediaSession == null)
+            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
-                CurrentPosition = TimeSpan.Zero;
-                return;
-            }
-
-            var desiredSession = GetCurrentSession();
-
-            if (mediaSession != desiredSession) return;
-
-            if (!IsMediaSourceEnabled(mediaSession.Id))
-            {
-                CurrentPosition = TimeSpan.Zero;
-            }
-            else
-            {
-                if (IsMediaSourceTimelineSyncEnabled(mediaSession.Id))
+                if (!_mediaManager.IsStarted) return;
+                if (mediaSession == null)
                 {
-                    CurrentPosition = timelineProperties?.Position ?? TimeSpan.Zero;
+                    CurrentPosition = TimeSpan.Zero;
+                    return;
                 }
-            }
+
+                var desiredSession = GetCurrentSession();
+
+                if (mediaSession != desiredSession) return;
+
+                if (!IsMediaSourceEnabled(mediaSession.Id))
+                {
+                    CurrentPosition = TimeSpan.Zero;
+                }
+                else
+                {
+                    if (IsMediaSourceTimelineSyncEnabled(mediaSession.Id))
+                    {
+                        CurrentPosition = timelineProperties?.Position ?? TimeSpan.Zero;
+                        CurrentSongInfo?.DurationMs = timelineProperties?.EndTime.TotalMilliseconds ?? 0;
+                    }
+                }
+            });
         }
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo? playbackInfo)
