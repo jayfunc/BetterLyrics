@@ -224,10 +224,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private static void WindowHelper_Closed(object sender, WindowEventArgs args)
         {
-            if (_activeWindows.Contains(sender))
-            {
-                _activeWindows.Remove(sender);
-            }
+            _activeWindows.Remove(sender);
         }
 
         public static void SetIsWorkArea(this NowPlayingWindow window, bool enable)
