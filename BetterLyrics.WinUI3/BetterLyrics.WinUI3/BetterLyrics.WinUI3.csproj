@@ -67,7 +67,6 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
 		<PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.250402" />
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
-		<PackageReference Include="csharp-kana" Version="1.0.2" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
 		<PackageReference Include="DevWinUI.Controls" Version="9.7.1" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.6" />
