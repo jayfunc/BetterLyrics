@@ -243,6 +243,9 @@
   <data name="LyricsPageCachePath.Value" xml:space="preserve">
     <value>缓存路径</value>
   </data>
+  <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+    <value>歌词语言</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌词来源</value>
   </data>

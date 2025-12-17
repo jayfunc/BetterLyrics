@@ -243,6 +243,9 @@
   <data name="LyricsPageCachePath.Value" xml:space="preserve">
     <value>Cache path</value>
   </data>
+  <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+    <value />
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics provider</value>
   </data>

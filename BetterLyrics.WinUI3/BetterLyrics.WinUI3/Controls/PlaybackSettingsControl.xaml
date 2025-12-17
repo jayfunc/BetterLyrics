@@ -348,6 +348,7 @@
                                     x:Uid="LyricsSearchControlDurauion"
                                     Unit="s"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Duration, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LanguageCode, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
                                 <local:PropertyRow
                                     x:Uid="LyricsPageLyricsProviderPrefix"
                                     Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay}"
