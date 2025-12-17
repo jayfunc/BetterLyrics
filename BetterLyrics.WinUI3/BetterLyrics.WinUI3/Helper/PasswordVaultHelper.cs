@@ -1,4 +1,5 @@
-﻿using Windows.Security.Credentials;
+﻿using System;
+using Windows.Security.Credentials;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -12,23 +13,13 @@ namespace BetterLyrics.WinUI3.Helper
         /// <param name="value">要保存的值</param>
         public static void Save(string resource, string key, string value)
         {
-            // 删除旧值（避免重复存储）
             try
             {
                 var vault = new PasswordVault();
 
-                var oldCredential = vault.Retrieve(resource, key);
-                if (oldCredential != null)
-                {
-                    vault.Remove(oldCredential);
-                }
-
                 vault.Add(new PasswordCredential(resource, key, value));
             }
-            catch
-            {
-                // 没有旧值就忽略
-            }
+            catch (Exception) { }
         }
 
         /// <summary>
@@ -47,7 +38,7 @@ namespace BetterLyrics.WinUI3.Helper
                 credential.RetrievePassword();
                 return credential.Password;
             }
-            catch
+            catch (Exception)
             {
                 return null;
             }
@@ -65,10 +56,7 @@ namespace BetterLyrics.WinUI3.Helper
                 var credential = vault.Retrieve(resource, key);
                 vault.Remove(credential);
             }
-            catch
-            {
-                // 不存在就忽略
-            }
+            catch (Exception) { }
         }
     }
 }

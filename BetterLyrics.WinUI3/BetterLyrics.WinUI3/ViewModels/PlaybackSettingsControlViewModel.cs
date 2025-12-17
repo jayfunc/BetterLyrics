@@ -204,6 +204,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void SaveAppleMusicMediaUserToken()
         {
+            PasswordVaultHelper.Delete(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey);
             PasswordVaultHelper.Save(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey, AppleMusicMediaUserToken);
             MediaSessionsService.UpdateLyrics();
         }
