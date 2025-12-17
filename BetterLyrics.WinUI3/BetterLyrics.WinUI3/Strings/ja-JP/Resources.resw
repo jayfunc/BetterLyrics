@@ -243,6 +243,9 @@
   <data name="LyricsPageCachePath.Value" xml:space="preserve">
     <value>キャッシュパス</value>
   </data>
+  <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+    <value>リリックランゲージ</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌詞プロバイダー</value>
   </data>

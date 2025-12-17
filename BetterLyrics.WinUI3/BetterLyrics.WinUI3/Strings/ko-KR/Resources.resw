@@ -243,6 +243,9 @@
   <data name="LyricsPageCachePath.Value" xml:space="preserve">
     <value>캐시</value>
   </data>
+  <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+    <value>가사 언어</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>가사 제공자</value>
   </data>
