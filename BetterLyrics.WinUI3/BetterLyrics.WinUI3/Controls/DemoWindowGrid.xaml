@@ -7,7 +7,6 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -94,16 +93,10 @@
                 TextWrapping="Wrap" />
         </Grid>
 
-        <Grid Opacity="0">
+        <Grid Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}" Opacity="0">
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
-            <Grid.Background>
-                <media:AcrylicBrush
-                    BlurAmount="10"
-                    TintColor="{ThemeResource SystemAccentColor}"
-                    TintOpacity="0" />
-            </Grid.Background>
             <interactivity:Interaction.Behaviors>
                 <interactivity:EventTriggerBehavior EventName="PointerEntered">
                     <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
