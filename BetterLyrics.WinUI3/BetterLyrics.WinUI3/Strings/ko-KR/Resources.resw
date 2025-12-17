@@ -1092,6 +1092,12 @@
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
     <value>여분의 빛</value>
   </data>
+  <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
+    <value>Enable fade effect for non-current rows</value>
+  </data>
+  <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
+    <value>Fadeout effect</value>
+  </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>Current Play Row</value>
   </data>
@@ -1160,6 +1166,12 @@
   </data>
   <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
     <value>Font opacity</value>
+  </data>
+  <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
+    <value>Gradually move non-current rows out of view</value>
+  </data>
+  <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
+    <value>Stay out of sight</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>Lyrics area height factor</value>
