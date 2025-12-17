@@ -7,6 +7,8 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
     <Grid
@@ -90,6 +92,53 @@
                 FontWeight="ExtraBlack"
                 Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}"
                 TextWrapping="Wrap" />
+        </Grid>
+
+        <Grid Opacity="0">
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
+            <Grid.Background>
+                <media:AcrylicBrush
+                    BlurAmount="10"
+                    TintColor="{ThemeResource SystemAccentColor}"
+                    TintOpacity="0" />
+            </Grid.Background>
+            <interactivity:Interaction.Behaviors>
+                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                </interactivity:EventTriggerBehavior>
+                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                </interactivity:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="OpenButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      Glyph=&#xE78B;}">
+                <ToolTipService.ToolTip>
+                    <TextBlock x:Uid="SystemTrayLyrics" />
+                </ToolTipService.ToolTip>
+            </Button>
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Click="CloseButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      Glyph=&#xE711;}"
+                IsEnabled="{x:Bind LyricsWindowStatus.IsOpened, Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <TextBlock x:Uid="SettingsPageCloseStatus" />
+                </ToolTipService.ToolTip>
+            </Button>
         </Grid>
     </Grid>
 

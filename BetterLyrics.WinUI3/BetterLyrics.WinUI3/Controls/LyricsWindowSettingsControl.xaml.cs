@@ -167,38 +167,6 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.OpenConfigPanel();
         }
 
-        private void DemoWindowGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var status = (LyricsWindowStatus)(((FrameworkElement)sender).DataContext);
-            // 多开模式
-            if (_settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
-            {
-                WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
-            }
-            // 单例模式
-            else
-            {
-                var openedWindows = WindowHook.GetWindows<NowPlayingWindow>();
-                foreach (var item in openedWindows.Where(x => x.LyricsWindowStatus != status))
-                {
-                    item.CloseWindow();
-                }
-                WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
-            }
-        }
-
-        private void CloseStatusButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is FrameworkElement element)
-            {
-                if (element.DataContext is LyricsWindowStatus data)
-                {
-                    var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == data);
-                    window?.CloseWindow();
-                }
-            }
-        }
-
         private void ConfigSegmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectorBarSelectedItemTag = (string)((SegmentedItem)((Segmented)sender).SelectedItem).Tag;

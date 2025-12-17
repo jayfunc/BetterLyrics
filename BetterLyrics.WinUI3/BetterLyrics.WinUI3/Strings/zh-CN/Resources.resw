@@ -1092,6 +1092,12 @@
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
     <value>超细</value>
   </data>
+  <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
+    <value>为非当前行启用淡出效果</value>
+  </data>
+  <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
+    <value>淡出效果</value>
+  </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>当前播放行</value>
   </data>
@@ -1160,6 +1166,12 @@
   </data>
   <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
     <value>字体不透明度</value>
+  </data>
+  <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
+    <value>使非当前行逐渐远离视野</value>
+  </data>
+  <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
+    <value>远离视野</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>歌词区域高度因子</value>
