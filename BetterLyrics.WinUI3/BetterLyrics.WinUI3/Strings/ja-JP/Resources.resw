@@ -1092,6 +1092,12 @@
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
     <value>余分な光</value>
   </data>
+  <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
+    <value>非現在の行にフェード効果を有効にします</value>
+  </data>
+  <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
+    <value>フェード効果</value>
+  </data>
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>現在のプレイ行</value>
   </data>
@@ -1160,6 +1166,12 @@
   </data>
   <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
     <value>フォントの不透明度</value>
+  </data>
+  <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
+    <value>現在ではない行を徐々に外に移動してください</value>
+  </data>
+  <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
+    <value>目につかないように</value>
   </data>
   <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
     <value>歌詞エリアの高さ係数</value>

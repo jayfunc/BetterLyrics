@@ -92,27 +92,30 @@ namespace BetterLyrics.WinUI3.Logic
 
                     line.ScaleTransition.SetDuration(yScrollDuration);
                     line.ScaleTransition.SetDelay(yScrollDelay);
-                    line.ScaleTransition.StartTransition(_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale));
+                    line.ScaleTransition.StartTransition(
+                        lyricsEffect.IsLyricsOutOfSightEffectEnabled ?
+                        (_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale)) :
+                        _highlightedScale);
 
                     line.PhoneticOpacityTransition.SetDuration(yScrollDuration);
                     line.PhoneticOpacityTransition.SetDelay(yScrollDelay);
                     line.PhoneticOpacityTransition.StartTransition(
-                        absLineCountDelta == 0 ? phoneticOpacity : (isMouseScrolling ? phoneticOpacity : (1 - distanceFactor) * phoneticOpacity));
+                        CalculateTargetOpacity(phoneticOpacity, phoneticOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
                     line.PlayedOriginalOpacityTransition.SetDuration(yScrollDuration);
                     line.PlayedOriginalOpacityTransition.SetDelay(yScrollDelay);
                     line.PlayedOriginalOpacityTransition.StartTransition(
-                        absLineCountDelta == 0 ? 1 : (isMouseScrolling ? 1.0 : (1 - distanceFactor) * originalOpacity));
+                        CalculateTargetOpacity(originalOpacity, 1.0, distanceFactor, isMouseScrolling, lyricsEffect));
 
                     line.UnplayedOriginalOpacityTransition.SetDuration(yScrollDuration);
                     line.UnplayedOriginalOpacityTransition.SetDelay(yScrollDelay);
                     line.UnplayedOriginalOpacityTransition.StartTransition(
-                        absLineCountDelta == 0 ? originalOpacity : (isMouseScrolling ? originalOpacity : (1 - distanceFactor) * originalOpacity));
+                        CalculateTargetOpacity(originalOpacity, originalOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
                     line.TranslatedOpacityTransition.SetDuration(yScrollDuration);
                     line.TranslatedOpacityTransition.SetDelay(yScrollDelay);
                     line.TranslatedOpacityTransition.StartTransition(
-                        absLineCountDelta == 0 ? translatedOpacity : (isMouseScrolling ? translatedOpacity : (1 - distanceFactor) * translatedOpacity));
+                        CalculateTargetOpacity(translatedOpacity, translatedOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
                     line.ColorTransition.SetDuration(yScrollDuration);
                     line.ColorTransition.SetDelay(yScrollDelay);
@@ -142,6 +145,34 @@ namespace BetterLyrics.WinUI3.Logic
                 line.YOffsetTransition.Update(elapsedTime);
                 line.ColorTransition.Update(elapsedTime);
             }
+        }
+
+        private static double CalculateTargetOpacity(double baseOpacity, double baseOpacityWhenZeroDistanceFactor, double distanceFactor, bool isMouseScrolling, LyricsEffectSettings lyricsEffect)
+        {
+            double targetOpacity;
+            if (distanceFactor == 0)
+            {
+                targetOpacity = baseOpacityWhenZeroDistanceFactor;
+            }
+            else
+            {
+                if (isMouseScrolling)
+                {
+                    targetOpacity = baseOpacity;
+                }
+                else
+                {
+                    if (lyricsEffect.IsLyricsFadeOutEffectEnabled)
+                    {
+                        targetOpacity = (1 - distanceFactor) * baseOpacity;
+                    }
+                    else
+                    {
+                        targetOpacity = baseOpacity;
+                    }
+                }
+            }
+            return targetOpacity;
         }
     }
 }

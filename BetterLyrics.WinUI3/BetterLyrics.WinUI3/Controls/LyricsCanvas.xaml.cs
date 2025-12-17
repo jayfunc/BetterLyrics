@@ -857,6 +857,14 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     _isLayoutChanged = true;
                 }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsFadeOutEffectEnabled))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled))
+                {
+                    _isLayoutChanged = true;
+                }
             }
             else if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
             {

@@ -100,10 +100,7 @@
                                                     BorderThickness="4"
                                                     CornerRadius="4"
                                                     Visibility="{Binding IsOpened, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                <uc:DemoWindowGrid
-                                                    Margin="4"
-                                                    LyricsWindowStatus="{Binding}"
-                                                    Tapped="DemoWindowGrid_Tapped" />
+                                                <uc:DemoWindowGrid Margin="4" LyricsWindowStatus="{Binding}" />
                                             </Grid>
                                             <Grid>
                                                 <ToggleButton
@@ -117,20 +114,12 @@
                                             <Grid ColumnSpacing="4">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
                                                 <Button
                                                     Grid.Column="0"
                                                     HorizontalAlignment="Stretch"
                                                     Click="ConfigButton_Click">
                                                     <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
-                                                </Button>
-                                                <Button
-                                                    Grid.Column="1"
-                                                    HorizontalAlignment="Stretch"
-                                                    Click="CloseStatusButton_Click"
-                                                    IsEnabled="{Binding IsOpened, Mode=OneWay}">
-                                                    <TextBlock x:Uid="SettingsPageCloseStatus" />
                                                 </Button>
                                             </Grid>
                                         </StackPanel>

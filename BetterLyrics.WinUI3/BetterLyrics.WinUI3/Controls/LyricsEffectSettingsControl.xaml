@@ -28,6 +28,16 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBlurEffectEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <!--  淡出效果  -->
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsFadeOutEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE89F;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFadeOutEffectEnabled, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <!--  远离视野  -->
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsOutOfSightEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF19D;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <!--  辉光效果  -->
                     <dev:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />

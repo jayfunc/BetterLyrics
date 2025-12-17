@@ -7,6 +7,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
     public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsBlurEffectEnabled { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFadeOutEffectEnabled { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsOutOfSightEffectEnabled { get; set; } = true;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsEffectScope LyricsGlowEffectScope { get; set; } = LyricsEffectScope.LongDurationSyllable;
@@ -52,6 +54,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
             return new LyricsEffectSettings(this.LyricsScrollTopDuration, this.LyricsScrollDuration, this.LyricsScrollBottomDuration, this.LyricsScrollEasingType)
             {
                 IsLyricsBlurEffectEnabled = this.IsLyricsBlurEffectEnabled,
+                IsLyricsFadeOutEffectEnabled = this.IsLyricsFadeOutEffectEnabled,
+                IsLyricsOutOfSightEffectEnabled = this.IsLyricsOutOfSightEffectEnabled,
 
                 IsLyricsGlowEffectEnabled = this.IsLyricsGlowEffectEnabled,
                 LyricsGlowEffectLongSyllableDuration = this.LyricsGlowEffectLongSyllableDuration,
