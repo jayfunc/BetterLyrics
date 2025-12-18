@@ -548,11 +548,12 @@ namespace BetterLyrics.WinUI3.Controls
             _isMouseScrollingChanged = false;
 
             _lyricsRenderer.CalculateLyrics3DMatrix(
+                lyricsStyle: lyricsStyle,
                 lyricsEffect: lyricsEffect,
                 lyricsX: _renderLyricsStartX,
                 lyricsY: _renderLyricsStartY,
                 lyricsWidth: _renderLyricsWidth,
-                canvasHeight: sender.Size.Height
+                lyricsHeight: _renderLyricsHeight
             );
 
             _isLayoutChanged = false;
