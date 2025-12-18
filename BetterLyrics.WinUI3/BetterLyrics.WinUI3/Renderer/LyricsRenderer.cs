@@ -233,13 +233,15 @@ namespace BetterLyrics.WinUI3.Renderer
             catch (Exception) { }
         }
 
-        public void CalculateLyrics3DMatrix(LyricsEffectSettings lyricsEffect, double lyricsX, double lyricsY, double lyricsWidth, double canvasHeight)
+        public void CalculateLyrics3DMatrix(LyricsStyleSettings lyricsStyle, LyricsEffectSettings lyricsEffect, double lyricsX, double lyricsY, double lyricsWidth, double lyricsHeight)
         {
             if (!lyricsEffect.Is3DLyricsEnabled) return;
 
+            var playingLineTopOffsetFactor = lyricsStyle.PlayingLineTopOffset / 100.0;
+
             Vector3 center = new(
                 (float)(lyricsX + lyricsWidth / 2),
-                (float)(lyricsY + canvasHeight / 2),
+                (float)(lyricsY + lyricsHeight * playingLineTopOffsetFactor / 2),
                 0);
 
             float rotationX = (float)(Math.PI * lyricsEffect.Lyrics3DXAngle / 180.0);
