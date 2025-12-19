@@ -356,7 +356,7 @@
                     Padding="8,4"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                    Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}"
                     CornerRadius="6"
                     Opacity="{x:Bind ViewModel.TimelineSliderThumbOpacity, Mode=OneWay}">
                     <Grid.OpacityTransition>

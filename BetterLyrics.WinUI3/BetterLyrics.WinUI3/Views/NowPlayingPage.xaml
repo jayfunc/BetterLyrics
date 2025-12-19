@@ -74,6 +74,17 @@
                         ShadowAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
                         Source="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
                         SwitchType="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=OneWay}" />
+                    <Grid.ContextFlyout>
+                        <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
+                            <StackPanel>
+                                <StackPanel Margin="16,8">
+                                    <uc:PropertyRow x:Uid="SettingsPageWidth" Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelWidth, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="SettingsPageHeight" Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelHeight, Mode=OneWay}" />
+                                </StackPanel>
+                                <Button Click="SaveAlbumArtButton_Click" HorizontalAlignment="Stretch" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=16, Glyph=&#xE74E;}" />
+                            </StackPanel>
+                        </Flyout>
+                    </Grid.ContextFlyout>
                 </Grid>
 
                 <!--  Song info  -->
