@@ -77,11 +77,22 @@
                     <Grid.ContextFlyout>
                         <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
                             <StackPanel>
-                                <StackPanel Margin="16,8">
-                                    <uc:PropertyRow x:Uid="SettingsPageWidth" Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelWidth, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="SettingsPageHeight" Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelHeight, Mode=OneWay}" />
+                                <StackPanel Margin="16,8,16,4">
+                                    <uc:PropertyRow
+                                        x:Uid="SettingsPageWidth"
+                                        Unit="px"
+                                        Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelWidth, Mode=OneWay}" />
+                                    <uc:PropertyRow
+                                        x:Uid="SettingsPageHeight"
+                                        Unit="px"
+                                        Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelHeight, Mode=OneWay}" />
                                 </StackPanel>
-                                <Button Click="SaveAlbumArtButton_Click" HorizontalAlignment="Stretch" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=16, Glyph=&#xE74E;}" />
+                                <Button
+                                    HorizontalAlignment="Stretch"
+                                    Click="SaveAlbumArtButton_Click"
+                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                          FontSize=16,
+                                                          Glyph=&#xE74E;}" />
                             </StackPanel>
                         </Flyout>
                     </Grid.ContextFlyout>
