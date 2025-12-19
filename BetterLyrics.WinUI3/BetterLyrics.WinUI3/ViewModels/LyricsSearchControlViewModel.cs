@@ -38,9 +38,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
 
         [ObservableProperty]
-        public partial LyricsLine? SelectedLyricsLine { get; set; }
-
-        [ObservableProperty]
         public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
 
         [ObservableProperty]
@@ -97,6 +94,15 @@ namespace BetterLyrics.WinUI3.ViewModels
                     x.OriginalAlbum == _mediaSessionsService.CurrentSongInfo.Album);
 
             return found;
+        }
+
+        public void PlayLyricsLine(LyricsLine? value)
+        {
+            if (value?.StartMs == null)
+            {
+                return;
+            }
+            _mediaSessionsService.ChangePosition(value.StartMs / 1000.0);
         }
 
         [RelayCommand]
@@ -186,15 +192,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 LyricsDataArr = null;
             }
-        }
-
-        partial void OnSelectedLyricsLineChanged(LyricsLine? value)
-        {
-            if (value?.StartMs == null)
-            {
-                return;
-            }
-            _mediaSessionsService.ChangePosition(value.StartMs / 1000.0);
         }
 
         public void Receive(PropertyChangedMessage<SongInfo?> message)

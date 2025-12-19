@@ -18,10 +18,10 @@ namespace BetterLyrics.WinUI3.Controls
             DataContext = Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PlayLyricsLineButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.SelectedLyricsLine = e.OriginalSource as LyricsLine;
+            var lyricsLine = (LyricsLine)((Button)sender).DataContext;
+            ViewModel.PlayLyricsLine(lyricsLine);
         }
-
     }
 }
