@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Hooks;
 using DevWinUI;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -45,6 +46,12 @@ namespace BetterLyrics.WinUI3.Helper
         public static async Task<StorageFile?> PickSaveFileAsync<T>(IDictionary<string, IList<string>> fileTypeChoices)
         {
             var window = WindowHook.GetWindow<T>();
+
+            return await PickSaveFileAsync(window, fileTypeChoices);
+        }
+
+        public static async Task<StorageFile?> PickSaveFileAsync<T>(T? window, IDictionary<string, IList<string>> fileTypeChoices)
+        {
             if (window == null) return null;
 
             var picker = new Windows.Storage.Pickers.FileSavePicker();

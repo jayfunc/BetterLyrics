@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
@@ -17,7 +18,11 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.Views
 {
@@ -652,5 +657,34 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        private async void SaveAlbumArtButton_Click(object sender, RoutedEventArgs e)
+        {
+            var sourceStream = ViewModel.MediaSessionsService.AlbumArtBitmapStream;
+            if (sourceStream == null) return;
+
+            var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == LyricsWindowStatus);
+            if (window == null) return;
+
+            IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
+            {
+                { "PNG", new List<string>() { ".png" } },
+                { "JPEG", new List<string>() { ".jpg", ".jpeg" } }
+            };
+
+            var file = await PickerHelper.PickSaveFileAsync(window, fileTypeChoices);
+
+            if (file != null)
+            {
+                using (IRandomAccessStream destStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    sourceStream.Seek(0);
+                    await RandomAccessStream.CopyAsync(sourceStream, destStream);
+                    await destStream.FlushAsync();
+
+                    ToastHelper.ShowToast("ActionCompleted", null, InfoBarSeverity.Success);
+                }
+            }
+
+        }
     }
 }

@@ -190,7 +190,7 @@ public sealed partial class NowPlayingBar : UserControl,
 
     private void TimelineSliderOverlay_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
-        ViewModel.TimelineSliderThumbOpacity = 0.7f;
+        ViewModel.TimelineSliderThumbOpacity = 1f;
     }
 
     private void TimelineSliderOverlay_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
