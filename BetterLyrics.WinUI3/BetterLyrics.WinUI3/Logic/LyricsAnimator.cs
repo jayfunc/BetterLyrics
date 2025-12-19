@@ -124,8 +124,10 @@ namespace BetterLyrics.WinUI3.Logic
                     line.AngleTransition.SetEasingType(canvasYScrollTransition.EasingType);
                     line.AngleTransition.SetDuration(yScrollDuration);
                     line.AngleTransition.SetDelay(yScrollDelay);
-                    line.AngleTransition.StartTransition(lyricsEffect.IsFanLyricsEnabled ?
-                        Math.PI * (lyricsEffect.FanLyricsAngle / 180.0) * distanceFactor * (i > playingLineIndex ? 1 : -1) : 0);
+                    line.AngleTransition.StartTransition(
+                        (lyricsEffect.IsFanLyricsEnabled && !isMouseScrolling) ?
+                        Math.PI * (lyricsEffect.FanLyricsAngle / 180.0) * distanceFactor * (i > playingLineIndex ? 1 : -1) :
+                        0);
 
                     line.YOffsetTransition.SetEasingType(canvasYScrollTransition.EasingType);
                     line.YOffsetTransition.SetDuration(yScrollDuration);

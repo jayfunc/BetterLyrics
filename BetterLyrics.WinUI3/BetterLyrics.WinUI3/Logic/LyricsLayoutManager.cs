@@ -213,6 +213,17 @@ namespace BetterLyrics.WinUI3.Logic
                 if (value >= mousePosition.Y) { result = mid; right = mid - 1; }
                 else { left = mid + 1; }
             }
+
+            if (result != -1)
+            {
+                var line = lines[result];
+                double lineTopY = offset + line.TopLeftPosition.Y;
+                if (mousePosition.Y < lineTopY)
+                {
+                    result = -1;
+                }
+            }
+
             return result;
         }
 
