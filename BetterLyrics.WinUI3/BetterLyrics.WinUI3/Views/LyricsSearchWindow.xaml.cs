@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             InitializeComponent();
 
-            this.Init("LyricsSearchPageTitle", backdropType: BackdropType.Transparent);
+            this.Init("LyricsSearchPageTitle");
 
             AppWindow.Closing += AppWindow_Closing;
         }

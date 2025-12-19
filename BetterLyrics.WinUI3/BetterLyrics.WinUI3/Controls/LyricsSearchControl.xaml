@@ -278,18 +278,43 @@
                     </Pivot.HeaderTemplate>
                     <Pivot.ItemTemplate>
                         <DataTemplate x:DataType="models:LyricsData">
-                            <ListView ItemsSource="{x:Bind LyricsLines, Mode=OneWay}" SelectionChanged="ListView_SelectionChanged">
+                            <ListView
+                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                                ItemsSource="{x:Bind LyricsLines, Mode=OneWay}"
+                                SelectionMode="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="models:LyricsLine">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{x:Bind StartMs, Mode=OneWay, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
-                                            <TextBlock
-                                                Margin="1,0"
-                                                Foreground="{ThemeResource SystemFillColorNeutralBrush}"
-                                                Text="-" />
-                                            <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{x:Bind EndMs, Mode=OneWay, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
-                                            <TextBlock Margin="6,0" Text="{x:Bind OriginalText, Mode=OneWay}" />
-                                        </StackPanel>
+                                        <Grid Margin="0,6" ColumnSpacing="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{x:Bind StartMs, Mode=OneWay, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                                                <Button
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Click="PlayLyricsLineButton_Click"
+                                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                          FontSize=16,
+                                                                          Glyph=&#xE768;}"
+                                                    Opacity="0"
+                                                    Style="{StaticResource AccentButtonStyle}">
+                                                    <Button.OpacityTransition>
+                                                        <ScalarTransition />
+                                                    </Button.OpacityTransition>
+                                                    <interactivity:Interaction.Behaviors>
+                                                        <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                        </interactivity:EventTriggerBehavior>
+                                                        <interactivity:EventTriggerBehavior EventName="PointerExited">
+                                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                        </interactivity:EventTriggerBehavior>
+                                                    </interactivity:Interaction.Behaviors>
+                                                </Button>
+                                            </Grid>
+                                            <local:PropertyRow Grid.Column="1" Value="{x:Bind OriginalText, Mode=OneWay}" />
+                                        </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
