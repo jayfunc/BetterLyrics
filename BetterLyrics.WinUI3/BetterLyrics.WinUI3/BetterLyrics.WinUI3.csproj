@@ -336,7 +336,7 @@
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <PRIResource Update="Strings\en-US\Resources.resw">
+	  <PRIResource Update="Strings\en\Resources.resw">
 	    <Generator></Generator>
 	  </PRIResource>
 	</ItemGroup>
