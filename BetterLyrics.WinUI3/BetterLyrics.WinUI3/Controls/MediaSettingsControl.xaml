@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.MediaSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,6 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -49,25 +49,32 @@
                         ItemsSource="{x:Bind ViewModel.AppSettings.LocalMediaFolders, Mode=OneWay}"
                         SelectionMode="None">
                         <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <dev:SettingsExpander>
+                            <DataTemplate x:DataType="models:MediaFolder">
+                                <dev:SettingsExpander Description="{x:Bind ConnectionSummary, Mode=OneWay}" HeaderIcon="{Binding SourceType, Converter={StaticResource FileSourceTypeToIconConverter}}">
+
                                     <dev:SettingsExpander.Header>
                                         <HyperlinkButton
+                                            Padding="0"
                                             Click="LocalFolderHyperlinkButton_Click"
-                                            Content="{Binding Path, Mode=OneWay}"
-                                            Tag="{Binding Path, Mode=OneWay}" />
+                                            Content="{x:Bind Path, Mode=OneWay}"
+                                            Tag="{x:Bind Path, Mode=OneWay}"
+                                            ToolTipService.ToolTip="{x:Bind ConnectionSummary}" />
                                     </dev:SettingsExpander.Header>
-                                    <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+
+                                    <ToggleSwitch IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
+
                                     <dev:SettingsExpander.Items>
                                         <dev:SettingsCard>
                                             <dev:SettingsCard.Header>
                                                 <HyperlinkButton
                                                     x:Uid="SettingsPageRemovePath"
+                                                    Padding="0"
                                                     Click="SettingsPageRemovePathButton_Click"
                                                     Tag="{Binding}" />
                                             </dev:SettingsCard.Header>
                                         </dev:SettingsCard>
-                                        <dev:SettingsCard x:Uid="SettingsPageMusicLibRealTimeWatch">
+
+                                        <dev:SettingsCard x:Uid="SettingsPageMusicLibRealTimeWatch" IsEnabled="{Binding IsLocal, Mode=OneWay}">
                                             <ToggleSwitch IsOn="{Binding IsRealTimeWatchEnabled, Mode=TwoWay}" />
                                         </dev:SettingsCard>
                                     </dev:SettingsExpander.Items>
@@ -76,11 +83,51 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <dev:SettingsCard x:Uid="SettingsPageAddFolder" Style="{StaticResource DefaultSettingsExpanderItemStyle}">
-                        <Button
-                            x:Uid="SettingsPageAddFolderButton"
-                            Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
-                            CommandParameter="{Binding ElementName=RootGrid}" />
+                    <dev:SettingsCard Style="{StaticResource DefaultSettingsExpanderItemStyle}">
+                        <DropDownButton x:Uid="SettingsPageAddFolderButton">
+                            <DropDownButton.Flyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Uid="SettingsPageLocalFolder"
+                                        Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
+                                        CommandParameter="{Binding ElementName=RootGrid}"
+                                        Icon="Folder" />
+
+                                    <MenuFlyoutSeparator />
+
+                                    <MenuFlyoutItem
+                                        Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
+                                        CommandParameter="SMB"
+                                        Text="SMB"
+                                        Visibility="Collapsed">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE839;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
+                                        CommandParameter="FTP"
+                                        Text="FTP Server"
+                                        Visibility="Collapsed">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE838;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                    <MenuFlyoutItem
+                                        Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
+                                        CommandParameter="WebDAV"
+                                        Text="WebDAV"
+                                        Visibility="Collapsed">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE774;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
+
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
                     </dev:SettingsCard>
 
                 </StackPanel>

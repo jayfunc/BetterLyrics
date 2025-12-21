@@ -120,6 +120,9 @@
   <data name="ActionCompleted" xml:space="preserve">
     <value>작전 완료</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>추가하다</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>로컬 음악 파일</value>
   </data>
@@ -546,6 +549,21 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>개인정보 보호정책</value>
   </data>
+  <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
+    <value>비밀번호</value>
+  </data>
+  <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
+    <value>길</value>
+  </data>
+  <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
+    <value>항구</value>
+  </data>
+  <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
+    <value>IP 주소</value>
+  </data>
+  <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
+    <value>사용자 이름</value>
+  </data>
   <data name="Romaji" xml:space="preserve">
     <value>로만</value>
   </data>
@@ -593,9 +611,6 @@
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>환경 색상에 적응하세요</value>
-  </data>
-  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
-    <value>폴더를 추가하십시오</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>추가하다</value>
@@ -1043,6 +1058,9 @@
   </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>새로운 재생 소스에 대한 모니터링을 활성화하십시오</value>
+  </data>
+  <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
+    <value>로컬 폴더</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>로그 레코드</value>

@@ -65,7 +65,6 @@
             <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
             <converter:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
             <converter:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />
-            <converter:TrackToLyricsConverter x:Key="TrackToLyricsConverter" />
             <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
             <converter:IndexToDisplayConverter x:Key="IndexToDisplayConverter" />
             <converter:IntToDoubleConverter x:Key="IntToDoubleConverter" />
@@ -75,6 +74,7 @@
             <converter:TextAlignmentTypeToHorizontalAlignmentConverter x:Key="TextAlignmentTypeToHorizontalAlignmentConverter" />
             <converter:LyricsLayoutOrientationToOrientationConverter x:Key="LyricsLayoutOrientationToOrientationConverter" />
             <converter:LyricsLayoutOrientationNegationToOrientationConverter x:Key="LyricsLayoutOrientationNegationToOrientationConverter" />
+            <converter:FileSourceTypeToIconConverter x:Key="FileSourceTypeToIconConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

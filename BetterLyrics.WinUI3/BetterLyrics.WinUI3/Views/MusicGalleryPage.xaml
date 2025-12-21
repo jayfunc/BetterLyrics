@@ -82,7 +82,7 @@
                                         x:Uid="MusicGalleryPageFileInfoPath"
                                         Link="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}"
                                         Value="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped, Converter={StaticResource TrackToLyricsConverter}, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped.RawLyrics, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
                         </ScrollViewer>
@@ -381,7 +381,7 @@
                                 </MenuBarItemFlyout>
                             </ListView.ContextFlyout>
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="atl:Track">
+                                <DataTemplate x:DataType="models:ExtendedTrack">
                                     <Grid
                                         Padding="12"
                                         ColumnSpacing="12"
