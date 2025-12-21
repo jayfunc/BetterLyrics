@@ -98,8 +98,7 @@
                                     <MenuFlyoutItem
                                         Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
                                         CommandParameter="SMB"
-                                        Text="SMB"
-                                        Visibility="Collapsed">
+                                        Text="SMB">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE839;" />
                                         </MenuFlyoutItem.Icon>
@@ -108,8 +107,7 @@
                                     <MenuFlyoutItem
                                         Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
                                         CommandParameter="FTP"
-                                        Text="FTP Server"
-                                        Visibility="Collapsed">
+                                        Text="FTP">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE838;" />
                                         </MenuFlyoutItem.Icon>
@@ -118,8 +116,7 @@
                                     <MenuFlyoutItem
                                         Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
                                         CommandParameter="WebDAV"
-                                        Text="WebDAV"
-                                        Visibility="Collapsed">
+                                        Text="WebDAV">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE774;" />
                                         </MenuFlyoutItem.Icon>

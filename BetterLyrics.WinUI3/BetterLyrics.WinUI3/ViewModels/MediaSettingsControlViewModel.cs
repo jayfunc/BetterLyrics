@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     dialog.IsPrimaryButtonEnabled = false;
                     configControl.IsEnabled = false;
-                    dialog.Title = $"Connecting to {protocolType}...";
+                    configControl.SetProgressBarVisibility(Visibility.Visible);
 
                     var tempFolder = configControl.GetConfig();
 
@@ -118,18 +118,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        ShowErrorTip(configControl, "Connection failed. Check IP/Port.");
+                        ShowErrorTip(configControl, _resourceService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
                     }
                 }
                 catch (Exception ex)
                 {
-                    ShowErrorTip(configControl, $"Error: {ex.Message}");
+                    ShowErrorTip(configControl, ex.Message);
                 }
                 finally
                 {
                     dialog.IsPrimaryButtonEnabled = true;
                     configControl.IsEnabled = true;
-                    dialog.Title = protocolType;
+                    configControl.SetProgressBarVisibility(Visibility.Collapsed);
                 }
             };
 

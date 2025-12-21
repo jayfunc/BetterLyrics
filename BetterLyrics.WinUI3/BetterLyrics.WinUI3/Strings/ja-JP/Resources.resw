@@ -561,6 +561,9 @@
   <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
     <value>サーバーアドレス</value>
   </data>
+  <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+    <value>住所は必須です</value>
+  </data>
   <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
     <value>ユーザー名</value>
   </data>
