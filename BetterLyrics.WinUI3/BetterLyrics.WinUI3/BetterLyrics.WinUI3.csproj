@@ -12,11 +12,17 @@
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 	</PropertyGroup>
 	<ItemGroup>
+		<Compile Remove="TemplateSelector\**" />
 		<Compile Remove="ViewModels\Lyrics\**" />
+		<Content Remove="TemplateSelector\**" />
 		<Content Remove="ViewModels\Lyrics\**" />
+		<EmbeddedResource Remove="TemplateSelector\**" />
 		<EmbeddedResource Remove="ViewModels\Lyrics\**" />
+		<None Remove="TemplateSelector\**" />
 		<None Remove="ViewModels\Lyrics\**" />
+		<Page Remove="TemplateSelector\**" />
 		<Page Remove="ViewModels\Lyrics\**" />
+		<PRIResource Remove="TemplateSelector\**" />
 		<PRIResource Remove="ViewModels\Lyrics\**" />
 	</ItemGroup>
 	<ItemGroup>
@@ -339,9 +345,6 @@
 	  <PRIResource Update="Strings\en\Resources.resw">
 	    <Generator></Generator>
 	  </PRIResource>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="TemplateSelector\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\RemoteServerConfigControl.xaml">
