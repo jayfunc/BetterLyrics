@@ -63,7 +63,7 @@ namespace BetterLyrics.WinUI3.Renderer
             float blur,
             float opacity)
         {
-            if (opacity <= 0) return;
+            if (float.IsNaN(opacity) || opacity <= 0) return;
 
             var bounds = layout.LayoutBounds;
             var destRect = new Rect(
