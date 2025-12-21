@@ -1000,7 +1000,7 @@
     <value>立即加入</value>
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
-    <value>廣東話拼音</value>
+    <value>粵語拼音</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
@@ -1018,7 +1018,7 @@
     <value>Last.fm</value>
   </data>
   <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
-    <value>聽歌總數量</value>
+    <value>總播放次數</value>
   </data>
   <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
     <value>重新整理</value>
