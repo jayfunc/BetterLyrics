@@ -561,6 +561,9 @@
   <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
     <value>IP 주소</value>
   </data>
+  <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+    <value>서버 주소가 필요합니다</value>
+  </data>
   <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
     <value>사용자 이름</value>
   </data>

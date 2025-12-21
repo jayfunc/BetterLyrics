@@ -10,6 +10,10 @@
 
     <Grid>
         <StackPanel Width="400" Spacing="16">
+            <ProgressBar
+                x:Name="ProgressBar"
+                IsIndeterminate="True"
+                Visibility="Collapsed" />
             <InfoBar
                 x:Name="ErrorInfoBar"
                 IsClosable="True"

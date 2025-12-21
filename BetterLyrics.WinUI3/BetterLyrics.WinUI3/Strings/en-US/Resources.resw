@@ -561,6 +561,9 @@
   <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
     <value>Server Address</value>
   </data>
+  <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+    <value>Server address is required</value>
+  </data>
   <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
     <value>Username</value>
   </data>

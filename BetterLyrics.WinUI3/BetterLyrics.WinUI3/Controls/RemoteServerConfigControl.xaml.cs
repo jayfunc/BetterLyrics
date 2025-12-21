@@ -1,7 +1,10 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.ResourceService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using DevWinUI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
@@ -13,6 +16,7 @@ namespace BetterLyrics.WinUI3.Controls
     public sealed partial class RemoteServerConfigControl : UserControl
     {
         private readonly string _protocolType;
+        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
         public RemoteServerConfigControl(string protocolType)
         {
@@ -44,7 +48,7 @@ namespace BetterLyrics.WinUI3.Controls
         public MediaFolder GetConfig()
         {
             if (string.IsNullOrWhiteSpace(HostBox.Text))
-                throw new ArgumentException("Server address is required.");
+                throw new ArgumentException(_resourceService.GetLocalizedString("RemoteServerConfigControlServerAddressRequired"));
 
             string name = $"{_protocolType} - {HostBox.Text}";
 
@@ -95,6 +99,11 @@ namespace BetterLyrics.WinUI3.Controls
         {
             ErrorInfoBar.Message = message;
             ErrorInfoBar.IsOpen = true;
+        }
+
+        public void SetProgressBarVisibility(Visibility visibility)
+        {
+            ProgressBar.Visibility = visibility;
         }
 
     }

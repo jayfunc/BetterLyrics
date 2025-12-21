@@ -561,6 +561,9 @@
   <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
     <value>服务器地址</value>
   </data>
+  <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+    <value>服务器地址为必填项</value>
+  </data>
   <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
     <value>用户名</value>
   </data>
