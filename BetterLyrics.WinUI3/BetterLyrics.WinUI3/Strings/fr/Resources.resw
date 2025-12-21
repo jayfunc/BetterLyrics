@@ -59,1664 +59,1664 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="ActionCompleted" xml:space="preserve">
+	<xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0"/>
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string"/>
+							<xsd:attribute name="type" type="xsd:string"/>
+							<xsd:attribute name="mimetype" type="xsd:string"/>
+							<xsd:attribute ref="xml:space"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string"/>
+							<xsd:attribute name="name" type="xsd:string"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+							<xsd:attribute ref="xml:space"/>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required"/>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="ActionCompleted" xml:space="preserve">
     <value>Operation réussie !</value>
   </data>
-  <data name="Add" xml:space="preserve">
+	<data name="Add" xml:space="preserve">
     <value>Ajouter!</value>
   </data>
-  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
-    <value>Fichiers de musique locale !</value>
-  </data>
-  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
-    <value>Lecteur de musique</value>
-  </data>
-  <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
-    <value>Mode “Picture-in-Picture”</value>
-  </data>
-  <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>Fenêtre</value>
-  </data>
-  <data name="ArtistsSplitHint.Text" xml:space="preserve">
-    <value>Lorsque vous tapez plusieurs artistes, veuillez les séparer avec l'un des délimiteurs suivants (ne les mélangez pas) !</value>
-  </data>
-  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>Ne plus afficher ce message</value>
-  </data>
-  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>Mode “Picture-in-Picture”</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Annuler !</value>
-  </data>
-  <data name="Copy.Content" xml:space="preserve">
-    <value>Copier!</value>
-  </data>
-  <data name="CreatePlaylistSuccessfully" xml:space="preserve">
-    <value>liste de lecture créé avec succès.</value>
-  </data>
-  <data name="CutletDockerFailed" xml:space="preserve">
-    <value>Échec de la demande de translittération depuis cutlet-docker, veuillez vérifier les paramètres ou la configuration native cutlet-docker !</value>
-  </data>
-  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>Par exemple http ://localhost :23333 !</value>
-  </data>
-  <data name="DemoWindowControlDefault.Text" xml:space="preserve">
-    <value>Par défaut</value>
-  </data>
-  <data name="DesktopMode" xml:space="preserve">
-    <value>Mode bureau (transparent) !</value>
-  </data>
-  <data name="DockedMode" xml:space="preserve">
-    <value>Mode amarré !</value>
-  </data>
-  <data name="ExportSettingsSuccess" xml:space="preserve">
-    <value>Export réussi !</value>
-  </data>
-  <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>Impossible de se connecter à LX Music Server, veuillez vous rendre dans Paramètres - Source de lecture - LX Music - LX Music Server pour vérifier si le lien est entré correctement !</value>
-  </data>
-  <data name="FullscreenMode" xml:space="preserve">
-    <value>Mode plein écran</value>
-  </data>
-  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
-    <value>Lock</value>
-  </data>
-  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
-    <value>Serrure</value>
-  </data>
-  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>Serrure</value>
-  </data>
-  <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
-    <value>Galerie de musique !</value>
-  </data>
-  <data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>Réglages</value>
-  </data>
-  <data name="ImportPlaylistSuccessfully" xml:space="preserve">
-    <value>La liste de lecture a été importée avec succès !</value>
-  </data>
-  <data name="ImportSettingsFailed" xml:space="preserve">
-    <value>L'importation du fichier de paramètres a échoué, les paramètres de l'application restent inchangés !</value>
-  </data>
-  <data name="ImportSettingsSuccess" xml:space="preserve">
-    <value>Importation réussie !</value>
-  </data>
-  <data name="Jyutping" xml:space="preserve">
-    <value>Pinyin cantonais !</value>
-  </data>
-  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
-    <value>Veuillez vous assurer qu'au moins un statut est défini par défaut !</value>
-  </data>
-  <data name="LastFMAuthFailed" xml:space="preserve">
-    <value>Echec, veuillez réessayer.</value>
-  </data>
-  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
-    <value>J'ai terminé l'autorisation !</value>
-  </data>
-  <data name="LastFMRequestAuthDesc" xml:space="preserve">
-    <value>Veuillez compléter l'autorisation dans votre navigateur !</value>
-  </data>
-  <data name="LastFMRequestAuthTitle" xml:space="preserve">
-    <value>Accordez à BetterLyrics l'autorisation d'accéder à votre compte Last.fm !</value>
-  </data>
-  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
-    <value>J'ai annulé mon autorisation !</value>
-  </data>
-  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
-    <value>Veuillez terminer l'opération d'annulation dans votre navigateur !</value>
-  </data>
-  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
-    <value>Révoquez l'autorisation de BetterLyrics d'accéder à votre compte Last.fm !</value>
-  </data>
-  <data name="LibreTranslateFailed" xml:space="preserve">
-    <value>La demande de traduction auprès de LibreTranslate a échoué, veuillez vérifier les paramètres ou la configuration native de LibreTranslate !</value>
-  </data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>par exemple http ://localhost :5000 !</value>
-  </data>
-  <data name="LyricsLoading" xml:space="preserve">
-    <value>Chargement des paroles... !</value>
-  </data>
-  <data name="LyricsNotFound" xml:space="preserve">
-    <value>Paroles introuvables !</value>
-  </data>
-  <data name="LyricsPageCachePath.Header" xml:space="preserve">
-    <value>Chemin du cache</value>
-  </data>
-  <data name="LyricsPageCachePath.Value" xml:space="preserve">
-    <value>Chemin du cache</value>
-  </data>
-  <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
-    <value>Langage lyrique !</value>
-  </data>
-  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
-    <value>Fournisseur de paroles !</value>
-  </data>
-  <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
-    <value>Recherchez manuellement les paroles !</value>
-  </data>
-  <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>Paramètres de raccourci de gestion de la fenêtre des paroles !</value>
-  </data>
-  <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
-    <value>Pourcentage de correspondance !</value>
-  </data>
-  <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>Jouer les paramètres de raccourci source !</value>
-  </data>
-  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
-    <value>Réinitialisez à 0 lorsque vous changez de chanson !</value>
-  </data>
-  <data name="LyricsPageSettings.Text" xml:space="preserve">
-    <value>Réglages</value>
-  </data>
-  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>Décalage de la chronologie des paroles !</value>
-  </data>
-  <data name="LyricsPageTitle" xml:space="preserve">
-    <value>BetterLyrics !</value>
-  </data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
-    <value>La traduction des paroles sera lue en premier. S'il n'y a pas de correspondance, la traduction automatique sera demandée au serveur LibreTranslate !</value>
-  </data>
-  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
-    <value>Activer la traduction !</value>
-  </data>
-  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
-    <value>afficher la traduction</value>
-  </data>
-  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
-    <value>Prestataire de traduction</value>
-  </data>
-  <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
-    <value>Source de translittération !</value>
-  </data>
-  <data name="LyricsParseError" xml:space="preserve">
-    <value>Échec de l'analyse des paroles !</value>
-  </data>
-  <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
-    <value>Artiste</value>
-  </data>
-  <data name="LyricsSearchControlAutoGenerated.Tag" xml:space="preserve">
-    <value>Généré automatiquement</value>
-  </data>
-  <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
-    <value>Durée</value>
-  </data>
-  <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
-    <value>* Enregistrer les modifications prennent effet immédiatement, après quoi les paroles de piste seront récupérées avec les informations de mappage et les paroles cibles ; marquer comme de la musique pure retournera directement à la pure musique des paroles. Réinitialiser pour récupérer par les données originales.</value>
-  </data>
-  <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
-    <value>Ignorer le cache lors de la recherche</value>
-  </data>
-  <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
-    <value>mappé comme</value>
-  </data>
-  <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
-    <value>Marquer comme musique pure</value>
-  </data>
-  <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
-    <value>Non trouvé</value>
-  </data>
-  <data name="LyricsSearchControlReset.Content" xml:space="preserve">
-    <value>Reset</value>
-  </data>
-  <data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
-    <value>Enregistrer les modifications</value>
-  </data>
-  <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
-    <value>Chercher</value>
-  </data>
-  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
-    <value>Mappage des infos de la chanson</value>
-  </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>Fournisseur de recherche de paroles cible</value>
-  </data>
-  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
-    <value>Titre de la page</value>
-  </data>
-  <data name="LyricsSearchPageTitle" xml:space="preserve">
-    <value>Recherche de paroles - BetterLyrics</value>
-  </data>
-  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
-    <value>Fichiers .ESLRC locaux</value>
-  </data>
-  <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
-    <value>Fichiers .LRC locaux</value>
-  </data>
-  <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+	<data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>Fichiers de musique locale</value>
   </data>
-  <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
-    <value>Fichiers .TTML locaux</value>
+	<data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>Lecteur de musique</value>
   </data>
-  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
-    <value>Mode immersif</value>
-  </data>
-  <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
-    <value>Configuration</value>
-  </data>
-  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
-    <value>Fenêtre des paroles</value>
-  </data>
-  <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
-    <value>Définir par défaut</value>
-  </data>
-  <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
-    <value>Exportation</value>
-  </data>
-  <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
-    <value>Sélecteur de fenêtre de paroles</value>
-  </data>
-  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
-    <value>Allez dans Paramètres pour ajouter plus de modes</value>
-  </data>
-  <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
-    <value>Sélecteur de fenêtre de paroles</value>
-  </data>
-  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>Zone de pochettes uniquement</value>
-  </data>
-  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
-    <value>Survolez à nouveau pour afficher le bouton de bascule</value>
-  </data>
-  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
-    <value>Paroles seulement</value>
-  </data>
-  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
-    <value>Aucun fichier local ne correspond</value>
-  </data>
-  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
-    <value>Aucune musique en cours de lecture</value>
-  </data>
-  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>Décalage de la timeline des paroles</value>
-  </data>
-  <data name="MainPageSplitView.Content" xml:space="preserve">
-    <value>Vue fractionnée</value>
-  </data>
-  <data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
-    <value>Bienvenue dans les meilleures paroles</value>
-  </data>
-  <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
-    <value>Ajouter à la playlist</value>
-  </data>
-  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
-    <value>Fin de la liste</value>
-  </data>
-  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
-    <value>Éléments suivants</value>
-  </data>
-  <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>Ajouter à la file d'attente de lecture</value>
-  </data>
-  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
-    <value>Toutes les chansons</value>
-  </data>
-  <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
-    <value>Vider la file d'attente</value>
-  </data>
-  <data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
-    <value>Artiste</value>
-  </data>
-  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
-    <value>Informations sur le fichier</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
-    <value>Profondeur de bits</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
-    <value>Débit binaire</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
-    <value>Durée</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
-    <value>Encodeur</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
-    <value>Formater</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
-    <value>Paroles</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
-    <value>Chemin d'accès</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
-    <value>Taux d'échantillonnage</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
-    <value>Titre de la page</value>
-  </data>
-  <data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
-    <value>Année</value>
-  </data>
-  <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
-    <value>Aucune chanson n'a été trouvée dans la médiathèque</value>
-  </data>
-  <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
-    <value>Importer depuis un fichier</value>
-  </data>
-  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>Créer une playlist</value>
-  </data>
-  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
-    <value>Jouer tout</value>
-  </data>
-  <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>Jouer la file d'attente</value>
-  </data>
-  <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>La file de lecture est vide</value>
-  </data>
-  <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>Listes de lecture</value>
-  </data>
-  <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
-    <value>Boucle de liste</value>
-  </data>
-  <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
-    <value>Aléatoire</value>
-  </data>
-  <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
-    <value>Retirer des playlists</value>
-  </data>
-  <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
-    <value>Retirer de la file d'attente</value>
-  </data>
-  <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
-    <value>Faites défiler pour jouer à l'objet</value>
-  </data>
-  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
-    <value>Tout sélectionner</value>
-  </data>
-  <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
-    <value>Boucle simple</value>
-  </data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Recherchez le nom de la chanson, l'artiste, l'album, le nom du fichier ou le chemin du dossier où se trouve le fichier</value>
-  </data>
-  <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
-    <value>Artiste</value>
-  </data>
-  <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
-    <value>Répertoire</value>
-  </data>
-  <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
-    <value>Titre de la page</value>
-  </data>
-  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
-    <value>Type de tri</value>
-  </data>
-  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
-    <value>Listes de lecture favorites</value>
-  </data>
-  <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
-    <value>Arrêter</value>
-  </data>
-  <data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>Galerie de musique - BetterLyrics</value>
-  </data>
-  <data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
-    <value>Retirer</value>
-  </data>
-  <data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
-    <value>Unwrap</value>
-  </data>
-  <data name="NarrowMode" xml:space="preserve">
-    <value>Mode étroit</value>
-  </data>
-  <data name="PictureInPictureMode" xml:space="preserve">
+	<data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
     <value>Mode image en image</value>
   </data>
-  <data name="Pinyin" xml:space="preserve">
-    <value>Mandarin pinyin</value>
+	<data name="AppSettingsControlGeneral.Text" xml:space="preserve">
+    <value>Fenêtre</value>
   </data>
-  <data name="PlaylistViewFailed" xml:space="preserve">
-    <value>Impossible de voir les pistes car le chemin n'existe pas</value>
+	<data name="ArtistsSplitHint.Text" xml:space="preserve">
+    <value>Lorsque vous tapez plusieurs artistes, veuillez les séparer avec l'un des délimiteurs suivants (ne les mélangez pas) !</value>
   </data>
-  <data name="PrivacyPolicy.Content" xml:space="preserve">
-    <value>Politique de confidentialité</value>
+	<data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>Ne plus afficher ce message</value>
   </data>
-  <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
-    <value>Mot de passe</value>
+	<data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>Mode image en image</value>
   </data>
-  <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
-    <value>Chemin d'accès</value>
+	<data name="Cancel" xml:space="preserve">
+    <value>Annuler !</value>
   </data>
-  <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
-    <value>Port</value>
+	<data name="Copy.Content" xml:space="preserve">
+    <value>Copier!</value>
   </data>
-  <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
-    <value>Adresse du serveur</value>
+	<data name="CreatePlaylistSuccessfully" xml:space="preserve">
+    <value>liste de lecture créé avec succès.</value>
   </data>
-  <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
-    <value>L'adresse du serveur est requise</value>
+	<data name="CutletDockerFailed" xml:space="preserve">
+    <value>Échec de la demande de translittération depuis cutlet-docker, veuillez vérifier les paramètres ou la configuration native cutlet-docker !</value>
   </data>
-  <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
+	<data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>par exemple http ://localhost :23333 !</value>
   </data>
-  <data name="Romaji" xml:space="preserve">
-    <value>Romaji</value>
-  </data>
-  <data name="SetingsPageContributors.Text" xml:space="preserve">
-    <value>Contributeurs</value>
-  </data>
-  <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>Référence de code</value>
-  </data>
-  <data name="SetingsPageDonation.Text" xml:space="preserve">
-    <value>Faire un don</value>
-  </data>
-  <data name="SetingsPageFeedback.Text" xml:space="preserve">
-    <value>Vos commentaires</value>
-  </data>
-  <data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>Instructions</value>
-  </data>
-  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
-    <value>Remerciements spéciaux</value>
-  </data>
-  <data name="SetingsPageThanks.Text" xml:space="preserve">
-    <value>Si vous aimez ce projet, pensez à le soutenir en faisant un don. Votre soutien aidera à maintenir le projet en vie et à encourager le développement ultérieur.</value>
-  </data>
-  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
-    <value>Référence de conception UI/UX</value>
-  </data>
-  <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>[Experimental] Effet Profondeur</value>
-  </data>
-  <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
-    <value>Profondeur</value>
-  </data>
-  <data name="SettingsPageAbout.Content" xml:space="preserve">
-    <value>À propos de</value>
-  </data>
-  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
-    <value>Base acrylique</value>
-  </data>
-  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
-    <value>Acrylique fine</value>
-  </data>
-  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>Activer cette option remplacera les paramètres du thème dans les paramètres de fond lyrique</value>
-  </data>
-  <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
-    <value>Adapter à la couleur de l'environnement</value>
-  </data>
-  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
-    <value>Ajouter</value>
-  </data>
-  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
-    <value>Options avancées</value>
-  </data>
-  <data name="SettingsPageAlbum.Header" xml:space="preserve">
-    <value>Album</value>
-  </data>
-  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
-    <value>Pochette de l'album</value>
-  </data>
-  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
-    <value>Hauteur de l'image de l'album</value>
-  </data>
-  <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
-    <value>Couche de la pochette de l'album</value>
-  </data>
-  <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
-    <value>Configurer la source de la pochette d'album</value>
-  </data>
-  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>Taille de la pochette</value>
-  </data>
-  <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
-    <value>Effet de zone de la pochette</value>
-  </data>
-  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
-    <value>Source de la pochette</value>
-  </data>
-  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
-    <value>Corner radius</value>
-  </data>
-  <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
-    <value>Combien les ombres se répandent</value>
-  </data>
-  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
-    <value>Style de la zone de pochette</value>
-  </data>
-  <data name="SettingsPageAlignment.Header" xml:space="preserve">
-    <value>Alignement</value>
-  </data>
-  <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
-    <value>Toujours masquer le bouton de déverrouillage</value>
-  </data>
-  <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
-    <value>URL de base</value>
-  </data>
-  <data name="SettingsPageAmount.Header" xml:space="preserve">
-    <value>Montant</value>
-  </data>
-  <data name="SettingsPageAOT.Header" xml:space="preserve">
-    <value>Amenez la fenêtre des paroles en haut</value>
-  </data>
-  <data name="SettingsPageApp.Content" xml:space="preserve">
-    <value>Apparence et comportement de l'application</value>
-  </data>
-  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
-    <value>Apparence de l'application</value>
-  </data>
-  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>Comportement général</value>
-  </data>
-  <data name="SettingsPageApply.Content" xml:space="preserve">
-    <value>Appliquer</value>
-  </data>
-  <data name="SettingsPageArtist.Header" xml:space="preserve">
-    <value>Artiste</value>
-  </data>
-  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
-    <value>Ajustement automatique</value>
-  </data>
-  <data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
-    <value>Ouvre automatiquement la fenêtre de paroles par défaut lorsque le programme démarre</value>
-  </data>
-  <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>Ouvrir la fenêtre de la bibliothèque musicale au démarrage de l'application</value>
-  </data>
-  <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>Continuer automatiquement la lecture lorsque la fenêtre de la bibliothèque de musique est ouverte</value>
-  </data>
-  <data name="SettingsPageAutoStart.Header" xml:space="preserve">
-    <value>Automatic startup</value>
-  </data>
-  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
-    <value>Au démarrage de l'application</value>
-  </data>
-  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>Arrière-plan des paroles</value>
-  </data>
-  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>Force de l'effet acrylique de l'arrière-plan de l'album</value>
-  </data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
-    <value>Arrière-plan des paroles</value>
-  </data>
-  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
-    <value>Montant du flou</value>
-  </data>
-  <data name="SettingsPageBorderless.Header" xml:space="preserve">
-    <value>Fenêtre sans bordure</value>
-  </data>
-  <data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
-    <value>Raccourci de la fenêtre des paroles sans frontières</value>
-  </data>
-  <data name="SettingsPageBottomGapFactor.Header" xml:space="preserve">
-    <value>Facteur de hauteur de l'écart inférieur</value>
-  </data>
-  <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>Incluant les fichiers logs, le cache de paroles du réseau</value>
-  </data>
-  <data name="SettingsPageCache.Header" xml:space="preserve">
-    <value>Cache</value>
-  </data>
-  <data name="SettingsPageCenter.Content" xml:space="preserve">
-    <value>Centrer</value>
-  </data>
-  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
-    <value>Vérifier le raccourci</value>
-  </data>
-  <data name="SettingsPageChinese.Header" xml:space="preserve">
-    <value>prononciation chinoise</value>
-  </data>
-  <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
-    <value>Paroles de paroles en chinois</value>
-  </data>
-  <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
-    <value>Convertir le chinois en chinois traditionnel</value>
-  </data>
-  <data name="SettingsPageCJK.Header" xml:space="preserve">
-    <value>Idéographe unifié CJC</value>
-  </data>
-  <data name="SettingsPageClear.Content" xml:space="preserve">
-    <value>Nettoyer</value>
-  </data>
-  <data name="SettingsPageClearCache.Content" xml:space="preserve">
-    <value>Vider les fichiers du cache</value>
-  </data>
-  <data name="SettingsPageClickThrough.Header" xml:space="preserve">
-    <value>Click-through</value>
-  </data>
-  <data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
-    <value>Touches de raccourci cliquantes</value>
-  </data>
-  <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
-    <value>Fermer</value>
-  </data>
-  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
-    <value>Réduire la liste déroulante</value>
-  </data>
-  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
-    <value>Compact</value>
-  </data>
-  <data name="SettingsPageConfigName.Description" xml:space="preserve">
-    <value>Nommer les états de fenêtre enregistrés peut vous aider à mieux les distinguer</value>
-  </data>
-  <data name="SettingsPageConfigName.Header" xml:space="preserve">
-    <value>Nom de la configuration</value>
-  </data>
-  <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
-    <value>Configurer la source de lecture</value>
-  </data>
-  <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
-    <value>Copie</value>
-  </data>
-  <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
-    <value>Créer à partir de modèles</value>
-  </data>
-  <data name="SettingsPageCrossfade.Content" xml:space="preserve">
-    <value>Crossfade</value>
-  </data>
-  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
-    <value>Statut de la fenêtre de paroles actuelle</value>
-  </data>
-  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
-    <value>service de translittération de docker coupé</value>
-  </data>
-  <data name="SettingsPageDark.Content" xml:space="preserve">
-    <value>Sombre</value>
-  </data>
-  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
-    <value>Show debug overlay</value>
-  </data>
-  <data name="SettingsPageDelete.Text" xml:space="preserve">
-    <value>Supprimez</value>
-  </data>
-  <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
-    <value>Mode bureau (transparent)</value>
-  </data>
-  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
-    <value>Ce projet est fourni sans garantie d'aucune sorte. Toutes les paroles, polices, icônes et autres ressources tierces sont la propriété de leurs détenteurs respectifs de droits d’auteur. L'auteur de ce projet ne revendique pas la propriété de ces ressources. Ce projet est non commercial et ne doit être utilisé pour enfreindre aucun droit. Il incombe aux utilisateurs de veiller à ce que leur propre utilisation soit conforme aux lois et licences applicables.</value>
-  </data>
-  <data name="SettingsPageDiscord.Content" xml:space="preserve">
-    <value>Discord.</value>
-  </data>
-  <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
-    <value>Afficher le statut d'écoute via Discord Presence</value>
-  </data>
-  <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>Mode d'affichage</value>
-  </data>
-  <data name="SettingsPageDockedMode.Text" xml:space="preserve">
-    <value>Mode ancré</value>
-  </data>
-  <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
-    <value>Moniteur cible</value>
-  </data>
-  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>Lieu de travail</value>
-  </data>
-  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
-    <value>Bas</value>
-  </data>
-  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
-    <value>En haut</value>
-  </data>
-  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
-    <value>Hauteur de la fenêtre</value>
-  </data>
-  <data name="SettingsPageDragArea.Header" xml:space="preserve">
-    <value>Zone glissante</value>
-  </data>
-  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
-    <value>Type d'animation de facilité</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
-    <value>Rétro-en-dessous</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
-    <value>Rebondir facilement</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
-    <value>Cercle de sortie facile</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
-    <value>Cube facile à insérer</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
-    <value>Elastique facile à insérer</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
-    <value>Exposition facile d'accès</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
-    <value>Quad facile à insérer</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
-    <value>Senti-en-dehors quart</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
-    <value>Quint de sortie facile</value>
-  </data>
-  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
-    <value>Sinus aisé</value>
-  </data>
-  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
-    <value>Linéaire</value>
-  </data>
-  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
-    <value>Étape lisse</value>
-  </data>
-  <data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>Début de la ligne vers le caractère actuel</value>
-  </data>
-  <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
-    <value>syllabe longue durée</value>
-  </data>
-  <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>Anglais</value>
-  </data>
-  <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
-    <value>Mode d'échantillonnage des couleurs environnementales</value>
-  </data>
-  <data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
-    <value>Au-dessus de la fenêtre</value>
-  </data>
-  <data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
-    <value>Sous la fenêtre</value>
-  </data>
-  <data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
-    <value>Arêtes de la fenêtre</value>
-  </data>
-  <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
-    <value>À l'intérieur de la fenêtre</value>
-  </data>
-  <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
-    <value>Quitter le programme lors de la fermeture de la fenêtre de la bibliothèque musicale</value>
-  </data>
-  <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
-    <value>Quitter le programme lorsque vous fermez la fenêtre des paroles</value>
-  </data>
-  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
-    <value>Exporter les paramètres</value>
-  </data>
-  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
-    <value>Étendu</value>
-  </data>
-  <data name="SettingsPageFan.Header" xml:space="preserve">
-    <value>Paroles de fans</value>
-  </data>
-  <data name="SettingsPageFAQ.Content" xml:space="preserve">
-    <value>Foire aux questions</value>
-  </data>
-  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
-    <value>Rendu du pas de temps fixe</value>
-  </data>
-  <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
-    <value>Couche fluide</value>
-  </data>
-  <data name="SettingsPageFogLayer.Header" xml:space="preserve">
-    <value>Couche de brouillard</value>
-  </data>
-  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>Suivre le système</value>
-  </data>
-  <data name="SettingsPageFontColor.Header" xml:space="preserve">
-    <value>Font color</value>
-  </data>
-  <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
-    <value>Garder la fenêtre des paroles en haut par sondage</value>
-  </data>
-  <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
-    <value>Forcer au premier plan</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>Même si les paroles actuelles ne disposent pas d'informations mot par mot, elles le forceront à simuler un effet mot à mot</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>Forcer l’activation de l’effet de paroles mot par mot</value>
-  </data>
-  <data name="SettingsPageFPS.Header" xml:space="preserve">
-    <value>Vitesse de rendu des images</value>
-  </data>
-  <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
-    <value>Mode plein écran</value>
-  </data>
-  <data name="SettingsPageGeneralLayoutFactor.Text" xml:space="preserve">
-    <value>Facteur de mise en page général</value>
-  </data>
-  <data name="SettingsPageHeight.Header" xml:space="preserve">
-    <value>Hauteur</value>
-  </data>
-  <data name="SettingsPageHello.Text" xml:space="preserve">
-    <value>Bonjour</value>
-  </data>
-  <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
-    <value>Aidez-nous à traduire cette application</value>
-  </data>
-  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>Masquer/afficher automatiquement la fenêtre lyrique lorsque la musique ne joue pas</value>
-  </data>
-  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
-    <value>Masquer/afficher automatiquement les fenêtres</value>
-  </data>
-  <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
-    <value>Maintenir ici et faire glisser pour trier</value>
-  </data>
-  <data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
-    <value>Facteur de mise en page horizontal</value>
-  </data>
-  <data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
-    <value>Animation de la pochette d'album</value>
-  </data>
-  <data name="SettingsPageImport.Content" xml:space="preserve">
-    <value>Importation</value>
-  </data>
-  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
-    <value>Importer les paramètres</value>
-  </data>
-  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
-    <value>Le programme redémarrera automatiquement une fois l'importation réussie.</value>
-  </data>
-  <data name="SettingsPageJA.Content" xml:space="preserve">
-    <value>日本語</value>
-  </data>
-  <data name="SettingsPageJapanese.Description" xml:space="preserve">
-    <value>La translittération des paroles sera lue en premier, et s'il n'y a pas de correspondance, la translittération de la machine sera demandée au serveur cutlet-docker</value>
-  </data>
-  <data name="SettingsPageJapanese.Header" xml:space="preserve">
-    <value>Annotation japonaise</value>
-  </data>
-  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
-    <value>Rejoignez maintenant</value>
-  </data>
-  <data name="SettingsPageJyutping.Content" xml:space="preserve">
-    <value>Pinyin cantonais</value>
-  </data>
-  <data name="SettingsPageKO.Content" xml:space="preserve">
-    <value>한국어</value>
-  </data>
-  <data name="SettingsPageLanguage.Header" xml:space="preserve">
-    <value>Langue</value>
-  </data>
-  <data name="SettingsPageLastFM.Text" xml:space="preserve">
-    <value>Last.fm</value>
-  </data>
-  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
-    <value>Autoriser</value>
-  </data>
-  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
-    <value>Last.fm</value>
-  </data>
-  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
-    <value>Nombre total de lectures</value>
-  </data>
-  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
-    <value>Rafraîchir</value>
-  </data>
-  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
-    <value>Date d'inscription</value>
-  </data>
-  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
-    <value>Suivre l'historique d'écoute via Last.fm</value>
-  </data>
-  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
-    <value>Révoquer l'autorisation</value>
-  </data>
-  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
-    <value>Nom d'utilisateur</value>
-  </data>
-  <data name="SettingsPageLayout.Text" xml:space="preserve">
-    <value>Mise en page</value>
-  </data>
-  <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
-    <value>Orientation de la disposition</value>
-  </data>
-  <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
-    <value>Horizontal</value>
-  </data>
-  <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
-    <value>Vertical</value>
-  </data>
-  <data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>Gauche</value>
-  </data>
-  <data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
-    <value>Facteur de largeur de la zone de l’écart gauche</value>
-  </data>
-  <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
-    <value>Adresse du serveur</value>
-  </data>
-  <data name="SettingsPageLight.Content" xml:space="preserve">
-    <value>Lumière</value>
-  </data>
-  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
-    <value>Fichier local lié</value>
-  </data>
-  <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
-    <value>Activer la surveillance pour les nouvelles sources de lecture</value>
-  </data>
-  <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
-    <value>Dossier local</value>
-  </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>Enregistrement du journal</value>
-  </data>
-  <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
-    <value>Seuil long syllabe</value>
-  </data>
-  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
-    <value>Serveur de musique LX</value>
-  </data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
-    <value>par exemple http://127.0.0.1:23330</value>
-  </data>
-  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
-    <value>Alignement</value>
-  </data>
-  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
-    <value>Arrière-plan des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>Pas la ligne de lecture actuelle</value>
-  </data>
-  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
-    <value>Noir</value>
-  </data>
-  <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
-    <value>Activer le flou pour les lignes non actuelles</value>
-  </data>
-  <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
-    <value>Effet de flou</value>
-  </data>
-  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
-    <value>Bold</value>
-  </data>
-  <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
-    <value>Position actuelle de la ligne</value>
-  </data>
-  <data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
-    <value>Facteur de largeur de zone de paroles</value>
-  </data>
-  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>Effet des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
-    <value>Extra Black</value>
-  </data>
-  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
-    <value>Extra Bold</value>
-  </data>
-  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
-    <value>Ultra-léger</value>
-  </data>
-  <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
-    <value>Activer l'effet de fondu pour les lignes non actuelles</value>
-  </data>
-  <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
-    <value>Effet de fondu</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>Ligne de lecture actuelle</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>Adaptatif au fond des paroles (Colored)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>Adaptatif à l'arrière-plan des paroles (Gris)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
-    <value>Personnalisé</value>
-  </data>
-  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
-    <value>Animation flottante</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>Adaptatif au fond des paroles (Colored)</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>Adaptatif à l'arrière-plan des paroles (Gris)</value>
-  </data>
-  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
-    <value>Personnalisé</value>
-  </data>
-  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>Famille de police</value>
-  </data>
-  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
-    <value>Font size</value>
-  </data>
-  <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
-    <value>Largeur du contour des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
-    <value>Poids de la police</value>
-  </data>
-  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
-    <value>Effet lumineux</value>
-  </data>
-  <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>Surligner</value>
-  </data>
-  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>Plage de surbrillance originale</value>
-  </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>Gauche</value>
-  </data>
-  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
-    <value>Lumière</value>
-  </data>
-  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
-    <value>Jouer au dégradé du bord de la zone</value>
-  </data>
-  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
-    <value>Interligne</value>
-  </data>
-  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
-    <value>hauteur x ligne</value>
-  </data>
-  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
-    <value>Moyenne</value>
-  </data>
-  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
-    <value>Normale</value>
-  </data>
-  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
-    <value>Opacité de la police</value>
-  </data>
-  <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
-    <value>Déplacer progressivement les lignes non courantes en dehors de la vue</value>
-  </data>
-  <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
-    <value>Rester en dehors de la vue</value>
-  </data>
-  <data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
-    <value>Facteur de hauteur de la zone de paroles</value>
-  </data>
-  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
-    <value>Activer la mise à l'échelle des syllabes avec une longue durée</value>
-  </data>
-  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
-    <value>Effet d'écailles</value>
-  </data>
-  <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
-    <value>Meilleure correspondance</value>
-  </data>
-  <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
-    <value>Configurer la source des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
-    <value>Séquentiel</value>
-  </data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
-    <value>Dans l'ordre : Trouvez en fonction de la priorité de la liste ci-dessous et retournez les premières paroles trouvées ; Meilleure correspondance : Recherchez dans toutes les sources de paroles activées et sélectionnez automatiquement la meilleure correspondance</value>
-  </data>
-  <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
-    <value>Stratégie de recherche des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
-    <value>Semi-Gras</value>
-  </data>
-  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
-    <value>Semi-lumière</value>
-  </data>
-  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
-    <value>Ombres</value>
-  </data>
-  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>Style des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
-    <value>Maigre</value>
-  </data>
-  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
-    <value>Synchronisation de la chronologie des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
-    <value>Si la progression des paroles est jittery, essayez d'augmenter ce seuil, changer cette valeur peut entraîner une déviation de la synchronisation des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
-    <value>Seuil de synchronisation de la timeline des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
-    <value>Surbrillance de la traduction</value>
-  </data>
-  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
-    <value>Séparateur de source et de traduction</value>
-  </data>
-  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>Opacité des bords haut et bas</value>
-  </data>
-  <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
-    <value>Fenêtre des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
-    <value>Gestionnaire de fenêtres de paroles</value>
-  </data>
-  <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
-    <value>Gestionnaire de fenêtres de paroles</value>
-  </data>
-  <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
-    <value>Raccourci du changement d'état de la fenêtre des paroles</value>
-  </data>
-  <data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
-    <value>Fenêtre des paroles</value>
-  </data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
-    <value>Ajuster cette valeur affectera la recherche séquentielle et les meilleurs résultats de recherche, mais n'affectera pas les résultats de recherche dans l'interface de recherche manuelle des paroles</value>
-  </data>
-  <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
-    <value>Seuil minimum de correspondance</value>
-  </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>Médiathèque</value>
-  </data>
-  <data name="SettingsPageMedianCut.Content" xml:space="preserve">
-    <value>Conservateur</value>
-  </data>
-  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>Surveiller cette source de lecture</value>
-  </data>
-  <data name="SettingsPageMica.Content" xml:space="preserve">
-    <value>Mica</value>
-  </data>
-  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
-    <value>Mica Alt</value>
-  </data>
-  <data name="SettingsPageMiddleGapColFactor.Header" xml:space="preserve">
-    <value>Facteur de largeur de la zone centrale</value>
-  </data>
-  <data name="SettingsPageMiddleGapRowFactor.Header" xml:space="preserve">
-    <value>Facteur de hauteur de la zone de l'intervalle moyen</value>
-  </data>
-  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
-    <value>Jouer la musique de test</value>
-  </data>
-  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
-    <value>Mode de coexistence multi-fenêtres</value>
-  </data>
-  <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
-    <value>Galerie de musique</value>
-  </data>
-  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
-    <value>Fenêtre de paroles intégrée dans la bibliothèque musicale</value>
-  </data>
-  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
-    <value>Ajouter des dossiers stockant de la musique ou des paroles</value>
-  </data>
-  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>Médiathèque local</value>
-  </data>
-  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
-    <value>Écouter les modifications de fichier en temps réel</value>
-  </data>
-  <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
-    <value>Mode étroit</value>
-  </data>
-  <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
-    <value>Touches de raccourci de la piste suivante</value>
-  </data>
-  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
-    <value>Aucun</value>
-  </data>
-  <data name="SettingsPageOctTree.Content" xml:space="preserve">
-    <value>Agressif</value>
-  </data>
-  <data name="SettingsPageOpacity.Header" xml:space="preserve">
-    <value>Opacité</value>
-  </data>
-  <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
-    <value>Ouvrir dans l'explorateur de fichiers</value>
-  </data>
-  <data name="SettingsPageOriginalText.Header" xml:space="preserve">
-    <value>Texte original</value>
-  </data>
-  <data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
-    <value>Définir le seuil de correspondance minimum individuellement</value>
-  </data>
-  <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
-    <value>Style du sélecteur de couleurs</value>
-  </data>
-  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
-    <value>Ce dossier est déjà inclus dans le dossier existant et n'a pas besoin d'être ajouté à nouveau</value>
-  </data>
-  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
-    <value>Le dossier a été ajouté. Veuillez ne pas l'ajouter à nouveau.</value>
-  </data>
-  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
-    <value>Ce dossier contient des dossiers ajoutés, veuillez supprimer ces dossiers pour ajouter le dossier</value>
-  </data>
-  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
-    <value>Le chemin d'accès est introuvable sur votre ordinateur</value>
-  </data>
-  <data name="SettingsPagePatrons.Text" xml:space="preserve">
-    <value>Sponsor</value>
-  </data>
-  <data name="SettingsPagePhonetic.Text" xml:space="preserve">
-    <value>Annotation lyrique</value>
-  </data>
-  <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Symboles phonétiques</value>
-  </data>
-  <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
-    <value>Épingler dans la barre des tâches</value>
-  </data>
-  <data name="SettingsPagePinyin.Content" xml:space="preserve">
-    <value>Pinyine de Mandarin</value>
-  </data>
-  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Sources de lecture</value>
-  </data>
-  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
-    <value>Aucune source de lecture capturée</value>
-  </data>
-  <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
-    <value>Source de lecture</value>
-  </data>
-  <data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
-    <value>ID de la source de lecture</value>
-  </data>
-  <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
-    <value>Source de lecture actuelle</value>
-  </data>
-  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>Jouez "Cut To The Feeling" sur "soundcloud.com"</value>
-  </data>
-  <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
-    <value>Raccourcis de lecture et de pause</value>
-  </data>
-  <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
-    <value>Touches de raccourci pour la piste précédente</value>
-  </data>
-  <data name="SettingsPagePureLayer.Header" xml:space="preserve">
-    <value>Couche de couleur pure</value>
-  </data>
-  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
-    <value>Retour QQ et groupe de discussion</value>
-  </data>
-  <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
-    <value>Statut en temps réel</value>
-  </data>
-  <data name="SettingsPageRecord.Content" xml:space="preserve">
-    <value>Enregistrements</value>
-  </data>
-  <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
-    <value>État de la fenêtre enregistrée</value>
-  </data>
-  <data name="SettingsPageReference.Header" xml:space="preserve">
-    <value>Lien de référence</value>
-  </data>
-  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
-    <value>Rafraîchir la liste déroulante</value>
-  </data>
-  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
-    <value>Les fichiers et dossiers originaux de ce chemin ne seront pas supprimés lorsque vous le supprimerez de cette application</value>
-  </data>
-  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
-    <value>Vous pouvez supprimer les éléments suivants en toute sécurité</value>
-  </data>
-  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
-    <value>Retirer de l'application</value>
-  </data>
-  <data name="SettingsPageRestart.Content" xml:space="preserve">
-    <value>Redémarrer l'application pour appliquer le changement</value>
-  </data>
-  <data name="SettingsPageRight.Content" xml:space="preserve">
-    <value>Droite</value>
-  </data>
-  <data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
-    <value>Facteur de largeur de la zone de droite</value>
-  </data>
-  <data name="SettingsPageRomaji.Header" xml:space="preserve">
-    <value>Annotation japonaise</value>
-  </data>
-  <data name="SettingsPageSC.Content" xml:space="preserve">
-    <value>简体中文</value>
-  </data>
-  <data name="SettingsPageScope.Header" xml:space="preserve">
-    <value>Périmètre d'application</value>
-  </data>
-  <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
-    <value>Délai de la queue</value>
-  </data>
-  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
-    <value>Durée de la ligne finale</value>
-  </data>
-  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>Durée de la ligne actuelle</value>
-  </data>
-  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
-    <value>Type d'animation lyrique</value>
-  </data>
-  <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
-    <value>Délai de la première ligne</value>
-  </data>
-  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
-    <value>La durée de la première ligne</value>
-  </data>
-  <data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
-    <value>Résultat de recherche de paroles actuel</value>
-  </data>
-  <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
-    <value>Serveur de test</value>
-  </data>
-  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
-    <value>Le test du serveur a échoué</value>
-  </data>
-  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
-    <value>Test du serveur réussi</value>
-  </data>
-  <data name="SettingsPageSettings.Header" xml:space="preserve">
-    <value>Réglages</value>
-  </data>
-  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
-    <value>Gestionnaire de paramètres</value>
-  </data>
-  <data name="SettingsPageShareHub.Content" xml:space="preserve">
-    <value>Parcourir le centre de partage de ressources en ligne</value>
-  </data>
-  <data name="SettingsPageShortcut.Text" xml:space="preserve">
-    <value>Jouer</value>
-  </data>
-  <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
-    <value>Ce raccourci clavier n'a pas été enregistré avec succès</value>
-  </data>
-  <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
-    <value>Ce raccourci clavier a été enregistré avec succès</value>
-  </data>
-  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
-    <value>Afficher l'album</value>
-  </data>
-  <data name="SettingsPageShowArtists.Header" xml:space="preserve">
-    <value>Afficher les artistes</value>
-  </data>
-  <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
-    <value>La fenêtre de paroles affiche et masque les touches de raccourci</value>
-  </data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
-    <value>e.g. Alt + Tab, Taskbar</value>
-  </data>
-  <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
-    <value>Afficher dans l'environnement système</value>
-  </data>
-  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
-    <value>Afficher le diviseur de mise en page</value>
-  </data>
-  <data name="SettingsPageShowTitle.Header" xml:space="preserve">
-    <value>Afficher le titre</value>
-  </data>
-  <data name="SettingsPageSlide.Content" xml:space="preserve">
-    <value>Diapositive</value>
-  </data>
-  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>Valeur actuelle : </value>
-  </data>
-  <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
-    <value>Couche de flocons de neige</value>
-  </data>
-  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>Informations sur la musique</value>
-  </data>
-  <data name="SettingsPageSongStatus.Header" xml:space="preserve">
-    <value>Chanson actuelle</value>
-  </data>
-  <data name="SettingsPageSongTitle.Header" xml:space="preserve">
-    <value>Titre de la page</value>
-  </data>
-  <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
-    <value>[Experimental] Couche Spectrum</value>
-  </data>
-  <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
-    <value>Placement du spectre</value>
-  </data>
-  <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
-    <value>Style Spectrum</value>
-  </data>
-  <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
-    <value>Bas</value>
-  </data>
-  <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
-    <value>En haut</value>
-  </data>
-  <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
-    <value>Barre</value>
-  </data>
-  <data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
-    <value>Courbe</value>
-  </data>
-  <data name="SettingsPageSpeed.Header" xml:space="preserve">
-    <value>Vitesse de mouvement</value>
-  </data>
-  <data name="SettingsPageStandardMode.Text" xml:space="preserve">
-    <value>Mode standard</value>
-  </data>
-  <data name="SettingsPageStartup.Text" xml:space="preserve">
-    <value>Début</value>
-  </data>
-  <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
-    <value>Arrêter la lecture lorsque la bibliothèque musicale est fermée</value>
-  </data>
-  <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
-    <value>Couleur du trait</value>
-  </data>
-  <data name="SettingsPageSystemLanguage" xml:space="preserve">
+	<data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>Par défaut</value>
   </data>
-  <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
-    <value>Langue cible</value>
+	<data name="DesktopMode" xml:space="preserve">
+    <value>Mode bureau (Transparent)</value>
   </data>
-  <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
-    <value>Mode de la barre des tâches</value>
+	<data name="DockedMode" xml:space="preserve">
+    <value>Mode ancré</value>
   </data>
-  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
-    <value>Position fixe de la barre des tâches</value>
+	<data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>Export réussi !</value>
   </data>
-  <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁體中文</value>
+	<data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>Impossible de se connecter au serveur de musique LX. Veuillez aller dans Paramètres - Playback Source - LX Music - LX Music Server pour vérifier si le lien est entré correctement</value>
   </data>
-  <data name="SettingsPageTelegram.Content" xml:space="preserve">
-    <value>Télégramme</value>
+	<data name="FullscreenMode" xml:space="preserve">
+    <value>Mode plein écran</value>
   </data>
-  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
-    <value>Merci d'avoir acheté BetterLyrics</value>
+	<data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>Lock</value>
   </data>
-  <data name="SettingsPageThanksList.Header" xml:space="preserve">
-    <value>Crédits</value>
+	<data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>Serrure</value>
   </data>
-  <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>Thème de fond des paroles</value>
+	<data name="HostWindowLockToolTip.Text" xml:space="preserve">
+    <value>Serrure</value>
   </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Paramètres - BetterLyrics</value>
+	<data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
+    <value>Galerie de musique</value>
   </data>
-  <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
-    <value>Aucun</value>
-  </data>
-  <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
-    <value>En haut</value>
-  </data>
-  <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
-    <value>Toute la fenêtre</value>
-  </data>
-  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
-    <value>Taille de la barre de titre</value>
-  </data>
-  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
-    <value>Basculer dans et découper les touches de raccourci</value>
-  </data>
-  <data name="SettingsPageTopGapFactor.Header" xml:space="preserve">
-    <value>Facteur de hauteur de la zone de l'intervalle le plus haut</value>
-  </data>
-  <data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
-    <value>Facteur de largeur de zone de suivi du résumé</value>
-  </data>
-  <data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
-    <value>Facteur de hauteur de la zone de résumé du parcours</value>
-  </data>
-  <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
-    <value>Texte traduit</value>
-  </data>
-  <data name="SettingsPageTranslation.Text" xml:space="preserve">
-    <value>Traduction des paroles</value>
-  </data>
-  <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>Service de traduction de LibreTranslate</value>
-  </data>
-  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
-    <value>Visitez https://github.com/LibreTranslate/LibreTranslate pour des instructions d'installation et plus d'informations (ce logiciel n'est pas affilié à ce service de traduction)</value>
-  </data>
-  <data name="SettingsPageTransparent.Content" xml:space="preserve">
-    <value>Transparence</value>
-  </data>
-  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
-    <value>Et achetez des utilisateurs qui supportent BetterLyrics</value>
-  </data>
-  <data name="SettingsPageVersion.Text" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="SettingsPageVerticalLayoutFactor.Text" xml:space="preserve">
-    <value>Facteur de mise en page vertical</value>
-  </data>
-  <data name="SettingsPageWesternChar.Header" xml:space="preserve">
-    <value>alphabet latin</value>
-  </data>
-  <data name="SettingsPageWidth.Header" xml:space="preserve">
-    <value>Width</value>
-  </data>
-  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
-    <value>Limites de la fenêtre</value>
-  </data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>En tant que zone de travail séparée amarrée au bord supérieur/inférieur de l'écran</value>
-  </data>
-  <data name="SettingsPageWorkArea.Header" xml:space="preserve">
-    <value>En tant que zone de travail</value>
-  </data>
-  <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>Hauteur de la zone de travail</value>
-  </data>
-  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
-    <value>Vous qui utilisez le logiciel</value>
-  </data>
-  <data name="StandardMode" xml:space="preserve">
-    <value>Mode standard</value>
-  </data>
-  <data name="SystemTrayExit.Text" xml:space="preserve">
-    <value>Quitter</value>
-  </data>
-  <data name="SystemTrayLyrics.Text" xml:space="preserve">
-    <value>Ouvrir la fenêtre des paroles</value>
-  </data>
-  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
-    <value>Ouvrir la galerie de musique</value>
-  </data>
-  <data name="SystemTrayPageTitle" xml:space="preserve">
-    <value>Barre d'état système - Meilleures paroles</value>
-  </data>
-  <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
-    <value>Réinitialiser la position de la fenêtre</value>
-  </data>
-  <data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>Redémarrer</value>
-  </data>
-  <data name="SystemTraySearch.Text" xml:space="preserve">
-    <value>Fenêtre de recherche des paroles</value>
-  </data>
-  <data name="SystemTraySettings.Text" xml:space="preserve">
+	<data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
     <value>Réglages</value>
   </data>
-  <data name="SystemTraySwitch.Text" xml:space="preserve">
+	<data name="ImportPlaylistSuccessfully" xml:space="preserve">
+    <value>La liste de lecture a été importée avec succès !</value>
+  </data>
+	<data name="ImportSettingsFailed" xml:space="preserve">
+    <value>L'importation du fichier de paramètres a échoué, les paramètres de l'application restent inchangés !</value>
+  </data>
+	<data name="ImportSettingsSuccess" xml:space="preserve">
+    <value>Importation réussie !</value>
+  </data>
+	<data name="Jyutping" xml:space="preserve">
+    <value>Pinyin cantonais</value>
+  </data>
+	<data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
+    <value>Veuillez vous assurer qu'au moins un statut est défini par défaut !</value>
+  </data>
+	<data name="LastFMAuthFailed" xml:space="preserve">
+    <value>Echec, veuillez réessayer.</value>
+  </data>
+	<data name="LastFMRequestAuthConfirm" xml:space="preserve">
+    <value>J'ai terminé l'autorisation !</value>
+  </data>
+	<data name="LastFMRequestAuthDesc" xml:space="preserve">
+    <value>Veuillez compléter l'autorisation dans votre navigateur !</value>
+  </data>
+	<data name="LastFMRequestAuthTitle" xml:space="preserve">
+    <value>Accordez à BetterLyrics l'autorisation d'accéder à votre compte Last.fm !</value>
+  </data>
+	<data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+    <value>J'ai annulé mon autorisation !</value>
+  </data>
+	<data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+    <value>Veuillez terminer l'opération d'annulation dans votre navigateur !</value>
+  </data>
+	<data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+    <value>Révoquez l'autorisation de BetterLyrics d'accéder à votre compte Last.fm !</value>
+  </data>
+	<data name="LibreTranslateFailed" xml:space="preserve">
+    <value>La demande de traduction auprès de LibreTranslate a échoué, veuillez vérifier les paramètres ou la configuration native de LibreTranslate !</value>
+  </data>
+	<data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>par exemple http ://localhost :5000 !</value>
+  </data>
+	<data name="LyricsLoading" xml:space="preserve">
+    <value>Chargement des paroles... !</value>
+  </data>
+	<data name="LyricsNotFound" xml:space="preserve">
+    <value>Paroles introuvables !</value>
+  </data>
+	<data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <value>Chemin du cache</value>
+  </data>
+	<data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <value>Chemin du cache</value>
+  </data>
+	<data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+    <value>Langue lyrique</value>
+  </data>
+	<data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+    <value>Fournisseur de paroles</value>
+  </data>
+	<data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
+    <value>Rechercher manuellement les paroles</value>
+  </data>
+	<data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
+    <value>Paramètres de raccourci de gestion de la fenêtre des paroles !</value>
+  </data>
+	<data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
+    <value>Pourcentage de correspondance</value>
+  </data>
+	<data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
+    <value>Paramètres de raccourci de la source de lecture</value>
+  </data>
+	<data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
+    <value>Réinitialisez à 0 lorsque vous changez de chanson !</value>
+  </data>
+	<data name="LyricsPageSettings.Text" xml:space="preserve">
+    <value>Réglages</value>
+  </data>
+	<data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
+    <value>Décalage de la chronologie des paroles</value>
+  </data>
+	<data name="LyricsPageTitle" xml:space="preserve">
+    <value>BetterLyrics !</value>
+  </data>
+	<data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
+    <value>La traduction des paroles sera lue en premier. S'il n'y a pas de correspondance, la traduction automatique sera demandée au serveur LibreTranslate !</value>
+  </data>
+	<data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>Activer la traduction</value>
+  </data>
+	<data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>Afficher uniquement la traduction</value>
+  </data>
+	<data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+    <value>Fournisseur de traduction</value>
+  </data>
+	<data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
+    <value>Source de translittération</value>
+  </data>
+	<data name="LyricsParseError" xml:space="preserve">
+    <value>Échec de l'analyse des paroles !</value>
+  </data>
+	<data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="LyricsSearchControlArtist.Header" xml:space="preserve">
+    <value>Artiste</value>
+  </data>
+	<data name="LyricsSearchControlAutoGenerated.Tag" xml:space="preserve">
+    <value>Généré automatiquement</value>
+  </data>
+	<data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
+    <value>Durée</value>
+  </data>
+	<data name="LyricsSearchControlHelp.Text" xml:space="preserve">
+    <value>* Enregistrer les modifications prennent effet immédiatement, après quoi les paroles de piste seront récupérées avec les informations de mappage et les paroles cibles ; marquer comme de la musique pure retournera directement à la pure musique des paroles. Réinitialiser pour récupérer par les données originales.</value>
+  </data>
+	<data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+    <value>Ignorer le cache lors de la recherche</value>
+  </data>
+	<data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
+    <value>Mappé comme</value>
+  </data>
+	<data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
+    <value>Marquer comme musique pure</value>
+  </data>
+	<data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
+    <value>Non Trouvé</value>
+  </data>
+	<data name="LyricsSearchControlReset.Content" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+	<data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
+    <value>Enregistrer les modifications</value>
+  </data>
+	<data name="LyricsSearchControlSearch.Content" xml:space="preserve">
+    <value>Chercher</value>
+  </data>
+	<data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <value>Mappage des informations de la chanson</value>
+  </data>
+	<data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
+    <value>Fournisseur de recherche de paroles cible</value>
+  </data>
+	<data name="LyricsSearchControlTitle.Header" xml:space="preserve">
+    <value>Titre de la page</value>
+  </data>
+	<data name="LyricsSearchPageTitle" xml:space="preserve">
+    <value>Recherche de paroles - BetterLyrics</value>
+  </data>
+	<data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <value>Fichiers .ESLRC locaux</value>
+  </data>
+	<data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+    <value>Fichiers .LRC locaux</value>
+  </data>
+	<data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+    <value>Fichiers de musique locale</value>
+  </data>
+	<data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
+    <value>Fichiers .TTML locaux</value>
+  </data>
+	<data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
+    <value>Mode immersif</value>
+  </data>
+	<data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+	<data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
+    <value>Mode fenêtre de paroles</value>
+  </data>
+	<data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
+    <value>Définir comme valeur par défaut</value>
+  </data>
+	<data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
+    <value>Exportation</value>
+  </data>
+	<data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>Sélecteur de fenêtre de paroles</value>
   </data>
-  <data name="TaskbarMode" xml:space="preserve">
+	<data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
+    <value>Allez dans Paramètres pour ajouter plus de modes</value>
+  </data>
+	<data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <value>Sélecteur de fenêtre de paroles</value>
+  </data>
+	<data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>Zone de pochettes uniquement</value>
+  </data>
+	<data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>Survolez à nouveau pour afficher le bouton de bascule</value>
+  </data>
+	<data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>Paroles seulement</value>
+  </data>
+	<data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <value>Aucun fichier local ne correspond</value>
+  </data>
+	<data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <value>Aucune musique en cours de lecture</value>
+  </data>
+	<data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <value>Décalage de la chronologie des paroles</value>
+  </data>
+	<data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>Vue fractionnée</value>
+  </data>
+	<data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
+    <value>Bienvenue dans les meilleures paroles</value>
+  </data>
+	<data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
+    <value>Ajouter à la playlist</value>
+  </data>
+	<data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>Fin de la liste</value>
+  </data>
+	<data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>Éléments suivants</value>
+  </data>
+	<data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
+    <value>Ajouter à la file d'attente de lecture</value>
+  </data>
+	<data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <value>Toutes les chansons</value>
+  </data>
+	<data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
+    <value>Vider la file d'attente</value>
+  </data>
+	<data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
+    <value>Artiste</value>
+  </data>
+	<data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
+    <value>Informations sur le fichier</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
+    <value>Profondeur du Bit</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
+    <value>Débit binaire</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
+    <value>Durée</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
+    <value>Encodeur</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
+    <value>Formater</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
+    <value>Paroles</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
+    <value>Chemin d'accès</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
+    <value>Taux d'échantillonnage</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
+    <value>Titre de la page</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
+    <value>Année</value>
+  </data>
+	<data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
+    <value>Aucune chanson n'a été trouvée dans la médiathèque</value>
+  </data>
+	<data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+    <value>Importer depuis un fichier</value>
+  </data>
+	<data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>Créer une playlist</value>
+  </data>
+	<data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
+    <value>Tout jouer</value>
+  </data>
+	<data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
+    <value>Jouer à la file d'attente</value>
+  </data>
+	<data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
+    <value>La file de lecture est vide</value>
+  </data>
+	<data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+    <value>Listes de lecture</value>
+  </data>
+	<data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
+    <value>Boucle de liste</value>
+  </data>
+	<data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
+    <value>Aléatoire</value>
+  </data>
+	<data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+    <value>Retirer des playlists</value>
+  </data>
+	<data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
+    <value>Retirer de la file d'attente</value>
+  </data>
+	<data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
+    <value>Défiler vers l'objet en cours de lecture</value>
+  </data>
+	<data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>Tout sélectionner</value>
+  </data>
+	<data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
+    <value>Boucle simple</value>
+  </data>
+	<data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Recherchez le nom de la chanson, l'artiste, l'album, le nom du fichier ou le chemin du dossier où se trouve le fichier</value>
+  </data>
+	<data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
+    <value>Artiste</value>
+  </data>
+	<data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
+    <value>Répertoire</value>
+  </data>
+	<data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
+    <value>Titre de la page</value>
+  </data>
+	<data name="MusicGalleryPageSortType.Text" xml:space="preserve">
+    <value>Type de tri</value>
+  </data>
+	<data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
+    <value>Playlists favorites</value>
+  </data>
+	<data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <value>Arrêter</value>
+  </data>
+	<data name="MusicGalleryPageTitle" xml:space="preserve">
+    <value>Galerie de musique - BetterLyrics</value>
+  </data>
+	<data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
+    <value>Retirer</value>
+  </data>
+	<data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
+    <value>Unwrap</value>
+  </data>
+	<data name="NarrowMode" xml:space="preserve">
+    <value>Mode étroit</value>
+  </data>
+	<data name="PictureInPictureMode" xml:space="preserve">
+    <value>Mode image en image</value>
+  </data>
+	<data name="Pinyin" xml:space="preserve">
+    <value>Mandarin Pinyin</value>
+  </data>
+	<data name="PlaylistViewFailed" xml:space="preserve">
+    <value>Impossible de voir les pistes car le chemin n'existe pas</value>
+  </data>
+	<data name="PrivacyPolicy.Content" xml:space="preserve">
+    <value>Politique de confidentialité</value>
+  </data>
+	<data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+	<data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
+    <value>Chemin d'accès</value>
+  </data>
+	<data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
+    <value>Port</value>
+  </data>
+	<data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
+    <value>Adresse du serveur</value>
+  </data>
+	<data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+    <value>L'adresse du serveur est requise</value>
+  </data>
+	<data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
+    <value>Nom d'utilisateur</value>
+  </data>
+	<data name="Romaji" xml:space="preserve">
+    <value>Romaji</value>
+  </data>
+	<data name="SetingsPageContributors.Text" xml:space="preserve">
+    <value>Contributeurs</value>
+  </data>
+	<data name="SetingsPageDeps.Text" xml:space="preserve">
+    <value>Référence de code</value>
+  </data>
+	<data name="SetingsPageDonation.Text" xml:space="preserve">
+    <value>Faire un don</value>
+  </data>
+	<data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <value>Vos commentaires</value>
+  </data>
+	<data name="SetingsPageInstructions.Text" xml:space="preserve">
+    <value>Instructions</value>
+  </data>
+	<data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>Remerciements spéciaux</value>
+  </data>
+	<data name="SetingsPageThanks.Text" xml:space="preserve">
+    <value>Si vous aimez ce projet, pensez à le soutenir en faisant un don. Votre soutien aidera à maintenir le projet en vie et à encourager le développement ultérieur.</value>
+  </data>
+	<data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+    <value>Référence de conception UI/UX</value>
+  </data>
+	<data name="SettingsPage3DLyrics.Header" xml:space="preserve">
+    <value>[Experimental] Effet Profondeur</value>
+  </data>
+	<data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
+    <value>Profondeur</value>
+  </data>
+	<data name="SettingsPageAbout.Content" xml:space="preserve">
+    <value>À propos de</value>
+  </data>
+	<data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
+    <value>Base acrylique</value>
+  </data>
+	<data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
+    <value>Acrylique fine</value>
+  </data>
+	<data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
+    <value>Activer cette option remplacera les paramètres du thème dans les paramètres de fond lyrique</value>
+  </data>
+	<data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
+    <value>Adapter à la couleur environnementale</value>
+  </data>
+	<data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>Ajouter</value>
+  </data>
+	<data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Options avancées</value>
+  </data>
+	<data name="SettingsPageAlbum.Header" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>Pochette de l'album</value>
+  </data>
+	<data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+    <value>Hauteur de l'image de l'album</value>
+  </data>
+	<data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
+    <value>Couche de pochette d'album</value>
+  </data>
+	<data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
+    <value>Configurer la source de couverture de l'album</value>
+  </data>
+	<data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
+    <value>Taille de la pochette</value>
+  </data>
+	<data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
+    <value>Effet de zone de l'album</value>
+  </data>
+	<data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>Source de la pochette</value>
+  </data>
+	<data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>Corner Radius</value>
+  </data>
+	<data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
+    <value>Quantité de Spread de l'Ombre</value>
+  </data>
+	<data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+    <value>Style de zone de pochette</value>
+  </data>
+	<data name="SettingsPageAlignment.Header" xml:space="preserve">
+    <value>Alignement</value>
+  </data>
+	<data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
+    <value>Toujours masquer le bouton de déverrouillage</value>
+  </data>
+	<data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
+    <value>URL de base</value>
+  </data>
+	<data name="SettingsPageAmount.Header" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+	<data name="SettingsPageAOT.Header" xml:space="preserve">
+    <value>Amener la fenêtre des paroles en haut</value>
+  </data>
+	<data name="SettingsPageApp.Content" xml:space="preserve">
+    <value>Apparence de l'application et comportement</value>
+  </data>
+	<data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <value>Apparence de l'application</value>
+  </data>
+	<data name="SettingsPageAppBehavior.Text" xml:space="preserve">
+    <value>Comportement général</value>
+  </data>
+	<data name="SettingsPageApply.Content" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+	<data name="SettingsPageArtist.Header" xml:space="preserve">
+    <value>Artiste</value>
+  </data>
+	<data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <value>Ajustement automatique</value>
+  </data>
+	<data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
+    <value>Ouvrir automatiquement la fenêtre de paroles par défaut au démarrage</value>
+  </data>
+	<data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>Ouvrir la fenêtre de bibliothèque musicale au démarrage</value>
+  </data>
+	<data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>Continuer automatiquement la lecture lorsque la fenêtre de la bibliothèque de musique est ouverte</value>
+  </data>
+	<data name="SettingsPageAutoStart.Header" xml:space="preserve">
+    <value>Automatic Startup</value>
+  </data>
+	<data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>Au démarrage de l'application</value>
+  </data>
+	<data name="SettingsPageBackdrop.Header" xml:space="preserve">
+    <value>Arrière-plan des paroles</value>
+  </data>
+	<data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+    <value>Force de l'effet acrylique de l'arrière-plan de l'album</value>
+  </data>
+	<data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
+    <value>Arrière-plan des paroles</value>
+  </data>
+	<data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>Flou de montant</value>
+  </data>
+	<data name="SettingsPageBorderless.Header" xml:space="preserve">
+    <value>Fenêtre sans bordure</value>
+  </data>
+	<data name="SettingsPageBorderlessHotKey.Header" xml:space="preserve">
+    <value>Raccourci de la fenêtre des paroles sans frontières</value>
+  </data>
+	<data name="SettingsPageBottomGapFactor.Header" xml:space="preserve">
+    <value>Facteur de hauteur du fossé inférieur</value>
+  </data>
+	<data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>Incluant les fichiers logs, le cache de paroles du réseau</value>
+  </data>
+	<data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>Cache</value>
+  </data>
+	<data name="SettingsPageCenter.Content" xml:space="preserve">
+    <value>Centrer</value>
+  </data>
+	<data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>Vérifier le raccourci</value>
+  </data>
+	<data name="SettingsPageChinese.Header" xml:space="preserve">
+    <value>Prononciation chinoise</value>
+  </data>
+	<data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
+    <value>Paroles chinoises</value>
+  </data>
+	<data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+    <value>Convertir le chinois en chinois traditionnel</value>
+  </data>
+	<data name="SettingsPageCJK.Header" xml:space="preserve">
+    <value>Idéographe unifié CJC</value>
+  </data>
+	<data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>Nettoyer</value>
+  </data>
+	<data name="SettingsPageClearCache.Content" xml:space="preserve">
+    <value>Vider les fichiers du cache</value>
+  </data>
+	<data name="SettingsPageClickThrough.Header" xml:space="preserve">
+    <value>Clic à travers</value>
+  </data>
+	<data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
+    <value>Touches de raccourcis cliquables</value>
+  </data>
+	<data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+	<data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>Réduire la liste déroulante</value>
+  </data>
+	<data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>Compact</value>
+  </data>
+	<data name="SettingsPageConfigName.Description" xml:space="preserve">
+    <value>Nommer les états de fenêtre enregistrés peut vous aider à mieux les distinguer</value>
+  </data>
+	<data name="SettingsPageConfigName.Header" xml:space="preserve">
+    <value>Nom de la configuration</value>
+  </data>
+	<data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <value>Configurer la source de lecture</value>
+  </data>
+	<data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
+    <value>Copie</value>
+  </data>
+	<data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
+    <value>Créer à partir de modèles</value>
+  </data>
+	<data name="SettingsPageCrossfade.Content" xml:space="preserve">
+    <value>Crossfade</value>
+  </data>
+	<data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
+    <value>Statut actuel de la fenêtre des paroles</value>
+  </data>
+	<data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <value>Service de translittération de docker coupé</value>
+  </data>
+	<data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>Sombre</value>
+  </data>
+	<data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>Show Debug Overlay</value>
+  </data>
+	<data name="SettingsPageDelete.Text" xml:space="preserve">
+    <value>Supprimez</value>
+  </data>
+	<data name="SettingsPageDesktopMode.Text" xml:space="preserve">
+    <value>Mode bureau (Transparent)</value>
+  </data>
+	<data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+    <value>Ce projet est fourni sans garantie d'aucune sorte. Toutes les paroles, polices, icônes et autres ressources tierces sont la propriété de leurs détenteurs respectifs de droits d’auteur. L'auteur de ce projet ne revendique pas la propriété de ces ressources. Ce projet est non commercial et ne doit être utilisé pour enfreindre aucun droit. Il incombe aux utilisateurs de veiller à ce que leur propre utilisation soit conforme aux lois et licences applicables.</value>
+  </data>
+	<data name="SettingsPageDiscord.Content" xml:space="preserve">
+    <value>Discord.</value>
+  </data>
+	<data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+    <value>Afficher le statut d'écoute via Discord Presence</value>
+  </data>
+	<data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
+    <value>Mode mise en page</value>
+  </data>
+	<data name="SettingsPageDockedMode.Text" xml:space="preserve">
+    <value>Mode ancré</value>
+  </data>
+	<data name="SettingsPageDockMonitor.Header" xml:space="preserve">
+    <value>Moniteur de cible</value>
+  </data>
+	<data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>Placement de l'espace de travail</value>
+  </data>
+	<data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>Bas</value>
+  </data>
+	<data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>En haut</value>
+  </data>
+	<data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>Hauteur de la fenêtre</value>
+  </data>
+	<data name="SettingsPageDragArea.Header" xml:space="preserve">
+    <value>Zone glissante</value>
+  </data>
+	<data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+    <value>Type d'animation d'assouplissement</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>Revenir en arrière</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>Rebondir facilement</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>Cirque de sortie facile</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>Cubique aisé</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>Élastique facile à saisir</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>Exposition de facilité</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>Quadruple de sortie</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>Quart d'amorçage</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>Quint de sortie facile</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>Sine de facilité</value>
+  </data>
+	<data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>Linéaire</value>
+  </data>
+	<data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>Étape lisse</value>
+  </data>
+	<data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>Début de la ligne vers le caractère actuel</value>
+  </data>
+	<data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
+    <value>Syllabaire de longue durée</value>
+  </data>
+	<data name="SettingsPageEN.Content" xml:space="preserve">
+    <value>Anglais</value>
+  </data>
+	<data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
+    <value>Mode d'échantillonnage des couleurs environnementales</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
+    <value>Au-dessus de la fenêtre</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
+    <value>Sous la fenêtre</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
+    <value>Arêtes de la fenêtre</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
+    <value>À l'intérieur de la fenêtre</value>
+  </data>
+	<data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>Quitter le programme lors de la fermeture de la fenêtre de la bibliothèque musicale</value>
+  </data>
+	<data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
+    <value>Quitter le programme lors de la fermeture de la fenêtre des paroles</value>
+  </data>
+	<data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>Paramètres d'exportation</value>
+  </data>
+	<data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>Étendu</value>
+  </data>
+	<data name="SettingsPageFan.Header" xml:space="preserve">
+    <value>Paroles de fan</value>
+  </data>
+	<data name="SettingsPageFAQ.Content" xml:space="preserve">
+    <value>Foire aux questions</value>
+  </data>
+	<data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <value>Équivalent Fixe pas de temps</value>
+  </data>
+	<data name="SettingsPageFluidLayer.Header" xml:space="preserve">
+    <value>Calque de Fluide</value>
+  </data>
+	<data name="SettingsPageFogLayer.Header" xml:space="preserve">
+    <value>Couche du brouillard</value>
+  </data>
+	<data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>Suivre le système</value>
+  </data>
+	<data name="SettingsPageFontColor.Header" xml:space="preserve">
+    <value>Font Color</value>
+  </data>
+	<data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
+    <value>Garder la fenêtre des paroles en haut par sondage</value>
+  </data>
+	<data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
+    <value>Forcer en haut</value>
+  </data>
+	<data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
+    <value>Même si les paroles actuelles ne disposent pas d'informations mot par mot, elles le forceront à simuler un effet mot à mot</value>
+  </data>
+	<data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
+    <value>Forcer l’activation de l’effet Paroles de mot à mot</value>
+  </data>
+	<data name="SettingsPageFPS.Header" xml:space="preserve">
+    <value>Fréquence d'images du rendu</value>
+  </data>
+	<data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
+    <value>Mode plein écran</value>
+  </data>
+	<data name="SettingsPageGeneralLayoutFactor.Text" xml:space="preserve">
+    <value>Facteur de mise en page général</value>
+  </data>
+	<data name="SettingsPageHeight.Header" xml:space="preserve">
+    <value>Hauteur</value>
+  </data>
+	<data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>Bonjour</value>
+  </data>
+	<data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
+    <value>Aidez-nous à traduire cette application</value>
+  </data>
+	<data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>Masquer/afficher automatiquement la fenêtre lyrique lorsque la musique ne joue pas</value>
+  </data>
+	<data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>Masquer/Afficher automatiquement les fenêtres</value>
+  </data>
+	<data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
+    <value>Maintenez ici et faites glisser pour trier</value>
+  </data>
+	<data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
+    <value>Facteur de mise en page horizontal</value>
+  </data>
+	<data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
+    <value>Animation des pochettes d'album</value>
+  </data>
+	<data name="SettingsPageImport.Content" xml:space="preserve">
+    <value>Importation</value>
+  </data>
+	<data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>Importer les paramètres</value>
+  </data>
+	<data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>Le programme redémarrera automatiquement une fois l'importation réussie.</value>
+  </data>
+	<data name="SettingsPageJA.Content" xml:space="preserve">
+    <value>日本語</value>
+  </data>
+	<data name="SettingsPageJapanese.Description" xml:space="preserve">
+    <value>La translittération des paroles sera lue en premier, et s'il n'y a pas de correspondance, la translittération de la machine sera demandée au serveur cutlet-docker</value>
+  </data>
+	<data name="SettingsPageJapanese.Header" xml:space="preserve">
+    <value>Annotation japonaise</value>
+  </data>
+	<data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>Rejoignez maintenant</value>
+  </data>
+	<data name="SettingsPageJyutping.Content" xml:space="preserve">
+    <value>Pinyin cantonais</value>
+  </data>
+	<data name="SettingsPageKO.Content" xml:space="preserve">
+    <value>한국어</value>
+  </data>
+	<data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>Langue</value>
+  </data>
+	<data name="SettingsPageLastFM.Text" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+	<data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <value>Autoriser</value>
+  </data>
+	<data name="SettingsPageLastFMManager.Header" xml:space="preserve">
+    <value>Last.fm</value>
+  </data>
+	<data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+    <value>Nombre total de parties</value>
+  </data>
+	<data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <value>Rafraîchir</value>
+  </data>
+	<data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <value>Date d'inscription</value>
+  </data>
+	<data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+    <value>Suivre l'historique d'écoute via Last.fm</value>
+  </data>
+	<data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <value>Révoquer l'autorisation</value>
+  </data>
+	<data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <value>Nom d'utilisateur</value>
+  </data>
+	<data name="SettingsPageLayout.Text" xml:space="preserve">
+    <value>Mise en page</value>
+  </data>
+	<data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
+    <value>Orientation de mise en page</value>
+  </data>
+	<data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+	<data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
+    <value>Vertical</value>
+  </data>
+	<data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>Gauche</value>
+  </data>
+	<data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
+    <value>Facteur de largeur de la zone de Gap Gauche</value>
+  </data>
+	<data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
+    <value>Adresse du serveur</value>
+  </data>
+	<data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>Lumière</value>
+  </data>
+	<data name="SettingsPageLinkedFile.Text" xml:space="preserve">
+    <value>Fichier local lié</value>
+  </data>
+	<data name="SettingsPageListenNewSession.Header" xml:space="preserve">
+    <value>Activer la surveillance pour les nouvelles sources de lecture</value>
+  </data>
+	<data name="SettingsPageLocalFolder.Text" xml:space="preserve">
+    <value>Dossier local</value>
+  </data>
+	<data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>Enregistrement du journal</value>
+  </data>
+	<data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
+    <value>Seuil long de syllabe</value>
+  </data>
+	<data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>Serveur de musique LX</value>
+  </data>
+	<data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
+    <value>par exemple http://127.0.0.1:23330</value>
+  </data>
+	<data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>Alignement</value>
+  </data>
+	<data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <value>Arrière-plan des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
+    <value>Ligne non courante</value>
+  </data>
+	<data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>Noir</value>
+  </data>
+	<data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <value>Activer le flou pour les lignes non actuelles</value>
+  </data>
+	<data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <value>Effet de flou</value>
+  </data>
+	<data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+	<data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
+    <value>Position actuelle de la ligne</value>
+  </data>
+	<data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
+    <value>Facteur de largeur de zone de paroles</value>
+  </data>
+	<data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
+    <value>Effet des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>Extra Black</value>
+  </data>
+	<data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>Extra Bold</value>
+  </data>
+	<data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>Ultra-léger</value>
+  </data>
+	<data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
+    <value>Activer l'effet de fondu pour les lignes non courantes</value>
+  </data>
+	<data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
+    <value>Effet de fondu</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
+    <value>Ligne actuelle</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>Adaptatif à l'arrière-plan des paroles (coloré)</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>Adaptatif à l'arrière-plan des paroles (Gris)</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+	<data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+    <value>Animation flottante</value>
+  </data>
+	<data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>Adaptatif à l'arrière-plan des paroles (coloré)</value>
+  </data>
+	<data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>Adaptatif à l'arrière-plan des paroles (Gris)</value>
+  </data>
+	<data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+	<data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>Famille de police</value>
+  </data>
+	<data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>Font Size</value>
+  </data>
+	<data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
+    <value>Largeur du trait des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>Poids de la police</value>
+  </data>
+	<data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>Effet lumineux</value>
+  </data>
+	<data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
+    <value>Surligner</value>
+  </data>
+	<data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>Plage de surbrillance originale</value>
+  </data>
+	<data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>Gauche</value>
+  </data>
+	<data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>Lumière</value>
+  </data>
+	<data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
+    <value>Dégradé du bord de la zone de jeu</value>
+  </data>
+	<data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>Espacement des lignes</value>
+  </data>
+	<data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+    <value>Hauteur de la ligne x</value>
+  </data>
+	<data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>Moyenne</value>
+  </data>
+	<data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>Normale</value>
+  </data>
+	<data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>Opacité de la police</value>
+  </data>
+	<data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
+    <value>Déplacez progressivement les lignes non courantes hors vue</value>
+  </data>
+	<data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
+    <value>Restez à l’écart de la vue</value>
+  </data>
+	<data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
+    <value>Facteur de hauteur de zone de paroles</value>
+  </data>
+	<data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <value>Activer la mise à l'échelle des syllabes avec une longue durée</value>
+  </data>
+	<data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>Effet d'écailles</value>
+  </data>
+	<data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <value>Meilleure correspondance</value>
+  </data>
+	<data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
+    <value>Configurer la source des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <value>Séquentiel</value>
+  </data>
+	<data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+    <value>Dans l'ordre : Trouvez en fonction de la priorité de la liste ci-dessous et retournez les premières paroles trouvées ; Meilleure correspondance : Recherchez dans toutes les sources de paroles activées et sélectionnez automatiquement la meilleure correspondance</value>
+  </data>
+	<data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <value>Stratégie de recherche des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>Semi-Gras</value>
+  </data>
+	<data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>Semi-lumière</value>
+  </data>
+	<data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
+    <value>Ombres</value>
+  </data>
+	<data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
+    <value>Style des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>Maigre</value>
+  </data>
+	<data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>Synchronisation de la timeline des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>Si la progression des paroles est jittery, essayez d'augmenter ce seuil, changer cette valeur peut entraîner une déviation de la synchronisation des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>Seuil de synchronisation de la timeline des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
+    <value>Surbrillance de la traduction</value>
+  </data>
+	<data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
+    <value>Séparateur de source et de traduction</value>
+  </data>
+	<data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+    <value>Opacité du bord haut et du bas</value>
+  </data>
+	<data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
+    <value>Fenêtre des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
+    <value>Gestionnaire de fenêtres des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
+    <value>Gestionnaire de fenêtres des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
+    <value>Raccourci de la fenêtre de saisie des paroles</value>
+  </data>
+	<data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
+    <value>Fenêtre des paroles</value>
+  </data>
+	<data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
+    <value>Ajuster cette valeur affectera la recherche séquentielle et les meilleurs résultats de recherche, mais n'affectera pas les résultats de recherche dans l'interface de recherche manuelle des paroles</value>
+  </data>
+	<data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
+    <value>Seuil minimum de correspondance</value>
+  </data>
+	<data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>Médiathèque</value>
+  </data>
+	<data name="SettingsPageMedianCut.Content" xml:space="preserve">
+    <value>Conservateur</value>
+  </data>
+	<data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <value>Surveiller cette source de lecture</value>
+  </data>
+	<data name="SettingsPageMica.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+	<data name="SettingsPageMicaAlt.Content" xml:space="preserve">
+    <value>Mica Alt</value>
+  </data>
+	<data name="SettingsPageMiddleGapColFactor.Header" xml:space="preserve">
+    <value>Facteur de largeur de paille de la zone intermédiaire</value>
+  </data>
+	<data name="SettingsPageMiddleGapRowFactor.Header" xml:space="preserve">
+    <value>Facteur de hauteur de zone intermédiaire</value>
+  </data>
+	<data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <value>Jouer de la musique de test</value>
+  </data>
+	<data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+    <value>Mode de coexistence multi-fenêtres</value>
+  </data>
+	<data name="SettingsPageMusicGallery.Text" xml:space="preserve">
+    <value>Galerie de musique</value>
+  </data>
+	<data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+    <value>Fenêtre de paroles intégrée dans la bibliothèque musicale</value>
+  </data>
+	<data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <value>Ajouter des dossiers stockant de la musique ou des paroles</value>
+  </data>
+	<data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>Bibliothèque de médias locale</value>
+  </data>
+	<data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
+    <value>Écouter les changements de fichiers en temps réel</value>
+  </data>
+	<data name="SettingsPageNarrowMode.Text" xml:space="preserve">
+    <value>Mode étroit</value>
+  </data>
+	<data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+    <value>Touches de raccourci de la piste suivante</value>
+  </data>
+	<data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+	<data name="SettingsPageOctTree.Content" xml:space="preserve">
+    <value>Agressif</value>
+  </data>
+	<data name="SettingsPageOpacity.Header" xml:space="preserve">
+    <value>Opacité</value>
+  </data>
+	<data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
+    <value>Ouvrir dans l'explorateur de fichiers</value>
+  </data>
+	<data name="SettingsPageOriginalText.Header" xml:space="preserve">
+    <value>Texte original</value>
+  </data>
+	<data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
+    <value>Définir le Seuil de Match Minimum individuellement</value>
+  </data>
+	<data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+    <value>Style du sélecteur de couleur</value>
+  </data>
+	<data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>Ce dossier est déjà inclus dans le dossier existant et n'a pas besoin d'être ajouté à nouveau</value>
+  </data>
+	<data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>Le dossier a été ajouté. Veuillez ne pas l'ajouter à nouveau.</value>
+  </data>
+	<data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>Ce dossier contient des dossiers ajoutés, veuillez supprimer ces dossiers pour ajouter le dossier</value>
+  </data>
+	<data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>Le chemin d'accès est introuvable sur votre ordinateur</value>
+  </data>
+	<data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+	<data name="SettingsPagePhonetic.Text" xml:space="preserve">
+    <value>Annotation lyrique</value>
+  </data>
+	<data name="SettingsPagePhoneticText.Header" xml:space="preserve">
+    <value>Symboles phonétiques</value>
+  </data>
+	<data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
+    <value>Épingler dans la barre des tâches</value>
+  </data>
+	<data name="SettingsPagePinyin.Content" xml:space="preserve">
+    <value>Mandarin Pinyin</value>
+  </data>
+	<data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>Sources de lecture</value>
+  </data>
+	<data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+    <value>Aucune source de lecture capturée</value>
+  </data>
+	<data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
+    <value>Source de lecture</value>
+  </data>
+	<data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
+    <value>ID de la source de lecture</value>
+  </data>
+	<data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
+    <value>Source de lecture actuelle</value>
+  </data>
+	<data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+    <value>Jouez "Cut To The Feeling" sur "soundcloud.com"</value>
+  </data>
+	<data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+    <value>Raccourcis de lecture et de pause</value>
+  </data>
+	<data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+    <value>Touches de raccourcis pour la piste précédente</value>
+  </data>
+	<data name="SettingsPagePureLayer.Header" xml:space="preserve">
+    <value>Couche de couleur pure</value>
+  </data>
+	<data name="SettingsPageQQGroup.Content" xml:space="preserve">
+    <value>Commentaires QQ et groupe de discussion</value>
+  </data>
+	<data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
+    <value>Statut en temps réel</value>
+  </data>
+	<data name="SettingsPageRecord.Content" xml:space="preserve">
+    <value>Enregistrements</value>
+  </data>
+	<data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <value>Statut de la fenêtre enregistrée</value>
+  </data>
+	<data name="SettingsPageReference.Header" xml:space="preserve">
+    <value>Lien de référence</value>
+  </data>
+	<data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>Rafraîchir la liste déroulante</value>
+  </data>
+	<data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <value>Les fichiers et dossiers originaux de ce chemin ne seront pas supprimés lorsque vous le supprimerez de cette application</value>
+  </data>
+	<data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <value>Vous pouvez supprimer les éléments suivants en toute sécurité</value>
+  </data>
+	<data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <value>Retirer de l'application</value>
+  </data>
+	<data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>Redémarrer l'application pour appliquer le changement</value>
+  </data>
+	<data name="SettingsPageRight.Content" xml:space="preserve">
+    <value>Droite</value>
+  </data>
+	<data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
+    <value>Facteur de largeur de la zone de rupture de droite</value>
+  </data>
+	<data name="SettingsPageRomaji.Header" xml:space="preserve">
+    <value>Annotation japonaise</value>
+  </data>
+	<data name="SettingsPageSC.Content" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+	<data name="SettingsPageScope.Header" xml:space="preserve">
+    <value>Périmètre d'application</value>
+  </data>
+	<data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+    <value>Délai de la ligne de queue</value>
+  </data>
+	<data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+    <value>Durée de la ligne finale</value>
+  </data>
+	<data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>Durée de la ligne actuelle</value>
+  </data>
+	<data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>Type d'animation lyrique</value>
+  </data>
+	<data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+    <value>Délai de la première ligne</value>
+  </data>
+	<data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+    <value>Durée de la première ligne</value>
+  </data>
+	<data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
+    <value>Résultat de la recherche des paroles</value>
+  </data>
+	<data name="SettingsPageServerTestButton.Content" xml:space="preserve">
+    <value>Serveur de test</value>
+  </data>
+	<data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
+    <value>Le test du serveur a échoué</value>
+  </data>
+	<data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
+    <value>Test du serveur réussi</value>
+  </data>
+	<data name="SettingsPageSettings.Header" xml:space="preserve">
+    <value>Réglages</value>
+  </data>
+	<data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>Gestionnaire de paramètres</value>
+  </data>
+	<data name="SettingsPageShareHub.Content" xml:space="preserve">
+    <value>Parcourir le Hub de partage de ressources en ligne</value>
+  </data>
+	<data name="SettingsPageShortcut.Text" xml:space="preserve">
+    <value>Jouer</value>
+  </data>
+	<data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+    <value>Ce raccourci clavier n'a pas été enregistré avec succès</value>
+  </data>
+	<data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+    <value>Ce raccourci clavier a été enregistré avec succès</value>
+  </data>
+	<data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <value>Afficher l'album</value>
+  </data>
+	<data name="SettingsPageShowArtists.Header" xml:space="preserve">
+    <value>Afficher les artistes</value>
+  </data>
+	<data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+    <value>Affichage des fenêtres de paroles et Cacher les touches de raccourcis</value>
+  </data>
+	<data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
+    <value>e.g. Alt + Tab, Taskbar</value>
+  </data>
+	<data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
+    <value>Afficher dans l'environnement système</value>
+  </data>
+	<data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
+    <value>Afficher le partage de mise en page</value>
+  </data>
+	<data name="SettingsPageShowTitle.Header" xml:space="preserve">
+    <value>Afficher le titre</value>
+  </data>
+	<data name="SettingsPageSlide.Content" xml:space="preserve">
+    <value>Diapositive</value>
+  </data>
+	<data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>Valeur actuelle : </value>
+  </data>
+	<data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
+    <value>Couche de flocon de neige</value>
+  </data>
+	<data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>Info Chanson</value>
+  </data>
+	<data name="SettingsPageSongStatus.Header" xml:space="preserve">
+    <value>Chanson actuelle</value>
+  </data>
+	<data name="SettingsPageSongTitle.Header" xml:space="preserve">
+    <value>Titre de la page</value>
+  </data>
+	<data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
+    <value>[Experimental] Couche Spectrum</value>
+  </data>
+	<data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
+    <value>Placement du spectre</value>
+  </data>
+	<data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
+    <value>Style Spectrum</value>
+  </data>
+	<data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
+    <value>Bas</value>
+  </data>
+	<data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
+    <value>En haut</value>
+  </data>
+	<data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
+    <value>Barre</value>
+  </data>
+	<data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
+    <value>Courbe</value>
+  </data>
+	<data name="SettingsPageSpeed.Header" xml:space="preserve">
+    <value>Vitesse de mouvement</value>
+  </data>
+	<data name="SettingsPageStandardMode.Text" xml:space="preserve">
+    <value>Mode Standard</value>
+  </data>
+	<data name="SettingsPageStartup.Text" xml:space="preserve">
+    <value>Début</value>
+  </data>
+	<data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>Arrêter la lecture lorsque la bibliothèque musicale est fermée</value>
+  </data>
+	<data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
+    <value>Couleur du trait</value>
+  </data>
+	<data name="SettingsPageSystemLanguage" xml:space="preserve">
+    <value>Par défaut</value>
+  </data>
+	<data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
+    <value>Langue cible</value>
+  </data>
+	<data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>Mode de la barre des tâches</value>
   </data>
-  <data name="TermsOfService.Content" xml:space="preserve">
+	<data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value>Position fixe de la barre des tâches</value>
+  </data>
+	<data name="SettingsPageTC.Content" xml:space="preserve">
+    <value>繁體中文</value>
+  </data>
+	<data name="SettingsPageTelegram.Content" xml:space="preserve">
+    <value>Télégramme</value>
+  </data>
+	<data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+    <value>Merci d'avoir acheté BetterLyrics</value>
+  </data>
+	<data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>Crédits</value>
+  </data>
+	<data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>Thème d'arrière-plan des paroles</value>
+  </data>
+	<data name="SettingsPageTitle" xml:space="preserve">
+    <value>Paramètres - BetterLyrics</value>
+  </data>
+	<data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
+    <value>Aucun</value>
+  </data>
+	<data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
+    <value>En haut</value>
+  </data>
+	<data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
+    <value>La Fenêtre entière</value>
+  </data>
+	<data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>Taille de la barre de titre</value>
+  </data>
+	<data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
+    <value>Basculer dans et découper les touches de raccourci</value>
+  </data>
+	<data name="SettingsPageTopGapFactor.Header" xml:space="preserve">
+    <value>Facteur de Hauteur de la Zone de Gaz du Haut</value>
+  </data>
+	<data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
+    <value>Facteur de largeur de zone de résumé de la piste</value>
+  </data>
+	<data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
+    <value>Facteur de hauteur de zone de résumé du parcours</value>
+  </data>
+	<data name="SettingsPageTranslatedText.Header" xml:space="preserve">
+    <value>Texte traduit</value>
+  </data>
+	<data name="SettingsPageTranslation.Text" xml:space="preserve">
+    <value>Traduction des paroles</value>
+  </data>
+	<data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
+    <value>Service de traduction de LibreTranslate</value>
+  </data>
+	<data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
+    <value>Visitez https://github.com/LibreTranslate/LibreTranslate pour des instructions d'installation et plus d'informations (ce logiciel n'est pas affilié à ce service de traduction)</value>
+  </data>
+	<data name="SettingsPageTransparent.Content" xml:space="preserve">
+    <value>Transparence</value>
+  </data>
+	<data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+    <value>Et achetez des utilisateurs qui supportent BetterLyrics</value>
+  </data>
+	<data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+	<data name="SettingsPageVerticalLayoutFactor.Text" xml:space="preserve">
+    <value>Facteur de mise en page vertical</value>
+  </data>
+	<data name="SettingsPageWesternChar.Header" xml:space="preserve">
+    <value>Alphabet latin</value>
+  </data>
+	<data name="SettingsPageWidth.Header" xml:space="preserve">
+    <value>Width</value>
+  </data>
+	<data name="SettingsPageWindowBounds.Header" xml:space="preserve">
+    <value>Limites de la fenêtre</value>
+  </data>
+	<data name="SettingsPageWorkArea.Description" xml:space="preserve">
+    <value>En tant que zone de travail séparée amarrée au bord supérieur/inférieur de l'écran</value>
+  </data>
+	<data name="SettingsPageWorkArea.Header" xml:space="preserve">
+    <value>En tant qu'espace de travail</value>
+  </data>
+	<data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
+    <value>Hauteur de la zone de travail</value>
+  </data>
+	<data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <value>Vous qui utilisez le logiciel</value>
+  </data>
+	<data name="StandardMode" xml:space="preserve">
+    <value>Mode Standard</value>
+  </data>
+	<data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>Quitter</value>
+  </data>
+	<data name="SystemTrayLyrics.Text" xml:space="preserve">
+    <value>Ouvrir la fenêtre des paroles</value>
+  </data>
+	<data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>Ouvrir la Galerie de Musique</value>
+  </data>
+	<data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>System Tray - Mieux Paroles</value>
+  </data>
+	<data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
+    <value>Réinitialiser la position de la fenêtre</value>
+  </data>
+	<data name="SystemTrayRestart.Text" xml:space="preserve">
+    <value>Redémarrer</value>
+  </data>
+	<data name="SystemTraySearch.Text" xml:space="preserve">
+    <value>Fenêtre de recherche des paroles</value>
+  </data>
+	<data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>Réglages</value>
+  </data>
+	<data name="SystemTraySwitch.Text" xml:space="preserve">
+    <value>Sélecteur de fenêtre de paroles</value>
+  </data>
+	<data name="TaskbarMode" xml:space="preserve">
+    <value>Mode de la barre des tâches</value>
+  </data>
+	<data name="TermsOfService.Content" xml:space="preserve">
     <value>Conditions d'utilisation</value>
   </data>
-  <data name="TracksAddToPlaylistFailed" xml:space="preserve">
+	<data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Impossible d'ajouter des pistes car le chemin n'existe pas</value>
   </data>
-  <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+	<data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
     <value>Les pistes sélectionnées ont été ajoutées à cette playlist</value>
   </data>
-  <data name="TranslateServerNotSet" xml:space="preserve">
+	<data name="TranslateServerNotSet" xml:space="preserve">
     <value>Le serveur de traduction n'est pas défini, veuillez le configurer dans les paramètres en premier</value>
   </data>
-  <data name="TryRunMultipleInstance" xml:space="preserve">
+	<data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics est déjà en cours d'exécution</value>
   </data>
-  <data name="UserGuide.Content" xml:space="preserve">
+	<data name="UserGuide.Content" xml:space="preserve">
     <value>Guide de l'utilisateur</value>
   </data>
 </root>
