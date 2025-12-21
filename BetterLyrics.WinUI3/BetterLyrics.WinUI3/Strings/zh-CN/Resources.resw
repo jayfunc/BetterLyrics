@@ -121,7 +121,7 @@
     <value>操作完成</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>添加</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>本地音乐文件</value>
@@ -133,10 +133,10 @@
     <value>画中画模式</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>Window</value>
+    <value>窗口</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
-    <value>When typing multiple artists, please separate them with one of the following delimiters (do not mix them)</value>
+    <value>当输入多位艺术家时，请使用以下分隔符之一进行分隔（请勿混合使用）</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>不再显示此消息</value>
@@ -148,13 +148,13 @@
     <value>取消</value>
   </data>
   <data name="Copy.Content" xml:space="preserve">
-    <value>Copy</value>
+    <value>复制</value>
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
-    <value>Playlist was created successfully</value>
+    <value>播放列表创建成功</value>
   </data>
   <data name="CutletDockerFailed" xml:space="preserve">
-    <value>Failed to request transliteration from cutlet-docker, please check settings or native cutlet-docker configuration</value>
+    <value>无法从 cutlet-docker 请求音译，请检查设置或本地 cutlet-docker 配置</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>For example http://localhost:23333</value>
