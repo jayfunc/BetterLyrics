@@ -93,11 +93,15 @@ namespace BetterLyrics.WinUI3.Helper
         public static List<ExtendedLanguage> SupportedDisplayLanguages { get; set; } =
         [
             new ExtendedLanguage("", _resourceService.GetLocalizedString("SettingsPageSystemLanguage")),
-            new ExtendedLanguage("en-US", "English"),
-            new ExtendedLanguage("ja-JP"),
-            new ExtendedLanguage("ko-KR"),
-            new ExtendedLanguage("zh-CN", "简体中文"),
-            new ExtendedLanguage("zh-TW", "繁體中文"),
+            new ExtendedLanguage("de"),
+            new ExtendedLanguage("en"),
+            new ExtendedLanguage("es"),
+            new ExtendedLanguage("fr"),
+            new ExtendedLanguage("ja"),
+            new ExtendedLanguage("ko"),
+            new ExtendedLanguage("ru"),
+            new ExtendedLanguage("zh-Hans"),
+            new ExtendedLanguage("zh-Hant"),
         ];
 
         static LanguageHelper()
