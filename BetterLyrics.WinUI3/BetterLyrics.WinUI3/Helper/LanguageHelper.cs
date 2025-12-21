@@ -107,7 +107,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string? DetectLanguageCode(string? text)
         {
-            if (text == null) return null;
+            if (string.IsNullOrWhiteSpace(text)) return null;
             var guessList = _identifier.Identify(text);
             string? code = guessList?.FirstOrDefault()?.Item1.Iso639_2T;
             code = code switch

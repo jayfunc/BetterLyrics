@@ -11,7 +11,7 @@ namespace BetterLyrics.WinUI3.Models
     {
         private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
 
-        public List<LyricsLine> LyricsLines { get; set; }
+        public List<LyricsLine> LyricsLines { get; set; } = [];
         public string? LanguageCode
         {
             get => field ?? LanguageHelper.DetectLanguageCode(WrappedOriginalText);
@@ -22,7 +22,6 @@ namespace BetterLyrics.WinUI3.Models
 
         public LyricsData()
         {
-            LyricsLines = [];
         }
 
         public LyricsData(List<LyricsLine> lyricsLines)
@@ -120,14 +119,18 @@ namespace BetterLyrics.WinUI3.Models
 
         public static LyricsData GetLoadingPlaceholder()
         {
-            return new LyricsData([
-                new LyricsLine
-                {
-                    StartMs = 0,
-                    EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                    OriginalText = "● ● ●",
-                },
-            ]);
+            return new LyricsData()
+            {
+                LyricsLines = [
+                    new LyricsLine
+                    {
+                        StartMs = 0,
+                        EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
+                        OriginalText = "● ● ●",
+                    },
+                ],
+                LanguageCode = "N/A",
+            };
         }
 
         public LyricsLine? GetLyricsLine(double sec)
