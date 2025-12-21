@@ -54,7 +54,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private async void SongPathHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            await LauncherHelper.SelectAndShowFile(((Track)((HyperlinkButton)sender).DataContext).Path);
+            await LauncherHelper.SelectAndShowFile(((ExtendedTrack)((HyperlinkButton)sender).DataContext).Path);
         }
 
         private async void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -104,7 +104,7 @@ namespace BetterLyrics.WinUI3.Views
         private async void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = ViewModel.TrackPlayingQueue.Count == 0;
-            ViewModel.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, SongListView.SelectedItems.Cast<Track>().Select(x => new PlayQueueItem(x)));
+            ViewModel.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
@@ -115,7 +115,7 @@ namespace BetterLyrics.WinUI3.Views
         private async void AddSongToQueueEndMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = ViewModel.TrackPlayingQueue.Count == 0;
-            ViewModel.TrackPlayingQueue.AddRange(SongListView.SelectedItems.Cast<Track>().Select(x => new PlayQueueItem(x)));
+            ViewModel.TrackPlayingQueue.AddRange(SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
@@ -125,7 +125,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void SongListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.SelectedTracks = SongListView.SelectedItems.Cast<Track>().ToList();
+            ViewModel.SelectedTracks = SongListView.SelectedItems.Cast<ExtendedTrack>().ToList();
             ViewModel.SelectedTracksTotalDuration = ViewModel.SelectedTracks.Select(x => x.Duration).Sum();
             if (SelectAllCheckBox != null)
             {
@@ -142,22 +142,22 @@ namespace BetterLyrics.WinUI3.Views
 
         private void ArtistHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
-            var artist = ((Track)((FrameworkElement)sender).DataContext).Artist;
+            var artist = ((ExtendedTrack)((FrameworkElement)sender).DataContext).Artist;
             var playlist = new SongsTabInfo(artist, "\uEFA9", true, false, CommonSongProperty.Artist, artist);
             ViewModel.UpdateSelectedPlaylist(playlist);
         }
 
         private void AlbumHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
-            var album = ((Track)((FrameworkElement)sender).DataContext).Album;
+            var album = ((ExtendedTrack)((FrameworkElement)sender).DataContext).Album;
             var playlist = new SongsTabInfo(album, "\uE93C", true, false, CommonSongProperty.Album, album);
             ViewModel.UpdateSelectedPlaylist(playlist);
         }
 
         private void PathHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
-            var track = ((Track)((FrameworkElement)sender).DataContext);
-            var playlist = new SongsTabInfo(track.GetParentFolderName(), "\uE8B7", true, false, CommonSongProperty.Folder, track.GetParentFolderPath());
+            var track = ((ExtendedTrack)((FrameworkElement)sender).DataContext);
+            var playlist = new SongsTabInfo(track.ParentFolderName, "\uE8B7", true, false, CommonSongProperty.Folder, track.ParentFolderPath);
             ViewModel.UpdateSelectedPlaylist(playlist);
         }
 
@@ -210,7 +210,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void SongListViewItemMoreButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.TrackRightTapped = (Track)((FrameworkElement)sender).DataContext;
+            ViewModel.TrackRightTapped = (ExtendedTrack)((FrameworkElement)sender).DataContext;
             SongFileInfoFlyout.ShowAt(sender as FrameworkElement);
         }
 
@@ -260,8 +260,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private async void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            var displayedTracks = SongListView.Items.Cast<Track>();
-            var track = (Track)((FrameworkElement)sender).DataContext;
+            var displayedTracks = SongListView.Items.Cast<ExtendedTrack>();
+            var track = (ExtendedTrack)((FrameworkElement)sender).DataContext;
 
             // Play all the songs
             ViewModel.TrackPlayingQueue.Clear();

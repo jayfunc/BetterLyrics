@@ -49,7 +49,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                     switch (provider.Provider)
                     {
                         case AlbumArtSearchProvider.Local:
-                            result = SearchFile(songInfo)?.AsBuffer();
+                            result = (await SearchFile(songInfo))?.AsBuffer();
                             break;
                         case AlbumArtSearchProvider.SMTC:
                             result = bufferFromSMTC;
@@ -77,29 +77,73 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             return null;
         }
 
-        private byte[]? SearchFile(SongInfo songInfo)
+        private async Task<byte[]?> SearchFile(SongInfo songInfo)
         {
             foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
             {
-                if (Directory.Exists(folder.Path) && folder.IsEnabled)
+                if (!folder.IsEnabled) continue;
+
+                try
                 {
-                    foreach (var file in DirectoryHelper.GetAllFiles(folder.Path))
+                    using var fs = folder.CreateFileSystem();
+                    if (fs == null) continue;
+                    if (!await fs.ConnectAsync()) continue;
+
+                    // 递归扫描
+                    var foldersToScan = new Queue<string>();
+                    foldersToScan.Enqueue(""); // 根目录
+
+                    while (foldersToScan.Count > 0)
                     {
-                        if (FileHelper.MusicExtensions.Contains(Path.GetExtension(file)))
+                        var currentPath = foldersToScan.Dequeue();
+                        var items = await fs.GetFilesAsync(currentPath);
+
+                        foreach (var item in items)
                         {
-                            Track track = new(file);
-                            if ((track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists) || StringHelper.IsSwitchableNormalizedMatch(Path.GetFileNameWithoutExtension(file), songInfo.DisplayArtists, songInfo.Title))
+                            if (item.IsFolder)
                             {
-                                var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
-                                if (bytes != null)
+                                foldersToScan.Enqueue(Path.Combine(currentPath, item.Name));
+                                continue;
+                            }
+
+                            var ext = Path.GetExtension(item.Name).ToLower();
+                            if (FileHelper.MusicExtensions.Contains(ext))
+                            {
+                                try
                                 {
-                                    return bytes;
+                                    using (var stream = await fs.OpenReadAsync(item.FullPath))
+                                    {
+                                        var track = new ExtendedTrack(item.FullPath, stream);
+
+                                        bool isMetadataMatch = (track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists);
+                                        bool isFilenameMatch = StringHelper.IsSwitchableNormalizedMatch(
+                                            Path.GetFileNameWithoutExtension(item.Name),
+                                            songInfo.DisplayArtists,
+                                            songInfo.Title
+                                        );
+
+                                        if (isMetadataMatch || isFilenameMatch)
+                                        {
+                                            var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
+                                            if (bytes != null && bytes.Length > 0)
+                                            {
+                                                return bytes;
+                                            }
+                                        }
+                                    }
+                                }
+                                catch
+                                {
                                 }
                             }
                         }
                     }
                 }
+                catch
+                {
+                }
             }
+
             return null;
         }
 

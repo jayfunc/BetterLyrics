@@ -22,7 +22,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void SettingsPageRemovePathButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.RemoveFolderAsync((LocalMediaFolder)(sender as HyperlinkButton)!.Tag);
+            ViewModel.RemoveFolderAsync((MediaFolder)(sender as HyperlinkButton)!.Tag);
         }
 
         private async void LocalFolderHyperlinkButton_Click(object sender, RoutedEventArgs e)

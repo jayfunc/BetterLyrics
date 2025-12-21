@@ -120,6 +120,9 @@
   <data name="ActionCompleted" xml:space="preserve">
     <value>操作完成</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>本地音乐文件</value>
   </data>
@@ -546,6 +549,21 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>隐私政策</value>
   </data>
+  <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
+    <value>路径</value>
+  </data>
+  <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
+    <value>端口</value>
+  </data>
+  <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
+    <value>服务器地址</value>
+  </data>
+  <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
+    <value>用户名</value>
+  </data>
   <data name="Romaji" xml:space="preserve">
     <value>罗马音</value>
   </data>
@@ -593,9 +611,6 @@
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>适应环境色彩</value>
-  </data>
-  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
-    <value>添加文件夹</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>添加</value>
@@ -1043,6 +1058,9 @@
   </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>启用对新播放源的监听</value>
+  </data>
+  <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
+    <value>本地文件夹</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>日志记录</value>

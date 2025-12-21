@@ -37,6 +37,7 @@
 		<None Remove="Controls\NowPlayingBar.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
 		<None Remove="Controls\PropertyRow.xaml" />
+		<None Remove="Controls\RemoteServerConfigControl.xaml" />
 		<None Remove="Controls\ShortcutTextBox.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
@@ -58,20 +59,21 @@
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.251021-build.2365" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250703-build.2173" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.250402" />
-		<PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.250402" />
+		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
 		<PackageReference Include="DevWinUI.Controls" Version="9.8.1" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.6" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
 		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
+		<PackageReference Include="FluentFTP" Version="53.0.2" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
 		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
@@ -85,6 +87,7 @@
 		<PackageReference Include="NTextCat" Version="0.3.65" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+		<PackageReference Include="SMBLibrary" Version="1.5.5.1" />
 		<PackageReference Include="System.Drawing.Common" Version="10.0.1" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.1" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
@@ -95,6 +98,7 @@
 		<PackageReference Include="Vanara.PInvoke.User32" Version="4.2.1" />
 		<PackageReference Include="Vanara.Windows.Shell" Version="4.2.1" />
 		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
+		<PackageReference Include="WebDav.Client" Version="2.9.0" />
 		<PackageReference Include="WinUIEx" Version="2.9.0" />
 		<PackageReference Include="z440.atl.core" Version="7.9.0" />
 	</ItemGroup>
@@ -338,6 +342,11 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="TemplateSelector\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\RemoteServerConfigControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\NowPlayingBar.xaml">

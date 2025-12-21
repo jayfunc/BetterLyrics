@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.RemoteServerConfigControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel Width="400" Spacing="16">
+            <InfoBar
+                x:Name="ErrorInfoBar"
+                IsClosable="True"
+                IsOpen="False"
+                Severity="Error" />
+
+            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
+                <TextBox
+                    x:Name="HostBox"
+                    x:Uid="RemoteServerConfigControlServerAddress"
+                    Grid.Column="0"
+                    Header="Server Address"
+                    InputScope="Url"
+                    PlaceholderText="192.168.1.x"
+                    TextWrapping="Wrap" />
+
+                <NumberBox
+                    x:Name="PortBox"
+                    x:Uid="RemoteServerConfigControlPort"
+                    Grid.Column="1"
+                    MinWidth="100"
+                    Header="Port"
+                    LargeChange="10"
+                    SmallChange="1"
+                    SpinButtonPlacementMode="Inline"
+                    ToolTipService.ToolTip="80"
+                    Value="80" />
+            </Grid>
+
+            <TextBox
+                x:Name="PathBox"
+                x:Uid="RemoteServerConfigControlPath"
+                TextWrapping="Wrap" />
+
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                <TextBox
+                    x:Name="UserBox"
+                    x:Uid="RemoteServerConfigControlUsername"
+                    Grid.Column="0"
+                    TextWrapping="Wrap" />
+
+                <PasswordBox
+                    x:Name="PwdBox"
+                    x:Uid="RemoteServerConfigControlPassword"
+                    Grid.Column="1"
+                    PasswordRevealMode="Peek" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
