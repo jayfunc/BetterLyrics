@@ -63,7 +63,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool CurrentIsPlaying { get; private set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TimeSpan CurrentPosition { get; private set; } = TimeSpan.Zero;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial SongInfo? CurrentSongInfo { get; private set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial SongInfo? CurrentSongInfo { get; private set; } = SongInfoExtensions.Placeholder;
 
         [ObservableProperty] public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
 
@@ -331,9 +331,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                         CurrentSongInfo = new SongInfo
                         {
-                            Title = mediaProperties?.Title ?? "",
-                            Artists = fixedArtist?.SplitByCommonSplitter() ?? [],
-                            Album = fixedAlbum ?? "",
+                            Title = mediaProperties?.Title ?? "N/A",
+                            Artists = fixedArtist?.SplitByCommonSplitter() ?? ["N/A"],
+                            Album = fixedAlbum ?? "N/A",
                             DurationMs = mediaSession?.ControlSession?.GetTimelineProperties().EndTime.TotalMilliseconds ?? 0,
                             PlayerId = sessionId,
                             SongId = songId,

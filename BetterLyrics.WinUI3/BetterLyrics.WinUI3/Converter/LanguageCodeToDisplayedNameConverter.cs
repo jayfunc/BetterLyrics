@@ -11,7 +11,11 @@ namespace BetterLyrics.WinUI3.Converter
         {
             if (value is string langCode)
             {
-                if (PhoneticHelper.IsPhoneticCode(langCode))
+                if (langCode == "N/A")
+                {
+                    return langCode;
+                }
+                else if (PhoneticHelper.IsPhoneticCode(langCode))
                 {
                     return PhoneticHelper.GetDisplayName(langCode);
                 }
