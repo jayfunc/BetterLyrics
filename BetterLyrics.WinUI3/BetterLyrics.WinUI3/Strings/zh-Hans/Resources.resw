@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -148,7 +148,7 @@
     <value>取消</value>
   </data>
   <data name="Copy.Content" xml:space="preserve">
-    <value>拷贝</value>
+    <value>复制</value>
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>播放列表创建成功</value>
@@ -436,7 +436,7 @@
     <value>比特率</value>
   </data>
   <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
-    <value>期间</value>
+    <value>时长</value>
   </data>
   <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
     <value>编码器</value>
@@ -451,7 +451,7 @@
     <value>路径</value>
   </data>
   <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
-    <value>样本率</value>
+    <value>采样率</value>
   </data>
   <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
     <value>标题</value>
@@ -475,7 +475,7 @@
     <value>播放队列</value>
   </data>
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
-    <value>播放队列是空的</value>
+    <value>播放队列为空</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>播放列表</value>
@@ -778,7 +778,7 @@
     <value>配置播放源</value>
   </data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
-    <value>拷贝</value>
+    <value>复制</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>从模板创建</value>
@@ -823,7 +823,7 @@
     <value>目标显示器</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>工作区域位置</value>
+    <value>工作区位置</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>底部</value>
@@ -997,7 +997,7 @@
     <value>立即加入</value>
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
-    <value>广东话拼音</value>
+    <value>粤语拼音</value>
   </data>
   <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
@@ -1015,7 +1015,7 @@
     <value>Last.fm</value>
   </data>
   <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
-    <value>听歌总数量</value>
+    <value>总播放次数</value>
   </data>
   <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
     <value>刷新</value>
@@ -1654,7 +1654,7 @@
     <value>窗口边界</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>作为一个独立的工作区域停靠在屏幕的上/下边缘</value>
+    <value>作为一个单独的工作区，停靠到屏幕上/下边缘</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
     <value>工作区</value>
