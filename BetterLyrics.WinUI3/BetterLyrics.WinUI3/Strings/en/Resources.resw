@@ -960,6 +960,9 @@
   <data name="SettingsPageHello.Text" xml:space="preserve">
     <value>Hello</value>
   </data>
+  <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>Automatically hide/show lyric window when music is not playing</value>
   </data>
