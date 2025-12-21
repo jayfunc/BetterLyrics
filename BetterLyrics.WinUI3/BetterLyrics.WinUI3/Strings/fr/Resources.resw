@@ -118,193 +118,193 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionCompleted" xml:space="preserve">
-    <value>Operation completed</value>
+    <value>Operation réussie !</value>
   </data>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Ajouter!</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
-    <value>Local music files</value>
+    <value>Fichiers de musique locale !</value>
   </data>
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
-    <value>Music player</value>
+    <value>Lecteur de musique</value>
   </data>
   <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
-    <value>Picture-in-picture mode</value>
+    <value>Mode “Picture-in-Picture”</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>Window</value>
+    <value>Fenêtre</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
-    <value>When typing multiple artists, please separate them with one of the following delimiters (do not mix them)</value>
+    <value>Lorsque vous tapez plusieurs artistes, veuillez les séparer avec l'un des délimiteurs suivants (ne les mélangez pas) !</value>
   </data>
   <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>Do not show this message again</value>
+    <value>Ne plus afficher ce message</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>Picture-in-picture mode</value>
+    <value>Mode “Picture-in-Picture”</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuler !</value>
   </data>
   <data name="Copy.Content" xml:space="preserve">
-    <value>Copy</value>
+    <value>Copier!</value>
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
-    <value>Playlist was created successfully</value>
+    <value>liste de lecture créé avec succès.</value>
   </data>
   <data name="CutletDockerFailed" xml:space="preserve">
-    <value>Failed to request transliteration from cutlet-docker, please check settings or native cutlet-docker configuration</value>
+    <value>Échec de la demande de translittération depuis cutlet-docker, veuillez vérifier les paramètres ou la configuration native cutlet-docker !</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>For example http://localhost:23333</value>
+    <value>Par exemple http ://localhost :23333 !</value>
   </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>Par défaut</value>
   </data>
   <data name="DesktopMode" xml:space="preserve">
-    <value>Desktop mode (transparent)</value>
+    <value>Mode bureau (transparent) !</value>
   </data>
   <data name="DockedMode" xml:space="preserve">
-    <value>Docked mode</value>
+    <value>Mode amarré !</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
-    <value>Export successful</value>
+    <value>Export réussi !</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>Unable to connect to LX Music Server, please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
+    <value>Impossible de se connecter à LX Music Server, veuillez vous rendre dans Paramètres - Source de lecture - LX Music - LX Music Server pour vérifier si le lien est entré correctement !</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
-    <value>Fullscreen mode</value>
+    <value>Mode plein écran</value>
   </data>
   <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
     <value>Lock</value>
   </data>
   <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
-    <value>Lock</value>
+    <value>Serrure</value>
   </data>
   <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>Lock</value>
+    <value>Serrure</value>
   </data>
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
-    <value>Music gallery</value>
+    <value>Galerie de musique !</value>
   </data>
   <data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>Settings</value>
+    <value>Réglages</value>
   </data>
   <data name="ImportPlaylistSuccessfully" xml:space="preserve">
-    <value>Playlist was imported successfully</value>
+    <value>La liste de lecture a été importée avec succès !</value>
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
-    <value>Settings file import failed, application settings remain unchanged</value>
+    <value>L'importation du fichier de paramètres a échoué, les paramètres de l'application restent inchangés !</value>
   </data>
   <data name="ImportSettingsSuccess" xml:space="preserve">
-    <value>Import successful</value>
+    <value>Importation réussie !</value>
   </data>
   <data name="Jyutping" xml:space="preserve">
-    <value>Cantonese pinyin</value>
+    <value>Pinyin cantonais !</value>
   </data>
   <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
-    <value>Please make sure at least one status is set to default</value>
+    <value>Veuillez vous assurer qu'au moins un statut est défini par défaut !</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
-    <value>Authorization failed, please try again</value>
+    <value>Echec, veuillez réessayer.</value>
   </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
-    <value>I have completed the authorization</value>
+    <value>J'ai terminé l'autorisation !</value>
   </data>
   <data name="LastFMRequestAuthDesc" xml:space="preserve">
-    <value>Please complete the authorization in your browser</value>
+    <value>Veuillez compléter l'autorisation dans votre navigateur !</value>
   </data>
   <data name="LastFMRequestAuthTitle" xml:space="preserve">
-    <value>Grant BetterLyrics permission to access your Last.fm account</value>
+    <value>Accordez à BetterLyrics l'autorisation d'accéder à votre compte Last.fm !</value>
   </data>
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
-    <value>I have canceled my authorization</value>
+    <value>J'ai annulé mon autorisation !</value>
   </data>
   <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
-    <value>Please complete the cancellation operation in your browser</value>
+    <value>Veuillez terminer l'opération d'annulation dans votre navigateur !</value>
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
-    <value>Revoke BetterLyrics' permission to access your Last.fm account</value>
+    <value>Révoquez l'autorisation de BetterLyrics d'accéder à votre compte Last.fm !</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
-    <value>Requesting translation from LibreTranslate failed, please check the settings or the native LibreTranslate configuration</value>
+    <value>La demande de traduction auprès de LibreTranslate a échoué, veuillez vérifier les paramètres ou la configuration native de LibreTranslate !</value>
   </data>
   <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>e.g. http://localhost:5000</value>
+    <value>par exemple http ://localhost :5000 !</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
-    <value>Loading lyrics...</value>
+    <value>Chargement des paroles... !</value>
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
-    <value>Lyrics not found</value>
+    <value>Paroles introuvables !</value>
   </data>
   <data name="LyricsPageCachePath.Header" xml:space="preserve">
-    <value>Cache path</value>
+    <value>Chemin du cache</value>
   </data>
   <data name="LyricsPageCachePath.Value" xml:space="preserve">
-    <value>Cache path</value>
+    <value>Chemin du cache</value>
   </data>
   <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
-    <value>Lyric language</value>
+    <value>Langage lyrique !</value>
   </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
-    <value>Lyrics provider</value>
+    <value>Fournisseur de paroles !</value>
   </data>
   <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
-    <value>Manually search lyrics</value>
+    <value>Recherchez manuellement les paroles !</value>
   </data>
   <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>Lyrics Window Management Shortcut Settings</value>
+    <value>Paramètres de raccourci de gestion de la fenêtre des paroles !</value>
   </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
-    <value>Match percentage</value>
+    <value>Pourcentage de correspondance !</value>
   </data>
   <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>Play source shortcut settings</value>
+    <value>Jouer les paramètres de raccourci source !</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
-    <value>Reset to 0 when switching songs</value>
+    <value>Réinitialisez à 0 lorsque vous changez de chanson !</value>
   </data>
   <data name="LyricsPageSettings.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Réglages</value>
   </data>
   <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>Lyrics timeline offset</value>
+    <value>Décalage de la chronologie des paroles !</value>
   </data>
   <data name="LyricsPageTitle" xml:space="preserve">
-    <value>BetterLyrics</value>
+    <value>BetterLyrics !</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
-    <value>The translation in the lyrics will be read first. If there is no match, the machine translation will be requested from the LibreTranslate server</value>
+    <value>La traduction des paroles sera lue en premier. S'il n'y a pas de correspondance, la traduction automatique sera demandée au serveur LibreTranslate !</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
-    <value>Enable translation</value>
+    <value>Activer la traduction !</value>
   </data>
   <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
-    <value>Show translation only</value>
+    <value>afficher la traduction</value>
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
-    <value>Translation provider</value>
+    <value>Prestataire de traduction</value>
   </data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
-    <value>Transliteration source</value>
+    <value>Source de translittération !</value>
   </data>
   <data name="LyricsParseError" xml:space="preserve">
-    <value>Lyrics parsing failed</value>
+    <value>Échec de l'analyse des paroles !</value>
   </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>Album</value>
   </data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
-    <value>Artist</value>
+    <value>Artiste</value>
   </data>
   <data name="LyricsSearchControlAutoGenerated.Tag" xml:space="preserve">
-    <value>Auto generated</value>
+    <value>Généré automatiquement</value>
   </data>
   <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>Durée</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* Save changes take effect immediately, after which the track lyrics will be retrieved with mapping information and target lyrics; marking as pure music will directly return to pure music placeholder lyrics. Reset to retrieve by original data.</value>
