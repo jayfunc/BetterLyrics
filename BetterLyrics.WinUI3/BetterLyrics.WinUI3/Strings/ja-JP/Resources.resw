@@ -120,6 +120,9 @@
   <data name="ActionCompleted" xml:space="preserve">
     <value>操作が完了しました</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>ローカル音楽ファイル</value>
   </data>
@@ -546,6 +549,21 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>Privacy policy</value>
   </data>
+  <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
+    <value>Server Address</value>
+  </data>
+  <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
+    <value>Username</value>
+  </data>
   <data name="Romaji" xml:space="preserve">
     <value>ローマン</value>
   </data>
@@ -593,9 +611,6 @@
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>環境の色に適応しましょう</value>
-  </data>
-  <data name="SettingsPageAddFolder.Header" xml:space="preserve">
-    <value>フォルダーを追加します</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>追加</value>
@@ -1043,6 +1058,9 @@
   </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>新しい再生ソースの監視を有効にします</value>
+  </data>
+  <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
+    <value>Local Folder</value>
   </data>
   <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>ログレコード</value>
