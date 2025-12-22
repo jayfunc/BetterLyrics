@@ -135,12 +135,6 @@
 		<TrimmerRootAssembly Include="Vanara.PInvoke.User32" />
 		<TrimmerRootAssembly Include="Vanara.Windows.Shell" />
 	</ItemGroup>
-	<!-- Copy all "Resources.resw" files in the "Strings" folder to the output folder. -->
-	<ItemGroup>
-		<Content Include="Strings\**\*.resw">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
 	<ItemGroup>
 	  <Content Update="Assets\AIMP.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -349,8 +343,33 @@
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
+	  <PRIResource Update="Strings\de\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
 	  <PRIResource Update="Strings\en\Resources.resw">
 	    <Generator></Generator>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
+	  <PRIResource Update="Strings\es\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
+	  <PRIResource Update="Strings\fr\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
+	  <PRIResource Update="Strings\ja\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
+	  <PRIResource Update="Strings\ko\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
+	  <PRIResource Update="Strings\ru\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
+	  <PRIResource Update="Strings\zh-Hans\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </PRIResource>
+	  <PRIResource Update="Strings\zh-Hant\Resources.resw">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </PRIResource>
 	</ItemGroup>
 	<ItemGroup>
