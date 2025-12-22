@@ -973,7 +973,7 @@
     <value>按住此处并拖动以排序</value>
   </data>
 	<data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
-    <value>水平布局因子</value>
+    <value>水平布局系数</value>
   </data>
 	<data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
     <value>专辑封面切换动画</value>
@@ -1564,7 +1564,7 @@
     <value>启动</value>
   </data>
 	<data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
-    <value>音乐库关闭时停止播放</value>
+    <value>关闭音乐库时停止播放</value>
   </data>
 	<data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>描边颜色</value>
@@ -1618,7 +1618,7 @@
     <value>顶部间隙区域高度系数</value>
   </data>
 	<data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
-    <value>曲目摘要区域宽度因子</value>
+    <value>曲目摘要区域宽度系数</value>
   </data>
 	<data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
     <value>曲目摘要区域高度系数</value>
