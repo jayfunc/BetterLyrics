@@ -820,7 +820,7 @@
     <value>停靠模式</value>
   </data>
 	<data name="SettingsPageDockMonitor.Header" xml:space="preserve">
-    <value>目标监视器</value>
+    <value>目标显示器</value>
   </data>
 	<data name="SettingsPageDockPlacement.Header" xml:space="preserve">
     <value>工作区位置</value>
@@ -1618,7 +1618,7 @@
     <value>顶部间隙区域高度因子</value>
   </data>
 	<data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
-    <value>曲目摘要区域宽度因子</value>
+    <value>曲目摘要区域宽度系数</value>
   </data>
 	<data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
     <value>曲目摘要区域高度系数</value>
