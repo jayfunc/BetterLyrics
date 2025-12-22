@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -294,13 +293,13 @@
                                 <MenuFlyout>
                                     <!--  Lyrics search window  -->
                                     <MenuFlyoutItem
-                                        l:Uids.Uid="LyricsPageLyricsSearch"
+                                        x:Uid="LyricsPageLyricsSearch"
                                         Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
                                         Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                            Glyph=&#xE721;}" />
                                     <!--  Lyrics window manager shortcut settings  -->
                                     <MenuFlyoutItem
-                                        l:Uids.Uid="LyricsPageLyricsSettings"
+                                        x:Uid="LyricsPageLyricsSettings"
                                         Click="LyricsSettingsShortcutMenuFlyoutItem_Click"
                                         Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                            Glyph=&#xE61F;}">
@@ -315,7 +314,7 @@
                                     </MenuFlyoutItem>
                                     <!--  Playback shortcut settings  -->
                                     <MenuFlyoutItem
-                                        l:Uids.Uid="LyricsPagePlaybackSource"
+                                        x:Uid="LyricsPagePlaybackSource"
                                         Click="PlaybackSettingsShortcutMenuFlyoutItem_Click"
                                         Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                            Glyph=&#xEA69;}">
@@ -330,7 +329,7 @@
                                     </MenuFlyoutItem>
                                     <!--  Settings  -->
                                     <MenuFlyoutItem
-                                        l:Uids.Uid="LyricsPageSettings"
+                                        x:Uid="LyricsPageSettings"
                                         Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
                                         Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                            Glyph=&#xE713;}" />

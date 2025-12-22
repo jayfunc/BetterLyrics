@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
@@ -27,32 +26,32 @@
             <NavigationView.MenuItems>
 
                 <NavigationViewItem
-                    l:Uids.Uid="SettingsPageApp"
+                    x:Uid="SettingsPageApp"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xECAA;}"
                     IsSelected="True"
                     Tag="App" />
 
                 <NavigationViewItem
-                    l:Uids.Uid="SettingsPageLyricsWindowMgr"
+                    x:Uid="SettingsPageLyricsWindowMgr"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE61F;}"
                     Tag="LyricsWindowMgr" />
 
                 <NavigationViewItem
-                    l:Uids.Uid="SettingsPageMediaLib"
+                    x:Uid="SettingsPageMediaLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE8B7;}"
                     Tag="MediaLib" />
 
                 <NavigationViewItem
-                    l:Uids.Uid="SettingsPagePlaybackLib"
+                    x:Uid="SettingsPagePlaybackLib"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xEA69;}"
                     Tag="PlaybackLib" />
 
                 <NavigationViewItem
-                    l:Uids.Uid="SettingsPageAbout"
+                    x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE946;}"
                     Tag="About" />

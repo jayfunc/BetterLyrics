@@ -2,7 +2,7 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
-
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using Hqub.Lastfm;
@@ -10,14 +10,13 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 using Windows.System;
-using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Services.LastFMService
 {
     public partial class LastFMService : ILastFMService
     {
         private readonly ISettingsService _settingsService;
-        private readonly ILocalizer _localizer = Localizer.Get();
+        private readonly ILocalizationService _localizationService;
 
         private readonly LastfmClient _client;
 
@@ -28,8 +27,9 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         public bool IsAuthenticated { get; private set; }
 
-        public LastFMService(ISettingsService settingsService)
+        public LastFMService(ISettingsService settingsService, ILocalizationService localizationService)
         {
+            _localizationService = localizationService;
             _settingsService = settingsService;
 
             _client = new LastfmClient(Constants.LastFM.ApiKey, Constants.LastFM.SharedSecret);
@@ -68,10 +68,10 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
             var dialog = new ContentDialog
             {
-                Title = _localizer.GetLocalizedString("LastFMRequestAuthTitle") ?? "",
-                Content = _localizer.GetLocalizedString("LastFMRequestAuthDesc") ?? "",
-                PrimaryButtonText = _localizer.GetLocalizedString("LastFMRequestAuthConfirm") ?? "",
-                CloseButtonText = _localizer.GetLocalizedString("Cancel") ?? "",
+                Title = _localizationService.GetLocalizedString("LastFMRequestAuthTitle") ?? "",
+                Content = _localizationService.GetLocalizedString("LastFMRequestAuthDesc") ?? "",
+                PrimaryButtonText = _localizationService.GetLocalizedString("LastFMRequestAuthConfirm") ?? "",
+                CloseButtonText = _localizationService.GetLocalizedString("Cancel") ?? "",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = dialogXamlRoot,
             };
@@ -95,10 +95,10 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
             var dialog = new ContentDialog
             {
-                Title = _localizer.GetLocalizedString("LastFMRequestUnAuthTitle") ?? "",
-                Content = _localizer.GetLocalizedString("LastFMRequestUnAuthDesc") ?? "",
-                PrimaryButtonText = _localizer.GetLocalizedString("LastFMRequestUnAuthConfirm") ?? "",
-                CloseButtonText = _localizer.GetLocalizedString("Cancel") ?? "",
+                Title = _localizationService.GetLocalizedString("LastFMRequestUnAuthTitle") ?? "",
+                Content = _localizationService.GetLocalizedString("LastFMRequestUnAuthDesc") ?? "",
+                PrimaryButtonText = _localizationService.GetLocalizedString("LastFMRequestUnAuthConfirm") ?? "",
+                CloseButtonText = _localizationService.GetLocalizedString("Cancel") ?? "",
                 DefaultButton = ContentDialogButton.Close,
                 XamlRoot = dialogXamlRoot,
             };

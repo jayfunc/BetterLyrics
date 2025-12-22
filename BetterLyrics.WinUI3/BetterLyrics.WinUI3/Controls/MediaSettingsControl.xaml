@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
@@ -20,10 +19,10 @@
 
                     <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard l:Uids.Uid="SettingsPageMusicLib" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B7;}" />
+                    <dev:SettingsCard x:Uid="SettingsPageMusicLib" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B7;}" />
 
                     <InfoBar
-                        l:Uids.Uid="SettingsPageRemoveInfo"
+                        x:Uid="SettingsPageRemoveInfo"
                         BorderThickness="0"
                         CornerRadius="0"
                         IsClosable="False"
@@ -71,14 +70,14 @@
                                         <dev:SettingsCard>
                                             <dev:SettingsCard.Header>
                                                 <HyperlinkButton
+                                                    x:Uid="SettingsPageRemovePath"
                                                     Padding="0"
-                                                    l:Uids.Uid="SettingsPageRemovePath"
                                                     Click="SettingsPageRemovePathButton_Click"
                                                     Tag="{Binding}" />
                                             </dev:SettingsCard.Header>
                                         </dev:SettingsCard>
 
-                                        <dev:SettingsCard l:Uids.Uid="SettingsPageMusicLibRealTimeWatch" IsEnabled="{Binding IsLocal, Mode=OneWay}">
+                                        <dev:SettingsCard x:Uid="SettingsPageMusicLibRealTimeWatch" IsEnabled="{Binding IsLocal, Mode=OneWay}">
                                             <ToggleSwitch IsOn="{Binding IsRealTimeWatchEnabled, Mode=TwoWay}" />
                                         </dev:SettingsCard>
                                     </dev:SettingsExpander.Items>
@@ -88,11 +87,11 @@
                     </ListView>
 
                     <dev:SettingsCard Style="{StaticResource DefaultSettingsExpanderItemStyle}">
-                        <DropDownButton l:Uids.Uid="SettingsPageAddFolderButton">
+                        <DropDownButton x:Uid="SettingsPageAddFolderButton">
                             <DropDownButton.Flyout>
                                 <MenuFlyout>
                                     <MenuFlyoutItem
-                                        l:Uids.Uid="SettingsPageLocalFolder"
+                                        x:Uid="SettingsPageLocalFolder"
                                         Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
                                         CommandParameter="{Binding ElementName=RootGrid}"
                                         Icon="Folder" />

@@ -11,7 +11,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
@@ -80,11 +79,11 @@
                             <StackPanel>
                                 <StackPanel Margin="16,8,16,4">
                                     <uc:PropertyRow
-                                        l:Uids.Uid="SettingsPageWidth"
+                                        x:Uid="SettingsPageWidth"
                                         Unit="px"
                                         Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelWidth, Mode=OneWay}" />
                                     <uc:PropertyRow
-                                        l:Uids.Uid="SettingsPageHeight"
+                                        x:Uid="SettingsPageHeight"
                                         Unit="px"
                                         Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelHeight, Mode=OneWay}" />
                                 </StackPanel>

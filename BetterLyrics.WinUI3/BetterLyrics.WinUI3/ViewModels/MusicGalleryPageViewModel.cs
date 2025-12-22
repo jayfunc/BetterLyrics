@@ -6,7 +6,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
-
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -25,7 +25,6 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
-using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -33,7 +32,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ILibWatcherService _libWatcherService;
         private readonly ISettingsService _settingsService;
-        private readonly ILocalizer _localizer = Localizer.Get();
+        private readonly ILocalizationService _localizationService;
 
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
@@ -94,8 +93,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
 
-        public MusicGalleryPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
+        public MusicGalleryPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, ILocalizationService localizationService)
         {
+            _localizationService = localizationService;
             _refreshSongsTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService = settingsService;
@@ -104,7 +104,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             TrackPlayingQueue = [.. AppSettings.MusicGallerySettings.PlayQueuePaths.Select(x => new PlayQueueItem(new ExtendedTrack(x)))];
             TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
 
-            SongsTabInfoList.Add(new SongsTabInfo(_localizer.GetLocalizedString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
+            SongsTabInfoList.Add(new SongsTabInfo(_localizationService.GetLocalizedString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
 
             RefreshSongs();
 

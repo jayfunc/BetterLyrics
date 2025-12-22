@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
@@ -22,7 +21,7 @@
                     FontSize="12"
                     Glyph="&#xE8AB;" />
                 <ToolTipService.ToolTip>
-                    <ToolTip l:Uids.Uid="LyricsWindowSwitchButtonToolTip" />
+                    <ToolTip x:Uid="LyricsWindowSwitchButtonToolTip" />
                 </ToolTipService.ToolTip>
             </Button>
 
@@ -33,7 +32,7 @@
                                       Glyph=&#xE8F1;}"
                 Style="{StaticResource TitleBarButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip l:Uids.Uid="HostWindowMusicGalleryButtonToolTip" />
+                    <ToolTip x:Uid="HostWindowMusicGalleryButtonToolTip" />
                 </ToolTipService.ToolTip>
             </Button>
         </StackPanel>

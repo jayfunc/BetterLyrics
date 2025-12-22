@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -20,14 +21,11 @@ using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
 using Serilog;
 using System;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
-using Windows.Storage;
-using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3
 {
@@ -69,10 +67,8 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            await InitializeLocalizer();
-
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
             settingsService.UpdateLanguage();
 
@@ -124,6 +120,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ITransliterationService, TransliterationService>()
                     .AddSingleton<ILastFMService, LastFMService>()
                     .AddSingleton<IDiscordService, DiscordService>()
+                    .AddSingleton<ILocalizationService, LocalizationService>()
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()
@@ -145,43 +142,6 @@ namespace BetterLyrics.WinUI3
 
                     .BuildServiceProvider()
             );
-        }
-
-        private async Task InitializeLocalizer()
-        {
-            // Initialize a "Strings" folder in the "LocalFolder" for the packaged app.
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFolder stringsFolder = await localFolder.CreateFolderAsync("Strings", CreationCollisionOption.ReplaceExisting);
-
-            // Create string resources file from app resources.
-            string resourceFileName = "Resources.resw";
-            foreach (var item in LanguageHelper.SupportedDisplayLanguages)
-            {
-                await CreateStringResourceFile(stringsFolder, item.LanguageCode, resourceFileName);
-            }
-
-            ILocalizer localizer = await new LocalizerBuilder()
-                .AddStringResourcesFolderForLanguageDictionaries(stringsFolder.Path)
-                .SetOptions(options =>
-                {
-                    options.DefaultLanguage = "en";
-                })
-                .Build();
-        }
-
-        private static async Task CreateStringResourceFile(StorageFolder stringsFolder, string language, string resourceFileName)
-        {
-            StorageFolder languageFolder = await stringsFolder.CreateFolderAsync(language, CreationCollisionOption.ReplaceExisting);
-
-            string resourceFilePath = Path.Combine(stringsFolder.Name, language, resourceFileName);
-            StorageFile resourceFile = await LoadStringResourcesFileFromAppResource(resourceFilePath);
-            _ = await resourceFile.CopyAsync(languageFolder);
-        }
-
-        private static async Task<StorageFile> LoadStringResourcesFileFromAppResource(string filePath)
-        {
-            Uri resourcesFileUri = new($"ms-appx:///{filePath}");
-            return await StorageFile.GetFileFromApplicationUriAsync(resourcesFileUri);
         }
 
         private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)

@@ -10,7 +10,6 @@
     xmlns:globalization="using:Windows.Globalization"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
@@ -54,7 +53,7 @@
             <!--  播放源列表  -->
             <Grid Grid.Row="1" Margin="36,0,36,4">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                    <TextBlock l:Uids.Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                     <ComboBox
                         x:Name="MediaSourceProvidersListView"
                         HorizontalAlignment="Stretch"
@@ -94,44 +93,44 @@
                 <Grid Style="{StaticResource SettingsGridStyle}">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageMediaSourceProvidersConfig">
+                        <dev:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                        <dev:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageDiscordPresence">
+                        <dev:SettingsCard x:Uid="SettingsPageDiscordPresence">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
                         <!--  LX music server  -->
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                        <dev:SettingsCard x:Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                             <Grid ColumnSpacing="6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBox
+                                    x:Uid="SettingsPageLXMusicServerInput"
                                     Grid.Column="0"
-                                    l:Uids.Uid="SettingsPageLXMusicServerInput"
                                     IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                                     Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}"
                                     TextWrapping="Wrap" />
                                 <Button
+                                    x:Uid="SettingsPageServerTestButton"
                                     Grid.Column="1"
-                                    l:Uids.Uid="SettingsPageServerTestButton"
                                     Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
                                     IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
                             </Grid>
                         </dev:SettingsCard>
 
                         <!--  时间轴相关配置  -->
-                        <dev:SettingsExpander l:Uids.Uid="SettingsPageLyricsTimeline" IsExpanded="True">
+                        <dev:SettingsExpander x:Uid="SettingsPageLyricsTimeline" IsExpanded="True">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=TwoWay}" />
                             <dev:SettingsExpander.Items>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
                                     <local:ExtendedSlider
                                         Frequency="100"
                                         Maximum="1000"
@@ -142,9 +141,9 @@
                                 </dev:SettingsCard>
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
-                        <dev:SettingsExpander l:Uids.Uid="MainPagePositionOffsetSlider" IsExpanded="True">
+                        <dev:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
                             <local:ExtendedSlider
-                                l:Uids.Uid="SettingsPagePositionOffsetReset"
+                                x:Uid="SettingsPagePositionOffsetReset"
                                 Default="0"
                                 Frequency="100"
                                 Maximum="5000"
@@ -152,14 +151,14 @@
                                 Unit="ms"
                                 Value="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=TwoWay}" />
                             <dev:SettingsExpander.Items>
-                                <dev:SettingsCard l:Uids.Uid="LyricsPagePositionOffsetHint">
+                                <dev:SettingsCard x:Uid="LyricsPagePositionOffsetHint">
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.ResetPositionOffsetOnSongChanged, Mode=TwoWay}" />
                                 </dev:SettingsCard>
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
 
                         <!--  专辑封面源配置  -->
-                        <TextBlock l:Uids.Uid="SettingsPageAlbumArtSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock x:Uid="SettingsPageAlbumArtSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <ListView
                             x:Name="AlbumArtSearchProvidersListView"
                             AllowDrop="True"
@@ -185,14 +184,14 @@
                         </ListView>
 
                         <!--  歌词源配置  -->
-                        <TextBlock l:Uids.Uid="SettingsPageLyricsSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsSearchType">
+                        <TextBlock x:Uid="SettingsPageLyricsSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <dev:SettingsCard x:Uid="SettingsPageLyricsSearchType">
                             <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                <ComboBoxItem l:Uids.Uid="SettingsPageLyricsSearchSequential" />
-                                <ComboBoxItem l:Uids.Uid="SettingsPageLyricsSearchBestMatch" />
+                                <ComboBoxItem x:Uid="SettingsPageLyricsSearchSequential" />
+                                <ComboBoxItem x:Uid="SettingsPageLyricsSearchBestMatch" />
                             </ComboBox>
                         </dev:SettingsCard>
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageMatchingThreshold">
+                        <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
                             <local:ExtendedSlider
                                 Default="0"
                                 Maximum="100"
@@ -228,10 +227,10 @@
                                             </dev:SettingsExpander.HeaderIcon>
                                             <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
                                             <dev:SettingsExpander.Items>
-                                                <dev:SettingsCard l:Uids.Uid="SettingsPageOverwriteMatchingThreshold">
+                                                <dev:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
                                                     <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />
                                                 </dev:SettingsCard>
-                                                <dev:SettingsCard l:Uids.Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
+                                                <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
                                                     <local:ExtendedSlider
                                                         Default="0"
                                                         Maximum="100"
@@ -259,7 +258,7 @@
                                                 <ScalarTransition />
                                             </Grid.OpacityTransition>
                                             <ToolTipService.ToolTip>
-                                                <ToolTip l:Uids.Uid="SettingsPageHoldDragSort" />
+                                                <ToolTip x:Uid="SettingsPageHoldDragSort" />
                                             </ToolTipService.ToolTip>
                                         </Grid>
                                     </Grid>
@@ -295,8 +294,8 @@
             </interactivity:Interaction.Behaviors>
             <Image MaxWidth="200" Source="/Assets/Leaf.png" />
             <TextBlock
+                x:Uid="SettingsPagePlaybackNotFound"
                 HorizontalAlignment="Center"
-                l:Uids.Uid="SettingsPagePlaybackNotFound"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
         </StackPanel>
 
@@ -307,30 +306,30 @@
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                         <!--  Realtime info  -->
-                        <TextBlock l:Uids.Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <!--  Playback source info  -->
                         <Expander
+                            x:Uid="SettingsPagePlaybackStatus"
                             HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Left"
-                            l:Uids.Uid="SettingsPagePlaybackStatus">
+                            HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <local:PropertyRow l:Uids.Uid="SettingsPagePlaybackSource" Value="{x:Bind ViewModel.MediaSessionsService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
-                                <local:PropertyRow l:Uids.Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSource" Value="{x:Bind ViewModel.MediaSessionsService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.PlayerId, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 
                         <!--  Song info  -->
                         <Expander
+                            x:Uid="SettingsPageSongStatus"
                             HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Left"
-                            l:Uids.Uid="SettingsPageSongStatus">
+                            HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <local:PropertyRow l:Uids.Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow l:Uids.Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow l:Uids.Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Album, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Title, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Album, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow
-                                    l:Uids.Uid="LyricsSearchControlDurauion"
+                                    x:Uid="LyricsSearchControlDurauion"
                                     Unit="s"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Duration, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
@@ -338,50 +337,50 @@
 
                         <!--  Search result info  -->
                         <Expander
+                            x:Uid="SettingsPageSearchResultStatus"
                             HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Left"
-                            l:Uids.Uid="SettingsPageSearchResultStatus">
+                            HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <local:PropertyRow l:Uids.Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow l:Uids.Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow l:Uids.Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Album, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Title, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Album, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow
-                                    l:Uids.Uid="LyricsSearchControlDurauion"
+                                    x:Uid="LyricsSearchControlDurauion"
                                     Unit="s"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Duration, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow l:Uids.Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LanguageCode, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
+                                <local:PropertyRow x:Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LanguageCode, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
                                 <local:PropertyRow
-                                    l:Uids.Uid="LyricsPageLyricsProviderPrefix"
+                                    x:Uid="LyricsPageLyricsProviderPrefix"
                                     Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay}"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
-                                <local:PropertyRow l:Uids.Uid="LyricsPageTransliterationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.TransliterationProvider, Mode=OneWay, Converter={StaticResource TransliterationSearchProviderToDisplayNameConverter}}" />
-                                <local:PropertyRow l:Uids.Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.TranslationProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                                <local:PropertyRow x:Uid="LyricsPageTransliterationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.TransliterationProvider, Mode=OneWay, Converter={StaticResource TransliterationSearchProviderToDisplayNameConverter}}" />
+                                <local:PropertyRow x:Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.TranslationProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
                                 <local:PropertyRow
-                                    l:Uids.Uid="LyricsPageMatchPercentage"
+                                    x:Uid="LyricsPageMatchPercentage"
                                     Unit="%"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
                                 <local:PropertyRow
-                                    l:Uids.Uid="LyricsPageCachePath"
+                                    x:Uid="LyricsPageCachePath"
                                     Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay}"
                                     ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageListenNewSession">
+                        <dev:SettingsCard x:Uid="SettingsPageListenNewSession">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageForceWordByWordEffect">
+                        <dev:SettingsCard x:Uid="SettingsPageForceWordByWordEffect">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsForceWordByWordEffect, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
                         <!--  Lyrics translation  -->
-                        <TextBlock l:Uids.Uid="SettingsPageTranslation" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsExpander l:Uids.Uid="LyricsPageTranslationEnabled" IsExpanded="True">
+                        <TextBlock x:Uid="SettingsPageTranslation" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <dev:SettingsExpander x:Uid="LyricsPageTranslationEnabled" IsExpanded="True">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=TwoWay}" />
                             <dev:SettingsExpander.Items>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <ComboBox ItemsSource="{x:Bind helper:LanguageHelper.SupportedTranslationTargetLanguages}" SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate x:DataType="models:ExtendedLanguage">
@@ -392,27 +391,27 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </dev:SettingsCard>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <dev:SettingsCard.Description>
                                         <HyperlinkButton Content="https://github.com/LibreTranslate/LibreTranslate" NavigateUri="https://github.com/LibreTranslate/LibreTranslate" />
                                     </dev:SettingsCard.Description>
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=TwoWay}" />
                                 </dev:SettingsCard>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageLibreTranslateServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageLibreTranslateServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=OneWay}">
                                     <Grid ColumnSpacing="6">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBox
+                                            x:Uid="LibreTranslateServerTextBox"
                                             Grid.Column="0"
-                                            l:Uids.Uid="LibreTranslateServerTextBox"
                                             IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                                             Text="{x:Bind ViewModel.AppSettings.TranslationSettings.LibreTranslateServer, Mode=TwoWay}"
                                             TextWrapping="Wrap" />
                                         <Button
+                                            x:Uid="SettingsPageServerTestButton"
                                             Grid.Column="1"
-                                            l:Uids.Uid="SettingsPageServerTestButton"
                                             Command="{x:Bind ViewModel.LibreTranslateServerTestCommand}"
                                             IsEnabled="{x:Bind ViewModel.IsLibreTranslateServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
                                     </Grid>
@@ -421,22 +420,22 @@
                         </dev:SettingsExpander>
 
                         <!--  Lyrics phonetic  -->
-                        <TextBlock l:Uids.Uid="SettingsPagePhonetic" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsExpander l:Uids.Uid="SettingsPageChinese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
+                        <TextBlock x:Uid="SettingsPagePhonetic" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <dev:SettingsExpander x:Uid="SettingsPageChinese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=TwoWay}" />
                             <dev:SettingsExpander.Items>
                                 <dev:SettingsCard IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
                                     <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.ChineseRomanization, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
-                                        <ComboBoxItem l:Uids.Uid="SettingsPagePinyin" />
-                                        <ComboBoxItem l:Uids.Uid="SettingsPageJyutping" />
+                                        <ComboBoxItem x:Uid="SettingsPagePinyin" />
+                                        <ComboBoxItem x:Uid="SettingsPageJyutping" />
                                     </ComboBox>
                                 </dev:SettingsCard>
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
-                        <dev:SettingsExpander l:Uids.Uid="SettingsPageJapanese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=OneWay}">
+                        <dev:SettingsExpander x:Uid="SettingsPageJapanese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
                             <dev:SettingsExpander.Items>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageCutletDockerServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageCutletDockerServer" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=OneWay}">
                                     <dev:SettingsCard.Description>
                                         <HyperlinkButton Content="https://github.com/jayfunc/cutlet-docker" NavigateUri="https://github.com/jayfunc/cutlet-docker" />
                                     </dev:SettingsCard.Description>
@@ -446,14 +445,14 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBox
+                                            x:Uid="CutletServerTextBox"
                                             Grid.Column="0"
-                                            l:Uids.Uid="CutletServerTextBox"
                                             IsEnabled="{x:Bind ViewModel.IsCutletDockerServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
                                             Text="{x:Bind ViewModel.AppSettings.TranslationSettings.CutletDockerServer, Mode=TwoWay}"
                                             TextWrapping="Wrap" />
                                         <Button
+                                            x:Uid="SettingsPageServerTestButton"
                                             Grid.Column="1"
-                                            l:Uids.Uid="SettingsPageServerTestButton"
                                             Command="{x:Bind ViewModel.CutletDockerServerTestCommand}"
                                             IsEnabled="{x:Bind ViewModel.IsCutletDockerServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
                                     </Grid>
@@ -462,46 +461,46 @@
                         </dev:SettingsExpander>
 
                         <!--  中文简体繁体偏好  -->
-                        <TextBlock l:Uids.Uid="SettingsPageChineseLyrics" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageChinesePreference">
+                        <TextBlock x:Uid="SettingsPageChineseLyrics" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <dev:SettingsCard x:Uid="SettingsPageChinesePreference">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTraditionalChineseEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
                         <!--  Last.fm  -->
-                        <TextBlock l:Uids.Uid="SettingsPageLastFM" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock x:Uid="SettingsPageLastFM" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <dev:SettingsExpander
-                            l:Uids.Uid="SettingsPageLastFMManager"
+                            x:Uid="SettingsPageLastFMManager"
                             HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
                             IsExpanded="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                             <StackPanel Orientation="Horizontal" Spacing="6">
                                 <Button
-                                    l:Uids.Uid="SettingsPageLastFMAuth"
+                                    x:Uid="SettingsPageLastFMAuth"
                                     Command="{x:Bind ViewModel.LastFMAuthCommand}"
                                     IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
                                 <Button
-                                    l:Uids.Uid="SettingsPageLastFMUnAuth"
+                                    x:Uid="SettingsPageLastFMUnAuth"
                                     Command="{x:Bind ViewModel.LastFMUnAuthCommand}"
                                     IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}" />
                             </StackPanel>
                             <dev:SettingsExpander.Items>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                                     <HyperlinkButton Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}" NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
                                 </dev:SettingsCard>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                                     <TextBlock Text="{x:Bind ViewModel.LastFMUser.Playcount, Mode=OneWay}" />
                                 </dev:SettingsCard>
-                                <dev:SettingsCard l:Uids.Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                                <dev:SettingsCard x:Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                                     <TextBlock Text="{x:Bind ViewModel.LastFMUser.Registered.ToLongDateString(), Mode=OneWay}" />
                                 </dev:SettingsCard>
                                 <dev:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <Button l:Uids.Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFMRefreshCommand}" />
+                                    <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFMRefreshCommand}" />
                                 </dev:SettingsCard>
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
 
                         <!--  amll-ttml-db  -->
                         <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="amll-ttml-db" />
-                        <dev:SettingsCard l:Uids.Uid="SettingsPageAmllTtmlDbBaseUrl">
+                        <dev:SettingsCard x:Uid="SettingsPageAmllTtmlDbBaseUrl">
                             <Grid ColumnSpacing="6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />

@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
@@ -29,7 +28,7 @@
                 <ScrollViewer>
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <TextBlock l:Uids.Uid="LyricsSearchControlSongInfoMapping" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock x:Uid="LyricsSearchControlSongInfoMapping" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <Grid
                             Padding="16"
@@ -37,7 +36,7 @@
                             CornerRadius="4">
                             <StackPanel Spacing="6">
 
-                                <local:PropertyRow l:Uids.Uid="LyricsSearchControlTitle" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalTitle, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlTitle" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalTitle, Mode=OneWay}" />
 
                                 <Grid ColumnSpacing="6">
                                     <Grid.ColumnDefinitions>
@@ -46,9 +45,9 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
+                                        x:Uid="LyricsSearchControlMappedAs"
                                         Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        l:Uids.Uid="LyricsSearchControlMappedAs" />
+                                        VerticalAlignment="Center" />
                                     <TextBox
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedTitle, Mode=TwoWay}"
@@ -72,7 +71,7 @@
                             CornerRadius="4">
                             <StackPanel Spacing="6">
 
-                                <local:PropertyRow l:Uids.Uid="LyricsSearchControlArtist" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalArtist, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlArtist" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalArtist, Mode=OneWay}" />
 
                                 <Grid ColumnSpacing="6">
                                     <Grid.ColumnDefinitions>
@@ -81,9 +80,9 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
+                                        x:Uid="LyricsSearchControlMappedAs"
                                         Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        l:Uids.Uid="LyricsSearchControlMappedAs" />
+                                        VerticalAlignment="Center" />
                                     <TextBox
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedArtist, Mode=TwoWay}"
@@ -104,7 +103,7 @@
                                     TextWrapping="Wrap">
                                     <Paragraph>
                                         <Run Text="*" />
-                                        <Run l:Uids.Uid="ArtistsSplitHint" />
+                                        <Run x:Uid="ArtistsSplitHint" />
                                     </Paragraph>
                                     <Paragraph>
                                         <Run Text=";    ,    /    ；    、    ，" />
@@ -120,7 +119,7 @@
                             CornerRadius="4">
                             <StackPanel Spacing="6">
 
-                                <local:PropertyRow l:Uids.Uid="LyricsSearchControlAlbum" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalAlbum, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlAlbum" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalAlbum, Mode=OneWay}" />
 
                                 <Grid ColumnSpacing="6">
                                     <Grid.ColumnDefinitions>
@@ -130,9 +129,9 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock
+                                        x:Uid="LyricsSearchControlMappedAs"
                                         Grid.Column="0"
-                                        VerticalAlignment="Center"
-                                        l:Uids.Uid="LyricsSearchControlMappedAs" />
+                                        VerticalAlignment="Center" />
                                     <TextBox
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedAlbum, Mode=TwoWay}"
@@ -151,17 +150,17 @@
                         </Grid>
 
                         <dev:SettingsCard>
-                            <CheckBox l:Uids.Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
+                            <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard l:Uids.Uid="LyricsSearchControlTargetSearchProvider">
+                        <dev:SettingsCard x:Uid="LyricsSearchControlTargetSearchProvider">
                             <Button
-                                l:Uids.Uid="LyricsSearchControlSearch"
+                                x:Uid="LyricsSearchControlSearch"
                                 Command="{x:Bind ViewModel.SearchCommand}"
                                 Style="{StaticResource AccentButtonStyle}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard l:Uids.Uid="LyricsSearchControlIgnoreCache">
+                        <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
@@ -181,26 +180,26 @@
                                         Value="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
                                     <!--  Lyrics search result  -->
                                     <StackPanel Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <local:PropertyRow l:Uids.Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                        <local:PropertyRow l:Uids.Uid="SettingsPageArtist" Value="{x:Bind DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
-                                        <local:PropertyRow l:Uids.Uid="SettingsPageAlbum" Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow
-                                            l:Uids.Uid="LyricsSearchControlDurauion"
+                                            x:Uid="LyricsSearchControlDurauion"
                                             Unit="s"
                                             Value="{x:Bind Duration, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow
-                                            l:Uids.Uid="LyricsPageMatchPercentage"
+                                            x:Uid="LyricsPageMatchPercentage"
                                             Unit="%"
                                             Value="{x:Bind MatchPercentage, Mode=OneWay}" />
                                         <local:PropertyRow
-                                            l:Uids.Uid="LyricsPageCachePath"
+                                            x:Uid="LyricsPageCachePath"
                                             Link="{x:Bind SelfPath, TargetNullValue=N/A, Mode=OneWay}"
                                             ToolTipService.ToolTip="{x:Bind SelfPath, TargetNullValue=N/A, Mode=OneWay}" />
                                     </StackPanel>
                                     <!--  NOT FOUND  -->
                                     <TextBlock
+                                        x:Uid="LyricsSearchControlNotFound"
                                         VerticalAlignment="Center"
-                                        l:Uids.Uid="LyricsSearchControlNotFound"
                                         Visibility="{x:Bind IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
                                 </StackPanel>
                             </ListViewItem>
@@ -270,8 +269,8 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind LanguageCode, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
                                 <InfoBadge
+                                    x:Uid="LyricsSearchControlAutoGenerated"
                                     Margin="6,0,0,0"
-                                    l:Uids.Uid="LyricsSearchControlAutoGenerated"
                                     Style="{StaticResource StringInfoBadgeStyle}"
                                     Visibility="{x:Bind AutoGenerated, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
                             </StackPanel>
@@ -353,19 +352,19 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock
+                x:Uid="LyricsSearchControlHelp"
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                l:Uids.Uid="LyricsSearchControlHelp"
                 FontSize="12"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 TextWrapping="Wrap" />
             <Button
+                x:Uid="LyricsSearchControlReset"
                 Grid.Column="2"
-                l:Uids.Uid="LyricsSearchControlReset"
                 Command="{x:Bind ViewModel.ResetCommand}" />
             <Button
+                x:Uid="LyricsSearchControlSaveChanges"
                 Grid.Column="3"
-                l:Uids.Uid="LyricsSearchControlSaveChanges"
                 Command="{x:Bind ViewModel.SaveCommand}"
                 Style="{StaticResource AccentButtonStyle}" />
         </Grid>

@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -35,7 +34,7 @@
             Opacity="0.7"
             Visibility="{x:Bind LyricsWindowStatus.IsDefault, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
             <TextBlock
-                l:Uids.Uid="DemoWindowControlDefault"
+                x:Uid="DemoWindowControlDefault"
                 FontSize="12"
                 TextWrapping="Wrap" />
         </Grid>
@@ -118,7 +117,7 @@
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       Glyph=&#xE78B;}">
                 <ToolTipService.ToolTip>
-                    <TextBlock l:Uids.Uid="SystemTrayLyrics" />
+                    <TextBlock x:Uid="SystemTrayLyrics" />
                 </ToolTipService.ToolTip>
             </Button>
             <Button
@@ -130,7 +129,7 @@
                                       Glyph=&#xE711;}"
                 IsEnabled="{x:Bind LyricsWindowStatus.IsOpened, Mode=OneWay}">
                 <ToolTipService.ToolTip>
-                    <TextBlock l:Uids.Uid="SettingsPageCloseStatus" />
+                    <TextBlock x:Uid="SettingsPageCloseStatus" />
                 </ToolTipService.ToolTip>
             </Button>
         </Grid>
