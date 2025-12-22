@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -286,10 +286,10 @@
     <value>仅显示翻译</value>
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
-    <value>翻译提供方</value>
+    <value>翻译服务提供方</value>
   </data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
-    <value>音译提供方</value>
+    <value>音译来源</value>
   </data>
   <data name="LyricsParseError" xml:space="preserve">
     <value>歌词解析失败</value>
@@ -691,7 +691,7 @@
     <value>启动时打开音乐库窗口</value>
   </data>
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>打开音乐库窗口时自动继续播放</value>
+    <value>音乐库窗口打开时自动继续播放</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自动启动</value>
@@ -1255,7 +1255,7 @@
     <value>调整此值将影响顺序搜索和最佳匹配搜索结果，但不会影响手动歌词搜索界面中的搜索结果</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
-    <value>最小匹配阈值</value>
+    <value>最低匹配阈值</value>
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>媒体库</value>
@@ -1372,7 +1372,7 @@
     <value>上一曲目快捷键</value>
   </data>
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
-    <value>纯色层</value>
+    <value>纯色图层</value>
   </data>
   <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ 反馈交流群</value>
@@ -1534,7 +1534,7 @@
     <value>启动</value>
   </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
-    <value>关闭音乐库窗口时停止播放</value>
+    <value>关闭音乐库时停止播放</value>
   </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>描边颜色</value>
