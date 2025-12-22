@@ -157,13 +157,13 @@
     <value>Transliteration vom Cutlet-Docker konnte nicht angefordert werden. Bitte überprüfen Sie die Einstellungen oder die native Cutlet-Docker Konfiguration</value>
   </data>
 	<data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>e.g. http://localhost:23333</value>
+    <value>Zum Beispiel http://localhost:23333</value>
   </data>
 	<data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>Standard</value>
   </data>
 	<data name="DesktopMode" xml:space="preserve">
-    <value>Desktop-Modus (Transparent)</value>
+    <value>Desktop-Modus (transparent)</value>
   </data>
 	<data name="DockedMode" xml:space="preserve">
     <value>Andockmodus</value>
@@ -172,7 +172,7 @@
     <value>Export erfolgreich</value>
   </data>
 	<data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>Keine Verbindung zum LX Music Server möglich. Bitte gehen Sie zu Einstellungen - Wiedergabequelle - LX Music - LX Music Server um zu überprüfen, ob der Link korrekt eingegeben wurde</value>
+    <value>Keine Verbindung zum LX-Musik-Server bitte gehen Sie zu Einstellungen - Playback Source - LX Music - LX Music Server um zu überprüfen, ob der Link korrekt eingegeben wurde</value>
   </data>
 	<data name="FullscreenMode" xml:space="preserve">
     <value>Vollbildmodus</value>
@@ -253,16 +253,16 @@
     <value>Songtext-Anbieter</value>
   </data>
 	<data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
-    <value>Songtext manuell suchen</value>
+    <value>Songtexte manuell suchen</value>
   </data>
 	<data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
     <value>Einstellungen für Songtext-Fensterverwaltung</value>
   </data>
 	<data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
-    <value>Prozentsatz übereinstimmen</value>
+    <value>Prozentsatz Match</value>
   </data>
 	<data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>Wiedergabequellen-Kurzbefehl Einstellungen</value>
+    <value>Quellenverknüpfungseinstellungen abspielen</value>
   </data>
 	<data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>Beim Titelwechsel auf 0 zurücksetzen</value>
@@ -271,7 +271,7 @@
     <value>Einstellungen</value>
   </data>
 	<data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>Songtext-Timeline Offset</value>
+    <value>Songtext-Timeline-Offset</value>
   </data>
 	<data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
@@ -313,7 +313,7 @@
     <value>Cache bei der Suche ignorieren</value>
   </data>
 	<data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
-    <value>Zugeordnet als</value>
+    <value>zugeordnet als</value>
   </data>
 	<data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
     <value>Als reine Musik markieren</value>
@@ -334,7 +334,7 @@
     <value>Songinfo-Zuordnung</value>
   </data>
 	<data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>Suchanbieter für Zieltexte</value>
+    <value>Zieltext-Suchanbieter</value>
   </data>
 	<data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>Titel</value>
@@ -346,7 +346,7 @@
     <value>Lokale .ESLRC Dateien</value>
   </data>
 	<data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
-    <value>Lokale .LRC Dateien</value>
+    <value>Lokale .LRC-Dateien</value>
   </data>
 	<data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>Lokale Musikdateien</value>
@@ -370,13 +370,13 @@
     <value>Exportieren</value>
   </data>
 	<data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
-    <value>Songtext-Fensterschalter</value>
+    <value>Songtext-Fensterwechsel</value>
   </data>
 	<data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
     <value>Gehen Sie zu Einstellungen, um weitere Modi hinzuzufügen</value>
   </data>
 	<data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
-    <value>Songtext-Fensterschalter</value>
+    <value>Songtext-Fensterwechsel</value>
   </data>
 	<data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>Nur Albumcover Bereich</value>
@@ -394,7 +394,7 @@
     <value>Keine Musik wird gerade abgespielt</value>
   </data>
 	<data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>Songtext-Timeline Offset</value>
+    <value>Songtext-Timeline-Offset</value>
   </data>
 	<data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Ansicht teilen</value>
@@ -409,16 +409,16 @@
     <value>Ende der Liste</value>
   </data>
 	<data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
-    <value>Nächste Artikel</value>
+    <value>Nächste Elemente</value>
   </data>
 	<data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>Zur Playlist hinzufügen</value>
+    <value>Zur Warteschlange hinzufügen</value>
   </data>
 	<data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>Alle Titel</value>
   </data>
 	<data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
-    <value>Warteschlange leeren</value>
+    <value>Playlist leeren</value>
   </data>
 	<data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
     <value>Album</value>
@@ -451,7 +451,7 @@
     <value>Pfad</value>
   </data>
 	<data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
-    <value>Beispielrate</value>
+    <value>Abtastrate</value>
   </data>
 	<data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
     <value>Titel</value>
@@ -469,10 +469,10 @@
     <value>Playlist erstellen</value>
   </data>
 	<data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
-    <value>Alle abspielen</value>
+    <value>Alle spielen</value>
   </data>
 	<data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
-    <value>Warteschlange abspielen</value>
+    <value>Warteschlange</value>
   </data>
 	<data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>Warteschlange ist leer</value>
@@ -493,13 +493,13 @@
     <value>Aus der Warteschlange entfernen</value>
   </data>
 	<data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
-    <value>Scrolle zum Abspielen des Elements</value>
+    <value>Scrolle zum Abspielen</value>
   </data>
 	<data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
-    <value>Alle auswählen</value>
+    <value>Alles auswählen</value>
   </data>
 	<data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
-    <value>Einfache Schleife</value>
+    <value>Einzelne Schleife</value>
   </data>
 	<data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
     <value>Suche nach dem Songname, Interpret, Album, Dateinamen oder Ordnerpfad, in dem sich die Datei befindet</value>
@@ -541,7 +541,7 @@
     <value>Bild-in-Bild-Modus</value>
   </data>
 	<data name="Pinyin" xml:space="preserve">
-    <value>Mandarin Pinyin</value>
+    <value>Mandarin pinyin</value>
   </data>
 	<data name="PlaylistViewFailed" xml:space="preserve">
     <value>Titel können nicht angezeigt werden, da der Pfad nicht existiert</value>
@@ -613,7 +613,7 @@
     <value>Aktivieren wird die Theme-Einstellungen in den lyrischen Hintergrundeinstellungen überschreiben</value>
   </data>
 	<data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
-    <value>An Umweltfarbe anpassen</value>
+    <value>An Umgebungsfarbe anpassen</value>
   </data>
 	<data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>Neu</value>
@@ -628,7 +628,7 @@
     <value>Albumcover</value>
   </data>
 	<data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
-    <value>Albumbild Höhe</value>
+    <value>Höhe des Albumbildes</value>
   </data>
 	<data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>Albumcover Ebene</value>
@@ -637,7 +637,7 @@
     <value>Albumcover Quelle konfigurieren</value>
   </data>
 	<data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>Albumcover-Größe</value>
+    <value>Albumcover Größe</value>
   </data>
 	<data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
     <value>Albumcover Flächeneffekt</value>
@@ -646,19 +646,19 @@
     <value>Albumcover-Quelle</value>
   </data>
 	<data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
-    <value>Corner Radius</value>
+    <value>Corner radius</value>
   </data>
 	<data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
-    <value>Schattenstread Betrag</value>
+    <value>Wie sehr sich die Schatten ausbreiten</value>
   </data>
 	<data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
-    <value>Albumcover-Stil</value>
+    <value>Stil der Albumcover Fläche</value>
   </data>
 	<data name="SettingsPageAlignment.Header" xml:space="preserve">
     <value>Ausrichtung</value>
   </data>
 	<data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
-    <value>Entsperrschaltfläche immer ausblenden</value>
+    <value>Entsperrtaste immer ausblenden</value>
   </data>
 	<data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>Basis-URL</value>
@@ -670,10 +670,10 @@
     <value>Bring das Songtext-Fenster nach oben</value>
   </data>
 	<data name="SettingsPageApp.Content" xml:space="preserve">
-    <value>App-Aussehen und Verhalten</value>
+    <value>Aussehen und Verhalten der App</value>
   </data>
 	<data name="SettingsPageAppAppearance.Text" xml:space="preserve">
-    <value>App-Erscheinung</value>
+    <value>App-Aussehen</value>
   </data>
 	<data name="SettingsPageAppBehavior.Text" xml:space="preserve">
     <value>Allgemeines Verhalten</value>
@@ -688,16 +688,16 @@
     <value>Automatische Anpassung</value>
   </data>
 	<data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
-    <value>Standard-Songtext-Fenster beim Start automatisch öffnen</value>
+    <value>Beim Programmstart automatisch das Standard-Songtext-Fenster öffnen</value>
   </data>
 	<data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>Fenster der Musikbibliothek beim Start öffnen</value>
+    <value>Öffne das Musikbibliothek-Fenster beim Start der App</value>
   </data>
 	<data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>Wiedergabe automatisch fortsetzen, wenn das Musikbibliothek Fenster geöffnet wird</value>
+    <value>Beim Öffnen des Musikbibliotheksfensters automatisch weiterspielen</value>
   </data>
 	<data name="SettingsPageAutoStart.Header" xml:space="preserve">
-    <value>Automatic Startup</value>
+    <value>Automatic startup</value>
   </data>
 	<data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>Beim Starten der App</value>
@@ -721,7 +721,7 @@
     <value>Grenzenlose Songtext-Verknüpfung</value>
   </data>
 	<data name="SettingsPageBottomGapFactor.Header" xml:space="preserve">
-    <value>Unterer Gap Höhe Faktor</value>
+    <value>Unterer Abstand Höhe Faktor</value>
   </data>
 	<data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Inklusive Logdateien, Netzwerk-Songtext-Cache</value>
@@ -736,7 +736,7 @@
     <value>Verknüpfung prüfen</value>
   </data>
 	<data name="SettingsPageChinese.Header" xml:space="preserve">
-    <value>Chinesische Pronunciation</value>
+    <value>Chinesische Aussprache</value>
   </data>
 	<data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
     <value>Chinesische Songtexte</value>
@@ -757,7 +757,7 @@
     <value>Durchklicken</value>
   </data>
 	<data name="SettingsPageClickThroughHotKey.Header" xml:space="preserve">
-    <value>Tastenkürzel anklicken</value>
+    <value>Tastenkürzel durchklicken</value>
   </data>
 	<data name="SettingsPageCloseStatus.Text" xml:space="preserve">
     <value>Schließen</value>
@@ -787,7 +787,7 @@
     <value>Crossfade</value>
   </data>
 	<data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
-    <value>Aktueller Songtext-Fensterstatus</value>
+    <value>Status des aktuellen Songtext-Fensters</value>
   </data>
 	<data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
     <value>cutlet-docker Transliteration Service</value>
@@ -796,13 +796,13 @@
     <value>Dunkel</value>
   </data>
 	<data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
-    <value>Show Debug Overlay</value>
+    <value>Show debug overlay</value>
   </data>
 	<data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
 	<data name="SettingsPageDesktopMode.Text" xml:space="preserve">
-    <value>Desktop-Modus (Transparent)</value>
+    <value>Desktop-Modus (transparent)</value>
   </data>
 	<data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>Dieses Projekt wird ohne jegliche Gewährleistung zur Verfügung gestellt. Alle Texte, Schriftarten, Icons und andere Ressourcen Dritter sind Eigentum der jeweiligen Copyright-Inhaber. Der Autor dieses Projekts beansprucht nicht das Eigentum an solchen Ressourcen. Dieses Projekt ist nicht kommerziell und sollte nicht dazu benutzt werden, Rechte zu verletzen. Der Nutzer ist dafür verantwortlich, dass seine eigene Nutzung den geltenden Gesetzen und Lizenzen entspricht.</value>
@@ -811,7 +811,7 @@
     <value>Discord</value>
   </data>
 	<data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
-    <value>Hörstatus über Discord Präsenz anzeigen</value>
+    <value>Hörstatus über Discord Presence anzeigen</value>
   </data>
 	<data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
     <value>Layout-Modus</value>
@@ -823,7 +823,7 @@
     <value>Zielmonitor</value>
   </data>
 	<data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>Platzierung von Arbeitsbereichen</value>
+    <value>Arbeitsplatzplatzierung</value>
   </data>
 	<data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>Unten</value>
@@ -838,7 +838,7 @@
     <value>Ziehbare Fläche</value>
   </data>
 	<data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
-    <value>Lockernder Animationstyp</value>
+    <value>Lockernde Animationstyp</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
     <value>Einfaches Hinten</value>
@@ -847,28 +847,28 @@
     <value>Einfacher Bounce</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
-    <value>Einfacher in-Out Circ</value>
+    <value>Einfacher in-out-Kreis</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
-    <value>Leicht in der Hand</value>
+    <value>Einfaches In-Out-Kubisch</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
-    <value>Leicht in Elastik</value>
+    <value>Leicht in Elastisch</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
-    <value>Einfach in der Expo</value>
+    <value>Leichte in-out-Expo</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
-    <value>Einfaches Quad</value>
+    <value>Einfaches in-Out Quadrat</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
     <value>Einfaches in-out-Quart</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
-    <value>Leichter in-out Quint</value>
+    <value>Einfacher In-Out Quint</value>
   </data>
 	<data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
-    <value>Einfach in Sine</value>
+    <value>Einfacher Sinus</value>
   </data>
 	<data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>Linear</value>
@@ -877,7 +877,7 @@
     <value>Glatter Schritt</value>
   </data>
 	<data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>Zeilenanfang zum aktuellen Char</value>
+    <value>Zeilenanfang zum aktuellen Zeichen</value>
   </data>
 	<data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
     <value>Langfristige Silbe</value>
@@ -886,7 +886,7 @@
     <value>Englisch</value>
   </data>
 	<data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
-    <value>Umweltfarben-Sample-Modus</value>
+    <value>Umweltfarben-Sampe-Modus</value>
   </data>
 	<data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
     <value>Über dem Fenster</value>
@@ -898,13 +898,13 @@
     <value>Fensterkanten</value>
   </data>
 	<data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
-    <value>Innerhalb des Fensters</value>
+    <value>Im Fenster</value>
   </data>
 	<data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
-    <value>Programm beim Schließen des Musikbibliotheksfensters beenden</value>
+    <value>Schließen Sie das Programm beim Schließen des Musikbibliotheksfensters</value>
   </data>
 	<data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
-    <value>Programm beim Schließen des Songtext-Fensters beenden</value>
+    <value>Schließen Sie das Programm, wenn Sie das Songtext-Fenster schließen</value>
   </data>
 	<data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>Export-Einstellungen</value>
@@ -919,7 +919,7 @@
     <value>Häufig gestellte Fragen</value>
   </data>
 	<data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
-    <value>Feste Zeitschritt Wiedergabe</value>
+    <value>Feste Zeitschritt Rendering</value>
   </data>
 	<data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>Flüssigkeitsschicht</value>
@@ -931,7 +931,7 @@
     <value>System folgen</value>
   </data>
 	<data name="SettingsPageFontColor.Header" xml:space="preserve">
-    <value>Font Color</value>
+    <value>Font color</value>
   </data>
 	<data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>Songtext-Fenster durch Umfragen oben halten</value>
@@ -943,7 +943,7 @@
     <value>Auch wenn der aktuelle Songtext keine Wort-zu-Wort-Informationen hat, wird er es zwingen, einen Wort-zu-Wort-Effekt zu simulieren</value>
   </data>
 	<data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>Erzwinge Word-by-Word-Lyrics Effekt</value>
+    <value>Texteffekt von Wort für Wort aktivieren</value>
   </data>
 	<data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>Bildrate rendern</value>
@@ -970,13 +970,13 @@
     <value>Fenster automatisch ausblenden/anzeigen</value>
   </data>
 	<data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
-    <value>Hier halten und zum Sortieren ziehen</value>
+    <value>Hier gedrückt halten und sortieren</value>
   </data>
 	<data name="SettingsPageHorizontalLayoutFactor.Text" xml:space="preserve">
     <value>Horizontaler Layoutfaktor</value>
   </data>
 	<data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
-    <value>Albumcover Animation umschalten</value>
+    <value>Albumcover Animation</value>
   </data>
 	<data name="SettingsPageImport.Content" xml:space="preserve">
     <value>Importieren</value>
@@ -1018,7 +1018,7 @@
     <value>Last.fm</value>
   </data>
 	<data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
-    <value>Gesamtzahl der Wiedergabe</value>
+    <value>Gesamtzahl der Spiele</value>
   </data>
 	<data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
     <value>Aktualisieren</value>
@@ -1027,7 +1027,7 @@
     <value>Registrierungsdatum</value>
   </data>
 	<data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
-    <value>Tracklistenverlauf über Last.fm</value>
+    <value>Verlauf verfolgen über Last.fm</value>
   </data>
 	<data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
     <value>Autorisierung widerrufen</value>
@@ -1051,7 +1051,7 @@
     <value>Links</value>
   </data>
 	<data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
-    <value>Breite des linken Gap Bereichs</value>
+    <value>Breite des linken Spaltbereichs</value>
   </data>
 	<data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>Serveradresse</value>
@@ -1060,7 +1060,7 @@
     <value>Hell</value>
   </data>
 	<data name="SettingsPageLinkedFile.Text" xml:space="preserve">
-    <value>Verknüpfte lokale Datei</value>
+    <value>Verlinkte lokale Datei</value>
   </data>
 	<data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>Überwachung für neue Wiedergabequellen aktivieren</value>
@@ -1069,10 +1069,10 @@
     <value>Lokaler Ordner</value>
   </data>
 	<data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>Logeintrag</value>
+    <value>Protokolleintrag</value>
   </data>
 	<data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
-    <value>Grenzwert für lange Silbe</value>
+    <value>Schwellenwert für lange Silbe</value>
   </data>
 	<data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX-Musik-Server</value>
@@ -1087,7 +1087,7 @@
     <value>Songtext-Hintergrund</value>
   </data>
 	<data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>Nicht aktuelle Zeile</value>
+    <value>Nicht die aktuelle Linie</value>
   </data>
 	<data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>Schwarz</value>
@@ -1105,7 +1105,7 @@
     <value>Aktuelle Zeilenposition</value>
   </data>
 	<data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
-    <value>Breite des Songtext-Bereichs</value>
+    <value>Songtext-Bereich-Breite Faktor</value>
   </data>
 	<data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>Liedtext-Effekt</value>
@@ -1120,19 +1120,19 @@
     <value>Zusätzliches Licht</value>
   </data>
 	<data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
-    <value>Fadeneffekt für nicht aktuelle Zeilen aktivieren</value>
+    <value>Ausblendeffekt für nicht aktuelle Zeilen aktivieren</value>
   </data>
 	<data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
     <value>Ausblendeffekt</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>Aktuelle Zeile</value>
+    <value>Aktuelle Spielzeile</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>Adaptiv für den Songtext-Hintergrund (Farben)</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>Adaptiv für den Songtext-Hintergrund (grau)</value>
+    <value>Adaptiv für den Songtext-Hintergrund (Grau)</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
     <value>Eigene</value>
@@ -1144,7 +1144,7 @@
     <value>Adaptiv für den Songtext-Hintergrund (Farben)</value>
   </data>
 	<data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>Adaptiv für den Songtext-Hintergrund (grau)</value>
+    <value>Adaptiv für den Songtext-Hintergrund (Grau)</value>
   </data>
 	<data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
     <value>Eigene</value>
@@ -1153,10 +1153,10 @@
     <value>Schriftfamilie</value>
   </data>
 	<data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
-    <value>Font Size</value>
+    <value>Font size</value>
   </data>
 	<data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
-    <value>Songtext Strichbreite</value>
+    <value>Liedtext Strichbreite</value>
   </data>
 	<data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Schriftgewicht</value>
@@ -1168,7 +1168,7 @@
     <value>Hervorheben</value>
   </data>
 	<data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>Hervorhebungsbereich</value>
+    <value>Original Highlight-Bereich</value>
   </data>
 	<data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>Links</value>
@@ -1177,7 +1177,7 @@
     <value>Hell</value>
   </data>
 	<data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
-    <value>Spielbereich Kantenverlauf</value>
+    <value>Kantenverlauf abspielen</value>
   </data>
 	<data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>Zeilenabstand</value>
@@ -1198,19 +1198,19 @@
     <value>Nicht aktuelle Zeilen schrittweise aus der Ansicht verschieben</value>
   </data>
 	<data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
-    <value>Bleiben Sie aus der Sicht</value>
+    <value>Bleiben Sie unsichtbar</value>
   </data>
 	<data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
-    <value>Liedtext-Bereichshöhe Faktor</value>
+    <value>Höhe des Songtext-Bereichs</value>
   </data>
 	<data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>Skalierung für Silben mit langer Dauer aktivieren</value>
   </data>
 	<data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
-    <value>Skaliereffekt</value>
+    <value>Skalierungseffekt</value>
   </data>
 	<data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
-    <value>Bestes Match</value>
+    <value>Bester Treffer</value>
   </data>
 	<data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
     <value>Songtext-Quelle konfigurieren</value>
@@ -1240,13 +1240,13 @@
     <value>Dünn</value>
   </data>
 	<data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
-    <value>Songtext-Timeline-Sync</value>
+    <value>Liedtext-Timeline-Sync</value>
   </data>
 	<data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>Wenn der Songtext-Fortschritt nervös ist, versuche diesen Schwellenwert zu erhöhen; das Ändern dieses Wertes kann dazu führen, dass die Songtextsynchronisierung abweicht</value>
   </data>
 	<data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
-    <value>Songtext-Timeline-Sync-Schwellenwert</value>
+    <value>Songtext-Timeline-Sync-Schwelle</value>
   </data>
 	<data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
     <value>Hervorhebung der Übersetzung</value>
@@ -1255,7 +1255,7 @@
     <value>Quell- und Übersetzungseparator</value>
   </data>
 	<data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>Deckkraft der oberen und unteren Kanten</value>
+    <value>Deckkraft am oberen und unteren Rand</value>
   </data>
 	<data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>Songtext-Fenster</value>
@@ -1267,7 +1267,7 @@
     <value>Songtext-Fenstermanager</value>
   </data>
 	<data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
-    <value>Songtext-Fenster-Switcher-Verknüpfung</value>
+    <value>Songtext-Statuswechsel-Verknüpfung</value>
   </data>
 	<data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
     <value>Songtext-Fenster</value>
@@ -1276,7 +1276,7 @@
     <value>Die Anpassung dieses Wertes wirkt sich auf die sequentielle Suche aus und entspricht am besten den Suchergebnissen, wirkt sich aber nicht auf die Suchergebnisse im manuellen Text-Suchfenster aus</value>
   </data>
 	<data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
-    <value>Minimaler Anpassungsschwellwert</value>
+    <value>Minimaler Schwellenwert</value>
   </data>
 	<data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>Medienbibliothek</value>
@@ -1294,10 +1294,10 @@
     <value>Mica Alt</value>
   </data>
 	<data name="SettingsPageMiddleGapColFactor.Header" xml:space="preserve">
-    <value>Winkelbreite mittlerer Bereich</value>
+    <value>Abstand zwischen dem mittleren Bereich</value>
   </data>
 	<data name="SettingsPageMiddleGapRowFactor.Header" xml:space="preserve">
-    <value>Faktor mittlere Lücke Fläche</value>
+    <value>Höhe des mittleren Spalt Bereichs</value>
   </data>
 	<data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>Testmusik abspielen</value>
@@ -1309,7 +1309,7 @@
     <value>Musikgalerie</value>
   </data>
 	<data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
-    <value>Eingebettetes Lyrics Fenster in der Musikbibliothek</value>
+    <value>Eingebettetes Songtext-Fenster in der Musikbibliothek</value>
   </data>
 	<data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Ordner hinzufügen, die Musik oder Songtexte speichern</value>
@@ -1342,10 +1342,10 @@
     <value>Originaltext</value>
   </data>
 	<data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
-    <value>Legen Sie den minimalen Match-Grenzwert individuell fest</value>
+    <value>Legen Sie den minimalen Schwellwert einzeln fest</value>
   </data>
 	<data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
-    <value>Farbauswahlstil</value>
+    <value>Farbwählerstil</value>
   </data>
 	<data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>Dieser Ordner ist bereits im existierenden Ordner enthalten und muss nicht erneut hinzugefügt werden</value>
@@ -1372,7 +1372,7 @@
     <value>An Taskleiste anheften</value>
   </data>
 	<data name="SettingsPagePinyin.Content" xml:space="preserve">
-    <value>Mandarin Pinyin</value>
+    <value>Pinyin von Mandarin</value>
   </data>
 	<data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
     <value>Wiedergabequellen</value>
@@ -1399,10 +1399,10 @@
     <value>Tastenkürzel für den vorherigen Track</value>
   </data>
 	<data name="SettingsPagePureLayer.Header" xml:space="preserve">
-    <value>Reine Farbenebene</value>
+    <value>Reine Farbschicht</value>
   </data>
 	<data name="SettingsPageQQGroup.Content" xml:space="preserve">
-    <value>QQ Feedback &amp; Chat-Gruppe</value>
+    <value>QQ-Feedback &amp; Chat-Gruppe</value>
   </data>
 	<data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Echtzeit-Status</value>
@@ -1435,7 +1435,7 @@
     <value>Rechts</value>
   </data>
 	<data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
-    <value>Breite des rechten Gap Bereichs</value>
+    <value>Breite des rechten Lückenbereichs</value>
   </data>
 	<data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>Japanische Anmerkung</value>
@@ -1447,7 +1447,7 @@
     <value>Bereich</value>
   </data>
 	<data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
-    <value>Schwanz-Zeilenverzögerung</value>
+    <value>Schwinglinienverzögerung</value>
   </data>
 	<data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
     <value>Endzeile-Dauer</value>
@@ -1456,16 +1456,16 @@
     <value>Aktuelle Zeilendauer</value>
   </data>
 	<data name="SettingsPageScrollEasing.Header" xml:space="preserve">
-    <value>Text-Animationstyp</value>
+    <value>Lyrische Animationstyp</value>
   </data>
 	<data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
-    <value>Verzögerung der ersten Zeile</value>
+    <value>Erste Zeilenverzögerung</value>
   </data>
 	<data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
-    <value>Dauer der ersten Zeile</value>
+    <value>Die Dauer der ersten Zeile</value>
   </data>
 	<data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
-    <value>Aktuelle Songtext-Suchergebnisse</value>
+    <value>Aktueller Songtext Suchergebnis</value>
   </data>
 	<data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>Server testen</value>
@@ -1483,7 +1483,7 @@
     <value>Einstellungsmanager</value>
   </data>
 	<data name="SettingsPageShareHub.Content" xml:space="preserve">
-    <value>Online-Ressourcen-Sharing-Hub durchsuchen</value>
+    <value>Durchsuche Online-Ressourcen-Sharing-Hub</value>
   </data>
 	<data name="SettingsPageShortcut.Text" xml:space="preserve">
     <value>Abspielen</value>
@@ -1510,7 +1510,7 @@
     <value>In Systemumgebung anzeigen</value>
   </data>
 	<data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
-    <value>Layout Splitter anzeigen</value>
+    <value>Layoutsplitter anzeigen</value>
   </data>
 	<data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>Titel anzeigen</value>
@@ -1528,7 +1528,7 @@
     <value>Song-Info</value>
   </data>
 	<data name="SettingsPageSongStatus.Header" xml:space="preserve">
-    <value>Aktueller Song</value>
+    <value>Aktueller Titel</value>
   </data>
 	<data name="SettingsPageSongTitle.Header" xml:space="preserve">
     <value>Titel</value>
@@ -1576,7 +1576,7 @@
     <value>Zielsprache</value>
   </data>
 	<data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
-    <value>Taskleisten-Modus</value>
+    <value>Taskbar-Modus</value>
   </data>
 	<data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>Position der Taskleiste</value>
@@ -1615,13 +1615,13 @@
     <value>Tastenkombination ein- und ausschalten</value>
   </data>
 	<data name="SettingsPageTopGapFactor.Header" xml:space="preserve">
-    <value>Obere Lückenfläche Höhe Faktor</value>
+    <value>Höhe der oberen Spaltfläche</value>
   </data>
 	<data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
-    <value>Titelübersicht Flächen-Breite Faktor</value>
+    <value>Spur Zusammenfassung Flächenbreitenfaktor</value>
   </data>
 	<data name="SettingsPageTrackSummaryRowFactor.Header" xml:space="preserve">
-    <value>Titelübersicht Flächenhöhe Faktor</value>
+    <value>Höhenfaktor der Trackbereichsübersicht</value>
   </data>
 	<data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Übersetzter Text</value>
@@ -1630,7 +1630,7 @@
     <value>Songtext-Übersetzung</value>
   </data>
 	<data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
-    <value>LibreTranslate Übersetzungsdienst</value>
+    <value>Übersetzungsdienst Libreübersetzen</value>
   </data>
 	<data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>Besuche https://github.com/LibreTranslate/LibreTranslate für Installationsanweisungen und weitere Informationen (diese Software ist in keiner Weise mit diesem Übersetzungsdienst verbunden)</value>
@@ -1648,7 +1648,7 @@
     <value>Vertikaler Layoutfaktor</value>
   </data>
 	<data name="SettingsPageWesternChar.Header" xml:space="preserve">
-    <value>Lateinisches Alphabet</value>
+    <value>lateinisches Alphabet</value>
   </data>
 	<data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>Width</value>
@@ -1663,7 +1663,7 @@
     <value>Als Arbeitsbereich</value>
   </data>
 	<data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>Arbeitsbereichshöhe</value>
+    <value>Höhe des Arbeitsbereichs</value>
   </data>
 	<data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>Du verwendest die Software</value>
@@ -1696,10 +1696,10 @@
     <value>Einstellungen</value>
   </data>
 	<data name="SystemTraySwitch.Text" xml:space="preserve">
-    <value>Songtext-Fensterschalter</value>
+    <value>Songtext-Fensterwechsel</value>
   </data>
 	<data name="TaskbarMode" xml:space="preserve">
-    <value>Taskleisten-Modus</value>
+    <value>Taskbar-Modus</value>
   </data>
 	<data name="TermsOfService.Content" xml:space="preserve">
     <value>Nutzungsbedingungen</value>
