@@ -26,7 +26,6 @@
                     x:Name="HostBox"
                     Grid.Column="0"
                     l:Uids.Uid="RemoteServerConfigControlServerAddress"
-                    Header="Server Address"
                     InputScope="Url"
                     PlaceholderText="192.168.1.x"
                     TextWrapping="Wrap" />
@@ -36,7 +35,6 @@
                     Grid.Column="1"
                     MinWidth="100"
                     l:Uids.Uid="RemoteServerConfigControlPort"
-                    Header="Port"
                     LargeChange="10"
                     SmallChange="1"
                     SpinButtonPlacementMode="Inline"

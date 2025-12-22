@@ -51,7 +51,10 @@
                         SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:MediaFolder">
-                                <dev:SettingsExpander Description="{x:Bind ConnectionSummary, Mode=OneWay}" HeaderIcon="{Binding SourceType, Converter={StaticResource FileSourceTypeToIconConverter}}">
+                                <dev:SettingsExpander Description="{x:Bind ConnectionSummary, Mode=OneWay}">
+                                    <dev:SettingsExpander.HeaderIcon>
+                                        <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}, Mode=OneWay}" />
+                                    </dev:SettingsExpander.HeaderIcon>
 
                                     <dev:SettingsExpander.Header>
                                         <HyperlinkButton
@@ -94,12 +97,13 @@
                                         CommandParameter="{Binding ElementName=RootGrid}"
                                         Icon="Folder" />
 
-                                    <MenuFlyoutSeparator />
+                                    <MenuFlyoutSeparator Visibility="Collapsed" />
 
                                     <MenuFlyoutItem
                                         Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
                                         CommandParameter="SMB"
-                                        Text="SMB">
+                                        Text="SMB"
+                                        Visibility="Collapsed">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE839;" />
                                         </MenuFlyoutItem.Icon>
@@ -108,7 +112,8 @@
                                     <MenuFlyoutItem
                                         Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
                                         CommandParameter="FTP"
-                                        Text="FTP">
+                                        Text="FTP"
+                                        Visibility="Collapsed">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE838;" />
                                         </MenuFlyoutItem.Icon>
@@ -117,7 +122,8 @@
                                     <MenuFlyoutItem
                                         Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
                                         CommandParameter="WebDAV"
-                                        Text="WebDAV">
+                                        Text="WebDAV"
+                                        Visibility="Collapsed">
                                         <MenuFlyoutItem.Icon>
                                             <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE774;" />
                                         </MenuFlyoutItem.Icon>
