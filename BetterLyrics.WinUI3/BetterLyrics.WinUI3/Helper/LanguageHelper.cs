@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Models;
 using NTextCat;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Windows.Globalization;
 using WinUI3Localizer;
@@ -11,7 +12,6 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
-        private static readonly ILocalizer _localizer = Localizer.Get();
 
         public const string ChineseCode = "zh";
         public const string JapaneseCode = "ja";
@@ -91,7 +91,6 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static List<ExtendedLanguage> SupportedDisplayLanguages { get; set; } =
         [
-            new ExtendedLanguage("", _localizer.GetLocalizedString("SettingsPageSystemLanguage")),
             new ExtendedLanguage("de"),
             new ExtendedLanguage("en"),
             new ExtendedLanguage("es"),
@@ -146,23 +145,35 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        public static string GetDefaultLanguageCode()
+        public static string ParseLanguageCode(string? languageCode)
         {
-            var systemLang = ApplicationLanguages.Languages.FirstOrDefault();
-            if (systemLang == null)
+            if (string.IsNullOrWhiteSpace(languageCode))
+            {
+                languageCode = ApplicationLanguages.Languages.FirstOrDefault();
+            }
+
+            if (languageCode == null)
+            {
+                return "en";
+            }
+
+            var shortSysLangCode = languageCode.Substring(0, 2);
+            var found = SupportedDisplayLanguages.FirstOrDefault(x => shortSysLangCode == x.LanguageCode.Substring(0, 2));
+            if (found == null)
             {
                 return "en";
             }
             else
             {
-                var found = SupportedDisplayLanguages.Where(x => x.LanguageCode != "").FirstOrDefault(x => systemLang.StartsWith(x.LanguageCode) == true);
-                if (found == null)
+                var shortLangCodeFound = found.LanguageCode.Substring(0, 2);
+                if (shortLangCodeFound == "zh")
                 {
-                    return "en";
+                    // https://learn.microsoft.com/zh-cn/windows/apps/publish/publish-your-app/msix/app-package-requirements#supported-languages
+                    return languageCode is "zh-Hans" or "zh-CN" or "zh-Hans-CN" or "zh-SG" or "zh-Hans-SG" ? "zh-Hans" : "zh-Hant";
                 }
                 else
                 {
-                    return found.LanguageCode;
+                    return shortLangCodeFound;
                 }
             }
         }

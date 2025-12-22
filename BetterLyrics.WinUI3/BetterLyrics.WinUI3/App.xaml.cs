@@ -74,6 +74,7 @@ namespace BetterLyrics.WinUI3
             await InitializeLocalizer();
 
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+            settingsService.UpdateLanguage();
 
             WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
@@ -150,21 +151,14 @@ namespace BetterLyrics.WinUI3
         {
             // Initialize a "Strings" folder in the "LocalFolder" for the packaged app.
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFolder stringsFolder = await localFolder.CreateFolderAsync(
-              "Strings",
-               CreationCollisionOption.OpenIfExists);
+            StorageFolder stringsFolder = await localFolder.CreateFolderAsync("Strings", CreationCollisionOption.ReplaceExisting);
 
-            // Create string resources file from app resources if doesn't exists.
+            // Create string resources file from app resources.
             string resourceFileName = "Resources.resw";
-            await CreateStringResourceFileIfNotExists(stringsFolder, "de", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "en", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "es", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "fr", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "ja", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "ko", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "ru", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "zh-Hans", resourceFileName);
-            await CreateStringResourceFileIfNotExists(stringsFolder, "zh-Hant", resourceFileName);
+            foreach (var item in LanguageHelper.SupportedDisplayLanguages)
+            {
+                await CreateStringResourceFile(stringsFolder, item.LanguageCode, resourceFileName);
+            }
 
             ILocalizer localizer = await new LocalizerBuilder()
                 .AddStringResourcesFolderForLanguageDictionaries(stringsFolder.Path)
@@ -175,18 +169,13 @@ namespace BetterLyrics.WinUI3
                 .Build();
         }
 
-        private static async Task CreateStringResourceFileIfNotExists(StorageFolder stringsFolder, string language, string resourceFileName)
+        private static async Task CreateStringResourceFile(StorageFolder stringsFolder, string language, string resourceFileName)
         {
-            StorageFolder languageFolder = await stringsFolder.CreateFolderAsync(
-                language,
-                CreationCollisionOption.OpenIfExists);
+            StorageFolder languageFolder = await stringsFolder.CreateFolderAsync(language, CreationCollisionOption.ReplaceExisting);
 
-            if (await languageFolder.TryGetItemAsync(resourceFileName) is null)
-            {
-                string resourceFilePath = Path.Combine(stringsFolder.Name, language, resourceFileName);
-                StorageFile resourceFile = await LoadStringResourcesFileFromAppResource(resourceFilePath);
-                _ = await resourceFile.CopyAsync(languageFolder);
-            }
+            string resourceFilePath = Path.Combine(stringsFolder.Name, language, resourceFileName);
+            StorageFile resourceFile = await LoadStringResourcesFileFromAppResource(resourceFilePath);
+            _ = await resourceFile.CopyAsync(languageFolder);
         }
 
         private static async Task<StorageFile> LoadStringResourcesFileFromAppResource(string filePath)

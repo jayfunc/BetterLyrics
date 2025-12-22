@@ -7,8 +7,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
     public interface ISettingsService
     {
         AppSettings AppSettings { get; set; }
-        // App behavior
 
+        void UpdateLanguage();
         bool ImportSettings(string importPath);
         void ExportSettings(string exportPath);
     }

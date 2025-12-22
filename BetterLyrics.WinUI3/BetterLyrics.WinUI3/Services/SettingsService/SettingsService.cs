@@ -118,20 +118,18 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             switch (e.PropertyName)
             {
                 case nameof(GeneralSettings.LanguageCode):
-                    var langCode = AppSettings.GeneralSettings.LanguageCode;
-                    if (langCode == "")
-                    {
-                        _localizer.SetLanguage(LanguageHelper.GetDefaultLanguageCode());
-                    }
-                    else
-                    {
-                        _localizer.SetLanguage(langCode);
-                    }
+                    UpdateLanguage();
                     break;
                 default:
                     break;
             }
             WriteAppSettings();
+        }
+
+        public void UpdateLanguage()
+        {
+            var langCode = AppSettings.GeneralSettings.LanguageCode;
+            _localizer.SetLanguage(LanguageHelper.ParseLanguageCode(langCode));
         }
 
         /// <summary>

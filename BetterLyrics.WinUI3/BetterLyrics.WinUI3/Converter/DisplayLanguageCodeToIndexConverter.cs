@@ -11,6 +11,7 @@ namespace BetterLyrics.WinUI3.Converter
         {
             if (value is string langCode)
             {
+                langCode = LanguageHelper.ParseLanguageCode(langCode);
                 return LanguageHelper.SupportedDisplayLanguages.FindIndex(x => x.LanguageCode == langCode);
             }
             return 0;
