@@ -1,19 +1,18 @@
-﻿using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.UI.Xaml.Controls;
+﻿using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public class ToastHelper
     {
-        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private static readonly ILocalizer _localizer = Localizer.Get();
 
         public static void ShowToast(string localizedTitleKey, string? description, InfoBarSeverity severity)
         {
             AppNotification notification = new AppNotificationBuilder()
-                .AddText(_resourceService.GetLocalizedString(localizedTitleKey))
+                .AddText(_localizer.GetLocalizedString(localizedTitleKey))
                 .AddText(description)
                 .BuildNotification();
 

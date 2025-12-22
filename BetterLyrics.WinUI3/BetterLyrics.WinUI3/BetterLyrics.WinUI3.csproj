@@ -105,6 +105,7 @@
 		<PackageReference Include="Vanara.Windows.Shell" Version="4.2.1" />
 		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
 		<PackageReference Include="WebDav.Client" Version="2.9.0" />
+		<PackageReference Include="WinUI3Localizer" Version="2.3.0" />
 		<PackageReference Include="WinUIEx" Version="2.9.0" />
 		<PackageReference Include="z440.atl.core" Version="7.9.0" />
 	</ItemGroup>
@@ -133,6 +134,12 @@
 		<TrimmerRootAssembly Include="Vanara.PInvoke.Shell32" />
 		<TrimmerRootAssembly Include="Vanara.PInvoke.User32" />
 		<TrimmerRootAssembly Include="Vanara.Windows.Shell" />
+	</ItemGroup>
+	<!-- Copy all "Resources.resw" files in the "Strings" folder to the output folder. -->
+	<ItemGroup>
+		<Content Include="Strings\**\*.resw">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
 	  <Content Update="Assets\AIMP.png">

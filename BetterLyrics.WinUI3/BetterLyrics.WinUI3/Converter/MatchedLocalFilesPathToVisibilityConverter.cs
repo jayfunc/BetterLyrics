@@ -1,22 +1,22 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Converter
 {
     public partial class MatchedLocalFilesPathToVisibilityConverter : IValueConverter
     {
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private readonly ILocalizer _localizer = Localizer.Get();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value is string path)
             {
-                if (path == _resourceService.GetLocalizedString("MainPageNoLocalFilesMatched"))
+                if (path == _localizer.GetLocalizedString("MainPageNoLocalFilesMatched"))
                 {
                     return Visibility.Collapsed;
                 }

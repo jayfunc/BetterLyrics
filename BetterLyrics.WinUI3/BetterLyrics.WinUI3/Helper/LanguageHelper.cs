@@ -1,10 +1,9 @@
 ﻿using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using NTextCat;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Globalization;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -12,7 +11,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private static readonly RankedLanguageIdentifierFactory _factory = new();
         private static readonly RankedLanguageIdentifier _identifier;
-        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private static readonly ILocalizer _localizer = Localizer.Get();
 
         public const string ChineseCode = "zh";
         public const string JapaneseCode = "ja";
@@ -92,7 +91,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static List<ExtendedLanguage> SupportedDisplayLanguages { get; set; } =
         [
-            new ExtendedLanguage("", _resourceService.GetLocalizedString("SettingsPageSystemLanguage")),
+            new ExtendedLanguage("", _localizer.GetLocalizedString("SettingsPageSystemLanguage")),
             new ExtendedLanguage("de"),
             new ExtendedLanguage("en"),
             new ExtendedLanguage("es"),
@@ -144,6 +143,27 @@ namespace BetterLyrics.WinUI3.Helper
             else
             {
                 return found.LanguageCode;
+            }
+        }
+
+        public static string GetDefaultLanguageCode()
+        {
+            var systemLang = ApplicationLanguages.Languages.FirstOrDefault();
+            if (systemLang == null)
+            {
+                return "en";
+            }
+            else
+            {
+                var found = SupportedDisplayLanguages.Where(x => x.LanguageCode != "").FirstOrDefault(x => systemLang.StartsWith(x.LanguageCode) == true);
+                if (found == null)
+                {
+                    return "en";
+                }
+                else
+                {
+                    return found.LanguageCode;
+                }
             }
         }
 

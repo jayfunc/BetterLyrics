@@ -1,15 +1,14 @@
 ﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsData
     {
-        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private static readonly ILocalizer _localizer = Localizer.Get();
 
         public List<LyricsLine> LyricsLines { get; set; } = [];
         public string? LanguageCode
@@ -113,7 +112,7 @@ namespace BetterLyrics.WinUI3.Models
             {
                 StartMs = 0,
                 EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                OriginalText = _resourceService.GetLocalizedString("LyricsNotFound"),
+                OriginalText = _localizer.GetLocalizedString("LyricsNotFound"),
             }]);
         }
 

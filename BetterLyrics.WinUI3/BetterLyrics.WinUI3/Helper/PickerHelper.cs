@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Hooks;
 using DevWinUI;
-using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

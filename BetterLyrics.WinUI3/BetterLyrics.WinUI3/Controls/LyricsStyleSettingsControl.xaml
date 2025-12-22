@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -19,17 +20,17 @@
 
                     <!--  Lyrics style  -->
 
-                    <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock l:Uids.Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLeft" />
-                            <ComboBoxItem x:Uid="SettingsPageCenter" />
-                            <ComboBoxItem x:Uid="SettingsPageRight" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLeft" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageCenter" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageRight" />
                         </ComboBox>
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsCenterTopOffset" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE78A;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsCenterTopOffset" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE78A;}">
                         <local:ExtendedSlider
                             Default="50"
                             Maximum="99"
@@ -38,9 +39,9 @@
                             Value="{x:Bind LyricsStyleSettings.PlayingLineTopOffset, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF579;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF579;}">
                         <local:ExtendedSlider
-                            x:Uid="SettingsPageLyricsLineSpacingFactorSlider"
+                            l:Uids.Uid="SettingsPageLyricsLineSpacingFactorSlider"
                             Default="0.5"
                             Frequency="0.1"
                             Maximum="2"
@@ -49,34 +50,34 @@
                             Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
+                    <dev:SettingsExpander l:Uids.Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageCJK">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageCJK">
                                 <local:FontFamilyAutoSuggestBox SelectedFontFamily="{x:Bind LyricsStyleSettings.LyricsCJKFontFamily, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageWesternChar">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageWesternChar">
                                 <local:FontFamilyAutoSuggestBox SelectedFontFamily="{x:Bind LyricsStyleSettings.LyricsWesternFontFamily, Mode=TwoWay}" />
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8DD;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8DD;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsFontWeight, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLyricsThin" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsExtraLight" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsLight" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsSemiLight" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsNormal" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsMedium" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsSemiBold" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsBold" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsExtraBold" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsBlack" />
-                            <ComboBoxItem x:Uid="SettingsPageLyricsExtraBlack" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsThin" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsExtraLight" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsLight" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsSemiLight" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsNormal" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsMedium" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsSemiBold" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsBold" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsExtraBold" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsBlack" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLyricsExtraBlack" />
                         </ComboBox>
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC12;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC12;}">
                         <local:ExtendedSlider
                             Default="0"
                             Maximum="10"
@@ -85,13 +86,13 @@
                     </dev:SettingsCard>
 
                     <!--  字体颜色  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D3;}">
+                    <dev:SettingsExpander l:Uids.Uid="SettingsPageFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D3;}">
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageStrokeFontColor">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageStrokeFontColor">
                                 <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorCustom" />
                                 </ComboBox>
                             </dev:SettingsCard>
 
@@ -122,11 +123,11 @@
                                     Color="{x:Bind LyricsStyleSettings.LyricsCustomStrokeFontColor, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageLyricsBgFontColor">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsBgFontColor">
                                 <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorCustom" />
                                 </ComboBox>
                             </dev:SettingsCard>
 
@@ -157,11 +158,11 @@
                                     Color="{x:Bind LyricsStyleSettings.LyricsCustomBgFontColor, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageLyricsFgFontColor">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageLyricsFgFontColor">
                                 <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageLyricsFontColorCustom" />
                                 </ComboBox>
                             </dev:SettingsCard>
 
@@ -195,12 +196,12 @@
                     </dev:SettingsExpander>
 
                     <!--  字体大小  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
+                    <dev:SettingsExpander l:Uids.Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPagePhoneticText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPagePhoneticText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Frequency="2"
                                     Maximum="256"
@@ -208,7 +209,7 @@
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsStyleSettings.PhoneticLyricsFontSize, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageOriginalText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageOriginalText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Frequency="2"
                                     Maximum="256"
@@ -216,7 +217,7 @@
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsStyleSettings.OriginalLyricsFontSize, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageTranslatedText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageTranslatedText" IsEnabled="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Frequency="2"
                                     Maximum="256"
@@ -228,9 +229,9 @@
                     </dev:SettingsExpander>
 
                     <!--  字体不透明度  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEF20;}">
+                    <dev:SettingsExpander l:Uids.Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEF20;}">
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPagePhoneticText">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPagePhoneticText">
                                 <local:ExtendedSlider
                                     Default="60"
                                     Frequency="1"
@@ -238,7 +239,7 @@
                                     Minimum="0"
                                     Value="{x:Bind LyricsStyleSettings.PhoneticLyricsOpacity, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageOriginalText">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageOriginalText">
                                 <local:ExtendedSlider
                                     Default="30"
                                     Frequency="1"
@@ -246,7 +247,7 @@
                                     Minimum="0"
                                     Value="{x:Bind LyricsStyleSettings.OriginalLyricsOpacity, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageTranslatedText">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageTranslatedText">
                                 <local:ExtendedSlider
                                     Default="60"
                                     Frequency="1"

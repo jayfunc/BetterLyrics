@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
@@ -48,7 +49,7 @@
                                 VerticalAlignment="Center"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
                                 <Paragraph>
-                                    <Run x:Uid="SettingsPageVersion" />
+                                    <Run l:Uids.Uid="SettingsPageVersion" />
                                     <Run Text="{x:Bind helper:MetadataHelper.AppVersion}" />
                                 </Paragraph>
                             </RichTextBlock>
@@ -59,9 +60,9 @@
                                 <StackPanel Spacing="6">
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
                                         <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
-                                        <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
-                                        <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
-                                        <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
+                                        <HyperlinkButton l:Uids.Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
+                                        <HyperlinkButton l:Uids.Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
+                                        <HyperlinkButton l:Uids.Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
                                     </StackPanel>
                                 </StackPanel>
 
@@ -69,18 +70,18 @@
 
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageFeedback" />
+                                    <TextBlock l:Uids.Uid="SetingsPageFeedback" />
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton x:Uid="SettingsPageQQGroup" NavigateUri="{x:Bind const:Link.QQGroup}" />
-                                        <HyperlinkButton x:Uid="SettingsPageDiscord" NavigateUri="{x:Bind const:Link.Discord}" />
-                                        <HyperlinkButton x:Uid="SettingsPageTelegram" NavigateUri="{x:Bind const:Link.Telegram}" />
+                                        <HyperlinkButton l:Uids.Uid="SettingsPageQQGroup" NavigateUri="{x:Bind const:Link.QQGroup}" />
+                                        <HyperlinkButton l:Uids.Uid="SettingsPageDiscord" NavigateUri="{x:Bind const:Link.Discord}" />
+                                        <HyperlinkButton l:Uids.Uid="SettingsPageTelegram" NavigateUri="{x:Bind const:Link.Telegram}" />
                                     </StackPanel>
                                 </StackPanel>
                             </dev:SettingsCard>
 
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageDonation" />
+                                    <TextBlock l:Uids.Uid="SetingsPageDonation" />
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
                                         <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
                                         <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
@@ -121,14 +122,14 @@
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="*" />
                                         <TextBlock
-                                            x:Uid="SetingsPageThanks"
+                                            l:Uids.Uid="SetingsPageThanks"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             TextWrapping="Wrap" />
                                     </StackPanel>
                                 </StackPanel>
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageThanksList">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageThanksList">
                                 <Button
                                     Click="Patron_Click"
                                     Content="{ui:FontIcon FontSize=16,
@@ -140,7 +141,7 @@
                         </dev:SettingsExpander.Items>
                         <dev:SettingsExpander.ItemsFooter>
                             <InfoBar
-                                x:Uid="SettingsPageDisclaimer"
+                                l:Uids.Uid="SettingsPageDisclaimer"
                                 BorderThickness="0"
                                 CornerRadius="0"
                                 IsClosable="False"
@@ -149,31 +150,31 @@
                         </dev:SettingsExpander.ItemsFooter>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
-                        <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageMockMusicPlaying">
+                        <HyperlinkButton l:Uids.Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
-                        <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
+                    <dev:SettingsExpander l:Uids.Uid="SettingsPageCache" IsExpanded="True">
+                        <Button l:Uids.Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard>
-                                <Button x:Uid="SettingsPageClearCache" Command="{x:Bind ViewModel.ClearCacheFilesCommand}" />
+                                <Button l:Uids.Uid="SettingsPageClearCache" Command="{x:Bind ViewModel.ClearCacheFilesCommand}" />
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageSettings">
-                        <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenSettingsFolderCommand}" />
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageSettings">
+                        <Button l:Uids.Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenSettingsFolderCommand}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageSettingsManager" IsExpanded="True">
+                    <dev:SettingsExpander l:Uids.Uid="SettingsPageSettingsManager" IsExpanded="True">
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Button x:Uid="SettingsPageImportSettingsButton" Command="{x:Bind ViewModel.ImportSettingsCommand}" />
-                            <Button x:Uid="SettingsPageExportSettingsButton" Command="{x:Bind ViewModel.ExportSettingsCommand}" />
+                            <Button l:Uids.Uid="SettingsPageImportSettingsButton" Command="{x:Bind ViewModel.ImportSettingsCommand}" />
+                            <Button l:Uids.Uid="SettingsPageExportSettingsButton" Command="{x:Bind ViewModel.ExportSettingsCommand}" />
                         </StackPanel>
                         <dev:SettingsExpander.ItemsHeader>
                             <InfoBar
-                                x:Uid="SettingsPageImportSettingsInfo"
+                                l:Uids.Uid="SettingsPageImportSettingsInfo"
                                 BorderThickness="0"
                                 CornerRadius="0"
                                 IsClosable="False"
@@ -182,11 +183,11 @@
                         </dev:SettingsExpander.ItemsHeader>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.IsFixedTimeStep, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageFPS" Visibility="Collapsed">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageFPS" Visibility="Collapsed">
                         <uc:ExtendedSlider
                             Default="60"
                             Frequency="10"
@@ -225,7 +226,7 @@
 
                     <!--  贡献者  -->
                     <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageContributors" />
+                        <Run l:Uids.Uid="SetingsPageContributors" />
                     </Paragraph>
                     <Paragraph>
                         <Hyperlink NavigateUri="https://github.com/jayfunc">
@@ -250,7 +251,7 @@
 
                     <!--  赞助  -->
                     <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SettingsPagePatrons" />
+                        <Run l:Uids.Uid="SettingsPagePatrons" />
                     </Paragraph>
                     <Paragraph>
                         <Run Text="YE" />
@@ -277,20 +278,20 @@
                         <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Aug 28, 2025" />
                     </Paragraph>
                     <Paragraph>
-                        <Run x:Uid="SettingsPageUserWhoPurchased" />
+                        <Run l:Uids.Uid="SettingsPageUserWhoPurchased" />
                     </Paragraph>
 
                     <!--  特别鸣谢  -->
                     <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageSpecialThanks" />
+                        <Run l:Uids.Uid="SetingsPageSpecialThanks" />
                     </Paragraph>
                     <Paragraph>
-                        <Run x:Uid="SettingsPageYouNowUsing" />
+                        <Run l:Uids.Uid="SettingsPageYouNowUsing" />
                     </Paragraph>
 
                     <!--  代码参考  -->
                     <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageDeps" />
+                        <Run l:Uids.Uid="SetingsPageDeps" />
                     </Paragraph>
                     <Paragraph>
                         <Hyperlink NavigateUri="https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce">
@@ -340,7 +341,7 @@
 
                     <!--  UI/UX 设计参考  -->
                     <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageUIUXRef" />
+                        <Run l:Uids.Uid="SetingsPageUIUXRef" />
                     </Paragraph>
                     <Paragraph>
                         <Hyperlink NavigateUri="https://github.com/solstice23/refined-now-playing-netease">

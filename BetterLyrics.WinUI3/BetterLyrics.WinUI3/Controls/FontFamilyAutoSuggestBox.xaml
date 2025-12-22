@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
@@ -45,12 +46,12 @@
                                       Glyph=&#xE72C;}"
                 Style="{StaticResource GhostButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip x:Uid="SettingsPageRefreshDropdown" />
+                    <ToolTip l:Uids.Uid="SettingsPageRefreshDropdown" />
                 </ToolTipService.ToolTip>
             </Button>
             <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE74A;}" Style="{StaticResource GhostButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip x:Uid="SettingsPageCollapseDropdown" />
+                    <ToolTip l:Uids.Uid="SettingsPageCollapseDropdown" />
                 </ToolTipService.ToolTip>
             </Button>
 

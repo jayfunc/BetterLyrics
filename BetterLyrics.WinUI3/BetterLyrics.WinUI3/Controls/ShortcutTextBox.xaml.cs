@@ -1,13 +1,12 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System.Collections.Generic;
 using Windows.UI.Core;
+using WinUI3Localizer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -16,7 +15,7 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class ShortcutTextBox : UserControl
     {
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private readonly ILocalizer _localizer = Localizer.Get();
 
         public ShortcutTextBox()
         {

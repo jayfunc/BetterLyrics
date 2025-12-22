@@ -1,16 +1,15 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
 using System;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Converter
 {
     public partial class LyricsSearchProviderToDisplayNameConverter : IValueConverter
     {
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private readonly ILocalizer _localizer = Localizer.Get();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -24,10 +23,10 @@ namespace BetterLyrics.WinUI3.Converter
                     LyricsSearchProvider.Kugou => "酷狗音乐",
                     LyricsSearchProvider.AmllTtmlDb => "amll-ttml-db",
                     LyricsSearchProvider.AppleMusic => "Apple Music",
-                    LyricsSearchProvider.LocalLrcFile => _resourceService.GetLocalizedString("LyricsSearchProviderLocalLrcFile"),
-                    LyricsSearchProvider.LocalMusicFile => _resourceService.GetLocalizedString("LyricsSearchProviderLocalMusicFile"),
-                    LyricsSearchProvider.LocalEslrcFile => _resourceService.GetLocalizedString("LyricsSearchProviderEslrcFile"),
-                    LyricsSearchProvider.LocalTtmlFile => _resourceService.GetLocalizedString("LyricsSearchProviderTtmlFile"),
+                    LyricsSearchProvider.LocalLrcFile => _localizer.GetLocalizedString("LyricsSearchProviderLocalLrcFile"),
+                    LyricsSearchProvider.LocalMusicFile => _localizer.GetLocalizedString("LyricsSearchProviderLocalMusicFile"),
+                    LyricsSearchProvider.LocalEslrcFile => _localizer.GetLocalizedString("LyricsSearchProviderEslrcFile"),
+                    LyricsSearchProvider.LocalTtmlFile => _localizer.GetLocalizedString("LyricsSearchProviderTtmlFile"),
                     _ => "N/A",
                 };
             }

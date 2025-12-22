@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -15,12 +16,12 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock x:Uid="SettingsPageAlbumEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock l:Uids.Uid="SettingsPageAlbumEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageImageSwitchType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8EB;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageImageSwitchType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8EB;}">
                         <ComboBox SelectedIndex="{x:Bind AlbumArtAreaEffectSettings.ImageSwitchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageCrossfade" />
-                            <ComboBoxItem x:Uid="SettingsPageSlide" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageCrossfade" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageSlide" />
                         </ComboBox>
                     </dev:SettingsCard>
 

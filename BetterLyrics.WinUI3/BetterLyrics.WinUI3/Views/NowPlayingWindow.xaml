@@ -7,6 +7,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
@@ -56,7 +57,7 @@
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                             Glyph="&#xE8F1;" />
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Uid="HostWindowMusicGalleryButtonToolTip" />
+                            <ToolTip l:Uids.Uid="HostWindowMusicGalleryButtonToolTip" />
                         </ToolTipService.ToolTip>
                     </Button>
 
@@ -70,7 +71,7 @@
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                             Glyph="&#xE713;" />
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Uid="HostWindowSettingsButtonToolTip" />
+                            <ToolTip l:Uids.Uid="HostWindowSettingsButtonToolTip" />
                         </ToolTipService.ToolTip>
                     </Button>
 
@@ -81,7 +82,7 @@
                             FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
                             Glyph="&#xE8AB;" />
                         <ToolTipService.ToolTip>
-                            <ToolTip x:Uid="LyricsWindowSwitchButtonToolTip" />
+                            <ToolTip l:Uids.Uid="LyricsWindowSwitchButtonToolTip" />
                         </ToolTipService.ToolTip>
                     </Button>
 

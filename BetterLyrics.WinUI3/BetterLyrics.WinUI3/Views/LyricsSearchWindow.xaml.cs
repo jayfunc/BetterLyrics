@@ -1,4 +1,3 @@
-using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using Microsoft.UI.Windowing;

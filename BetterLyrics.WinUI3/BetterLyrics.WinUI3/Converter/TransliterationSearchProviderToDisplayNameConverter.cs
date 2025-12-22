@@ -1,14 +1,13 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
 using System;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Converter
 {
     public partial class TransliterationSearchProviderToDisplayNameConverter : IValueConverter
     {
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private readonly ILocalizer _localizer = Localizer.Get();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -22,10 +21,10 @@ namespace BetterLyrics.WinUI3.Converter
                     TransliterationSearchProvider.Kugou => "酷狗音乐",
                     TransliterationSearchProvider.AmllTtmlDb => "amll-ttml-db",
                     TransliterationSearchProvider.AppleMusic => "Apple Music",
-                    TransliterationSearchProvider.LocalLrcFile => _resourceService.GetLocalizedString("LyricsSearchProviderLocalLrcFile"),
-                    TransliterationSearchProvider.LocalMusicFile => _resourceService.GetLocalizedString("LyricsSearchProviderLocalMusicFile"),
-                    TransliterationSearchProvider.LocalEslrcFile => _resourceService.GetLocalizedString("LyricsSearchProviderEslrcFile"),
-                    TransliterationSearchProvider.LocalTtmlFile => _resourceService.GetLocalizedString("LyricsSearchProviderTtmlFile"),
+                    TransliterationSearchProvider.LocalLrcFile => _localizer.GetLocalizedString("LyricsSearchProviderLocalLrcFile"),
+                    TransliterationSearchProvider.LocalMusicFile => _localizer.GetLocalizedString("LyricsSearchProviderLocalMusicFile"),
+                    TransliterationSearchProvider.LocalEslrcFile => _localizer.GetLocalizedString("LyricsSearchProviderEslrcFile"),
+                    TransliterationSearchProvider.LocalTtmlFile => _localizer.GetLocalizedString("LyricsSearchProviderTtmlFile"),
                     TransliterationSearchProvider.BetterLyrics => "BetterLyrics",
                     TransliterationSearchProvider.CutletDocker => "cutlet-docker",
                     _ => "N/A",
