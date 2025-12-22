@@ -136,7 +136,7 @@
     <value>窗口</value>
   </data>
 	<data name="ArtistsSplitHint.Text" xml:space="preserve">
-    <value>键入多位艺术家时请以下述一种分隔符分隔（不要混用）</value>
+    <value>输入多位艺术家时，请使用以下分隔符之一进行分隔（请勿混合使用）</value>
   </data>
 	<data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
     <value>不再显示此消息</value>
@@ -253,16 +253,16 @@
     <value>歌词提供方</value>
   </data>
 	<data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
-    <value>手动检索歌词</value>
+    <value>手动搜索歌词</value>
   </data>
 	<data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>歌词窗口管理快捷设置</value>
+    <value>歌词窗口管理快捷方式设置</value>
   </data>
 	<data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>匹配百分比</value>
   </data>
 	<data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>播放源快捷设置</value>
+    <value>播放源快捷方式设置</value>
   </data>
 	<data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>切换歌曲时重置为 0</value>
@@ -286,7 +286,7 @@
     <value>仅显示翻译</value>
   </data>
 	<data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
-    <value>翻译服务</value>
+    <value>翻译服务提供方</value>
   </data>
 	<data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
     <value>音译来源</value>
@@ -307,7 +307,7 @@
     <value>时长</value>
   </data>
 	<data name="LyricsSearchControlHelp.Text" xml:space="preserve">
-    <value>* 保存更改立即生效，此后将以映射信息和目标歌词源检索该曲目歌词；标记为纯音乐将直接返回纯音乐占位歌词。重置以按原始数据检索。</value>
+    <value>* 保存更改后立即生效，随后歌曲歌词将通过映射信息和目标歌词进行检索；标记为纯音乐将直接恢复为纯音乐占位符歌词。重置后将恢复原始数据检索。</value>
   </data>
 	<data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>搜索时忽略缓存</value>
@@ -334,7 +334,7 @@
     <value>歌曲信息映射</value>
   </data>
 	<data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>目标歌词搜索提供商</value>
+    <value>目标歌词搜索提供方</value>
   </data>
 	<data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>标题</value>
@@ -379,7 +379,7 @@
     <value>歌词窗口切换器</value>
   </data>
 	<data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>仅显示专辑区域</value>
+    <value>仅显示专辑封面区域</value>
   </data>
 	<data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>再次悬停以显示切换按钮</value>
@@ -406,7 +406,7 @@
     <value>添加到播放列表</value>
   </data>
 	<data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
-    <value>列表的结尾</value>
+    <value>列表的末尾</value>
   </data>
 	<data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>下一个项目</value>
@@ -490,7 +490,7 @@
     <value>从播放列表中删除</value>
   </data>
 	<data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
-    <value>从播放队列移除</value>
+    <value>从播放队列删除</value>
   </data>
 	<data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>滚动到播放项</value>
@@ -628,7 +628,7 @@
     <value>专辑封面</value>
   </data>
 	<data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
-    <value>专辑图片高度</value>
+    <value>专辑封面高度</value>
   </data>
 	<data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>专辑封面层</value>
@@ -652,7 +652,7 @@
     <value>阴影扩散量</value>
   </data>
 	<data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
-    <value>专辑封面样式</value>
+    <value>专辑封面区域样式</value>
   </data>
 	<data name="SettingsPageAlignment.Header" xml:space="preserve">
     <value>对齐方式</value>
@@ -721,7 +721,7 @@
     <value>无边框歌词窗口快捷方式</value>
   </data>
 	<data name="SettingsPageBottomGapFactor.Header" xml:space="preserve">
-    <value>底部间隙高度因子</value>
+    <value>底部间隙区域高度系数</value>
   </data>
 	<data name="SettingsPageCache.Description" xml:space="preserve">
     <value>包括日志文件，网络歌词缓存</value>
@@ -820,7 +820,7 @@
     <value>停靠模式</value>
   </data>
 	<data name="SettingsPageDockMonitor.Header" xml:space="preserve">
-    <value>目标监视器</value>
+    <value>目标显示器</value>
   </data>
 	<data name="SettingsPageDockPlacement.Header" xml:space="preserve">
     <value>工作区位置</value>
@@ -940,7 +940,7 @@
     <value>强制置于顶层</value>
   </data>
 	<data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>即使当前歌词没有逐字信息，也会迫使其模拟逐字效果</value>
+    <value>即使当前歌词没有逐字信息，仍强制模拟逐字效果</value>
   </data>
 	<data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
     <value>强制启用逐字歌词效果</value>
@@ -964,7 +964,7 @@
     <value>帮助我们翻译此应用程序</value>
   </data>
 	<data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>音乐未播放/播放时自动隐藏/显示歌词窗口</value>
+    <value>当音乐停止播放时自动隐藏/显示歌词窗口</value>
   </data>
 	<data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>自动隐藏/显示窗口</value>
@@ -1051,7 +1051,7 @@
     <value>靠左</value>
   </data>
 	<data name="SettingsPageLeftGapFactor.Header" xml:space="preserve">
-    <value>左间隙区域宽度因子</value>
+    <value>左侧间隙区域宽度系数</value>
   </data>
 	<data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>服务器地址</value>
@@ -1105,7 +1105,7 @@
     <value>当前行位置</value>
   </data>
 	<data name="SettingsPageLyricsColFactor.Header" xml:space="preserve">
-    <value>歌词区域宽度因子</value>
+    <value>歌词区域宽度系数</value>
   </data>
 	<data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>歌词效果</value>
@@ -1150,7 +1150,7 @@
     <value>自定义</value>
   </data>
 	<data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>字体家族</value>
+    <value>字体系列</value>
   </data>
 	<data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>字体大小</value>
@@ -1159,7 +1159,7 @@
     <value>歌词描边宽度</value>
   </data>
 	<data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
-    <value>字体权重</value>
+    <value>字重</value>
   </data>
 	<data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>发光效果</value>
@@ -1201,7 +1201,7 @@
     <value>远离视野</value>
   </data>
 	<data name="SettingsPageLyricsRowFactor.Header" xml:space="preserve">
-    <value>歌词区域高度因子</value>
+    <value>歌词区域高度系数</value>
   </data>
 	<data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>为持续时间较长的音节启用缩放</value>
@@ -1243,7 +1243,7 @@
     <value>歌词时间轴同步</value>
   </data>
 	<data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
-    <value>当歌词进度抖动时，请尝试增加该阈值；更改此值会导致歌词同步有偏差</value>
+    <value>当歌词进度抖动时，请尝试增加该阈值；更改此值会导致歌词同步出现偏差</value>
   </data>
 	<data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>歌词时间轴同步阈值</value>
@@ -1294,7 +1294,7 @@
     <value>云母（替代样式）</value>
   </data>
 	<data name="SettingsPageMiddleGapColFactor.Header" xml:space="preserve">
-    <value>中间区域间隙宽度系数</value>
+    <value>中间间隙区域宽度系数</value>
   </data>
 	<data name="SettingsPageMiddleGapRowFactor.Header" xml:space="preserve">
     <value>中间间隙区域高度系数</value>
@@ -1366,7 +1366,7 @@
     <value>歌词注音</value>
   </data>
 	<data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>注音</value>
+    <value>音标</value>
   </data>
 	<data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>固定到任务栏</value>
@@ -1435,7 +1435,7 @@
     <value>靠右</value>
   </data>
 	<data name="SettingsPageRightGapFactor.Header" xml:space="preserve">
-    <value>右间隙区域宽度因子</value>
+    <value>右侧间隙区域宽度系数</value>
   </data>
 	<data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>日语注音</value>
@@ -1486,7 +1486,7 @@
     <value>浏览在线资源共享中心</value>
   </data>
 	<data name="SettingsPageShortcut.Text" xml:space="preserve">
-    <value>快捷键</value>
+    <value>播放</value>
   </data>
 	<data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>该热键未成功注册</value>
@@ -1501,7 +1501,7 @@
     <value>显示艺术家</value>
   </data>
 	<data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
-    <value>歌词窗口显示和隐藏快捷键</value>
+    <value>歌词窗口显示和隐藏 快捷键</value>
   </data>
 	<data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
     <value>例如：Alt + Tab，任务栏</value>
@@ -1615,7 +1615,7 @@
     <value>切入与切出快捷键</value>
   </data>
 	<data name="SettingsPageTopGapFactor.Header" xml:space="preserve">
-    <value>顶部间隙区域高度因子</value>
+    <value>顶部间隙区域高度系数</value>
   </data>
 	<data name="SettingsPageTrackSummaryColFactor.Header" xml:space="preserve">
     <value>曲目摘要区域宽度因子</value>
