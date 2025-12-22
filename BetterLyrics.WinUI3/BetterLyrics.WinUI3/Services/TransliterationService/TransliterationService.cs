@@ -1,15 +1,11 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Services.TransliterationService
 {

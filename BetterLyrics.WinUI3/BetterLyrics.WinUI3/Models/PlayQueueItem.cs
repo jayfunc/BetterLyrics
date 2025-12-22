@@ -1,6 +1,4 @@
-﻿using ATL;
-
-namespace BetterLyrics.WinUI3.Models
+﻿namespace BetterLyrics.WinUI3.Models
 {
     public class PlayQueueItem
     {

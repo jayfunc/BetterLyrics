@@ -1,10 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using ATL;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Services.SettingsService;

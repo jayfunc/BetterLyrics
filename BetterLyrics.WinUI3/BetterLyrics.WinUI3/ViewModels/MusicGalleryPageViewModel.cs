@@ -1,14 +1,12 @@
-﻿using ATL;
-using BetterLyrics.WinUI3.Collections;
+﻿using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
-using BetterLyrics.WinUI3.Services.ResourceService;
+
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -27,6 +25,7 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -34,7 +33,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ILibWatcherService _libWatcherService;
         private readonly ISettingsService _settingsService;
-        private readonly IResourceService _resourceService;
+        private readonly ILocalizer _localizer = Localizer.Get();
 
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
@@ -95,18 +94,17 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
 
-        public MusicGalleryPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, IResourceService resourceService)
+        public MusicGalleryPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService)
         {
             _refreshSongsTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService = settingsService;
-            _resourceService = resourceService;
             AppSettings = _settingsService.AppSettings;
 
             TrackPlayingQueue = [.. AppSettings.MusicGallerySettings.PlayQueuePaths.Select(x => new PlayQueueItem(new ExtendedTrack(x)))];
             TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
 
-            SongsTabInfoList.Add(new SongsTabInfo(_resourceService.GetLocalizedString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
+            SongsTabInfoList.Add(new SongsTabInfo(_localizer.GetLocalizedString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
 
             RefreshSongs();
 

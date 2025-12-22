@@ -13,7 +13,6 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Lyricify.Lyrics.Providers.Web.Netease;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
@@ -21,13 +20,11 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 using Windows.UI;
-using static Vanara.PInvoke.Ole32;
 
 namespace BetterLyrics.WinUI3.Controls
 {

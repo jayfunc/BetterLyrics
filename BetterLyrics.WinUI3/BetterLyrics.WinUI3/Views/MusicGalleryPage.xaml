@@ -10,6 +10,7 @@
     xmlns:ext="using:BetterLyrics.WinUI3.Extensions"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -68,21 +69,21 @@
                                     Grid.Row="1"
                                     Padding="12"
                                     Spacing="6">
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoTitle" Value="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileArtist" Value="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileAlbum" Value="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoYear" Value="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoDuration" Value="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitrate" Value="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoSampleRate" Value="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoTitle" Value="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileArtist" Value="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileAlbum" Value="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoYear" Value="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoDuration" Value="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoBitrate" Value="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoSampleRate" Value="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
                                     <uc:PropertyRow
-                                        x:Uid="MusicGalleryPageFileInfoPath"
+                                        l:Uids.Uid="MusicGalleryPageFileInfoPath"
                                         Link="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}"
                                         Value="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped.RawLyrics, Mode=OneWay}" />
+                                    <uc:PropertyRow l:Uids.Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped.RawLyrics, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
                         </ScrollViewer>
@@ -107,7 +108,7 @@
                                         FontFamily="{StaticResource IconFontFamily}"
                                         FontSize="16"
                                         Glyph="&#xE728;" />
-                                    <TextBlock x:Uid="MusicGalleryPagePlaylist" />
+                                    <TextBlock l:Uids.Uid="MusicGalleryPagePlaylist" />
                                 </StackPanel>
                             </Button.Content>
                             <Button.Flyout>
@@ -135,7 +136,7 @@
                                                         FontFamily="{StaticResource IconFontFamily}"
                                                         FontSize="16"
                                                         Glyph="&#xE710;" />
-                                                    <TextBlock x:Uid="MusicGalleryPageNewPlaylist" />
+                                                    <TextBlock l:Uids.Uid="MusicGalleryPageNewPlaylist" />
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
@@ -156,7 +157,7 @@
                                                         FontFamily="{StaticResource IconFontFamily}"
                                                         FontSize="16"
                                                         Glyph="&#xE74B;" />
-                                                    <TextBlock x:Uid="MusicGalleryPageImportFromFile" />
+                                                    <TextBlock l:Uids.Uid="MusicGalleryPageImportFromFile" />
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
@@ -217,8 +218,8 @@
                                             Visibility="{x:Bind IsClosable, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                                             <ToolTipService.ToolTip>
                                                 <Grid>
-                                                    <TextBlock x:Uid="MusicGalleryPageAddToCustomList" Visibility="{x:Bind IsStarred, Converter={StaticResource BoolNegationToVisibilityConverter}, Mode=OneWay}" />
-                                                    <TextBlock x:Uid="MusicGalleryPageRemoveFromCustomList" Visibility="{x:Bind IsStarred, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                                                    <TextBlock l:Uids.Uid="MusicGalleryPageAddToCustomList" Visibility="{x:Bind IsStarred, Converter={StaticResource BoolNegationToVisibilityConverter}, Mode=OneWay}" />
+                                                    <TextBlock l:Uids.Uid="MusicGalleryPageRemoveFromCustomList" Visibility="{x:Bind IsStarred, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
                                                 </Grid>
                                             </ToolTipService.ToolTip>
                                             <Button.Content>
@@ -282,9 +283,9 @@
 
                     <AutoSuggestBox
                         x:Name="SongSearchBox"
-                        x:Uid="MusicGalleryPageSongSearchBox"
                         Margin="0,-8,0,0"
                         HorizontalAlignment="Stretch"
+                        l:Uids.Uid="MusicGalleryPageSongSearchBox"
                         QueryIcon="Find"
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
 
@@ -319,17 +320,17 @@
                             Spacing="6">
                             <StackPanel Orientation="Horizontal" Spacing="12">
                                 <TextBlock
-                                    x:Uid="MusicGalleryPageSortType"
                                     VerticalAlignment="Center"
+                                    l:Uids.Uid="MusicGalleryPageSortType"
                                     Style="{StaticResource BodyStrongTextBlockStyle}" />
                                 <controls:Segmented
                                     x:Name="Segmented"
                                     SelectedIndex="{x:Bind ViewModel.SongOrderType, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
                                     SelectionMode="Single">
-                                    <controls:SegmentedItem x:Uid="MusicGalleryPageSortByTitle" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
-                                    <controls:SegmentedItem x:Uid="MusicGalleryPageSortByAlbum" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
-                                    <controls:SegmentedItem x:Uid="MusicGalleryPageSortByArtist" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
-                                    <controls:SegmentedItem x:Uid="MusicGalleryPageSortByFolder" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B7;}" />
+                                    <controls:SegmentedItem l:Uids.Uid="MusicGalleryPageSortByTitle" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC4F;}" />
+                                    <controls:SegmentedItem l:Uids.Uid="MusicGalleryPageSortByAlbum" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE93C;}" />
+                                    <controls:SegmentedItem l:Uids.Uid="MusicGalleryPageSortByArtist" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEFA9;}" />
+                                    <controls:SegmentedItem l:Uids.Uid="MusicGalleryPageSortByFolder" Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B7;}" />
                                 </controls:Segmented>
                             </StackPanel>
                         </StackPanel>
@@ -346,12 +347,12 @@
                             SelectionMode="Multiple">
                             <ListView.ContextFlyout>
                                 <MenuBarItemFlyout>
-                                    <MenuFlyoutSubItem x:Uid="MusicGalleryPageAddToPlayingQueue" IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
-                                        <MenuFlyoutItem x:Uid="MusicGalleryPageAddToNext" Click="AddSongToQueueNextMenuFlyoutItem_Click" />
-                                        <MenuFlyoutItem x:Uid="MusicGalleryPageAddToEnd" Click="AddSongToQueueEndMenuFlyoutItem_Click" />
+                                    <MenuFlyoutSubItem l:Uids.Uid="MusicGalleryPageAddToPlayingQueue" IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
+                                        <MenuFlyoutItem l:Uids.Uid="MusicGalleryPageAddToNext" Click="AddSongToQueueNextMenuFlyoutItem_Click" />
+                                        <MenuFlyoutItem l:Uids.Uid="MusicGalleryPageAddToEnd" Click="AddSongToQueueEndMenuFlyoutItem_Click" />
                                     </MenuFlyoutSubItem>
                                     <MenuFlyoutItem
-                                        x:Uid="MusicGalleryPageAddToCustomList"
+                                        l:Uids.Uid="MusicGalleryPageAddToCustomList"
                                         Click="AddToPlaylistMenuFlyoutItem_Click"
                                         IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
                                         <MenuFlyoutItem.ContextFlyout>
@@ -507,8 +508,8 @@
                         Spacing="12">
                         <Image MaxWidth="200" Source="/Assets/EmptyState.png" />
                         <TextBlock
-                            x:Uid="MusicGalleryPageFileNotFound"
                             HorizontalAlignment="Center"
+                            l:Uids.Uid="MusicGalleryPageFileNotFound"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                     </StackPanel>
                 </Grid>
@@ -532,9 +533,9 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <TextBlock
-                            x:Uid="MusicGalleryPagePlayingQueue"
                             Grid.Column="0"
                             VerticalAlignment="Center"
+                            l:Uids.Uid="MusicGalleryPagePlayingQueue"
                             Style="{StaticResource BodyStrongTextBlockStyle}" />
                         <StackPanel
                             Grid.Column="1"
@@ -556,7 +557,7 @@
                                                   Glyph=&#xE71A;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="MusicGalleryPageStopTrack" />
+                                <TextBlock l:Uids.Uid="MusicGalleryPageStopTrack" />
                             </ToolTipService.ToolTip>
                         </Button>
 
@@ -569,9 +570,9 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip>
                                     <Grid>
-                                        <TextBlock x:Name="PlaybackRepeatAllHint" x:Uid="MusicGalleryPageQueueLoop" />
-                                        <TextBlock x:Name="PlaybackRepeatOneHint" x:Uid="MusicGalleryPageSingleLoop" />
-                                        <TextBlock x:Name="PlaybackShuffleHint" x:Uid="MusicGalleryPageQueueRandom" />
+                                        <TextBlock x:Name="PlaybackRepeatAllHint" l:Uids.Uid="MusicGalleryPageQueueLoop" />
+                                        <TextBlock x:Name="PlaybackRepeatOneHint" l:Uids.Uid="MusicGalleryPageSingleLoop" />
+                                        <TextBlock x:Name="PlaybackShuffleHint" l:Uids.Uid="MusicGalleryPageQueueRandom" />
                                     </Grid>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
@@ -621,7 +622,7 @@
                                                   Glyph=&#xE7B7;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
+                                <TextBlock l:Uids.Uid="MusicGalleryPageScrollToPlayingItem" />
                             </ToolTipService.ToolTip>
                         </Button>
 
@@ -635,7 +636,7 @@
                                                   Glyph=&#xE738;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
+                                <TextBlock l:Uids.Uid="MusicGalleryPageEmptyPlayingQueue" />
                             </ToolTipService.ToolTip>
                         </Button>
                     </Grid>
@@ -667,7 +668,7 @@
                                                               Glyph=&#xE738;}"
                                         Style="{StaticResource GhostButtonStyle}">
                                         <ToolTipService.ToolTip>
-                                            <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />
+                                            <TextBlock l:Uids.Uid="MusicGalleryPageRemoveFromPlayingQueue" />
                                         </ToolTipService.ToolTip>
                                     </Button>
                                 </Grid>
@@ -697,8 +698,8 @@
                         Spacing="12">
                         <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
                         <TextBlock
-                            x:Uid="MusicGalleryPagePlayingQueueEmpty"
                             HorizontalAlignment="Center"
+                            l:Uids.Uid="MusicGalleryPagePlayingQueueEmpty"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                     </StackPanel>
                 </Grid>

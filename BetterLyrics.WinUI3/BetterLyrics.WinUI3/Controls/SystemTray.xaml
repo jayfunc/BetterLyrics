@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tb="using:H.NotifyIcon"
@@ -29,37 +30,37 @@
                     </Style>
                 </MenuFlyout.MenuFlyoutPresenterStyle>
                 <MenuFlyoutItem
-                    x:Uid="SystemTraySwitch"
+                    l:Uids.Uid="SystemTraySwitch"
                     Command="{x:Bind ViewModel.OpenLyricsWindowSwitchCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE8AB;}" />
                 <MenuFlyoutItem
-                    x:Uid="SystemTraySearch"
+                    l:Uids.Uid="SystemTraySearch"
                     Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE721;}" />
                 <MenuFlyoutItem
-                    x:Uid="SystemTrayMusicGallery"
+                    l:Uids.Uid="SystemTrayMusicGallery"
                     Command="{x:Bind ViewModel.OpenMusicGalleryCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE8F1;}" />
                 <MenuFlyoutItem
-                    x:Uid="SystemTraySettings"
+                    l:Uids.Uid="SystemTraySettings"
                     Command="{x:Bind ViewModel.OpenSettingsCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE713;}" />
                 <MenuFlyoutItem
-                    x:Uid="SystemTrayResetWindowPosition"
+                    l:Uids.Uid="SystemTrayResetWindowPosition"
                     Command="{x:Bind ViewModel.ResetWindowPositionCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE923;}" />
                 <MenuFlyoutItem
-                    x:Uid="SystemTrayRestart"
+                    l:Uids.Uid="SystemTrayRestart"
                     Command="{x:Bind ViewModel.RestartAppCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE777;}" />
                 <MenuFlyoutItem
-                    x:Uid="SystemTrayExit"
+                    l:Uids.Uid="SystemTrayExit"
                     Command="{x:Bind ViewModel.ExitAppCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE7E8;}" />

@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -22,23 +23,23 @@
 
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <TextBlock x:Uid="SettingsPageRecordedWindowStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock l:Uids.Uid="SettingsPageRecordedWindowStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <StackPanel Orientation="Horizontal" Spacing="3">
 
                             <!--  Create from templates  -->
                             <Button Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource IconFontFamily}, Glyph=&#xE710;}" Style="{StaticResource GhostButtonStyle}">
                                 <ToolTipService.ToolTip>
-                                    <ToolTip x:Uid="SettingsPageCreateFromTemplates" />
+                                    <ToolTip l:Uids.Uid="SettingsPageCreateFromTemplates" />
                                 </ToolTipService.ToolTip>
                                 <Button.Flyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem x:Uid="SettingsPageStandardMode" Command="{x:Bind ViewModel.CreateStandardLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageDesktopMode" Command="{x:Bind ViewModel.CreateTransparentLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageDockedMode" Command="{x:Bind ViewModel.CreateDockedLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageTaskbarMode" Command="{x:Bind ViewModel.CreateTaskbarLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem l:Uids.Uid="SettingsPageStandardMode" Command="{x:Bind ViewModel.CreateStandardLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem l:Uids.Uid="SettingsPageDesktopMode" Command="{x:Bind ViewModel.CreateTransparentLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem l:Uids.Uid="SettingsPageDockedMode" Command="{x:Bind ViewModel.CreateDockedLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem l:Uids.Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem l:Uids.Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem l:Uids.Uid="SettingsPageTaskbarMode" Command="{x:Bind ViewModel.CreateTaskbarLyricsWindowStatusCommand}" />
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
@@ -51,12 +52,12 @@
                                                       Glyph=&#xE74B;}"
                                 Style="{StaticResource GhostButtonStyle}">
                                 <ToolTipService.ToolTip>
-                                    <ToolTip x:Uid="SettingsPageImport" />
+                                    <ToolTip l:Uids.Uid="SettingsPageImport" />
                                 </ToolTipService.ToolTip>
                             </Button>
 
                             <!--  Sharing hub  -->
-                            <HyperlinkButton x:Uid="SettingsPageShareHub" NavigateUri="{x:Bind constants:Link.ShareHub}" />
+                            <HyperlinkButton l:Uids.Uid="SettingsPageShareHub" NavigateUri="{x:Bind constants:Link.ShareHub}" />
 
                         </StackPanel>
 
@@ -86,10 +87,10 @@
                                             Spacing="6">
                                             <StackPanel.ContextFlyout>
                                                 <MenuBarItemFlyout>
-                                                    <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
-                                                    <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
+                                                    <MenuFlyoutItem l:Uids.Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
+                                                    <MenuFlyoutItem l:Uids.Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem
-                                                        x:Uid="SettingsPageDelete"
+                                                        l:Uids.Uid="SettingsPageDelete"
                                                         Click="DeleteMenuFlyoutItem_Click"
                                                         IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
                                                 </MenuBarItemFlyout>
@@ -108,7 +109,7 @@
                                                     HorizontalAlignment="Stretch"
                                                     Click="SetDefaultMenuFlyoutItem_Click"
                                                     IsChecked="{Binding IsDefault, Mode=OneWay}">
-                                                    <TextBlock x:Uid="LyricsWindowSettingsControlSetDefault" />
+                                                    <TextBlock l:Uids.Uid="LyricsWindowSettingsControlSetDefault" />
                                                 </ToggleButton>
                                             </Grid>
                                             <Grid ColumnSpacing="4">
@@ -119,7 +120,7 @@
                                                     Grid.Column="0"
                                                     HorizontalAlignment="Stretch"
                                                     Click="ConfigButton_Click">
-                                                    <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
+                                                    <TextBlock l:Uids.Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
                                                 </Button>
                                             </Grid>
                                         </StackPanel>
@@ -128,13 +129,13 @@
                             </ListView>
                         </StackPanel>
 
-                        <dev:SettingsCard x:Uid="SettingsPageMultiNowPlayingWindows">
+                        <dev:SettingsCard l:Uids.Uid="SettingsPageMultiNowPlayingWindows">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.MultiNowPlayingWindowMode, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard x:Uid="SettingsPageMusicGalleryLyrics">
+                        <dev:SettingsCard l:Uids.Uid="SettingsPageMusicGalleryLyrics">
                             <Button HorizontalAlignment="Stretch" Click="EmbeddedConfigButton_Click">
-                                <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
+                                <TextBlock l:Uids.Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
                             </Button>
                         </dev:SettingsCard>
 
@@ -191,25 +192,25 @@
                         Style="{StaticResource PivotSegmentedStyle}">
 
                         <controls:SegmentedItem x:Name="WindowSegmentedItem" Tag="Window">
-                            <TextBlock x:Uid="AppSettingsControlGeneral" />
+                            <TextBlock l:Uids.Uid="AppSettingsControlGeneral" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem x:Name="LayoutSegmentedItem" Tag="Layout">
-                            <TextBlock x:Uid="SettingsPageLayout" />
+                            <TextBlock l:Uids.Uid="SettingsPageLayout" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem x:Name="AlbumArtStyleSegmentedItem" Tag="AlbumArtStyle">
-                            <TextBlock x:Uid="SettingsPageAlbumStyle" />
+                            <TextBlock l:Uids.Uid="SettingsPageAlbumStyle" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="AlbumArtEffect">
-                            <TextBlock x:Uid="SettingsPageAlbumEffect" />
+                            <TextBlock l:Uids.Uid="SettingsPageAlbumEffect" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="LyricsStyle">
-                            <TextBlock x:Uid="SettingsPageLyricsStyle" />
+                            <TextBlock l:Uids.Uid="SettingsPageLyricsStyle" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="LyricsEffect">
-                            <TextBlock x:Uid="SettingsPageLyricsEffect" />
+                            <TextBlock l:Uids.Uid="SettingsPageLyricsEffect" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="LyricsBackground">
-                            <TextBlock x:Uid="SettingsPageBackgroundOverlay" />
+                            <TextBlock l:Uids.Uid="SettingsPageBackgroundOverlay" />
                         </controls:SegmentedItem>
 
                     </controls:Segmented>
@@ -235,19 +236,19 @@
                         <Grid Style="{StaticResource SettingsGridStyle}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                                <TextBlock x:Uid="SettingsPageLayout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <TextBlock l:Uids.Uid="SettingsPageLayout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                                <dev:SettingsExpander x:Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
+                                <dev:SettingsExpander l:Uids.Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
                                     <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
-                                        <ComboBoxItem x:Uid="MainPageLyriscOnly" />
-                                        <ComboBoxItem x:Uid="MainPageSplitView" />
+                                        <ComboBoxItem l:Uids.Uid="MainPageAlbumArtOnly" />
+                                        <ComboBoxItem l:Uids.Uid="MainPageLyriscOnly" />
+                                        <ComboBoxItem l:Uids.Uid="MainPageSplitView" />
                                     </ComboBox>
                                     <dev:SettingsExpander.Items>
-                                        <dev:SettingsCard x:Uid="SettingsPageLayoutOrientation">
+                                        <dev:SettingsCard l:Uids.Uid="SettingsPageLayoutOrientation">
                                             <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
-                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
+                                                <ComboBoxItem l:Uids.Uid="SettingsPageLayoutOrientationHorizontal" />
+                                                <ComboBoxItem l:Uids.Uid="SettingsPageLayoutOrientationVertical" />
                                             </ComboBox>
                                         </dev:SettingsCard>
                                     </dev:SettingsExpander.Items>

@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:enums="using:BetterLyrics.WinUI3.Enums"
+    xmlns:l="using:WinUI3Localizer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -17,25 +18,25 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock x:Uid="SettingsPageBackgroundOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock l:Uids.Uid="SettingsPageBackgroundOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE790;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE790;}">
                         <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind LyricsBackgroundSettings.LyricsBackgroundTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
-                            <ComboBoxItem x:Uid="SettingsPageLight" />
-                            <ComboBoxItem x:Uid="SettingsPageDark" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageFollowSystem" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageLight" />
+                            <ComboBoxItem l:Uids.Uid="SettingsPageDark" />
                         </ComboBox>
                     </dev:SettingsCard>
 
                     <dev:SettingsExpander
-                        x:Uid="SettingsPagePureLayer"
+                        l:Uids.Uid="SettingsPagePureLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xEB42;}"
                         IsExpanded="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
-                            <dev:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
                                     Maximum="100"
@@ -48,14 +49,14 @@
                     </dev:SettingsExpander>
 
                     <dev:SettingsExpander
-                        x:Uid="SettingsPageAlbumArtLayer"
+                        l:Uids.Uid="SettingsPageAlbumArtLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xE93C;}"
                         IsExpanded="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
-                            <dev:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
                                     Maximum="100"
@@ -64,7 +65,7 @@
                                     Value="{x:Bind LyricsBackgroundSettings.CoverOverlayOpacity, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="50"
                                     Maximum="100"
@@ -73,7 +74,7 @@
                                     Value="{x:Bind LyricsBackgroundSettings.CoverOverlaySpeed, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageBlurAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageBlurAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
                                     Maximum="200"
@@ -81,7 +82,7 @@
                                     Value="{x:Bind LyricsBackgroundSettings.CoverOverlayBlurAmount, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <!--<dev:SettingsCard x:Uid="SettingsPageBackgroundAcrylicEffectAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
+                            <!--<dev:SettingsCard l:Uids.Uid="SettingsPageBackgroundAcrylicEffectAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="0"
                                     Maximum="10"
@@ -93,14 +94,14 @@
                     </dev:SettingsExpander>
 
                     <dev:SettingsExpander
-                        x:Uid="SettingsPageFluidLayer"
+                        l:Uids.Uid="SettingsPageFluidLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xEDA8;}"
                         IsExpanded="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
-                            <dev:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
                                     Maximum="100"
@@ -109,10 +110,10 @@
                                     Value="{x:Bind LyricsBackgroundSettings.FluidOverlayOpacity, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPagePaletteGeneratorType" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageMedianCut" />
-                                    <ComboBoxItem x:Uid="SettingsPageOctTree" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageMedianCut" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageOctTree" />
                                 </ComboBox>
                             </dev:SettingsCard>
 
@@ -120,20 +121,20 @@
                     </dev:SettingsExpander>
 
                     <dev:SettingsExpander
-                        x:Uid="SettingsPageSnowFlakeLayer"
+                        l:Uids.Uid="SettingsPageSnowFlakeLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xEDAD;}"
                         IsExpanded="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Maximum="10"
                                     Minimum="0"
                                     ResetButtonVisibility="Collapsed"
                                     Value="{x:Bind LyricsBackgroundSettings.SnowFlakeOverlayAmount, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Maximum="10"
                                     Minimum="1"
@@ -143,33 +144,33 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageFogLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA91;}">
+                    <dev:SettingsCard l:Uids.Uid="SettingsPageFogLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA91;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFogOverlayEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
                     <dev:SettingsExpander
-                        x:Uid="SettingsPageSpectrumLayer"
+                        l:Uids.Uid="SettingsPageSpectrumLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                  Glyph=&#xF61F;}"
                         IsExpanded="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
 
-                            <dev:SettingsCard x:Uid="SettingsPageSpectrumLayerPlacement" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageSpectrumLayerPlacement" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.SpectrumPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageSpectrumPlacementTop" />
-                                    <ComboBoxItem x:Uid="SettingsPageSpectrumPlacementBottom" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageSpectrumPlacementTop" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageSpectrumPlacementBottom" />
                                 </ComboBox>
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageSpectrumLayerStyle" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageSpectrumLayerStyle" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.SpectrumStyle, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageSpectrumStyleCurve" />
-                                    <ComboBoxItem x:Uid="SettingsPageSpectrumStyleBar" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageSpectrumStyleCurve" />
+                                    <ComboBoxItem l:Uids.Uid="SettingsPageSpectrumStyleBar" />
                                 </ComboBox>
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                            <dev:SettingsCard l:Uids.Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="128"
                                     Maximum="1024"

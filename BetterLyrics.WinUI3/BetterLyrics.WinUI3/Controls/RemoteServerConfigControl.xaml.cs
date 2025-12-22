@@ -1,22 +1,16 @@
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.ResourceService;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using DevWinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Windows.Storage;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class RemoteServerConfigControl : UserControl
     {
         private readonly string _protocolType;
-        private readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private readonly ILocalizer _localizer = Localizer.Get();
 
         public RemoteServerConfigControl(string protocolType)
         {
@@ -48,7 +42,7 @@ namespace BetterLyrics.WinUI3.Controls
         public MediaFolder GetConfig()
         {
             if (string.IsNullOrWhiteSpace(HostBox.Text))
-                throw new ArgumentException(_resourceService.GetLocalizedString("RemoteServerConfigControlServerAddressRequired"));
+                throw new ArgumentException(_localizer.GetLocalizedString("RemoteServerConfigControlServerAddressRequired"));
 
             string name = $"{_protocolType} - {HostBox.Text}";
 

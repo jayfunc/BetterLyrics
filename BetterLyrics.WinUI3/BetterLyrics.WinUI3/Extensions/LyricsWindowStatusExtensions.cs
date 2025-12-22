@@ -2,24 +2,24 @@
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.ResourceService;
+
 using BetterLyrics.WinUI3.Views;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Windows.Foundation;
+using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
     public static class LyricsWindowStatusExtensions
     {
-        private static readonly IResourceService _resourceService = Ioc.Default.GetRequiredService<IResourceService>();
+        private static readonly ILocalizer _localizer = Localizer.Get();
 
         public static LyricsWindowStatus DesktopMode(Window? window = null)
         {
             window ??= WindowHook.GetWindow<SystemTrayWindow>();
             return new LyricsWindowStatus(window)
             {
-                Name = _resourceService.GetLocalizedString("DesktopMode"),
+                Name = _localizer.GetLocalizedString("DesktopMode"),
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 WindowBounds = new Rect(100, 100, 600, 250),
                 IsLocked = true,
@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.Extensions
             window ??= WindowHook.GetWindow<SystemTrayWindow>();
             var status = new LyricsWindowStatus(window)
             {
-                Name = _resourceService.GetLocalizedString("DockedMode"),
+                Name = _localizer.GetLocalizedString("DockedMode"),
                 IsWorkArea = true,
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
@@ -71,7 +71,7 @@ namespace BetterLyrics.WinUI3.Extensions
             window ??= WindowHook.GetWindow<SystemTrayWindow>();
             var status = new LyricsWindowStatus(window)
             {
-                Name = _resourceService.GetLocalizedString("FullscreenMode"),
+                Name = _localizer.GetLocalizedString("FullscreenMode"),
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
@@ -93,7 +93,7 @@ namespace BetterLyrics.WinUI3.Extensions
             window ??= WindowHook.GetWindow<SystemTrayWindow>();
             return new LyricsWindowStatus(window)
             {
-                Name = _resourceService.GetLocalizedString("StandardMode"),
+                Name = _localizer.GetLocalizedString("StandardMode"),
             };
         }
 
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.Extensions
             window ??= WindowHook.GetWindow<SystemTrayWindow>();
             return new LyricsWindowStatus(window)
             {
-                Name = _resourceService.GetLocalizedString("NarrowMode"),
+                Name = _localizer.GetLocalizedString("NarrowMode"),
                 WindowBounds = new Rect(100, 100, 400, 800),
                 LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical,
             };
@@ -113,7 +113,7 @@ namespace BetterLyrics.WinUI3.Extensions
             window ??= WindowHook.GetWindow<SystemTrayWindow>();
             return new LyricsWindowStatus(window)
             {
-                Name = _resourceService.GetLocalizedString("TaskbarMode"),
+                Name = _localizer.GetLocalizedString("TaskbarMode"),
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 IsPinToTaskbar = true,
                 IsLocked = true,
