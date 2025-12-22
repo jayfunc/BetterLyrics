@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using WinUI3Localizer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,8 +25,6 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class MusicGalleryPage : Page
     {
-        private readonly ILocalizer _localizer = Localizer.Get();
-
         public MusicGalleryPageViewModel ViewModel => (MusicGalleryPageViewModel)DataContext;
 
         public MusicGalleryPage()

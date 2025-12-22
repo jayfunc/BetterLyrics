@@ -3,7 +3,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,20 +14,20 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class MediaSettingsControlViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
-        private readonly ILocalizer _localizer = Localizer.Get();
+        private readonly ILocalizationService _localizationService;
 
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
 
-        public MediaSettingsControlViewModel(ISettingsService settingsService)
+        public MediaSettingsControlViewModel(ISettingsService settingsService, ILocalizationService localizationService)
         {
+            _localizationService = localizationService;
             _settingsService = settingsService;
             AppSettings = _settingsService.AppSettings;
         }
@@ -81,8 +81,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                 XamlRoot = WindowHook.GetWindow<SettingsWindow>()?.Content.XamlRoot,
                 Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
                 Title = protocolType,
-                PrimaryButtonText = _localizer.GetLocalizedString("Add"),
-                CloseButtonText = _localizer.GetLocalizedString("Cancel"),
+                PrimaryButtonText = _localizationService.GetLocalizedString("Add"),
+                CloseButtonText = _localizationService.GetLocalizedString("Cancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 Content = new RemoteServerConfigControl(protocolType)
             };
@@ -116,7 +116,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
-                        ShowErrorTip(configControl, _localizer.GetLocalizedString("SettingsPageServerTestFailedInfo"));
+                        ShowErrorTip(configControl, _localizationService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
                     }
                 }
                 catch (Exception ex)

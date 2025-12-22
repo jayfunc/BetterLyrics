@@ -1,14 +1,15 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Services.LocalizationService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
-using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
     public static class WindowExtensions
     {
-        private static readonly ILocalizer _localizer = Localizer.Get();
+        private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
         extension(Window window)
         {
@@ -17,7 +18,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 TitleBarHeightOption titleBarHeightOption = TitleBarHeightOption.Standard,
                 BackdropType backdropType = BackdropType.DesktopAcrylic)
             {
-                window.Title = _localizer.GetLocalizedString(titleKey);
+                window.Title = _localizationService.GetLocalizedString(titleKey);
                 window.AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
                 window.AppWindow.SetIcons();
 

@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -26,7 +25,7 @@
                                       Glyph=&#xE894;}"
                 Style="{StaticResource GhostButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip l:Uids.Uid="SettingsPageClear" />
+                    <ToolTip x:Uid="SettingsPageClear" />
                 </ToolTipService.ToolTip>
             </Button>
             <Button
@@ -38,7 +37,7 @@
                                       Glyph=&#xE721;}"
                 Style="{StaticResource GhostButtonStyle}">
                 <ToolTipService.ToolTip>
-                    <ToolTip l:Uids.Uid="SettingsPageCheckShortcut" />
+                    <ToolTip x:Uid="SettingsPageCheckShortcut" />
                 </ToolTipService.ToolTip>
             </Button>
         </StackPanel>

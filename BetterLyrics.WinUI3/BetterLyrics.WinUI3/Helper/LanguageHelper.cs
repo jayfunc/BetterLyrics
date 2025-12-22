@@ -1,10 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Models;
 using NTextCat;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Windows.Globalization;
-using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Helper
 {

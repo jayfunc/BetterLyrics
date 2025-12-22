@@ -6,7 +6,6 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -26,10 +25,10 @@
         </Border>
         <Grid Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" CornerRadius="12">
             <TextBlock
+                x:Uid="SystemTraySwitch"
                 Margin="20"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                l:Uids.Uid="SystemTraySwitch" />
+                VerticalAlignment="Top" />
             <Button
                 Margin="12"
                 HorizontalAlignment="Right"
@@ -77,7 +76,7 @@
                 Spacing="6">
                 <HyperlinkButton Click="SettingsHypelinkButton_Click">
                     <HyperlinkButton.Content>
-                        <TextBlock l:Uids.Uid="LyricsWindowSwitchWindowHelp" />
+                        <TextBlock x:Uid="LyricsWindowSwitchWindowHelp" />
                     </HyperlinkButton.Content>
                 </HyperlinkButton>
             </StackPanel>

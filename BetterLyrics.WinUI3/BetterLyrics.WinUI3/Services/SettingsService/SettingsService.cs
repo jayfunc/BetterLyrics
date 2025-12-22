@@ -7,29 +7,28 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using System;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using Windows.Globalization;
-using WinUI3Localizer;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService
 {
     // 新建一个 AppSettings 类
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
-        private readonly ILocalizer _localizer = Localizer.Get();
+        private readonly ILocalizationService _localizationService;
         private readonly DispatcherQueueTimer _writeAppSettingsTimer;
 
         public AppSettings AppSettings { get; set; }
 
-        public SettingsService()
+        public SettingsService(ILocalizationService localizationService)
         {
+            _localizationService = localizationService;
             _writeAppSettingsTimer = _dispatcherQueue.CreateTimer();
 
             AppSettings = ReadAppSettings();
@@ -129,7 +128,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         public void UpdateLanguage()
         {
             var langCode = AppSettings.GeneralSettings.LanguageCode;
-            _localizer.SetLanguage(LanguageHelper.ParseLanguageCode(langCode));
+            var parsedLangCode = LanguageHelper.ParseLanguageCode(langCode);
+            ApplicationLanguages.PrimaryLanguageOverride = parsedLangCode;
         }
 
         /// <summary>

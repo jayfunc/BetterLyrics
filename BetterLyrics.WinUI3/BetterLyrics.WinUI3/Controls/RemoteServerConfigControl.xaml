@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:l="using:WinUI3Localizer"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -24,17 +23,17 @@
             <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
                 <TextBox
                     x:Name="HostBox"
+                    x:Uid="RemoteServerConfigControlServerAddress"
                     Grid.Column="0"
-                    l:Uids.Uid="RemoteServerConfigControlServerAddress"
                     InputScope="Url"
                     PlaceholderText="192.168.1.x"
                     TextWrapping="Wrap" />
 
                 <NumberBox
                     x:Name="PortBox"
+                    x:Uid="RemoteServerConfigControlPort"
                     Grid.Column="1"
                     MinWidth="100"
-                    l:Uids.Uid="RemoteServerConfigControlPort"
                     LargeChange="10"
                     SmallChange="1"
                     SpinButtonPlacementMode="Inline"
@@ -44,20 +43,20 @@
 
             <TextBox
                 x:Name="PathBox"
-                l:Uids.Uid="RemoteServerConfigControlPath"
+                x:Uid="RemoteServerConfigControlPath"
                 TextWrapping="Wrap" />
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
                 <TextBox
                     x:Name="UserBox"
+                    x:Uid="RemoteServerConfigControlUsername"
                     Grid.Column="0"
-                    l:Uids.Uid="RemoteServerConfigControlUsername"
                     TextWrapping="Wrap" />
 
                 <PasswordBox
                     x:Name="PwdBox"
+                    x:Uid="RemoteServerConfigControlPassword"
                     Grid.Column="1"
-                    l:Uids.Uid="RemoteServerConfigControlPassword"
                     PasswordRevealMode="Peek" />
             </Grid>
         </StackPanel>

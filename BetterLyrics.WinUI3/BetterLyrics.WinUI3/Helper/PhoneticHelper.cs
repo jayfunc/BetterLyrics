@@ -1,11 +1,12 @@
-﻿using System;
-using WinUI3Localizer;
+﻿using BetterLyrics.WinUI3.Services.LocalizationService;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using System;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public static class PhoneticHelper
     {
-        private static readonly ILocalizer _localizer = Localizer.Get();
+        private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
         public const string PinyinCode = "zh-cmn-pinyin";
         public const string JyutpingCode = "zh-yue-jyutping";
@@ -21,11 +22,11 @@ namespace BetterLyrics.WinUI3.Helper
             switch (code)
             {
                 case PinyinCode:
-                    return _localizer.GetLocalizedString("Pinyin");
+                    return _localizationService.GetLocalizedString("Pinyin");
                 case JyutpingCode:
-                    return _localizer.GetLocalizedString("Jyutping");
+                    return _localizationService.GetLocalizedString("Jyutping");
                 case RomanCode:
-                    return _localizer.GetLocalizedString("Romaji");
+                    return _localizationService.GetLocalizedString("Romaji");
                 default:
                     throw new ArgumentOutOfRangeException(nameof(code));
             }
