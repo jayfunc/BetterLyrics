@@ -271,7 +271,7 @@
     <value>設定</value>
   </data>
 	<data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>歌詞時間軌偏移</value>
+    <value>歌詞時間偏移</value>
   </data>
 	<data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
@@ -397,7 +397,7 @@
     <value>歌詞時間軌偏移</value>
   </data>
 	<data name="MainPageSplitView.Content" xml:space="preserve">
-    <value>拆分檢視</value>
+    <value>分割畫面視圖</value>
   </data>
 	<data name="MainPageWelcomeTeachingTip.Title" xml:space="preserve">
     <value>歡迎使用 BetterLyrics</value>
@@ -415,7 +415,7 @@
     <value>新增到播放隊列</value>
   </data>
 	<data name="MusicGalleryPageAllSongs" xml:space="preserve">
-    <value>所有音樂</value>
+    <value>所有歌曲</value>
   </data>
 	<data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>清除播放隊列</value>
@@ -496,7 +496,7 @@
     <value>定位到播放項</value>
   </data>
 	<data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
-    <value>全選</value>
+    <value>選擇全部</value>
   </data>
 	<data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>單曲循環</value>
@@ -625,7 +625,7 @@
     <value>專輯</value>
   </data>
 	<data name="SettingsPageAlbumArt.Text" xml:space="preserve">
-    <value>專輯封面</value>
+    <value>專輯</value>
   </data>
 	<data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
     <value>專輯圖片高度</value>
@@ -1054,7 +1054,7 @@
     <value>左間隙區域寬度因子</value>
   </data>
 	<data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
-    <value>伺服器位址</value>
+    <value>服務器地址</value>
   </data>
 	<data name="SettingsPageLight.Content" xml:space="preserve">
     <value>淺色</value>
@@ -1126,7 +1126,7 @@
     <value>淡出效果</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>目前行</value>
+    <value>目前播放行</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>適應歌詞背景（彩色）</value>
