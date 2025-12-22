@@ -1054,7 +1054,7 @@
     <value>왼쪽 갭 영역 너비 계수</value>
   </data>
 	<data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
-    <value>IP 주소</value>
+    <value>서버 주소</value>
   </data>
 	<data name="SettingsPageLight.Content" xml:space="preserve">
     <value>빛</value>
@@ -1126,7 +1126,7 @@
     <value>페이드 효과</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>현재 라인</value>
+    <value>현재 플레이 행</value>
   </data>
 	<data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>가사 배경 (색상)에 적응</value>
