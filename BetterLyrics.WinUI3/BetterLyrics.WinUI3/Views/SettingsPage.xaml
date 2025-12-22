@@ -35,7 +35,6 @@
 
                 <NavigationViewItem
                     l:Uids.Uid="SettingsPageLyricsWindowMgr"
-                    Content="Lyrics window manager"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE61F;}"
                     Tag="LyricsWindowMgr" />
