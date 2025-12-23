@@ -1297,7 +1297,7 @@
     <value>Fonética de letras</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Fonética</value>
+    <value>Pronunciación</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>Anclar a la barra de tareas</value>
