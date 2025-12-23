@@ -1297,7 +1297,7 @@
     <value>Фонетика текста</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Транскрипция</value>
+    <value>Произношения</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>Закрепить на панели задач</value>
