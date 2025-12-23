@@ -1297,7 +1297,7 @@
     <value>歌词注音</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>音标</value>
+    <value>发音标示</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>固定到任务栏</value>
