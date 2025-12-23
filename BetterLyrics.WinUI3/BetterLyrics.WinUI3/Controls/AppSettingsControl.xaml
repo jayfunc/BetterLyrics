@@ -3,6 +3,7 @@
     x:Class="BetterLyrics.WinUI3.Controls.AppSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:consts="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
@@ -47,7 +48,7 @@
                                 <HyperlinkButton
                                     x:Uid="SettingsPageHelpUsTranslate"
                                     Padding="0"
-                                    NavigateUri="https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556" />
+                                    NavigateUri="{x:Bind consts:Link.Crowdin}" />
                             </InfoBar>
                         </dev:SettingsExpander.ItemsFooter>
                     </dev:SettingsExpander>
