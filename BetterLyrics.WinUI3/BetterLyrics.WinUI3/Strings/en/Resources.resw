@@ -1297,7 +1297,7 @@
     <value>Lyric Phonetics</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Phonetic</value>
+    <value>Pronunciation</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>Pin to Taskbar</value>
