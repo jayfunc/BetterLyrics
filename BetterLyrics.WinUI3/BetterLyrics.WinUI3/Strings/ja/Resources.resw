@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-	<!-- 
+  <!-- 
     Microsoft ResX Schema 
     
     Version 2.0
@@ -59,1613 +59,1616 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0"/>
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string"/>
-							<xsd:attribute name="type" type="xsd:string"/>
-							<xsd:attribute name="mimetype" type="xsd:string"/>
-							<xsd:attribute ref="xml:space"/>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string"/>
-							<xsd:attribute name="name" type="xsd:string"/>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-							<xsd:attribute ref="xml:space"/>
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required"/>
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<resheader name="writer">
-		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-	</resheader>
-	<data name="ActionCompleted" xml:space="preserve">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionCompleted" xml:space="preserve">
     <value>Action completed</value>
   </data>
-	<data name="Add" xml:space="preserve">
-    <value>追加</value>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
   </data>
-	<data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>Local music files</value>
   </data>
-	<data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>Music player</value>
   </data>
-	<data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
+  <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
     <value>Picture-in-Picture mode</value>
   </data>
-	<data name="AppSettingsControlGeneral.Text" xml:space="preserve">
-    <value>ウィンドウ</value>
+  <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
+    <value>Window</value>
   </data>
-	<data name="ArtistsSplitHint.Text" xml:space="preserve">
+  <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>When entering multiple artists, please separate them using one of the following delimiters (do not mix use)</value>
   </data>
-	<data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>このメッセージを二度と見せないでください</value>
+  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>Do not show this message again</value>
   </data>
-	<data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
     <value>Picture-in-Picture mode</value>
   </data>
-	<data name="Cancel" xml:space="preserve">
-    <value>キャンセル</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-	<data name="Copy.Content" xml:space="preserve">
-    <value>コピー</value>
+  <data name="Copy.Content" xml:space="preserve">
+    <value>Copy</value>
   </data>
-	<data name="CreatePlaylistSuccessfully" xml:space="preserve">
+  <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>Playlist created successfully</value>
   </data>
-	<data name="CutletDockerFailed" xml:space="preserve">
+  <data name="CutletDockerFailed" xml:space="preserve">
     <value>Failed to request transliteration from cutlet-docker. Please check settings or local cutlet-docker configuration</value>
   </data>
-	<data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>たとえば、http://localhost:23333</value>
+  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>e.g. http://localhost:23333</value>
   </data>
-	<data name="DemoWindowControlDefault.Text" xml:space="preserve">
-    <value>デフォルト</value>
+  <data name="DemoWindowControlDefault.Text" xml:space="preserve">
+    <value>Default</value>
   </data>
-	<data name="DesktopMode" xml:space="preserve">
-    <value>デスクトップモード（透明） </value>
+  <data name="DesktopMode" xml:space="preserve">
+    <value>Desktop Mode (Transparent)</value>
   </data>
-	<data name="DockedMode" xml:space="preserve">
-    <value>ドック式</value>
+  <data name="DockedMode" xml:space="preserve">
+    <value>Docked Mode</value>
   </data>
-	<data name="ExportSettingsSuccess" xml:space="preserve">
-    <value>エクスポートが成功しました</value>
+  <data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>Export successful</value>
   </data>
-	<data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>LXミュージックサーバーに接続できません。[設定] - [再生ソース] - [LXミュージック] - [LXミュージックサーバー]に移動して、リンクが正しく入力されているかどうかを確認してください。</value>
+  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>Unable to connect to LX Music Server. Please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
   </data>
-	<data name="FullscreenMode" xml:space="preserve">
-    <value>フルスクリーンモード</value>
+  <data name="FullscreenMode" xml:space="preserve">
+    <value>Fullscreen Mode</value>
   </data>
-	<data name="HostWindowClickThroughButton.Content" xml:space="preserve">
-    <value>ロック</value>
+  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>Lock</value>
   </data>
-	<data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
-    <value>ロック</value>
+  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>Lock</value>
   </data>
-	<data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>ロック</value>
+  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
+    <value>Lock</value>
   </data>
-	<data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
-    <value>ミュージックギャラリー</value>
+  <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
+    <value>Music Gallery</value>
   </data>
-	<data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
-    <value>設定</value>
+  <data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>Settings</value>
   </data>
-	<data name="ImportPlaylistSuccessfully" xml:space="preserve">
+  <data name="ImportPlaylistSuccessfully" xml:space="preserve">
     <value>Playlist imported successfully</value>
   </data>
-	<data name="ImportSettingsFailed" xml:space="preserve">
-    <value>設定ファイルのインポートに失敗し、アプリケーション設定は変更されません</value>
+  <data name="ImportSettingsFailed" xml:space="preserve">
+    <value>Settings file import failed, application settings remain unchanged</value>
   </data>
-	<data name="ImportSettingsSuccess" xml:space="preserve">
-    <value>インポート成功</value>
+  <data name="ImportSettingsSuccess" xml:space="preserve">
+    <value>Import successful</value>
   </data>
-	<data name="Jyutping" xml:space="preserve">
+  <data name="Jyutping" xml:space="preserve">
     <value>Jyutping (Cantonese)</value>
   </data>
-	<data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
+  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
     <value>Please ensure at least one status is set as default</value>
   </data>
-	<data name="LastFMAuthFailed" xml:space="preserve">
-    <value>承認が失敗しました、もう一度やり直してください</value>
+  <data name="LastFMAuthFailed" xml:space="preserve">
+    <value>Authorization failed, please try again</value>
   </data>
-	<data name="LastFMRequestAuthConfirm" xml:space="preserve">
+  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>I have completed authorization</value>
   </data>
-	<data name="LastFMRequestAuthDesc" xml:space="preserve">
+  <data name="LastFMRequestAuthDesc" xml:space="preserve">
     <value>Please complete authorization in your browser</value>
   </data>
-	<data name="LastFMRequestAuthTitle" xml:space="preserve">
+  <data name="LastFMRequestAuthTitle" xml:space="preserve">
     <value>Grant BetterLyrics access to your Last.fm account</value>
   </data>
-	<data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>I have cancelled my authorization</value>
   </data>
-	<data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
     <value>Please complete the revocation in your browser</value>
   </data>
-	<data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>Revoke BetterLyrics access to your Last.fm account</value>
   </data>
-	<data name="LibreTranslateFailed" xml:space="preserve">
+  <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Failed to request translation from LibreTranslate. Please check settings or local LibreTranslate configuration</value>
   </data>
-	<data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>例：http://localhost:5000</value>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>e.g. http://localhost:5000</value>
   </data>
-	<data name="LyricsLoading" xml:space="preserve">
-    <value>歌詞の読み込み...</value>
+  <data name="LyricsLoading" xml:space="preserve">
+    <value>Loading lyrics...</value>
   </data>
-	<data name="LyricsNotFound" xml:space="preserve">
-    <value>歌詞が見つかりません</value>
+  <data name="LyricsNotFound" xml:space="preserve">
+    <value>Lyrics not found</value>
   </data>
-	<data name="LyricsPageCachePath.Header" xml:space="preserve">
-    <value>キャッシュパス</value>
+  <data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <value>Cache Path</value>
   </data>
-	<data name="LyricsPageCachePath.Value" xml:space="preserve">
-    <value>キャッシュパス</value>
+  <data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <value>Cache Path</value>
   </data>
-	<data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+  <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
     <value>Lyrics Language</value>
   </data>
-	<data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
-    <value>歌詞プロバイダー</value>
+  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+    <value>Lyrics Provider</value>
   </data>
-	<data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
+  <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
     <value>Manual Lyrics Search</value>
   </data>
-	<data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>歌詞ウィンドウ管理ショートカット設定</value>
+  <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
+    <value>Lyrics Window Management Shortcut Settings</value>
   </data>
-	<data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
-    <value>マッチ率</value>
+  <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
+    <value>Match Percentage</value>
   </data>
-	<data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>再生ソースクイック設定</value>
+  <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
+    <value>Playback Source Shortcut Settings</value>
   </data>
-	<data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
-    <value>曲を切り替えるときに0にリセットします</value>
+  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
+    <value>Reset to 0 when switching songs</value>
   </data>
-	<data name="LyricsPageSettings.Text" xml:space="preserve">
-    <value>設定</value>
+  <data name="LyricsPageSettings.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
-	<data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>歌詞タイムラインオフセット</value>
+  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
+    <value>Lyrics Timeline Offset</value>
   </data>
-	<data name="LyricsPageTitle" xml:space="preserve">
+  <data name="LyricsPageTitle" xml:space="preserve">
     <value>BetterLyrics</value>
   </data>
-	<data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>Prioritize reading translations within lyrics; if no match, request machine translation from LibreTranslate server</value>
   </data>
-	<data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
-    <value>翻訳を有効にします</value>
+  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>Enable Translation</value>
   </data>
-	<data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
-    <value>翻訳のみを表示します</value>
+  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>Show Translation Only</value>
   </data>
-	<data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
-    <value>翻訳プロバイダー</value>
+  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+    <value>Translation Provider</value>
   </data>
-	<data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
+  <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
     <value>Transliteration Provider</value>
   </data>
-	<data name="LyricsParseError" xml:space="preserve">
-    <value>歌詞の解析に失敗しました</value>
+  <data name="LyricsParseError" xml:space="preserve">
+    <value>Lyrics parsing failed</value>
   </data>
-	<data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
-    <value>アルバム</value>
+  <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
+    <value>Album</value>
   </data>
-	<data name="LyricsSearchControlArtist.Header" xml:space="preserve">
-    <value>アーティスト</value>
+  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
+    <value>Artist</value>
   </data>
-	<data name="LyricsSearchControlAutoGenerated.Tag" xml:space="preserve">
+  <data name="LyricsSearchControlAutoGenerated.Tag" xml:space="preserve">
     <value>Auto-generated</value>
   </data>
-	<data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
-    <value>間隔</value>
+  <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
+    <value>Duration</value>
   </data>
-	<data name="LyricsSearchControlHelp.Text" xml:space="preserve">
+  <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* Changes take effect immediately after saving, and subsequent song lyrics will be retrieved using mapping info and target lyrics; marking as Instrumental will directly revert to Instrumental placeholder lyrics. Resetting will restore original data retrieval.</value>
   </data>
-	<data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+  <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>Ignore cache when searching</value>
   </data>
-	<data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
-    <value>次の形式でマップされました</value>
+  <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
+    <value>Mapped as</value>
   </data>
-	<data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
+  <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
     <value>Mark as Instrumental</value>
   </data>
-	<data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
+  <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
     <value>Not found</value>
   </data>
-	<data name="LyricsSearchControlReset.Content" xml:space="preserve">
-    <value>リセット</value>
+  <data name="LyricsSearchControlReset.Content" xml:space="preserve">
+    <value>Reset</value>
   </data>
-	<data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
-    <value>変更を保存</value>
+  <data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
+    <value>Save Changes</value>
   </data>
-	<data name="LyricsSearchControlSearch.Content" xml:space="preserve">
-    <value>検索する</value>
+  <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
+    <value>Search</value>
   </data>
-	<data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
-    <value>曲情報マッピング</value>
+  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <value>Song Info Mapping</value>
   </data>
-	<data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>ターゲット歌詞検索プロバイダー</value>
+  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
+    <value>Target Lyrics Search Provider</value>
   </data>
-	<data name="LyricsSearchControlTitle.Header" xml:space="preserve">
-    <value>タイトル</value>
+  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
+    <value>Title</value>
   </data>
-	<data name="LyricsSearchPageTitle" xml:space="preserve">
-    <value>歌詞検索 - BetterLyrics</value>
+  <data name="LyricsSearchPageTitle" xml:space="preserve">
+    <value>Lyrics Search - BetterLyrics</value>
   </data>
-	<data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
     <value>Local .ESLRC File</value>
   </data>
-	<data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+  <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
     <value>Local .LRC File</value>
   </data>
-	<data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+  <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>Local Music File</value>
   </data>
-	<data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
+  <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>Local .TTML File</value>
   </data>
-	<data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
-    <value>没入モード</value>
+  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
+    <value>Immersive Mode</value>
   </data>
-	<data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
-    <value>構成</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
+    <value>Configuration</value>
   </data>
-	<data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
-    <value>歌詞ウィンドウモード</value>
+  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
+    <value>Lyrics Window Mode</value>
   </data>
-	<data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
-    <value>既定のブラウザーに設定する</value>
+  <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
+    <value>Set as Default</value>
   </data>
-	<data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
-    <value>エクスポート</value>
+  <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
+    <value>Export</value>
   </data>
-	<data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
-    <value>歌詞ウィンドウスイッチャー</value>
+  <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
+    <value>Lyrics Window Switcher</value>
   </data>
-	<data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
+  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
     <value>Go to "Settings" to add more modes</value>
   </data>
-	<data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
-    <value>歌詞ウィンドウスイッチャー</value>
+  <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <value>Lyrics Window Switcher</value>
   </data>
-	<data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>Show album art area only</value>
   </data>
-	<data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
     <value>Hover again to show the toggle button</value>
   </data>
-	<data name="MainPageLyriscOnly.Content" xml:space="preserve">
+  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>Show lyrics only</value>
   </data>
-	<data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
     <value>No matched local files found</value>
   </data>
-	<data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>No music is currently playing</value>
   </data>
-	<data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>歌詞タイムラインオフセット</value>
+  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <value>Lyrics Timeline Offset</value>
   </data>
-	<data name="MainPageSplitView.Content" xml:space="preserve">
-    <value>分割ビュー</value>
+  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>Split View</value>
   </data>
-	<data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
+  <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Add to playlist</value>
   </data>
-	<data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
     <value>End of list</value>
   </data>
-	<data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>Next item</value>
   </data>
-	<data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
+  <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
     <value>Add to queue</value>
   </data>
-	<data name="MusicGalleryPageAllSongs" xml:space="preserve">
+  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>All Music</value>
   </data>
-	<data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
+  <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Clear queue</value>
   </data>
-	<data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
-    <value>アルバム</value>
+  <data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
+    <value>Album</value>
   </data>
-	<data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
-    <value>アーティスト</value>
+  <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
+    <value>Artist</value>
   </data>
-	<data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
-    <value>ファイル情報</value>
+  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
+    <value>File Info</value>
   </data>
-	<data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
-    <value>ビットの深さ</value>
+  <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
+    <value>Bit Depth</value>
   </data>
-	<data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
-    <value>ビットレート</value>
+  <data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
+    <value>Bitrate</value>
   </data>
-	<data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
-    <value>間隔</value>
+  <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
+    <value>Duration</value>
   </data>
-	<data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
-    <value>エンコーダー</value>
+  <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
+    <value>Encoder</value>
   </data>
-	<data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
-    <value>形式</value>
+  <data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
+    <value>Format</value>
   </data>
-	<data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
-    <value>歌詞</value>
+  <data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
+    <value>Lyrics</value>
   </data>
-	<data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
-    <value>パス</value>
+  <data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
+    <value>Path</value>
   </data>
-	<data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
-    <value>サンプルレート</value>
+  <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
+    <value>Sample Rate</value>
   </data>
-	<data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
-    <value>タイトル</value>
+  <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
+    <value>Title</value>
   </data>
-	<data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
-    <value>年</value>
+  <data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
+    <value>Year</value>
   </data>
-	<data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
+  <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>No songs found in media library</value>
   </data>
-	<data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+  <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>Import from file</value>
   </data>
-	<data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>Create Playlist</value>
   </data>
-	<data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
+  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
     <value>Play all</value>
   </data>
-	<data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
+  <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>Playing Queue</value>
   </data>
-	<data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
+  <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>Playing queue is empty</value>
   </data>
-	<data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+  <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>Playlist</value>
   </data>
-	<data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
+  <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>Loop List</value>
   </data>
-	<data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
+  <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
     <value>Shuffle</value>
   </data>
-	<data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+  <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
     <value>Remove from playlist</value>
   </data>
-	<data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
+  <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>Remove from queue</value>
   </data>
-	<data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
+  <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>Scroll to playing item</value>
   </data>
-	<data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
     <value>Select all</value>
   </data>
-	<data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
+  <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>Loop Single</value>
   </data>
-	<data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
     <value>Search title, artist, album, filename or folder path</value>
   </data>
-	<data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
-    <value>アルバム</value>
+  <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
+    <value>Album</value>
   </data>
-	<data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
-    <value>アーティスト</value>
+  <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
+    <value>Artist</value>
   </data>
-	<data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
-    <value>フォルダー</value>
+  <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
+    <value>Folder</value>
   </data>
-	<data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
-    <value>タイトル</value>
+  <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
+    <value>Title</value>
   </data>
-	<data name="MusicGalleryPageSortType.Text" xml:space="preserve">
-    <value>並べ替えタイプ</value>
+  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
+    <value>Sort Type</value>
   </data>
-	<data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
+  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
     <value>Starred Playlist</value>
   </data>
-	<data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
-    <value>立ち止まる</value>
+  <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <value>Stop</value>
   </data>
-	<data name="MusicGalleryPageTitle" xml:space="preserve">
-    <value>音楽ギャラリー - BetterLyrics</value>
+  <data name="MusicGalleryPageTitle" xml:space="preserve">
+    <value>Music Gallery - BetterLyrics</value>
   </data>
-	<data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
+  <data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
     <value>Collapse</value>
   </data>
-	<data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
+  <data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
     <value>Expand</value>
   </data>
-	<data name="NarrowMode" xml:space="preserve">
-    <value>狭い</value>
+  <data name="NarrowMode" xml:space="preserve">
+    <value>Narrow Mode</value>
   </data>
-	<data name="PictureInPictureMode" xml:space="preserve">
-    <value>ピクチャーインピクチャーモード</value>
+  <data name="PictureInPictureMode" xml:space="preserve">
+    <value>Picture-in-Picture Mode</value>
   </data>
-	<data name="Pinyin" xml:space="preserve">
+  <data name="Pinyin" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
-	<data name="PlaylistViewFailed" xml:space="preserve">
+  <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Unable to view tracks because the path does not exist</value>
   </data>
-	<data name="PrivacyPolicy.Content" xml:space="preserve">
-    <value>プライバシーポリシー</value>
+  <data name="PrivacyPolicy.Content" xml:space="preserve">
+    <value>Privacy Policy</value>
   </data>
-	<data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
-    <value>パスワード</value>
+  <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
+    <value>Password</value>
   </data>
-	<data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
-    <value>パス</value>
+  <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
+    <value>Path</value>
   </data>
-	<data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
-    <value>ポート</value>
+  <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
+    <value>Port</value>
   </data>
-	<data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
-    <value>サーバーアドレス</value>
+  <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
+    <value>Server Address</value>
   </data>
-	<data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+  <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
     <value>Server Address is required</value>
   </data>
-	<data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
-    <value>ユーザー名</value>
+  <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
+    <value>Username</value>
   </data>
-	<data name="Romaji" xml:space="preserve">
-    <value>ローマン</value>
+  <data name="Romaji" xml:space="preserve">
+    <value>Romaji</value>
   </data>
-	<data name="SetingsPageContributors.Text" xml:space="preserve">
-    <value>投稿者</value>
+  <data name="SetingsPageContributors.Text" xml:space="preserve">
+    <value>Contributors</value>
   </data>
-	<data name="SetingsPageDeps.Text" xml:space="preserve">
+  <data name="SetingsPageDeps.Text" xml:space="preserve">
     <value>Code References</value>
   </data>
-	<data name="SetingsPageDonation.Text" xml:space="preserve">
+  <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>Donate</value>
   </data>
-	<data name="SetingsPageFeedback.Text" xml:space="preserve">
-    <value>フィードバック</value>
+  <data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <value>Feedback</value>
   </data>
-	<data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>手順</value>
+  <data name="SetingsPageInstructions.Text" xml:space="preserve">
+    <value>Instructions</value>
   </data>
-	<data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
-    <value>スペシャルサンクス</value>
+  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>Special Thanks</value>
   </data>
-	<data name="SetingsPageThanks.Text" xml:space="preserve">
+  <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>If you like this project, please consider supporting it by donating. Your support helps keep the project alive and encourages further development.</value>
   </data>
-	<data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
     <value>UI/UX References</value>
   </data>
-	<data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>[実験的] 奥行き効果</value>
+  <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
+    <value>[Experimental] Depth Effect</value>
   </data>
-	<data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
-    <value>深度</value>
+  <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
+    <value>Depth</value>
   </data>
-	<data name="SettingsPageAbout.Content" xml:space="preserve">
-    <value>について</value>
+  <data name="SettingsPageAbout.Content" xml:space="preserve">
+    <value>About</value>
   </data>
-	<data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
+  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
     <value>Acrylic (Base)</value>
   </data>
-	<data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
+  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
     <value>Acrylic (Thin)</value>
   </data>
-	<data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
+  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
     <value>Enabling this will override the theme setting in Lyrics Background</value>
   </data>
-	<data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
+  <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>Adapt to Environment Color</value>
   </data>
-	<data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
-    <value>追加</value>
+  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>Add</value>
   </data>
-	<data name="SettingsPageAdvanced.Text" xml:space="preserve">
-    <value>高度なオプション</value>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Advanced Options</value>
   </data>
-	<data name="SettingsPageAlbum.Header" xml:space="preserve">
-    <value>アルバム</value>
+  <data name="SettingsPageAlbum.Header" xml:space="preserve">
+    <value>Album</value>
   </data>
-	<data name="SettingsPageAlbumArt.Text" xml:space="preserve">
-    <value>アルバムアート</value>
+  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>Album Art</value>
   </data>
-	<data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
     <value>Album Art Height</value>
   </data>
-	<data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
-    <value>アルバムアートレイヤー</value>
+  <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
+    <value>Album Art Layer</value>
   </data>
-	<data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>Configure Album Art Sources</value>
   </data>
-	<data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>アルバムアートサイズ</value>
+  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
+    <value>Album Art Size</value>
   </data>
-	<data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
+  <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
     <value>Album Art Effect</value>
   </data>
-	<data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>Album Art Sources</value>
   </data>
-	<data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
-    <value>コーナー半径</value>
+  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>Corner Radius</value>
   </data>
-	<data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
+  <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
     <value>Shadow Diffusion</value>
   </data>
-	<data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
-    <value>アルバムエリアスタイル</value>
+  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+    <value>Album Art Area Style</value>
   </data>
-	<data name="SettingsPageAlignment.Header" xml:space="preserve">
-    <value>アライメント</value>
+  <data name="SettingsPageAlignment.Header" xml:space="preserve">
+    <value>Alignment</value>
   </data>
-	<data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
+  <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
     <value>Always hide unlock button</value>
   </data>
-	<data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
-    <value>ベースURL</value>
+  <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
+    <value>Base URL</value>
   </data>
-	<data name="SettingsPageAmount.Header" xml:space="preserve">
-    <value>量</value>
+  <data name="SettingsPageAmount.Header" xml:space="preserve">
+    <value>Amount</value>
   </data>
-	<data name="SettingsPageAOT.Header" xml:space="preserve">
+  <data name="SettingsPageAOT.Header" xml:space="preserve">
     <value>Keep Lyrics Window Always on Top</value>
   </data>
-	<data name="SettingsPageApp.Content" xml:space="preserve">
+  <data name="SettingsPageApp.Content" xml:space="preserve">
     <value>App Appearance &amp; Behavior</value>
   </data>
-	<data name="SettingsPageAppAppearance.Text" xml:space="preserve">
-    <value>アプリの外観</value>
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <value>App Appearance</value>
   </data>
-	<data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>一般的な行動</value>
+  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
+    <value>General Behavior</value>
   </data>
-	<data name="SettingsPageApply.Content" xml:space="preserve">
-    <value>適用する</value>
+  <data name="SettingsPageApply.Content" xml:space="preserve">
+    <value>Apply</value>
   </data>
-	<data name="SettingsPageArtist.Header" xml:space="preserve">
-    <value>アーティスト</value>
+  <data name="SettingsPageArtist.Header" xml:space="preserve">
+    <value>Artist</value>
   </data>
-	<data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>Auto Adjust</value>
   </data>
-	<data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
+  <data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
     <value>Auto-open default lyrics window on startup</value>
   </data>
-	<data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
+  <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>Open Music Gallery window on startup</value>
   </data>
-	<data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
+  <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>Auto-resume playback when Music Gallery window opens</value>
   </data>
-	<data name="SettingsPageAutoStart.Header" xml:space="preserve">
+  <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Auto Start</value>
   </data>
-	<data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
     <value>On application startup</value>
   </data>
-	<data name="SettingsPageBackdrop.Header" xml:space="preserve">
+  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
     <value>Lyrics Background Material</value>
   </data>
-	<data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
+  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
     <value>Album Background Acrylic Strength</value>
   </data>
-	<data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
-    <value>歌詞の背景</value>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
+    <value>Lyrics Background</value>
   </data>
-	<data name="SettingsPageBlurAmount.Header" xml:space="preserve">
-    <value>あいまい</value>
+  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>Blur Amount</value>
   </data>
-	<data name="SettingsPageBorderless.Header" xml:space="preserve">
-    <value>ボーダーレスウィンドウ</value>
+  <data name="SettingsPageBorderless.Header" xml:space="preserve">
+    <value>Borderless Window</value>
   </data>
-	<data name="SettingsPageCache.Description" xml:space="preserve">
+  <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Includes log files, online lyrics cache</value>
   </data>
-	<data name="SettingsPageCache.Header" xml:space="preserve">
-    <value>キャッシュ</value>
+  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>Cache</value>
   </data>
-	<data name="SettingsPageCenter.Content" xml:space="preserve">
-    <value>中心</value>
+  <data name="SettingsPageCenter.Content" xml:space="preserve">
+    <value>Center</value>
   </data>
-	<data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
-    <value>ショートカットをチェック！</value>
+  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>Check Shortcut</value>
   </data>
-	<data name="SettingsPageChinese.Header" xml:space="preserve">
+  <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>Chinese Phonetic</value>
   </data>
-	<data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
-    <value>中国語の歌詞</value>
+  <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
+    <value>Chinese Lyrics</value>
   </data>
-	<data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+  <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>Convert Chinese to Traditional</value>
   </data>
-	<data name="SettingsPageCJK.Header" xml:space="preserve">
+  <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK Unified Ideographs</value>
   </data>
-	<data name="SettingsPageClear.Content" xml:space="preserve">
-    <value>消去</value>
+  <data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>Clear</value>
   </data>
-	<data name="SettingsPageClearCache.Content" xml:space="preserve">
-    <value>キャッシュファイルをクリア</value>
+  <data name="SettingsPageClearCache.Content" xml:space="preserve">
+    <value>Clear Cache Files</value>
   </data>
-	<data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+  <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
     <value>Closed</value>
   </data>
-	<data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
-    <value>ドロップダウンを折りたたみます</value>
+  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>Collapse Dropdown</value>
   </data>
-	<data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
-    <value>コンパクト</value>
+  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>Compact</value>
   </data>
-	<data name="SettingsPageConfigName.Description" xml:space="preserve">
+  <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Naming recorded window statuses helps you distinguish them better</value>
   </data>
-	<data name="SettingsPageConfigName.Header" xml:space="preserve">
+  <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>Config Name</value>
   </data>
-	<data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
-    <value>再生ソースを設定します</value>
+  <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <value>Configure Playback Source</value>
   </data>
-	<data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
+  <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
     <value>Duplicate</value>
   </data>
-	<data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
+  <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>Create from template</value>
   </data>
-	<data name="SettingsPageCrossfade.Content" xml:space="preserve">
-    <value>クロスフェード</value>
+  <data name="SettingsPageCrossfade.Content" xml:space="preserve">
+    <value>Crossfade</value>
   </data>
-	<data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
-    <value>現在の歌詞ウィンドウステータス</value>
+  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
+    <value>Current Lyrics Window Status</value>
   </data>
-	<data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
-    <value>cutlet-docker 音声翻訳サービス</value>
+  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <value>cutlet-docker Transliteration Service</value>
   </data>
-	<data name="SettingsPageDark.Content" xml:space="preserve">
-    <value>暗い</value>
+  <data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>Dark</value>
   </data>
-	<data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>Show debug overlay</value>
   </data>
-	<data name="SettingsPageDelete.Text" xml:space="preserve">
-    <value>消去</value>
+  <data name="SettingsPageDelete.Text" xml:space="preserve">
+    <value>Delete</value>
   </data>
-	<data name="SettingsPageDesktopMode.Text" xml:space="preserve">
-    <value>デスクトップモード（透明） </value>
+  <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
+    <value>Desktop Mode (Transparent)</value>
   </data>
-	<data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>This project is provided as-is without warranty of any kind. All lyrics, fonts, icons, and other third-party resources are property of their respective copyright holders. The authors of this project claim no ownership of such resources. This project is non-commercial and must not be used to infringe any rights. Users are responsible for ensuring their use complies with applicable laws and licenses.</value>
   </data>
-	<data name="SettingsPageDiscord.Content" xml:space="preserve">
+  <data name="SettingsPageDiscord.Content" xml:space="preserve">
     <value>Discord</value>
   </data>
-	<data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+  <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>Show listening status via Discord Presence</value>
   </data>
-	<data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>レイアウトモード</value>
+  <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
+    <value>Layout Mode</value>
   </data>
-	<data name="SettingsPageDockedMode.Text" xml:space="preserve">
-    <value>ドック式</value>
+  <data name="SettingsPageDockedMode.Text" xml:space="preserve">
+    <value>Docked Mode</value>
   </data>
-	<data name="SettingsPageDockMonitor.Header" xml:space="preserve">
+  <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
     <value>Target Display</value>
   </data>
-	<data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
     <value>Workspace Position</value>
   </data>
-	<data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
-    <value>底</value>
+  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>Bottom</value>
   </data>
-	<data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
-    <value>トップ</value>
+  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>Top</value>
   </data>
-	<data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
-    <value>窓の高さ</value>
+  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>Window Height</value>
   </data>
-	<data name="SettingsPageDragArea.Header" xml:space="preserve">
-    <value>ドラッグ可能</value>
+  <data name="SettingsPageDragArea.Header" xml:space="preserve">
+    <value>Draggable Area</value>
   </data>
-	<data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
     <value>Easing Function Type</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
     <value>Back Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
     <value>Bounce Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
     <value>Circular Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
     <value>Cubic Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
     <value>Elastic Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
     <value>Exponential Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
     <value>Quadratic Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
     <value>Quartic Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
     <value>Quintic Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
     <value>Sine Ease In-Out</value>
   </data>
-	<data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
-    <value>リニア</value>
+  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>Linear</value>
   </data>
-	<data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
-    <value>スムーズなステップ</value>
+  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>Smooth Step</value>
   </data>
-	<data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
-    <value>現在の文字への行開始</value>
+  <data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>Line Start to Current Char</value>
   </data>
-	<data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
-    <value>長時間の音節</value>
+  <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
+    <value>Long Duration Syllable</value>
   </data>
-	<data name="SettingsPageEN.Content" xml:space="preserve">
+  <data name="SettingsPageEN.Content" xml:space="preserve">
     <value>English</value>
   </data>
-	<data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
+  <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>Environment Color Sampling Mode</value>
   </data>
-	<data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
+  <data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
     <value>Above Window</value>
   </data>
-	<data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
+  <data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
     <value>Below Window</value>
   </data>
-	<data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
+  <data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
     <value>Window Edge</value>
   </data>
-	<data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
+  <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>Window Inner</value>
   </data>
-	<data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
+  <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Exit app when Music Gallery window is closed</value>
   </data>
-	<data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
+  <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>Exit app when lyrics window is closed</value>
   </data>
-	<data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
-    <value>エクスポート設定</value>
+  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>Export Settings</value>
   </data>
-	<data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
-    <value>拡張</value>
+  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>Extended</value>
   </data>
-	<data name="SettingsPageFan.Header" xml:space="preserve">
+  <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>Fan-shaped Lyrics</value>
   </data>
-	<data name="SettingsPageFAQ.Content" xml:space="preserve">
+  <data name="SettingsPageFAQ.Content" xml:space="preserve">
     <value>FAQ</value>
   </data>
-	<data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
-    <value>固定時間ステップレンダリング</value>
+  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <value>Fixed Time Step Rendering</value>
   </data>
-	<data name="SettingsPageFluidLayer.Header" xml:space="preserve">
-    <value>流体層</value>
+  <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
+    <value>Fluid Layer</value>
   </data>
-	<data name="SettingsPageFogLayer.Header" xml:space="preserve">
-    <value>フォグレイヤー</value>
+  <data name="SettingsPageFogLayer.Header" xml:space="preserve">
+    <value>Fog Layer</value>
   </data>
-	<data name="SettingsPageFollowSystem.Content" xml:space="preserve">
-    <value>システムをフォローします</value>
+  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>Follow System</value>
   </data>
-	<data name="SettingsPageFontColor.Header" xml:space="preserve">
-    <value>フォントの色</value>
+  <data name="SettingsPageFontColor.Header" xml:space="preserve">
+    <value>Font Color</value>
   </data>
-	<data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
+  <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>Keep lyrics window always on top via polling</value>
   </data>
-	<data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
+  <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>Force Always on Top</value>
   </data>
-	<data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
+  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
     <value>Force word-by-word simulation even if current lyrics don't have word-by-word info</value>
   </data>
-	<data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
+  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
     <value>Force Word-by-Word Effect</value>
   </data>
-	<data name="SettingsPageFPS.Header" xml:space="preserve">
+  <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>Render FPS</value>
   </data>
-	<data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
-    <value>フルスクリーンモード</value>
+  <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
+    <value>Fullscreen Mode</value>
   </data>
-	<data name="SettingsPageHeight.Header" xml:space="preserve">
-    <value>高さ</value>
+  <data name="SettingsPageHeight.Header" xml:space="preserve">
+    <value>Height</value>
   </data>
-	<data name="SettingsPageHello.Text" xml:space="preserve">
-    <value>こんにちは</value>
+  <data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>Hello</value>
   </data>
-	<data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
+  <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>Help us translate this app</value>
   </data>
-	<data name="SettingsPageHideWindow.Description" xml:space="preserve">
+  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
     <value>Automatically hide/show lyrics window when music stops playing</value>
   </data>
-	<data name="SettingsPageHideWindow.Header" xml:space="preserve">
+  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Auto Hide/Show Window</value>
   </data>
-	<data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
+  <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>Hold here and drag to sort</value>
   </data>
-	<data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
+  <data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
     <value>Album Art Switch Animation</value>
   </data>
-	<data name="SettingsPageImport.Content" xml:space="preserve">
-    <value>インポート</value>
+  <data name="SettingsPageImport.Content" xml:space="preserve">
+    <value>Import</value>
   </data>
-	<data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
-    <value>設定をインポートします</value>
+  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>Import Settings</value>
   </data>
-	<data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>The app will restart automatically after successful import</value>
   </data>
-	<data name="SettingsPageJA.Content" xml:space="preserve">
+  <data name="SettingsPageJA.Content" xml:space="preserve">
     <value>日本語</value>
   </data>
-	<data name="SettingsPageJapanese.Description" xml:space="preserve">
+  <data name="SettingsPageJapanese.Description" xml:space="preserve">
     <value>Prioritize reading transliteration within lyrics; if no match, request machine transliteration from cutlet-docker server</value>
   </data>
-	<data name="SettingsPageJapanese.Header" xml:space="preserve">
+  <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>Japanese Phonetic</value>
   </data>
-	<data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
-    <value>今すぐ参加してください</value>
+  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>Join Now</value>
   </data>
-	<data name="SettingsPageJyutping.Content" xml:space="preserve">
+  <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>Jyutping (Cantonese)</value>
   </data>
-	<data name="SettingsPageKO.Content" xml:space="preserve">
+  <data name="SettingsPageKO.Content" xml:space="preserve">
     <value>한국어</value>
   </data>
-	<data name="SettingsPageLanguage.Header" xml:space="preserve">
-    <value>言語</value>
+  <data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>Language</value>
   </data>
-	<data name="SettingsPageLastFM.Text" xml:space="preserve">
+  <data name="SettingsPageLastFM.Text" xml:space="preserve">
     <value>Last.fm</value>
   </data>
-	<data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
-    <value>許可</value>
+  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <value>Authorize</value>
   </data>
-	<data name="SettingsPageLastFMManager.Header" xml:space="preserve">
+  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
     <value>Last.fm</value>
   </data>
-	<data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
     <value>Total Scrobbles</value>
   </data>
-	<data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
-    <value>リフレッシュします</value>
+  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <value>Refresh</value>
   </data>
-	<data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
-    <value>登録日</value>
+  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <value>Registration Date</value>
   </data>
-	<data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
     <value>Track listening history via Last.fm</value>
   </data>
-	<data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
-    <value>承認を取り消します</value>
+  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <value>Revoke Authorization</value>
   </data>
-	<data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
-    <value>ユーザー名</value>
+  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <value>Username</value>
   </data>
-	<data name="SettingsPageLayout.Text" xml:space="preserve">
-    <value>レイアウト</value>
+  <data name="SettingsPageLayout.Text" xml:space="preserve">
+    <value>Layout</value>
   </data>
-	<data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
-    <value>レイアウトの向き</value>
+  <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
+    <value>Layout Orientation</value>
   </data>
-	<data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
-    <value>水平方向</value>
+  <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
+    <value>Horizontal</value>
   </data>
-	<data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
-    <value>垂直方向</value>
+  <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
+    <value>Vertical</value>
   </data>
-	<data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>左</value>
+  <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>Left</value>
   </data>
-	<data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
-    <value>サーバーアドレス</value>
+  <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
+    <value>Server Address</value>
   </data>
-	<data name="SettingsPageLight.Content" xml:space="preserve">
-    <value>ライト</value>
+  <data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>Light</value>
   </data>
-	<data name="SettingsPageLinkedFile.Text" xml:space="preserve">
-    <value>リンクされたローカルファイル</value>
+  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
+    <value>Linked Local File</value>
   </data>
-	<data name="SettingsPageListenNewSession.Header" xml:space="preserve">
+  <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>Enable listening for new playback sessions</value>
   </data>
-	<data name="SettingsPageLocalFolder.Text" xml:space="preserve">
-    <value>ローカル フォルダ</value>
+  <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
+    <value>Local Folder</value>
   </data>
-	<data name="SettingsPageLog.Header" xml:space="preserve">
+  <data name="SettingsPageLog.Header" xml:space="preserve">
     <value>Logging</value>
   </data>
-	<data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
-    <value>長い音節のしきい値</value>
+  <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
+    <value>Long Syllable Threshold</value>
   </data>
-	<data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX Music Server</value>
   </data>
-	<data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
-    <value>例）http://127.0.0.1:23330</value>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
+    <value>e.g. http://127.0.0.1:23330</value>
   </data>
-	<data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
-    <value>アライメント</value>
+  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>Alignment</value>
   </data>
-	<data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
-    <value>歌詞の背景</value>
+  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <value>Lyrics Background</value>
   </data>
-	<data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>Non-current Line</value>
   </data>
-	<data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
-    <value>黒</value>
+  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>Black</value>
   </data>
-	<data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
-    <value>現在ではない行のぼかしを有効にします</value>
+  <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <value>Enable blur for non-current lines</value>
   </data>
-	<data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
-    <value>ぼかし効果</value>
+  <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <value>Blur Effect</value>
   </data>
-	<data name="SettingsPageLyricsBold.Content" xml:space="preserve">
-    <value>大胆な</value>
+  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>Bold</value>
   </data>
-	<data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
-    <value>現在の行の位置</value>
+  <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
+    <value>Current Line Position</value>
   </data>
-	<data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>歌詞効果</value>
+  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
+    <value>Lyrics Effect</value>
   </data>
-	<data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
-    <value>余分な黒</value>
+  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>Extra Black</value>
   </data>
-	<data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
-    <value>余分な太字</value>
+  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>Extra Bold</value>
   </data>
-	<data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
-    <value>余分な光</value>
+  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>Extra Light</value>
   </data>
-	<data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
+  <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
     <value>Enable fade-out effect for non-current lines</value>
   </data>
-	<data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
     <value>Fade Out Effect</value>
   </data>
-	<data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>現在のプレイ行</value>
+  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
+    <value>Current Line</value>
   </data>
-	<data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>Adapt to Lyrics Background (Colored)</value>
   </data>
-	<data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
     <value>Adapt to Lyrics Background (Grayed)</value>
   </data>
-	<data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
-    <value>カスタマイズ</value>
+  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
+    <value>Custom</value>
   </data>
-	<data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>Float Animation</value>
   </data>
-	<data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>Adapt to Lyrics Background (Colored)</value>
   </data>
-	<data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
     <value>Adapt to Lyrics Background (Grayed)</value>
   </data>
-	<data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
-    <value>カスタマイズ</value>
+  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <value>Custom</value>
   </data>
-	<data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>フォントファミリー</value>
+  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>Font Family</value>
   </data>
-	<data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
-    <value>フォントサイズ</value>
+  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>Font Size</value>
   </data>
-	<data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
-    <value>歌詞ストローク幅</value>
+  <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
+    <value>Lyrics Stroke Width</value>
   </data>
-	<data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
-    <value>フォント重量</value>
+  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>Font Weight</value>
   </data>
-	<data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
-    <value>グロー効果</value>
+  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>Glow Effect</value>
   </data>
-	<data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>ハイライト</value>
+  <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
+    <value>Highlight</value>
   </data>
-	<data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
     <value>Original Text Highlight Scope</value>
   </data>
-	<data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>左</value>
+  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>Left</value>
   </data>
-	<data name="SettingsPageLyricsLight.Content" xml:space="preserve">
-    <value>ライト</value>
+  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>Light</value>
   </data>
-	<data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
     <value>Play Area Edge Fade</value>
   </data>
-	<data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
-    <value>ライン間隔</value>
+  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>Line Spacing</value>
   </data>
-	<data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
     <value> x Line Height</value>
   </data>
-	<data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
-    <value>中くらい</value>
+  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>Medium</value>
   </data>
-	<data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
-    <value>普通</value>
+  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>Normal</value>
   </data>
-	<data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
-    <value>フォントの不透明度</value>
+  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>Font Opacity</value>
   </data>
-	<data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
+  <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
     <value>Make non-current lines gradually move out of sight</value>
   </data>
-	<data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>Out of Sight</value>
   </data>
-	<data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>Enable scaling for long duration syllables</value>
   </data>
-	<data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
-    <value>スケール効果</value>
+  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>Scale Effect</value>
   </data>
-	<data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
-    <value>ベストマッチ</value>
+  <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <value>Best Match</value>
   </data>
-	<data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
+  <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
     <value>Configure Lyrics Sources</value>
   </data>
-	<data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
-    <value>順次処理</value>
+  <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <value>Sequential</value>
   </data>
-	<data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
     <value>Sequential: Search through the list below in order of priority, returning the first result found; Best Match: Search all enabled sources and automatically select the result with the highest match score</value>
   </data>
-	<data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
-    <value>歌詞検索戦略</value>
+  <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <value>Lyrics Search Strategy</value>
   </data>
-	<data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
-    <value>セミボールド</value>
+  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>Semi Bold</value>
   </data>
-	<data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
-    <value>半光</value>
+  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>Semi Light</value>
   </data>
-	<data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
     <value>Shadow</value>
   </data>
-	<data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>歌詞スタイル</value>
+  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
+    <value>Lyrics Style</value>
   </data>
-	<data name="SettingsPageLyricsThin.Content" xml:space="preserve">
-    <value>薄い</value>
+  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>Thin</value>
   </data>
-	<data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
-    <value>歌詞のタイムラインを同期</value>
+  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>Lyrics Timeline Sync</value>
   </data>
-	<data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>Try increasing this threshold if lyric progress jitters; changing this value may cause lyric sync deviations</value>
   </data>
-	<data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
-    <value>歌詞タイムライン同期しきい値</value>
+  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>Lyrics Timeline Sync Threshold</value>
   </data>
-	<data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
-    <value>翻訳ハイライト</value>
+  <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
+    <value>Translation Highlight</value>
   </data>
-	<data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
     <value>Original-Translation Separator</value>
   </data>
-	<data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
     <value>Vertical Edge Opacity</value>
   </data>
-	<data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
-    <value>歌詞ウィンドウ</value>
+  <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
+    <value>Lyrics Window</value>
   </data>
-	<data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
-    <value>歌詞ウィンドウマネージャー</value>
+  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
+    <value>Lyrics Window Manager</value>
   </data>
-	<data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
-    <value>歌詞ウィンドウマネージャー</value>
+  <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
+    <value>Lyrics Window Manager</value>
   </data>
-	<data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
+  <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>Lyrics Window Status Switch Shortcut</value>
   </data>
-	<data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
-    <value>歌詞ウィンドウ</value>
+  <data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
+    <value>Lyrics Window</value>
   </data>
-	<data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
-    <value>この値を調整すると、シーケンシャル検索と最適な検索結果に影響しますが、手動歌詞検索インターフェースの検索結果には影響しません</value>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
+    <value>Adjusting this value will affect sequential search and best match search results, but will not affect search results in the manual lyrics search interface</value>
   </data>
-	<data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
+  <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
     <value>Minimum Match Threshold</value>
   </data>
-	<data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>メディアライブラリ</value>
+  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>Media Library</value>
   </data>
-	<data name="SettingsPageMedianCut.Content" xml:space="preserve">
-    <value>保守的</value>
+  <data name="SettingsPageMedianCut.Content" xml:space="preserve">
+    <value>Conservative</value>
   </data>
-	<data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>Listen to this playback source</value>
   </data>
-	<data name="SettingsPageMica.Content" xml:space="preserve">
-    <value>雲母</value>
+  <data name="SettingsPageMica.Content" xml:space="preserve">
+    <value>Mica</value>
   </data>
-	<data name="SettingsPageMicaAlt.Content" xml:space="preserve">
+  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
     <value>Mica (Alt)</value>
   </data>
-	<data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
-    <value>テスト音楽を再生します</value>
+  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <value>Play Test Music</value>
   </data>
-	<data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
     <value>Multi-Window Mode</value>
   </data>
-	<data name="SettingsPageMusicGallery.Text" xml:space="preserve">
-    <value>ミュージックギャラリー</value>
+  <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
+    <value>Music Gallery</value>
   </data>
-	<data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
     <value>Music Gallery Embedded Lyrics Window</value>
   </data>
-	<data name="SettingsPageMusicLib.Description" xml:space="preserve">
+  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
+    <value>The Music Gallery window is open. Ignoring other playback sources</value>
+  </data>
+  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Add folders containing music or lyrics</value>
   </data>
-	<data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>地元のメディア図書館</value>
+  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>Local Media Library</value>
   </data>
-	<data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
+  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
     <value>Real-time file monitoring</value>
   </data>
-	<data name="SettingsPageNarrowMode.Text" xml:space="preserve">
-    <value>狭い</value>
+  <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
+    <value>Narrow Mode</value>
   </data>
-	<data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+  <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>Next Track Shortcut</value>
   </data>
-	<data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
-    <value>なし</value>
+  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>None</value>
   </data>
-	<data name="SettingsPageOctTree.Content" xml:space="preserve">
-    <value>急進的だ</value>
+  <data name="SettingsPageOctTree.Content" xml:space="preserve">
+    <value>Aggressive</value>
   </data>
-	<data name="SettingsPageOpacity.Header" xml:space="preserve">
-    <value>不透明度</value>
+  <data name="SettingsPageOpacity.Header" xml:space="preserve">
+    <value>Opacity</value>
   </data>
-	<data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
-    <value>ファイルエクスプローラーで開きます</value>
+  <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
+    <value>Open in File Explorer</value>
   </data>
-	<data name="SettingsPageOriginalText.Header" xml:space="preserve">
+  <data name="SettingsPageOriginalText.Header" xml:space="preserve">
     <value>Original</value>
   </data>
-	<data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
+  <data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
     <value>Set Separate Minimum Match Threshold</value>
   </data>
-	<data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+  <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Palette Generator Type</value>
   </data>
-	<data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>This folder is already included in an existing folder, no need to add again</value>
   </data>
-	<data name="SettingsPagePathExistedInfo" xml:space="preserve">
+  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
     <value>This folder has already been added, please do not add it again</value>
   </data>
-	<data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>This folder contains already added folders, please remove them to add this folder</value>
   </data>
-	<data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
     <value>Unable to find this path on your computer</value>
   </data>
-	<data name="SettingsPagePatrons.Text" xml:space="preserve">
+  <data name="SettingsPagePatrons.Text" xml:space="preserve">
     <value>Sponsorship</value>
   </data>
-	<data name="SettingsPagePhonetic.Text" xml:space="preserve">
+  <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>Lyric Phonetics</value>
   </data>
-	<data name="SettingsPagePhoneticText.Header" xml:space="preserve">
+  <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>Phonetic</value>
   </data>
-	<data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
-    <value>タスクバーに移動</value>
+  <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
+    <value>Pin to Taskbar</value>
   </data>
-	<data name="SettingsPagePinyin.Content" xml:space="preserve">
+  <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
-	<data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>再生ソース</value>
+  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>Playback Sources</value>
   </data>
-	<data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>No captured playback source</value>
   </data>
-	<data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
-    <value>再生ソース</value>
+  <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
+    <value>Playback Source</value>
   </data>
-	<data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
-    <value>再生ソースID</value>
+  <data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
+    <value>Playback Source ID</value>
   </data>
-	<data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
-    <value>現在の再生ソース</value>
+  <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
+    <value>Current Playback Source</value>
   </data>
-	<data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Play "Cut to the Feeling" on "soundcloud.com"</value>
   </data>
-	<data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+  <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>Play/Pause Shortcut</value>
   </data>
-	<data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+  <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>Previous Track Shortcut</value>
   </data>
-	<data name="SettingsPagePureLayer.Header" xml:space="preserve">
+  <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>Solid Color Layer</value>
   </data>
-	<data name="SettingsPageQQGroup.Content" xml:space="preserve">
+  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
     <value>QQ Feedback Group</value>
   </data>
-	<data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
+  <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Real-time Status</value>
   </data>
-	<data name="SettingsPageRecord.Content" xml:space="preserve">
-    <value>記録</value>
+  <data name="SettingsPageRecord.Content" xml:space="preserve">
+    <value>Record</value>
   </data>
-	<data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
-    <value>記録されたウィンドウステータス</value>
+  <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <value>Recorded Window Status</value>
   </data>
-	<data name="SettingsPageReference.Header" xml:space="preserve">
+  <data name="SettingsPageReference.Header" xml:space="preserve">
     <value>References</value>
   </data>
-	<data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
-    <value>ドロップダウンを更新してください</value>
+  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>Refresh Dropdown</value>
   </data>
-	<data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>Original files and folders in the path will not be deleted</value>
   </data>
-	<data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
     <value>You can safely remove the following items</value>
   </data>
-	<data name="SettingsPageRemovePath.Content" xml:space="preserve">
+  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
     <value>Remove from app</value>
   </data>
-	<data name="SettingsPageRestart.Content" xml:space="preserve">
+  <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>Restart app to apply changes</value>
   </data>
-	<data name="SettingsPageRight.Content" xml:space="preserve">
-    <value>右</value>
+  <data name="SettingsPageRight.Content" xml:space="preserve">
+    <value>Right</value>
   </data>
-	<data name="SettingsPageRomaji.Header" xml:space="preserve">
+  <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>Japanese Phonetic</value>
   </data>
-	<data name="SettingsPageSC.Content" xml:space="preserve">
+  <data name="SettingsPageSC.Content" xml:space="preserve">
     <value>简体中文</value>
   </data>
-	<data name="SettingsPageScope.Header" xml:space="preserve">
-    <value>範囲</value>
+  <data name="SettingsPageScope.Header" xml:space="preserve">
+    <value>Scope</value>
   </data>
-	<data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+  <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
     <value>Bottom Line Delay</value>
   </data>
-	<data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
     <value>Bottom Line Duration</value>
   </data>
-	<data name="SettingsPageScrollDuration.Header" xml:space="preserve">
-    <value>現在のライン期間</value>
+  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>Current Line Duration</value>
   </data>
-	<data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
     <value>Lyrics Animation Type</value>
   </data>
-	<data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+  <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
     <value>Top Line Delay</value>
   </data>
-	<data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>Top Line Duration</value>
   </data>
-	<data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
-    <value>現在の歌詞検索結果</value>
+  <data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
+    <value>Current Lyrics Search Result</value>
   </data>
-	<data name="SettingsPageServerTestButton.Content" xml:space="preserve">
-    <value>テストサーバー</value>
+  <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
+    <value>Test Server</value>
   </data>
-	<data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
-    <value>サーバーテストに失敗しました</value>
+  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
+    <value>Server test failed</value>
   </data>
-	<data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
-    <value>サーバーテストが成功しました</value>
+  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
+    <value>Server test successful</value>
   </data>
-	<data name="SettingsPageSettings.Header" xml:space="preserve">
-    <value>設定</value>
+  <data name="SettingsPageSettings.Header" xml:space="preserve">
+    <value>Settings</value>
   </data>
-	<data name="SettingsPageSettingsManager.Header" xml:space="preserve">
-    <value>設定マネージャー</value>
+  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>Settings Manager</value>
   </data>
-	<data name="SettingsPageShareHub.Content" xml:space="preserve">
+  <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Browse Online Share Hub</value>
   </data>
-	<data name="SettingsPageShortcut.Text" xml:space="preserve">
+  <data name="SettingsPageShortcut.Text" xml:space="preserve">
     <value>Shortcuts</value>
   </data>
-	<data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+  <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>Hot key registration failed</value>
   </data>
-	<data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+  <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>Hot key registration successful</value>
   </data>
-	<data name="SettingsPageShowAlbum.Header" xml:space="preserve">
-    <value>アルバムを表示</value>
+  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <value>Show Album</value>
   </data>
-	<data name="SettingsPageShowArtists.Header" xml:space="preserve">
-    <value>アーティスト</value>
+  <data name="SettingsPageShowArtists.Header" xml:space="preserve">
+    <value>Show Artists</value>
   </data>
-	<data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+  <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
     <value>Show/Hide Lyrics Window Shortcut</value>
   </data>
-	<data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
     <value>e.g., Alt + Tab, Taskbar</value>
   </data>
-	<data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
-    <value>システム環境に表示します</value>
+  <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
+    <value>Show in System Environment</value>
   </data>
-	<data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
-    <value>レイアウトスプリッターを表示</value>
+  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
+    <value>Show Layout Splitter</value>
   </data>
-	<data name="SettingsPageShowTitle.Header" xml:space="preserve">
-    <value>タイトルを表示</value>
+  <data name="SettingsPageShowTitle.Header" xml:space="preserve">
+    <value>Show Title</value>
   </data>
-	<data name="SettingsPageSlide.Content" xml:space="preserve">
-    <value>スライド</value>
+  <data name="SettingsPageSlide.Content" xml:space="preserve">
+    <value>Slide</value>
   </data>
-	<data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
     <value>Current Value: </value>
   </data>
-	<data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
-    <value>スノーフレークレイヤー</value>
+  <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
+    <value>Snowflake Layer</value>
   </data>
-	<data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>曲情報</value>
+  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>Song Info</value>
   </data>
-	<data name="SettingsPageSongStatus.Header" xml:space="preserve">
-    <value>現在の曲です</value>
+  <data name="SettingsPageSongStatus.Header" xml:space="preserve">
+    <value>Current Song</value>
   </data>
-	<data name="SettingsPageSongTitle.Header" xml:space="preserve">
-    <value>タイトル</value>
+  <data name="SettingsPageSongTitle.Header" xml:space="preserve">
+    <value>Title</value>
   </data>
-	<data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
-    <value>[実験的] スペクトラムレイヤー</value>
+  <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
+    <value>[Experimental] Spectrum Layer</value>
   </data>
-	<data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
+  <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
     <value>Spectrum Position</value>
   </data>
-	<data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
-    <value>スペクトラムスタイル</value>
+  <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
+    <value>Spectrum Style</value>
   </data>
-	<data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
-    <value>底</value>
+  <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
+    <value>Bottom</value>
   </data>
-	<data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
-    <value>トップ</value>
+  <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
+    <value>Top</value>
   </data>
-	<data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
-    <value>コラム</value>
+  <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
+    <value>Bar</value>
   </data>
-	<data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
-    <value>曲線</value>
+  <data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
+    <value>Curve</value>
   </data>
-	<data name="SettingsPageSpeed.Header" xml:space="preserve">
+  <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>Speed</value>
   </data>
-	<data name="SettingsPageStandardMode.Text" xml:space="preserve">
-    <value>標準モード</value>
+  <data name="SettingsPageStandardMode.Text" xml:space="preserve">
+    <value>Standard Mode</value>
   </data>
-	<data name="SettingsPageStartup.Text" xml:space="preserve">
+  <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Startup</value>
   </data>
-	<data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
+  <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Stop playback when Music Gallery window is closed</value>
   </data>
-	<data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
-    <value>ストロークカラー</value>
+  <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke Color</value>
   </data>
-	<data name="SettingsPageSystemLanguage" xml:space="preserve">
-    <value>デフォルト</value>
+  <data name="SettingsPageSystemLanguage" xml:space="preserve">
+    <value>Default</value>
   </data>
-	<data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
-    <value>ターゲット言語</value>
+  <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
+    <value>Target Language</value>
   </data>
-	<data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
-    <value>タスクバーモード</value>
+  <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
+    <value>Taskbar Mode</value>
   </data>
-	<data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>Taskbar Pin Position</value>
   </data>
-	<data name="SettingsPageTC.Content" xml:space="preserve">
+  <data name="SettingsPageTC.Content" xml:space="preserve">
     <value>繁體中文</value>
   </data>
-	<data name="SettingsPageTelegram.Content" xml:space="preserve">
+  <data name="SettingsPageTelegram.Content" xml:space="preserve">
     <value>Telegram</value>
   </data>
-	<data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
     <value>Thanks for purchasing BetterLyrics</value>
   </data>
-	<data name="SettingsPageThanksList.Header" xml:space="preserve">
-    <value>ありがとうございました</value>
+  <data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>Credits</value>
   </data>
-	<data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>歌詞の背景テーマ</value>
+  <data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>Lyrics Background Theme</value>
   </data>
-	<data name="SettingsPageTitle" xml:space="preserve">
-    <value>設定 - BetterLyrics</value>
+  <data name="SettingsPageTitle" xml:space="preserve">
+    <value>Settings - BetterLyrics</value>
   </data>
-	<data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
-    <value>なし</value>
+  <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
+    <value>None</value>
   </data>
-	<data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
-    <value>トップ</value>
+  <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
+    <value>Top</value>
   </data>
-	<data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
+  <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>Whole Window</value>
   </data>
-	<data name="SettingsPageTitleBarType.Header" xml:space="preserve">
-    <value>タイトルバーサイズ</value>
+  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>Title Bar Size</value>
   </data>
-	<data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
+  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
     <value>Toggle Active/Inactive Shortcut</value>
   </data>
-	<data name="SettingsPageTranslatedText.Header" xml:space="preserve">
+  <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Translation</value>
   </data>
-	<data name="SettingsPageTranslation.Text" xml:space="preserve">
-    <value>歌詞翻訳</value>
+  <data name="SettingsPageTranslation.Text" xml:space="preserve">
+    <value>Lyrics Translation</value>
   </data>
-	<data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
+  <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate Service</value>
   </data>
-	<data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
+  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>Visit https://github.com/LibreTranslate/LibreTranslate for installation tutorial and more info (This software is not affiliated with this service)</value>
   </data>
-	<data name="SettingsPageTransparent.Content" xml:space="preserve">
-    <value>透明</value>
+  <data name="SettingsPageTransparent.Content" xml:space="preserve">
+    <value>Transparent</value>
   </data>
-	<data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>And users who purchased BetterLyrics</value>
   </data>
-	<data name="SettingsPageVersion.Text" xml:space="preserve">
-    <value>バージョン</value>
+  <data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>Version</value>
   </data>
-	<data name="SettingsPageWesternChar.Header" xml:space="preserve">
+  <data name="SettingsPageWesternChar.Header" xml:space="preserve">
     <value>Latin Characters</value>
   </data>
-	<data name="SettingsPageWidth.Header" xml:space="preserve">
-    <value>幅</value>
+  <data name="SettingsPageWidth.Header" xml:space="preserve">
+    <value>Width</value>
   </data>
-	<data name="SettingsPageWindowBounds.Header" xml:space="preserve">
-    <value>ウィンドウ境界</value>
+  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
+    <value>Window Bounds</value>
   </data>
-	<data name="SettingsPageWorkArea.Description" xml:space="preserve">
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>As a separate work area, docked to the top/bottom edge of the screen</value>
   </data>
-	<data name="SettingsPageWorkArea.Header" xml:space="preserve">
-    <value>kawasan kerja</value>
+  <data name="SettingsPageWorkArea.Header" xml:space="preserve">
+    <value>As Work Area</value>
   </data>
-	<data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>作業エリアの高さ</value>
+  <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
+    <value>Work Area Height</value>
   </data>
-	<data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>You, who are using this software</value>
   </data>
-	<data name="StandardMode" xml:space="preserve">
-    <value>標準モード</value>
+  <data name="StandardMode" xml:space="preserve">
+    <value>Standard Mode</value>
   </data>
-	<data name="SystemTrayExit.Text" xml:space="preserve">
-    <value>プログラムを終了します</value>
+  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>Exit</value>
   </data>
-	<data name="SystemTrayLyrics.Text" xml:space="preserve">
+  <data name="SystemTrayLyrics.Text" xml:space="preserve">
     <value>Open Lyrics Window</value>
   </data>
-	<data name="SystemTrayMusicGallery.Text" xml:space="preserve">
-    <value>オープンミュージックギャラリー</value>
+  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>Open Music Gallery</value>
   </data>
-	<data name="SystemTrayPageTitle" xml:space="preserve">
-    <value>システムトレイ - BetterLyrics</value>
+  <data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>System Tray - BetterLyrics</value>
   </data>
-	<data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
-    <value>ウィンドウの位置をリセットします</value>
+  <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
+    <value>Reset Window Position</value>
   </data>
-	<data name="SystemTrayRestart.Text" xml:space="preserve">
-    <value>再起動</value>
+  <data name="SystemTrayRestart.Text" xml:space="preserve">
+    <value>Restart</value>
   </data>
-	<data name="SystemTraySearch.Text" xml:space="preserve">
-    <value>歌詞検索ウィンドウ</value>
+  <data name="SystemTraySearch.Text" xml:space="preserve">
+    <value>Lyrics Search Window</value>
   </data>
-	<data name="SystemTraySettings.Text" xml:space="preserve">
+  <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>Open Settings</value>
   </data>
-	<data name="SystemTraySwitch.Text" xml:space="preserve">
-    <value>歌詞ウィンドウスイッチャー</value>
+  <data name="SystemTraySwitch.Text" xml:space="preserve">
+    <value>Lyrics Window Switcher</value>
   </data>
-	<data name="TaskbarMode" xml:space="preserve">
-    <value>タスクバーモード</value>
+  <data name="TaskbarMode" xml:space="preserve">
+    <value>Taskbar Mode</value>
   </data>
-	<data name="TermsOfService.Content" xml:space="preserve">
-    <value>利用規約</value>
+  <data name="TermsOfService.Content" xml:space="preserve">
+    <value>Terms of Service</value>
   </data>
-	<data name="TracksAddToPlaylistFailed" xml:space="preserve">
+  <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Unable to add tracks because the path does not exist</value>
   </data>
-	<data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+  <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
     <value>Selected tracks added to this playlist</value>
   </data>
-	<data name="TranslateServerNotSet" xml:space="preserve">
+  <data name="TranslateServerNotSet" xml:space="preserve">
     <value>Translate server not set, please configure in settings first</value>
   </data>
-	<data name="TryRunMultipleInstance" xml:space="preserve">
-    <value>BetterLyrics はすでに実行されています</value>
+  <data name="TryRunMultipleInstance" xml:space="preserve">
+    <value>BetterLyrics is already running</value>
   </data>
-	<data name="UserGuide.Content" xml:space="preserve">
-    <value>利用案内</value>
+  <data name="UserGuide.Content" xml:space="preserve">
+    <value>User Guide</value>
   </data>
 </root>
