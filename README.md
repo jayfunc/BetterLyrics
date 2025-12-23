@@ -209,6 +209,18 @@ Cannot find your language? Or have better translations? Don't worry! Start trans
 
 Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 to accept the invitation and become a valuable translator now!
 
+| Language | Language Code | Contributors |
+| :---: | :---: | :---: |
+| German | de | - |
+| English | en | [jayfunc](https://crowdin.com/profile/jayfunc) |
+| Spanish | es | - |
+| French | fr | - |
+| Japanese | ja | - |
+| Korean | ko | - |
+| Russian | ru | - |
+| Simplified Chinese | zh-Hans | [borcolasky](https://crowdin.com/profile/borcolasky) |
+| Traditional Chinese | zh-Hant | - |
+
 ## ⭐ Star history
 
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
