@@ -203,6 +203,18 @@ BetterLyrics
 
 现在访问 https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 即刻为本应用提供翻译，成为贡献者！
 
+| 语言 | 语言代码 | 贡献者 |
+| :---: | :---: | :---: |
+| 德语 | de | - |
+| 英语 | en | [jayfunc](https://crowdin.com/profile/jayfunc) |
+| 西班牙语 | es | - |
+| 法语 | fr | - |
+| 日语 | ja | - |
+| 韩语 | ko | - |
+| 俄语 | ru | - |
+| 简体中文 | zh-Hans | [borcolasky](https://crowdin.com/profile/borcolasky) |
+| 繁体中文 | zh-Hant | - |
+
 ## ⭐ 星标记录
 
 <div style="display: flex; justify-content: space-around; align-items: flex-start;">
