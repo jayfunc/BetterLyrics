@@ -44,10 +44,10 @@
             </interactivity:Interaction.Behaviors>
 
             <InfoBar
+                x:Uid="SettingsPageMusicGalleryOpened"
                 Grid.Row="0"
                 IsClosable="False"
                 IsOpen="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened, Mode=OneWay}"
-                Message="音乐库窗口已打开，将忽略对其他播放源的监听"
                 Severity="Informational" />
 
             <!--  播放源列表  -->
