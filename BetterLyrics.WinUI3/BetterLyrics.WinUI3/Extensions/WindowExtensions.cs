@@ -14,11 +14,19 @@ namespace BetterLyrics.WinUI3.Extensions
         extension(Window window)
         {
             public void Init(
-                string titleKey,
+                string titleKey = "",
+                string title = "",
                 TitleBarHeightOption titleBarHeightOption = TitleBarHeightOption.Standard,
                 BackdropType backdropType = BackdropType.DesktopAcrylic)
             {
-                window.Title = _localizationService.GetLocalizedString(titleKey);
+                if (titleKey != "")
+                {
+                    window.Title = _localizationService.GetLocalizedString(titleKey);
+                }
+                if (title != "")
+                {
+                    window.Title = title;
+                }
                 window.AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
                 window.AppWindow.SetIcons();
 

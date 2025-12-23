@@ -1,0 +1,1561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="ActionCompleted" xml:space="preserve">
+    <value>Tindakan selesai</value>
+  </data>
+	<data name="Add" xml:space="preserve">
+    <value>Tambah</value>
+  </data>
+	<data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <value>File musik lokal</value>
+  </data>
+	<data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <value>Pemutar musik</value>
+  </data>
+	<data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
+    <value>Mode Gambar-dalam-Gambar (PiP)</value>
+  </data>
+	<data name="AppSettingsControlGeneral.Text" xml:space="preserve">
+    <value>Jendela</value>
+  </data>
+	<data name="ArtistsSplitHint.Text" xml:space="preserve">
+    <value>Saat memasukkan beberapa artis, silakan gunakan salah satu pemisah berikut untuk memisahkannya (jangan dicampur)</value>
+  </data>
+	<data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
+    <value>Jangan tampilkan pesan ini lagi</value>
+  </data>
+	<data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
+    <value>Mode Gambar-dalam-Gambar (PiP)</value>
+  </data>
+	<data name="Cancel" xml:space="preserve">
+    <value>Batal</value>
+  </data>
+	<data name="Copy.Content" xml:space="preserve">
+    <value>Salin</value>
+  </data>
+	<data name="CreatePlaylistSuccessfully" xml:space="preserve">
+    <value>Daftar putar berhasil dibuat</value>
+  </data>
+	<data name="CutletDockerFailed" xml:space="preserve">
+    <value>Permintaan transliterasi ke cutlet-docker gagal, silakan periksa pengaturan atau konfigurasi cutlet-docker lokal</value>
+  </data>
+	<data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>Contoh: http://localhost:23333</value>
+  </data>
+	<data name="DemoWindowControlDefault.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+	<data name="DesktopMode" xml:space="preserve">
+    <value>Mode Desktop (Transparan)</value>
+  </data>
+	<data name="DockedMode" xml:space="preserve">
+    <value>Mode Dok</value>
+  </data>
+	<data name="ExportSettingsSuccess" xml:space="preserve">
+    <value>Ekspor berhasil</value>
+  </data>
+	<data name="FailToStartLXMusicServer" xml:space="preserve">
+    <value>Tidak dapat terhubung ke server LX Music, silakan buka Pengaturan - Sumber Pemutaran - LX Music - Server LX Music untuk memeriksa apakah tautan telah dimasukkan dengan benar</value>
+  </data>
+	<data name="FullscreenMode" xml:space="preserve">
+    <value>Mode Layar Penuh</value>
+  </data>
+	<data name="HostWindowClickThroughButton.Content" xml:space="preserve">
+    <value>Kunci</value>
+  </data>
+	<data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
+    <value>Kunci</value>
+  </data>
+	<data name="HostWindowLockToolTip.Text" xml:space="preserve">
+    <value>Kunci</value>
+  </data>
+	<data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
+    <value>Galeri Musik</value>
+  </data>
+	<data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
+    <value>Pengaturan</value>
+  </data>
+	<data name="ImportPlaylistSuccessfully" xml:space="preserve">
+    <value>Daftar putar berhasil diimpor</value>
+  </data>
+	<data name="ImportSettingsFailed" xml:space="preserve">
+    <value>Gagal mengimpor file pengaturan, pengaturan aplikasi tetap tidak berubah</value>
+  </data>
+	<data name="ImportSettingsSuccess" xml:space="preserve">
+    <value>Impor berhasil</value>
+  </data>
+	<data name="Jyutping" xml:space="preserve">
+    <value>Jyutping (Kanton)</value>
+  </data>
+	<data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
+    <value>Pastikan setidaknya satu status diatur sebagai default</value>
+  </data>
+	<data name="LastFMAuthFailed" xml:space="preserve">
+    <value>Otorisasi gagal, silakan coba lagi</value>
+  </data>
+	<data name="LastFMRequestAuthConfirm" xml:space="preserve">
+    <value>Saya telah menyelesaikan otorisasi</value>
+  </data>
+	<data name="LastFMRequestAuthDesc" xml:space="preserve">
+    <value>Silakan selesaikan otorisasi di browser</value>
+  </data>
+	<data name="LastFMRequestAuthTitle" xml:space="preserve">
+    <value>Berikan BetterLyrics akses ke akun Last.fm Anda</value>
+  </data>
+	<data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+    <value>Saya telah membatalkan otorisasi saya</value>
+  </data>
+	<data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+    <value>Silakan selesaikan pembatalan di browser</value>
+  </data>
+	<data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+    <value>Cabut akses BetterLyrics ke akun Last.fm Anda</value>
+  </data>
+	<data name="LibreTranslateFailed" xml:space="preserve">
+    <value>Permintaan terjemahan ke LibreTranslate gagal, silakan periksa pengaturan atau konfigurasi LibreTranslate lokal</value>
+  </data>
+	<data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
+    <value>Contoh: http://localhost:5000</value>
+  </data>
+	<data name="LyricsLoading" xml:space="preserve">
+    <value>Memuat lirik...</value>
+  </data>
+	<data name="LyricsNotFound" xml:space="preserve">
+    <value>Lirik tidak ditemukan</value>
+  </data>
+	<data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <value>Jalur Cache</value>
+  </data>
+	<data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <value>Jalur Cache</value>
+  </data>
+	<data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+    <value>Bahasa Lirik</value>
+  </data>
+	<data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+    <value>Penyedia Lirik</value>
+  </data>
+	<data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
+    <value>Pencarian Manual Lirik</value>
+  </data>
+	<data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
+    <value>Pengaturan Pintasan Manajemen Jendela Lirik</value>
+  </data>
+	<data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
+    <value>Persentase Kecocokan</value>
+  </data>
+	<data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
+    <value>Pengaturan Pintasan Sumber Pemutaran</value>
+  </data>
+	<data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
+    <value>Atur ulang ke 0 saat mengganti lagu</value>
+  </data>
+	<data name="LyricsPageSettings.Text" xml:space="preserve">
+    <value>Pengaturan</value>
+  </data>
+	<data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
+    <value>Offset Waktu Lirik</value>
+  </data>
+	<data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
+    <value>Akan memprioritaskan membaca terjemahan di dalam lirik, jika tidak ada kecocokan maka akan meminta terjemahan mesin dari server LibreTranslate</value>
+  </data>
+	<data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <value>Aktifkan Terjemahan</value>
+  </data>
+	<data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
+    <value>Hanya Tampilkan Terjemahan</value>
+  </data>
+	<data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+    <value>Penyedia Terjemahan</value>
+  </data>
+	<data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
+    <value>Penyedia Transliterasi</value>
+  </data>
+	<data name="LyricsParseError" xml:space="preserve">
+    <value>Gagal mengurai lirik</value>
+  </data>
+	<data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="LyricsSearchControlArtist.Header" xml:space="preserve">
+    <value>Artis</value>
+  </data>
+	<data name="LyricsSearchControlAutoGenerated.Tag" xml:space="preserve">
+    <value>Dibuat Otomatis</value>
+  </data>
+	<data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
+    <value>Durasi</value>
+  </data>
+	<data name="LyricsSearchControlHelp.Text" xml:space="preserve">
+    <value>* Perubahan akan segera berlaku setelah disimpan, kemudian lirik lagu akan diambil melalui informasi pemetaan dan lirik target; menandai sebagai musik murni akan langsung mengembalikan ke lirik penampung musik murni. Reset akan mengembalikan pengambilan data asli.</value>
+  </data>
+	<data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+    <value>Abaikan cache saat mencari</value>
+  </data>
+	<data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
+    <value>Dipetakan sebagai</value>
+  </data>
+	<data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
+    <value>Tandai sebagai Musik Murni</value>
+  </data>
+	<data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
+    <value>Tidak ditemukan</value>
+  </data>
+	<data name="LyricsSearchControlReset.Content" xml:space="preserve">
+    <value>Atur Ulang</value>
+  </data>
+	<data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
+    <value>Simpan Perubahan</value>
+  </data>
+	<data name="LyricsSearchControlSearch.Content" xml:space="preserve">
+    <value>Cari</value>
+  </data>
+	<data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <value>Pemetaan Info Lagu</value>
+  </data>
+	<data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
+    <value>Penyedia Pencarian Lirik Target</value>
+  </data>
+	<data name="LyricsSearchControlTitle.Header" xml:space="preserve">
+    <value>Judul</value>
+  </data>
+	<data name="LyricsSearchPageTitle" xml:space="preserve">
+    <value>Pencarian Lirik - BetterLyrics</value>
+  </data>
+	<data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <value>File .ESLRC Lokal</value>
+  </data>
+	<data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+    <value>File .LRC Lokal</value>
+  </data>
+	<data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+    <value>File Musik Lokal</value>
+  </data>
+	<data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
+    <value>File .TTML Lokal</value>
+  </data>
+	<data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
+    <value>Mode Imersif</value>
+  </data>
+	<data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
+    <value>Konfigurasi</value>
+  </data>
+	<data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
+    <value>Mode Jendela Lirik</value>
+  </data>
+	<data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
+    <value>Tetapkan sebagai Default</value>
+  </data>
+	<data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
+    <value>Ekspor</value>
+  </data>
+	<data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
+    <value>Pengalih Jendela Lirik</value>
+  </data>
+	<data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
+    <value>Buka "Pengaturan" untuk menambahkan mode lainnya</value>
+  </data>
+	<data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <value>Pengalih Jendela Lirik</value>
+  </data>
+	<data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <value>Hanya tampilkan area sampul album</value>
+  </data>
+	<data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
+    <value>Arahkan kursor lagi untuk menampilkan tombol sakelar</value>
+  </data>
+	<data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <value>Hanya tampilkan lirik</value>
+  </data>
+	<data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <value>Tidak ada file lokal yang cocok ditemukan</value>
+  </data>
+	<data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <value>Tidak ada musik yang sedang diputar</value>
+  </data>
+	<data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <value>Offset Waktu Lirik</value>
+  </data>
+	<data name="MainPageSplitView.Content" xml:space="preserve">
+    <value>Tampilan Terpisah</value>
+  </data>
+	<data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
+    <value>Tambahkan ke daftar putar</value>
+  </data>
+	<data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <value>Akhir daftar</value>
+  </data>
+	<data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <value>Item berikutnya</value>
+  </data>
+	<data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
+    <value>Tambahkan ke antrean putar</value>
+  </data>
+	<data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <value>Semua Musik</value>
+  </data>
+	<data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
+    <value>Bersihkan antrean putar</value>
+  </data>
+	<data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
+    <value>Artis</value>
+  </data>
+	<data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
+    <value>Info File</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
+    <value>Kedalaman Bit</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
+    <value>Durasi</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
+    <value>Encoder</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
+    <value>Format</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
+    <value>Lirik</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
+    <value>Jalur</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
+    <value>Laju Sampel</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
+    <value>Judul</value>
+  </data>
+	<data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
+    <value>Tahun</value>
+  </data>
+	<data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
+    <value>Tidak ada lagu yang ditemukan di pustaka media</value>
+  </data>
+	<data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+    <value>Impor dari file</value>
+  </data>
+	<data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <value>Buat daftar putar</value>
+  </data>
+	<data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
+    <value>Putar Semua</value>
+  </data>
+	<data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
+    <value>Antrean Putar</value>
+  </data>
+	<data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
+    <value>Antrean putar kosong</value>
+  </data>
+	<data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+    <value>Daftar Putar</value>
+  </data>
+	<data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
+    <value>Loop daftar</value>
+  </data>
+	<data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
+    <value>Acak</value>
+  </data>
+	<data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+    <value>Hapus dari daftar putar</value>
+  </data>
+	<data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
+    <value>Hapus dari antrean putar</value>
+  </data>
+	<data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
+    <value>Gulir ke item yang diputar</value>
+  </data>
+	<data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
+    <value>Pilih Semua</value>
+  </data>
+	<data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
+    <value>Loop tunggal</value>
+  </data>
+	<data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Cari nama lagu, artis, album, nama file, atau jalur folder</value>
+  </data>
+	<data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
+    <value>Artis</value>
+  </data>
+	<data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+	<data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
+    <value>Judul</value>
+  </data>
+	<data name="MusicGalleryPageSortType.Text" xml:space="preserve">
+    <value>Jenis Urutan</value>
+  </data>
+	<data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
+    <value>Daftar Putar Berbintang</value>
+  </data>
+	<data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <value>Berhenti</value>
+  </data>
+	<data name="MusicGalleryPageTitle" xml:space="preserve">
+    <value>Galeri Musik - BetterLyrics</value>
+  </data>
+	<data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
+    <value>Tarik kembali</value>
+  </data>
+	<data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
+    <value>Perluas</value>
+  </data>
+	<data name="NarrowMode" xml:space="preserve">
+    <value>Mode Sempit</value>
+  </data>
+	<data name="PictureInPictureMode" xml:space="preserve">
+    <value>Mode Gambar-dalam-Gambar (PiP)</value>
+  </data>
+	<data name="Pinyin" xml:space="preserve">
+    <value>Pinyin (Mandarin)</value>
+  </data>
+	<data name="PlaylistViewFailed" xml:space="preserve">
+    <value>Tidak dapat melihat trek karena jalur tidak ada</value>
+  </data>
+	<data name="PrivacyPolicy.Content" xml:space="preserve">
+    <value>Kebijakan Privasi</value>
+  </data>
+	<data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
+    <value>Kata Sandi</value>
+  </data>
+	<data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
+    <value>Jalur</value>
+  </data>
+	<data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
+    <value>Port</value>
+  </data>
+	<data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
+    <value>Alamat Server</value>
+  </data>
+	<data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+    <value>Alamat server wajib diisi</value>
+  </data>
+	<data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
+    <value>Nama Pengguna</value>
+  </data>
+	<data name="Romaji" xml:space="preserve">
+    <value>Romaji</value>
+  </data>
+	<data name="SetingsPageContributors.Text" xml:space="preserve">
+    <value>Kontributor</value>
+  </data>
+	<data name="SetingsPageDeps.Text" xml:space="preserve">
+    <value>Referensi Kode</value>
+  </data>
+	<data name="SetingsPageDonation.Text" xml:space="preserve">
+    <value>Donasi</value>
+  </data>
+	<data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <value>Umpan Balik</value>
+  </data>
+	<data name="SetingsPageInstructions.Text" xml:space="preserve">
+    <value>Panduan Penggunaan</value>
+  </data>
+	<data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <value>Terima Kasih Khusus</value>
+  </data>
+	<data name="SetingsPageThanks.Text" xml:space="preserve">
+    <value>Jika Anda menyukai proyek ini, silakan pertimbangkan untuk mendukungnya dengan berdonasi. Dukungan Anda akan membantu menjaga proyek tetap hidup dan mendorong pengembangan lebih lanjut.</value>
+  </data>
+	<data name="SetingsPageUIUXRef.Text" xml:space="preserve">
+    <value>Referensi Desain UI/UX</value>
+  </data>
+	<data name="SettingsPage3DLyrics.Header" xml:space="preserve">
+    <value>[Eksperimental] Efek Kedalaman</value>
+  </data>
+	<data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
+    <value>Kedalaman</value>
+  </data>
+	<data name="SettingsPageAbout.Content" xml:space="preserve">
+    <value>Tentang</value>
+  </data>
+	<data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
+    <value>Mengaktifkan ini akan menimpa pengaturan tema di pengaturan latar belakang lirik</value>
+  </data>
+	<data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
+    <value>Adaptasi Warna Lingkungan</value>
+  </data>
+	<data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <value>Tambah</value>
+  </data>
+	<data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Opsi Lanjutan</value>
+  </data>
+	<data name="SettingsPageAlbum.Header" xml:space="preserve">
+    <value>Album</value>
+  </data>
+	<data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <value>Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+    <value>Tinggi Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
+    <value>Lapisan Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
+    <value>Konfigurasi Sumber Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
+    <value>Ukuran Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
+    <value>Efek Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlbumLib.Content" xml:space="preserve">
+    <value>Sumber Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <value>Radius Sudut</value>
+  </data>
+	<data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
+    <value>Jumlah Penyebaran Bayangan</value>
+  </data>
+	<data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+    <value>Gaya Area Sampul Album</value>
+  </data>
+	<data name="SettingsPageAlignment.Header" xml:space="preserve">
+    <value>Penyelarasan</value>
+  </data>
+	<data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
+    <value>Selalu Sembunyikan Tombol Buka Kunci</value>
+  </data>
+	<data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
+    <value>URL Dasar</value>
+  </data>
+	<data name="SettingsPageAmount.Header" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+	<data name="SettingsPageAOT.Header" xml:space="preserve">
+    <value>Pertahankan Jendela Lirik di Atas</value>
+  </data>
+	<data name="SettingsPageApp.Content" xml:space="preserve">
+    <value>Tampilan dan Perilaku Aplikasi</value>
+  </data>
+	<data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <value>Tampilan Aplikasi</value>
+  </data>
+	<data name="SettingsPageAppBehavior.Text" xml:space="preserve">
+    <value>Perilaku Umum</value>
+  </data>
+	<data name="SettingsPageApply.Content" xml:space="preserve">
+    <value>Terapkan</value>
+  </data>
+	<data name="SettingsPageArtist.Header" xml:space="preserve">
+    <value>Artis</value>
+  </data>
+	<data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <value>Sesuaikan Otomatis</value>
+  </data>
+	<data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
+    <value>Buka jendela lirik default secara otomatis saat startup</value>
+  </data>
+	<data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>Buka jendela galeri musik saat startup</value>
+  </data>
+	<data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <value>Lanjutkan pemutaran secara otomatis saat membuka jendela galeri musik</value>
+  </data>
+	<data name="SettingsPageAutoStart.Header" xml:space="preserve">
+    <value>Mulai Otomatis</value>
+  </data>
+	<data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
+    <value>Saat memulai aplikasi</value>
+  </data>
+	<data name="SettingsPageBackdrop.Header" xml:space="preserve">
+    <value>Material Latar Belakang Lirik</value>
+  </data>
+	<data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
+    <value>Latar Belakang Lirik</value>
+  </data>
+	<data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <value>Tingkat Keburaman</value>
+  </data>
+	<data name="SettingsPageBorderless.Header" xml:space="preserve">
+    <value>Jendela Tanpa Batas</value>
+  </data>
+	<data name="SettingsPageCache.Description" xml:space="preserve">
+    <value>Termasuk file log, cache lirik jaringan</value>
+  </data>
+	<data name="SettingsPageCache.Header" xml:space="preserve">
+    <value>Cache</value>
+  </data>
+	<data name="SettingsPageCenter.Content" xml:space="preserve">
+    <value>Tengah</value>
+  </data>
+	<data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <value>Periksa Pintasan</value>
+  </data>
+	<data name="SettingsPageChinese.Header" xml:space="preserve">
+    <value>Fonetik Bahasa Mandarin</value>
+  </data>
+	<data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
+    <value>Lirik Bahasa Mandarin</value>
+  </data>
+	<data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+    <value>Konversi Mandarin ke Tradisional</value>
+  </data>
+	<data name="SettingsPageCJK.Header" xml:space="preserve">
+    <value>Ideograf Terpadu CJK</value>
+  </data>
+	<data name="SettingsPageClear.Content" xml:space="preserve">
+    <value>Bersihkan</value>
+  </data>
+	<data name="SettingsPageClearCache.Content" xml:space="preserve">
+    <value>Bersihkan File Cache</value>
+  </data>
+	<data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+    <value>Tutup</value>
+  </data>
+	<data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <value>Ciutkan Dropdown</value>
+  </data>
+	<data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
+    <value>Kompak</value>
+  </data>
+	<data name="SettingsPageConfigName.Description" xml:space="preserve">
+    <value>Menamai status jendela yang direkam dapat membantu Anda membedakannya dengan lebih baik</value>
+  </data>
+	<data name="SettingsPageConfigName.Header" xml:space="preserve">
+    <value>Nama Konfigurasi</value>
+  </data>
+	<data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <value>Konfigurasi Sumber Pemutaran</value>
+  </data>
+	<data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
+    <value>Duplikat</value>
+  </data>
+	<data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
+    <value>Buat dari Templat</value>
+  </data>
+	<data name="SettingsPageCrossfade.Content" xml:space="preserve">
+    <value>Crossfade</value>
+  </data>
+	<data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
+    <value>Status Jendela Lirik Saat Ini</value>
+  </data>
+	<data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <value>Layanan Transliterasi cutlet-docker</value>
+  </data>
+	<data name="SettingsPageDark.Content" xml:space="preserve">
+    <value>Gelap</value>
+  </data>
+	<data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>Tampilkan Overlay Debug</value>
+  </data>
+	<data name="SettingsPageDelete.Text" xml:space="preserve">
+    <value>Hapus</value>
+  </data>
+	<data name="SettingsPageDesktopMode.Text" xml:space="preserve">
+    <value>Mode Desktop (Transparan)</value>
+  </data>
+	<data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+    <value>Proyek ini disediakan "apa adanya" tanpa jaminan apa pun. Semua lirik, font, ikon, dan sumber daya pihak ketiga lainnya adalah milik pemegang hak cipta masing-masing. Penulis proyek ini tidak mengklaim kepemilikan atas sumber daya tersebut. Ini adalah proyek non-komersial dan tidak boleh digunakan untuk melanggar hak apa pun. Pengguna bertanggung jawab untuk memastikan penggunaannya mematuhi hukum dan lisensi yang berlaku.</value>
+  </data>
+	<data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+    <value>Tampilkan status mendengarkan melalui Discord Presence</value>
+  </data>
+	<data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
+    <value>Mode Tata Letak</value>
+  </data>
+	<data name="SettingsPageDockedMode.Text" xml:space="preserve">
+    <value>Mode Dok</value>
+  </data>
+	<data name="SettingsPageDockMonitor.Header" xml:space="preserve">
+    <value>Monitor Target</value>
+  </data>
+	<data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <value>Lokasi Ruang Kerja</value>
+  </data>
+	<data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <value>Bawah</value>
+  </data>
+	<data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <value>Atas</value>
+  </data>
+	<data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
+    <value>Tinggi Jendela</value>
+  </data>
+	<data name="SettingsPageDragArea.Header" xml:space="preserve">
+    <value>Area yang Dapat Diseret</value>
+  </data>
+	<data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
+    <value>Jenis Animasi Easing</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
+    <value>EaseInOutBack</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
+    <value>EaseInOutBounce</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
+    <value>EaseInOutCirc</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
+    <value>EaseInOutCubic</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
+    <value>EaseInOutElastic</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
+    <value>EaseInOutExpo</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
+    <value>EaseInOutQuad</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
+    <value>EaseInOutQuart</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
+    <value>EaseInOutQuint</value>
+  </data>
+	<data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
+    <value>EaseInOutSine</value>
+  </data>
+	<data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <value>Linear</value>
+  </data>
+	<data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <value>SmoothStep</value>
+  </data>
+	<data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
+    <value>Awal Baris ke Karakter Saat Ini</value>
+  </data>
+	<data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
+    <value>Suku Kata Durasi Panjang</value>
+  </data>
+	<data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
+    <value>Mode Pengambilan Sampel Warna Lingkungan</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
+    <value>Di Atas Jendela</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
+    <value>Di Bawah Jendela</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
+    <value>Tepi Jendela</value>
+  </data>
+	<data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
+    <value>Di Dalam Jendela</value>
+  </data>
+	<data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>Keluar dari program saat jendela galeri musik ditutup</value>
+  </data>
+	<data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
+    <value>Keluar dari program saat jendela lirik ditutup</value>
+  </data>
+	<data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <value>Ekspor Pengaturan</value>
+  </data>
+	<data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
+    <value>Diperluas</value>
+  </data>
+	<data name="SettingsPageFan.Header" xml:space="preserve">
+    <value>Lirik Kipas</value>
+  </data>
+	<data name="SettingsPageFAQ.Content" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+	<data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <value>Rendering Langkah Waktu Tetap</value>
+  </data>
+	<data name="SettingsPageFluidLayer.Header" xml:space="preserve">
+    <value>Lapisan Cairan</value>
+  </data>
+	<data name="SettingsPageFogLayer.Header" xml:space="preserve">
+    <value>Lapisan Kabut</value>
+  </data>
+	<data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <value>Ikuti Sistem</value>
+  </data>
+	<data name="SettingsPageFontColor.Header" xml:space="preserve">
+    <value>Warna Font</value>
+  </data>
+	<data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
+    <value>Pertahankan jendela lirik di atas melalui polling</value>
+  </data>
+	<data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
+    <value>Paksa Selalu di Atas</value>
+  </data>
+	<data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
+    <value>Paksa simulasi efek kata-demi-kata meskipun lirik saat ini tidak memiliki informasi kata-demi-kata</value>
+  </data>
+	<data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
+    <value>Paksa Aktifkan Efek Kata-demi-Kata</value>
+  </data>
+	<data name="SettingsPageFPS.Header" xml:space="preserve">
+    <value>Frame Rate Rendering</value>
+  </data>
+	<data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
+    <value>Mode Layar Penuh</value>
+  </data>
+	<data name="SettingsPageHeight.Header" xml:space="preserve">
+    <value>Tinggi</value>
+  </data>
+	<data name="SettingsPageHello.Text" xml:space="preserve">
+    <value>Halo</value>
+  </data>
+	<data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
+    <value>Bantu kami menerjemahkan aplikasi ini</value>
+  </data>
+	<data name="SettingsPageHideWindow.Description" xml:space="preserve">
+    <value>Otomatis menyembunyikan/menampilkan jendela lirik saat musik berhenti diputar</value>
+  </data>
+	<data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <value>Otomatis Sembunyikan/Tampilkan Jendela</value>
+  </data>
+	<data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
+    <value>Tahan di sini dan seret untuk mengurutkan</value>
+  </data>
+	<data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
+    <value>Animasi Peralihan Sampul Album</value>
+  </data>
+	<data name="SettingsPageImport.Content" xml:space="preserve">
+    <value>Impor</value>
+  </data>
+	<data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <value>Impor Pengaturan</value>
+  </data>
+	<data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <value>Setelah impor berhasil, program akan dimuat ulang secara otomatis</value>
+  </data>
+	<data name="SettingsPageJapanese.Description" xml:space="preserve">
+    <value>Akan memprioritaskan membaca transliterasi di dalam lirik, jika tidak ada kecocokan maka akan meminta transliterasi mesin dari server cutlet-docker</value>
+  </data>
+	<data name="SettingsPageJapanese.Header" xml:space="preserve">
+    <value>Fonetik Bahasa Jepang</value>
+  </data>
+	<data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
+    <value>Gabung Sekarang</value>
+  </data>
+	<data name="SettingsPageJyutping.Content" xml:space="preserve">
+    <value>Jyutping (Kanton)</value>
+  </data>
+	<data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <value>Bahasa</value>
+  </data>
+	<data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <value>Otorisasi</value>
+  </data>
+	<data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+    <value>Total Pemutaran</value>
+  </data>
+	<data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <value>Segarkan</value>
+  </data>
+	<data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <value>Tanggal Terdaftar</value>
+  </data>
+	<data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+    <value>Lacak riwayat mendengarkan melalui Last.fm</value>
+  </data>
+	<data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <value>Batalkan Otorisasi</value>
+  </data>
+	<data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <value>Nama Pengguna</value>
+  </data>
+	<data name="SettingsPageLayout.Text" xml:space="preserve">
+    <value>Tata Letak</value>
+  </data>
+	<data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
+    <value>Orientasi Tata Letak</value>
+  </data>
+	<data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
+	<data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
+    <value>Vertikal</value>
+  </data>
+	<data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>Kiri</value>
+  </data>
+	<data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
+    <value>Alamat Server</value>
+  </data>
+	<data name="SettingsPageLight.Content" xml:space="preserve">
+    <value>Terang</value>
+  </data>
+	<data name="SettingsPageLinkedFile.Text" xml:space="preserve">
+    <value>File Lokal Tertaut</value>
+  </data>
+	<data name="SettingsPageListenNewSession.Header" xml:space="preserve">
+    <value>Aktifkan mendengarkan sumber pemutaran baru</value>
+  </data>
+	<data name="SettingsPageLocalFolder.Text" xml:space="preserve">
+    <value>Folder Lokal</value>
+  </data>
+	<data name="SettingsPageLog.Header" xml:space="preserve">
+    <value>Pencatatan (Logging)</value>
+  </data>
+	<data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
+    <value>Ambang Batas Suku Kata Panjang</value>
+  </data>
+	<data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <value>Server LX Music</value>
+  </data>
+	<data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
+    <value>Contoh: http://127.0.0.1:23330</value>
+  </data>
+	<data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <value>Penyelarasan</value>
+  </data>
+	<data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <value>Latar Belakang Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
+    <value>Baris Non-Saat Ini</value>
+  </data>
+	<data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <value>Hitam</value>
+  </data>
+	<data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <value>Aktifkan keburaman untuk baris non-saat ini</value>
+  </data>
+	<data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <value>Efek Kabur</value>
+  </data>
+	<data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <value>Tebal</value>
+  </data>
+	<data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
+    <value>Posisi Baris Saat Ini</value>
+  </data>
+	<data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
+    <value>Efek Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <value>Ekstra Hitam</value>
+  </data>
+	<data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <value>Ekstra Tebal</value>
+  </data>
+	<data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <value>Ekstra Tipis</value>
+  </data>
+	<data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
+    <value>Aktifkan efek memudar untuk baris non-saat ini</value>
+  </data>
+	<data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
+    <value>Efek Memudar (Fade Out)</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
+    <value>Baris Saat Ini</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>Adaptif terhadap Latar Belakang Lirik (Berwarna)</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>Adaptif terhadap Latar Belakang Lirik (Abu-abu)</value>
+  </data>
+	<data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
+    <value>Kustom</value>
+  </data>
+	<data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+    <value>Animasi Mengambang</value>
+  </data>
+	<data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <value>Adaptif terhadap Latar Belakang Lirik (Berwarna)</value>
+  </data>
+	<data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <value>Adaptif terhadap Latar Belakang Lirik (Abu-abu)</value>
+  </data>
+	<data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <value>Kustom</value>
+  </data>
+	<data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <value>Keluarga Font</value>
+  </data>
+	<data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <value>Ukuran Font</value>
+  </data>
+	<data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
+    <value>Lebar Garis Tepi Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <value>Ketebalan Font</value>
+  </data>
+	<data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <value>Efek Bersinar</value>
+  </data>
+	<data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
+    <value>Sorot</value>
+  </data>
+	<data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
+    <value>Cakupan Penyorotan Teks Asli</value>
+  </data>
+	<data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
+    <value>Kiri</value>
+  </data>
+	<data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <value>Tipis</value>
+  </data>
+	<data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
+    <value>Gradien Tepi Area Pemutaran</value>
+  </data>
+	<data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <value>Spasi Baris</value>
+  </data>
+	<data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
+    <value> kali tinggi baris</value>
+  </data>
+	<data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <value>Sedang</value>
+  </data>
+	<data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+	<data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <value>Opasitas Font</value>
+  </data>
+	<data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
+    <value>Buat baris non-saat ini perlahan menjauh dari pandangan</value>
+  </data>
+	<data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
+    <value>Jauh dari Pandangan</value>
+  </data>
+	<data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <value>Aktifkan penskalaan untuk suku kata berdurasi panjang</value>
+  </data>
+	<data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <value>Efek Skala</value>
+  </data>
+	<data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <value>Kecocokan Terbaik</value>
+  </data>
+	<data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
+    <value>Konfigurasi Sumber Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <value>Berurutan</value>
+  </data>
+	<data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+    <value>Berurutan: Cari secara berurutan sesuai prioritas daftar di bawah, dan kembalikan lirik pertama yang ditemukan; Kecocokan Terbaik: Cari di semua sumber lirik yang diaktifkan dan pilih hasil dengan kecocokan tertinggi secara otomatis</value>
+  </data>
+	<data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <value>Strategi Pencarian Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <value>Semi Tebal</value>
+  </data>
+	<data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <value>Semi Tipis</value>
+  </data>
+	<data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
+    <value>Bayangan</value>
+  </data>
+	<data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
+    <value>Gaya Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <value>Sangat Tipis</value>
+  </data>
+	<data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <value>Sinkronisasi Waktu Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <value>Saat kemajuan lirik tersendat, coba tingkatkan nilai ini; mengubah nilai ini dapat menyebabkan penyimpangan sinkronisasi lirik</value>
+  </data>
+	<data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <value>Ambang Sinkronisasi Waktu Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
+    <value>Sorotan Terjemahan</value>
+  </data>
+	<data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
+    <value>Pemisah Teks Asli dan Terjemahan</value>
+  </data>
+	<data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
+    <value>Opasitas Tepi Vertikal</value>
+  </data>
+	<data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
+    <value>Jendela Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
+    <value>Manajer Jendela Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
+    <value>Manajer Jendela Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
+    <value>Pintasan Pengalih Status Jendela Lirik</value>
+  </data>
+	<data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
+    <value>Jendela Lirik</value>
+  </data>
+	<data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
+    <value>Menyesuaikan nilai ini akan memengaruhi hasil pencarian berurutan dan pencarian kecocokan terbaik, tetapi tidak akan memengaruhi hasil pencarian di antarmuka pencarian manual lirik</value>
+  </data>
+	<data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
+    <value>Ambang Kecocokan Minimum</value>
+  </data>
+	<data name="SettingsPageMediaLib.Content" xml:space="preserve">
+    <value>Pustaka Media</value>
+  </data>
+	<data name="SettingsPageMedianCut.Content" xml:space="preserve">
+    <value>Konservatif</value>
+  </data>
+	<data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <value>Pantau sumber pemutaran ini</value>
+  </data>
+	<data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <value>Putar Musik Uji</value>
+  </data>
+	<data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+    <value>Mode Koeksistensi Multi-Jendela</value>
+  </data>
+	<data name="SettingsPageMusicGallery.Text" xml:space="preserve">
+    <value>Galeri Musik</value>
+  </data>
+	<data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+    <value>Jendela Lirik Tertanam Galeri Musik</value>
+  </data>
+	<data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
+    <value>Jendela Galeri Musik terbuka, pemantauan sumber pemutaran lain diabaikan</value>
+  </data>
+	<data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <value>Tambahkan folder yang berisi musik atau lirik</value>
+  </data>
+	<data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <value>Pustaka Media Lokal</value>
+  </data>
+	<data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
+    <value>Pemantauan Perubahan File Secara Real-time</value>
+  </data>
+	<data name="SettingsPageNarrowMode.Text" xml:space="preserve">
+    <value>Mode Sempit</value>
+  </data>
+	<data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+    <value>Pintasan Lagu Berikutnya</value>
+  </data>
+	<data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
+    <value>Tidak Ada</value>
+  </data>
+	<data name="SettingsPageOctTree.Content" xml:space="preserve">
+    <value>Agresif</value>
+  </data>
+	<data name="SettingsPageOpacity.Header" xml:space="preserve">
+    <value>Opasitas</value>
+  </data>
+	<data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
+    <value>Buka di File Explorer</value>
+  </data>
+	<data name="SettingsPageOriginalText.Header" xml:space="preserve">
+    <value>Teks Asli</value>
+  </data>
+	<data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
+    <value>Tetapkan Ambang Kecocokan Minimum Secara Terpisah</value>
+  </data>
+	<data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+    <value>Gaya Pengambilan Warna</value>
+  </data>
+	<data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <value>Folder ini sudah termasuk dalam folder yang ada, tidak perlu menambahkannya lagi</value>
+  </data>
+	<data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <value>Folder ini sudah ditambahkan, harap jangan menambahkannya lagi</value>
+  </data>
+	<data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <value>Folder ini berisi folder yang sudah ditambahkan, harap hapus folder tersebut untuk menambahkan folder ini</value>
+  </data>
+	<data name="SettingsPagePathNotFound.Text" xml:space="preserve">
+    <value>Tidak dapat menemukan jalur di komputer Anda</value>
+  </data>
+	<data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+	<data name="SettingsPagePhonetic.Text" xml:space="preserve">
+    <value>Fonetik Lirik</value>
+  </data>
+	<data name="SettingsPagePhoneticText.Header" xml:space="preserve">
+    <value>Simbol Fonetik</value>
+  </data>
+	<data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
+    <value>Sematkan ke Bilah Tugas</value>
+  </data>
+	<data name="SettingsPagePinyin.Content" xml:space="preserve">
+    <value>Pinyin (Mandarin)</value>
+  </data>
+	<data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+    <value>Sumber Pemutaran</value>
+  </data>
+	<data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+    <value>Tidak ada sumber pemutaran yang ditangkap</value>
+  </data>
+	<data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
+    <value>Sumber Pemutaran</value>
+  </data>
+	<data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
+    <value>ID Sumber Pemutaran</value>
+  </data>
+	<data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
+    <value>Sumber Pemutaran Saat Ini</value>
+  </data>
+	<data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+    <value>Putar "Cut to the Feeling" di "soundcloud.com"</value>
+  </data>
+	<data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+    <value>Pintasan Putar dan Jeda</value>
+  </data>
+	<data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+    <value>Pintasan Lagu Sebelumnya</value>
+  </data>
+	<data name="SettingsPagePureLayer.Header" xml:space="preserve">
+    <value>Lapisan Warna Solid</value>
+  </data>
+	<data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
+    <value>Status Waktu Nyata</value>
+  </data>
+	<data name="SettingsPageRecord.Content" xml:space="preserve">
+    <value>Rekam</value>
+  </data>
+	<data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <value>Status Jendela yang Direkam</value>
+  </data>
+	<data name="SettingsPageReference.Header" xml:space="preserve">
+    <value>Tautan Referensi</value>
+  </data>
+	<data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <value>Segarkan Dropdown</value>
+  </data>
+	<data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <value>File dan folder asli di jalur tersebut tidak akan dihapus</value>
+  </data>
+	<data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <value>Anda dapat menghapus item berikut dengan aman</value>
+  </data>
+	<data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <value>Hapus dari Aplikasi</value>
+  </data>
+	<data name="SettingsPageRestart.Content" xml:space="preserve">
+    <value>Mulai ulang aplikasi untuk menerapkan perubahan</value>
+  </data>
+	<data name="SettingsPageRight.Content" xml:space="preserve">
+    <value>Kanan</value>
+  </data>
+	<data name="SettingsPageRomaji.Header" xml:space="preserve">
+    <value>Fonetik Bahasa Jepang</value>
+  </data>
+	<data name="SettingsPageScope.Header" xml:space="preserve">
+    <value>Cakupan</value>
+  </data>
+	<data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+    <value>Penundaan Baris Terakhir</value>
+  </data>
+	<data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+    <value>Durasi Baris Terakhir</value>
+  </data>
+	<data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <value>Durasi Baris Saat Ini</value>
+  </data>
+	<data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <value>Jenis Animasi Lirik</value>
+  </data>
+	<data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+    <value>Penundaan Baris Pertama</value>
+  </data>
+	<data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+    <value>Durasi Baris Pertama</value>
+  </data>
+	<data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
+    <value>Hasil Pencarian Lirik Saat Ini</value>
+  </data>
+	<data name="SettingsPageServerTestButton.Content" xml:space="preserve">
+    <value>Tes Server</value>
+  </data>
+	<data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
+    <value>Tes server gagal</value>
+  </data>
+	<data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
+    <value>Tes server berhasil</value>
+  </data>
+	<data name="SettingsPageSettings.Header" xml:space="preserve">
+    <value>Pengaturan</value>
+  </data>
+	<data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <value>Manajer Pengaturan</value>
+  </data>
+	<data name="SettingsPageShareHub.Content" xml:space="preserve">
+    <value>Jelajahi Hub Berbagi Sumber Daya Online</value>
+  </data>
+	<data name="SettingsPageShortcut.Text" xml:space="preserve">
+    <value>Pintasan</value>
+  </data>
+	<data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+    <value>Hotkey gagal didaftarkan</value>
+  </data>
+	<data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+    <value>Hotkey berhasil didaftarkan</value>
+  </data>
+	<data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <value>Tampilkan Album</value>
+  </data>
+	<data name="SettingsPageShowArtists.Header" xml:space="preserve">
+    <value>Tampilkan Artis</value>
+  </data>
+	<data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+    <value>Pintasan Tampilkan dan Sembunyikan Jendela Lirik</value>
+  </data>
+	<data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
+    <value>Contoh: Alt + Tab, Bilah Tugas</value>
+  </data>
+	<data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
+    <value>Tampilkan di Lingkungan Sistem</value>
+  </data>
+	<data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
+    <value>Tampilkan Pemisah Tata Letak</value>
+  </data>
+	<data name="SettingsPageShowTitle.Header" xml:space="preserve">
+    <value>Tampilkan Judul</value>
+  </data>
+	<data name="SettingsPageSlide.Content" xml:space="preserve">
+    <value>Geser</value>
+  </data>
+	<data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
+    <value>Nilai saat ini: </value>
+  </data>
+	<data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
+    <value>Lapisan Kepingan Salju</value>
+  </data>
+	<data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <value>Info Lagu</value>
+  </data>
+	<data name="SettingsPageSongStatus.Header" xml:space="preserve">
+    <value>Lagu Saat Ini</value>
+  </data>
+	<data name="SettingsPageSongTitle.Header" xml:space="preserve">
+    <value>Judul</value>
+  </data>
+	<data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
+    <value>[Eksperimental] Lapisan Spektrum</value>
+  </data>
+	<data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
+    <value>Penempatan Spektrum</value>
+  </data>
+	<data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
+    <value>Gaya Spektrum</value>
+  </data>
+	<data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
+    <value>Bawah</value>
+  </data>
+	<data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
+    <value>Atas</value>
+  </data>
+	<data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
+    <value>Batang</value>
+  </data>
+	<data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
+    <value>Kurva</value>
+  </data>
+	<data name="SettingsPageSpeed.Header" xml:space="preserve">
+    <value>Kecepatan Gerakan</value>
+  </data>
+	<data name="SettingsPageStandardMode.Text" xml:space="preserve">
+    <value>Mode Standar</value>
+  </data>
+	<data name="SettingsPageStartup.Text" xml:space="preserve">
+    <value>Startup</value>
+  </data>
+	<data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
+    <value>Hentikan pemutaran saat jendela galeri musik ditutup</value>
+  </data>
+	<data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
+    <value>Warna Garis Tepi</value>
+  </data>
+	<data name="SettingsPageSystemLanguage" xml:space="preserve">
+    <value>Default</value>
+  </data>
+	<data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
+    <value>Bahasa Target</value>
+  </data>
+	<data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
+    <value>Mode Bilah Tugas</value>
+  </data>
+	<data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <value>Posisi Pemasangan Bilah Tugas</value>
+  </data>
+	<data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
+    <value>Terima kasih telah membeli BetterLyrics</value>
+  </data>
+	<data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <value>Daftar Ucapan Terima Kasih</value>
+  </data>
+	<data name="SettingsPageTheme.Header" xml:space="preserve">
+    <value>Tema Latar Belakang Lirik</value>
+  </data>
+	<data name="SettingsPageTitle" xml:space="preserve">
+    <value>Pengaturan - BetterLyrics</value>
+  </data>
+	<data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
+    <value>Tidak Ada</value>
+  </data>
+	<data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
+    <value>Atas</value>
+  </data>
+	<data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
+    <value>Seluruh Jendela</value>
+  </data>
+	<data name="SettingsPageTitleBarType.Header" xml:space="preserve">
+    <value>Ukuran Bilah Judul</value>
+  </data>
+	<data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
+    <value>Pintasan Masuk dan Keluar (Cut-in/out)</value>
+  </data>
+	<data name="SettingsPageTranslatedText.Header" xml:space="preserve">
+    <value>Terjemahan</value>
+  </data>
+	<data name="SettingsPageTranslation.Text" xml:space="preserve">
+    <value>Terjemahan Lirik</value>
+  </data>
+	<data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
+    <value>Layanan Terjemahan LibreTranslate</value>
+  </data>
+	<data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
+    <value>Kunjungi https://github.com/LibreTranslate/LibreTranslate untuk tutorial instalasi dan info lebih lanjut (perangkat lunak ini tidak memiliki afiliasi dengan layanan terjemahan tersebut)</value>
+  </data>
+	<data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+    <value>dan pengguna yang membeli serta mendukung BetterLyrics</value>
+  </data>
+	<data name="SettingsPageVersion.Text" xml:space="preserve">
+    <value>Versi</value>
+  </data>
+	<data name="SettingsPageWesternChar.Header" xml:space="preserve">
+    <value>Karakter Latin</value>
+  </data>
+	<data name="SettingsPageWidth.Header" xml:space="preserve">
+    <value>Lebar</value>
+  </data>
+	<data name="SettingsPageWindowBounds.Header" xml:space="preserve">
+    <value>Batas Jendela</value>
+  </data>
+	<data name="SettingsPageWorkArea.Description" xml:space="preserve">
+    <value>Sebagai ruang kerja terpisah, dipasang di tepi atas/bawah layar</value>
+  </data>
+	<data name="SettingsPageWorkArea.Header" xml:space="preserve">
+    <value>Sebagai Ruang Kerja</value>
+  </data>
+	<data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
+    <value>Tinggi Ruang Kerja</value>
+  </data>
+	<data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <value>Anda yang sedang menggunakan perangkat lunak ini</value>
+  </data>
+	<data name="StandardMode" xml:space="preserve">
+    <value>Mode Standar</value>
+  </data>
+	<data name="SystemTrayExit.Text" xml:space="preserve">
+    <value>Keluar dari Program</value>
+  </data>
+	<data name="SystemTrayLyrics.Text" xml:space="preserve">
+    <value>Buka Jendela Lirik</value>
+  </data>
+	<data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <value>Buka Galeri Musik</value>
+  </data>
+	<data name="SystemTrayPageTitle" xml:space="preserve">
+    <value>Baki Sistem - BetterLyrics</value>
+  </data>
+	<data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
+    <value>Atur Ulang Posisi Jendela</value>
+  </data>
+	<data name="SystemTrayRestart.Text" xml:space="preserve">
+    <value>Mulai Ulang</value>
+  </data>
+	<data name="SystemTraySearch.Text" xml:space="preserve">
+    <value>Jendela Pencarian Lirik</value>
+  </data>
+	<data name="SystemTraySettings.Text" xml:space="preserve">
+    <value>Buka Pengaturan</value>
+  </data>
+	<data name="SystemTraySwitch.Text" xml:space="preserve">
+    <value>Pengalih Jendela Lirik</value>
+  </data>
+	<data name="TaskbarMode" xml:space="preserve">
+    <value>Mode Bilah Tugas</value>
+  </data>
+	<data name="TermsOfService.Content" xml:space="preserve">
+    <value>Ketentuan Layanan</value>
+  </data>
+	<data name="TracksAddToPlaylistFailed" xml:space="preserve">
+    <value>Tidak dapat menambahkan trek karena jalur tidak ada</value>
+  </data>
+	<data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+    <value>Trek yang dipilih ditambahkan ke daftar putar ini</value>
+  </data>
+	<data name="TryRunMultipleInstance" xml:space="preserve">
+    <value>BetterLyrics sudah berjalan</value>
+  </data>
+	<data name="UserGuide.Content" xml:space="preserve">
+    <value>Panduan Pengguna</value>
+  </data>
+</root>
