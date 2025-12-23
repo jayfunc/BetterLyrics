@@ -852,9 +852,6 @@
   <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
     <value>긴 지속 시간 음절</value>
   </data>
-  <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>English</value>
-  </data>
   <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>환경 색상 샘플링 모드</value>
   </data>
@@ -951,9 +948,6 @@
   <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>가져오기가 성공하면 프로그램이 자동으로 다시 시작됩니다</value>
   </data>
-  <data name="SettingsPageJA.Content" xml:space="preserve">
-    <value>日本語</value>
-  </data>
   <data name="SettingsPageJapanese.Description" xml:space="preserve">
     <value>가사 내의 발음 표기를 우선적으로 읽습니다. 일치하는 항목이 없으면 cutlet-docker 서버에 기계 음역을 요청합니다</value>
   </data>
@@ -965,9 +959,6 @@
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>Jyutping (광동어)</value>
-  </data>
-  <data name="SettingsPageKO.Content" xml:space="preserve">
-    <value>한국어</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>언어</value>
@@ -1374,9 +1365,6 @@
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>일본어 발음 표기</value>
   </data>
-  <data name="SettingsPageSC.Content" xml:space="preserve">
-    <value>简体中文</value>
-  </data>
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>범위</value>
   </data>
@@ -1514,12 +1502,6 @@
   </data>
   <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>작업 표시줄 고정 위치</value>
-  </data>
-  <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁體中文</value>
-  </data>
-  <data name="SettingsPageTelegram.Content" xml:space="preserve">
-    <value>Telegram</value>
   </data>
   <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
     <value>BetterLyrics를 구매해 주셔서 감사합니다</value>

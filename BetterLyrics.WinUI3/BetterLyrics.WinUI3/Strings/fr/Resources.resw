@@ -852,9 +852,6 @@
   <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
     <value>Syllabe à longue durée</value>
   </data>
-  <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>English</value>
-  </data>
   <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>Mode d'échantillonnage de la couleur de l'environnement</value>
   </data>
@@ -951,9 +948,6 @@
   <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>L'application redémarrera automatiquement après une importation réussie</value>
   </data>
-  <data name="SettingsPageJA.Content" xml:space="preserve">
-    <value>日本語</value>
-  </data>
   <data name="SettingsPageJapanese.Description" xml:space="preserve">
     <value>Prioriser la lecture de la translittération dans les paroles ; si aucune correspondance, demander une translittération automatique au serveur cutlet-docker</value>
   </data>
@@ -965,9 +959,6 @@
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>Jyutping (Cantonais)</value>
-  </data>
-  <data name="SettingsPageKO.Content" xml:space="preserve">
-    <value>한국어</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>Langue</value>
@@ -1374,9 +1365,6 @@
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>Phonétique japonaise</value>
   </data>
-  <data name="SettingsPageSC.Content" xml:space="preserve">
-    <value>简体中文</value>
-  </data>
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>Portée</value>
   </data>
@@ -1514,12 +1502,6 @@
   </data>
   <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>Position d'épinglage barre des tâches</value>
-  </data>
-  <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁體中文</value>
-  </data>
-  <data name="SettingsPageTelegram.Content" xml:space="preserve">
-    <value>Telegram</value>
   </data>
   <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
     <value>Merci d'avoir acheté BetterLyrics</value>
