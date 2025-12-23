@@ -42,14 +42,14 @@
                                 <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
-                        <dev:SettingsExpander.ItemsFooter>
+                        <!--<dev:SettingsExpander.ItemsFooter>
                             <InfoBar IsClosable="False" IsOpen="True">
                                 <HyperlinkButton
                                     x:Uid="SettingsPageHelpUsTranslate"
                                     Padding="0"
                                     NavigateUri="https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556" />
                             </InfoBar>
-                        </dev:SettingsExpander.ItemsFooter>
+                        </dev:SettingsExpander.ItemsFooter>-->
                     </dev:SettingsExpander>
 
                     <!--  Startup  -->

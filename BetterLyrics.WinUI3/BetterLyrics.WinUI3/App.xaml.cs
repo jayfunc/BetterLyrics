@@ -2,6 +2,7 @@
 
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LastFMService;
@@ -69,15 +70,9 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-            if (settingsService.AppSettings.GeneralSettings.LanguageCode == "")
-            {
-                settingsService.AppSettings.GeneralSettings.LanguageCode = CultureInfo.CurrentUICulture.Name;
-                await Task.Delay(Constants.Time.DebounceTimeout * 2);
-                WindowHook.RestartApp();
-            }
 
             WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
