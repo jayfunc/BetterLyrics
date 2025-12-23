@@ -81,14 +81,6 @@
                                     Value="{x:Bind LyricsBackgroundSettings.CoverOverlayBlurAmount, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <!--<dev:SettingsCard x:Uid="SettingsPageBackgroundAcrylicEffectAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsCoverOverlayEnabled, Mode=OneWay}">
-                                <uc:ExtendedSlider
-                                    Default="0"
-                                    Maximum="10"
-                                    Minimum="0"
-                                    Value="{x:Bind LyricsBackgroundSettings.CoverAcrylicEffectAmount, Mode=TwoWay}" />
-                            </dev:SettingsCard>-->
-
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 

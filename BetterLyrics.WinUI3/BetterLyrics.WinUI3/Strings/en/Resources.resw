@@ -273,9 +273,6 @@
   <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
     <value>Lyrics Timeline Offset</value>
   </data>
-  <data name="LyricsPageTitle" xml:space="preserve">
-    <value>BetterLyrics</value>
-  </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>Prioritize reading translations within lyrics; if no match, request machine translation from LibreTranslate server</value>
   </data>
@@ -600,12 +597,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
-    <value>Acrylic (Base)</value>
-  </data>
-  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
-    <value>Acrylic (Thin)</value>
-  </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
     <value>Enabling this will override the theme setting in Lyrics Background</value>
   </data>
@@ -702,9 +693,6 @@
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
     <value>Lyrics Background Material</value>
   </data>
-  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>Album Background Acrylic Strength</value>
-  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Lyrics Background</value>
   </data>
@@ -791,9 +779,6 @@
   </data>
   <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>This project is provided as-is without warranty of any kind. All lyrics, fonts, icons, and other third-party resources are property of their respective copyright holders. The authors of this project claim no ownership of such resources. This project is non-commercial and must not be used to infringe any rights. Users are responsible for ensuring their use complies with applicable laws and licenses.</value>
-  </data>
-  <data name="SettingsPageDiscord.Content" xml:space="preserve">
-    <value>Discord</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>Show listening status via Discord Presence</value>
@@ -987,14 +972,8 @@
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="SettingsPageLastFM.Text" xml:space="preserve">
-    <value>Last.fm</value>
-  </data>
   <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
     <value>Authorize</value>
-  </data>
-  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
-    <value>Last.fm</value>
   </data>
   <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
     <value>Total Scrobbles</value>
@@ -1257,12 +1236,6 @@
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>Listen to this playback source</value>
   </data>
-  <data name="SettingsPageMica.Content" xml:space="preserve">
-    <value>Mica</value>
-  </data>
-  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
-    <value>Mica (Alt)</value>
-  </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>Play Test Music</value>
   </data>
@@ -1367,9 +1340,6 @@
   </data>
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>Solid Color Layer</value>
-  </data>
-  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
-    <value>QQ Feedback Group</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Real-time Status</value>
@@ -1590,9 +1560,6 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>Visit https://github.com/LibreTranslate/LibreTranslate for installation tutorial and more info (This software is not affiliated with this service)</value>
   </data>
-  <data name="SettingsPageTransparent.Content" xml:space="preserve">
-    <value>Transparent</value>
-  </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>And users who purchased BetterLyrics</value>
   </data>
@@ -1661,9 +1628,6 @@
   </data>
   <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
     <value>Selected tracks added to this playlist</value>
-  </data>
-  <data name="TranslateServerNotSet" xml:space="preserve">
-    <value>Translate server not set, please configure in settings first</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics is already running</value>

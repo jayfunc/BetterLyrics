@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -272,9 +272,6 @@
   </data>
   <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
     <value>Décalage temporel des paroles</value>
-  </data>
-  <data name="LyricsPageTitle" xml:space="preserve">
-    <value>BetterLyrics</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>Prioriser la lecture des traductions dans les paroles ; si aucune correspondance n'est trouvée, demander une traduction automatique au serveur LibreTranslate</value>
@@ -600,12 +597,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>À propos</value>
   </data>
-  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
-    <value>Acrylique (Base)</value>
-  </data>
-  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
-    <value>Acrylique (Fin)</value>
-  </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
     <value>Activer cette option remplacera le paramètre de thème dans l'arrière-plan des paroles</value>
   </data>
@@ -702,9 +693,6 @@
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
     <value>Matériau d'arrière-plan des paroles</value>
   </data>
-  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>Intensité de l'acrylique d'arrière-plan</value>
-  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Arrière-plan des paroles</value>
   </data>
@@ -791,9 +779,6 @@
   </data>
   <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>Ce projet est fourni tel quel, sans aucune garantie. Toutes les paroles, polices, icônes et autres ressources tierces sont la propriété de leurs détenteurs de droits d'auteur respectifs. Les auteurs de ce projet ne revendiquent aucune propriété sur ces ressources. Ce projet est non commercial et ne doit pas être utilisé pour enfreindre des droits. Les utilisateurs sont responsables de s'assurer que leur utilisation est conforme aux lois et licences applicables.</value>
-  </data>
-  <data name="SettingsPageDiscord.Content" xml:space="preserve">
-    <value>Discord</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>Afficher le statut d'écoute via Discord Presence</value>
@@ -987,14 +972,8 @@
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>Langue</value>
   </data>
-  <data name="SettingsPageLastFM.Text" xml:space="preserve">
-    <value>Last.fm</value>
-  </data>
   <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
     <value>Autoriser</value>
-  </data>
-  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
-    <value>Last.fm</value>
   </data>
   <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
     <value>Total des scrobbles</value>
@@ -1257,12 +1236,6 @@
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>Écouter cette source de lecture</value>
   </data>
-  <data name="SettingsPageMica.Content" xml:space="preserve">
-    <value>Mica</value>
-  </data>
-  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
-    <value>Mica (Alt)</value>
-  </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>Lire musique de test</value>
   </data>
@@ -1367,9 +1340,6 @@
   </data>
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>Couche de couleur unie</value>
-  </data>
-  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
-    <value>Groupe de commentaires QQ</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Statut en temps réel</value>
@@ -1590,9 +1560,6 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>Visitez https://github.com/LibreTranslate/LibreTranslate pour le tutoriel d'installation et plus d'infos (Ce logiciel n'est pas affilié à ce service)</value>
   </data>
-  <data name="SettingsPageTransparent.Content" xml:space="preserve">
-    <value>Transparent</value>
-  </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>Et les utilisateurs ayant acheté BetterLyrics</value>
   </data>
@@ -1661,9 +1628,6 @@
   </data>
   <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
     <value>Pistes sélectionnées ajoutées à cette liste de lecture</value>
-  </data>
-  <data name="TranslateServerNotSet" xml:space="preserve">
-    <value>Serveur de traduction non défini, veuillez le configurer dans les paramètres d'abord</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics est déjà en cours d'exécution</value>

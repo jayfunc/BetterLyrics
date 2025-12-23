@@ -71,9 +71,9 @@
                                 <StackPanel Spacing="6">
                                     <TextBlock x:Uid="SetingsPageFeedback" />
                                     <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton x:Uid="SettingsPageQQGroup" NavigateUri="{x:Bind const:Link.QQGroup}" />
-                                        <HyperlinkButton x:Uid="SettingsPageDiscord" NavigateUri="{x:Bind const:Link.Discord}" />
-                                        <HyperlinkButton x:Uid="SettingsPageTelegram" NavigateUri="{x:Bind const:Link.Telegram}" />
+                                        <HyperlinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
+                                        <HyperlinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
+                                        <HyperlinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
                                     </StackPanel>
                                 </StackPanel>
                             </dev:SettingsCard>

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -272,9 +272,6 @@
   </data>
   <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
     <value>歌词时间轴偏移</value>
-  </data>
-  <data name="LyricsPageTitle" xml:space="preserve">
-    <value>BetterLyrics</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>将优先读取歌词内翻译，若无匹配则向 LibreTranslate 服务器请求机器翻译</value>
@@ -600,12 +597,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>关于</value>
   </data>
-  <data name="SettingsPageAcrylicBase.Content" xml:space="preserve">
-    <value>亚克力（基础）</value>
-  </data>
-  <data name="SettingsPageAcrylicThin.Content" xml:space="preserve">
-    <value>亚克力（薄层）</value>
-  </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
     <value>开启该项将覆盖歌词背景设置中的主题设置</value>
   </data>
@@ -702,9 +693,6 @@
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
     <value>歌词背景材质</value>
   </data>
-  <data name="SettingsPageBackgroundAcrylicEffectAmount.Header" xml:space="preserve">
-    <value>专辑背景亚克力效果强度</value>
-  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌词背景</value>
   </data>
@@ -791,9 +779,6 @@
   </data>
   <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
     <value>本项目按原样提供，不提供任何形式的保证。所有歌词、字体、图标和其他第三方资源均为其各自版权所有者的财产。本项目的作者不主张此类资源的所有权。本项目为非商业性项目，不得用于侵犯任何权利。用户有责任确保自己的使用符合适用的法律和许可。</value>
-  </data>
-  <data name="SettingsPageDiscord.Content" xml:space="preserve">
-    <value>Discord</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>通过 Discord Presence 显示收听状态</value>
@@ -987,14 +972,8 @@
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>语言</value>
   </data>
-  <data name="SettingsPageLastFM.Text" xml:space="preserve">
-    <value>Last.fm</value>
-  </data>
   <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
     <value>授权</value>
-  </data>
-  <data name="SettingsPageLastFMManager.Header" xml:space="preserve">
-    <value>Last.fm</value>
   </data>
   <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
     <value>总播放次数</value>
@@ -1257,12 +1236,6 @@
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>监听此播放源</value>
   </data>
-  <data name="SettingsPageMica.Content" xml:space="preserve">
-    <value>云母</value>
-  </data>
-  <data name="SettingsPageMicaAlt.Content" xml:space="preserve">
-    <value>云母（替代样式）</value>
-  </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>播放测试音乐</value>
   </data>
@@ -1367,9 +1340,6 @@
   </data>
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>纯色层</value>
-  </data>
-  <data name="SettingsPageQQGroup.Content" xml:space="preserve">
-    <value>QQ 反馈交流群</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>实时状态</value>
@@ -1590,9 +1560,6 @@
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
     <value>访问 https://github.com/LibreTranslate/LibreTranslate 获取安装教程及更多信息（本软件与该翻译服务无任何联系）</value>
   </data>
-  <data name="SettingsPageTransparent.Content" xml:space="preserve">
-    <value>透明</value>
-  </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>以及购买支持 BetterLyrics 的用户</value>
   </data>
@@ -1661,9 +1628,6 @@
   </data>
   <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
     <value>所选曲目已添加到此播放列表</value>
-  </data>
-  <data name="TranslateServerNotSet" xml:space="preserve">
-    <value>未设置Translate服务器，请先在设置中进行配置</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics 已经在运行</value>
