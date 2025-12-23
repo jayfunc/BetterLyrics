@@ -387,41 +387,32 @@
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <PRIResource Update="Strings\de\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  <PRIResource Update="Strings\de-DE\Resources.resw">
+		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\en\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  <PRIResource Update="Strings\en-US\Resources.resw">
+		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\es\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  <PRIResource Update="Strings\es-ES\Resources.resw">
+		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\fr\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  <PRIResource Update="Strings\fr-FR\Resources.resw">
+		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\ja\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  <PRIResource Update="Strings\ja-JP\Resources.resw">
+		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\ko\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  <PRIResource Update="Strings\ko-KR\Resources.resw">
+		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\ru\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  <PRIResource Update="Strings\ru-RU\Resources.resw">
+		  <Generator></Generator>
 	  </PRIResource>
 	  <PRIResource Update="Strings\zh-Hans\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+		  <Generator></Generator>
 	  </PRIResource>
 	  <PRIResource Update="Strings\zh-Hant\Resources.resw">
-	    <Generator></Generator>
-	    <CopyToOutputDirectory></CopyToOutputDirectory>
+		  <Generator></Generator>
 	  </PRIResource>
 	</ItemGroup>
 	<!-- Publish Properties -->
