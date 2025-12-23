@@ -19,8 +19,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.Resources;
+using Microsoft.Windows.Globalization;
 using Serilog;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -67,10 +69,15 @@ namespace BetterLyrics.WinUI3
             }
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-            settingsService.UpdateLanguage();
+            if (settingsService.AppSettings.GeneralSettings.LanguageCode == "")
+            {
+                settingsService.AppSettings.GeneralSettings.LanguageCode = CultureInfo.CurrentUICulture.Name;
+                await Task.Delay(Constants.Time.DebounceTimeout * 2);
+                WindowHook.RestartApp();
+            }
 
             WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 

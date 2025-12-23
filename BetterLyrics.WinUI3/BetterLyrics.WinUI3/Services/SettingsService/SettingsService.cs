@@ -12,8 +12,10 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService
@@ -21,14 +23,12 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
     // 新建一个 AppSettings 类
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
-        private readonly ILocalizationService _localizationService;
         private readonly DispatcherQueueTimer _writeAppSettingsTimer;
 
         public AppSettings AppSettings { get; set; }
 
-        public SettingsService(ILocalizationService localizationService)
+        public SettingsService()
         {
-            _localizationService = localizationService;
             _writeAppSettingsTimer = _dispatcherQueue.CreateTimer();
 
             AppSettings = ReadAppSettings();
@@ -117,19 +117,12 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             switch (e.PropertyName)
             {
                 case nameof(GeneralSettings.LanguageCode):
-                    UpdateLanguage();
+                    ApplicationLanguages.PrimaryLanguageOverride = AppSettings.GeneralSettings.LanguageCode;
                     break;
                 default:
                     break;
             }
             WriteAppSettings();
-        }
-
-        public void UpdateLanguage()
-        {
-            var langCode = AppSettings.GeneralSettings.LanguageCode;
-            var parsedLangCode = LanguageHelper.ParseLanguageCode(langCode);
-            ApplicationLanguages.PrimaryLanguageOverride = parsedLangCode;
         }
 
         /// <summary>
