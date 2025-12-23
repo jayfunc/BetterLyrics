@@ -10,7 +10,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-		<AppxDefaultResourceQualifiers>Language=de;en;es;fr;ja;ko;ru;zh-Hans;zh-Hant;</AppxDefaultResourceQualifiers>
+		<AppxDefaultResourceQualifiers>Language=ar;de;en;es;fr;hi;id;ja;ko;ms;pt;ru;th;vi;zh-Hans;zh-Hant;</AppxDefaultResourceQualifiers>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="TemplateSelector\**" />
