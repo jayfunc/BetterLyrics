@@ -1297,7 +1297,7 @@
     <value>歌詞注音</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>音標</value>
+    <value>發音標示</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>釘選到工作列</value>
