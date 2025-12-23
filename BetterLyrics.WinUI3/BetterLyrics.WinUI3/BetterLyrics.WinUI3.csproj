@@ -10,6 +10,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+		<AppxDefaultResourceQualifiers>Language=de;en;es;fr;ja;ko;ru;zh-Hans;zh-Hant;</AppxDefaultResourceQualifiers>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="TemplateSelector\**" />
@@ -387,25 +388,25 @@
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <PRIResource Update="Strings\de-DE\Resources.resw">
+	  <PRIResource Update="Strings\de\Resources.resw">
 		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\en-US\Resources.resw">
+	  <PRIResource Update="Strings\en\Resources.resw">
 		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\es-ES\Resources.resw">
+	  <PRIResource Update="Strings\es\Resources.resw">
 		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\fr-FR\Resources.resw">
+	  <PRIResource Update="Strings\fr\Resources.resw">
 		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\ja-JP\Resources.resw">
+	  <PRIResource Update="Strings\ja\Resources.resw">
 		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\ko-KR\Resources.resw">
+	  <PRIResource Update="Strings\ko\Resources.resw">
 		  <Generator></Generator>
 	  </PRIResource>
-	  <PRIResource Update="Strings\ru-RU\Resources.resw">
+	  <PRIResource Update="Strings\ru\Resources.resw">
 		  <Generator></Generator>
 	  </PRIResource>
 	  <PRIResource Update="Strings\zh-Hans\Resources.resw">
