@@ -1297,7 +1297,7 @@
     <value>歌詞の読み</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>読み (発音記号)</value>
+    <value>発音</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>タスクバーにピン留め</value>
