@@ -28,13 +28,20 @@
 	</Dependencies>
 
 	<Resources>
+		<Resource Language="ar"/>
 		<Resource Language="de"/>
 		<Resource Language="en"/>
 		<Resource Language="es"/>
 		<Resource Language="fr"/>
+		<Resource Language="hi"/>
+		<Resource Language="id"/>
 		<Resource Language="ja"/>
 		<Resource Language="ko"/>
+		<Resource Language="ms"/>
+		<Resource Language="pt"/>
 		<Resource Language="ru"/>
+		<Resource Language="th"/>
+		<Resource Language="vi"/>
 		<Resource Language="zh-Hans"/>
 		<Resource Language="zh-Hant"/>
 	</Resources>

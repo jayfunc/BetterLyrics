@@ -387,35 +387,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>
-	<ItemGroup>
-	  <PRIResource Update="Strings\de\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\en\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\es\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\fr\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\ja\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\ko\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\ru\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\zh-Hans\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	  <PRIResource Update="Strings\zh-Hant\Resources.resw">
-		  <Generator></Generator>
-	  </PRIResource>
-	</ItemGroup>
 	<!-- Publish Properties -->
 	<PropertyGroup>
 		<PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>

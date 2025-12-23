@@ -22,7 +22,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             InitializeComponent();
 
-            this.Init("LyricsWindowSwitchWindowTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
+            this.Init(title: "LyricsWindowSwitchWindowTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
 
             this.CenterOnScreen();
             this.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
