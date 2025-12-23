@@ -131,7 +131,9 @@ BetterLyrics
 
 ## 🏗️ 构建
 
-在构建之前确保替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`。
+在构建之前确保：
+- 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate.cs`.
+- 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`。
 
 ## 🤑 捐赠
 
@@ -140,6 +142,7 @@ BetterLyrics
 通过以下途径捐赠：
 - [PayPal](https://paypal.me/zhefangpay)
 - [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
+- [爱发电](https://afdian.com/a/jayfunc)
 - <details><summary>支付宝</summary>
     
   ![](Donate/Alipay.jpg)
@@ -201,7 +204,7 @@ BetterLyrics
 
 找不到你的语言？有更好的翻译？没关系！😆
 
-现在访问 https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 即刻为本应用提供翻译，成为贡献者！
+立即通过 crodwin 访问 [BetterLyrics](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410) 为本应用提供翻译，成为最具价值的贡献者！
 
 | 语言 | 语言代码 | 贡献者 |
 | :---: | :---: | :---: |
@@ -213,7 +216,7 @@ BetterLyrics
 | 韩语 | ko | - |
 | 俄语 | ru | - |
 | 简体中文 | zh-Hans | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
-| 繁体中文 | zh-Hant | - |
+| 繁体中文 | zh-Hant | [borcolasky](https://crowdin.com/profile/borcolasky) |
 
 ## ⭐ 星标记录
 

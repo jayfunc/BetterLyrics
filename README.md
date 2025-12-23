@@ -137,7 +137,9 @@ Having trouble downloading and installing from the MS Store? Try the following o
 
 ## 🏗️ Build
 
-Before you build, make sure that you have already replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`.
+Before you build, make sure that you have already:
+- Replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate.cs`.
+- Replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`.
 
 ## 🤑 Donations
 
@@ -146,6 +148,7 @@ If you like this project, please consider supporting it by donating. Your suppor
 You can donate via:
 - [PayPal](https://paypal.me/zhefangpay)
 - [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
+- [爱发电](https://afdian.com/a/jayfunc)
 - <details><summary>支付宝</summary>
     
   ![](Donate/Alipay.jpg)
@@ -207,7 +210,7 @@ Some design ideas are referenced from the following plugins/software (excluding 
 
 Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆
 
-Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891e7a26f9b2592556 to accept the invitation and become a valuable translator now!
+Visit [BetterLyrics](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410) on crowdin to accept the invitation and become a valuable translator now!
 
 | Language | Language Code | Contributors |
 | :---: | :---: | :---: |
@@ -219,7 +222,7 @@ Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891
 | Korean | ko | - |
 | Russian | ru | - |
 | Simplified Chinese | zh-Hans | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
-| Traditional Chinese | zh-Hant | - |
+| Traditional Chinese | zh-Hant | [borcolasky](https://crowdin.com/profile/borcolasky) |
 
 ## ⭐ Star history
 
