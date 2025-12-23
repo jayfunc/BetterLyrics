@@ -256,13 +256,13 @@
     <value>手动搜索歌词</value>
   </data>
   <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>歌词窗口管理快捷方式设置</value>
+    <value>歌词窗口管理快捷设置</value>
   </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>匹配百分比</value>
   </data>
   <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>播放源快捷方式设置</value>
+    <value>播放源快捷设置</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>切换歌曲时重置为 0</value>
@@ -1567,7 +1567,7 @@
     <value>工作区域高度</value>
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
-    <value>正在使用该软件的你</value>
+    <value>正在使用本软件的您</value>
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>标准模式</value>
