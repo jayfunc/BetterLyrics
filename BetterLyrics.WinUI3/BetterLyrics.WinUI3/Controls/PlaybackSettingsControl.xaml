@@ -467,9 +467,9 @@
                         </dev:SettingsCard>
 
                         <!--  Last.fm  -->
-                        <TextBlock x:Uid="SettingsPageLastFM" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Last.fm" />
                         <dev:SettingsExpander
-                            x:Uid="SettingsPageLastFMManager"
+                            Header="Last.fm"
                             HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
                             IsExpanded="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                             <StackPanel Orientation="Horizontal" Spacing="6">

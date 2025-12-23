@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Views
             LyricsWindowStatus = status;
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
 
-            this.Init("LyricsPageTitle", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
+            this.Init($"{status.Name} - {Constants.App.AppName}", TitleBarHeightOption.Collapsed, BackdropType.Transparent);
 
             AppWindow.Changed += AppWindow_Changed;
             AppWindow.Closing += AppWindow_Closing;
