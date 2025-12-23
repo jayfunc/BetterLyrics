@@ -1297,7 +1297,7 @@
     <value>Songtext-Lautschrift</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Lautschrift</value>
+    <value>Aussprache</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>An Taskleiste anheften</value>
