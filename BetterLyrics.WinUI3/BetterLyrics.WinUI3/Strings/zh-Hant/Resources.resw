@@ -852,9 +852,6 @@
   <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
     <value>長時間音節</value>
   </data>
-  <data name="SettingsPageEN.Content" xml:space="preserve">
-    <value>English</value>
-  </data>
   <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>環境色彩取樣模式</value>
   </data>
@@ -951,9 +948,6 @@
   <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>匯入成功後，該程式將自動重新啟動</value>
   </data>
-  <data name="SettingsPageJA.Content" xml:space="preserve">
-    <value>日本語</value>
-  </data>
   <data name="SettingsPageJapanese.Description" xml:space="preserve">
     <value>將優先讀取歌詞內音譯，若無符合則向 cutlet-docker 伺服器請求機器音譯</value>
   </data>
@@ -965,9 +959,6 @@
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>粵語拼音</value>
-  </data>
-  <data name="SettingsPageKO.Content" xml:space="preserve">
-    <value>한국어</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>語言</value>
@@ -1374,9 +1365,6 @@
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>日語注音</value>
   </data>
-  <data name="SettingsPageSC.Content" xml:space="preserve">
-    <value>简体中文</value>
-  </data>
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>範圍</value>
   </data>
@@ -1514,12 +1502,6 @@
   </data>
   <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>工作列固定位置</value>
-  </data>
-  <data name="SettingsPageTC.Content" xml:space="preserve">
-    <value>繁體中文</value>
-  </data>
-  <data name="SettingsPageTelegram.Content" xml:space="preserve">
-    <value>Telegram</value>
   </data>
   <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
     <value>感謝您購買 BetterLyrics</value>
