@@ -218,7 +218,7 @@ Visit https://crowdin.com/project/betterlyrics/invite?h=c9bfb28fce061484883c0891
 | Japanese | ja | - |
 | Korean | ko | - |
 | Russian | ru | - |
-| Simplified Chinese | zh-Hans | [borcolasky](https://crowdin.com/profile/borcolasky) |
+| Simplified Chinese | zh-Hans | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
 | Traditional Chinese | zh-Hant | - |
 
 ## ⭐ Star history

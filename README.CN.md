@@ -212,7 +212,7 @@ BetterLyrics
 | 日语 | ja | - |
 | 韩语 | ko | - |
 | 俄语 | ru | - |
-| 简体中文 | zh-Hans | [borcolasky](https://crowdin.com/profile/borcolasky) |
+| 简体中文 | zh-Hans | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
 | 繁体中文 | zh-Hant | - |
 
 ## ⭐ 星标记录
