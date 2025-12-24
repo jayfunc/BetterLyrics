@@ -283,10 +283,10 @@
     <value>翻訳のみを表示</value>
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
-    <value>翻訳プロバイダー</value>
+    <value>翻訳提供元</value>
   </data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
-    <value>翻字プロバイダー</value>
+    <value>翻訳提供元</value>
   </data>
   <data name="LyricsParseError" xml:space="preserve">
     <value>歌詞の解析に失敗しました</value>
@@ -304,7 +304,7 @@
     <value>長さ</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
-    <value>* 変更は保存後すぐに有効になり、その後の歌詞はマッピング情報とターゲット歌詞を使用して取得されます。インストゥルメンタルとしてマークすると、インストゥルメンタル用のプレースホルダー歌詞に直接戻ります。リセットすると、元のデータ取得に戻ります。</value>
+    <value>* 変更は保存後すぐに反映され、マッピング情報とターゲットの歌詞を使用して後続の曲の歌詞が取得されます。 「Instrumental」としてマークすると、「Instrumental」プレースホルダの歌詞に直接戻ります。 リセットすると元のデータの検索が復元されます。</value>
   </data>
   <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>検索時にキャッシュを無視する</value>
@@ -313,7 +313,7 @@
     <value>マッピング先</value>
   </data>
   <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
-    <value>インストゥルメンタルとしてマーク</value>
+    <value>インストゥルメンタルとして登録</value>
   </data>
   <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
     <value>見つかりません</value>
@@ -328,7 +328,7 @@
     <value>検索</value>
   </data>
   <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
-    <value>曲情報のマッピング</value>
+    <value>楽曲情報マッピング</value>
   </data>
   <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
     <value>ターゲット歌詞検索プロバイダー</value>
@@ -367,10 +367,10 @@
     <value>エクスポート</value>
   </data>
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
-    <value>歌詞ウィンドウ切り替え</value>
+    <value>歌詞ウィンドウスイッチャー</value>
   </data>
   <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
-    <value>「設定」に移動してモードを追加</value>
+    <value>さらにモードを追加するには「設定」に移動します</value>
   </data>
   <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
     <value>歌詞ウィンドウ切り替え</value>
@@ -430,7 +430,7 @@
     <value>ビットレート</value>
   </data>
   <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
-    <value>長さ</value>
+    <value>持続時間</value>
   </data>
   <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
     <value>エンコーダー</value>
@@ -454,7 +454,7 @@
     <value>年</value>
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
-    <value>メディアライブラリに曲が見つかりません</value>
+    <value>ライブラリに曲が見つかりません</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>ファイルからインポート</value>
@@ -493,7 +493,7 @@
     <value>すべて選択</value>
   </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
-    <value>1曲ループ</value>
+    <value>シングルループ</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
     <value>タイトル、アーティスト、アルバム、ファイル名、フォルダーパスを検索</value>
@@ -535,10 +535,10 @@
     <value>ピクチャー・イン・ピクチャーモード</value>
   </data>
   <data name="Pinyin" xml:space="preserve">
-    <value>ピンイン (北京語)</value>
+    <value>ピンイン (中国語)</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
-    <value>パスが存在しないため、トラックを表示できません</value>
+    <value>パスが存在しないため、曲を表示できません</value>
   </data>
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>プライバシーポリシー</value>
@@ -556,7 +556,7 @@
     <value>サーバーアドレス</value>
   </data>
   <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
-    <value>サーバーアドレスは必須です</value>
+    <value>サーバーアドレスが必要です</value>
   </data>
   <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
     <value>ユーザー名</value>
@@ -565,25 +565,25 @@
     <value>ローマ字</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
-    <value>貢献者</value>
+    <value>サポーター</value>
   </data>
   <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>コード参照</value>
+    <value>参照コード</value>
   </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
-    <value>寄付</value>
+    <value>ドネーション</value>
   </data>
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>フィードバック</value>
   </data>
   <data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>使い方ガイド</value>
+    <value>手順</value>
   </data>
   <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
     <value>スペシャルサンクス</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
-    <value>このプロジェクトを気に入っていただけましたら、寄付によるご支援をご検討ください。皆様のご支援がプロジェクトの継続とさらなる発展につながります。</value>
+    <value>本プロジェクトを支援していただける場合は、ぜひ寄付をお願いします。皆様のサポートが、継続的な開発と維持に繋がります。</value>
   </data>
   <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
     <value>UI/UX デザインリファレンス</value>
@@ -595,13 +595,13 @@
     <value>深度</value>
   </data>
   <data name="SettingsPageAbout.Content" xml:space="preserve">
-    <value>情報</value>
+    <value>このアプリについて</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
     <value>これを有効にすると、歌詞の背景のテーマ設定が上書きされます</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
-    <value>環境色に適応</value>
+    <value>環境の色に合わせる</value>
   </data>
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>追加</value>
@@ -619,16 +619,16 @@
     <value>アルバムアートの高さ</value>
   </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
-    <value>アルバムアートレイヤー</value>
+    <value>アルバムアートのレイヤー</value>
   </data>
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
-    <value>アルバムアートソースの設定</value>
+    <value>アルバムアートのソースを編集する</value>
   </data>
   <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
     <value>アルバムアートのサイズ</value>
   </data>
   <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
-    <value>アルバムアートエフェクト</value>
+    <value>アルバムアートの効果</value>
   </data>
   <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
     <value>アルバムアートソース</value>
@@ -679,10 +679,10 @@
     <value>起動時にデフォルトの歌詞ウィンドウを自動的に開く</value>
   </data>
   <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>起動時に音楽ギャラリーウィンドウを開く</value>
+    <value>起動時にギャラリーウィンドウを開く</value>
   </data>
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>音楽ギャラリーウィンドウを開いたときに自動的に再生を再開</value>
+    <value>ギャラリーウィンドウを開いたときに自動的に再生を再開</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動起動</value>
@@ -715,7 +715,7 @@
     <value>ショートカットを確認</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
-    <value>中国語の読み</value>
+    <value>ピンインルビ</value>
   </data>
   <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
     <value>中国語の歌詞</value>
@@ -778,7 +778,7 @@
     <value>デスクトップモード（透明）</value>
   </data>
   <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
-    <value>このプロジェクトは現状有姿で提供され、いかなる保証もありません。すべての歌詞、フォント、アイコン、その他のサードパーティのリソースは、それぞれの著作権所有者の財産です。このプロジェクトの作成者は、そのようなリソースの所有権を主張しません。このプロジェクトは非営利であり、権利を侵害するために使用してはなりません。ユーザーは、自身の使用が適用される法律およびライセンスに準拠していることを確認する責任があります。</value>
+    <value>このプロジェクトは、いかなる種類の保証もなくそのまま提供されています。すべての歌詞、フォント、アイコン、およびその他のサードパーティのリソースは、それぞれの著作権者の所有物です。 このプロジェクトの著者は、そのようなリソースの所有権を主張していません。このプロジェクトは非商業的であり、いかなる権利も侵害するために使用してはなりません。 ユーザーは、適用される法律およびライセンスに従うことを確認する責任があります。</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>Discord Presence で視聴ステータスを表示</value>
@@ -892,7 +892,7 @@
     <value>流体レイヤー</value>
   </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
-    <value>霧レイヤー</value>
+    <value>霧のレイヤー</value>
   </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>システムに従う</value>
@@ -904,7 +904,7 @@
     <value>ポーリングにより歌詞ウィンドウを常に最前面に維持します</value>
   </data>
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
-    <value>常に最前面に表示を強制</value>
+    <value>常に上部に強制的に表示</value>
   </data>
   <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
     <value>現在の歌詞に一語ずつの情報がない場合でも、一語ずつのシミュレーションを強制します</value>
@@ -925,10 +925,10 @@
     <value>こんにちは</value>
   </data>
   <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
-    <value>このアプリの翻訳にご協力ください</value>
+    <value>このアプリの翻訳に協力する 🌏</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>音楽の再生が停止したときに歌詞ウィンドウを自動的に非表示/表示します</value>
+    <value>音楽の再生が停止した場合、自動的に歌詞ウィンドウを非表示/表示する</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>ウィンドウの自動非表示/表示</value>
@@ -949,7 +949,7 @@
     <value>インポートが成功すると、アプリは自動的に再起動します</value>
   </data>
   <data name="SettingsPageJapanese.Description" xml:space="preserve">
-    <value>歌詞内の読みを優先して読み込みます。一致するものがない場合は、cutlet-docker サーバーに機械的な翻字をリクエストします</value>
+    <value>歌詞内の音訳を優先します。一致しない場合は、cutlet-docker サーバーからマシンの音訳を要求します</value>
   </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>日本語の読み</value>
@@ -967,7 +967,7 @@
     <value>認証</value>
   </data>
   <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
-    <value>総再生回数 (Scrobbles)</value>
+    <value>総再生回数</value>
   </data>
   <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
     <value>更新</value>
@@ -976,7 +976,7 @@
     <value>登録日</value>
   </data>
   <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
-    <value>Last.fm 経由で再生履歴を記録 (Scrobble)</value>
+    <value>Last.fm 経由でリスニング履歴を追跡</value>
   </data>
   <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
     <value>認証を取り消す</value>
@@ -988,7 +988,7 @@
     <value>レイアウト</value>
   </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
-    <value>レイアウトの方向</value>
+    <value>レイアウトの向き</value>
   </data>
   <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
     <value>水平</value>
@@ -1072,10 +1072,10 @@
     <value>現在の行</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>歌詞の背景に適応 (カラー)</value>
+    <value>歌詞の背景に合わせる（カラー）</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>歌詞の背景に適応 (グレー)</value>
+    <value>歌詞の背景に合わせる（グレー）</value>
   </data>
   <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
     <value>カスタム</value>
@@ -1084,10 +1084,10 @@
     <value>フロートアニメーション</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>歌詞の背景に適応 (カラー)</value>
+    <value>歌詞の背景に合わせる（色付き）</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>歌詞の背景に適応 (グレー)</value>
+    <value>歌詞の背景に合わせる（グレー）</value>
   </data>
   <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
     <value>カスタム</value>
@@ -1162,13 +1162,13 @@
     <value>順次：以下のリストの優先順位に従って検索し、最初に見つかった結果を返します。ベストマッチ：有効なすべてのソースを検索し、一致スコアが最も高い結果を自動的に選択します</value>
   </data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
-    <value>歌詞検索戦略</value>
+    <value>歌詞検索方法</value>
   </data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
-    <value>セミボールド</value>
+    <value>中太</value>
   </data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
-    <value>セミライト</value>
+    <value>準細</value>
   </data>
   <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
     <value>影</value>
@@ -1234,7 +1234,7 @@
     <value>マルチウィンドウモード</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
-    <value>音楽ギャラリー</value>
+    <value>ミュージックギャラリー</value>
   </data>
   <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
     <value>音楽ギャラリー埋め込み歌詞ウィンドウ</value>
@@ -1255,7 +1255,7 @@
     <value>ナローモード</value>
   </data>
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
-    <value>次の曲へのショートカット</value>
+    <value>次のトラックのショートカットキー</value>
   </data>
   <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
     <value>なし</value>
@@ -1291,7 +1291,7 @@
     <value>コンピューター上でこのパスが見つかりません</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
-    <value>支援者</value>
+    <value>スポンサー</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>歌詞の読み</value>
@@ -1303,7 +1303,7 @@
     <value>タスクバーにピン留め</value>
   </data>
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
-    <value>ピンイン (北京語)</value>
+    <value>ピンイン (中国語)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
     <value>再生ソース</value>
@@ -1360,7 +1360,7 @@
     <value>アプリを再起動して変更を適用</value>
   </data>
   <data name="SettingsPageRight.Content" xml:space="preserve">
-    <value>右</value>
+    <value>右揃え</value>
   </data>
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
     <value>日本語の読み</value>
@@ -1429,7 +1429,7 @@
     <value>例: Alt + Tab、タスクバー</value>
   </data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
-    <value>システム環境に表示</value>
+    <value>システム環境で表示</value>
   </data>
   <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
     <value>レイアウトスプリッターを表示</value>
@@ -1444,10 +1444,10 @@
     <value>現在値: </value>
   </data>
   <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
-    <value>雪の結晶レイヤー</value>
+    <value>雪のレイヤー</value>
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
-    <value>曲情報</value>
+    <value>楽曲情報</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
     <value>現在の曲</value>
@@ -1477,7 +1477,7 @@
     <value>曲線</value>
   </data>
   <data name="SettingsPageSpeed.Header" xml:space="preserve">
-    <value>速度</value>
+    <value>スピード</value>
   </data>
   <data name="SettingsPageStandardMode.Text" xml:space="preserve">
     <value>標準モード</value>
@@ -1534,16 +1534,16 @@
     <value>訳文</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
-    <value>歌詞翻訳</value>
+    <value>歌詞の翻訳</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate サービス</value>
   </data>
   <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
-    <value>インストールチュートリアルや詳細については https://github.com/LibreTranslate/LibreTranslate をご覧ください（本ソフトウェアはこのサービスとは無関係です）</value>
+    <value>インストールのチュートリアルと詳細については、https://github.com/LibreTranslate/LibreTranslateを参照してください（このソフトウェアはこのサービスとは関連していません）</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
-    <value>および BetterLyrics を購入してくださったユーザーの皆様</value>
+    <value>そしてBetterLyricsを購入したユーザー</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>バージョン</value>
@@ -1579,7 +1579,7 @@
     <value>歌詞ウィンドウを開く</value>
   </data>
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
-    <value>音楽ギャラリーを開く</value>
+    <value>ミュージックギャラリーを開く</value>
   </data>
   <data name="SystemTrayPageTitle" xml:space="preserve">
     <value>システムトレイ - BetterLyrics</value>
@@ -1591,7 +1591,7 @@
     <value>再起動</value>
   </data>
   <data name="SystemTraySearch.Text" xml:space="preserve">
-    <value>歌詞検索ウィンドウ</value>
+    <value>歌詞の検索ウィンドウ</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>設定を開く</value>
@@ -1600,7 +1600,7 @@
     <value>歌詞ウィンドウ切り替え</value>
   </data>
   <data name="TaskbarMode" xml:space="preserve">
-    <value>タスクバーモード</value>
+    <value>タスクバー モード</value>
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>利用規約</value>
@@ -1612,7 +1612,7 @@
     <value>選択したトラックがこのプレイリストに追加されました</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
-    <value>BetterLyrics はすでに実行中です</value>
+    <value>BetterLyricsは既に実行されています</value>
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>ユーザーガイド</value>
