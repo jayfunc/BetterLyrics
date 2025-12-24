@@ -57,9 +57,7 @@ BetterLyrics
 
 ## ✍️ Help us translate into your language
 
-Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆
-
-See [here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) for more info on how to contribute.
+Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆 See [here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) for more info on how to contribute.
 
 ## 🎉 This project was featured by SSPAI!
 
