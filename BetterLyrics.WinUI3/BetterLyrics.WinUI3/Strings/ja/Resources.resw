@@ -919,7 +919,7 @@
     <value>全画面モード</value>
   </data>
   <data name="SettingsPageHeight.Header" xml:space="preserve">
-    <value>高さ</value>
+    <value>縦幅</value>
   </data>
   <data name="SettingsPageHello.Text" xml:space="preserve">
     <value>こんにちは</value>
@@ -1405,7 +1405,7 @@
     <value>設定マネージャー</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
-    <value>オンライン共有ハブを閲覧</value>
+    <value>オンライン共有センターを閲覧する</value>
   </data>
   <data name="SettingsPageShortcut.Text" xml:space="preserve">
     <value>ショートカット</value>
@@ -1489,7 +1489,7 @@
     <value>ミュージックギャラリーウィンドウを閉じたときに再生を停止する</value>
   </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
-    <value>ストローク色</value>
+    <value>縁取りの色</value>
   </data>
   <data name="SettingsPageSystemLanguage" xml:space="preserve">
     <value>デフォルト</value>
@@ -1519,7 +1519,7 @@
     <value>なし</value>
   </data>
   <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
-    <value>上部</value>
+    <value>上部のみ</value>
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>ウィンドウ全体</value>
@@ -1552,7 +1552,7 @@
     <value>ラテン文字</value>
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
-    <value>幅</value>
+    <value>横幅</value>
   </data>
   <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
     <value>ウィンドウ境界</value>
