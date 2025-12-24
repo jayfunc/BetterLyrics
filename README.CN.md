@@ -221,7 +221,7 @@ BetterLyrics
 | 法语 | fr | ✅ | - | - |
 | 印地语 | hi | ✅ | - | - |
 | 印尼语 | id | ✅ | - | - |
-| 日语 | ja | ✅ | - | - |
+| 日语 | ja | ✅ | ✅ | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
 | 韩语 | ko | ✅ | - | - |
 | 马来语 | ms | ✅ | - | - |
 | 葡萄牙语 | pt | ✅ | - | - |
