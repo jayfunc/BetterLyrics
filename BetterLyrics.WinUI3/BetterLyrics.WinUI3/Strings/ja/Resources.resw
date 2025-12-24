@@ -454,7 +454,7 @@
     <value>年</value>
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
-    <value>ライブラリに曲が見つかりません</value>
+    <value>メディアライブラリに曲が見つかりません</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>ファイルからインポート</value>
@@ -664,7 +664,7 @@
     <value>アプリの外観</value>
   </data>
   <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>一般的な動作</value>
+    <value>全般的な動作</value>
   </data>
   <data name="SettingsPageApply.Content" xml:space="preserve">
     <value>適用</value>
@@ -691,7 +691,7 @@
     <value>アプリケーション起動時</value>
   </data>
   <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>歌詞背景のマテリアル</value>
+    <value>歌詞背景のテクスチャ</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌詞の背景</value>
@@ -712,7 +712,7 @@
     <value>中央揃え</value>
   </data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
-    <value>ショートカットを確認</value>
+    <value>キー割り当ての確認</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>ピンインルビ</value>
@@ -742,7 +742,7 @@
     <value>コンパクト</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
-    <value>記録されたウィンドウの状態に名前を付けると、区別しやすくなります</value>
+    <value>ウィンドウの状態に名前を付けると、区別しやすくなります</value>
   </data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>構成名</value>
@@ -784,7 +784,7 @@
     <value>Discord Presence で視聴ステータスを表示</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>レイアウトモード</value>
+    <value>レイアウト</value>
   </data>
   <data name="SettingsPageDockedMode.Text" xml:space="preserve">
     <value>ドッキングモード</value>
@@ -880,7 +880,7 @@
     <value>拡張</value>
   </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
-    <value>扇形歌詞</value>
+    <value>扇形の歌詞</value>
   </data>
   <data name="SettingsPageFAQ.Content" xml:space="preserve">
     <value>よくある質問 (FAQ)</value>
@@ -907,10 +907,10 @@
     <value>常に上部に強制的に表示</value>
   </data>
   <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>現在の歌詞に一語ずつの情報がない場合でも、一語ずつのシミュレーションを強制します</value>
+    <value>現在の歌詞に文字単位の情報がない場合でも、文字単位の歌詞シミュレーションをします</value>
   </data>
   <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>一語ずつのエフェクトを強制</value>
+    <value>文字単位の歌詞効果を強制する</value>
   </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>描画 FPS</value>
@@ -1033,10 +1033,10 @@
     <value>歌詞の背景</value>
   </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
-    <value>非アクティブ行</value>
+    <value>非目前行</value>
   </data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
-    <value>ブラック</value>
+    <value>極太</value>
   </data>
   <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
     <value>非アクティブ行のぼかしを有効にする</value>
@@ -1054,13 +1054,13 @@
     <value>歌詞エフェクト</value>
   </data>
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
-    <value>エクストラブラック</value>
+    <value>超極太</value>
   </data>
   <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
-    <value>エクラボールド</value>
+    <value>特太</value>
   </data>
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
-    <value>エクストラライト</value>
+    <value>超細</value>
   </data>
   <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
     <value>非アクティブ行のフェードアウト効果を有効にする</value>
@@ -1102,16 +1102,16 @@
     <value>歌詞の縁取り幅</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
-    <value>ウェイト</value>
+    <value>フォントの太さ</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
-    <value>発光効果</value>
+    <value>光沢効果</value>
   </data>
   <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>ハイライト</value>
+    <value>ハイライト表示</value>
   </data>
   <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>原文のハイライト範囲</value>
+    <value>オリジナルのテキストハイライト範囲</value>
   </data>
   <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
     <value>左</value>
@@ -1123,7 +1123,7 @@
     <value>再生エリア端のフェード</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
-    <value>行間</value>
+    <value>行間隔</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
     <value> x 行の高さ</value>
@@ -1144,7 +1144,7 @@
     <value>視界の外へ (Out of Sight)</value>
   </data>
   <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
-    <value>持続時間の長い音節の拡大縮小を有効にする</value>
+    <value>長い音節のスケーリングを有効にする</value>
   </data>
   <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
     <value>スケール効果</value>
@@ -1153,7 +1153,7 @@
     <value>ベストマッチ</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
-    <value>歌詞ソースの設定</value>
+    <value>歌詞元の設定</value>
   </data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
     <value>順次</value>
@@ -1177,7 +1177,7 @@
     <value>歌詞スタイル</value>
   </data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
-    <value>Thin</value>
+    <value>極細</value>
   </data>
   <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
     <value>歌詞タイムライン同期</value>
@@ -1186,7 +1186,7 @@
     <value>歌詞の進行が震える場合は、このしきい値を増やしてみてください。値を変更すると歌詞の同期がずれる可能性があります</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
-    <value>歌詞タイムライン同期のしきい値</value>
+    <value>歌詞同期のしきい値</value>
   </data>
   <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
     <value>翻訳のハイライト</value>
@@ -1195,7 +1195,7 @@
     <value>原文と訳文の区切り文字</value>
   </data>
   <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>上下端の不透明度</value>
+    <value>上下エッジの不透明度</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>歌詞ウィンドウ</value>
@@ -1216,7 +1216,7 @@
     <value>この値を調整すると、順次検索とベストマッチ検索の結果に影響しますが、手動歌詞検索インターフェイスの検索結果には影響しません</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
-    <value>最小一致しきい値</value>
+    <value>一致度の最低ライン</value>
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>メディアライブラリ</value>
@@ -1225,19 +1225,19 @@
     <value>保守的</value>
   </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
-    <value>この再生ソースをリッスンする</value>
+    <value>この再生ソースを監視する</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>テスト音楽を再生</value>
   </data>
   <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
-    <value>マルチウィンドウモード</value>
+    <value>マルチウィンドウ モード</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>ミュージックギャラリー</value>
   </data>
   <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
-    <value>音楽ギャラリー埋め込み歌詞ウィンドウ</value>
+    <value>ミュージックギャラリー埋め込み歌詞ウィンドウ</value>
   </data>
   <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
     <value>ミュージックギャラリーのウィンドウが開いています。他の再生ソースの監視を無視しています</value>
@@ -1312,13 +1312,13 @@
     <value>キャプチャされた再生ソースがありません</value>
   </data>
   <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
-    <value>再生元</value>
+    <value>再生ソース</value>
   </data>
   <data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
-    <value>再生元ID</value>
+    <value>再生ソース ID</value>
   </data>
   <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
-    <value>現在の再生元</value>
+    <value>現在の再生ソース</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com" で "Cut to the Feeling" を再生</value>
@@ -1363,7 +1363,7 @@
     <value>右揃え</value>
   </data>
   <data name="SettingsPageRomaji.Header" xml:space="preserve">
-    <value>日本語の読み</value>
+    <value>ローマ字ルビ</value>
   </data>
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>範囲</value>
