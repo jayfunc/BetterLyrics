@@ -391,7 +391,7 @@
     <value>現在再生中の音楽はありません</value>
   </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
-    <value>歌詞タイムラインオフセット</value>
+    <value>歌詞タイムラインのオフセット</value>
   </data>
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>分割表示</value>
@@ -718,10 +718,10 @@
     <value>中国語の読み</value>
   </data>
   <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
-    <value>中国語歌詞</value>
+    <value>中国語の歌詞</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
-    <value>中国語を繁体字に変換</value>
+    <value>簡体字から繁体字へ変換</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK 統合漢字</value>
@@ -958,7 +958,7 @@
     <value>今すぐ参加</value>
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
-    <value>Jyutping (広東語)</value>
+    <value>粤拼 (広東語)</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>言語</value>
