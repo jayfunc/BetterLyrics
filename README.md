@@ -227,7 +227,7 @@ Visit [BetterLyrics](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7
 | French | fr | ✅ | - | - |
 | Hindi | hi | ✅ | - | - |
 | Indonesian | id | ✅ | - | - |
-| Japanese | ja | ✅ | - | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
+| Japanese | ja | ✅ | ✅ | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
 | Korean | ko | ✅ | - | - |
 | Malay | ms | ✅ | - | - |
 | Portuguese | pt | ✅ | - | - |
