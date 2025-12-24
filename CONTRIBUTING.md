@@ -19,3 +19,27 @@ We want **BetterLyrics** to be accessible to everyone, and your help in translat
 * **Credit:** After the merge, your Crowdin profile will be automatically added to the **Contributors** column in the Translation section of the `README` file.
 
 Thank you for helping us make BetterLyrics better!
+
+---
+
+## 🌍 协助翻译
+
+我们致力于让 **BetterLyrics** 面向全球用户，非常感谢您在翻译方面提供的帮助！本项目使用 **Crowdin** 平台进行本地化管理。
+
+### 参与方式
+
+1.  **加入项目：**
+    通过以下链接接受邀请，加入 Crowdin 上的翻译团队：
+    [在 Crowdin 上加入 BetterLyrics](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410)
+
+2.  **翻译与校对：**
+    加入项目后，欢迎您翻译新的词条或校对现有的语言资源。
+    > **注意：** 请仅在您精通目标语言（母语或流利水平）并确信翻译准确无误时，才对翻译进行 **批准 (Approve)** 操作。
+
+### 同步与致谢
+
+* **同步机制：** Crowdin 会定期自动将翻译内容同步至 GitHub。
+* **合并流程：** 当您完成了一种语言的校对工作，且资源已通过 Pull Request 同步至 GitHub 后，维护者会将更改合并。
+* **贡献者致谢：** 代码合并后，您的 Crowdin 个人资料将自动添加至 `README` 文件翻译部分的 **贡献者 (Contributors)** 列表中。
+
+感谢您帮助我们将 BetterLyrics 打造得更好！
