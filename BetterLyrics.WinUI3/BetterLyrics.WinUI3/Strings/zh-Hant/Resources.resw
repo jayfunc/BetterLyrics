@@ -301,7 +301,7 @@
     <value>自動產生</value>
   </data>
   <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
-    <value>長度</value>
+    <value>時長</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* 儲存變更後立即生效，隨後歌曲歌詞將透過對應資訊和目標歌詞進行檢索；標記為純音樂將直接恢復為純音樂預留位置歌詞。重設後將恢復原始資料檢索。</value>
@@ -430,7 +430,7 @@
     <value>位元率</value>
   </data>
   <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
-    <value>長度</value>
+    <value>時長</value>
   </data>
   <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
     <value>編碼器</value>
