@@ -649,7 +649,7 @@
     <value>总是隐藏解锁按钮</value>
   </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
-    <value>基本 URL</value>
+    <value>根 URL</value>
   </data>
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>量</value>
@@ -1411,10 +1411,10 @@
     <value>快捷键</value>
   </data>
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
-    <value>该热键未成功注册</value>
+    <value>该快捷键未成功注册</value>
   </data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
-    <value>该热键已成功注册</value>
+    <value>该快捷键已成功注册</value>
   </data>
   <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
     <value>显示专辑</value>
