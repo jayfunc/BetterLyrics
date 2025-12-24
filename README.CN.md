@@ -141,6 +141,12 @@ BetterLyrics
 - 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate.cs`.
 - 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`。
 
+## ✍️ 协助翻译
+
+找不到你的语言？有更好的翻译？没关系！😆
+
+访问 [此处](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) 查看如何贡献翻译！
+
 ## 🤑 捐赠
 
 如果你喜欢本应用，请考虑捐赠支持开发者。这将有助于本应用的长远发展。
@@ -205,31 +211,6 @@ BetterLyrics
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
 - [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
-
-## ✍️ 协助翻译
-
-找不到你的语言？有更好的翻译？没关系！😆
-
-立即通过 crodwin 访问 [BetterLyrics](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410) 为本应用提供翻译，成为最具价值的贡献者！
-
-| 语言 | 代码 | 已翻译 | 已校对 | 贡献者 |
-| :--- | :---: | :---: | :---: | :--- |
-| 阿拉伯语 | ar | ✅ | - | - |
-| 德语 | de | ✅ | - | - |
-| 英语 | en | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc) |
-| 西班牙语 | es | ✅ | - | - |
-| 法语 | fr | ✅ | - | - |
-| 印地语 | hi | ✅ | - | - |
-| 印尼语 | id | ✅ | - | - |
-| 日语 | ja | ✅ | ✅ | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
-| 韩语 | ko | ✅ | - | - |
-| 马来语 | ms | ✅ | - | - |
-| 葡萄牙语 | pt | ✅ | - | - |
-| 俄语 | ru | ✅ | - | - |
-| 泰语 | th | ✅ | - | - |
-| 越南语 | vi | ✅ | - | - |
-| 简体中文 | zh-Hans | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
-| 繁体中文 | zh-Hant | ✅ | ✅ | [borcolasky](https://crowdin.com/profile/borcolasky) |
 
 ## ⭐ 星标记录
 
