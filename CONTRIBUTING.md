@@ -1,45 +1,66 @@
-## 🌍 Help Translate
+## 🌍 Translation / 翻译
 
 We want **BetterLyrics** to be accessible to everyone, and your help in translating it is greatly appreciated! We use **Crowdin** to manage localization.
+
+我们致力于让 **BetterLyrics** 面向全球用户，非常感谢您在翻译方面提供的帮助！本项目使用 **Crowdin** 平台进行本地化管理。
+
+---
 
 ### How to Contribute
 
 1.  **Join the Project:**
     Accept our invitation to join the translation team via Crowdin:
-    [Join BetterLyrics on Crowdin](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410)
+    [**Join BetterLyrics on Crowdin**](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410)
 
 2.  **Translate & Proofread:**
     Once you have joined, you are welcome to translate new strings or proofread existing language resources.
     > **Note:** Please only **approve** a translation if you are native or fluent in that language and are confident in its accuracy.
 
-### Syncing and Recognition
-
+**Syncing and Recognition**
 * **Synchronization:** Crowdin automatically syncs translations to GitHub periodically.
 * **Merging:** Once you have completed proofreading a language and the resources have synced to GitHub via a Pull Request, the maintainers will merge the changes.
-* **Credit:** After the merge, your Crowdin profile will be automatically added to the **Contributors** column in the Translation section of the `README` file.
+* **Credit:** After the merge, your Crowdin profile will be automatically added to the **Contributors** column in the table below.
 
 Thank you for helping us make BetterLyrics better!
 
 ---
 
-## 🌍 协助翻译
-
-我们致力于让 **BetterLyrics** 面向全球用户，非常感谢您在翻译方面提供的帮助！本项目使用 **Crowdin** 平台进行本地化管理。
-
-### 参与方式
+### 如何参与贡献
 
 1.  **加入项目：**
     通过以下链接接受邀请，加入 Crowdin 上的翻译团队：
-    [在 Crowdin 上加入 BetterLyrics](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410)
+    [**在 Crowdin 上加入 BetterLyrics**](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410)
 
 2.  **翻译与校对：**
     加入项目后，欢迎您翻译新的词条或校对现有的语言资源。
     > **注意：** 请仅在您精通目标语言（母语或流利水平）并确信翻译准确无误时，才对翻译进行 **批准 (Approve)** 操作。
 
-### 同步与致谢
-
+**同步与致谢**
 * **同步机制：** Crowdin 会定期自动将翻译内容同步至 GitHub。
 * **合并流程：** 当您完成了一种语言的校对工作，且资源已通过 Pull Request 同步至 GitHub 后，维护者会将更改合并。
-* **贡献者致谢：** 代码合并后，您的 Crowdin 个人资料将自动添加至 `README` 文件翻译部分的 **贡献者 (Contributors)** 列表中。
+* **贡献者致谢：** 代码合并后，您的 Crowdin 个人资料将自动添加至下方的 **贡献者 (Contributors)** 列表中。
 
 感谢您帮助我们将 BetterLyrics 打造得更好！
+
+---
+
+### 📊 Status / 状态
+
+| Language / 语言 | Code | Translated / 已翻译 | Proofread / 已校对 | Contributors / 贡献者 |
+| :--- | :---: | :---: | :---: | :--- |
+| Arabic | ar | ✅ | - | - |
+| German | de | ✅ | - | - |
+| English | en | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc) |
+| Spanish | es | ✅ | - | - |
+| French | fr | ✅ | - | - |
+| Hindi | hi | ✅ | - | - |
+| Indonesian | id | ✅ | - | - |
+| Japanese | ja | ✅ | ✅ | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
+| Korean | ko | ✅ | - | - |
+| Malay | ms | ✅ | - | - |
+| Portuguese | pt | ✅ | - | - |
+| Russian | ru | ✅ | - | - |
+| Thai | th | ✅ | - | - |
+| Vietnamese | vi | ✅ | - | - |
+| Simplified Chinese | zh-Hans | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
+| Traditional Chinese | zh-Hant | ✅ | ✅ | [borcolasky](https://crowdin.com/profile/borcolasky) |
