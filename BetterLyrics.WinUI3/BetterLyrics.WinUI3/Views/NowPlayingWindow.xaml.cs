@@ -33,7 +33,8 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<BitmapImage?>>,
         IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
         IRecipient<PropertyChangedMessage<Color>>,
-        IRecipient<PropertyChangedMessage<TaskbarPlacement>>
+        IRecipient<PropertyChangedMessage<TaskbarPlacement>>,
+        IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
     {
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private OverlayInputHelper? _overlayInputHelper;
@@ -628,6 +629,17 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(LyricsWindowStatus.TaskbarPlacement))
                 {
                     _taskbarHook?.UpdatePlacement(LyricsWindowStatus.TaskbarPlacement);
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
+        {
+            if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType))
+                {
+                    UpdateAlbumArtThemeColors();
                 }
             }
         }

@@ -1,5 +1,7 @@
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -22,7 +24,8 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class MusicGalleryWindow : Window,
          IRecipient<PropertyChangedMessage<BitmapImage?>>,
-         IRecipient<PropertyChangedMessage<ElementTheme>>
+         IRecipient<PropertyChangedMessage<ElementTheme>>,
+         IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
     {
         public MusicGalleryWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
 
@@ -79,6 +82,17 @@ namespace BetterLyrics.WinUI3.Views
             if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
             {
                 if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
+        {
+            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
                 {
                     UpdateAlbumArtThemeColors();
                 }
