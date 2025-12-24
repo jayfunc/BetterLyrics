@@ -49,6 +49,10 @@ BetterLyrics
 
 </div>
 
+## ✍️ 协助翻译
+
+找不到你的语言？有更好的翻译？没关系！😆 访问 [此处](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) 查看如何贡献翻译！
+
 ## 🎉 该项目入选少数派推荐文章！
 
 文章链接：[BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)。
@@ -140,12 +144,6 @@ BetterLyrics
 在构建之前确保：
 - 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate.cs`.
 - 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`。
-
-## ✍️ 协助翻译
-
-找不到你的语言？有更好的翻译？没关系！😆
-
-访问 [此处](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) 查看如何贡献翻译！
 
 ## 🤑 捐赠
 

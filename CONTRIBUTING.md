@@ -19,7 +19,7 @@ We want **BetterLyrics** to be accessible to everyone, and your help in translat
 **Syncing and Recognition**
 * **Synchronization:** Crowdin automatically syncs translations to GitHub periodically.
 * **Merging:** Once you have completed proofreading a language and the resources have synced to GitHub via a Pull Request, the maintainers will merge the changes.
-* **Credit:** After the merge, your Crowdin profile will be automatically added to the **Contributors** column in the table below.
+* **Credit:** After the merge, we will add your Crowdin profile to the **Contributors** column in the table below.
 
 Thank you for helping us make BetterLyrics better!
 
@@ -38,7 +38,7 @@ Thank you for helping us make BetterLyrics better!
 **同步与致谢**
 * **同步机制：** Crowdin 会定期自动将翻译内容同步至 GitHub。
 * **合并流程：** 当您完成了一种语言的校对工作，且资源已通过 Pull Request 同步至 GitHub 后，维护者会将更改合并。
-* **贡献者致谢：** 代码合并后，您的 Crowdin 个人资料将自动添加至下方的 **贡献者 (Contributors)** 列表中。
+* **贡献者致谢：** 代码合并后，我们会将您的 Crowdin 个人资料添加到下方的 **贡献者 (Contributors)** 列表中。
 
 感谢您帮助我们将 BetterLyrics 打造得更好！
 

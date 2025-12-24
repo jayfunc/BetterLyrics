@@ -55,6 +55,10 @@ BetterLyrics
 
 </div>
 
+## ✍️ Help us translate into your language
+
+Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆 See [here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) for more info on how to contribute.
+
 ## 🎉 This project was featured by SSPAI!
 
 Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028).
@@ -146,12 +150,6 @@ Having trouble downloading and installing from the MS Store? Try the following o
 Before you build, make sure that you have already:
 - Replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate.cs`.
 - Replaced `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` with `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`.
-
-## ✍️ Help us translate into your language
-
-Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆
-
-See [here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) for more info on how to contribute.
 
 ## 🤑 Donations
 
