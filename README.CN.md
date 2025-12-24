@@ -51,9 +51,7 @@ BetterLyrics
 
 ## ✍️ 协助翻译
 
-找不到你的语言？有更好的翻译？没关系！😆
-
-访问 [此处](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) 查看如何贡献翻译！
+找不到你的语言？有更好的翻译？没关系！😆 访问 [此处](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) 查看如何贡献翻译！
 
 ## 🎉 该项目入选少数派推荐文章！
 
