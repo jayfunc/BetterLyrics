@@ -48,19 +48,19 @@ Thank you for helping us make BetterLyrics better!
 
 | Language / 语言 | Code | Translated / 已翻译 | Proofread / 已校对 | Contributors / 贡献者 |
 | :--- | :---: | :---: | :---: | :--- |
-| Arabic | ar | ✅ | - | - |
-| German | de | ✅ | - | - |
+| Arabic (العربية) | ar | ✅ | - | - |
+| German (Deutsch) | de | ✅ | - | - |
 | English | en | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc) |
-| Spanish | es | ✅ | - | - |
-| French | fr | ✅ | - | - |
-| Hindi | hi | ✅ | - | - |
-| Indonesian | id | ✅ | - | - |
-| Japanese | ja | ✅ | ✅ | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
-| Korean | ko | ✅ | - | - |
-| Malay | ms | ✅ | - | - |
-| Portuguese | pt | ✅ | - | - |
-| Russian | ru | ✅ | - | - |
-| Thai | th | ✅ | - | - |
-| Vietnamese | vi | ✅ | - | - |
-| Simplified Chinese | zh-Hans | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
-| Traditional Chinese | zh-Hant | ✅ | ✅ | [borcolasky](https://crowdin.com/profile/borcolasky) |
+| Spanish (Español) | es | ✅ | - | - |
+| French (Français) | fr | ✅ | - | - |
+| Hindi (हिन्दी) | hi | ✅ | - | - |
+| Indonesian (Bahasa Indonesia) | id | ✅ | - | - |
+| Japanese (日本語) | ja | ✅ | ✅ | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
+| Korean (한국어) | ko | ✅ | - | - |
+| Malay (Bahasa Melayu) | ms | ✅ | - | - |
+| Portuguese (Português) | pt | ✅ | - | - |
+| Russian (Русский) | ru | ✅ | - | - |
+| Thai (ไทย) | th | ✅ | - | - |
+| Vietnamese (Tiếng Việt) | vi | ✅ | - | - |
+| Simplified Chinese (简体中文) | zh-Hans | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
+| Traditional Chinese (繁體中文) | zh-Hant | ✅ | ✅ | [borcolasky](https://crowdin.com/profile/borcolasky) |
