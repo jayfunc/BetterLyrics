@@ -736,7 +736,7 @@
     <value>閉じる</value>
   </data>
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
-    <value>ドロップダウンを折りたたむ</value>
+    <value>リストを折りたたむ</value>
   </data>
   <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
     <value>コンパクト</value>
@@ -751,7 +751,7 @@
     <value>再生ソースの構成</value>
   </data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
-    <value>複製</value>
+    <value>コピー</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>テンプレートから作成</value>
@@ -790,7 +790,7 @@
     <value>ドッキングモード</value>
   </data>
   <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
-    <value>ターゲットディスプレイ</value>
+    <value>対象ディスプレイ</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
     <value>ワークスペースの位置</value>
@@ -811,37 +811,37 @@
     <value>イージング関数の種類</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
-    <value>Back Ease In-Out</value>
+    <value>バックイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
-    <value>Bounce Ease In-Out</value>
+    <value>バウンスイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
-    <value>Circular Ease In-Out</value>
+    <value>サーキュラーイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
-    <value>Cubic Ease In-Out</value>
+    <value>キュービックイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
-    <value>Elastic Ease In-Out</value>
+    <value>エラスティックイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
-    <value>Exponential Ease In-Out</value>
+    <value>エキスポネンシャルイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
-    <value>Quadratic Ease In-Out</value>
+    <value>クアドラティックイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
-    <value>Quartic Ease In-Out</value>
+    <value>クオートイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
-    <value>Quintic Ease In-Out</value>
+    <value>クイントイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
-    <value>Sine Ease In-Out</value>
+    <value>サインイーズ イン アウト</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
-    <value>リニア (Linear)</value>
+    <value>リニア</value>
   </data>
   <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
     <value>スムーズステップ</value>
@@ -850,7 +850,7 @@
     <value>行頭から現在の文字まで</value>
   </data>
   <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
-    <value>長時間音節</value>
+    <value>ロングトーン</value>
   </data>
   <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>環境色サンプリングモード</value>
@@ -886,7 +886,7 @@
     <value>よくある質問 (FAQ)</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
-    <value>固定タイムステップレンダリング</value>
+    <value>固定タイムステップ描画</value>
   </data>
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>流体レイヤー</value>
@@ -1009,7 +1009,7 @@
     <value>リンクされたローカルファイル</value>
   </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
-    <value>新しい再生セッションをリッスンする</value>
+    <value>新しい再生ソースの監視を有効にする</value>
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>ローカルフォルダー</value>
@@ -1018,7 +1018,7 @@
     <value>ログ記録</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
-    <value>長音節のしきい値</value>
+    <value>ロングトーンのしきい値</value>
   </data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX Music サーバー</value>
@@ -1039,13 +1039,13 @@
     <value>極太</value>
   </data>
   <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
-    <value>非アクティブ行のぼかしを有効にする</value>
+    <value>現在の行以外の行のぼかしを有効化</value>
   </data>
   <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
     <value>ぼかし効果</value>
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
-    <value>ボールド</value>
+    <value>太字</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>現在の行の位置</value>
@@ -1063,7 +1063,7 @@
     <value>超細</value>
   </data>
   <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
-    <value>非アクティブ行のフェードアウト効果を有効にする</value>
+    <value>現在の行以外の行のフェードアウト効果を有効にする</value>
   </data>
   <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
     <value>フェードアウト効果</value>
@@ -1099,7 +1099,7 @@
     <value>フォントサイズ</value>
   </data>
   <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
-    <value>歌詞の縁取り幅</value>
+    <value>歌詞縁取りの太さ</value>
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>フォントの太さ</value>
@@ -1120,7 +1120,7 @@
     <value>ライト</value>
   </data>
   <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
-    <value>再生エリア端のフェード</value>
+    <value>再生エリアのエッジのフェード</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>行間隔</value>
@@ -1138,10 +1138,10 @@
     <value>フォントの不透明度</value>
   </data>
   <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
-    <value>非アクティブ行を徐々に視界の外へ移動させる</value>
+    <value>非目前行を徐々に視界の外へ移動させる</value>
   </data>
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
-    <value>視界の外へ (Out of Sight)</value>
+    <value>視界から外す</value>
   </data>
   <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>長い音節のスケーリングを有効にする</value>
@@ -1240,19 +1240,19 @@
     <value>ミュージックギャラリー埋め込み歌詞ウィンドウ</value>
   </data>
   <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>ミュージックギャラリーのウィンドウが開いています。他の再生ソースの監視を無視しています</value>
+    <value>ミュージック ギャラリーが開いているため、他の再生ソースを無視します</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
-    <value>音楽または歌詞を含むフォルダーを追加します</value>
+    <value>音楽または歌詞が含まれるフォルダを追加</value>
   </data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>ローカルメディアライブラリ</value>
   </data>
   <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
-    <value>リアルタイムファイル監視</value>
+    <value>リアルタイムのファイル監視</value>
   </data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
-    <value>ナローモード</value>
+    <value>狭い表示モード</value>
   </data>
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>次のトラックのショートカットキー</value>
@@ -1297,7 +1297,7 @@
     <value>歌詞のルビ</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>発音</value>
+    <value>ルビのサイズ</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>タスクバーにピン留め</value>
@@ -1342,7 +1342,7 @@
     <value>記録されたウィンドウの状態</value>
   </data>
   <data name="SettingsPageReference.Header" xml:space="preserve">
-    <value>リファレンス</value>
+    <value>参考リンク</value>
   </data>
   <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
     <value>ドロップダウンを更新</value>
@@ -1357,7 +1357,7 @@
     <value>アプリから削除</value>
   </data>
   <data name="SettingsPageRestart.Content" xml:space="preserve">
-    <value>アプリを再起動して変更を適用</value>
+    <value>変更を適用するにはアプリを再起動してください</value>
   </data>
   <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>右揃え</value>
@@ -1465,10 +1465,10 @@
     <value>スペクトラムスタイル</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
-    <value>下</value>
+    <value>下へ</value>
   </data>
   <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
-    <value>上</value>
+    <value>上へ</value>
   </data>
   <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
     <value>バー</value>
@@ -1486,7 +1486,7 @@
     <value>スタートアップ</value>
   </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
-    <value>音楽ギャラリーウィンドウを閉じたときに再生を停止</value>
+    <value>ミュージックギャラリーウィンドウを閉じたときに再生を停止する</value>
   </data>
   <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>ストローク色</value>
@@ -1495,7 +1495,7 @@
     <value>デフォルト</value>
   </data>
   <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
-    <value>ターゲット言語</value>
+    <value>翻訳先言語</value>
   </data>
   <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>タスクバーモード</value>
@@ -1507,7 +1507,7 @@
     <value>BetterLyrics をご購入いただきありがとうございます</value>
   </data>
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
-    <value>クレジット</value>
+    <value>謝辞</value>
   </data>
   <data name="SettingsPageTheme.Header" xml:space="preserve">
     <value>歌詞背景のテーマ</value>
