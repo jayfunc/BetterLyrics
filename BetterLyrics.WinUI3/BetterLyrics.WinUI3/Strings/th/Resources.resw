@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -129,20 +129,11 @@
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>เครื่องเล่นเพลง</value>
   </data>
-  <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
-    <value>โหมดภาพซ้อนภาพ (PiP)</value>
-  </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>หน้าต่าง</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>เมื่อป้อนศิลปินหลายคน โปรดใช้ตัวคั่นต่อไปนี้เพื่อแยก (ห้ามใช้ปนกัน)</value>
-  </data>
-  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>ไม่ต้องแสดงข้อความนี้อีก</value>
-  </data>
-  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>โหมดภาพซ้อนภาพ (PiP)</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>ยกเลิก</value>
@@ -177,15 +168,6 @@
   <data name="FullscreenMode" xml:space="preserve">
     <value>โหมดเต็มหน้าจอ</value>
   </data>
-  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
-    <value>ล็อก</value>
-  </data>
-  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
-    <value>ล็อก</value>
-  </data>
-  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>ล็อก</value>
-  </data>
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>คลังเพลง</value>
   </data>
@@ -203,9 +185,6 @@
   </data>
   <data name="Jyutping" xml:space="preserve">
     <value>ยุทพิง (กวางตุ้ง)</value>
-  </data>
-  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
-    <value>โปรดตรวจสอบให้แน่ใจว่ามีสถานะอย่างน้อยหนึ่งรายการถูกตั้งเป็นค่าเริ่มต้น</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>การอนุญาตล้มเหลว โปรดลองอีกครั้ง</value>
@@ -270,17 +249,11 @@
   <data name="LyricsPageSettings.Text" xml:space="preserve">
     <value>การตั้งค่า</value>
   </data>
-  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>การชดเชยเวลาเนื้อเพลง</value>
-  </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>จะให้ความสำคัญกับการอ่านคำแปลในเนื้อเพลงก่อน หากไม่พบจะขอคำแปลจากเครื่องผ่านเซิร์ฟเวอร์ LibreTranslate</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
     <value>เปิดใช้งานการแปล</value>
-  </data>
-  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
-    <value>แสดงเฉพาะคำแปล</value>
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>ผู้ให้บริการคำแปล</value>
@@ -351,9 +324,6 @@
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>ไฟล์ .TTML ในเครื่อง</value>
   </data>
-  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
-    <value>โหมดดื่มด่ำ</value>
-  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>การกำหนดค่า</value>
   </data>
@@ -377,9 +347,6 @@
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>แสดงเฉพาะส่วนปกอัลบั้ม</value>
-  </data>
-  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
-    <value>วางเมาส์อีกครั้งเพื่อแสดงปุ่มสลับ</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>แสดงเฉพาะเนื้อเพลง</value>
@@ -420,9 +387,6 @@
   <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
     <value>ศิลปิน</value>
   </data>
-  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
-    <value>ข้อมูลไฟล์</value>
-  </data>
   <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
     <value>ความลึกของบิต</value>
   </data>
@@ -462,9 +426,6 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>สร้างเพลย์ลิสต์</value>
   </data>
-  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
-    <value>เล่นทั้งหมด</value>
-  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>คิวการเล่น</value>
   </data>
@@ -489,9 +450,6 @@
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>เลื่อนไปยังรายการที่เล่นอยู่</value>
   </data>
-  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
-    <value>เลือกทั้งหมด</value>
-  </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>วนซ้ำเพลงเดียว</value>
   </data>
@@ -513,20 +471,11 @@
   <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
     <value>ประเภทการเรียงลำดับ</value>
   </data>
-  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
-    <value>เพลย์ลิสต์ที่ติดดาว</value>
-  </data>
   <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
     <value>หยุด</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>คลังเพลง - BetterLyrics</value>
-  </data>
-  <data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
-    <value>ยุบ</value>
-  </data>
-  <data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
-    <value>ขยาย</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>โหมดหน้าแคบ</value>
@@ -576,9 +525,6 @@
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>ข้อเสนอแนะ</value>
   </data>
-  <data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>คู่มือการใช้งาน</value>
-  </data>
   <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
     <value>ขอขอบคุณเป็นพิเศษ</value>
   </data>
@@ -606,9 +552,6 @@
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>เพิ่ม</value>
   </data>
-  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
-    <value>ตัวเลือกขั้นสูง</value>
-  </data>
   <data name="SettingsPageAlbum.Header" xml:space="preserve">
     <value>อัลบั้ม</value>
   </data>
@@ -624,14 +567,8 @@
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>กำหนดค่าแหล่งที่มาปกอัลบั้ม</value>
   </data>
-  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>ขนาดปกอัลบั้ม</value>
-  </data>
   <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
     <value>เอฟเฟกต์ปกอัลบั้ม</value>
-  </data>
-  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
-    <value>แหล่งที่มาปกอัลบั้ม</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>รัศมีมุมโค้ง</value>
@@ -663,12 +600,6 @@
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>รูปลักษณ์แอป</value>
   </data>
-  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>พฤติกรรมทั่วไป</value>
-  </data>
-  <data name="SettingsPageApply.Content" xml:space="preserve">
-    <value>นำไปใช้</value>
-  </data>
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>ศิลปิน</value>
   </data>
@@ -687,20 +618,11 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>เริ่มทำงานอัตโนมัติ</value>
   </data>
-  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
-    <value>เมื่อเริ่มแอปพลิเคชัน</value>
-  </data>
-  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>วัสดุพื้นหลังเนื้อเพลง</value>
-  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>พื้นหลังเนื้อเพลง</value>
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>ปริมาณความเบลอ</value>
-  </data>
-  <data name="SettingsPageBorderless.Header" xml:space="preserve">
-    <value>หน้าต่างไร้ขอบ</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>รวมไฟล์บันทึก, แคชเนื้อเพลงจากเครือข่าย</value>
@@ -738,9 +660,6 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>ยุบเมนูแบบเลื่อนลง</value>
   </data>
-  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
-    <value>กะทัดรัด</value>
-  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>การตั้งชื่อสถานะหน้าต่างที่บันทึกไว้จะช่วยให้คุณแยกแยะได้ดีขึ้น</value>
   </data>
@@ -759,17 +678,11 @@
   <data name="SettingsPageCrossfade.Content" xml:space="preserve">
     <value>ครอสเฟด (Crossfade)</value>
   </data>
-  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
-    <value>สถานะหน้าต่างเนื้อเพลงปัจจุบัน</value>
-  </data>
   <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
     <value>บริการคำอ่าน cutlet-docker</value>
   </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>มืด</value>
-  </data>
-  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
-    <value>แสดงโอเวอร์เลย์ดีบัก</value>
   </data>
   <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>ลบ</value>
@@ -801,14 +714,8 @@
   <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
     <value>ด้านบน</value>
   </data>
-  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
-    <value>ความสูงหน้าต่าง</value>
-  </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>พื้นที่ลาก</value>
-  </data>
-  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
-    <value>ประเภทแอนิเมชัน Easing</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
     <value>EaseInOutBack</value>
@@ -876,14 +783,8 @@
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>ส่งออกการตั้งค่า</value>
   </data>
-  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
-    <value>ขยาย</value>
-  </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>เนื้อเพลงแบบพัด</value>
-  </data>
-  <data name="SettingsPageFAQ.Content" xml:space="preserve">
-    <value>คำถามที่พบบ่อย</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
     <value>เรนเดอร์ด้วย Time Step คงที่</value>
@@ -921,9 +822,6 @@
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>ความสูง</value>
   </data>
-  <data name="SettingsPageHello.Text" xml:space="preserve">
-    <value>สวัสดี</value>
-  </data>
   <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>ช่วยเราแปลแอปพลิเคชันนี้</value>
   </data>
@@ -953,9 +851,6 @@
   </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>คำอ่านภาษาญี่ปุ่น</value>
-  </data>
-  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
-    <value>เข้าร่วมเลย</value>
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>ยุทพิง (กวางตุ้ง)</value>
@@ -1005,17 +900,11 @@
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>สว่าง</value>
   </data>
-  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
-    <value>ไฟล์ในเครื่องที่เชื่อมโยง</value>
-  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>เปิดใช้งานการฟังแหล่งเล่นเพลงใหม่</value>
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>โฟลเดอร์ในเครื่อง</value>
-  </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>การบันทึก (Log)</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>เกณฑ์พยางค์ยาว</value>
@@ -1071,15 +960,6 @@
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>บรรทัดปัจจุบัน</value>
   </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>ปรับตามพื้นหลังเนื้อเพลง (สี)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>ปรับตามพื้นหลังเนื้อเพลง (เทา)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
-    <value>กำหนดเอง</value>
-  </data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>แอนิเมชันลอยตัว</value>
   </data>
@@ -1107,26 +987,11 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>เอฟเฟกต์เรืองแสง</value>
   </data>
-  <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>ไฮไลท์</value>
-  </data>
-  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>ขอบเขตการไฮไลท์ข้อความต้นฉบับ</value>
-  </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>ซ้าย</value>
-  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>บาง</value>
   </data>
-  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
-    <value>การไล่ระดับขอบพื้นที่เล่น</value>
-  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>ระยะห่างบรรทัด</value>
-  </data>
-  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
-    <value> เท่าของความสูงบรรทัด</value>
   </data>
   <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
     <value>ปานกลาง</value>
@@ -1170,9 +1035,6 @@
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
     <value>กึ่งบาง</value>
   </data>
-  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
-    <value>เงา</value>
-  </data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>สไตล์เนื้อเพลง</value>
   </data>
@@ -1188,20 +1050,8 @@
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>เกณฑ์การซิงค์เวลาเนื้อเพลง</value>
   </data>
-  <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
-    <value>ไฮไลท์คำแปล</value>
-  </data>
-  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
-    <value>ตัวคั่นต้นฉบับและคำแปล</value>
-  </data>
-  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>ความทึบขอบแนวตั้ง</value>
-  </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>หน้าต่างเนื้อเพลง</value>
-  </data>
-  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
-    <value>ตัวจัดการหน้าต่างเนื้อเพลง</value>
   </data>
   <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
     <value>ตัวจัดการหน้าต่างเนื้อเพลง</value>
@@ -1257,9 +1107,6 @@
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>ทางลัดเพลงถัดไป</value>
   </data>
-  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
-    <value>ไม่มี</value>
-  </data>
   <data name="SettingsPageOctTree.Content" xml:space="preserve">
     <value>เชิงรุก (Aggressive)</value>
   </data>
@@ -1286,9 +1133,6 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>โฟลเดอร์นี้มีโฟลเดอร์ที่เพิ่มไปแล้ว โปรดลบโฟลเดอร์เหล่านั้นออกเพื่อเพิ่มโฟลเดอร์นี้</value>
-  </data>
-  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
-    <value>ไม่พบเส้นทางในคอมพิวเตอร์ของคุณ</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
     <value>ผู้สนับสนุน</value>
@@ -1335,14 +1179,8 @@
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>สถานะเรียลไทม์</value>
   </data>
-  <data name="SettingsPageRecord.Content" xml:space="preserve">
-    <value>บันทึก</value>
-  </data>
   <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
     <value>สถานะหน้าต่างที่บันทึกไว้</value>
-  </data>
-  <data name="SettingsPageReference.Header" xml:space="preserve">
-    <value>ลิงก์อ้างอิง</value>
   </data>
   <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
     <value>รีเฟรชเมนู</value>
@@ -1361,9 +1199,6 @@
   </data>
   <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>ขวา</value>
-  </data>
-  <data name="SettingsPageRomaji.Header" xml:space="preserve">
-    <value>คำอ่านภาษาญี่ปุ่น</value>
   </data>
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>ขอบเขต</value>
@@ -1431,17 +1266,11 @@
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>แสดงในสภาพแวดล้อมระบบ</value>
   </data>
-  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
-    <value>แสดงตัวแบ่งเค้าโครง</value>
-  </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>แสดงชื่อเพลง</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>เลื่อน (Slide)</value>
-  </data>
-  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>ค่าปัจจุบัน: </value>
   </data>
   <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
     <value>เลเยอร์เกล็ดหิมะ</value>
@@ -1524,12 +1353,6 @@
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>ทั้งหน้าต่าง</value>
   </data>
-  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
-    <value>ขนาดแถบชื่อเรื่อง</value>
-  </data>
-  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
-    <value>ทางลัดเข้าและออก (Cut-in/out)</value>
-  </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>คำแปล</value>
   </data>
@@ -1538,9 +1361,6 @@
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>บริการแปลภาษา LibreTranslate</value>
-  </data>
-  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
-    <value>ไปที่ https://github.com/LibreTranslate/LibreTranslate สำหรับบทช่วยสอนการติดตั้งและข้อมูลเพิ่มเติม (ซอฟต์แวร์นี้ไม่มีความเกี่ยวข้องกับบริการแปลดังกล่าว)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>และผู้ใช้ที่ซื้อและสนับสนุน BetterLyrics</value>
@@ -1553,9 +1373,6 @@
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>ความกว้าง</value>
-  </data>
-  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
-    <value>ขอบเขตหน้าต่าง</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>เป็นพื้นที่ทำงานแยกต่างหาก ยึดติดกับขอบบน/ล่างของหน้าจอ</value>

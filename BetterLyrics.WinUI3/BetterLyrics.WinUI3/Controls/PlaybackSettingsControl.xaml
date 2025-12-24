@@ -328,10 +328,7 @@
                                 <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Title, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow
-                                    x:Uid="LyricsSearchControlDurauion"
-                                    Unit="s"
-                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DurationMs, TargetNullValue=N/A, Converter={StaticResource MillisecondsToSecondsConverter}, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DurationMs, TargetNullValue=N/A, Converter={StaticResource MillisecondsToFormattedTimeConverter}, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 
@@ -344,10 +341,7 @@
                                 <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Title, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow
-                                    x:Uid="LyricsSearchControlDurauion"
-                                    Unit="s"
-                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Duration, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LanguageCode, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
                                 <local:PropertyRow
                                     x:Uid="LyricsPageLyricsProviderPrefix"
