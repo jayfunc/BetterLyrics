@@ -183,10 +183,7 @@
                                         <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                        <local:PropertyRow
-                                            x:Uid="LyricsSearchControlDurauion"
-                                            Unit="s"
-                                            Value="{x:Bind Duration, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow
                                             x:Uid="LyricsPageMatchPercentage"
                                             Unit="%"
@@ -346,8 +343,8 @@
         </Grid>
         <Grid Grid.Row="1" ColumnSpacing="6">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>

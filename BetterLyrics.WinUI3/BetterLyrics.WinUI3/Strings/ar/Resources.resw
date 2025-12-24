@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -129,20 +129,11 @@
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>مشغل الموسيقى</value>
   </data>
-  <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
-    <value>وضع صورة داخل صورة (PiP)</value>
-  </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>النافذة</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>عند إدخال فنانين متعددين، يرجى استخدام أحد الفواصل التالية للفصل بينهم (لا تخلط بينها)</value>
-  </data>
-  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>لا تظهر هذه الرسالة مرة أخرى</value>
-  </data>
-  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>وضع صورة داخل صورة (PiP)</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>إلغاء</value>
@@ -177,15 +168,6 @@
   <data name="FullscreenMode" xml:space="preserve">
     <value>وضع ملء الشاشة</value>
   </data>
-  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
-    <value>قفل</value>
-  </data>
-  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
-    <value>قفل</value>
-  </data>
-  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>قفل</value>
-  </data>
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>مكتبة الموسيقى</value>
   </data>
@@ -203,9 +185,6 @@
   </data>
   <data name="Jyutping" xml:space="preserve">
     <value>جيتبنغ (كانتونية)</value>
-  </data>
-  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
-    <value>يرجى التأكد من تعيين حالة واحدة على الأقل كافتراضية</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>فشل التفويض، يرجى المحاولة مرة أخرى</value>
@@ -270,17 +249,11 @@
   <data name="LyricsPageSettings.Text" xml:space="preserve">
     <value>الإعدادات</value>
   </data>
-  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>إزاحة الجدول الزمني للكلمات</value>
-  </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>ستُعطى الأولوية لقراءة الترجمة داخل ملف الكلمات، وإذا لم يوجد تطابق، سيتم طلب ترجمة آلية من خادم LibreTranslate</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
     <value>تفعيل الترجمة</value>
-  </data>
-  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
-    <value>عرض الترجمة فقط</value>
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>مُزود الترجمة</value>
@@ -351,9 +324,6 @@
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>ملف TTML محلي</value>
   </data>
-  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
-    <value>الوضع الغامر</value>
-  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>التكوين</value>
   </data>
@@ -377,9 +347,6 @@
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>إظهار منطقة غلاف الألبوم فقط</value>
-  </data>
-  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
-    <value>حرك المؤشر مرة أخرى لإظهار زر التبديل</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>إظهار الكلمات فقط</value>
@@ -420,9 +387,6 @@
   <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
     <value>الفنان</value>
   </data>
-  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
-    <value>معلومات الملف</value>
-  </data>
   <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
     <value>عمق البت (Bit Depth)</value>
   </data>
@@ -462,9 +426,6 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>إنشاء قائمة تشغيل</value>
   </data>
-  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
-    <value>تشغيل الكل</value>
-  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>قائمة الانتظار</value>
   </data>
@@ -489,9 +450,6 @@
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>التمرير إلى العنصر المشغل</value>
   </data>
-  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
-    <value>تحديد الكل</value>
-  </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>تكرار أغنية واحدة</value>
   </data>
@@ -513,20 +471,11 @@
   <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
     <value>نوع الفرز</value>
   </data>
-  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
-    <value>قوائم التشغيل المميزة بنجمة</value>
-  </data>
   <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
     <value>إيقاف</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>مكتبة الموسيقى - BetterLyrics</value>
-  </data>
-  <data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
-    <value>سحب</value>
-  </data>
-  <data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
-    <value>توسيع</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>وضع الشاشة الضيقة</value>
@@ -576,9 +525,6 @@
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>تعليقات</value>
   </data>
-  <data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>دليل التشغيل</value>
-  </data>
   <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
     <value>شكر خاص</value>
   </data>
@@ -606,9 +552,6 @@
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>إضافة</value>
   </data>
-  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
-    <value>خيارات متقدمة</value>
-  </data>
   <data name="SettingsPageAlbum.Header" xml:space="preserve">
     <value>الألبوم</value>
   </data>
@@ -624,14 +567,8 @@
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>تكوين مصادر غلاف الألبوم</value>
   </data>
-  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>حجم غلاف الألبوم</value>
-  </data>
   <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
     <value>تأثير غلاف الألبوم</value>
-  </data>
-  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
-    <value>مصدر غلاف الألبوم</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>نصف قطر الزاوية</value>
@@ -663,12 +600,6 @@
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>مظهر التطبيق</value>
   </data>
-  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>السلوك العام</value>
-  </data>
-  <data name="SettingsPageApply.Content" xml:space="preserve">
-    <value>تطبيق</value>
-  </data>
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>الفنان</value>
   </data>
@@ -687,20 +618,11 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>بدء التشغيل التلقائي</value>
   </data>
-  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
-    <value>عند بدء تشغيل التطبيق</value>
-  </data>
-  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>مادة خلفية الكلمات</value>
-  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>خلفية الكلمات</value>
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>كمية الضبابية (Blur)</value>
-  </data>
-  <data name="SettingsPageBorderless.Header" xml:space="preserve">
-    <value>نافذة بلا حدود</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>يشمل ملفات السجل وذاكرة التخزين المؤقت للكلمات عبر الشبكة</value>
@@ -738,9 +660,6 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>طي القائمة المنسدلة</value>
   </data>
-  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
-    <value>مدمج</value>
-  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>تسمية حالة النافذة المسجلة يمكن أن تساعدك على تمييزها بشكل أفضل</value>
   </data>
@@ -759,17 +678,11 @@
   <data name="SettingsPageCrossfade.Content" xml:space="preserve">
     <value>تلاشي متقاطع (Crossfade)</value>
   </data>
-  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
-    <value>حالة نافذة الكلمات الحالية</value>
-  </data>
   <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
     <value>خدمة النقل الصوتي cutlet-docker</value>
   </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>داكن</value>
-  </data>
-  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
-    <value>إظهار تراكب التصحيح (Debug)</value>
   </data>
   <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>حذف</value>
@@ -801,14 +714,8 @@
   <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
     <value>أعلى</value>
   </data>
-  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
-    <value>ارتفاع النافذة</value>
-  </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>منطقة قابلة للسحب</value>
-  </data>
-  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
-    <value>نوع حركة التسهيل (Easing)</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
     <value>EaseInOutBack</value>
@@ -876,14 +783,8 @@
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>تصدير الإعدادات</value>
   </data>
-  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
-    <value>موسع</value>
-  </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>كلمات مروحية الشكل</value>
-  </data>
-  <data name="SettingsPageFAQ.Content" xml:space="preserve">
-    <value>الأسئلة الشائعة</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
     <value>تصيير بخطوة زمنية ثابتة</value>
@@ -921,9 +822,6 @@
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>الارتفاع</value>
   </data>
-  <data name="SettingsPageHello.Text" xml:space="preserve">
-    <value>مرحباً</value>
-  </data>
   <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>ساعدنا في ترجمة هذا التطبيق</value>
   </data>
@@ -953,9 +851,6 @@
   </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>الصوتيات اليابانية</value>
-  </data>
-  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
-    <value>انضم الآن</value>
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>جيتبنغ (كانتونية)</value>
@@ -1005,17 +900,11 @@
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>فاتح</value>
   </data>
-  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
-    <value>الملفات المحلية المرتبطة</value>
-  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>تمكين الاستماع لمصادر التشغيل الجديدة</value>
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>مجلد محلي</value>
-  </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>التسجيل (Log)</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>عتبة المقطع الطويل</value>
@@ -1071,15 +960,6 @@
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>السطر الحالي</value>
   </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>التكيف مع خلفية الكلمات (ملون)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>التكيف مع خلفية الكلمات (رمادي)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
-    <value>مخصص</value>
-  </data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>الرسوم المتحركة العائمة</value>
   </data>
@@ -1107,26 +987,11 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>تأثير التوهج</value>
   </data>
-  <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>تمييز</value>
-  </data>
-  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>نطاق تمييز النص الأصلي</value>
-  </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>يسار</value>
-  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>خفيف</value>
   </data>
-  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
-    <value>تدرج حافة منطقة التشغيل</value>
-  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>تباعد الأسطر</value>
-  </data>
-  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
-    <value> مرات ارتفاع السطر</value>
   </data>
   <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
     <value>متوسط</value>
@@ -1170,9 +1035,6 @@
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
     <value>شبه خفيف</value>
   </data>
-  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
-    <value>الظل</value>
-  </data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>نمط الكلمات</value>
   </data>
@@ -1188,20 +1050,8 @@
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>عتبة مزامنة الجدول الزمني للكلمات</value>
   </data>
-  <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
-    <value>تمييز الترجمة</value>
-  </data>
-  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
-    <value>فاصل النص الأصلي والمترجم</value>
-  </data>
-  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>شفافية الحافة الرأسية</value>
-  </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>نافذة الكلمات</value>
-  </data>
-  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
-    <value>مدير نافذة الكلمات</value>
   </data>
   <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
     <value>مدير نافذة الكلمات</value>
@@ -1257,9 +1107,6 @@
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>اختصار الأغنية التالية</value>
   </data>
-  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
-    <value>لا شيء</value>
-  </data>
   <data name="SettingsPageOctTree.Content" xml:space="preserve">
     <value>عدواني</value>
   </data>
@@ -1286,9 +1133,6 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>يحتوي هذا المجلد على مجلدات مضافة مسبقاً، يرجى حذف تلك المجلدات لإضافة هذا المجلد</value>
-  </data>
-  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
-    <value>لا يمكن العثور على المسار في جهاز الكمبيوتر الخاص بك</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
     <value>الرعاة</value>
@@ -1335,14 +1179,8 @@
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>الحالة في الوقت الحقيقي</value>
   </data>
-  <data name="SettingsPageRecord.Content" xml:space="preserve">
-    <value>سجل</value>
-  </data>
   <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
     <value>حالة النافذة المسجلة</value>
-  </data>
-  <data name="SettingsPageReference.Header" xml:space="preserve">
-    <value>روابط مرجعية</value>
   </data>
   <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
     <value>تحديث القائمة المنسدلة</value>
@@ -1361,9 +1199,6 @@
   </data>
   <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>يمين</value>
-  </data>
-  <data name="SettingsPageRomaji.Header" xml:space="preserve">
-    <value>الصوتيات اليابانية</value>
   </data>
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>النطاق</value>
@@ -1431,17 +1266,11 @@
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>إظهار في بيئة النظام</value>
   </data>
-  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
-    <value>إظهار مقسم التخطيط</value>
-  </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>إظهار العنوان</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>انزلاق (Slide)</value>
-  </data>
-  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>القيمة الحالية: </value>
   </data>
   <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
     <value>طبقة الثلج</value>
@@ -1524,12 +1353,6 @@
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>كامل النافذة</value>
   </data>
-  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
-    <value>حجم شريط العنوان</value>
-  </data>
-  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
-    <value>اختصار التبديل للداخل والخارج</value>
-  </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>الترجمة</value>
   </data>
@@ -1538,9 +1361,6 @@
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>خدمة ترجمة LibreTranslate</value>
-  </data>
-  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
-    <value>قم بزيارة https://github.com/LibreTranslate/LibreTranslate للحصول على دروس التثبيت والمزيد من المعلومات (هذا البرنامج ليس له أي صلة بخدمة الترجمة هذه)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>والمستخدمين الذين اشتروا ودعموا BetterLyrics</value>
@@ -1553,9 +1373,6 @@
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>العرض</value>
-  </data>
-  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
-    <value>حدود النافذة</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>كمساحة عمل منفصلة، يتم تثبيتها في الحافة العلوية/السفلية للشاشة</value>
