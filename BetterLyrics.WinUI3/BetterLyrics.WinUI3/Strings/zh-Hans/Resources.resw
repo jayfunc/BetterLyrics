@@ -712,7 +712,7 @@
     <value>居中</value>
   </data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
-    <value>检查快捷方式</value>
+    <value>检查快捷键</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中文注音</value>
