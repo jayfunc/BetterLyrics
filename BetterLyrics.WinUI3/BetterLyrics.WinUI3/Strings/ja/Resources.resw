@@ -124,13 +124,13 @@
     <value>追加</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
-    <value>ローカル音楽ファイル</value>
+    <value>ローカルミュージックファイル</value>
   </data>
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
-    <value>音楽プレーヤー</value>
+    <value>ミュージックプレーヤー</value>
   </data>
   <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
-    <value>ピクチャー・イン・ピクチャーモード</value>
+    <value>ピクチャー イン ピクチャー モード</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>ウィンドウ</value>
@@ -142,7 +142,7 @@
     <value>今後このメッセージを表示しない</value>
   </data>
   <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>ピクチャー・イン・ピクチャーモード</value>
+    <value>ピクチャー イン ピクチャー モード</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>キャンセル</value>
@@ -151,10 +151,10 @@
     <value>コピー</value>
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
-    <value>プレイリストが正常に作成されました</value>
+    <value>プレイリストが作成されました</value>
   </data>
   <data name="CutletDockerFailed" xml:space="preserve">
-    <value>cutlet-docker への翻字リクエストに失敗しました。設定またはローカルの cutlet-docker 構成を確認してください</value>
+    <value>cutlet-docker からの音訳リクエストに失敗しました。ローカルの cutlet-docker 設定を確認してください</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>例: http://localhost:23333</value>
@@ -169,7 +169,7 @@
     <value>ドッキングモード</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
-    <value>エクスポート成功</value>
+    <value>エクスポートが成功しました</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>LX Music サーバーに接続できません。「設定」-「再生ソース」-「LX Music」-「LX Music サーバー」に移動し、リンクが正しく入力されているか確認してください</value>
@@ -187,7 +187,7 @@
     <value>ロック</value>
   </data>
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
-    <value>音楽ギャラリー</value>
+    <value>ミュージックギャラリー</value>
   </data>
   <data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
     <value>設定</value>
@@ -199,16 +199,16 @@
     <value>設定ファイルのインポートに失敗しました。アプリケーションの設定は変更されていません</value>
   </data>
   <data name="ImportSettingsSuccess" xml:space="preserve">
-    <value>インポート成功</value>
+    <value>インポートに成功しました</value>
   </data>
   <data name="Jyutping" xml:space="preserve">
-    <value>Jyutping (広東語)</value>
+    <value>粤拼 (広東語)</value>
   </data>
   <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
     <value>少なくとも1つの状態をデフォルトに設定してください</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
-    <value>認証に失敗しました。再試行してください</value>
+    <value>認証に失敗しました。もう一度お試しください</value>
   </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>認証を完了しました</value>
@@ -220,7 +220,7 @@
     <value>Last.fm アカウントへのアクセスを BetterLyrics に許可する</value>
   </data>
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
-    <value>認証を取り消しました</value>
+    <value>承認をキャンセルしました</value>
   </data>
   <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
     <value>ブラウザで取り消し操作を完了してください</value>
@@ -235,7 +235,7 @@
     <value>例: http://localhost:5000</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
-    <value>歌詞を読み込み中...</value>
+    <value>歌詞を読み込んでいます…</value>
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
     <value>歌詞が見つかりません</value>
@@ -250,31 +250,31 @@
     <value>歌詞の言語</value>
   </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
-    <value>歌詞プロバイダー</value>
+    <value>歌詞提供者</value>
   </data>
   <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
-    <value>手動歌詞検索</value>
+    <value>歌詞検索</value>
   </data>
   <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>歌詞ウィンドウ管理ショートカット設定</value>
+    <value>歌詞ウィンドウのショートカット</value>
   </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>一致率</value>
   </data>
   <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>再生ソースショートカット設定</value>
+    <value>再生ソースのショートカット設定</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
-    <value>曲切り替え時に 0 にリセット</value>
+    <value>曲の変更時に 0 へリセット</value>
   </data>
   <data name="LyricsPageSettings.Text" xml:space="preserve">
     <value>設定</value>
   </data>
   <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>歌詞タイムラインオフセット</value>
+    <value>歌詞タイムラインのオフセット</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
-    <value>歌詞内の翻訳を優先して読み込みます。一致するものがない場合は、LibreTranslate サーバーに機械翻訳をリクエストします</value>
+    <value>歌詞内の翻訳を優先して読み込みます。ない場合は、LibreTranslate サーバーに機械翻訳をリクエストします</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
     <value>翻訳を有効にする</value>
@@ -307,7 +307,7 @@
     <value>* 変更は保存後すぐに有効になり、その後の歌詞はマッピング情報とターゲット歌詞を使用して取得されます。インストゥルメンタルとしてマークすると、インストゥルメンタル用のプレースホルダー歌詞に直接戻ります。リセットすると、元のデータ取得に戻ります。</value>
   </data>
   <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
-    <value>検索時にキャッシュを無視</value>
+    <value>検索時にキャッシュを無視する</value>
   </data>
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>マッピング先</value>
@@ -346,7 +346,7 @@
     <value>ローカル .LRC ファイル</value>
   </data>
   <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
-    <value>ローカル音楽ファイル</value>
+    <value>ローカルミュージックファイル</value>
   </data>
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>ローカル .TTML ファイル</value>
@@ -361,7 +361,7 @@
     <value>歌詞ウィンドウモード</value>
   </data>
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
-    <value>デフォルトに設定</value>
+    <value>デフォルトとして設定</value>
   </data>
   <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
     <value>エクスポート</value>
