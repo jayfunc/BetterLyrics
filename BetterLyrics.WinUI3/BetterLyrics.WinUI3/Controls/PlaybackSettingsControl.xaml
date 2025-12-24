@@ -331,7 +331,7 @@
                                 <local:PropertyRow
                                     x:Uid="LyricsSearchControlDurauion"
                                     Unit="s"
-                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.Duration, TargetNullValue=N/A, Mode=OneWay}" />
+                                    Value="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DurationMs, TargetNullValue=N/A, Converter={StaticResource MillisecondsToSecondsConverter}, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 

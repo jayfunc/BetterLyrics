@@ -3,7 +3,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    public class MillisecondsToSecondsConverter : IValueConverter
+    public partial class MillisecondsToSecondsConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
