@@ -327,9 +327,6 @@
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Configuration</value>
   </data>
-  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
-    <value>Lyrics Window Mode</value>
-  </data>
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>Set as Default</value>
   </data>
@@ -1059,9 +1056,6 @@
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>Lyrics Window Status Switch Shortcut</value>
   </data>
-  <data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
-    <value>Lyrics Window</value>
-  </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>Adjusting this value will affect sequential search and best match search results, but will not affect search results in the manual lyrics search interface</value>
   </data>
@@ -1332,9 +1326,6 @@
   <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>Taskbar Pin Position</value>
   </data>
-  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
-    <value>Thanks for purchasing BetterLyrics</value>
-  </data>
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>Credits</value>
   </data>
@@ -1397,9 +1388,6 @@
   </data>
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>Open Music Gallery</value>
-  </data>
-  <data name="SystemTrayPageTitle" xml:space="preserve">
-    <value>System Tray - BetterLyrics</value>
   </data>
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>Reset Window Position</value>

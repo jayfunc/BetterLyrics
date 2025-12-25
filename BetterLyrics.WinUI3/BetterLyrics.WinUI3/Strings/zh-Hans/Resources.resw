@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -327,9 +327,6 @@
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>配置</value>
   </data>
-  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
-    <value>歌词窗口模式</value>
-  </data>
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>设置为默认</value>
   </data>
@@ -529,7 +526,7 @@
     <value>特别鸣谢</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
-    <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的生命并鼓励进一步的发展。</value>
+    <value>如果您喜欢这个项目，请考虑通过捐赠来支持它。您的支持将有助于保持项目的活力并鼓励进一步的发展。</value>
   </data>
   <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
     <value>UI/UX 设计参考</value>
@@ -586,7 +583,7 @@
     <value>总是隐藏解锁按钮</value>
   </data>
   <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
-    <value>根 URL</value>
+    <value>基本 URL</value>
   </data>
   <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>量</value>
@@ -1059,9 +1056,6 @@
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>歌词窗口状态切换快捷键</value>
   </data>
-  <data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
-    <value>歌词窗口</value>
-  </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>调整此值将影响顺序搜索和最佳匹配搜索结果，但不会影响手动歌词搜索界面中的搜索结果</value>
   </data>
@@ -1332,9 +1326,6 @@
   <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>任务栏固定位置</value>
   </data>
-  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
-    <value>感谢您购买 BetterLyrics</value>
-  </data>
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>致谢名单</value>
   </data>
@@ -1397,9 +1388,6 @@
   </data>
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>打开音乐库</value>
-  </data>
-  <data name="SystemTrayPageTitle" xml:space="preserve">
-    <value>系统托盘 - BetterLyrics</value>
   </data>
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>重置窗口位置</value>
