@@ -303,9 +303,6 @@
   <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
     <value>Mapeamento de Informações da Música</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>Fornecedor de Pesquisa de Letras Alvo</value>
-  </data>
   <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>Título</value>
   </data>
