@@ -303,9 +303,6 @@
   <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
     <value>การจับคู่ข้อมูลเพลง</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>ผู้ให้บริการค้นหาเนื้อเพลงเป้าหมาย</value>
-  </data>
   <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>ชื่อเพลง</value>
   </data>
