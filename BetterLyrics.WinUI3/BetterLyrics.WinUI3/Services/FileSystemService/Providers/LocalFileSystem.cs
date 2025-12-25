@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.FileSystemService;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Models.FileSystem
+namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 {
     public partial class LocalFileSystem : IUnifiedFileSystem
     {
@@ -38,8 +40,6 @@ namespace BetterLyrics.WinUI3.Models.FileSystem
                     Name = item.Name,
                     FullPath = item.FullName,
                     IsFolder = isDir,
-                    Size = isDir ? 0 : ((FileInfo)item).Length,
-                    LastModified = item.LastWriteTime
                 });
             }
             return result;

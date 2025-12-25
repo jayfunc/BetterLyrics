@@ -1,10 +1,12 @@
-﻿using FluentFTP;
+﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.FileSystemService;
+using FluentFTP;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Models.FileSystem
+namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 {
     public partial class FTPFileSystem : IUnifiedFileSystem
     {
@@ -37,8 +39,6 @@ namespace BetterLyrics.WinUI3.Models.FileSystem
                 Name = i.Name,
                 FullPath = i.FullName,
                 IsFolder = i.Type == FtpObjectType.Directory,
-                Size = i.Size,
-                LastModified = i.Modified
             }).ToList();
         }
 

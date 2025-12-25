@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Hooks;
+﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Views;

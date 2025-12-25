@@ -1,13 +1,11 @@
 ﻿using System;
 
-namespace BetterLyrics.WinUI3.Models.FileSystem
+namespace BetterLyrics.WinUI3.Models
 {
     public class UnifiedFileItem
     {
         public string Name { get; set; }
         public string FullPath { get; set; }
-        public long Size { get; set; }
         public bool IsFolder { get; set; }
-        public DateTime? LastModified { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -289,11 +290,18 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                             try
                             {
-                                using var fs = folder.CreateFileSystem();
+                                // 1. 创建底层的驱动 (FTP/SMB/Local)
+                                // 注意：这里我们使用 using 确保用完销毁连接
+                                using var rawFs = folder.CreateFileSystem();
+                                if (rawFs == null) continue;
 
-                                if (fs == null) continue;
+                                // 2. 【关键】将驱动包装进 Service
+                                // 这样你就拥有了：缓存能力 + 后台静默更新能力
+                                // 建议：如果 DatabaseManager 是单例，最好将其注入进去，这里直接 new 为了演示方便
+                                var fileService = new FileSystemService(rawFs);
 
-                                if (!await fs.ConnectAsync()) continue;
+                                // 初始化数据库连接 (如果没有在构造函数里做)
+                                await fileService.InitializeAsync();
 
                                 // 递归扫描队列
                                 var foldersToScan = new Queue<string>();
@@ -302,13 +310,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                                 while (foldersToScan.Count > 0)
                                 {
                                     var currentPath = foldersToScan.Dequeue();
-                                    var items = await fs.GetFilesAsync(currentPath);
+
+                                    // 3. 【提速】这里改用 Service 获取文件列表
+                                    // 第一次运行会走网络，第二次运行直接读本地 SQLite，毫秒级响应
+                                    var items = await fileService.GetFilesAsync(currentPath);
 
                                     foreach (var item in items)
                                     {
                                         if (item.IsFolder)
                                         {
-                                            foldersToScan.Enqueue(Path.Combine(currentPath, item.Name));
+                                            // 文件夹：加入队列继续递归
+                                            foldersToScan.Enqueue(item.FullPath);
                                             continue;
                                         }
 
@@ -317,16 +329,18 @@ namespace BetterLyrics.WinUI3.ViewModels
                                         {
                                             try
                                             {
-                                                using (var stream = await fs.OpenReadAsync(item.FullPath))
+                                                // 4. 读取文件流 (解析 ID3 信息)
+                                                // 注意：这里目前还是瓶颈，因为每次都要读文件头
+                                                // 优化方向：将 Title/Artist 也存入 SQLite，跳过这一步
+                                                using (var stream = await fileService.OpenFileAsync(item))
                                                 {
+                                                    // 这里的 item 是 UnifiedFileItem (Model)，正是 Service 返回的类型
                                                     ExtendedTrack track = new ExtendedTrack(item.FullPath, stream);
 
                                                     if (track.Duration > 0)
                                                     {
-                                                        // 读取专辑图写入内存
-                                                        // 因为此后该流将关闭无法再次访问
+                                                        // 读取专辑图到内存 (因为流马上要关闭)
                                                         _ = track.EmbeddedPictures;
-
                                                         _tracks.Add(track);
                                                     }
                                                 }

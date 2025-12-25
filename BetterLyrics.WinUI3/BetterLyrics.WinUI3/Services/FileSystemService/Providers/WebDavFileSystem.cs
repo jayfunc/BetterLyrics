@@ -1,11 +1,13 @@
-﻿using System;
+﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.FileSystemService;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebDav;
 
-namespace BetterLyrics.WinUI3.Models.FileSystem
+namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 {
     public partial class WebDavFileSystem : IUnifiedFileSystem
     {
@@ -63,8 +65,6 @@ namespace BetterLyrics.WinUI3.Models.FileSystem
                         Name = name,
                         FullPath = res.Uri.ToString(), // WebDAV 需要完整 URI 
                         IsFolder = res.IsCollection,
-                        Size = res.ContentLength ?? 0,
-                        LastModified = res.LastModifiedDate
                     });
                 }
             }

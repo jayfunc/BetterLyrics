@@ -187,29 +187,51 @@
 
                     <controls:Segmented
                         x:Name="ConfigSegmented"
+                        HorizontalAlignment="Stretch"
                         SelectionChanged="ConfigSegmented_SelectionChanged"
                         Style="{StaticResource PivotSegmentedStyle}">
 
                         <controls:SegmentedItem x:Name="WindowSegmentedItem" Tag="Window">
-                            <TextBlock x:Uid="AppSettingsControlGeneral" />
+                            <TextBlock
+                                x:Uid="AppSettingsControlGeneral"
+                                MaxWidth="120"
+                                TextWrapping="Wrap" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem x:Name="LayoutSegmentedItem" Tag="Layout">
-                            <TextBlock x:Uid="SettingsPageLayout" />
+                            <TextBlock
+                                x:Uid="SettingsPageLayout"
+                                MaxWidth="120"
+                                TextWrapping="Wrap" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem x:Name="AlbumArtStyleSegmentedItem" Tag="AlbumArtStyle">
-                            <TextBlock x:Uid="SettingsPageAlbumStyle" />
+                            <TextBlock
+                                x:Uid="SettingsPageAlbumStyle"
+                                MaxWidth="120"
+                                TextWrapping="Wrap" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="AlbumArtEffect">
-                            <TextBlock x:Uid="SettingsPageAlbumEffect" />
+                            <TextBlock
+                                x:Uid="SettingsPageAlbumEffect"
+                                MaxWidth="120"
+                                TextWrapping="Wrap" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="LyricsStyle">
-                            <TextBlock x:Uid="SettingsPageLyricsStyle" />
+                            <TextBlock
+                                x:Uid="SettingsPageLyricsStyle"
+                                MaxWidth="120"
+                                TextWrapping="Wrap" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="LyricsEffect">
-                            <TextBlock x:Uid="SettingsPageLyricsEffect" />
+                            <TextBlock
+                                x:Uid="SettingsPageLyricsEffect"
+                                MaxWidth="120"
+                                TextWrapping="Wrap" />
                         </controls:SegmentedItem>
                         <controls:SegmentedItem Tag="LyricsBackground">
-                            <TextBlock x:Uid="SettingsPageBackgroundOverlay" />
+                            <TextBlock
+                                x:Uid="SettingsPageBackgroundOverlay"
+                                MaxWidth="120"
+                                TextWrapping="Wrap" />
                         </controls:SegmentedItem>
 
                     </controls:Segmented>

@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <ScrollViewer>
+                <ScrollViewer Padding="8,0">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                         <TextBlock x:Uid="LyricsSearchControlSongInfoMapping" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
@@ -153,12 +153,11 @@
                             <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard x:Uid="LyricsSearchControlTargetSearchProvider">
-                            <Button
-                                x:Uid="LyricsSearchControlSearch"
-                                Command="{x:Bind ViewModel.SearchCommand}"
-                                Style="{StaticResource AccentButtonStyle}" />
-                        </dev:SettingsCard>
+                        <Button
+                            x:Uid="LyricsSearchControlSearch"
+                            HorizontalAlignment="Stretch"
+                            Command="{x:Bind ViewModel.SearchCommand}"
+                            Style="{StaticResource AccentButtonStyle}" />
 
                         <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />

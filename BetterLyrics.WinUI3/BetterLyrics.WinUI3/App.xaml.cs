@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
+using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
@@ -123,6 +124,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILastFMService, LastFMService>()
                     .AddSingleton<IDiscordService, DiscordService>()
                     .AddSingleton<ILocalizationService, LocalizationService>()
+                    .AddSingleton<IFileSystemService, FileSystemService>()
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()

@@ -548,6 +548,10 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     OnWorkAreaChanged();
                 }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.Name))
+                {
+                    this.Title = $"{LyricsWindowStatus.Name} - {Constants.App.AppName}";
+                }
             }
         }
 
