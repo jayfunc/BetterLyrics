@@ -303,9 +303,6 @@
   <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
     <value>곡 정보 매핑</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>대상 가사 검색 제공자</value>
-  </data>
   <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>제목</value>
   </data>
