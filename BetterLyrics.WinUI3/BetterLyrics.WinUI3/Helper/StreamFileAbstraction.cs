@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace BetterLyrics.WinUI3.Models.FileSystem
+namespace BetterLyrics.WinUI3.Helper
 {
     public class StreamFileAbstraction : TagLib.File.IFileAbstraction
     {

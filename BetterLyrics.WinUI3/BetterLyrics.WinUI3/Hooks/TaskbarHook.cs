@@ -7,6 +7,7 @@ using FlaUI.Core.EventHandlers;
 using FlaUI.UIA3;
 using Microsoft.UI.Dispatching;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 
@@ -186,7 +187,8 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 if (width < 20) return Rectangle.Empty;
 
-                return new Rectangle(finalLeft, taskbarRect.Top, width, taskbarRect.Height);
+                var finalRect = new Rectangle(finalLeft, taskbarRect.Top, width, taskbarRect.Height);
+                return finalRect;
             }
             catch (Exception ex)
             {

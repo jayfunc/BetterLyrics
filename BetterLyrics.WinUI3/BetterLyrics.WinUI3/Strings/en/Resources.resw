@@ -303,9 +303,6 @@
   <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
     <value>Song Info Mapping</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>Target Lyrics Search Provider</value>
-  </data>
   <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -652,7 +649,7 @@
     <value>Clear Cache Files</value>
   </data>
   <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
-    <value>Closed</value>
+    <value>Close</value>
   </data>
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>Collapse Dropdown</value>

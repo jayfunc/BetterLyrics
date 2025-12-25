@@ -1,0 +1,123 @@
+﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace BetterLyrics.WinUI3.Extensions
+{
+    public static class LyricsDataExtensions
+    {
+        extension(LyricsData lyricsData)
+        {
+            public static LyricsData GetLoadingPlaceholder()
+            {
+                return new LyricsData()
+                {
+                    LyricsLines = [
+                        new LyricsLine
+                        {
+                            StartMs = 0,
+                            EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
+                            OriginalText = "● ● ●",
+                        },
+                    ],
+                    LanguageCode = "N/A",
+                };
+            }
+
+            public void SetTranslatedText(LyricsData translationData, int toleranceMs = 50)
+            {
+                foreach (var line in lyricsData.LyricsLines)
+                {
+                    // 在翻译歌词中查找与当前行开始时间最接近且在容忍范围内的行
+                    var transLine = translationData.LyricsLines
+                        .FirstOrDefault(t => Math.Abs(t.StartMs - line.StartMs) <= toleranceMs);
+
+                    if (transLine != null)
+                    {
+                        // 此处 transLine.OriginalText 指翻译中的“原文”属性
+                        line.TranslatedText = transLine.OriginalText;
+                    }
+                    else
+                    {
+                        // 没有匹配的翻译
+                        line.TranslatedText = "";
+                    }
+                }
+            }
+
+            public void SetPhoneticText(LyricsData phoneticData, int toleranceMs = 50)
+            {
+                foreach (var line in lyricsData.LyricsLines)
+                {
+                    // 在音译歌词中查找与当前行开始时间最接近且在容忍范围内的行
+                    var transLine = phoneticData.LyricsLines
+                        .FirstOrDefault(t => Math.Abs(t.StartMs - line.StartMs) <= toleranceMs);
+
+                    if (transLine != null)
+                    {
+                        // 此处 transLine.OriginalText 指音译中的“原文”属性
+                        line.PhoneticText = transLine.OriginalText;
+                    }
+                    else
+                    {
+                        // 没有匹配的音译
+                        line.PhoneticText = "";
+                    }
+                }
+            }
+
+            public void SetTranslation(string translation)
+            {
+                List<string> translationArr = translation.Split(StringHelper.NewLine).ToList();
+                int i = 0;
+                foreach (var line in lyricsData.LyricsLines)
+                {
+                    if (i >= translationArr.Count)
+                    {
+                        line.TranslatedText = ""; // No translation available, keep empty
+                    }
+                    else
+                    {
+                        line.TranslatedText = translationArr[i];
+                    }
+                    i++;
+                }
+            }
+
+            public void SetTransliteration(string transliteration)
+            {
+                List<string> transliterationArr = transliteration.Split(StringHelper.NewLine).ToList();
+                int i = 0;
+                foreach (var line in lyricsData.LyricsLines)
+                {
+                    if (i >= transliterationArr.Count)
+                    {
+                        line.PhoneticText = ""; // No transliteration available, keep empty
+                    }
+                    else
+                    {
+                        line.PhoneticText = transliterationArr[i];
+                    }
+                    i++;
+                }
+            }
+
+            public LyricsLine? GetLyricsLine(double sec)
+            {
+                for (int i = 0; i < lyricsData.LyricsLines.Count; i++)
+                {
+                    var line = lyricsData.LyricsLines[i];
+                    if (line.StartMs > sec * 1000)
+                    {
+                        return lyricsData.LyricsLines.ElementAtOrDefault(i - 1);
+                    }
+                }
+                return null;
+            }
+
+        }
+    }
+}

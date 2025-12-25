@@ -2,7 +2,8 @@
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models.FileSystem;
+using BetterLyrics.WinUI3.Services.FileSystemService;
+using BetterLyrics.WinUI3.Services.FileSystemService.Providers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Text.Json.Serialization;
@@ -27,7 +28,7 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty] public partial string UserName { get; set; }
 
-        [ObservableProperty] public partial int Port { get; set; } = -1;
+        [ObservableProperty] public partial int Port { get; set; } = 80;
 
         [JsonIgnore] public string Password { get; set; }
 

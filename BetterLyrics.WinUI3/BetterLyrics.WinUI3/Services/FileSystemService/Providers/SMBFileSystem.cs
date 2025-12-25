@@ -1,4 +1,6 @@
-﻿using SMBLibrary;
+﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.FileSystemService;
+using SMBLibrary;
 using SMBLibrary.Client;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Models.FileSystem
+namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 {
     public partial class SMBFileSystem : IUnifiedFileSystem
     {
@@ -85,8 +87,6 @@ namespace BetterLyrics.WinUI3.Models.FileSystem
                         Name = item.FileName,
                         FullPath = Path.Combine(queryPath, item.FileName),
                         IsFolder = (item.FileAttributes & SMBLibrary.FileAttributes.Directory) == SMBLibrary.FileAttributes.Directory,
-                        Size = item.AllocationSize,
-                        LastModified = item.LastWriteTime
                     });
                 }
 

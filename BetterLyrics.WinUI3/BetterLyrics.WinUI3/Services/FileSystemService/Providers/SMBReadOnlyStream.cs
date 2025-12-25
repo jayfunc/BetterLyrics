@@ -3,7 +3,7 @@ using SMBLibrary.Client;
 using System;
 using System.IO;
 
-namespace BetterLyrics.WinUI3.Models.FileSystem
+namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 {
     public partial class SMBReadOnlyStream : Stream
     {
