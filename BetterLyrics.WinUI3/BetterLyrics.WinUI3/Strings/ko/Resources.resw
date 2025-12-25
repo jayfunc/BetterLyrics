@@ -129,20 +129,11 @@
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>음악 플레이어</value>
   </data>
-  <data name="AllLyricsSettingsControlPictureInPicture.Content" xml:space="preserve">
-    <value>PIP 모드 (화면 속 화면)</value>
-  </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>창</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>여러 아티스트를 입력할 때는 다음 구분 기호 중 하나를 사용하여 구분해 주세요 (혼용 금지)</value>
-  </data>
-  <data name="BaseWindowHostInfoBarCheckBox.Content" xml:space="preserve">
-    <value>이 메시지를 다시 표시하지 않음</value>
-  </data>
-  <data name="BaseWindowMiniFlyoutItem.Text" xml:space="preserve">
-    <value>PIP 모드</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>취소</value>
@@ -177,15 +168,6 @@
   <data name="FullscreenMode" xml:space="preserve">
     <value>전체 화면 모드</value>
   </data>
-  <data name="HostWindowClickThroughButton.Content" xml:space="preserve">
-    <value>잠금</value>
-  </data>
-  <data name="HostWindowClickThroughFlyoutItem.Text" xml:space="preserve">
-    <value>잠금</value>
-  </data>
-  <data name="HostWindowLockToolTip.Text" xml:space="preserve">
-    <value>잠금</value>
-  </data>
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>음악 갤러리</value>
   </data>
@@ -203,9 +185,6 @@
   </data>
   <data name="Jyutping" xml:space="preserve">
     <value>Jyutping (광동어)</value>
-  </data>
-  <data name="KeepAtLeastOneStatusDefault" xml:space="preserve">
-    <value>최소 하나의 상태를 기본값으로 설정해야 합니다</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>인증 실패, 다시 시도해 주세요</value>
@@ -270,17 +249,11 @@
   <data name="LyricsPageSettings.Text" xml:space="preserve">
     <value>설정</value>
   </data>
-  <data name="LyricsPageTimelineOffsetButtonToolTip.Content" xml:space="preserve">
-    <value>가사 타임라인 오프셋</value>
-  </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>가사 내 번역을 우선 읽고, 일치하는 것이 없으면 LibreTranslate 서버에 기계 번역을 요청합니다</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
     <value>번역 활성화</value>
-  </data>
-  <data name="LyricsPageTranslationOnly.Header" xml:space="preserve">
-    <value>번역만 표시</value>
   </data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>번역 제공자</value>
@@ -351,14 +324,8 @@
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>로컬 .TTML 파일</value>
   </data>
-  <data name="LyricsWindowImmersiveButtonToolTip.Content" xml:space="preserve">
-    <value>몰입 모드</value>
-  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>구성</value>
-  </data>
-  <data name="LyricsWindowSettingsControlLyricsWindowMode.Header" xml:space="preserve">
-    <value>가사 창 모드</value>
   </data>
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>기본값으로 설정</value>
@@ -377,9 +344,6 @@
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>앨범 아트 영역만 표시</value>
-  </data>
-  <data name="MainPageEnterImmersiveModeHint" xml:space="preserve">
-    <value>다시 호버하여 전환 버튼 표시</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>가사만 표시</value>
@@ -420,9 +384,6 @@
   <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
     <value>아티스트</value>
   </data>
-  <data name="MusicGalleryPageFileInfo.Text" xml:space="preserve">
-    <value>파일 정보</value>
-  </data>
   <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
     <value>비트 깊이</value>
   </data>
@@ -462,9 +423,6 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>재생 목록 생성</value>
   </data>
-  <data name="MusicGalleryPagePlayAll.Content" xml:space="preserve">
-    <value>모두 재생</value>
-  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>재생 대기열</value>
   </data>
@@ -489,9 +447,6 @@
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>재생 중인 항목으로 스크롤</value>
   </data>
-  <data name="MusicGalleryPageSelectAll.Content" xml:space="preserve">
-    <value>모두 선택</value>
-  </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>한 곡 반복</value>
   </data>
@@ -513,20 +468,11 @@
   <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
     <value>정렬 방식</value>
   </data>
-  <data name="MusicGalleryPageStarredPlaylist.Content" xml:space="preserve">
-    <value>즐겨찾는 재생 목록</value>
-  </data>
   <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
     <value>정지</value>
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>음악 갤러리 - BetterLyrics</value>
-  </data>
-  <data name="MusicGalleryWindowDownButtonToolTip.Content" xml:space="preserve">
-    <value>접기</value>
-  </data>
-  <data name="MusicGalleryWindowUpButtonToolTip.Content" xml:space="preserve">
-    <value>펼치기</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>좁은 화면 모드</value>
@@ -576,9 +522,6 @@
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>피드백</value>
   </data>
-  <data name="SetingsPageInstructions.Text" xml:space="preserve">
-    <value>사용 설명서</value>
-  </data>
   <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
     <value>특별히 감사드리는 분들</value>
   </data>
@@ -606,9 +549,6 @@
   <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>추가</value>
   </data>
-  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
-    <value>고급 옵션</value>
-  </data>
   <data name="SettingsPageAlbum.Header" xml:space="preserve">
     <value>앨범</value>
   </data>
@@ -624,14 +564,8 @@
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>앨범 아트 소스 구성</value>
   </data>
-  <data name="SettingsPageAlbumArtSize.Header" xml:space="preserve">
-    <value>앨범 아트 크기</value>
-  </data>
   <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
     <value>앨범 아트 효과</value>
-  </data>
-  <data name="SettingsPageAlbumLib.Content" xml:space="preserve">
-    <value>앨범 아트 소스</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>모서리 반경</value>
@@ -663,12 +597,6 @@
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>앱 모양</value>
   </data>
-  <data name="SettingsPageAppBehavior.Text" xml:space="preserve">
-    <value>일반 동작</value>
-  </data>
-  <data name="SettingsPageApply.Content" xml:space="preserve">
-    <value>적용</value>
-  </data>
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>아티스트</value>
   </data>
@@ -687,20 +615,11 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>자동 시작</value>
   </data>
-  <data name="SettingsPageAutoStartWindow.Header" xml:space="preserve">
-    <value>애플리케이션 시작 시</value>
-  </data>
-  <data name="SettingsPageBackdrop.Header" xml:space="preserve">
-    <value>가사 배경 재질</value>
-  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>가사 배경</value>
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>흐림 효과 강도</value>
-  </data>
-  <data name="SettingsPageBorderless.Header" xml:space="preserve">
-    <value>테두리 없는 창</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>로그 파일, 온라인 가사 캐시 포함</value>
@@ -738,9 +657,6 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>드롭다운 접기</value>
   </data>
-  <data name="SettingsPageCompactTitleBar.Content" xml:space="preserve">
-    <value>콤팩트</value>
-  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>기록된 창 상태에 이름을 지정하면 더 잘 구별할 수 있습니다</value>
   </data>
@@ -759,17 +675,11 @@
   <data name="SettingsPageCrossfade.Content" xml:space="preserve">
     <value>크로스페이드</value>
   </data>
-  <data name="SettingsPageCurrentLyricsWindowStatus.Text" xml:space="preserve">
-    <value>현재 가사 창 상태</value>
-  </data>
   <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
     <value>cutlet-docker 음역 서비스</value>
   </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>다크</value>
-  </data>
-  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
-    <value>디버그 오버레이 표시</value>
   </data>
   <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>삭제</value>
@@ -801,14 +711,8 @@
   <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
     <value>상단</value>
   </data>
-  <data name="SettingsPageDockWindowHeight.Header" xml:space="preserve">
-    <value>창 높이</value>
-  </data>
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>드래그 가능 영역</value>
-  </data>
-  <data name="SettingsPageEasingFuncType.Header" xml:space="preserve">
-    <value>이징 함수 유형</value>
   </data>
   <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
     <value>Back Ease In-Out</value>
@@ -876,14 +780,8 @@
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>설정 내보내기</value>
   </data>
-  <data name="SettingsPageExtendedTitleBar.Content" xml:space="preserve">
-    <value>확장</value>
-  </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>부채꼴 가사</value>
-  </data>
-  <data name="SettingsPageFAQ.Content" xml:space="preserve">
-    <value>자주 묻는 질문 (FAQ)</value>
   </data>
   <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
     <value>고정 타임스텝 렌더링</value>
@@ -921,9 +819,6 @@
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>높이</value>
   </data>
-  <data name="SettingsPageHello.Text" xml:space="preserve">
-    <value>안녕하세요</value>
-  </data>
   <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>이 애플리케이션 번역 돕기</value>
   </data>
@@ -953,9 +848,6 @@
   </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>일본어 발음 표기</value>
-  </data>
-  <data name="SettingsPageJoinNowButton.Content" xml:space="preserve">
-    <value>지금 가입하기</value>
   </data>
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>Jyutping (광동어)</value>
@@ -1005,17 +897,11 @@
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>라이트</value>
   </data>
-  <data name="SettingsPageLinkedFile.Text" xml:space="preserve">
-    <value>연결된 로컬 파일</value>
-  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>새 재생 소스 감지 활성화</value>
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>로컬 폴더</value>
-  </data>
-  <data name="SettingsPageLog.Header" xml:space="preserve">
-    <value>로그 기록</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>장음절 임계값</value>
@@ -1071,15 +957,6 @@
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>현재 행</value>
   </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>가사 배경에 적응 (컬러)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorAdaptiveGrayed.Content" xml:space="preserve">
-    <value>가사 배경에 적응 (회색조)</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColorCustom.Content" xml:space="preserve">
-    <value>사용자 지정</value>
-  </data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>플로팅 애니메이션</value>
   </data>
@@ -1107,26 +984,11 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>발광 효과</value>
   </data>
-  <data name="SettingsPageLyricsHighlight.Header" xml:space="preserve">
-    <value>하이라이트</value>
-  </data>
-  <data name="SettingsPageLyricsHighlightScope.Header" xml:space="preserve">
-    <value>원문 하이라이트 범위</value>
-  </data>
-  <data name="SettingsPageLyricsLeft.Content" xml:space="preserve">
-    <value>왼쪽</value>
-  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>라이트</value>
   </data>
-  <data name="SettingsPageLyricsLineFade.Header" xml:space="preserve">
-    <value>재생 영역 가장자리 페이드</value>
-  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>줄 간격</value>
-  </data>
-  <data name="SettingsPageLyricsLineSpacingFactorUnit.Text" xml:space="preserve">
-    <value> 배 (줄 높이 기준)</value>
   </data>
   <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
     <value>미디엄</value>
@@ -1170,9 +1032,6 @@
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
     <value>세미 라이트</value>
   </data>
-  <data name="SettingsPageLyricsShadow.Header" xml:space="preserve">
-    <value>그림자</value>
-  </data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>가사 스타일</value>
   </data>
@@ -1188,29 +1047,14 @@
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>가사 타임라인 동기화 임계값</value>
   </data>
-  <data name="SettingsPageLyricsTranslationHighlight.Header" xml:space="preserve">
-    <value>번역 하이라이트</value>
-  </data>
-  <data name="SettingsPageLyricsTranslationSeparator.Header" xml:space="preserve">
-    <value>원문-번역 구분 기호</value>
-  </data>
-  <data name="SettingsPageLyricsVerticalEdgeOpacity.Header" xml:space="preserve">
-    <value>수직 가장자리 불투명도</value>
-  </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>가사 창</value>
-  </data>
-  <data name="SettingsPageLyricsWindowManager.Text" xml:space="preserve">
-    <value>가사 창 관리자</value>
   </data>
   <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
     <value>가사 창 관리자</value>
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>가사 창 상태 전환 단축키</value>
-  </data>
-  <data name="SettingsPageLyricsWindowToolTip.Content" xml:space="preserve">
-    <value>가사 창</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>이 값을 조정하면 순차 검색 및 최적 일치 검색 결과에 영향을 미치지만 수동 가사 검색 인터페이스의 검색 결과에는 영향을 미치지 않습니다</value>
@@ -1257,9 +1101,6 @@
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>다음 곡 단축키</value>
   </data>
-  <data name="SettingsPageNoBackdrop.Content" xml:space="preserve">
-    <value>없음</value>
-  </data>
   <data name="SettingsPageOctTree.Content" xml:space="preserve">
     <value>공격적</value>
   </data>
@@ -1286,9 +1127,6 @@
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>이 폴더에는 이미 추가된 폴더가 포함되어 있습니다. 이 폴더를 추가하려면 해당 폴더를 삭제하세요</value>
-  </data>
-  <data name="SettingsPagePathNotFound.Text" xml:space="preserve">
-    <value>컴퓨터에서 해당 경로를 찾을 수 없습니다</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
     <value>후원</value>
@@ -1335,14 +1173,8 @@
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>실시간 상태</value>
   </data>
-  <data name="SettingsPageRecord.Content" xml:space="preserve">
-    <value>기록</value>
-  </data>
   <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
     <value>기록된 창 상태</value>
-  </data>
-  <data name="SettingsPageReference.Header" xml:space="preserve">
-    <value>참조 링크</value>
   </data>
   <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
     <value>드롭다운 새로 고침</value>
@@ -1361,9 +1193,6 @@
   </data>
   <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>오른쪽</value>
-  </data>
-  <data name="SettingsPageRomaji.Header" xml:space="preserve">
-    <value>일본어 발음 표기</value>
   </data>
   <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>범위</value>
@@ -1431,17 +1260,11 @@
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>시스템 환경에 표시</value>
   </data>
-  <data name="SettingsPageShowLayoutDragger.Header" xml:space="preserve">
-    <value>레이아웃 분할기 표시</value>
-  </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>제목 표시</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>슬라이드</value>
-  </data>
-  <data name="SettingsPageSliderPrefix.Text" xml:space="preserve">
-    <value>현재 값: </value>
   </data>
   <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
     <value>눈송이 레이어</value>
@@ -1503,9 +1326,6 @@
   <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>작업 표시줄 고정 위치</value>
   </data>
-  <data name="SettingsPageThanksForPurchasing.Text" xml:space="preserve">
-    <value>BetterLyrics를 구매해 주셔서 감사합니다</value>
-  </data>
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>크레딧</value>
   </data>
@@ -1524,12 +1344,6 @@
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>전체 창</value>
   </data>
-  <data name="SettingsPageTitleBarType.Header" xml:space="preserve">
-    <value>제목 표시줄 크기</value>
-  </data>
-  <data name="SettingsPageToggleHotKey.Header" xml:space="preserve">
-    <value>활성화/비활성화 전환 단축키</value>
-  </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>번역문</value>
   </data>
@@ -1538,9 +1352,6 @@
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate 번역 서비스</value>
-  </data>
-  <data name="SettingsPageTranslationInfoLink.Text" xml:space="preserve">
-    <value>설치 튜토리얼 및 자세한 정보는 https://github.com/LibreTranslate/LibreTranslate를 방문하세요 (이 소프트웨어는 해당 번역 서비스와 관련이 없습니다)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>및 BetterLyrics를 구매해 주신 사용자 여러분</value>
@@ -1553,9 +1364,6 @@
   </data>
   <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>너비</value>
-  </data>
-  <data name="SettingsPageWindowBounds.Header" xml:space="preserve">
-    <value>창 경계</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>별도의 작업 영역으로 화면 상단/하단 가장자리에 도킹</value>
@@ -1580,9 +1388,6 @@
   </data>
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>음악 갤러리 열기</value>
-  </data>
-  <data name="SystemTrayPageTitle" xml:space="preserve">
-    <value>시스템 트레이 - BetterLyrics</value>
   </data>
   <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>창 위치 초기화</value>
