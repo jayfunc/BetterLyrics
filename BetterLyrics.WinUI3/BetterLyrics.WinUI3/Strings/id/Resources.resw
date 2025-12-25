@@ -303,9 +303,6 @@
   <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
     <value>Pemetaan Info Lagu</value>
   </data>
-  <data name="LyricsSearchControlTargetSearchProvider.Header" xml:space="preserve">
-    <value>Penyedia Pencarian Lirik Target</value>
-  </data>
   <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>Judul</value>
   </data>
