@@ -166,22 +166,25 @@
     <value>无法连接到 LX 音乐服务器，请转到设置 - 播放源 - LX Music - LX 音乐服务器以检查是否正确输入链接</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>清理缓存中...</value>
+    <value>正在清理缓存...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>连接失败</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>连接中...</value>
+    <value>正在连接...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>获取文件列表中...</value>
+    <value>正在获取文件列表...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>解析中...</value>
+    <value>正在解析...</value>
+  </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value>正在准备清理...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>等待扫描中...</value>
+    <value>正在准备扫描...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全屏模式</value>
