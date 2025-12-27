@@ -11,7 +11,6 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
-using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslationService;
@@ -27,6 +26,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
@@ -41,7 +41,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
     public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<ChineseRomanization>>
+        IRecipient<PropertyChangedMessage<ChineseRomanization>>,
+        IRecipient<PropertyChangedMessage<DateTime?>>
     {
         private EventSourceReader? _sse = null;
         private readonly MediaManager _mediaManager = new();
@@ -52,7 +53,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly ITranslationService _translationService;
         private readonly ITransliterationService _transliterationService;
         private readonly ISettingsService _settingsService;
-        private readonly ILibWatcherService _libWatcherService;
         private readonly IDiscordService _discordService;
         private readonly ILogger<MediaSessionsService> _logger;
 
@@ -71,7 +71,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             ISettingsService settingsService,
             IAlbumArtSearchService albumArtSearchService,
             ILyricsSearchService lyricsSearchService,
-            ILibWatcherService libWatcherService,
             IDiscordService discordService,
             ITranslationService libreTranslateService,
             ITransliterationService transliterationService,
@@ -80,7 +79,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _settingsService = settingsService;
             _albumArtSearchService = albumArtSearchService;
             _lyrcsSearchService = lyricsSearchService;
-            _libWatcherService = libWatcherService;
             _translationService = libreTranslateService;
             _transliterationService = transliterationService;
             _discordService = discordService;
@@ -91,12 +89,9 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
 
             _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
-            _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
 
             _settingsService.AppSettings.MappedSongSearchQueries.CollectionChanged += MappedSongSearchQueries_CollectionChanged;
             _settingsService.AppSettings.MappedSongSearchQueries.ItemPropertyChanged += MappedSongSearchQueries_ItemPropertyChanged;
-
-            _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
 
             InitMediaManager();
         }
@@ -108,12 +103,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         private void MappedSongSearchQueries_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            UpdateLyrics();
-        }
-
-        private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
-        {
-            UpdateAlbumArt();
             UpdateLyrics();
         }
 
@@ -142,12 +131,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 default:
                     break;
             }
-        }
-
-        private void LibWatcherService_MusicLibraryFilesChanged(object? sender, LibChangedEventArgs e)
-        {
-            UpdateAlbumArt();
-            UpdateLyrics();
         }
 
         private MediaSourceProviderInfo? GetCurrentMediaSourceProviderInfo()
@@ -693,6 +676,14 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     MediaManager_OnFocusedSessionChanged(null);
                 }
             }
+            else if (message.Sender is MediaFolder)
+            {
+                if (message.PropertyName == nameof(MediaFolder.IsEnabled))
+                {
+                    UpdateAlbumArt();
+                    UpdateLyrics();
+                }
+            }
         }
 
         public void Receive(PropertyChangedMessage<string> message)
@@ -726,5 +717,16 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             }
         }
 
+        public void Receive(PropertyChangedMessage<DateTime?> message)
+        {
+            if (message.Sender is MediaFolder)
+            {
+                if (message.PropertyName == nameof(MediaFolder.LastSyncTime))
+                {
+                    UpdateAlbumArt();
+                    UpdateLyrics();
+                }
+            }
+        }
     }
 }

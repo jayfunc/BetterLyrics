@@ -165,6 +165,24 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>Não foi possível ligar ao servidor LX Music. Aceda a Definições - Fonte de Reprodução - LX Music - Servidor LX Music para verificar se a ligação foi introduzida corretamente</value>
   </data>
+  <data name="FileSystemServiceCleaningCache" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceConnectFailed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceConnecting" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceParsing" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
+    <value />
+  </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Modo de Ecrã Inteiro</value>
   </data>
@@ -357,6 +375,12 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Vista Dividida</value>
   </data>
+  <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
+    <value />
+  </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Adicionar à lista de reprodução</value>
   </data>
@@ -470,6 +494,24 @@
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Galeria de Música - BetterLyrics</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
+    <value />
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Modo Estreito</value>
@@ -1088,9 +1130,6 @@
   </data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>Biblioteca Multimédia Local</value>
-  </data>
-  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
-    <value>Monitorização de Alterações de Ficheiros em Tempo Real</value>
   </data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
     <value>Modo Estreito</value>

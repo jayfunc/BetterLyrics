@@ -165,6 +165,24 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>Не удалось подключиться к серверу LX Music. Перейдите в Настройки - Источник воспроизведения - LX Music - Сервер LX Music, чтобы проверить правильность ссылки</value>
   </data>
+  <data name="FileSystemServiceCleaningCache" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceConnectFailed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceConnecting" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceParsing" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
+    <value />
+  </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Полноэкранный режим</value>
   </data>
@@ -357,6 +375,12 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Разделенный вид</value>
   </data>
+  <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
+    <value />
+  </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Добавить в плейлист</value>
   </data>
@@ -470,6 +494,24 @@
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Музыкальная галерея - BetterLyrics</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
+    <value />
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Узкий режим</value>
@@ -1088,9 +1130,6 @@
   </data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>Локальная медиатека</value>
-  </data>
-  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
-    <value>Следить за изменениями файлов в реальном времени</value>
   </data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
     <value>Узкий режим</value>

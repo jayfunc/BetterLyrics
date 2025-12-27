@@ -9,8 +9,18 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
     public interface IUnifiedFileSystem : IDisposable
     {
         Task<bool> ConnectAsync();
-        Task<List<UnifiedFileItem>> GetFilesAsync(string relativePath);
-        Task<Stream> OpenReadAsync(string fullPath);
+        /// <summary>
+        /// 从流拉取
+        /// </summary>
+        /// <param name="parentFolder"></param>
+        /// <returns></returns>
+        Task<List<FileCacheEntity>> GetFilesAsync(FileCacheEntity? parentFolder = null);
+        /// <summary>
+        /// 打开流
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        Task<Stream?> OpenReadAsync(FileCacheEntity file);
         Task DisconnectAsync();
     }
 }

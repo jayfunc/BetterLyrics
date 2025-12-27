@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,11 +23,13 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
         private readonly HttpClient _iTunesHttpClinet;
 
         private readonly ISettingsService _settingsService;
+        private readonly IFileSystemService _fileSystemService;
         private readonly ILogger _logger;
 
-        public AlbumArtSearchService(ISettingsService settingsService, ILogger<AlbumArtSearchService> logger)
+        public AlbumArtSearchService(ISettingsService settingsService, IFileSystemService fileSystemService, ILogger<AlbumArtSearchService> logger)
         {
             _settingsService = settingsService;
+            _fileSystemService = fileSystemService;
             _logger = logger;
             _iTunesHttpClinet = new();
         }
@@ -77,69 +80,52 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 
         private async Task<byte[]?> SearchFile(SongInfo songInfo)
         {
-            foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
+            var enabledIds = _settingsService.AppSettings.LocalMediaFolders
+                .Where(f => f.IsEnabled)
+                .Select(f => f.Id)
+                .ToList();
+
+            if (enabledIds.Count == 0) return null;
+
+            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+
+            FileCacheEntity? bestMatch = null;
+
+            foreach (var item in allFiles)
             {
-                if (!folder.IsEnabled) continue;
+                var ext = Path.GetExtension(item.FileName).ToLower();
+                if (!FileHelper.MusicExtensions.Contains(ext)) continue;
 
-                try
+                bool isMetadataMatch = (item.Title == songInfo.Title && item.Artists == songInfo.DisplayArtists);
+
+                bool isFilenameMatch = StringHelper.IsSwitchableNormalizedMatch(
+                    Path.GetFileNameWithoutExtension(item.FileName),
+                    songInfo.DisplayArtists,
+                    songInfo.Title
+                );
+
+                if (isMetadataMatch || isFilenameMatch)
                 {
-                    using var fs = folder.CreateFileSystem();
-                    if (fs == null) continue;
-                    if (!await fs.ConnectAsync()) continue;
-
-                    // 递归扫描
-                    var foldersToScan = new Queue<string>();
-                    foldersToScan.Enqueue(""); // 根目录
-
-                    while (foldersToScan.Count > 0)
-                    {
-                        var currentPath = foldersToScan.Dequeue();
-                        var items = await fs.GetFilesAsync(currentPath);
-
-                        foreach (var item in items)
-                        {
-                            if (item.IsFolder)
-                            {
-                                foldersToScan.Enqueue(Path.Combine(currentPath, item.Name));
-                                continue;
-                            }
-
-                            var ext = Path.GetExtension(item.Name).ToLower();
-                            if (FileHelper.MusicExtensions.Contains(ext))
-                            {
-                                try
-                                {
-                                    using (var stream = await fs.OpenReadAsync(item.FullPath))
-                                    {
-                                        var track = new ExtendedTrack(item.FullPath, stream);
-
-                                        bool isMetadataMatch = (track.Title == songInfo.Title && track.Artist == songInfo.DisplayArtists);
-                                        bool isFilenameMatch = StringHelper.IsSwitchableNormalizedMatch(
-                                            Path.GetFileNameWithoutExtension(item.Name),
-                                            songInfo.DisplayArtists,
-                                            songInfo.Title
-                                        );
-
-                                        if (isMetadataMatch || isFilenameMatch)
-                                        {
-                                            var bytes = track.EmbeddedPictures.FirstOrDefault()?.PictureData;
-                                            if (bytes != null && bytes.Length > 0)
-                                            {
-                                                return bytes;
-                                            }
-                                        }
-                                    }
-                                }
-                                catch
-                                {
-                                }
-                            }
-                        }
-                    }
+                    bestMatch = item;
+                    break;
                 }
-                catch
+            }
+
+            if (bestMatch == null || string.IsNullOrEmpty(bestMatch.LocalAlbumArtPath))
+            {
+                return null;
+            }
+
+            try
+            {
+                if (File.Exists(bestMatch.LocalAlbumArtPath))
                 {
+                    return await File.ReadAllBytesAsync(bestMatch.LocalAlbumArtPath);
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"读取本地缓存失败: {ex.Message}");
             }
 
             return null;

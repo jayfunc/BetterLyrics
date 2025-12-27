@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Threading.Tasks;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -22,18 +23,23 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void SettingsPageRemovePathButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.RemoveFolderAsync((MediaFolder)(sender as HyperlinkButton)!.Tag);
+            var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
+            ViewModel.RemoveFolder(folder);
         }
 
         private async void LocalFolderHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is HyperlinkButton button && button.Tag is string uriStr)
+            var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
+            if (Uri.TryCreate(folder.UriString, UriKind.Absolute, out var uri))
             {
-                if (Uri.TryCreate(uriStr, UriKind.Absolute, out var uri))
-                {
-                    await Launcher.LaunchUriAsync(uri);
-                }
+                await Launcher.LaunchUriAsync(uri);
             }
+        }
+
+        private void SyncNowButton_Click(object sender, RoutedEventArgs e)
+        {
+            var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
+            ViewModel.SyncFolder(folder);
         }
     }
 }

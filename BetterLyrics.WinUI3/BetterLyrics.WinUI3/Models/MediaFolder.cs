@@ -1,12 +1,11 @@
-﻿// 2025/6/23 by Zhe Fang
-
-using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.FileSystemService.Providers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Text.Json.Serialization;
+using System.Threading;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -15,32 +14,85 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty] public partial string Id { get; set; } = Guid.NewGuid().ToString();
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEnabled { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsRealTimeWatchEnabled { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients][NotifyPropertyChangedFor(nameof(ConnectionSummary))] public partial string Path { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         [NotifyPropertyChangedFor(nameof(IsLocal))]
         [NotifyPropertyChangedFor(nameof(ConnectionSummary))]
+        [NotifyPropertyChangedFor(nameof(UriString))]
         public partial FileSourceType SourceType { get; set; } = FileSourceType.Local;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string Name { get; set; }
 
-        [ObservableProperty] public partial string UserName { get; set; }
+        // 连接属性
+        [ObservableProperty][NotifyPropertyChangedFor(nameof(UriString))] public partial string UserName { get; set; }
+        [ObservableProperty][NotifyPropertyChangedFor(nameof(UriString))] public partial string UriScheme { get; set; }
+        [ObservableProperty][NotifyPropertyChangedFor(nameof(UriString))] public partial string UriHost { get; set; }
+        [ObservableProperty][NotifyPropertyChangedFor(nameof(UriString))] public partial int UriPort { get; set; } = -1;
 
-        [ObservableProperty] public partial int Port { get; set; } = 80;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [NotifyPropertyChangedFor(nameof(ConnectionSummary))]
+        [NotifyPropertyChangedFor(nameof(UriString))]
+        public partial string UriPath { get; set; }
 
         [JsonIgnore] public string Password { get; set; }
 
         [JsonIgnore] public bool IsLocal => SourceType == FileSourceType.Local;
+
+        [JsonIgnore][ObservableProperty] public partial bool IsIndexing { get; set; } = false;
+        [JsonIgnore][ObservableProperty] public partial double IndexingProgress { get; set; } = 0;
+        [JsonIgnore][ObservableProperty] public partial string IndexingStatusText { get; set; } = "";
+
+        [JsonIgnore][ObservableProperty] public partial bool IsCleaningUp { get; set; } = false;
+        [JsonIgnore][ObservableProperty] public partial string CleaningUpStatusText { get; set; } = "";
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial DateTime? LastSyncTime { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial AutoScanInterval ScanInterval { get; set; } = AutoScanInterval.Disabled;
+
+        public Uri GetStandardUri()
+        {
+            try
+            {
+                if (IsLocal)
+                {
+                    return new Uri(UriPath);
+                }
+
+                var builder = new UriBuilder
+                {
+                    Scheme = UriScheme ?? "file",
+                    Host = UriHost,
+                    Port = UriPort,
+                    UserName = UserName
+                };
+
+                if (!string.IsNullOrEmpty(UriPath))
+                {
+                    string cleanPath = UriPath.Replace("\\", "/");
+                    if (!cleanPath.StartsWith("/")) cleanPath = "/" + cleanPath;
+                    builder.Path = cleanPath;
+                }
+
+                return builder.Uri;
+            }
+            catch (Exception)
+            {
+                return new Uri("about:blank");
+            }
+        }
+
+        // 例：smb://user@host:445/share/path
+        [JsonIgnore]
+        public string UriString => GetStandardUri().AbsoluteUri;
 
         [JsonIgnore]
         public string ConnectionSummary
         {
             get
             {
-                if (IsLocal) return Path;
-                return $"{SourceType} - {Path} {(string.IsNullOrEmpty(UserName) ? "" : $"({UserName})")}";
+                if (IsLocal) return UriPath;
+                return $"{UriScheme}://{UriHost}{(UriPort > 0 ? ":" + UriPort : "")}/{UriPath?.TrimStart('/', '\\')} {(string.IsNullOrEmpty(UserName) ? "" : $"({UserName})")}";
             }
         }
 
@@ -50,7 +102,8 @@ namespace BetterLyrics.WinUI3.Models
 
         public MediaFolder(string path)
         {
-            Path = path;
+            UriPath = path;
+            SourceType = FileSourceType.Local;
         }
 
         public IUnifiedFileSystem? CreateFileSystem()
@@ -63,12 +116,13 @@ namespace BetterLyrics.WinUI3.Models
 
             return SourceType switch
             {
-                FileSourceType.Local => new LocalFileSystem(Path),
-                FileSourceType.SMB => new SMBFileSystem(Path, UserName, Password),
-                FileSourceType.FTP => new FTPFileSystem(Path, UserName, Password, Port, Path),
-                FileSourceType.WebDav => new WebDavFileSystem(Path, UserName, Password, Port, Path),
+                FileSourceType.Local => new LocalFileSystem(this),
+                FileSourceType.SMB => new SMBFileSystem(this),
+                FileSourceType.FTP => new FTPFileSystem(this),
+                FileSourceType.WebDav => new WebDavFileSystem(this),
                 _ => throw new NotImplementedException()
             };
         }
+
     }
 }

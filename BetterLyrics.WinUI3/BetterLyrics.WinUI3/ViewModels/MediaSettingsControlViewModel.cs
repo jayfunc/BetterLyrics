@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
@@ -13,7 +14,9 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using static Vanara.PInvoke.Shell32;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -21,14 +24,16 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private readonly ILocalizationService _localizationService;
+        private readonly IFileSystemService _fileSystemService;
 
-        [ObservableProperty]
-        public partial AppSettings AppSettings { get; set; }
+        [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-        public MediaSettingsControlViewModel(ISettingsService settingsService, ILocalizationService localizationService)
+        public MediaSettingsControlViewModel(ISettingsService settingsService, ILocalizationService localizationService, IFileSystemService fileSystemService)
         {
             _localizationService = localizationService;
             _settingsService = settingsService;
+            _fileSystemService = fileSystemService;
+
             AppSettings = _settingsService.AppSettings;
         }
 
@@ -36,16 +41,16 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             var normalizedPath = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
 
-            if (AppSettings.LocalMediaFolders.Any(x => Path.GetFullPath(x.Path).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
+            if (AppSettings.LocalMediaFolders.Any(x => Path.GetFullPath(x.UriPath).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
             {
                 ToastHelper.ShowToast("SettingsPagePathExistedInfo", null, InfoBarSeverity.Warning);
             }
-            else if (AppSettings.LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
+            else if (AppSettings.LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
             {
                 // 添加的文件夹是现有文件夹的子文件夹
                 ToastHelper.ShowToast("SettingsPagePathBeIncludedInfo", null, InfoBarSeverity.Warning);
             }
-            else if (AppSettings.LocalMediaFolders.Any(item => Path.GetFullPath(item.Path).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
+            else if (AppSettings.LocalMediaFolders.Any(item => Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
             )
             {
                 // 添加的文件夹是现有文件夹的父文件夹
@@ -53,13 +58,29 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             else
             {
-                AppSettings.LocalMediaFolders.Add(new MediaFolder(path));
+                var tempFolder = new MediaFolder(path);
+                AppSettings.LocalMediaFolders.Add(tempFolder);
+                _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
             }
         }
 
-        public void RemoveFolderAsync(MediaFolder folder)
+        public void RemoveFolder(MediaFolder folder)
         {
-            AppSettings.LocalMediaFolders.Remove(folder);
+            _ = Task.Run(async () =>
+            {
+                await _fileSystemService.DeleteCacheForMediaFolderAsync(folder);
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    AppSettings.LocalMediaFolders.Remove(folder);
+                });
+            });
+        }
+
+        public void SyncFolder(MediaFolder folder)
+        {
+            if (folder.IsIndexing) return;
+
+            _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(folder, CancellationToken.None));
         }
 
         [RelayCommand]
@@ -91,44 +112,51 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 var configControl = (RemoteServerConfigControl)dialog.Content;
 
-                try
+                var deferral = e.GetDeferral();
+
+                e.Cancel = true;
+
+                dialog.IsPrimaryButtonEnabled = false;
+                configControl.IsEnabled = false;
+                configControl.SetProgressBarVisibility(Visibility.Visible);
+
+                var tempFolder = configControl.GetConfig();
+
+                bool isConnected = await Task.Run(async () =>
                 {
-                    e.Cancel = true;
-
-                    dialog.IsPrimaryButtonEnabled = false;
-                    configControl.IsEnabled = false;
-                    configControl.SetProgressBarVisibility(Visibility.Visible);
-
-                    var tempFolder = configControl.GetConfig();
-
-                    var provider = tempFolder.CreateFileSystem();
-
-                    bool isConnected = provider != null && await provider.ConnectAsync();
-
-                    if (isConnected)
+                    try
                     {
-                        await provider!.DisconnectAsync();
+                        using var provider = tempFolder.CreateFileSystem();
+                        if (provider == null) return false;
 
-                        PasswordVaultHelper.Save(Constants.App.AppName, tempFolder.VaultKey, tempFolder.Password);
-                        AppSettings.LocalMediaFolders.Add(tempFolder);
-
-                        e.Cancel = false;
+                        return await provider.ConnectAsync();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        ShowErrorTip(configControl, _localizationService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
+                        ShowErrorTip(configControl, ex.Message);
+                        return false;
                     }
-                }
-                catch (Exception ex)
+                });
+
+                if (isConnected)
                 {
-                    ShowErrorTip(configControl, ex.Message);
+                    AppSettings.LocalMediaFolders.Add(tempFolder);
+                    PasswordVaultHelper.Save(Constants.App.AppName, tempFolder.VaultKey, tempFolder.Password);
+
+                    _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
+
+                    e.Cancel = false;
                 }
-                finally
+                else
                 {
-                    dialog.IsPrimaryButtonEnabled = true;
-                    configControl.IsEnabled = true;
-                    configControl.SetProgressBarVisibility(Visibility.Collapsed);
+                    ShowErrorTip(configControl, _localizationService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
                 }
+
+                dialog.IsPrimaryButtonEnabled = true;
+                configControl.IsEnabled = true;
+                configControl.SetProgressBarVisibility(Visibility.Collapsed);
+
+                deferral.Complete();
             };
 
             await dialog.ShowAsync();
@@ -136,8 +164,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void ShowErrorTip(RemoteServerConfigControl control, string message)
         {
-            // 你可以在 RemoteServerConfigControl 里加一个 InfoBar 用来显示错误
-            // 假设你在 UserControl 里公开了一个 ShowError 方法
             control.ShowError(message);
         }
 

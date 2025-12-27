@@ -51,7 +51,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private async void SongPathHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            await LauncherHelper.SelectAndShowFile(((ExtendedTrack)((HyperlinkButton)sender).DataContext).Path);
+            await LauncherHelper.SelectAndShowFile(((ExtendedTrack)((HyperlinkButton)sender).DataContext).UriPath);
         }
 
         private async void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -236,7 +236,7 @@ namespace BetterLyrics.WinUI3.Views
                     if (File.Exists(path))
                     {
                         var content = File.ReadAllText(path);
-                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.Path).ToList())
+                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.UriPath).ToList())
                         {
                             if (!content.Contains(item))
                             {

@@ -62,7 +62,7 @@
                                             </Rectangle.Fill>
                                         </Rectangle>
                                     </controls:OpacityMaskView.OpacityMask>
-                                    <Image Source="{x:Bind ViewModel.TrackRightTapped.EmbeddedPictures, Mode=OneWay, Converter={StaticResource PictureInfosToImageSourceConverter}}" Stretch="Uniform" />
+                                    <Image Source="{x:Bind ViewModel.TrackRightTapped.LocalAlbumArtPath, Mode=OneWay, Converter={StaticResource PathToImageConverter}}" Stretch="Uniform" />
                                 </controls:OpacityMaskView>
                                 <StackPanel
                                     Grid.Row="1"
@@ -76,12 +76,12 @@
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitrate" Value="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoSampleRate" Value="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormat.Name, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormatName, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
                                     <uc:PropertyRow
                                         x:Uid="MusicGalleryPageFileInfoPath"
-                                        Link="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}"
-                                        Value="{x:Bind ViewModel.TrackRightTapped.Path, Mode=OneWay}" />
+                                        Link="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay}"
+                                        Value="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped.RawLyrics, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
@@ -402,7 +402,7 @@
                                             MaxWidth="48"
                                             MaxHeight="48"
                                             CornerRadius="4">
-                                            <Image Source="{x:Bind EmbeddedPictures, Mode=OneWay, Converter={StaticResource PictureInfosToImageSourceConverter}}" Stretch="Uniform" />
+                                            <Image Source="{x:Bind LocalAlbumArtPath, Mode=OneWay, Converter={StaticResource PathToImageConverter}}" Stretch="Uniform" />
                                         </Grid>
 
                                         <!--  基本信息  -->
@@ -414,7 +414,7 @@
                                                         <TextBlock
                                                             Margin="4,2"
                                                             FontSize="12"
-                                                            Text="{x:Bind AudioFormat.ShortName}" />
+                                                            Text="{x:Bind AudioFormatShortName}" />
                                                     </Grid>
                                                     <HyperlinkButton Padding="0" Click="ArtistHyperlibkButton_Click">
                                                         <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
@@ -443,12 +443,12 @@
                                             Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                                             TextWrapping="Wrap" />
 
-                                        <!--  歌曲时长  -->
+                                        <!--  路径  -->
                                         <HyperlinkButton
                                             Grid.Column="5"
                                             VerticalAlignment="Center"
                                             Click="PathHyperlibkButton_Click"
-                                            Content="{x:Bind Path, Converter={StaticResource PathToParentFolderConverter}}" />
+                                            Content="{x:Bind ParentFolderName}" />
 
                                         <Button
                                             Grid.Column="6"
@@ -721,7 +721,6 @@
                 <labs:Shimmer Grid.Row="4" CornerRadius="6" />
                 <labs:Shimmer Grid.Row="6" CornerRadius="6" />
             </Grid>
-            <ProgressRing IsActive="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}" />
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

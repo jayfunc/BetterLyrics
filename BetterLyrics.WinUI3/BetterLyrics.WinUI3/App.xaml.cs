@@ -7,7 +7,6 @@ using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
@@ -75,6 +74,9 @@ namespace BetterLyrics.WinUI3
         {
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
+            var fileSystemService = Ioc.Default.GetRequiredService<IFileSystemService>();
+            fileSystemService.StartAllFolderTimers();
+
             WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
@@ -118,7 +120,6 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IMediaSessionsService, MediaSessionsService>()
                     .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
                     .AddSingleton<ILyricsSearchService, LyricsSearchService>()
-                    .AddSingleton<ILibWatcherService, LibWatcherService>()
                     .AddSingleton<ITranslationService, TranslationService>()
                     .AddSingleton<ITransliterationService, TransliterationService>()
                     .AddSingleton<ILastFMService, LastFMService>()

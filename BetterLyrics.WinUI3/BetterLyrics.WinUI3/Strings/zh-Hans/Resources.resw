@@ -165,6 +165,24 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>无法连接到 LX 音乐服务器，请转到设置 - 播放源 - LX Music - LX 音乐服务器以检查是否正确输入链接</value>
   </data>
+  <data name="FileSystemServiceCleaningCache" xml:space="preserve">
+    <value>清理缓存中...</value>
+  </data>
+  <data name="FileSystemServiceConnectFailed" xml:space="preserve">
+    <value>连接失败</value>
+  </data>
+  <data name="FileSystemServiceConnecting" xml:space="preserve">
+    <value>连接中...</value>
+  </data>
+  <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
+    <value>获取文件列表中...</value>
+  </data>
+  <data name="FileSystemServiceParsing" xml:space="preserve">
+    <value>解析中...</value>
+  </data>
+  <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
+    <value>等待扫描中...</value>
+  </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全屏模式</value>
   </data>
@@ -357,6 +375,12 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>拆分视图</value>
   </data>
+  <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
+    <value>上次同步时间</value>
+  </data>
+  <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
+    <value>立即同步</value>
+  </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>添加到播放列表</value>
   </data>
@@ -470,6 +494,24 @@
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音乐库 - BetterLyrics</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
+    <value>自动同步频率</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
+    <value>从不</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
+    <value>每天</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
+    <value>每 15 分钟</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
+    <value>每小时</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
+    <value>每 6 小时</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>窄屏模式</value>
@@ -1088,9 +1130,6 @@
   </data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>本地媒体库</value>
-  </data>
-  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
-    <value>实时监听文件变化</value>
   </data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
     <value>窄屏模式</value>
