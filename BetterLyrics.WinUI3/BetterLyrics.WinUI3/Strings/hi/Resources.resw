@@ -169,10 +169,10 @@
     <value>Cleaning cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value>Connection failed</value>
+    <value>कनेक्शन विफल रहा</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>कनेक्टिंग ...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
     <value>Fetching file list...</value>
@@ -180,8 +180,11 @@
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>Parsing...</value>
   </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value>Preparing to clean cache...</value>
+  </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Waiting for scan...</value>
+    <value>Preparing to scan...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>फुलस्क्रीन मोड</value>
@@ -379,7 +382,7 @@
     <value>Last Sync Time</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value>Sync now</value>
+    <value>अभी सिंक्रनाइज़ करें</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>प्लेलिस्ट में जोड़ें</value>
@@ -499,19 +502,19 @@
     <value>Auto-sync Frequency</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>कभी नहीं</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value>Every Day</value>
+    <value>प्रतिदिन</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>Every 15 Minutes</value>
+    <value>हर 15 मिनट</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>Every Hour</value>
+    <value>हर घंटे</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>Every 6 Hours</value>
+    <value>हर ६ घंटे</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>संकीर्ण मोड</value>
