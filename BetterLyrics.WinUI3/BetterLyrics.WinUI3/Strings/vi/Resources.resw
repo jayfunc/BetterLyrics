@@ -180,6 +180,9 @@
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>Đang phân tích...</value>
   </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value>Đang chuẩn bị xóa bộ nhớ cache...</value>
+  </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>Đang chờ quét...</value>
   </data>
