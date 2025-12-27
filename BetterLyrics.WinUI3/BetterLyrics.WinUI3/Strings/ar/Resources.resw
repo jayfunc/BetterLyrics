@@ -166,22 +166,22 @@
     <value>تعذر الاتصال بخادم موسيقى LX، يرجى الانتقال إلى الإعدادات - مصدر التشغيل - LX Music - خادم موسيقى LX للتحقق مما إذا تم إدخال الرابط بشكل صحيح</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>تنظيف ذاكرة التخزين المؤقت...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value>Connection failed</value>
+    <value>فشل الاتصال</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>الاتصال جارِ...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>Fetching file list...</value>
+    <value>جلب قائمة الملفات...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>Parsing...</value>
+    <value>جاري التحليل...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Waiting for scan...</value>
+    <value>في انتظار المسح...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>وضع ملء الشاشة</value>
@@ -376,10 +376,10 @@
     <value>عرض مقسم</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value>Last Sync Time</value>
+    <value>آخر مزامنة للوقت</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value>Sync now</value>
+    <value>مزامنة الآن</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>إضافة إلى قائمة التشغيل</value>
@@ -496,22 +496,22 @@
     <value>مكتبة الموسيقى - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>Auto-sync Frequency</value>
+    <value>تردد المزامنة التلقائية</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>مطلقًا</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value>Every Day</value>
+    <value>كل يوم</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>Every 15 Minutes</value>
+    <value>كل 15 دقيقة</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>Every Hour</value>
+    <value>كُل ساعة</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>Every 6 Hours</value>
+    <value>كُل 6 ساعات</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>وضع الشاشة الضيقة</value>
