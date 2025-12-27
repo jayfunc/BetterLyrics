@@ -165,6 +165,24 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>Không thể kết nối với máy chủ LX Music, vui lòng vào Cài đặt - Nguồn phát - LX Music - Máy chủ LX Music để kiểm tra xem liên kết đã được nhập chính xác chưa</value>
   </data>
+  <data name="FileSystemServiceCleaningCache" xml:space="preserve">
+    <value>Cleaning cache...</value>
+  </data>
+  <data name="FileSystemServiceConnectFailed" xml:space="preserve">
+    <value>Connection failed</value>
+  </data>
+  <data name="FileSystemServiceConnecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
+    <value>Fetching file list...</value>
+  </data>
+  <data name="FileSystemServiceParsing" xml:space="preserve">
+    <value>Parsing...</value>
+  </data>
+  <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
+    <value>Waiting for scan...</value>
+  </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Chế độ toàn màn hình</value>
   </data>
@@ -357,6 +375,12 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Chế độ xem chia tách</value>
   </data>
+  <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
+    <value>Last Sync Time</value>
+  </data>
+  <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
+    <value>Sync now</value>
+  </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Thêm vào danh sách phát</value>
   </data>
@@ -470,6 +494,24 @@
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Thư viện nhạc - BetterLyrics</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
+    <value>Auto-sync Frequency</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
+    <value>Every Day</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
+    <value>Every 15 Minutes</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
+    <value>Every Hour</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
+    <value>Every 6 Hours</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Chế độ hẹp</value>
@@ -1088,9 +1130,6 @@
   </data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>Thư viện phương tiện cục bộ</value>
-  </data>
-  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
-    <value>Lắng nghe thay đổi tệp thời gian thực</value>
   </data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
     <value>Chế độ hẹp</value>
