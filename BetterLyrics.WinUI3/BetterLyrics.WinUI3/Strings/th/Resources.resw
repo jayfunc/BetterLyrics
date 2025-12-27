@@ -166,22 +166,22 @@
     <value>ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ LX Music โปรดไปที่ การตั้งค่า - แหล่งเล่นเพลง - LX Music - เซิร์ฟเวอร์ LX Music เพื่อตรวจสอบว่าป้อนลิงก์ถูกต้องหรือไม่</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>กำลังล้างแคช...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value>Connection failed</value>
+    <value>การเชื่อมต่อล้มเหลว</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>กำลังเชื่อมต่อ...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>Fetching file list...</value>
+    <value>กำลังดึงรายการไฟล์...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>Parsing...</value>
+    <value>กำลังแยกวิเคราะห์...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Waiting for scan...</value>
+    <value>กำลังรอสแกน...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>โหมดเต็มหน้าจอ</value>
@@ -376,10 +376,10 @@
     <value>มุมมองแยก</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value>Last Sync Time</value>
+    <value>เวลาซิงค์ครั้งล่าสุด</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value>Sync now</value>
+    <value>ซิงค์ตอนนี้</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>เพิ่มลงในเพลย์ลิสต์</value>
@@ -496,22 +496,22 @@
     <value>คลังเพลง - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>Auto-sync Frequency</value>
+    <value>ความถี่การซิงค์อัตโนมัติ</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>ไม่เคย</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value>Every Day</value>
+    <value>ทุกวัน</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>Every 15 Minutes</value>
+    <value>ทุก 15 นาที</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>Every Hour</value>
+    <value>ทุกชั่วโมง</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>Every 6 Hours</value>
+    <value>ทุก 6 ชั่วโมง</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>โหมดหน้าแคบ</value>
