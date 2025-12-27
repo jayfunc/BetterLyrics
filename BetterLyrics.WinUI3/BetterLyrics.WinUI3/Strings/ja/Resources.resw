@@ -180,6 +180,9 @@
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>Parsing...</value>
   </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value>キャッシュ・クリーン準備中</value>
+  </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>スキャンを待っています...</value>
   </data>
