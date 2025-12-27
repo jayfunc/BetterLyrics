@@ -166,22 +166,22 @@
     <value>Não foi possível ligar ao servidor LX Music. Aceda a Definições - Fonte de Reprodução - LX Music - Servidor LX Music para verificar se a ligação foi introduzida corretamente</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>Limpando o cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value>Connection failed</value>
+    <value>Conexão falhou</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Conectandochar@@0</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>Fetching file list...</value>
+    <value>Buscando lista de arquivos...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>Parsing...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Waiting for scan...</value>
+    <value>Aguardando verificação...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Modo de Ecrã Inteiro</value>
@@ -376,10 +376,10 @@
     <value>Vista Dividida</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value>Last Sync Time</value>
+    <value>Última sincronização</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value>Sync now</value>
+    <value>Sincronizar agora</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Adicionar à lista de reprodução</value>
@@ -496,22 +496,22 @@
     <value>Galeria de Música - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>Auto-sync Frequency</value>
+    <value>Frequência de sincronização automática</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>nunca</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value>Every Day</value>
+    <value>Todos os dias</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>Every 15 Minutes</value>
+    <value>A cada 15 minutos</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>Every Hour</value>
+    <value>A cada hora</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>Every 6 Hours</value>
+    <value>A cada 6 horas</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Modo Estreito</value>
