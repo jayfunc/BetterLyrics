@@ -180,6 +180,9 @@
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>Парсинг...</value>
   </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value>Подготовка к очистке кэша...</value>
+  </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>Ожидание сканирования...</value>
   </data>
