@@ -165,6 +165,24 @@
   <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>Tidak dapat menyambung ke pelayan LX Music, sila pergi ke Tetapan - Sumber Main Balik - LX Music - Pelayan LX Music untuk menyemak sama ada pautan dimasukkan dengan betul</value>
   </data>
+  <data name="FileSystemServiceCleaningCache" xml:space="preserve">
+    <value>Cleaning cache...</value>
+  </data>
+  <data name="FileSystemServiceConnectFailed" xml:space="preserve">
+    <value>Connection failed</value>
+  </data>
+  <data name="FileSystemServiceConnecting" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
+    <value>Fetching file list...</value>
+  </data>
+  <data name="FileSystemServiceParsing" xml:space="preserve">
+    <value>Parsing...</value>
+  </data>
+  <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
+    <value>Waiting for scan...</value>
+  </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Mod Skrin Penuh</value>
   </data>
@@ -357,6 +375,12 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Paparan Pisah</value>
   </data>
+  <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
+    <value>Last Sync Time</value>
+  </data>
+  <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
+    <value>Sync now</value>
+  </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Tambah ke senarai main</value>
   </data>
@@ -470,6 +494,24 @@
   </data>
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Galeri Muzik - BetterLyrics</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
+    <value>Auto-sync Frequency</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
+    <value>Every Day</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
+    <value>Every 15 Minutes</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
+    <value>Every Hour</value>
+  </data>
+  <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
+    <value>Every 6 Hours</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Mod Sempit</value>
@@ -1088,9 +1130,6 @@
   </data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>Pustaka Media Tempatan</value>
-  </data>
-  <data name="SettingsPageMusicLibRealTimeWatch.Header" xml:space="preserve">
-    <value>Pemantauan Perubahan Fail Masa Nyata</value>
   </data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
     <value>Mod Sempit</value>
