@@ -166,22 +166,22 @@
     <value>Không thể kết nối với máy chủ LX Music, vui lòng vào Cài đặt - Nguồn phát - LX Music - Máy chủ LX Music để kiểm tra xem liên kết đã được nhập chính xác chưa</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>Đang xóa bộ nhớ đệm...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value>Connection failed</value>
+    <value>Kết nối thất bại</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Đang kết nối...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>Fetching file list...</value>
+    <value>Đang lấy danh sách tệp...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>Parsing...</value>
+    <value>Đang phân tích...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Waiting for scan...</value>
+    <value>Đang chờ quét...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Chế độ toàn màn hình</value>
@@ -376,10 +376,10 @@
     <value>Chế độ xem chia tách</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value>Last Sync Time</value>
+    <value>Thời gian đồng bộ hóa gần nhất</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value>Sync now</value>
+    <value>Đồng bộ hóa ngay</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Thêm vào danh sách phát</value>
@@ -496,22 +496,22 @@
     <value>Thư viện nhạc - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>Auto-sync Frequency</value>
+    <value>Tần suất đồng bộ tự động</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>Không bao giờ</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value>Every Day</value>
+    <value>Hàng ngày</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>Every 15 Minutes</value>
+    <value>15 phút một lần</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>Every Hour</value>
+    <value>Mỗi giờ</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>Every 6 Hours</value>
+    <value>Mỗi 6 tiếng</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Chế độ hẹp</value>
