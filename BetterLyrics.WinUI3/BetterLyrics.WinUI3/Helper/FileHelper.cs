@@ -5,7 +5,9 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Serialization;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Ude;
 
@@ -86,5 +88,15 @@ namespace BetterLyrics.WinUI3.Helper
             ".wav", ".aiff", ".aif", ".pcm", ".cda", ".dsf", ".dff", ".au", ".snd",
             ".mid", ".midi", ".mod", ".xm", ".it", ".s3m"
         };
+
+        public static readonly string[] LyricExtensions =
+            Enum.GetValues(typeof(LyricsSearchProvider)).Cast<LyricsSearchProvider>()
+            .Where(x => x.IsLocal())
+            .Select(x => x.GetLyricsFormat())
+            .Where(x => x != LyricsFormat.NotSpecified)
+            .Select(x => x.ToFileExtension())
+            .ToArray();
+
+        public static readonly HashSet<string> AllSupportedExtensions = new(MusicExtensions.Union(LyricExtensions));
     }
 }

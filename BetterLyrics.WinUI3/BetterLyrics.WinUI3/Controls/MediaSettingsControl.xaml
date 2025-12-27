@@ -50,37 +50,73 @@
                         SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:MediaFolder">
-                                <dev:SettingsExpander Description="{x:Bind ConnectionSummary, Mode=OneWay}">
+                                <dev:SettingsExpander Description="{x:Bind ConnectionSummary, Mode=OneWay}" IsExpanded="True">
+
                                     <dev:SettingsExpander.HeaderIcon>
                                         <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}, Mode=OneWay}" />
                                     </dev:SettingsExpander.HeaderIcon>
-
                                     <dev:SettingsExpander.Header>
                                         <HyperlinkButton
                                             Padding="0"
                                             Click="LocalFolderHyperlinkButton_Click"
-                                            Content="{x:Bind Path, Mode=OneWay}"
-                                            Tag="{x:Bind Path, Mode=OneWay}"
-                                            ToolTipService.ToolTip="{x:Bind ConnectionSummary}" />
+                                            Content="{x:Bind ConnectionSummary, Mode=OneWay}" />
                                     </dev:SettingsExpander.Header>
 
                                     <ToggleSwitch IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
 
                                     <dev:SettingsExpander.Items>
-                                        <dev:SettingsCard>
-                                            <dev:SettingsCard.Header>
-                                                <HyperlinkButton
-                                                    x:Uid="SettingsPageRemovePath"
-                                                    Padding="0"
-                                                    Click="SettingsPageRemovePathButton_Click"
-                                                    Tag="{Binding}" />
-                                            </dev:SettingsCard.Header>
+                                        <dev:SettingsCard x:Uid="MediaSettingsControlLastSyncTime" Description="{x:Bind LastSyncTime.ToString(), Mode=OneWay, TargetNullValue=N/A}">
+                                            <Button
+                                                x:Uid="MediaSettingsControlSyncNow"
+                                                Click="SyncNowButton_Click"
+                                                IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" />
                                         </dev:SettingsCard>
-
-                                        <dev:SettingsCard x:Uid="SettingsPageMusicLibRealTimeWatch" IsEnabled="{Binding IsLocal, Mode=OneWay}">
-                                            <ToggleSwitch IsOn="{Binding IsRealTimeWatchEnabled, Mode=TwoWay}" />
+                                        <dev:SettingsCard x:Uid="MusicSettingsControlAutoSyncInterval">
+                                            <ComboBox IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" SelectedIndex="{x:Bind ScanInterval, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalDisabled" />
+                                                <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEveryFifteenMin" />
+                                                <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEveryHour" />
+                                                <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEverySixHrs" />
+                                                <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEveryDay" />
+                                            </ComboBox>
+                                        </dev:SettingsCard>
+                                        <dev:SettingsCard>
+                                            <Button x:Uid="SettingsPageRemovePath" Click="SettingsPageRemovePathButton_Click" />
                                         </dev:SettingsCard>
                                     </dev:SettingsExpander.Items>
+
+                                    <dev:SettingsExpander.ItemsFooter>
+                                        <StackPanel>
+                                            <!--  Index info  -->
+                                            <InfoBar
+                                                IsClosable="False"
+                                                IsOpen="{x:Bind IsIndexing, Mode=OneWay}"
+                                                Message="{x:Bind IndexingStatusText, Mode=OneWay}" />
+                                            <ProgressBar Visibility="{x:Bind IsIndexing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Value="{x:Bind IndexingProgress, Mode=OneWay}">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <interactivity:DataTriggerBehavior
+                                                        Binding="{x:Bind IndexingProgress, Mode=OneWay}"
+                                                        ComparisonCondition="Equal"
+                                                        Value="0">
+                                                        <interactivity:ChangePropertyAction PropertyName="IsIndeterminate" Value="True" />
+                                                    </interactivity:DataTriggerBehavior>
+                                                    <interactivity:DataTriggerBehavior
+                                                        Binding="{x:Bind IndexingProgress, Mode=OneWay}"
+                                                        ComparisonCondition="NotEqual"
+                                                        Value="0">
+                                                        <interactivity:ChangePropertyAction PropertyName="IsIndeterminate" Value="False" />
+                                                    </interactivity:DataTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                            </ProgressBar>
+                                            <!--  Clean up info  -->
+                                            <InfoBar
+                                                IsClosable="False"
+                                                IsOpen="{x:Bind IsCleaningUp, Mode=OneWay}"
+                                                Message="{x:Bind CleaningUpStatusText, Mode=OneWay}" />
+                                            <ProgressBar IsIndeterminate="True" Visibility="{x:Bind IsCleaningUp, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        </StackPanel>
+                                    </dev:SettingsExpander.ItemsFooter>
+
                                 </dev:SettingsExpander>
                             </DataTemplate>
                         </ListView.ItemTemplate>

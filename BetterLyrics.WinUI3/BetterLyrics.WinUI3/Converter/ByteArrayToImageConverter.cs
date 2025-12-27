@@ -17,20 +17,16 @@ namespace BetterLyrics.WinUI3.Converter
                     using (var ms = new MemoryStream(byteArray))
                     {
                         var stream = ms.AsRandomAccessStream();
+
                         var bitmapImage = new BitmapImage();
-
                         bitmapImage.SetSource(stream);
-
                         return bitmapImage;
                     }
                 }
-                catch
-                {
-                    return PathHelper.AlbumArtPlaceholderPath;
-                }
+                catch { }
             }
 
-            return PathHelper.AlbumArtPlaceholderPath;
+            return new BitmapImage(new Uri(PathHelper.AlbumArtPlaceholderPath));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

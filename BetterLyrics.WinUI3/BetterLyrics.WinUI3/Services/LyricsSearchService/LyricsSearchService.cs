@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Providers;
+using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using Lyricify.Lyrics.Helpers;
 using Lyricify.Lyrics.Searchers;
@@ -28,11 +29,13 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         private readonly AppleMusic _appleMusic;
 
         private readonly ISettingsService _settingsService;
+        private readonly IFileSystemService _fileSystemService;
         private readonly ILogger _logger;
 
-        public LyricsSearchService(ISettingsService settingsService, ILogger<LyricsSearchService> logger)
+        public LyricsSearchService(ISettingsService settingsService, IFileSystemService fileSystemService, ILogger<LyricsSearchService> logger)
         {
             _settingsService = settingsService;
+            _fileSystemService = fileSystemService;
             _logger = logger;
 
             _lrcLibHttpClient = new();
@@ -276,92 +279,49 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         {
             int maxScore = 0;
 
-            MediaFolder? bestFolder = null;
-            string? bestFilePath = null;
+            FileCacheEntity? bestFileEntity = null;
+            MediaFolder? bestFolderConfig = null;
 
             var lyricsSearchResult = new LyricsSearchResult();
-
             if (format.ToLyricsSearchProvider() is LyricsSearchProvider lyricsSearchProvider)
             {
                 lyricsSearchResult.Provider = lyricsSearchProvider;
             }
 
-            foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
+            string targetExt = format.ToFileExtension();
+
+            var enabledFolders = _settingsService.AppSettings.LocalMediaFolders
+                .Where(f => f.IsEnabled)
+                .ToList();
+
+            var enabledIds = enabledFolders.Select(f => f.Id).ToList();
+
+            if (enabledIds.Count == 0) return lyricsSearchResult;
+
+            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+
+            foreach (var item in allFiles)
             {
-                if (!folder.IsEnabled) continue;
-
-                try
+                if (item.FileName.EndsWith(targetExt, StringComparison.OrdinalIgnoreCase))
                 {
-                    using var fs = folder.CreateFileSystem();
-                    if (fs == null) continue;
-                    if (!await fs.ConnectAsync()) continue;
+                    int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult { Reference = item.FileName });
 
-                    // 递归扫描
-                    var foldersToScan = new Queue<string>();
-                    foldersToScan.Enqueue(""); // 从根目录开始
-
-                    string targetExt = format.ToFileExtension();
-
-                    while (foldersToScan.Count > 0)
+                    if (score > maxScore)
                     {
-                        var currentPath = foldersToScan.Dequeue();
-                        var items = await fs.GetFilesAsync(currentPath);
+                        maxScore = score;
+                        bestFileEntity = item;
 
-                        foreach (var item in items)
-                        {
-                            if (item.IsFolder)
-                            {
-                                foldersToScan.Enqueue(Path.Combine(currentPath, item.Name));
-                                continue;
-                            }
-
-                            if (item.Name.EndsWith(targetExt, StringComparison.OrdinalIgnoreCase))
-                            {
-                                int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult { Reference = item.FullPath });
-
-                                if (score > maxScore)
-                                {
-                                    maxScore = score;
-                                    bestFilePath = item.FullPath;
-                                    bestFolder = folder;
-                                }
-                            }
-                        }
+                        bestFolderConfig = enabledFolders.FirstOrDefault(f => f.Id == item.MediaFolderId);
                     }
-                }
-                catch (Exception ex)
-                {
-                    // 日志记录...
                 }
             }
 
-            // 4. 如果找到了最佳匹配，读取内容
-            if (bestFolder != null && bestFilePath != null)
+            if (bestFileEntity != null)
             {
-                try
-                {
-                    // 重新连接以读取文件 (因为之前的 fs 已经在 using 结束时释放)
-                    using var fs = bestFolder.CreateFileSystem();
-                    if (fs != null && await fs.ConnectAsync())
-                    {
-                        using var stream = await fs.OpenReadAsync(bestFilePath);
+                lyricsSearchResult.Raw = bestFileEntity.EmbeddedLyrics;
 
-                        // 使用 StreamReader 读取文本
-                        // 注意：这里简单使用 Default 编码，如果需要探测编码(FileHelper.GetEncoding)，
-                        // 可能需要先读一部分字节来判断，或者使用带编码探测的库。
-                        using var reader = new StreamReader(stream);
-
-                        string raw = await reader.ReadToEndAsync();
-
-                        lyricsSearchResult.Reference = bestFilePath;
-                        lyricsSearchResult.MatchPercentage = maxScore;
-                        lyricsSearchResult.Raw = raw;
-                    }
-                }
-                catch (Exception)
-                {
-                    // 读取失败处理
-                }
+                lyricsSearchResult.Reference = bestFileEntity.Uri;
+                lyricsSearchResult.MatchPercentage = maxScore;
             }
 
             return lyricsSearchResult;
@@ -369,107 +329,52 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         private async Task<LyricsSearchResult> SearchEmbedded(SongInfo songInfo)
         {
-            int bestScore = 0;
-            string? bestFilePath = null;
-            string? bestRaw = null;
-
-            // 用于最后回填 Metadata
-            string? bestTitle = null;
-            string[]? bestArtists = null;
-            string? bestAlbum = null;
-            double bestDuration = 0;
-
             var lyricsSearchResult = new LyricsSearchResult
             {
                 Provider = LyricsSearchProvider.LocalMusicFile,
             };
 
-            foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
+            var enabledIds = _settingsService.AppSettings.LocalMediaFolders
+                .Where(f => f.IsEnabled)
+                .Select(f => f.Id)
+                .ToList();
+
+            if (enabledIds.Count == 0) return lyricsSearchResult;
+
+            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+
+            FileCacheEntity? bestFile = null;
+            int maxScore = 0;
+
+            foreach (var item in allFiles)
             {
-                if (!folder.IsEnabled) continue;
+                if (string.IsNullOrEmpty(item.EmbeddedLyrics)) continue;
 
-                try
+                int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult
                 {
-                    using var fs = folder.CreateFileSystem();
-                    if (fs == null) continue;
-                    if (!await fs.ConnectAsync()) continue;
+                    Title = item.Title,
+                    Artists = item.Artists?.Split(ATL.Settings.DisplayValueSeparator),
+                    Album = item.Album,
+                    Duration = item.Duration
+                });
 
-                    var foldersToScan = new Queue<string>();
-                    foldersToScan.Enqueue("");
-
-                    while (foldersToScan.Count > 0)
-                    {
-                        var currentPath = foldersToScan.Dequeue();
-                        var items = await fs.GetFilesAsync(currentPath);
-
-                        foreach (var item in items)
-                        {
-                            if (item.IsFolder)
-                            {
-                                foldersToScan.Enqueue(Path.Combine(currentPath, item.Name));
-                                continue;
-                            }
-
-                            var ext = Path.GetExtension(item.Name).ToLower();
-                            if (FileHelper.MusicExtensions.Contains(ext))
-                            {
-                                try
-                                {
-                                    using var stream = await fs.OpenReadAsync(item.FullPath);
-
-                                    var track = new ExtendedTrack(item.FullPath, stream);
-                                    var raw = track.RawLyrics;
-
-                                    if (!string.IsNullOrEmpty(raw))
-                                    {
-                                        int score = MetadataComparer.CalculateScore(songInfo, new LyricsSearchResult
-                                        {
-                                            Title = track.Title,
-                                            Artists = track.Artist?.Split(ATL.Settings.DisplayValueSeparator),
-                                            Album = track.Album,
-                                            Duration = track.Duration,
-                                            Reference = item.FullPath,
-                                        });
-
-                                        if (score > bestScore)
-                                        {
-                                            bestScore = score;
-                                            bestFilePath = item.FullPath;
-                                            bestRaw = raw;
-
-                                            // 缓存当前最佳的元数据，避免最后还需要重新打开文件读一次
-                                            bestTitle = track.Title;
-                                            bestArtists = track.Artist?.Split(ATL.Settings.DisplayValueSeparator);
-                                            bestAlbum = track.Album;
-                                            bestDuration = track.Duration;
-                                        }
-                                    }
-                                }
-                                catch
-                                {
-                                    // 单个文件解析失败忽略
-                                }
-                            }
-                        }
-                    }
-                }
-                catch
+                if (score > maxScore)
                 {
-                    // 文件夹扫描失败忽略
+                    maxScore = score;
+                    bestFile = item;
                 }
             }
 
-            if (bestFilePath != null)
+            if (bestFile != null && maxScore > 0)
             {
-                // 直接使用缓存的数据，不需要 new Track(bestFile) 了
-                lyricsSearchResult.Title = bestTitle;
-                lyricsSearchResult.Artists = bestArtists;
-                lyricsSearchResult.Album = bestAlbum;
-                lyricsSearchResult.Duration = bestDuration;
+                lyricsSearchResult.Title = bestFile.Title;
+                lyricsSearchResult.Artists = bestFile.Artists?.Split(ATL.Settings.DisplayValueSeparator);
+                lyricsSearchResult.Album = bestFile.Album;
+                lyricsSearchResult.Duration = bestFile.Duration;
 
-                lyricsSearchResult.Raw = bestRaw;
-                lyricsSearchResult.Reference = bestFilePath;
-                lyricsSearchResult.MatchPercentage = bestScore;
+                lyricsSearchResult.Raw = bestFile.EmbeddedLyrics;
+                lyricsSearchResult.Reference = bestFile.Uri;
+                lyricsSearchResult.MatchPercentage = maxScore;
             }
 
             return lyricsSearchResult;

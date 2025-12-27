@@ -240,8 +240,6 @@
                 <ProgressBar
                     VerticalAlignment="Top"
                     IsIndeterminate="True"
-                    ShowError="False"
-                    ShowPaused="False"
                     Visibility="{x:Bind ViewModel.IsSearching, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
             </Grid>
             <Grid Grid.Column="2">

@@ -10,7 +10,10 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
         private readonly ISMBFileStore _store;
         private readonly object _handle;
         private long _position;
-        private long _length; // 新增：缓存文件长度
+        private long _length;
+
+        // SMB 协议建议的最大读取块大小 (64KB 是最安全的通用值)
+        private const int MaxReadChunkSize = 65536;
 
         public SMBReadOnlyStream(ISMBFileStore store, object handle)
         {
@@ -25,18 +28,15 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             }
             else
             {
-                // 如果获取失败，这是一个严重问题，意味着无法 Seek 到末尾
-                // 暂时设为 0，但后续读取可能会出问题
-                _length = 0;
+                _length = 0; // 这是一个风险点，但为了不 crash 先设为 0
+                System.Diagnostics.Debug.WriteLine($"SMB GetLength Error: {status}");
             }
         }
 
         public override bool CanRead => true;
         public override bool CanSeek => true;
         public override bool CanWrite => false;
-
         public override long Length => _length;
-
         public override long Position
         {
             get => _position;
@@ -45,30 +45,49 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            // 保护：如果位置已经超过文件末尾，直接返回 0 (EOF)
             if (_position >= _length) return 0;
 
-            // 保护：防止读取越界 (请求读取量不能超过剩余量)
-            long remaining = _length - _position;
-            int bytesToRequest = (int)Math.Min(count, remaining);
+            int totalBytesRead = 0;
+            int remainingRequest = count;
 
-            // 为了安全，保留对 remaining 的检查是必须的
-            if (bytesToRequest <= 0) return 0;
-
-            var status = _store.ReadFile(out byte[] data, _handle, _position, bytesToRequest);
-
-            if (status == NTStatus.STATUS_END_OF_FILE) return 0;
-
-            if (status != NTStatus.STATUS_SUCCESS)
+            // 循环读取，直到读完请求的数量，或者文件结束
+            while (remainingRequest > 0)
             {
-                throw new IOException($"SMB Read failed. Status: {status} (Pos: {_position}, Req: {bytesToRequest})");
+                // 计算剩余文件长度
+                long remainingFile = _length - _position;
+                if (remainingFile <= 0) break; // 已到末尾
+
+                // 计算本次 SMB 请求的大小 (取三者最小值：请求剩余量、文件剩余量、SMB最大块限制)
+                int bytesToReadThisChunk = (int)Math.Min(Math.Min(remainingRequest, remainingFile), MaxReadChunkSize);
+
+                // 发送 SMB 请求
+                var status = _store.ReadFile(out byte[] data, _handle, _position, bytesToReadThisChunk);
+
+                // 处理结果
+                if (status == NTStatus.STATUS_END_OF_FILE) break;
+
+                if (status != NTStatus.STATUS_SUCCESS)
+                {
+                    // 遇到错误抛出详细信息
+                    throw new IOException($"SMB Read failed. Status: {status}, Position: {_position}, ChunkReq: {bytesToReadThisChunk}");
+                }
+
+                if (data == null || data.Length == 0) break;
+
+                // 复制数据到输出 buffer
+                Array.Copy(data, 0, buffer, offset + totalBytesRead, data.Length);
+
+                // 更新指针和计数器
+                _position += data.Length;
+                totalBytesRead += data.Length;
+                remainingRequest -= data.Length;
+
+                // 如果实际读到的比请求的少，通常意味着提前到了 EOF，或者网络包较小
+                // 这里选择继续循环尝试，直到读不够或者明确 EOF
+                if (data.Length < bytesToReadThisChunk) break;
             }
 
-            if (data == null || data.Length == 0) return 0;
-
-            Array.Copy(data, 0, buffer, offset, data.Length);
-            _position += data.Length;
-            return data.Length;
+            return totalBytesRead;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -88,10 +107,9 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                     break;
             }
 
-            // 允许 Seek 超过 EOF (标准 Stream 行为)，但在 Read 时会返回 0
             if (newPos < 0)
             {
-                throw new IOException("An attempt was made to move the file pointer before the beginning of the file.");
+                throw new IOException("Seek before beginning.");
             }
 
             _position = newPos;

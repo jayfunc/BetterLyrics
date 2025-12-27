@@ -6,18 +6,20 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.FileSystemService;
-using BetterLyrics.WinUI3.Services.LibWatcherService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,20 +28,27 @@ using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class MusicGalleryPageViewModel : BaseViewModel
+    public partial class MusicGalleryPageViewModel : BaseViewModel,
+        IRecipient<PropertyChangedMessage<DateTime?>>,
+        IRecipient<PropertyChangedMessage<bool>>
     {
-        private readonly ILibWatcherService _libWatcherService;
         private readonly ISettingsService _settingsService;
         private readonly ILocalizationService _localizationService;
+        private readonly IFileSystemService _fileSystemService;
 
         private readonly MediaPlayer _mediaPlayer = new();
         private readonly MediaTimelineController _timelineController = new();
         private readonly SystemMediaTransportControls _smtc;
 
         private readonly DispatcherQueueTimer _refreshSongsTimer;
+
+        private IRandomAccessStream? _currentStream;
+        private Stream? _currentNetStream;
+        private IUnifiedFileSystem? _currentProvider;
 
         // All songs
         private List<ExtendedTrack> _tracks = [];
@@ -85,18 +94,22 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public SongsTabInfo? SelectedSongsTabInfo => SongsTabInfoList.ElementAtOrDefault(SelectedSongsTabInfoIndex);
 
-        [ObservableProperty]
-        public partial bool IsDataLoading { get; set; } = false;
+        [ObservableProperty] public partial bool IsDataLoading { get; set; } = false;
 
-        [ObservableProperty]
-        public partial ExtendedTrack TrackRightTapped { get; set; } = new();
+        [ObservableProperty] public partial ExtendedTrack TrackRightTapped { get; set; } = new();
 
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
 
-        public MusicGalleryPageViewModel(ISettingsService settingsService, ILibWatcherService libWatcherService, ILocalizationService localizationService)
+        public MusicGalleryPageViewModel(
+            ISettingsService settingsService,
+            ILocalizationService localizationService,
+            IFileSystemService fileSystemService
+        )
         {
             _localizationService = localizationService;
+            _fileSystemService = fileSystemService;
+
             _refreshSongsTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService = settingsService;
@@ -110,7 +123,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             RefreshSongs();
 
             _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
-            _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
 
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
@@ -126,19 +138,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             _smtc.IsPreviousEnabled = true;
             _smtc.ButtonPressed += Smtc_ButtonPressed;
             _smtc.PlaybackPositionChangeRequested += Smtc_PlaybackPositionChangeRequested;
-
-            _libWatcherService = libWatcherService;
-            _libWatcherService.MusicLibraryFilesChanged += LibWatcherService_MusicLibraryFilesChanged;
         }
 
         private void TrackPlayingQueue_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Path)];
-        }
-
-        private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
-        {
-            RefreshSongs();
+            AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.UriPath)];
         }
 
         private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -264,11 +268,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        private void LibWatcherService_MusicLibraryFilesChanged(object? sender, Events.LibChangedEventArgs e)
-        {
-            RefreshSongs();
-        }
-
         public void CancelRefreshSongs()
         {
         }
@@ -278,102 +277,36 @@ namespace BetterLyrics.WinUI3.ViewModels
             _refreshSongsTimer.Debounce(() =>
             {
                 IsDataLoading = true;
-                _tracks.Clear();
 
-                Task.Run(async () =>
+                _ = Task.Run(async () =>
                 {
-                    try
+                    var enabledFolderIds = _settingsService.AppSettings.LocalMediaFolders
+                        .Where(f => f.IsEnabled)
+                        .Select(f => f.Id)
+                        .ToList();
+
+                    var cachedFiles = await _fileSystemService.GetParsedFilesAsync(enabledFolderIds);
+
+                    var newTrackList = cachedFiles
+                        .Select(x => new ExtendedTrack(x))
+                        .ToList();
+
+                    _dispatcherQueue.TryEnqueue(() =>
                     {
-                        foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
-                        {
-                            if (!folder.IsEnabled) continue;
+                        _tracks = newTrackList;
 
-                            try
-                            {
-                                // 1. 创建底层的驱动 (FTP/SMB/Local)
-                                // 注意：这里我们使用 using 确保用完销毁连接
-                                using var rawFs = folder.CreateFileSystem();
-                                if (rawFs == null) continue;
-
-                                // 2. 【关键】将驱动包装进 Service
-                                // 这样你就拥有了：缓存能力 + 后台静默更新能力
-                                // 建议：如果 DatabaseManager 是单例，最好将其注入进去，这里直接 new 为了演示方便
-                                var fileService = new FileSystemService(rawFs);
-
-                                // 初始化数据库连接 (如果没有在构造函数里做)
-                                await fileService.InitializeAsync();
-
-                                // 递归扫描队列
-                                var foldersToScan = new Queue<string>();
-                                foldersToScan.Enqueue(""); // 从根目录开始
-
-                                while (foldersToScan.Count > 0)
-                                {
-                                    var currentPath = foldersToScan.Dequeue();
-
-                                    // 3. 【提速】这里改用 Service 获取文件列表
-                                    // 第一次运行会走网络，第二次运行直接读本地 SQLite，毫秒级响应
-                                    var items = await fileService.GetFilesAsync(currentPath);
-
-                                    foreach (var item in items)
-                                    {
-                                        if (item.IsFolder)
-                                        {
-                                            // 文件夹：加入队列继续递归
-                                            foldersToScan.Enqueue(item.FullPath);
-                                            continue;
-                                        }
-
-                                        var ext = Path.GetExtension(item.Name).ToLower();
-                                        if (FileHelper.MusicExtensions.Contains(ext))
-                                        {
-                                            try
-                                            {
-                                                // 4. 读取文件流 (解析 ID3 信息)
-                                                // 注意：这里目前还是瓶颈，因为每次都要读文件头
-                                                // 优化方向：将 Title/Artist 也存入 SQLite，跳过这一步
-                                                using (var stream = await fileService.OpenFileAsync(item))
-                                                {
-                                                    // 这里的 item 是 UnifiedFileItem (Model)，正是 Service 返回的类型
-                                                    ExtendedTrack track = new ExtendedTrack(item.FullPath, stream);
-
-                                                    if (track.Duration > 0)
-                                                    {
-                                                        // 读取专辑图到内存 (因为流马上要关闭)
-                                                        _ = track.EmbeddedPictures;
-                                                        _tracks.Add(track);
-                                                    }
-                                                }
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                System.Diagnostics.Debug.WriteLine($"Error loading track {item.Name}: {ex.Message}");
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Diagnostics.Debug.WriteLine($"Folder scan error ({folder.Name}): {ex.Message}");
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Global scan error: {ex.Message}");
-                    }
-
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                    {
+                        // 应用过滤器
                         ApplyPlaylist();
                         ApplySongSearchQuery();
+
                         IsLocalMediaNotFound = !_filteredTracks.Any();
+
                         ApplySongOrderType();
+
                         IsDataLoading = false;
                     });
                 });
-            }, Constants.Time.DebounceTimeout);
+            }, Time.DebounceTimeout);
         }
 
         public void ApplyPlaylist()
@@ -404,7 +337,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                             if (File.Exists(path))
                             {
                                 var m3uFileContent = File.ReadAllText(path);
-                                _playlistTracks = _tracks.Where(t => m3uFileContent.Contains(t.Path)).ToList();
+                                _playlistTracks = _tracks.Where(t => m3uFileContent.Contains(t.UriPath)).ToList();
                             }
                             else
                             {
@@ -494,28 +427,109 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _timelineController.Pause();
             _mediaPlayer.Source = null;
+
+            _currentStream?.Dispose();
+            _currentNetStream?.Dispose();
+            _currentStream = null;
+            _currentNetStream = null;
+
             if (playQueueItem == null)
             {
                 _smtc.IsEnabled = false;
+                _smtc.DisplayUpdater.ClearAll();
             }
             else
             {
                 PlayingTrack = playQueueItem.Track;
-
-                var updater = _smtc.DisplayUpdater;
-                updater.ClearAll();
-
                 _smtc.IsEnabled = true;
-                _mediaPlayer.Source = MediaSource.CreateFromUri(new Uri(PlayingTrack.Path));
 
-                var storageFile = await StorageFile.GetFileFromPathAsync(PlayingTrack.Path);
+                try
+                {
+                    // ★ 1. 查找对应的 MediaFolder 配置
+                    // 现在的 PlayingTrack.Uri 是标准的完整 URI (例如 smb://host/share/file.mp3)
+                    // 我们通过对比前缀来找到它属于哪个 MediaFolder
+                    var targetFolder = _settingsService.AppSettings.LocalMediaFolders.FirstOrDefault(f =>
+                        PlayingTrack.Uri.StartsWith(f.GetStandardUri().AbsoluteUri, StringComparison.OrdinalIgnoreCase));
 
-                await updater.CopyFromFileAsync(MediaPlaybackType.Music, storageFile);
-                updater.AppMediaId = Package.Current.Id.FullName;
-                updater.MusicProperties.AlbumTitle = PlayingTrack.Album;
-                updater.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(PlayingTrack.Path)}");
-                updater.Update();
+                    if (targetFolder == null)
+                    {
+                        throw new Exception($"找不到文件 {PlayingTrack.FileName} 对应的存储配置。请检查服务器设置是否已启用。");
+                    }
+
+                    // ★ 2. 创建 Provider 并连接
+                    _currentProvider = targetFolder.CreateFileSystem();
+                    if (_currentProvider == null) return;
+
+                    await _currentProvider.ConnectAsync();
+
+                    // ★ 3. 构造实体对象进行读取
+                    // FileSystemService.OpenFileAsync 现在只需要 entity.Uri 就能工作
+                    var fileCacheStub = new FileCacheEntity
+                    {
+                        Uri = PlayingTrack.Uri
+                    };
+
+                    _currentNetStream = await _fileSystemService.OpenFileAsync(_currentProvider, fileCacheStub);
+
+                    _currentStream = _currentNetStream.AsRandomAccessStream();
+
+                    // 获取 MIME 类型 (使用 FileName 或 Uri 都可以)
+                    string contentType = GetMimeType(PlayingTrack.FileName);
+                    var mediaSource = MediaSource.CreateFromStream(_currentStream, contentType);
+
+                    _mediaPlayer.Source = mediaSource;
+
+                    // --- SMTC 更新逻辑 (基本保持不变) ---
+                    var updater = _smtc.DisplayUpdater;
+                    updater.Type = MediaPlaybackType.Music;
+
+                    updater.MusicProperties.Title = PlayingTrack.Title ?? PlayingTrack.FileName;
+                    updater.MusicProperties.Artist = PlayingTrack.Artist ?? "Unknown Artist";
+                    updater.MusicProperties.AlbumTitle = PlayingTrack.Album ?? "";
+
+                    updater.MusicProperties.Genres.Clear();
+                    // 注意：这里改用 FileName 获取文件名，因为 UriPath 已被移除
+                    updater.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(PlayingTrack.FileName)}");
+
+                    updater.AppMediaId = Package.Current.Id.FullName;
+
+                    if (!string.IsNullOrEmpty(PlayingTrack.LocalAlbumArtPath) && File.Exists(PlayingTrack.LocalAlbumArtPath))
+                    {
+                        var storageFile = await StorageFile.GetFileFromPathAsync(PlayingTrack.LocalAlbumArtPath);
+                        updater.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
+                    }
+                    else
+                    {
+                        updater.Thumbnail = null;
+                    }
+
+                    updater.Update();
+                }
+                catch (Exception ex)
+                {
+                    // 建议：播放失败时弹个 Toast 或者在 UI 上显示错误
+                    System.Diagnostics.Debug.WriteLine($"PlayTrackAsync Error: {ex.Message}");
+
+                    // 自动跳过或停止
+                    _timelineController.Pause();
+                }
             }
+        }
+
+        private string GetMimeType(string path)
+        {
+            var ext = Path.GetExtension(path).ToLower();
+            return ext switch
+            {
+                ".mp3" => "audio/mpeg",
+                ".flac" => "audio/flac",
+                ".wav" => "audio/wav",
+                ".m4a" => "audio/mp4",
+                ".aac" => "audio/aac",
+                ".ogg" => "audio/ogg",
+                ".wma" => "audio/x-ms-wma",
+                _ => "application/octet-stream"
+            };
         }
 
         partial void OnSongOrderTypeChanged(CommonSongProperty value)
@@ -582,5 +596,28 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             await PlayTrackAtAsync(-1);
         }
+
+        public void Receive(PropertyChangedMessage<DateTime?> message)
+        {
+            if (message.Sender is MediaFolder)
+            {
+                if (message.PropertyName == nameof(MediaFolder.LastSyncTime))
+                {
+                    RefreshSongs();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is MediaFolder)
+            {
+                if (message.PropertyName == nameof(MediaFolder.IsEnabled))
+                {
+                    RefreshSongs();
+                }
+            }
+        }
+
     }
 }
