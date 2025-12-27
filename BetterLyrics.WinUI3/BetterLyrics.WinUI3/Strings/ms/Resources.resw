@@ -169,19 +169,22 @@
     <value>Cleaning cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value>Connection failed</value>
+    <value>Sambungan gagal</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>Menyambung...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
     <value>Fetching file list...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>Parsing...</value>
+    <value>Menghurai...</value>
+  </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value>Preparing to clean cache...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Waiting for scan...</value>
+    <value>Preparing to scan...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Mod Skrin Penuh</value>
@@ -376,10 +379,10 @@
     <value>Paparan Pisah</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value>Last Sync Time</value>
+    <value>Masa Segerak Akhir</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value>Sync now</value>
+    <value>Segerak sekarang</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Tambah ke senarai main</value>
@@ -499,16 +502,16 @@
     <value>Auto-sync Frequency</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>Tak pernah</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value>Every Day</value>
+    <value>Setiap Hari</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>Every 15 Minutes</value>
+    <value>Setiap 15 minit</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>Every Hour</value>
+    <value>Setiap jam</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>Every 6 Hours</value>
