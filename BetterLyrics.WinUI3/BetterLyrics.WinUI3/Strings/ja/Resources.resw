@@ -166,22 +166,22 @@
     <value>LX Music サーバーに接続できません。「設定」-「再生ソース」-「LX Music」-「LX Music サーバー」に移動し、リンクが正しく入力されているか確認してください</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>キャッシュをクリーニング中...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value>Connection failed</value>
+    <value>接続に失敗しました</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>Connecting...</value>
+    <value>接続中...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>Fetching file list...</value>
+    <value>ファイルリストを取得しています...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>Parsing...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Waiting for scan...</value>
+    <value>スキャンを待っています...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全画面モード</value>
@@ -376,10 +376,10 @@
     <value>分割表示</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value>Last Sync Time</value>
+    <value>最終同期時間</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value>Sync now</value>
+    <value>今すぐ同期</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>プレイリストに追加</value>
@@ -496,22 +496,22 @@
     <value>ミュージックギャラリー - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>Auto-sync Frequency</value>
+    <value>自動同期周波数</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>一切なし</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value>Every Day</value>
+    <value>毎日</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>Every 15 Minutes</value>
+    <value>15分ごと</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>Every Hour</value>
+    <value>1時間ごと</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>Every 6 Hours</value>
+    <value>6時間ごと</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>狭い表示モード</value>
