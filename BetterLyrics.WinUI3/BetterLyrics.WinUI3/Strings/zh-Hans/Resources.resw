@@ -181,7 +181,7 @@
     <value>正在解析...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value>正在准备清理...</value>
+    <value>正在准备清理缓存...</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>正在准备扫描...</value>
