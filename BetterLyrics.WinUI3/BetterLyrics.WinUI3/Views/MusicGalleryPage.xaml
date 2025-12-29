@@ -29,7 +29,7 @@
     </Page.Resources>
 
     <Grid>
-        <Grid Padding="12,8,12,64" ColumnSpacing="12">
+        <Grid Padding="12,16,12,64" ColumnSpacing="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
@@ -49,7 +49,7 @@
                     <TextBlock
                         x:Uid="MusicGalleryPagePlaylist"
                         Grid.Row="0"
-                        Margin="1,4,0,6"
+                        Margin="1,0,0,6"
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <Grid Grid.Row="1">

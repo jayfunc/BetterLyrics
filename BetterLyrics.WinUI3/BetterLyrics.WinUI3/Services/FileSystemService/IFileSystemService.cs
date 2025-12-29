@@ -10,6 +10,10 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 {
     public interface IFileSystemService
     {
+        /// <summary>
+        /// 初始化（连接）数据库
+        /// </summary>
+        /// <returns></returns>
         Task InitializeAsync();
 
         /// <summary>

@@ -46,10 +46,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             _db = new SQLiteAsyncConnection(PathHelper.FilesCachePath);
         }
 
-        /// <summary>
-        /// 初始化（连接）数据库
-        /// </summary>
-        /// <returns></returns>
         public async Task InitializeAsync()
         {
             if (_isInitialized) return;
@@ -136,14 +132,15 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                 await _db.RunInTransactionAsync(conn =>
                 {
                     var dbItems = conn.Table<FileCacheEntity>()
-                                      .Where(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri)
-                                      .ToList();
+                        .Where(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri)
+                        .ToList();
 
                     var dbMap = dbItems.ToDictionary(x => x.Uri, x => x);
 
-                    var remoteMap = remoteItems.GroupBy(x => x.Uri)
-                                               .Select(g => g.First())
-                                               .ToDictionary(x => x.Uri, x => x);
+                    var remoteMap = remoteItems
+                        .GroupBy(x => x.Uri)
+                        .Select(g => g.First())
+                        .ToDictionary(x => x.Uri, x => x);
 
                     var toInsert = new List<FileCacheEntity>();
                     var toUpdate = new List<FileCacheEntity>();

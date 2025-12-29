@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using SMBLibrary;
 using SMBLibrary.Client;
 using System;
@@ -88,7 +89,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
             if (statusRet != NTStatus.STATUS_SUCCESS) return result;
 
-            // 确保 parentUriString 总是以 / 结尾，方便后续拼接
             string parentUriString = parentFolder?.Uri ?? _config.GetStandardUri().AbsoluteUri;
 
             List<QueryDirectoryFileInformation> fileInfo;
@@ -97,7 +97,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             {
                 statusRet = _fileStore.QueryDirectory(out fileInfo, handle, "*", FileInformationClass.FileDirectoryInformation);
 
-                // 【安全检查】如果查询失败或者没有更多文件，fileInfo 可能是 null，直接跳出
+                // 如果查询失败或者没有更多文件，fileInfo 可能是 null，直接跳出
                 if (statusRet != NTStatus.STATUS_SUCCESS && statusRet != NTStatus.STATUS_NO_MORE_FILES)
                 {
                     break;
@@ -110,35 +110,32 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                     {
                         if (item.FileName == "." || item.FileName == "..") continue;
 
-                        // ==================================================
-                        // ★ 修正后的 URI 构建逻辑
-                        // ==================================================
+                        // 过滤隐藏文件和系统文件
+                        if ((item.FileAttributes & SMBLibrary.FileAttributes.Hidden) == SMBLibrary.FileAttributes.Hidden ||
+                        (item.FileAttributes & SMBLibrary.FileAttributes.System) == SMBLibrary.FileAttributes.System)
+                        {
+                            continue;
+                        }
 
-                        // 方法 A (推荐): 使用 Uri 构造函数自动合并
-                        // 1. 确保 Base Uri 以 / 结尾 (否则 "folder" + "file" 会变成 "file" 替换掉 "folder")
+                        bool isDir = (item.FileAttributes & SMBLibrary.FileAttributes.Directory) == SMBLibrary.FileAttributes.Directory;
+
+                        // 后缀名过滤
+                        if (!isDir)
+                        {
+                            string extension = Path.GetExtension(item.FileName);
+                            if (string.IsNullOrEmpty(extension) || !FileHelper.AllSupportedExtensions.Contains(extension)) continue;
+                        }
+
                         if (!parentUriString.EndsWith("/")) parentUriString += "/";
                         var baseUri = new Uri(parentUriString);
-
-                        // 2. 直接利用 Uri 的构造函数处理相对路径
-                        // new Uri(baseUri, "filename") 会自动处理编码和斜杠
-                        // 注意：如果 item.FileName 包含特殊字符，Uri 类会自动帮我们编码
                         var newUri = new Uri(baseUri, item.FileName);
-
-                        // 如果你还是想用 UriBuilder (手动控制更强)，请用下面这行代替上面：
-                        /*
-                        var builder = new UriBuilder(baseUri);
-                        // 关键：先 Unescape 解码，变回原始字符串，再拼接，最后赋值给 builder 让它重新编码
-                        string cleanBasePath = Uri.UnescapeDataString(baseUri.AbsolutePath); 
-                        builder.Path = Path.Combine(cleanBasePath, item.FileName).Replace("\\", "/");
-                        var newUri = builder.Uri;
-                        */
 
                         result.Add(new FileCacheEntity
                         {
                             MediaFolderId = _config.Id,
-                            ParentUri = parentFolder?.Uri ?? _config.GetStandardUri().AbsoluteUri, // 保持原始父级 URI (不带末尾斜杠的)
+                            ParentUri = parentFolder?.Uri ?? _config.GetStandardUri().AbsoluteUri,
 
-                            Uri = newUri.AbsoluteUri, // 使用修正后的 URI
+                            Uri = newUri.AbsoluteUri,
 
                             FileName = item.FileName,
                             IsDirectory = (item.FileAttributes & SMBLibrary.FileAttributes.Directory) == SMBLibrary.FileAttributes.Directory,
