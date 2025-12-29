@@ -159,6 +159,9 @@
   <data name="DockedMode" xml:space="preserve">
     <value>停靠模式</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>匯出成功</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>準備清除快取...</value>
+  </data>
+  <data name="FileSystemServiceReady" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>已偵測到根目錄路徑。全磁碟索引可能包含大量非媒體檔案，導致掃描時間過長。建議指定特定的子目錄。</value>
@@ -407,6 +413,9 @@
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>所有音樂</value>
+  </data>
+  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
+    <value>The data is being processed. You can check the detailed progress in the settings.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>清除播放佇列</value>
