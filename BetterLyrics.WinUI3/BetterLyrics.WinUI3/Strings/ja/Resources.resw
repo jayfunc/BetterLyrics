@@ -159,6 +159,9 @@
   <data name="DockedMode" xml:space="preserve">
     <value>ドッキングモード</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>エクスポートが成功しました</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>キャッシュ・クリーン準備中</value>
+  </data>
+  <data name="FileSystemServiceReady" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>ルートディレクトリのパスが検出された。フルディスクインデックスにはメディア以外のファイルが多数含まれている可能性があり、スキャンに時間がかかりすぎる。特定のサブディレクトリを指定することを推奨する。</value>
@@ -407,6 +413,9 @@
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>すべてのミュージック</value>
+  </data>
+  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
+    <value>The data is being processed. You can check the detailed progress in the settings.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>キューをクリア</value>
