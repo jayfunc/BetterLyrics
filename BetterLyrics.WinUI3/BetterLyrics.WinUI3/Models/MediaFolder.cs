@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.FileSystemService.Providers;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -30,6 +31,7 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedFor(nameof(UriString))] public partial string UriHost { get; set; }
         [ObservableProperty][NotifyPropertyChangedFor(nameof(UriString))] public partial int UriPort { get; set; } = -1;
 
+        [JsonPropertyName("Path")]
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         [NotifyPropertyChangedFor(nameof(ConnectionSummary))]
@@ -40,12 +42,10 @@ namespace BetterLyrics.WinUI3.Models
 
         [JsonIgnore] public bool IsLocal => SourceType == FileSourceType.Local;
 
-        [JsonIgnore][ObservableProperty] public partial bool IsIndexing { get; set; } = false;
-        [JsonIgnore][ObservableProperty] public partial double IndexingProgress { get; set; } = 0;
-        [JsonIgnore][ObservableProperty] public partial string IndexingStatusText { get; set; } = "";
-
-        [JsonIgnore][ObservableProperty] public partial bool IsCleaningUp { get; set; } = false;
-        [JsonIgnore][ObservableProperty] public partial string CleaningUpStatusText { get; set; } = "";
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsProcessing { get; set; } = false;
+        [ObservableProperty] public partial double IndexingProgress { get; set; } = 0;
+        [ObservableProperty] public partial string StatusText { get; set; } = "";
+        [ObservableProperty] public partial InfoBarSeverity StatusSeverity { get; set; } = InfoBarSeverity.Informational;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DateTime? LastSyncTime { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial AutoScanInterval ScanInterval { get; set; } = AutoScanInterval.Disabled;
@@ -118,7 +118,7 @@ namespace BetterLyrics.WinUI3.Models
                 FileSourceType.Local => new LocalFileSystem(this),
                 FileSourceType.SMB => new SMBFileSystem(this),
                 FileSourceType.FTP => new FTPFileSystem(this),
-                FileSourceType.WebDav => new WebDavFileSystem(this),
+                FileSourceType.WebDAV => new WebDavFileSystem(this),
                 _ => throw new NotImplementedException()
             };
         }

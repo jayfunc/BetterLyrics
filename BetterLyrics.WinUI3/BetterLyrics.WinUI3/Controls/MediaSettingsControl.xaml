@@ -5,6 +5,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
+    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -88,14 +89,18 @@
                                         </dev:SettingsCard>
                                     </dev:SettingsExpander.Items>
 
-                                    <dev:SettingsExpander.ItemsFooter>
+                                    <dev:SettingsExpander.ItemsHeader>
                                         <StackPanel>
                                             <!--  Index info  -->
                                             <InfoBar
                                                 IsClosable="False"
-                                                IsOpen="{x:Bind IsIndexing, Mode=OneWay}"
-                                                Message="{x:Bind IndexingStatusText, Mode=OneWay}" />
-                                            <ProgressBar Visibility="{x:Bind IsIndexing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" Value="{x:Bind IndexingProgress, Mode=OneWay}">
+                                                IsOpen="True"
+                                                Message="{x:Bind StatusText, Mode=OneWay}"
+                                                Severity="{x:Bind StatusSeverity, Mode=OneWay}" />
+                                            <ProgressBar
+                                                Background="Transparent"
+                                                Visibility="{x:Bind IsProcessing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                Value="{x:Bind IndexingProgress, Mode=OneWay}">
                                                 <interactivity:Interaction.Behaviors>
                                                     <interactivity:DataTriggerBehavior
                                                         Binding="{x:Bind IndexingProgress, Mode=OneWay}"
@@ -111,14 +116,8 @@
                                                     </interactivity:DataTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                             </ProgressBar>
-                                            <!--  Clean up info  -->
-                                            <InfoBar
-                                                IsClosable="False"
-                                                IsOpen="{x:Bind IsCleaningUp, Mode=OneWay}"
-                                                Message="{x:Bind CleaningUpStatusText, Mode=OneWay}" />
-                                            <ProgressBar IsIndeterminate="True" Visibility="{x:Bind IsCleaningUp, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         </StackPanel>
-                                    </dev:SettingsExpander.ItemsFooter>
+                                    </dev:SettingsExpander.ItemsHeader>
 
                                 </dev:SettingsExpander>
                             </DataTemplate>

@@ -75,6 +75,13 @@ namespace BetterLyrics.WinUI3
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
             var fileSystemService = Ioc.Default.GetRequiredService<IFileSystemService>();
+            foreach (var item in settingsService.AppSettings.LocalMediaFolders)
+            {
+                if (item.LastSyncTime == null)
+                {
+                    _ = Task.Run(async () => await fileSystemService.ScanMediaFolderAsync(item, CancellationToken.None));
+                }
+            }
             fileSystemService.StartAllFolderTimers();
 
             WindowHook.OpenOrShowWindow<SystemTrayWindow>();

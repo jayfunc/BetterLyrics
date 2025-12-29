@@ -5,6 +5,6 @@
         Local,
         SMB,
         FTP,
-        WebDav
+        WebDAV
     }
 }

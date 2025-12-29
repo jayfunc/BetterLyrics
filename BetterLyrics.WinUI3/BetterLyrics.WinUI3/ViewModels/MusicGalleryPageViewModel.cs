@@ -274,8 +274,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             _refreshSongsTimer.Debounce(() =>
             {
-                IsDataLoading = true;
-
                 _ = Task.Run(async () =>
                 {
                     var enabledFolderIds = _settingsService.AppSettings.LocalMediaFolders
@@ -304,8 +302,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                         IsLocalMediaNotFound = !_filteredTracks.Any();
 
                         ApplySongOrderType();
-
-                        IsDataLoading = false;
                     });
                 });
             }, Time.DebounceTimeout);
@@ -491,8 +487,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     if (targetFolder == null)
                     {
-                        
-                        throw new Exception($"找不到文件 {PlayingTrack.FileName} 对应的存储配置。请检查服务器设置是否已启用。");
+                        throw new FileNotFoundException(null, PlayingTrack.DecodedAbsoluteUri);
                     }
 
                     _currentProvider = targetFolder.CreateFileSystem();
@@ -509,7 +504,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     if (sourceStream == null)
                     {
-                        throw new FileNotFoundException("无法打开文件流");
+                        throw new FileNotFoundException(null, fileCacheStub.Uri);
                     }
 
                     if (sourceStream.CanSeek)
@@ -561,7 +556,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    ToastHelper.ShowToast($"PlayTrackAsync: Error", ex.Message, InfoBarSeverity.Error);
+                    ToastHelper.ShowToast("Error", ex.Message, InfoBarSeverity.Error);
                     _timelineController.Pause();
                 }
             }
@@ -664,6 +659,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(MediaFolder.IsEnabled))
                 {
                     RefreshSongs();
+                }
+                else if (message.PropertyName == nameof(MediaFolder.IsProcessing))
+                {
+                    IsDataLoading = message.NewValue;
                 }
             }
         }
