@@ -171,6 +171,7 @@
                         x:Name="FolderTreeView"
                         Grid.Row="4"
                         AllowDrop="False"
+                        CanDrag="False"
                         CanDragItems="False"
                         ItemInvoked="FolderTreeView_ItemInvoked"
                         ItemsSource="{x:Bind ViewModel.FolderRoots, Mode=OneWay}"
