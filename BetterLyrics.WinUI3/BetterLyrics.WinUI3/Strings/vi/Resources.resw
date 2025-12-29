@@ -159,6 +159,9 @@
   <data name="DockedMode" xml:space="preserve">
     <value>Chế độ neo (Docked)</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>Xuất thành công</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>Đang chuẩn bị xóa bộ nhớ cache...</value>
+  </data>
+  <data name="FileSystemServiceReady" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>Đường dẫn thư mục gốc đã được phát hiện. Chỉ mục đĩa đầy đủ có thể chứa một lượng lớn tệp không phải phương tiện và khiến quá trình quét mất quá nhiều thời gian. Khuyến nghị chỉ định một thư mục con cụ thể.</value>
@@ -407,6 +413,9 @@
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>Tất cả bài hát</value>
+  </data>
+  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
+    <value>The data is being processed. You can check the detailed progress in the settings.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Xóa hàng đợi phát</value>
