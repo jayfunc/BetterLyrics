@@ -12,13 +12,13 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class RemoteServerConfigControl : UserControl
     {
-        private readonly string _protocolType;
+        private readonly FileSourceType _fileSourceType;
         private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
-        public RemoteServerConfigControl(string protocolType)
+        public RemoteServerConfigControl(FileSourceType fileSourceType)
         {
             this.InitializeComponent();
-            _protocolType = protocolType;
+            _fileSourceType = fileSourceType;
 
             SetupDefaults();
             CheckPathForWarning();
@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void SetupDefaults()
         {
-            if (_protocolType.Equals("Local", StringComparison.OrdinalIgnoreCase))
+            if (_fileSourceType == FileSourceType.Local)
             {
                 RemoteFieldsPanel.Visibility = Visibility.Collapsed;
                 AuthFieldsPanel.Visibility = Visibility.Collapsed;
@@ -41,17 +41,17 @@ namespace BetterLyrics.WinUI3.Controls
                 RemoteFieldsPanel.Visibility = Visibility.Visible;
                 AuthFieldsPanel.Visibility = Visibility.Visible;
 
-                switch (_protocolType.ToUpper())
+                switch (_fileSourceType)
                 {
-                    case "SMB":
+                    case FileSourceType.SMB:
                         PortBox.Value = 445;
                         PathBox.PlaceholderText = "SharedMusic";
                         break;
-                    case "FTP":
+                    case FileSourceType.FTP:
                         PortBox.Value = 21;
                         PathBox.PlaceholderText = "/pub/music";
                         break;
-                    case "WEBDAV":
+                    case FileSourceType.WebDAV:
                         PortBox.Value = 80;
                         PathBox.PlaceholderText = "/dav/music";
                         break;
@@ -62,15 +62,15 @@ namespace BetterLyrics.WinUI3.Controls
         private string GetScheme()
         {
             string scheme = string.Empty;
-            switch (_protocolType.ToUpper())
+            switch (_fileSourceType)
             {
-                case "SMB":
+                case FileSourceType.SMB:
                     scheme = "smb";
                     break;
-                case "FTP":
+                case FileSourceType.FTP:
                     scheme = "ftp";
                     break;
-                case "WEBDAV":
+                case FileSourceType.WebDAV:
                     scheme = "https";
                     break;
             }
@@ -81,7 +81,7 @@ namespace BetterLyrics.WinUI3.Controls
         {
             string finalName = HostBox.Text.Trim();
 
-            if (_protocolType.Equals("Local", StringComparison.OrdinalIgnoreCase))
+            if (_fileSourceType == FileSourceType.Local)
             {
                 if (string.IsNullOrWhiteSpace(PathBox.Text))
                     throw new ArgumentException(_localizationService.GetLocalizedString("RemoteServerConfigControlPathRequired"));
@@ -109,17 +109,15 @@ namespace BetterLyrics.WinUI3.Controls
             }
             else
             {
-                finalName = $"{_protocolType} - {HostBox.Text}";
+                finalName = $"{_fileSourceType} - {HostBox.Text}";
             }
-
-            Enum.TryParse(_protocolType, true, out FileSourceType sourceType);
 
             string scheme = GetScheme();
 
             var folder = new MediaFolder
             {
                 Name = finalName,
-                SourceType = sourceType,
+                SourceType = _fileSourceType,
 
                 UriScheme = scheme,
                 UriHost = HostBox.Text.Trim(), // È¥³ýÊ×Î²¿Õ¸ñ
@@ -144,12 +142,7 @@ namespace BetterLyrics.WinUI3.Controls
         {
             ProgressBar.Visibility = visibility;
         }
-
-        private void PathBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            CheckPathForWarning();
-        }
-
+        
         private void CheckPathForWarning()
         {
             string? path = PathBox.Text?.Trim();
@@ -176,6 +169,11 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 PathWarningBar.IsOpen = false;
             }
+        }
+
+        private void PathBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckPathForWarning();
         }
 
         private async void BrowseButton_Click(object sender, RoutedEventArgs e)

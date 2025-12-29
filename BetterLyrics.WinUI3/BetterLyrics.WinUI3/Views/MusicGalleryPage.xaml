@@ -195,6 +195,7 @@
             <Grid x:Name="SongViewer" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.Tag>
@@ -302,7 +303,13 @@
 
                 </StackPanel>
 
-                <SemanticZoom Grid.Row="1">
+                <InfoBar
+                    x:Uid="MusicGalleryPageDataLoading"
+                    Grid.Row="1"
+                    IsClosable="False"
+                    IsOpen="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}" />
+
+                <SemanticZoom Grid.Row="2">
                     <SemanticZoom.ZoomedInView>
                         <ListView
                             x:Name="SongListView"
@@ -448,7 +455,7 @@
                     </SemanticZoom.ZoomedOutView>
                 </SemanticZoom>
 
-                <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid Grid.Row="2" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
@@ -650,24 +657,6 @@
                 </Grid>
             </Grid>
 
-        </Grid>
-
-        <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" Visibility="{x:Bind ViewModel.IsDataLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-            <Grid Margin="12">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="48" />
-                    <RowDefinition Height="12" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="12" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="12" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <labs:Shimmer Grid.Row="0" CornerRadius="6" />
-                <labs:Shimmer Grid.Row="2" CornerRadius="6" />
-                <labs:Shimmer Grid.Row="4" CornerRadius="6" />
-                <labs:Shimmer Grid.Row="6" CornerRadius="6" />
-            </Grid>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>

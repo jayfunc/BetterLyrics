@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Controls;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
@@ -9,6 +10,7 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI.Animations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -51,23 +53,25 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void SyncFolder(MediaFolder folder)
         {
-            if (folder.IsIndexing) return;
+            if (folder.IsProcessing) return;
 
             _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(folder, CancellationToken.None));
         }
 
         [RelayCommand]
-        private async Task AddMediaSourceAsync(string protocolType)
+        private async Task AddMediaSourceAsync(string fileSourceTypeName)
         {
+            FileSourceType fileSourceType = Enum.Parse<FileSourceType>(fileSourceTypeName);
+
             var dialog = new ContentDialog
             {
                 XamlRoot = WindowHook.GetWindow<SettingsWindow>()?.Content.XamlRoot,
                 Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                Title = protocolType == "Local" ? _localizationService.GetLocalizedString("MediaSettingsControlLocalFolder") : protocolType,
+                Title = fileSourceType == FileSourceType.Local ? _localizationService.GetLocalizedString("MediaSettingsControlLocalFolder") : Enum.GetName(fileSourceType),
                 PrimaryButtonText = _localizationService.GetLocalizedString("Add"),
                 CloseButtonText = _localizationService.GetLocalizedString("Cancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                Content = new RemoteServerConfigControl(protocolType)
+                Content = new RemoteServerConfigControl(fileSourceType)
             };
 
             dialog.PrimaryButtonClick += async (s, e) =>
@@ -86,13 +90,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     var tempFolder = configControl.GetConfig();
 
-                    if (protocolType == "Local")
+                    if (fileSourceType == FileSourceType.Local)
                     {
                         string path = tempFolder.UriPath;
 
-                        if (!System.IO.Directory.Exists(path))
+                        if (!Directory.Exists(path))
                         {
-                            throw new System.IO.DirectoryNotFoundException(_localizationService.GetLocalizedString("RemoteServerConfigControlPathNotExisted"));
+                            throw new DirectoryNotFoundException(_localizationService.GetLocalizedString("RemoteServerConfigControlPathNotExisted"));
                         }
 
                         var normalizedPath = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
@@ -126,6 +130,29 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
+                        if (fileSourceType == FileSourceType.WebDAV)
+                        {
+                            // 使用辅助类探测协议
+                            string? detectedScheme = await WebDavProbeHelper.DetectSchemeAsync(
+                                tempFolder.UriHost,
+                                tempFolder.UriPort,
+                                tempFolder.UriPath,
+                                tempFolder.UserName,
+                                tempFolder.Password
+                            );
+
+                            if (detectedScheme == null)
+                            {
+                                // 探测失败，直接报错返回
+                                configControl.ShowError(_localizationService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
+                                deferral.Complete();
+                                return;
+                            }
+
+                            // 将探测到的正确协议 (http 或 https) 写入配置对象
+                            tempFolder.UriScheme = detectedScheme;
+                        }
+
                         var newUriString = tempFolder.GetStandardUri().AbsoluteUri.TrimEnd('/') + "/";
 
                         foreach (var existingFolder in AppSettings.LocalMediaFolders)
@@ -206,11 +233,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             };
 
             await dialog.ShowAsync();
-        }
-
-        private void ShowErrorTip(RemoteServerConfigControl control, string message)
-        {
-            control.ShowError(message);
         }
 
     }

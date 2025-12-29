@@ -8,6 +8,7 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml.Controls;
 using SQLite;
 using System;
 using System.Collections.Concurrent;
@@ -241,8 +242,10 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         {
             _dispatcherQueue.TryEnqueue(() =>
             {
-                folder.CleaningUpStatusText = _localizationService.GetLocalizedString("FileSystemServicePrepareToClean");
-                folder.IsCleaningUp = true;
+                folder.IndexingProgress = 0;
+                folder.StatusSeverity = InfoBarSeverity.Informational;
+                folder.StatusText = _localizationService.GetLocalizedString("FileSystemServicePrepareToClean");
+                folder.IsProcessing = true;
             });
 
             if (_folderTimerTokens.TryRemove(folder.Id, out var timerCts))
@@ -266,7 +269,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                 {
                     _dispatcherQueue.TryEnqueue(() =>
                     {
-                        folder.CleaningUpStatusText = _localizationService.GetLocalizedString("FileSystemServiceCleaningCache");
+                        folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceCleaningCache");
                     });
 
                     await InitializeAsync();
@@ -295,8 +298,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             {
                 _dispatcherQueue.TryEnqueue(() =>
                 {
-                    folder.CleaningUpStatusText = "";
-                    folder.IsCleaningUp = false;
+                    folder.IsProcessing = false;
                     folder.LastSyncTime = null;
                 });
             }
@@ -311,27 +313,32 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
             _dispatcherQueue.TryEnqueue(() =>
             {
-                folder.IsIndexing = true;
+                folder.StatusSeverity = InfoBarSeverity.Informational;
+                folder.IsProcessing = true;
                 folder.IndexingProgress = 0;
-                folder.IndexingStatusText = _localizationService.GetLocalizedString("FileSystemServiceWaitingForScan");
+                folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceWaitingForScan");
             });
 
             try
             {
                 await _folderScanLock.WaitAsync(scanCts.Token);
 
-                _dispatcherQueue.TryEnqueue(() => folder.IndexingStatusText = _localizationService.GetLocalizedString("FileSystemServiceConnecting"));
+                _dispatcherQueue.TryEnqueue(() => folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceConnecting"));
 
                 await InitializeAsync();
 
                 using var fs = folder.CreateFileSystem();
                 if (fs == null || !await fs.ConnectAsync())
                 {
-                    _dispatcherQueue.TryEnqueue(() => folder.IndexingStatusText = _localizationService.GetLocalizedString("FileSystemServiceConnectFailed"));
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        folder.StatusSeverity = InfoBarSeverity.Error;
+                        folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceConnectFailed");
+                    });
                     return;
                 }
 
-                _dispatcherQueue.TryEnqueue(() => folder.IndexingStatusText = _localizationService.GetLocalizedString("FileSystemServiceFetchingFileList"));
+                _dispatcherQueue.TryEnqueue(() => folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceFetchingFileList"));
 
                 var filesToProcess = new List<FileCacheEntity>();
                 var foldersToScan = new Queue<FileCacheEntity?>();
@@ -374,10 +381,10 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                     if (current % 10 == 0 || current == total)
                     {
                         double progress = (double)current / total * 100;
-                        _dispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
+                        _dispatcherQueue.TryEnqueue(() =>
                         {
                             folder.IndexingProgress = progress;
-                            folder.IndexingStatusText = $"{_localizationService.GetLocalizedString("FileSystemServiceParsing")} {current}/{total}";
+                            folder.StatusText = $"{_localizationService.GetLocalizedString("FileSystemServiceParsing")} {current}/{total}";
                         });
                     }
 
@@ -461,6 +468,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                 _dispatcherQueue.TryEnqueue(() =>
                 {
+                    folder.StatusSeverity = InfoBarSeverity.Success;
+                    folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceReady");
                     folder.LastSyncTime = DateTime.Now;
                 });
             }
@@ -470,7 +479,11 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             }
             catch (Exception ex)
             {
-                _dispatcherQueue.TryEnqueue(() => folder.IndexingStatusText = ex.Message);
+                _dispatcherQueue.TryEnqueue(() =>
+                {
+                    folder.StatusText = ex.Message;
+                    folder.StatusSeverity = InfoBarSeverity.Error;
+                });
             }
             finally
             {
@@ -480,9 +493,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                 _dispatcherQueue.TryEnqueue(() =>
                 {
-                    folder.IsIndexing = false;
-                    folder.IndexingStatusText = "";
-                    folder.IndexingProgress = 100;
+                    folder.IsProcessing = false;
+                    folder.IndexingProgress = 0;
                 });
             }
         }

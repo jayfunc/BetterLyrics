@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Converter
                     FileSourceType.Local => "\uE8B7", // Folder
                     FileSourceType.SMB => "\uE839",   // Network
                     FileSourceType.FTP => "\uE838",   // Globe
-                    FileSourceType.WebDav => "\uE753", // Cloud
+                    FileSourceType.WebDAV => "\uE753", // Cloud
                     _ => "\uE8B7"
                 };
             }
