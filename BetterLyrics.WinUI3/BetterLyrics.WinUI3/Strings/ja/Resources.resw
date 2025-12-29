@@ -457,7 +457,7 @@
     <value>ファイルからインポート</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>プレイリストの作成</value>
+    <value>プレイリストを作成</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>再生キュー</value>
