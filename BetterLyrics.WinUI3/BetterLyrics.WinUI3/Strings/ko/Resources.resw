@@ -159,6 +159,9 @@
   <data name="DockedMode" xml:space="preserve">
     <value>도킹 모드</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>내보내기 성공</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>캐시 정리 준비 중...</value>
+  </data>
+  <data name="FileSystemServiceReady" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>루트 디렉터리 경로가 감지되었습니다. 전체 디스크 인덱스에 미디어가 아닌 파일이 많이 포함되어 있어 스캔 시간이 너무 오래 걸릴 수 있습니다. 특정 하위 디렉터리를 지정하는 것이 좋습니다.</value>
@@ -407,6 +413,9 @@
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>모든 음악</value>
+  </data>
+  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
+    <value>The data is being processed. You can check the detailed progress in the settings.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>재생 대기열 비우기</value>
