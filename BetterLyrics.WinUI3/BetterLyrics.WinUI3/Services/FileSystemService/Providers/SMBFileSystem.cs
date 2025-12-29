@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
         private SMB2Client? _client;
         private ISMBFileStore? _fileStore;
 
-        // 保存配置对象的引用，它是我们的“真理来源”
+        // 保存配置对象的引用
         private readonly MediaFolder _config;
 
         // 缓存解析出来的 Share 名称，因为 TreeConnect 要用
@@ -26,8 +26,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             _config = config ?? throw new ArgumentNullException(nameof(config));
 
             // 在构造时就解析好 Share 名称，避免后续重复解析
-            // 假设 URI 是 smb://host/ShareName/Folder/Sub
-            // 我们需要提取 "ShareName"
             var uri = _config.GetStandardUri();
 
             // Segments[0] 是 "/", Segments[1] 是 "ShareName/"
@@ -48,16 +46,16 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             {
                 _client = new SMB2Client();
 
-                // 1. 连接主机
+                // 连接主机
                 bool connected = _client.Connect(_config.UriHost, SMBTransportType.DirectTCPTransport);
                 if (!connected) return false;
 
-                // 2. 登录
+                // 登录
                 var status = _client.Login(string.Empty, _config.UserName, _config.Password);
                 if (status != NTStatus.STATUS_SUCCESS) return false;
 
-                // 3. 连接共享目录 (TreeConnect)
-                // 注意：SMBLibrary 必须先连接到 Share，后续所有文件操作都是基于这个 Share 的相对路径
+                // 连接共享目录 (TreeConnect)
+                // SMBLibrary 必须先连接到 Share，后续所有文件操作都是基于这个 Share 的相对路径
                 if (string.IsNullOrEmpty(_shareName)) return false;
 
                 _fileStore = _client.TreeConnect(_shareName, out status);
@@ -161,7 +159,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
         {
             if (_fileStore == null || file == null) return null;
 
-            // ★ 核心简化：直接把对象扔进去，获取路径
             string smbPath = GetPathRelativeToShare(file);
 
             var ret = _fileStore.CreateFile(out object handle, out FileStatus status, smbPath,
@@ -184,9 +181,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             _client?.Disconnect();
         }
 
-        // =========================================================
-        // ★ 私有魔法方法：处理所有令人头大的路径逻辑
-        // =========================================================
         private string GetPathRelativeToShare(FileCacheEntity? entity)
         {
             Uri targetUri;
@@ -200,29 +194,17 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                 targetUri = new Uri(entity.Uri);
             }
 
-            // 1. 获取绝对路径
-            // ★★★ 关键修正：必须解码！把 %20 变回空格 ★★★
-            // targetUri.AbsolutePath -> "/Share/My%20Music/Song.mp3"
-            // Uri.UnescapeDataString -> "/Share/My Music/Song.mp3"
             string absolutePath = Uri.UnescapeDataString(targetUri.AbsolutePath);
-
-            // 2. 移除 ShareName 部分
-            // 确保移除开头的 /
             string cleanPath = absolutePath.TrimStart('/');
-
-            // 找到 ShareName 后的第一个斜杠
             int slashIndex = cleanPath.IndexOf('/');
 
             if (slashIndex == -1)
             {
-                // 如果没有斜杠，说明就是 Share 根目录
                 return string.Empty;
             }
 
-            // 截取 Share 之后的部分
             string relativePath = cleanPath.Substring(slashIndex + 1);
 
-            // 3. 转换为 Windows 风格的反斜杠 (SMB 协议要求)
             return relativePath.Replace("/", "\\");
         }
     }
