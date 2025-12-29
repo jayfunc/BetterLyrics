@@ -159,6 +159,9 @@
   <data name="DockedMode" xml:space="preserve">
     <value>الوضع المثبت (Docked)</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>تم التصدير بنجاح</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>التحضير لتنظيف ذاكرة التخزين المؤقت...</value>
+  </data>
+  <data name="FileSystemServiceReady" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>تم اكتشاف مسار الدليل الجذر. قد يحتوي فهرس القرص الكامل على عدد كبير من الملفات غير الوسائط ويتسبب في استغراق الفحص وقتاً طويلاً جداً. يوصى بتحديد دليل فرعي محدد.</value>
@@ -407,6 +413,9 @@
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>كل الموسيقى</value>
+  </data>
+  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
+    <value>The data is being processed. You can check the detailed progress in the settings.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>مسح قائمة الانتظار</value>
