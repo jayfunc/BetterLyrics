@@ -159,6 +159,9 @@
   <data name="DockedMode" xml:space="preserve">
     <value>Modo Acoplado</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>Exportação bem-sucedida</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>A preparar a limpeza da cache...</value>
+  </data>
+  <data name="FileSystemServiceReady" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>O caminho do diretório raiz foi detectado. Um índice de disco completo pode conter um grande número de ficheiros não multimédia e fazer com que a pesquisa demore demasiado tempo. Recomenda-se a especificação de um subdiretório específico.</value>
@@ -407,6 +413,9 @@
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>Todas as Músicas</value>
+  </data>
+  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
+    <value>The data is being processed. You can check the detailed progress in the settings.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Limpar fila de reprodução</value>
