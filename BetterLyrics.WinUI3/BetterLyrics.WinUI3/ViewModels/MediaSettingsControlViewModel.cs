@@ -126,6 +126,40 @@ namespace BetterLyrics.WinUI3.ViewModels
                     }
                     else
                     {
+                        var newUriString = tempFolder.GetStandardUri().AbsoluteUri.TrimEnd('/') + "/";
+
+                        foreach (var existingFolder in AppSettings.LocalMediaFolders)
+                        {
+                            // 只比对同类型的远程源 (可选，或者是比对所有源)
+                            // 这里建议比对所有，防止逻辑上的冲突
+
+                            var existingUriString = existingFolder.GetStandardUri().AbsoluteUri.TrimEnd('/') + "/";
+
+                            // 是否完全重复 (忽略大小写)
+                            if (newUriString.Equals(existingUriString, StringComparison.OrdinalIgnoreCase))
+                            {
+                                configControl.ShowError(_localizationService.GetLocalizedString("SettingsPagePathExistedInfo"));
+                                deferral.Complete();
+                                return;
+                            }
+
+                            // 新路径是否是现有路径的“子文件夹”
+                            if (newUriString.StartsWith(existingUriString, StringComparison.OrdinalIgnoreCase))
+                            {
+                                configControl.ShowError(_localizationService.GetLocalizedString("SettingsPagePathBeIncludedInfo"));
+                                deferral.Complete();
+                                return;
+                            }
+
+                            // 新路径是否是现有路径的“父文件夹”
+                            if (existingUriString.StartsWith(newUriString, StringComparison.OrdinalIgnoreCase))
+                            {
+                                configControl.ShowError(_localizationService.GetLocalizedString("SettingsPagePathIncludingOthersInfo"));
+                                deferral.Complete();
+                                return;
+                            }
+                        }
+
                         bool isConnected = await Task.Run(async () =>
                         {
                             try

@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,13 +34,11 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             {
                 if (parentFolder == null)
                 {
-                    // 根目录
                     targetPath = _rootLocalPath;
                     parentUriString = _config.GetStandardUri().AbsoluteUri;
                 }
                 else
                 {
-                    // 子目录：从标准 URI (file:///...) 还原为本地路径 (C:\...)
                     var uri = new Uri(parentFolder.Uri);
                     targetPath = uri.LocalPath;
                     parentUriString = parentFolder.Uri;
@@ -49,16 +48,23 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
                 var dirInfo = new DirectoryInfo(targetPath);
 
-                foreach (var item in dirInfo.GetFileSystemInfos())
+                foreach (var item in dirInfo.EnumerateFileSystemInfos())
                 {
-                    // 生成标准 URI 作为唯一 ID
-                    // new Uri("C:\Path\File") 会自动生成 file:///C:/Path/File
-                    var itemUri = new Uri(item.FullName).AbsoluteUri;
+                    // 跳过系统/隐藏文件
+                    if ((item.Attributes & FileAttributes.Hidden) != 0 || (item.Attributes & FileAttributes.System) != 0) continue;
 
                     bool isDir = (item.Attributes & FileAttributes.Directory) == FileAttributes.Directory;
+
+                    if (!isDir)
+                    {
+                        // 过滤后缀名
+                        if (string.IsNullOrEmpty(item.Extension) || !FileHelper.AllSupportedExtensions.Contains(item.Extension)) continue;
+                    }
+
+                    var itemUri = new Uri(item.FullName).AbsoluteUri;
+
                     long size = 0;
 
-                    // DirectoryInfo 没有 Length 属性，只有 FileInfo 有
                     if (!isDir && item is FileInfo fi)
                     {
                         size = fi.Length;
@@ -70,7 +76,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
                         ParentUri = parentUriString, // 记录父级 URI
 
-                        Uri = itemUri, // 标准化 URI (file:///...)
+                        Uri = itemUri,
 
                         FileName = item.Name,
                         IsDirectory = isDir,
@@ -92,7 +98,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
         {
             if (entity == null) return null;
 
-            // 将标准 URI (file:///C:/...) 还原为本地路径 (C:\...)
             string localPath = new Uri(entity.Uri).LocalPath;
 
             // 使用 FileShare.Read 允许其他程序同时读取
