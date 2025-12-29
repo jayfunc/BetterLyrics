@@ -16,7 +16,7 @@
         Loaded="RootGrid_Loaded"
         Unloaded="RootGrid_Unloaded">
 
-        <local:MusicGalleryPage x:Name="MusicGalleryPage" />
+        <local:MusicGalleryPage x:Name="MusicGalleryPage" IsPlayingQueueOpened="{Binding ElementName=NowPlayingBar, Path=IsPlayingQueueOpened, Mode=OneWay}" />
 
         <local:NowPlayingPage
             x:Name="NowPlayingPage"
@@ -32,6 +32,9 @@
             x:Name="NowPlayingBar"
             VerticalAlignment="Bottom"
             IsAutoHideEnabled="False"
+            PlaybackOrder="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=TwoWay}"
+            ShowPlaybackOrderButton="True"
+            ShowPlayingQueueButton="True"
             ShowSongInfo="True"
             SongInfoTapped="NowPlayingBar_SongInfoTapped"
             TimeTapped="NowPlayingBar_TimeTapped" />

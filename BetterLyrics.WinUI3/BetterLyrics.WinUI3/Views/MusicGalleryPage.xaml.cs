@@ -27,11 +27,32 @@ namespace BetterLyrics.WinUI3.Views
     {
         public MusicGalleryPageViewModel ViewModel => (MusicGalleryPageViewModel)DataContext;
 
+        public bool IsPlayingQueueOpened
+        {
+            get { return (bool)GetValue(IsPlayingQueueOpenedProperty); }
+            set { SetValue(IsPlayingQueueOpenedProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsPlayingQueueOpenedProperty =
+            DependencyProperty.Register(nameof(IsPlayingQueueOpened), typeof(bool), typeof(MusicGalleryPage), new PropertyMetadata(false, OnDependencyPropertyChanged));
+
         public MusicGalleryPage()
         {
             InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<MusicGalleryPageViewModel>();
             ViewModel.AppSettings.MusicGallerySettings.PropertyChanged += MusicGallerySettings_PropertyChanged;
+        }
+
+        private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is MusicGalleryPage self)
+            {
+                if (e.Property == IsPlayingQueueOpenedProperty)
+                {
+                    var newValue = (bool)e.NewValue;
+                    self.PlayQueue.Translation = newValue ? new() : new(310, 0, 0);
+                }
+            }
         }
 
         private void ScrollToPlayingItem()
@@ -216,40 +237,6 @@ namespace BetterLyrics.WinUI3.Views
             SongListView.SelectedItems.Clear();
         }
 
-        private void AddToPlaylistMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            //((MenuFlyoutItem)sender).ContextFlyout.ShowAt(PlaylistButton);
-        }
-
-        private void ToBeAddedPlaylistsListViewItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var songsTabInfo = ((SongsTabInfo)((FrameworkElement)sender).DataContext);
-            if (songsTabInfo.FilterProperty == CommonSongProperty.M3UFilePath)
-            {
-                if (songsTabInfo.FilterValue is string path)
-                {
-                    if (File.Exists(path))
-                    {
-                        var content = File.ReadAllText(path);
-                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.DecodedAbsoluteUri).ToList())
-                        {
-                            if (!content.Contains(item))
-                            {
-                                content += Environment.NewLine;
-                                content += item;
-                            }
-                        }
-                        File.WriteAllText(path, content);
-                        ToastHelper.ShowToast("TracksAddToPlaylistSuccessfully", null, InfoBarSeverity.Success);
-                    }
-                    else
-                    {
-                        ToastHelper.ShowToast("TracksAddToPlaylistFailed", null, InfoBarSeverity.Error);
-                    }
-                }
-            }
-        }
-
         private async void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             var displayedTracks = SongListView.Items.Cast<ExtendedTrack>();
@@ -280,6 +267,53 @@ namespace BetterLyrics.WinUI3.Views
             if (args.InvokedItem is FolderNode selectedFolder)
             {
                 ViewModel.SelectFolder(selectedFolder);
+            }
+        }
+
+        private void ToBeAddedPlaylistsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var songsTabInfo = ((SongsTabInfo)((FrameworkElement)sender).DataContext);
+            if (songsTabInfo.FilterProperty == CommonSongProperty.M3UFilePath)
+            {
+                if (songsTabInfo.FilterValue is string path)
+                {
+                    if (File.Exists(path))
+                    {
+                        var content = File.ReadAllText(path);
+                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.DecodedAbsoluteUri).ToList())
+                        {
+                            if (!content.Contains(item))
+                            {
+                                content += Environment.NewLine;
+                                content += item;
+                            }
+                        }
+                        File.WriteAllText(path, content);
+                        ToastHelper.ShowToast("TracksAddToPlaylistSuccessfully", null, InfoBarSeverity.Success);
+                    }
+                    else
+                    {
+                        ToastHelper.ShowToast("TracksAddToPlaylistFailed", null, InfoBarSeverity.Error);
+                    }
+                }
+            }
+        }
+
+        private void AddToMenuBarItemFlyout_Opened(object sender, object e)
+        {
+            AddToCustomListMenuFlyoutSubItem.Items.Clear();
+            foreach (var item in ViewModel.AppSettings.StarredPlaylists)
+            {
+                if (item.FilterProperty == CommonSongProperty.M3UFilePath)
+                {
+                    var menuFlyoutItem = new MenuFlyoutItem
+                    {
+                        Text = item.Name,
+                        DataContext = item,
+                    };
+                    menuFlyoutItem.Click += ToBeAddedPlaylistsMenuFlyoutItem_Click;
+                    AddToCustomListMenuFlyoutSubItem.Items.Add(menuFlyoutItem);
+                }
             }
         }
     }

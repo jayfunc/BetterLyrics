@@ -29,14 +29,14 @@
     </Page.Resources>
 
     <Grid>
-        <Grid Padding="12,16,12,64" ColumnSpacing="12">
+        <Grid Padding="12,4,12,68" ColumnSpacing="12">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ScrollViewer Grid.Column="0">
+            <ScrollViewer x:Name="LeftSidePanel" Grid.Column="0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -49,7 +49,7 @@
                     <TextBlock
                         x:Uid="MusicGalleryPagePlaylist"
                         Grid.Row="0"
-                        Margin="1,0,0,6"
+                        Margin="1,8,0,6"
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <Grid Grid.Row="1">
@@ -98,7 +98,7 @@
                                             Click="RemoveFromPlaylistButton_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                                   FontSize=16,
-                                                                  Glyph=&#xE711;}"
+                                                                  Glyph=&#xE738;}"
                                             Style="{StaticResource GhostButtonStyle}"
                                             Visibility="{x:Bind IsDefault, Converter={StaticResource BoolNegationToVisibilityConverter}}">
                                             <ToolTipService.ToolTip>
@@ -192,7 +192,9 @@
                 </Grid>
             </ScrollViewer>
 
-            <Grid x:Name="SongViewer" Grid.Column="1">
+            <controls:ContentSizer Grid.Column="1" TargetControl="{x:Bind LeftSidePanel}" />
+
+            <Grid x:Name="SongViewer" Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -245,17 +247,17 @@
                     </Flyout>
                 </Grid.Tag>
 
-                <StackPanel Grid.Row="0" Spacing="6">
+                <StackPanel Grid.Row="1" Spacing="6">
 
                     <AutoSuggestBox
                         x:Name="SongSearchBox"
                         x:Uid="MusicGalleryPageSongSearchBox"
+                        Margin="0,0,128,0"
                         HorizontalAlignment="Stretch"
                         QueryIcon="Find"
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
 
                     <Grid>
-
                         <StackPanel
                             HorizontalAlignment="Left"
                             Orientation="Horizontal"
@@ -305,7 +307,7 @@
 
                 <InfoBar
                     x:Uid="MusicGalleryPageDataLoading"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     IsClosable="False"
                     IsOpen="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}" />
 
@@ -317,39 +319,15 @@
                             SelectionChanged="SongListView_SelectionChanged"
                             SelectionMode="Multiple">
                             <ListView.ContextFlyout>
-                                <MenuBarItemFlyout>
+                                <MenuBarItemFlyout Opened="AddToMenuBarItemFlyout_Opened">
                                     <MenuFlyoutSubItem x:Uid="MusicGalleryPageAddToPlayingQueue" IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
                                         <MenuFlyoutItem x:Uid="MusicGalleryPageAddToNext" Click="AddSongToQueueNextMenuFlyoutItem_Click" />
                                         <MenuFlyoutItem x:Uid="MusicGalleryPageAddToEnd" Click="AddSongToQueueEndMenuFlyoutItem_Click" />
                                     </MenuFlyoutSubItem>
-                                    <MenuFlyoutItem
+                                    <MenuFlyoutSubItem
+                                        x:Name="AddToCustomListMenuFlyoutSubItem"
                                         x:Uid="MusicGalleryPageAddToCustomList"
-                                        Click="AddToPlaylistMenuFlyoutItem_Click"
-                                        IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
-                                        <MenuFlyoutItem.ContextFlyout>
-                                            <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}" Placement="Bottom">
-                                                <ListView ItemsSource="{x:Bind ViewModel.AppSettings.StarredPlaylists, Mode=OneWay}">
-                                                    <ListView.ItemTemplate>
-                                                        <DataTemplate x:DataType="models:SongsTabInfo">
-                                                            <Grid Tapped="ToBeAddedPlaylistsListViewItemGrid_Tapped">
-                                                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                                                    <FontIcon
-                                                                        FontFamily="{StaticResource IconFontFamily}"
-                                                                        FontSize="16"
-                                                                        Glyph="{x:Bind Icon}" />
-                                                                    <TextBlock
-                                                                        Margin="0,0,0,2"
-                                                                        VerticalAlignment="Center"
-                                                                        Style="{StaticResource BodyTextBlockStyle}"
-                                                                        Text="{x:Bind Name}" />
-                                                                </StackPanel>
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                    </ListView.ItemTemplate>
-                                                </ListView>
-                                            </Flyout>
-                                        </MenuFlyoutItem.ContextFlyout>
-                                    </MenuFlyoutItem>
+                                        IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}" />
                                 </MenuBarItemFlyout>
                             </ListView.ContextFlyout>
                             <ListView.ItemTemplate>
@@ -470,246 +448,157 @@
 
             </Grid>
 
-            <Grid x:Name="PlayQueue" Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <TextBlock
-                        x:Uid="MusicGalleryPagePlayingQueue"
-                        VerticalAlignment="Center"
-                        Style="{StaticResource BodyStrongTextBlockStyle}" />
-                </Grid>
-
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel
-                        Grid.Column="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
-                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
-                        <TextBlock Text="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}" />
-                    </StackPanel>
-
-                    <!--  Stop media session  -->
-                    <Button
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        Command="{x:Bind ViewModel.StopTrackCommand}"
-                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                              FontSize=16,
-                                              Glyph=&#xE71A;}"
-                        Style="{StaticResource GhostButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <TextBlock x:Uid="MusicGalleryPageStopTrack" />
-                        </ToolTipService.ToolTip>
-                    </Button>
-                    <!--  Playback order  -->
-                    <Button
-                        Grid.Column="2"
-                        HorizontalAlignment="Right"
-                        Command="{x:Bind ViewModel.SwitchPlaybackOrderCommand}"
-                        Style="{StaticResource GhostButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip>
-                                <Grid>
-                                    <TextBlock x:Name="PlaybackRepeatAllHint" x:Uid="MusicGalleryPageQueueLoop" />
-                                    <TextBlock x:Name="PlaybackRepeatOneHint" x:Uid="MusicGalleryPageSingleLoop" />
-                                    <TextBlock x:Name="PlaybackShuffleHint" x:Uid="MusicGalleryPageQueueRandom" />
-                                </Grid>
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <Button.Content>
-                            <Grid>
-                                <!--  Repeat all  -->
-                                <FontIcon
-                                    x:Name="PlaybackRepeatAll"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    FontSize="16"
-                                    Glyph="&#xE8EE;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                </FontIcon>
-                                <!--  Repeat one  -->
-                                <FontIcon
-                                    x:Name="PlaybackRepeatOne"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    FontSize="16"
-                                    Glyph="&#xE8ED;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                </FontIcon>
-                                <!--  Shuffle  -->
-                                <FontIcon
-                                    x:Name="PlaybackShuffle"
-                                    FontFamily="{StaticResource IconFontFamily}"
-                                    FontSize="16"
-                                    Glyph="&#xE8B1;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                </FontIcon>
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                    <!--  Scroll to playing item  -->
-                    <Button
-                        Grid.Column="3"
-                        HorizontalAlignment="Right"
-                        Click="ScrollToPlayingItemButton_Click"
-                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                              FontSize=16,
-                                              Glyph=&#xE7B7;}"
-                        Style="{StaticResource GhostButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
-                        </ToolTipService.ToolTip>
-                    </Button>
-                    <!--  Empty play queue  -->
-                    <Button
-                        Grid.Column="4"
-                        HorizontalAlignment="Right"
-                        Click="EmptyPlayingQueueButton_Click"
-                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                              FontSize=16,
-                                              Glyph=&#xE738;}"
-                        Style="{StaticResource GhostButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
-                        </ToolTipService.ToolTip>
-                    </Button>
-                </Grid>
-
-                <ListView
-                    x:Name="PlayingQueueListView"
-                    Grid.Row="3"
-                    ItemsSource="{x:Bind ViewModel.TrackPlayingQueue, Mode=OneWay}"
-                    SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=TwoWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="0,6">
-                                <Grid Tapped="PlayingQueueListVireItemGrid_Tapped">
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Track.Title}" TextWrapping="Wrap" />
-                                        <TextBlock
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="{Binding Track.Artist}"
-                                            TextWrapping="Wrap" />
-                                    </StackPanel>
-                                </Grid>
-                                <Grid HorizontalAlignment="Right">
-                                    <Button
-                                        Click="RemoveFromPlayingQueueButton_Click"
-                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                              FontSize=12,
-                                                              Glyph=&#xE738;}"
-                                        Style="{StaticResource GhostButtonStyle}">
-                                        <ToolTipService.ToolTip>
-                                            <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />
-                                        </ToolTipService.ToolTip>
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-                <Grid Grid.Row="3">
-                    <interactivity:Interaction.Behaviors>
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}"
-                            ComparisonCondition="Equal"
-                            Value="0">
-                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                        </interactivity:DataTriggerBehavior>
-                        <interactivity:DataTriggerBehavior
-                            Binding="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}"
-                            ComparisonCondition="NotEqual"
-                            Value="0">
-                            <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                        </interactivity:DataTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                    <StackPanel
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Spacing="12">
-                        <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
-                        <TextBlock
-                            x:Uid="MusicGalleryPagePlayingQueueEmpty"
-                            HorizontalAlignment="Center"
-                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    </StackPanel>
-                </Grid>
-            </Grid>
-
         </Grid>
 
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup x:Name="PlaybackOrderState">
-                <VisualState x:Name="RepeatAll">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                            To="0" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="PlaybackRepeatAll.Opacity" Value="1" />
-                        <Setter Target="PlaybackRepeatOne.Opacity" Value="0" />
-                        <Setter Target="PlaybackShuffle.Opacity" Value="0" />
-                        <Setter Target="PlaybackRepeatAllHint.Visibility" Value="Visible" />
-                        <Setter Target="PlaybackRepeatOneHint.Visibility" Value="Collapsed" />
-                        <Setter Target="PlaybackShuffleHint.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="RepeatOne">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                            To="1" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="PlaybackRepeatAll.Opacity" Value="0" />
-                        <Setter Target="PlaybackRepeatOne.Opacity" Value="1" />
-                        <Setter Target="PlaybackShuffle.Opacity" Value="0" />
-                        <Setter Target="PlaybackRepeatAllHint.Visibility" Value="Collapsed" />
-                        <Setter Target="PlaybackRepeatOneHint.Visibility" Value="Visible" />
-                        <Setter Target="PlaybackShuffleHint.Visibility" Value="Collapsed" />
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Shuffle">
-                    <VisualState.StateTriggers>
-                        <ui:CompareStateTrigger
-                            Comparison="Equal"
-                            Value="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                            To="2" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="PlaybackRepeatAll.Opacity" Value="0" />
-                        <Setter Target="PlaybackRepeatOne.Opacity" Value="0" />
-                        <Setter Target="PlaybackShuffle.Opacity" Value="1" />
-                        <Setter Target="PlaybackRepeatAllHint.Visibility" Value="Collapsed" />
-                        <Setter Target="PlaybackRepeatOneHint.Visibility" Value="Collapsed" />
-                        <Setter Target="PlaybackShuffleHint.Visibility" Value="Visible" />
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        <Grid
+            x:Name="PlayQueue"
+            Width="300"
+            Margin="0,4,4,72"
+            Padding="12,16,12,0"
+            HorizontalAlignment="Right"
+            Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Translation="310,0,0">
+            <Grid.TranslationTransition>
+                <Vector3Transition />
+            </Grid.TranslationTransition>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock
+                    x:Uid="MusicGalleryPagePlayingQueue"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource BodyStrongTextBlockStyle}" />
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
+                    <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
+                    <TextBlock Text="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}" />
+                </StackPanel>
+
+                <!--  Stop media session  -->
+                <Button
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Command="{x:Bind ViewModel.StopTrackCommand}"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          FontSize=16,
+                                          Glyph=&#xE71A;}"
+                    Style="{StaticResource GhostButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="MusicGalleryPageStopTrack" />
+                    </ToolTipService.ToolTip>
+                </Button>
+                <!--  Scroll to playing item  -->
+                <Button
+                    Grid.Column="3"
+                    HorizontalAlignment="Right"
+                    Click="ScrollToPlayingItemButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          FontSize=16,
+                                          Glyph=&#xE7B7;}"
+                    Style="{StaticResource GhostButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
+                    </ToolTipService.ToolTip>
+                </Button>
+                <!--  Empty play queue  -->
+                <Button
+                    Grid.Column="4"
+                    HorizontalAlignment="Right"
+                    Click="EmptyPlayingQueueButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                          FontSize=16,
+                                          Glyph=&#xE738;}"
+                    Style="{StaticResource GhostButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
+                    </ToolTipService.ToolTip>
+                </Button>
+            </Grid>
+
+            <ListView
+                x:Name="PlayingQueueListView"
+                Grid.Row="3"
+                ItemsSource="{x:Bind ViewModel.TrackPlayingQueue, Mode=OneWay}"
+                SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0,6">
+                            <Grid Tapped="PlayingQueueListVireItemGrid_Tapped">
+                                <StackPanel Margin="0,0,36,0">
+                                    <TextBlock Text="{Binding Track.Title}" TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="{Binding Track.Artist}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid HorizontalAlignment="Right">
+                                <Button
+                                    Click="RemoveFromPlayingQueueButton_Click"
+                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                          FontSize=16,
+                                                          Glyph=&#xE738;}"
+                                    Style="{StaticResource GhostButtonStyle}">
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />
+                                    </ToolTipService.ToolTip>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Grid Grid.Row="3">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}"
+                        ComparisonCondition="NotEqual"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="12">
+                    <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
+                    <TextBlock
+                        x:Uid="MusicGalleryPagePlayingQueueEmpty"
+                        HorizontalAlignment="Center"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+
     </Grid>
 </Page>
