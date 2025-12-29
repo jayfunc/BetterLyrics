@@ -183,6 +183,9 @@
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>캐시 정리 준비 중...</value>
   </data>
+  <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
+    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory.</value>
+  </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>스캔 대기 중...</value>
   </data>
@@ -381,6 +384,12 @@
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
     <value>마지막 동기화 시간</value>
   </data>
+  <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
+    <value>Local Folder</value>
+  </data>
+  <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>지금 동기화</value>
   </data>
@@ -394,7 +403,7 @@
     <value>다음 항목</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>재생 대기열에 추가</value>
+    <value>Add to playing queue</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>모든 음악</value>
@@ -441,11 +450,14 @@
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>미디어 라이브러리에서 곡을 찾지 못했습니다</value>
   </data>
+  <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
+    <value>Folders</value>
+  </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>파일에서 가져오기</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>재생 목록 생성</value>
+    <value>Create playlist</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>재생 대기열</value>
@@ -454,7 +466,7 @@
     <value>재생 대기열이 비어 있습니다</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>재생 목록</value>
+    <value>Playlists</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>목록 반복</value>
@@ -531,11 +543,26 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>개인정보 처리방침</value>
   </data>
+  <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
+    <value>Leaving it blank will automatically generate a default name.</value>
+  </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>비밀번호</value>
   </data>
   <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
     <value>경로</value>
+  </data>
+  <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
+    <value>The specified folder path could not be found</value>
+  </data>
+  <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
+    <value>Path is required</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>포트</value>
