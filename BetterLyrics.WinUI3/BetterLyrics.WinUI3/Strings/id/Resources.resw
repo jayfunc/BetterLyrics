@@ -159,6 +159,9 @@
   <data name="DockedMode" xml:space="preserve">
     <value>Mode Dok</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>Ekspor berhasil</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>Bersiap untuk membersihkan cache...</value>
+  </data>
+  <data name="FileSystemServiceReady" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>Jalur direktori root telah terdeteksi. Indeks disk penuh mungkin berisi sejumlah besar file non-media dan menyebabkan pemindaian memakan waktu terlalu lama. Disarankan untuk menentukan subdirektori tertentu.</value>
@@ -407,6 +413,9 @@
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>Semua Musik</value>
+  </data>
+  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
+    <value>The data is being processed. You can check the detailed progress in the settings.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Bersihkan antrean putar</value>
