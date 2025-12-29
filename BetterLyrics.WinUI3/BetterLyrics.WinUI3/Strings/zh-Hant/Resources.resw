@@ -385,7 +385,7 @@
     <value>上次同步時間</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value>本地資料夾</value>
+    <value>本機資料夾</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
     <value>名稱</value>
