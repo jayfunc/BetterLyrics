@@ -50,21 +50,24 @@
                         SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="models:MediaFolder">
-                                <dev:SettingsExpander Description="{x:Bind ConnectionSummary, Mode=OneWay}" IsExpanded="True">
+                                <dev:SettingsExpander IsExpanded="True">
 
                                     <dev:SettingsExpander.HeaderIcon>
                                         <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}, Mode=OneWay}" />
                                     </dev:SettingsExpander.HeaderIcon>
                                     <dev:SettingsExpander.Header>
-                                        <HyperlinkButton
-                                            Padding="0"
-                                            Click="LocalFolderHyperlinkButton_Click"
-                                            Content="{x:Bind ConnectionSummary, Mode=OneWay}" />
+                                        <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind Name, Mode=OneWay}" />
                                     </dev:SettingsExpander.Header>
+                                    <dev:SettingsExpander.Description>
+                                        <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ConnectionSummary, Mode=OneWay}" />
+                                    </dev:SettingsExpander.Description>
 
                                     <ToggleSwitch IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
 
                                     <dev:SettingsExpander.Items>
+                                        <dev:SettingsCard x:Uid="MediaSettingsControlNameSetting">
+                                            <TextBox VerticalAlignment="Center" Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </dev:SettingsCard>
                                         <dev:SettingsCard x:Uid="MediaSettingsControlLastSyncTime" Description="{x:Bind LastSyncTime.ToString(), Mode=OneWay, TargetNullValue=N/A}">
                                             <Button
                                                 x:Uid="MediaSettingsControlSyncNow"
@@ -128,14 +131,17 @@
                                 <MenuFlyout>
                                     <MenuFlyoutItem
                                         x:Uid="SettingsPageLocalFolder"
-                                        Command="{x:Bind ViewModel.SelectAndAddFolderCommand}"
-                                        CommandParameter="{Binding ElementName=RootGrid}"
-                                        Icon="Folder" />
+                                        Command="{x:Bind ViewModel.AddMediaSourceCommand}"
+                                        CommandParameter="Local">
+                                        <MenuFlyoutItem.Icon>
+                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE8B7;" />
+                                        </MenuFlyoutItem.Icon>
+                                    </MenuFlyoutItem>
 
                                     <MenuFlyoutSeparator />
 
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
+                                        Command="{x:Bind ViewModel.AddMediaSourceCommand}"
                                         CommandParameter="SMB"
                                         Text="SMB">
                                         <MenuFlyoutItem.Icon>
@@ -144,7 +150,7 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
+                                        Command="{x:Bind ViewModel.AddMediaSourceCommand}"
                                         CommandParameter="FTP"
                                         Text="FTP">
                                         <MenuFlyoutItem.Icon>
@@ -153,7 +159,7 @@
                                     </MenuFlyoutItem>
 
                                     <MenuFlyoutItem
-                                        Command="{x:Bind ViewModel.AddRemoteSourceCommand}"
+                                        Command="{x:Bind ViewModel.AddMediaSourceCommand}"
                                         CommandParameter="WebDAV"
                                         Text="WebDAV">
                                         <MenuFlyoutItem.Icon>

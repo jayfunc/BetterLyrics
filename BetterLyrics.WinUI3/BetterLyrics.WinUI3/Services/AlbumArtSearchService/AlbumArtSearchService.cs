@@ -88,6 +88,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             if (enabledIds.Count == 0) return null;
 
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+            allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
             FileCacheEntity? bestMatch = null;
 

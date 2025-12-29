@@ -8,20 +8,17 @@ namespace BetterLyrics.WinUI3.Models
 {
     public class ExtendedTrack
     {
-        // 标准 URI (file:///..., smb://..., http://...)
         public string Uri { get; private set; } = "";
 
-        // 对于本地文件，返回 C:\Music\Song.mp3
-        // 对于远程文件，返回解码后的路径部分 /Music/Song.mp3
-        public string UriPath
+        public string DecodedAbsoluteUri
         {
             get
             {
                 if (string.IsNullOrEmpty(Uri)) return "";
                 try
                 {
-                    var u = new System.Uri(Uri);
-                    return u.IsFile ? u.LocalPath : System.Net.WebUtility.UrlDecode(u.AbsolutePath);
+                    var u = new Uri(Uri);
+                    return u.IsFile ? u.LocalPath : System.Net.WebUtility.UrlDecode(u.AbsoluteUri);
                 }
                 catch { return Uri; }
             }
@@ -105,6 +102,7 @@ namespace BetterLyrics.WinUI3.Models
                 }
             }
         }
+        public string MediaFolderId { get; set; } = "";
 
         public string Title { get; set; } = "";
         public string Artist { get; set; } = "";
@@ -142,6 +140,7 @@ namespace BetterLyrics.WinUI3.Models
         {
             if (entity == null) return;
 
+            this.MediaFolderId = entity.MediaFolderId;
             this.Uri = entity.Uri;
 
             this.Title = entity.Title;

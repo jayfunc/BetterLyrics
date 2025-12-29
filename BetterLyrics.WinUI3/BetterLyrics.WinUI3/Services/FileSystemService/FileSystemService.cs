@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 using SQLite;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,12 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
         private readonly SQLiteAsyncConnection _db;
         private bool _isInitialized = false;
-        private readonly System.Collections.Concurrent.ConcurrentDictionary<string, CancellationTokenSource> _folderTimerTokens = new();
+
+        // 定时器字典
+        private readonly ConcurrentDictionary<string, CancellationTokenSource> _folderTimerTokens = new();
+        // 当前正在执行的扫描任务字典
+        private readonly ConcurrentDictionary<string, CancellationTokenSource> _activeScanTokens = new();
+
         private static readonly SemaphoreSlim _dbLock = new(1, 1);
         private static readonly SemaphoreSlim _folderScanLock = new(1, 1);
 
@@ -238,15 +244,21 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         {
             _dispatcherQueue.TryEnqueue(() =>
             {
-                folder.CleaningUpStatusText = _localizationService.GetLocalizedString("FileSystemServiceCleaningCache");
+                folder.CleaningUpStatusText = _localizationService.GetLocalizedString("FileSystemServicePrepareToClean");
                 folder.IsCleaningUp = true;
             });
 
-            if (_folderTimerTokens.TryRemove(folder.Id, out var cts))
+            if (_folderTimerTokens.TryRemove(folder.Id, out var timerCts))
             {
-                cts.Cancel();
-                cts.Dispose();
+                timerCts.Cancel();
+                timerCts.Dispose();
                 _logger.LogInformation("DeleteCacheForMediaFolderAsync: {}", "cts.Dispose();");
+            }
+
+            if (_activeScanTokens.TryGetValue(folder.Id, out var activeScanCts))
+            {
+                activeScanCts.Cancel();
+                // 强制终止正在扫描的操作
             }
 
             try
@@ -255,6 +267,11 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                 try
                 {
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        folder.CleaningUpStatusText = _localizationService.GetLocalizedString("FileSystemServiceCleaningCache");
+                    });
+
                     await InitializeAsync();
 
                     await _dbLock.WaitAsync();
@@ -292,6 +309,9 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         {
             if (folder == null || !folder.IsEnabled) return;
 
+            using var scanCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            _activeScanTokens[folder.Id] = scanCts;
+
             _dispatcherQueue.TryEnqueue(() =>
             {
                 folder.IsIndexing = true;
@@ -301,7 +321,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
             try
             {
-                await _folderScanLock.WaitAsync(token);
+                await _folderScanLock.WaitAsync(scanCts.Token);
 
                 _dispatcherQueue.TryEnqueue(() => folder.IndexingStatusText = _localizationService.GetLocalizedString("FileSystemServiceConnecting"));
 
@@ -322,7 +342,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                 while (foldersToScan.Count > 0)
                 {
-                    if (token.IsCancellationRequested) return;
+                    if (scanCts.Token.IsCancellationRequested) return;
 
                     var currentParent = foldersToScan.Dequeue();
 
@@ -350,7 +370,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                 foreach (var item in filesToProcess)
                 {
-                    if (token.IsCancellationRequested) return;
+                    if (scanCts.Token.IsCancellationRequested) return;
 
                     current++;
 
@@ -383,7 +403,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                             else
                             {
                                 using var memStream = new MemoryStream();
-                                await originalStream.CopyToAsync(memStream, token);
+                                await originalStream.CopyToAsync(memStream, scanCts.Token);
                                 memStream.Position = 0;
                                 track = new ExtendedTrack(item, memStream);
                             }
@@ -459,6 +479,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             {
                 _folderScanLock.Release();
 
+                _activeScanTokens.TryRemove(folder.Id, out _);
+
                 _dispatcherQueue.TryEnqueue(() =>
                 {
                     folder.IsIndexing = false;
@@ -481,8 +503,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
             // SQL 逻辑: SELECT * FROM FileCache WHERE IsMetadataParsed = 1 AND MediaFolderId IN (...)
             var results = await _db.Table<FileCacheEntity>()
-                                    .Where(x => x.IsMetadataParsed && idList.Contains(x.MediaFolderId))
-                                    .ToListAsync();
+                .Where(x => x.IsMetadataParsed && idList.Contains(x.MediaFolderId))
+                .ToListAsync();
 
             return results;
         }

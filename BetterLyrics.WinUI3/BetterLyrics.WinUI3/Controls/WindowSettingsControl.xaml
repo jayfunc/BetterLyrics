@@ -18,13 +18,7 @@
                     <TextBlock x:Uid="AppSettingsControlGeneral" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8AC;}">
-                        <StackPanel
-                            Margin="0,6,0,0"
-                            Orientation="Horizontal"
-                            Spacing="6">
-                            <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay}" TextWrapping="Wrap" />
-                            <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE8FB;}" Style="{StaticResource GhostButtonStyle}" />
-                        </StackPanel>
+                        <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
                     </dev:SettingsCard>
 
                     <dev:SettingsExpander

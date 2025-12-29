@@ -64,7 +64,6 @@ namespace BetterLyrics.WinUI3.Models
                     Scheme = UriScheme ?? "file",
                     Host = UriHost,
                     Port = UriPort,
-                    UserName = UserName
                 };
 
                 if (!string.IsNullOrEmpty(UriPath))

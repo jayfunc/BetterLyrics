@@ -27,15 +27,6 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.RemoveFolder(folder);
         }
 
-        private async void LocalFolderHyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
-            if (Uri.TryCreate(folder.UriString, UriKind.Absolute, out var uri))
-            {
-                await Launcher.LaunchUriAsync(uri);
-            }
-        }
-
         private void SyncNowButton_Click(object sender, RoutedEventArgs e)
         {
             var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
