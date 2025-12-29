@@ -514,7 +514,7 @@
     <value>自動同步頻率</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>決不</value>
+    <value>從不</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
     <value>每日</value>
