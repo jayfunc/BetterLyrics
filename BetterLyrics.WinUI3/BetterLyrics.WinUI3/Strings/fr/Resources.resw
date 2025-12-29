@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -166,28 +166,28 @@
     <value>Impossible de se connecter au serveur LX Music. Veuillez aller dans Paramètres - Source de lecture - LX Music - Serveur LX Music pour vérifier si le lien est correct</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value />
+    <value>Nettoyage du cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value />
+    <value>Échec de la connexion</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value />
+    <value>Connexion en cours...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value />
+    <value>Récupération de la liste des fichiers...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value />
+    <value>Parsing...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value />
+    <value>Préparation du nettoyage du cache...</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value />
+    <value>Le chemin du répertoire racine a été détecté. Un index de disque complet peut contenir un grand nombre de fichiers non multimédias et faire durer l'analyse trop longtemps. Il est recommandé de spécifier un sous-répertoire spécifique.</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value />
+    <value>En attente d'analyse...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Mode Plein écran</value>
@@ -382,16 +382,16 @@
     <value>Vue scindée</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value />
+    <value>Date de la dernière synchronisation</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value />
+    <value>Dossier local</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value />
+    <value>Nom</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value />
+    <value>Synchroniser maintenant</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Ajouter à la liste de lecture</value>
@@ -451,7 +451,7 @@
     <value>Aucune chanson trouvée dans la bibliothèque multimédia</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
-    <value />
+    <value>Dossiers</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>Importer depuis un fichier</value>
@@ -466,7 +466,7 @@
     <value>La file d'attente est vide</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>Liste de lecture</value>
+    <value>Listes de lecture</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>Boucle de liste</value>
@@ -511,22 +511,22 @@
     <value>Galerie de musique - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value />
+    <value>Fréquence de synchronisation automatique</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value />
+    <value>Jamais</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value />
+    <value>Tous les jours</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value />
+    <value>Toutes les 15 minutes</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value />
+    <value>Toutes les heures</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value />
+    <value>Toutes les 6 heures</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Mode Étroit</value>
@@ -544,13 +544,13 @@
     <value>Politique de confidentialité</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value />
+    <value>Parcourir</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
-    <value />
+    <value>Nom</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value />
+    <value>Si vous laissez le champ vide, un nom par défaut sera automatiquement généré.</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>Mot de passe</value>
@@ -559,10 +559,10 @@
     <value>Chemin</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value />
+    <value>Le chemin d'accès au dossier spécifié n'a pas été trouvé</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
-    <value />
+    <value>Le chemin d'accès est requis</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>Port</value>

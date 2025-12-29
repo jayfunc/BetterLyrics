@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -166,28 +166,28 @@
     <value>Tidak dapat menyambung ke pelayan LX Music, sila pergi ke Tetapan - Sumber Main Balik - LX Music - Pelayan LX Music untuk menyemak sama ada pautan dimasukkan dengan betul</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value />
+    <value>Cleaning cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value />
+    <value>Sambungan gagal</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value />
+    <value>Menyambung...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value />
+    <value>Fetching file list...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value />
+    <value>Menghurai...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value />
+    <value>Preparing to clean cache...</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value />
+    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory.</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value />
+    <value>Preparing to scan...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Mod Skrin Penuh</value>
@@ -382,16 +382,16 @@
     <value>Paparan Pisah</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value />
+    <value>Masa Segerak Akhir</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value />
+    <value>Local Folder</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value />
+    <value>Name</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value />
+    <value>Segerak sekarang</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Tambah ke senarai main</value>
@@ -403,7 +403,7 @@
     <value>Item seterusnya</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>Tambah ke baris gilir main</value>
+    <value>Add to playing queue</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>Semua Muzik</value>
@@ -451,13 +451,13 @@
     <value>Tiada lagu ditemui dalam pustaka media</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
-    <value />
+    <value>Folders</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>Import dari fail</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>Cipta senarai main</value>
+    <value>Create playlist</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>Baris Gilir Main</value>
@@ -466,7 +466,7 @@
     <value>Baris gilir main kosong</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>Senarai Main</value>
+    <value>Playlists</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>Gelung senarai</value>
@@ -511,22 +511,22 @@
     <value>Galeri Muzik - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value />
+    <value>Auto-sync Frequency</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value />
+    <value>Tak pernah</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value />
+    <value>Setiap Hari</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value />
+    <value>Setiap 15 minit</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value />
+    <value>Setiap jam</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value />
+    <value>Every 6 Hours</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Mod Sempit</value>
@@ -544,13 +544,13 @@
     <value>Dasar Privasi</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value />
+    <value>Browse</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
-    <value />
+    <value>Name</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value />
+    <value>Leaving it blank will automatically generate a default name.</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>Kata Laluan</value>
@@ -559,10 +559,10 @@
     <value>Laluan</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value />
+    <value>The specified folder path could not be found</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
-    <value />
+    <value>Path is required</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>Port</value>

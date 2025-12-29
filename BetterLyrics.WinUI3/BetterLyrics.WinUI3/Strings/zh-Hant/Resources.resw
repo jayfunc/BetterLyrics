@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -166,28 +166,28 @@
     <value>無法連線到 LX 音樂伺服器，請轉到設定 - 播放來源 - LX Music - LX 音樂伺服器以檢查是否正確輸入連結</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value />
+    <value>清除快取...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value />
+    <value>連線失敗</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value />
+    <value>連線中...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value />
+    <value>擷取檔案清單...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value />
+    <value>解析中…</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value />
+    <value>準備清除快取...</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value />
+    <value>已偵測到根目錄路徑。全磁碟索引可能包含大量非媒體檔案，導致掃描時間過長。建議指定特定的子目錄。</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value />
+    <value>等待掃描...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全螢幕模式</value>
@@ -382,16 +382,16 @@
     <value>分割檢視</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value />
+    <value>上次同步時間</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value />
+    <value>本地資料夾</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value />
+    <value>名稱</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value />
+    <value>立即同步</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>加入播放清單</value>
@@ -451,7 +451,7 @@
     <value>未在媒體櫃內找到任何歌曲</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
-    <value />
+    <value>資料夾</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>從檔案匯入</value>
@@ -511,22 +511,22 @@
     <value>音樂庫 - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value />
+    <value>自動同步頻率</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value />
+    <value>決不</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value />
+    <value>每日</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value />
+    <value>每 15 分鐘</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value />
+    <value>每小時</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value />
+    <value>每 6 小時</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>窄屏模式</value>
@@ -544,13 +544,13 @@
     <value>隱私權政策</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value />
+    <value>瀏覽</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
-    <value />
+    <value>名稱</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value />
+    <value>留空會自動產生預設名稱。</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>密碼</value>
@@ -559,10 +559,10 @@
     <value>路徑</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value />
+    <value>無法找到指定的資料夾路徑</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
-    <value />
+    <value>需要路徑</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>連接埠</value>

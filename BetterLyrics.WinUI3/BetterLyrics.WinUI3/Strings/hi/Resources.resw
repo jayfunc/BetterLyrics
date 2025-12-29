@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -166,28 +166,28 @@
     <value>LX Music सर्वर से कनेक्ट नहीं हो सकता, कृपया सेटिंग्स - प्लेबैक स्रोत - LX Music - LX Music सर्वर पर जाएं और जांचें कि लिंक सही तरीके से दर्ज किया गया है या नहीं</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value />
+    <value>Cleaning cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value />
+    <value>कनेक्शन विफल रहा</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value />
+    <value>कनेक्टिंग ...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value />
+    <value>Fetching file list...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value />
+    <value>Parsing...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value />
+    <value>Preparing to clean cache...</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value />
+    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory.</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value />
+    <value>Preparing to scan...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>फुलस्क्रीन मोड</value>
@@ -382,16 +382,16 @@
     <value>विभाजित दृश्य</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value />
+    <value>Last Sync Time</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value />
+    <value>Local Folder</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value />
+    <value>Name</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value />
+    <value>अभी सिंक्रनाइज़ करें</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>प्लेलिस्ट में जोड़ें</value>
@@ -403,7 +403,7 @@
     <value>अगला आइटम</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>प्लेइंग कतार में जोड़ें</value>
+    <value>Add to playing queue</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>सभी गाने</value>
@@ -451,13 +451,13 @@
     <value>मीडिया लाइब्रेरी में कोई गाना नहीं मिला</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
-    <value />
+    <value>Folders</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>फ़ाइल से आयात करें</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>प्लेलिस्ट बनाएं</value>
+    <value>Create playlist</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार</value>
@@ -466,7 +466,7 @@
     <value>प्लेइंग कतार खाली है</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>प्लेलिस्ट</value>
+    <value>Playlists</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>सूची लूप</value>
@@ -511,22 +511,22 @@
     <value>संगीत लाइब्रेरी - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value />
+    <value>Auto-sync Frequency</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value />
+    <value>कभी नहीं</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value />
+    <value>प्रतिदिन</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value />
+    <value>हर 15 मिनट</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value />
+    <value>हर घंटे</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value />
+    <value>हर ६ घंटे</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>संकीर्ण मोड</value>
@@ -544,13 +544,13 @@
     <value>गोपनीयता नीति</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value />
+    <value>Browse</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
-    <value />
+    <value>Name</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value />
+    <value>Leaving it blank will automatically generate a default name.</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>पासवर्ड</value>
@@ -559,10 +559,10 @@
     <value>पथ</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value />
+    <value>The specified folder path could not be found</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
-    <value />
+    <value>Path is required</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>पोर्ट</value>

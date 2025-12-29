@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -166,28 +166,28 @@
     <value>تعذر الاتصال بخادم موسيقى LX، يرجى الانتقال إلى الإعدادات - مصدر التشغيل - LX Music - خادم موسيقى LX للتحقق مما إذا تم إدخال الرابط بشكل صحيح</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value />
+    <value>تنظيف ذاكرة التخزين المؤقت...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
-    <value />
+    <value>فشل الاتصال</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value />
+    <value>الاتصال جارِ...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value />
+    <value>جلب قائمة الملفات...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value />
+    <value>جاري التحليل...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value />
+    <value>التحضير لتنظيف ذاكرة التخزين المؤقت...</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value />
+    <value>تم اكتشاف مسار الدليل الجذر. قد يحتوي فهرس القرص الكامل على عدد كبير من الملفات غير الوسائط ويتسبب في استغراق الفحص وقتاً طويلاً جداً. يوصى بتحديد دليل فرعي محدد.</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value />
+    <value>في انتظار المسح...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>وضع ملء الشاشة</value>
@@ -382,16 +382,16 @@
     <value>عرض مقسم</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value />
+    <value>آخر مزامنة للوقت</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value />
+    <value>المجلد المحلي</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value />
+    <value>الاسم</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
-    <value />
+    <value>مزامنة الآن</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>إضافة إلى قائمة التشغيل</value>
@@ -403,7 +403,7 @@
     <value>العنصر التالي</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>إضافة إلى قائمة الانتظار</value>
+    <value>إضافة إلى قائمة انتظار اللعب</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>كل الموسيقى</value>
@@ -451,7 +451,7 @@
     <value>لم يتم العثور على أغاني في مكتبة الوسائط</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
-    <value />
+    <value>المجلدات</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>استيراد من ملف</value>
@@ -466,7 +466,7 @@
     <value>قائمة الانتظار فارغة</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>قائمة التشغيل</value>
+    <value>قوائم التشغيل</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>تكرار القائمة</value>
@@ -511,22 +511,22 @@
     <value>مكتبة الموسيقى - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value />
+    <value>تردد المزامنة التلقائية</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value />
+    <value>مطلقًا</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
-    <value />
+    <value>كل يوم</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value />
+    <value>كل 15 دقيقة</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value />
+    <value>كُل ساعة</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value />
+    <value>كُل 6 ساعات</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>وضع الشاشة الضيقة</value>
@@ -544,13 +544,13 @@
     <value>سياسة الخصوصية</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value />
+    <value>تصفح</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
-    <value />
+    <value>الاسم</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value />
+    <value>سيؤدي تركه فارغاً إلى إنشاء اسم افتراضي تلقائياً.</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>كلمة المرور</value>
@@ -559,10 +559,10 @@
     <value>المسار</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value />
+    <value>تعذر العثور على مسار المجلد المحدد</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
-    <value />
+    <value>المسار مطلوب</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>المنفذ</value>
