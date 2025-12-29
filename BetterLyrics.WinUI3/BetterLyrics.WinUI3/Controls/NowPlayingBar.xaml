@@ -11,7 +11,6 @@
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
-
         <Grid
             x:Name="BottomCommandGrid"
             Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}"
@@ -113,7 +112,58 @@
                         x:Name="BottomCenterCommandStackPanel"
                         Padding="16"
                         Orientation="Horizontal"
-                        Spacing="3">
+                        Spacing="12">
+                        <!--  Playback order  -->
+                        <Button
+                            Grid.Column="2"
+                            Click="PlaybackOrderButton_Click"
+                            Style="{StaticResource GhostButtonStyle}"
+                            Visibility="{x:Bind ShowPlaybackOrderButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    <Grid>
+                                        <TextBlock x:Name="PlaybackRepeatAllHint" x:Uid="MusicGalleryPageQueueLoop" />
+                                        <TextBlock x:Name="PlaybackRepeatOneHint" x:Uid="MusicGalleryPageSingleLoop" />
+                                        <TextBlock x:Name="PlaybackShuffleHint" x:Uid="MusicGalleryPageQueueRandom" />
+                                    </Grid>
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                            <Button.Content>
+                                <Grid>
+                                    <!--  Repeat all  -->
+                                    <FontIcon
+                                        x:Name="PlaybackRepeatAll"
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xE8EE;">
+                                        <FontIcon.OpacityTransition>
+                                            <ScalarTransition />
+                                        </FontIcon.OpacityTransition>
+                                    </FontIcon>
+                                    <!--  Repeat one  -->
+                                    <FontIcon
+                                        x:Name="PlaybackRepeatOne"
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xE8ED;">
+                                        <FontIcon.OpacityTransition>
+                                            <ScalarTransition />
+                                        </FontIcon.OpacityTransition>
+                                    </FontIcon>
+                                    <!--  Shuffle  -->
+                                    <FontIcon
+                                        x:Name="PlaybackShuffle"
+                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontSize="16"
+                                        Glyph="&#xE8B1;">
+                                        <FontIcon.OpacityTransition>
+                                            <ScalarTransition />
+                                        </FontIcon.OpacityTransition>
+                                    </FontIcon>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                        <!--  上一曲目  -->
                         <Button
                             Command="{x:Bind ViewModel.PreviousSongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -164,6 +214,13 @@
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                   Glyph=&#xE623;}"
                             Style="{StaticResource GhostButtonStyle}" />
+                        <!--  播放队列按钮  -->
+                        <ToggleButton
+                            Click="PlayingQueueButton_Click"
+                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                  Glyph=&#xE8FD;}"
+                            Style="{StaticResource GhostToggleButtonStyle}"
+                            Visibility="{x:Bind ShowPlayingQueueButton, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
                     </StackPanel>
                 </Grid>
 
@@ -427,7 +484,58 @@
             </Grid.ContextFlyout>
         </Grid>
 
-
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="PlaybackOrderState">
+                <VisualState x:Name="RepeatAll">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            To="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PlaybackRepeatAll.Opacity" Value="1" />
+                        <Setter Target="PlaybackRepeatOne.Opacity" Value="0" />
+                        <Setter Target="PlaybackShuffle.Opacity" Value="0" />
+                        <Setter Target="PlaybackRepeatAllHint.Visibility" Value="Visible" />
+                        <Setter Target="PlaybackRepeatOneHint.Visibility" Value="Collapsed" />
+                        <Setter Target="PlaybackShuffleHint.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="RepeatOne">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            To="1" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PlaybackRepeatAll.Opacity" Value="0" />
+                        <Setter Target="PlaybackRepeatOne.Opacity" Value="1" />
+                        <Setter Target="PlaybackShuffle.Opacity" Value="0" />
+                        <Setter Target="PlaybackRepeatAllHint.Visibility" Value="Collapsed" />
+                        <Setter Target="PlaybackRepeatOneHint.Visibility" Value="Visible" />
+                        <Setter Target="PlaybackShuffleHint.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Shuffle">
+                    <VisualState.StateTriggers>
+                        <ui:CompareStateTrigger
+                            Comparison="Equal"
+                            Value="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
+                            To="2" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="PlaybackRepeatAll.Opacity" Value="0" />
+                        <Setter Target="PlaybackRepeatOne.Opacity" Value="0" />
+                        <Setter Target="PlaybackShuffle.Opacity" Value="1" />
+                        <Setter Target="PlaybackRepeatAllHint.Visibility" Value="Collapsed" />
+                        <Setter Target="PlaybackRepeatOneHint.Visibility" Value="Collapsed" />
+                        <Setter Target="PlaybackShuffleHint.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 
 </UserControl>

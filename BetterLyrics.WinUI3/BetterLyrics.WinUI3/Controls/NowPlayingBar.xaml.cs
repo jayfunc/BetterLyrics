@@ -1,5 +1,7 @@
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -12,6 +14,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Numerics;
+using BetterLyrics.WinUI3.Extensions;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -45,6 +48,42 @@ public sealed partial class NowPlayingBar : UserControl,
 
     public static readonly DependencyProperty ShowSongInfoProperty =
         DependencyProperty.Register(nameof(ShowSongInfo), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
+
+    public bool ShowPlayingQueueButton
+    {
+        get { return (bool)GetValue(ShowPlayingQueueButtonProperty); }
+        set { SetValue(ShowPlayingQueueButtonProperty, value); }
+    }
+
+    public static readonly DependencyProperty ShowPlayingQueueButtonProperty =
+        DependencyProperty.Register(nameof(ShowPlayingQueueButton), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
+
+    public bool ShowPlaybackOrderButton
+    {
+        get { return (bool)GetValue(ShowPlaybackOrderButtonProperty); }
+        set { SetValue(ShowPlaybackOrderButtonProperty, value); }
+    }
+
+    public static readonly DependencyProperty ShowPlaybackOrderButtonProperty =
+        DependencyProperty.Register(nameof(ShowPlaybackOrderButton), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
+
+    public PlaybackOrder PlaybackOrder
+    {
+        get { return (PlaybackOrder)GetValue(PlaybackOrderProperty); }
+        set { SetValue(PlaybackOrderProperty, value); }
+    }
+
+    public static readonly DependencyProperty PlaybackOrderProperty =
+        DependencyProperty.Register(nameof(PlaybackOrder), typeof(PlaybackOrder), typeof(NowPlayingBar), new PropertyMetadata(PlaybackOrder.RepeatAll));
+
+    public bool IsPlayingQueueOpened
+    {
+        get { return (bool)GetValue(IsPlayingQueueOpenedProperty); }
+        set { SetValue(IsPlayingQueueOpenedProperty, value); }
+    }
+
+    public static readonly DependencyProperty IsPlayingQueueOpenedProperty =
+        DependencyProperty.Register(nameof(IsPlayingQueueOpened), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
 
     public bool IsCompactMode
     {
@@ -210,12 +249,12 @@ public sealed partial class NowPlayingBar : UserControl,
 
     private void SongInfoStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
     {
-        SongInfoTapped?.Invoke(this, EventArgs.Empty);
+        SongInfoTapped?.Invoke(sender, EventArgs.Empty);
     }
 
     private void TimeStackPanel_Tapped(object sender, TappedRoutedEventArgs e)
     {
-        TimeTapped?.Invoke(this, EventArgs.Empty);
+        TimeTapped?.Invoke(sender, EventArgs.Empty);
     }
 
     private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -260,6 +299,16 @@ public sealed partial class NowPlayingBar : UserControl,
         {
             BottomCommandFlyout.ShowAt(BottomCommandFlyoutTrigger);
         }
+    }
+
+    private void PlayingQueueButton_Click(object sender, RoutedEventArgs e)
+    {
+        IsPlayingQueueOpened = !IsPlayingQueueOpened;
+    }
+
+    private void PlaybackOrderButton_Click(object sender, RoutedEventArgs e)
+    {
+        PlaybackOrder = PlaybackOrder.GetNext();
     }
 
     public void Receive(PropertyChangedMessage<SongInfo?> message)

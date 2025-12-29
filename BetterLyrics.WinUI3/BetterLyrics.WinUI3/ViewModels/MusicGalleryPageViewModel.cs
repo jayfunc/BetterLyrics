@@ -630,12 +630,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void SwitchPlaybackOrder()
-        {
-            AppSettings.MusicGallerySettings.PlaybackOrder = AppSettings.MusicGallerySettings.PlaybackOrder.GetNext();
-        }
-
-        [RelayCommand]
         private async Task StopTrackAsync()
         {
             await PlayTrackAtAsync(-1);

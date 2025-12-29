@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
@@ -126,6 +127,11 @@ namespace BetterLyrics.WinUI3.Views
         private void RootGrid_Unloaded(object sender, RoutedEventArgs e)
         {
             ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened = false;
+        }
+
+        private void NowPlayingBar_PlayingQueueClick(object sender, System.EventArgs e)
+        {
+            MusicGalleryPage.IsPlayingQueueOpened = !MusicGalleryPage.IsPlayingQueueOpened;
         }
     }
 }
