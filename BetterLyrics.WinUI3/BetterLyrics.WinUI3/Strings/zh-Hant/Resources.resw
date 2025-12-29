@@ -183,6 +183,9 @@
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>準備清除快取...</value>
   </data>
+  <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
+    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory.</value>
+  </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>等待掃描...</value>
   </data>
@@ -381,6 +384,12 @@
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
     <value>上次同步時間</value>
   </data>
+  <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
+    <value>Local Folder</value>
+  </data>
+  <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>立即同步</value>
   </data>
@@ -394,7 +403,7 @@
     <value>下一個項目</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>加入播放佇列</value>
+    <value>Add to playing queue</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>所有音樂</value>
@@ -441,11 +450,14 @@
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>未在媒體櫃內找到任何歌曲</value>
   </data>
+  <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
+    <value>Folders</value>
+  </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>從檔案匯入</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>建立播放清單</value>
+    <value>Create playlist</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>播放佇列</value>
@@ -454,7 +466,7 @@
     <value>播放佇列為空</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>播放清單</value>
+    <value>Playlists</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>清單循環</value>
@@ -531,11 +543,26 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>隱私權政策</value>
   </data>
+  <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
+    <value>Leaving it blank will automatically generate a default name.</value>
+  </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>密碼</value>
   </data>
   <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
     <value>路徑</value>
+  </data>
+  <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
+    <value>The specified folder path could not be found</value>
+  </data>
+  <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
+    <value>Path is required</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>連接埠</value>
