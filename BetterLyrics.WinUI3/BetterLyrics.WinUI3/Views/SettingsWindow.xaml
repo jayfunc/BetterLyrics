@@ -11,9 +11,13 @@
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
-        <Frame x:Name="RootFrame" Margin="0,40,0,0" />
+        <Frame x:Name="RootFrame" />
 
-        <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+        <StackPanel
+            Margin="0,0,140,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
 
             <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                 <FontIcon

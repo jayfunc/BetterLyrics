@@ -29,12 +29,169 @@
     </Page.Resources>
 
     <Grid>
-        <Grid Padding="12,0,12,64" ColumnSpacing="12">
+        <Grid Padding="12,8,12,64" ColumnSpacing="12">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid x:Name="SongViewer" Grid.Column="0">
+
+            <ScrollViewer Grid.Column="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        x:Uid="MusicGalleryPagePlaylist"
+                        Grid.Row="0"
+                        Margin="1,4,0,6"
+                        Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <!--  播放列表  -->
+                        <ListView
+                            x:Name="StarredPlaylistsListView"
+                            Grid.Row="0"
+                            ItemsSource="{x:Bind ViewModel.AppSettings.StarredPlaylists, Mode=OneWay}"
+                            SelectedIndex="{x:Bind ViewModel.SelectedSongsTabInfoIndex, Mode=TwoWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:SongsTabInfo">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid
+                                            Grid.Column="0"
+                                            ColumnSpacing="6"
+                                            Tapped="PlaylistGrid_Tapped">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <FontIcon
+                                                Grid.Column="0"
+                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontSize="16"
+                                                Glyph="{x:Bind Icon}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Margin="0,8"
+                                                VerticalAlignment="Center"
+                                                Style="{StaticResource BodyTextBlockStyle}"
+                                                Text="{x:Bind Name}"
+                                                TextWrapping="Wrap" />
+                                        </Grid>
+                                        <!--  从播放列表移除  -->
+                                        <Button
+                                            Grid.Column="1"
+                                            Click="RemoveFromPlaylistButton_Click"
+                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                  FontSize=16,
+                                                                  Glyph=&#xE711;}"
+                                            Style="{StaticResource GhostButtonStyle}"
+                                            Visibility="{x:Bind IsDefault, Converter={StaticResource BoolNegationToVisibilityConverter}}">
+                                            <ToolTipService.ToolTip>
+                                                <TextBlock x:Uid="MusicGalleryPageRemoveFromCustomList" />
+                                            </ToolTipService.ToolTip>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <NavigationViewItemSeparator Grid.Row="1" />
+                        <!--  命令区域  -->
+                        <Grid Grid.Row="2">
+                            <StackPanel>
+                                <!--  创建播放列表  -->
+                                <Button
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Command="{x:Bind ViewModel.CreatePlaylistCommand}">
+                                    <Button.Content>
+                                        <StackPanel
+                                            Padding="4,0"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="6">
+                                            <FontIcon
+                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontSize="16"
+                                                Glyph="&#xE710;" />
+                                            <TextBlock x:Uid="MusicGalleryPageNewPlaylist" />
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <!--  导入播放列表  -->
+                                <Button
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Stretch"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Command="{x:Bind ViewModel.ImportPlaylistCommand}">
+                                    <Button.Content>
+                                        <StackPanel
+                                            Padding="4,0"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="6">
+                                            <FontIcon
+                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontSize="16"
+                                                Glyph="&#xE896;" />
+                                            <TextBlock x:Uid="MusicGalleryPageImportFromFile" />
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                    <NavigationViewItemSeparator Grid.Row="2" />
+
+                    <TextBlock
+                        x:Uid="MusicGalleryPageFolder"
+                        Grid.Row="3"
+                        Margin="1,4,0,6"
+                        Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <TreeView
+                        x:Name="FolderTreeView"
+                        Grid.Row="4"
+                        AllowDrop="False"
+                        CanDragItems="False"
+                        ItemInvoked="FolderTreeView_ItemInvoked"
+                        ItemsSource="{x:Bind ViewModel.FolderRoots, Mode=OneWay}"
+                        SelectionMode="Single">
+
+                        <TreeView.ItemTemplate>
+                            <DataTemplate x:DataType="models:FolderNode">
+                                <TreeViewItem IsExpanded="{x:Bind IsExpanded, Mode=TwoWay}" ItemsSource="{x:Bind SubFolders}">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <FontIcon FontSize="16" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}}" />
+                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind FolderName}" />
+                                    </StackPanel>
+                                </TreeViewItem>
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
+                </Grid>
+            </ScrollViewer>
+
+            <Grid x:Name="SongViewer" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -78,10 +235,7 @@
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormatName, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
-                                    <uc:PropertyRow
-                                        x:Uid="MusicGalleryPageFileInfoPath"
-                                        Link="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay}"
-                                        Value="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay}" />
+                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoPath" Value="{x:Bind ViewModel.TrackRightTapped.DecodedAbsoluteUri, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped.RawLyrics, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
@@ -91,199 +245,9 @@
 
                 <StackPanel Grid.Row="0" Spacing="6">
 
-                    <Grid VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Button
-                            x:Name="PlaylistButton"
-                            Grid.Column="0"
-                            Style="{StaticResource GhostButtonStyle}">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xE728;" />
-                                    <TextBlock x:Uid="MusicGalleryPagePlaylist" />
-                                </StackPanel>
-                            </Button.Content>
-                            <Button.Flyout>
-                                <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-                                        <Button
-                                            Grid.Row="0"
-                                            Margin="4"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Command="{x:Bind ViewModel.CreatePlaylistCommand}">
-                                            <Button.Content>
-                                                <StackPanel
-                                                    VerticalAlignment="Center"
-                                                    Orientation="Horizontal"
-                                                    Spacing="6">
-                                                    <FontIcon
-                                                        FontFamily="{StaticResource IconFontFamily}"
-                                                        FontSize="16"
-                                                        Glyph="&#xE710;" />
-                                                    <TextBlock x:Uid="MusicGalleryPageNewPlaylist" />
-                                                </StackPanel>
-                                            </Button.Content>
-                                        </Button>
-                                        <Button
-                                            Grid.Row="1"
-                                            Margin="4,1,4,2"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            Background="Transparent"
-                                            BorderBrush="Transparent"
-                                            Command="{x:Bind ViewModel.ImportPlaylistCommand}">
-                                            <Button.Content>
-                                                <StackPanel
-                                                    VerticalAlignment="Center"
-                                                    Orientation="Horizontal"
-                                                    Spacing="6">
-                                                    <FontIcon
-                                                        FontFamily="{StaticResource IconFontFamily}"
-                                                        FontSize="16"
-                                                        Glyph="&#xE74B;" />
-                                                    <TextBlock x:Uid="MusicGalleryPageImportFromFile" />
-                                                </StackPanel>
-                                            </Button.Content>
-                                        </Button>
-                                        <ListView
-                                            x:Name="StarredPlaylistsListView"
-                                            Grid.Row="2"
-                                            ItemsSource="{x:Bind ViewModel.AppSettings.StarredPlaylists, Mode=OneWay}">
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate x:DataType="models:SongsTabInfo">
-                                                    <Grid Tapped="StarredPlaylistsListViewItemGrid_Tapped">
-                                                        <StackPanel Orientation="Horizontal" Spacing="6">
-                                                            <FontIcon
-                                                                FontFamily="{StaticResource IconFontFamily}"
-                                                                FontSize="16"
-                                                                Glyph="{x:Bind Icon}" />
-                                                            <TextBlock
-                                                                Margin="0,0,0,2"
-                                                                VerticalAlignment="Center"
-                                                                Style="{StaticResource BodyTextBlockStyle}"
-                                                                Text="{x:Bind Name}" />
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </Grid>
-                                </Flyout>
-                            </Button.Flyout>
-                        </Button>
-
-                        <ListView
-                            Grid.Column="1"
-                            ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
-                            ItemsSource="{x:Bind ViewModel.SongsTabInfoList, Mode=OneWay}"
-                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                            ScrollViewer.HorizontalScrollMode="Enabled"
-                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            ScrollViewer.VerticalScrollMode="Disabled"
-                            SelectedIndex="{x:Bind ViewModel.SelectedSongsTabInfoIndex, Mode=TwoWay}">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <ItemsStackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:SongsTabInfo">
-                                    <Grid Padding="12,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="1*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Button
-                                            Grid.Column="0"
-                                            Click="PlaylistFavButton_Click"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource GhostButtonStyle}"
-                                            Visibility="{x:Bind IsClosable, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                            <ToolTipService.ToolTip>
-                                                <Grid>
-                                                    <TextBlock x:Uid="MusicGalleryPageAddToCustomList" Visibility="{x:Bind IsStarred, Converter={StaticResource BoolNegationToVisibilityConverter}, Mode=OneWay}" />
-                                                    <TextBlock x:Uid="MusicGalleryPageRemoveFromCustomList" Visibility="{x:Bind IsStarred, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                                                </Grid>
-                                            </ToolTipService.ToolTip>
-                                            <Button.Content>
-                                                <Grid>
-                                                    <FontIcon
-                                                        FontFamily="{StaticResource IconFontFamily}"
-                                                        FontSize="16"
-                                                        Glyph="&#xE734;"
-                                                        Opacity="{x:Bind IsStarred, Converter={StaticResource BoolNegationToOpacityConverter}, Mode=OneWay}">
-                                                        <FontIcon.OpacityTransition>
-                                                            <ScalarTransition />
-                                                        </FontIcon.OpacityTransition>
-                                                    </FontIcon>
-                                                    <FontIcon
-                                                        FontFamily="{StaticResource IconFontFamily}"
-                                                        FontSize="16"
-                                                        Glyph="&#xE735;"
-                                                        Opacity="{x:Bind IsStarred, Converter={StaticResource BoolToOpacityConverter}, Mode=OneWay}">
-                                                        <FontIcon.OpacityTransition>
-                                                            <ScalarTransition />
-                                                        </FontIcon.OpacityTransition>
-                                                    </FontIcon>
-                                                </Grid>
-                                            </Button.Content>
-                                        </Button>
-                                        <Grid
-                                            Grid.Column="1"
-                                            Background="Transparent"
-                                            ColumnSpacing="6"
-                                            Tapped="PlaylistGrid_Tapped">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="1*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <FontIcon
-                                                Grid.Column="0"
-                                                FontFamily="{StaticResource IconFontFamily}"
-                                                FontSize="16"
-                                                Glyph="{x:Bind Icon}" />
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                Margin="0,0,0,2"
-                                                VerticalAlignment="Center"
-                                                Style="{StaticResource BodyTextBlockStyle}"
-                                                Text="{x:Bind Name}" />
-                                        </Grid>
-                                        <Button
-                                            Grid.Column="2"
-                                            Click="PlaylistCloseButton_Click"
-                                            Content="{ui:FontIcon FontSize=16,
-                                                                  FontFamily={StaticResource IconFontFamily},
-                                                                  Glyph=&#xE711;}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource GhostButtonStyle}"
-                                            Visibility="{x:Bind IsClosable, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-
                     <AutoSuggestBox
                         x:Name="SongSearchBox"
                         x:Uid="MusicGalleryPageSongSearchBox"
-                        Margin="0,-8,0,0"
                         HorizontalAlignment="Stretch"
                         QueryIcon="Find"
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
@@ -388,70 +352,53 @@
                                         DoubleTapped="SongListViewItem_DoubleTapped">
 
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*" />
-                                            <ColumnDefinition Width="4*" />
-                                            <ColumnDefinition Width="4*" />
                                             <ColumnDefinition Width="2*" />
                                             <ColumnDefinition Width="2*" />
                                             <ColumnDefinition Width="2*" />
                                             <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Grid
-                                            Grid.Column="0"
-                                            MaxWidth="48"
-                                            MaxHeight="48"
-                                            CornerRadius="4">
-                                            <Image Source="{x:Bind LocalAlbumArtPath, Mode=OneWay, Converter={StaticResource PathToImageConverter}}" Stretch="Uniform" />
+                                        <!--  标题  -->
+                                        <Grid Grid.Column="0">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="{x:Bind Title}"
+                                                TextWrapping="Wrap" />
                                         </Grid>
 
-                                        <!--  基本信息  -->
+                                        <!--  艺术家  -->
                                         <Grid Grid.Column="1">
-                                            <StackPanel VerticalAlignment="Center" Spacing="6">
-                                                <TextBlock Text="{x:Bind Title}" TextWrapping="Wrap" />
-                                                <StackPanel Orientation="Horizontal" Spacing="6">
-                                                    <Grid Background="{ThemeResource AccentAcrylicBackgroundFillColorBaseBrush}" CornerRadius="4">
-                                                        <TextBlock
-                                                            Margin="4,2"
-                                                            FontSize="12"
-                                                            Text="{x:Bind AudioFormatShortName}" />
-                                                    </Grid>
-                                                    <HyperlinkButton Padding="0" Click="ArtistHyperlibkButton_Click">
-                                                        <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
-                                                    </HyperlinkButton>
-                                                </StackPanel>
-                                            </StackPanel>
+                                            <HyperlinkButton Click="ArtistHyperlibkButton_Click">
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock x:Uid="MusicGalleryPageAddToCustomList" />
+                                                </ToolTipService.ToolTip>
+                                                <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
+                                            </HyperlinkButton>
                                         </Grid>
 
-                                        <HyperlinkButton Grid.Column="2" Click="AlbumHyperlibkButton_Click">
-                                            <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
-                                        </HyperlinkButton>
-
-                                        <!--  年份  -->
-                                        <TextBlock
-                                            Grid.Column="3"
-                                            VerticalAlignment="Center"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="{x:Bind Year}"
-                                            TextWrapping="Wrap" />
+                                        <!--  专辑  -->
+                                        <Grid Grid.Column="2">
+                                            <HyperlinkButton Click="AlbumHyperlibkButton_Click">
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock x:Uid="MusicGalleryPageAddToCustomList" />
+                                                </ToolTipService.ToolTip>
+                                                <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
+                                            </HyperlinkButton>
+                                        </Grid>
 
                                         <!--  歌曲时长  -->
                                         <TextBlock
-                                            Grid.Column="4"
+                                            Grid.Column="3"
                                             VerticalAlignment="Center"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                                             TextWrapping="Wrap" />
 
-                                        <!--  路径  -->
-                                        <HyperlinkButton
-                                            Grid.Column="5"
-                                            VerticalAlignment="Center"
-                                            Click="PathHyperlibkButton_Click"
-                                            Content="{x:Bind ParentFolderName}" />
-
+                                        <!--  更多  -->
                                         <Button
-                                            Grid.Column="6"
+                                            Grid.Column="4"
+                                            HorizontalAlignment="Right"
                                             Click="SongListViewItemMoreButton_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                                   FontSize=12,
@@ -515,136 +462,134 @@
 
             </Grid>
 
-            <Grid x:Name="PlayQueue" Grid.Column="1">
+            <Grid x:Name="PlayQueue" Grid.Column="2">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Spacing="6">
-                    <Grid ColumnSpacing="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            x:Uid="MusicGalleryPagePlayingQueue"
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        <StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
-                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
-                            <TextBlock Text="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}" />
-                        </StackPanel>
+                <Grid Grid.Row="0">
+                    <TextBlock
+                        x:Uid="MusicGalleryPagePlayingQueue"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource BodyStrongTextBlockStyle}" />
+                </Grid>
 
-                        <!--  Stop media session  -->
-                        <Button
-                            Grid.Column="2"
-                            HorizontalAlignment="Right"
-                            Command="{x:Bind ViewModel.StopTrackCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  FontSize=16,
-                                                  Glyph=&#xE71A;}"
-                            Style="{StaticResource GhostButtonStyle}">
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="MusicGalleryPageStopTrack" />
-                            </ToolTipService.ToolTip>
-                        </Button>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-                        <!--  Playback order  -->
-                        <Button
-                            Grid.Column="3"
-                            HorizontalAlignment="Right"
-                            Command="{x:Bind ViewModel.SwitchPlaybackOrderCommand}"
-                            Style="{StaticResource GhostButtonStyle}">
-                            <ToolTipService.ToolTip>
-                                <ToolTip>
-                                    <Grid>
-                                        <TextBlock x:Name="PlaybackRepeatAllHint" x:Uid="MusicGalleryPageQueueLoop" />
-                                        <TextBlock x:Name="PlaybackRepeatOneHint" x:Uid="MusicGalleryPageSingleLoop" />
-                                        <TextBlock x:Name="PlaybackShuffleHint" x:Uid="MusicGalleryPageQueueRandom" />
-                                    </Grid>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                            <Button.Content>
+                    <StackPanel
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
+                        <TextBlock Text="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}" />
+                    </StackPanel>
+
+                    <!--  Stop media session  -->
+                    <Button
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Command="{x:Bind ViewModel.StopTrackCommand}"
+                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                              FontSize=16,
+                                              Glyph=&#xE71A;}"
+                        Style="{StaticResource GhostButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:Uid="MusicGalleryPageStopTrack" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+                    <!--  Playback order  -->
+                    <Button
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Command="{x:Bind ViewModel.SwitchPlaybackOrderCommand}"
+                        Style="{StaticResource GhostButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
                                 <Grid>
-                                    <!--  Repeat all  -->
-                                    <FontIcon
-                                        x:Name="PlaybackRepeatAll"
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xE8EE;">
-                                        <FontIcon.OpacityTransition>
-                                            <ScalarTransition />
-                                        </FontIcon.OpacityTransition>
-                                    </FontIcon>
-                                    <!--  Repeat one  -->
-                                    <FontIcon
-                                        x:Name="PlaybackRepeatOne"
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xE8ED;">
-                                        <FontIcon.OpacityTransition>
-                                            <ScalarTransition />
-                                        </FontIcon.OpacityTransition>
-                                    </FontIcon>
-                                    <!--  Shuffle  -->
-                                    <FontIcon
-                                        x:Name="PlaybackShuffle"
-                                        FontFamily="{StaticResource IconFontFamily}"
-                                        FontSize="16"
-                                        Glyph="&#xE8B1;">
-                                        <FontIcon.OpacityTransition>
-                                            <ScalarTransition />
-                                        </FontIcon.OpacityTransition>
-                                    </FontIcon>
+                                    <TextBlock x:Name="PlaybackRepeatAllHint" x:Uid="MusicGalleryPageQueueLoop" />
+                                    <TextBlock x:Name="PlaybackRepeatOneHint" x:Uid="MusicGalleryPageSingleLoop" />
+                                    <TextBlock x:Name="PlaybackShuffleHint" x:Uid="MusicGalleryPageQueueRandom" />
                                 </Grid>
-                            </Button.Content>
-                        </Button>
-
-                        <!--  Scroll to playing item  -->
-                        <Button
-                            Grid.Column="4"
-                            HorizontalAlignment="Right"
-                            Click="ScrollToPlayingItemButton_Click"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  FontSize=16,
-                                                  Glyph=&#xE7B7;}"
-                            Style="{StaticResource GhostButtonStyle}">
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
-                            </ToolTipService.ToolTip>
-                        </Button>
-
-                        <!--  Empty play queue  -->
-                        <Button
-                            Grid.Column="5"
-                            HorizontalAlignment="Right"
-                            Click="EmptyPlayingQueueButton_Click"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                  FontSize=16,
-                                                  Glyph=&#xE738;}"
-                            Style="{StaticResource GhostButtonStyle}">
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
-                            </ToolTipService.ToolTip>
-                        </Button>
-                    </Grid>
-
-                </StackPanel>
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <Button.Content>
+                            <Grid>
+                                <!--  Repeat all  -->
+                                <FontIcon
+                                    x:Name="PlaybackRepeatAll"
+                                    FontFamily="{StaticResource IconFontFamily}"
+                                    FontSize="16"
+                                    Glyph="&#xE8EE;">
+                                    <FontIcon.OpacityTransition>
+                                        <ScalarTransition />
+                                    </FontIcon.OpacityTransition>
+                                </FontIcon>
+                                <!--  Repeat one  -->
+                                <FontIcon
+                                    x:Name="PlaybackRepeatOne"
+                                    FontFamily="{StaticResource IconFontFamily}"
+                                    FontSize="16"
+                                    Glyph="&#xE8ED;">
+                                    <FontIcon.OpacityTransition>
+                                        <ScalarTransition />
+                                    </FontIcon.OpacityTransition>
+                                </FontIcon>
+                                <!--  Shuffle  -->
+                                <FontIcon
+                                    x:Name="PlaybackShuffle"
+                                    FontFamily="{StaticResource IconFontFamily}"
+                                    FontSize="16"
+                                    Glyph="&#xE8B1;">
+                                    <FontIcon.OpacityTransition>
+                                        <ScalarTransition />
+                                    </FontIcon.OpacityTransition>
+                                </FontIcon>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                    <!--  Scroll to playing item  -->
+                    <Button
+                        Grid.Column="3"
+                        HorizontalAlignment="Right"
+                        Click="ScrollToPlayingItemButton_Click"
+                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                              FontSize=16,
+                                              Glyph=&#xE7B7;}"
+                        Style="{StaticResource GhostButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+                    <!--  Empty play queue  -->
+                    <Button
+                        Grid.Column="4"
+                        HorizontalAlignment="Right"
+                        Click="EmptyPlayingQueueButton_Click"
+                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                              FontSize=16,
+                                              Glyph=&#xE738;}"
+                        Style="{StaticResource GhostButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
+                        </ToolTipService.ToolTip>
+                    </Button>
+                </Grid>
 
                 <ListView
                     x:Name="PlayingQueueListView"
-                    Grid.Row="1"
+                    Grid.Row="3"
                     ItemsSource="{x:Bind ViewModel.TrackPlayingQueue, Mode=OneWay}"
                     SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=TwoWay}">
                     <ListView.ItemTemplate>
@@ -676,7 +621,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="3">
                     <interactivity:Interaction.Behaviors>
                         <interactivity:DataTriggerBehavior
                             Binding="{x:Bind ViewModel.TrackPlayingQueue.Count, Mode=OneWay}"
@@ -703,6 +648,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
+
         </Grid>
 
         <Grid Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" Visibility="{x:Bind ViewModel.IsDataLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">

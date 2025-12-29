@@ -299,6 +299,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             if (enabledIds.Count == 0) return lyricsSearchResult;
 
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+            allFiles = allFiles.Where(x => FileHelper.LyricExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
             foreach (var item in allFiles)
             {
@@ -342,6 +343,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             if (enabledIds.Count == 0) return lyricsSearchResult;
 
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+            allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
             FileCacheEntity? bestFile = null;
             int maxScore = 0;

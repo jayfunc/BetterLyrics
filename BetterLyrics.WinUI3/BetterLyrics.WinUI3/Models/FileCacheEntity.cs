@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Models
         [Indexed(Unique = true)]
         public string Uri { get; set; }
 
-        public string FileName { get; set; }
+        public string FileName { get; set; } = "";
 
         public bool IsDirectory { get; set; }
 
@@ -39,17 +39,17 @@ namespace BetterLyrics.WinUI3.Models
         public DateTime? LastModified { get; set; }
 
         // ------ 元数据部分 (保持不变) ------
-        public string? Title { get; set; }
-        public string? Artists { get; set; }
-        public string? Album { get; set; }
+        public string Title { get; set; } = "";
+        public string Artists { get; set; } = "";
+        public string Album { get; set; } = "";
         public int? Year { get; set; }
         public int Bitrate { get; set; }
         public double SampleRate { get; set; }
         public int BitDepth { get; set; }
-        public int Duration { get; set; } // 建议明确单位，例如 DurationMs
-        public string? AudioFormatName { get; set; }
-        public string? AudioFormatShortName { get; set; }
-        public string? Encoder { get; set; }
+        public int Duration { get; set; }
+        public string AudioFormatName { get; set; } = "";
+        public string AudioFormatShortName { get; set; } = "";
+        public string Encoder { get; set; } = "";
         public string? EmbeddedLyrics { get; set; }
         public string? LocalAlbumArtPath { get; set; }
         public bool IsMetadataParsed { get; set; }

@@ -166,22 +166,28 @@
     <value>无法连接到 LX 音乐服务器，请转到设置 - 播放源 - LX Music - LX 音乐服务器以检查是否正确输入链接</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>清理缓存中...</value>
+    <value>正在清理缓存...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>连接失败</value>
   </data>
   <data name="FileSystemServiceConnecting" xml:space="preserve">
-    <value>连接中...</value>
+    <value>正在连接...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>获取文件列表中...</value>
+    <value>正在获取文件列表...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>解析中...</value>
+    <value>正在解析...</value>
+  </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value>正在准备清理...</value>
+  </data>
+  <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
+    <value>检测到根目录路径。全盘索引可能包含大量非媒体文件并导致扫描耗时过长，建议指定具体的子目录。</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>等待扫描中...</value>
+    <value>正在准备扫描...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全屏模式</value>
@@ -378,6 +384,12 @@
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
     <value>上次同步时间</value>
   </data>
+  <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
+    <value>本地文件夹</value>
+  </data>
+  <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
+    <value>名称</value>
+  </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>立即同步</value>
   </data>
@@ -437,6 +449,9 @@
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>未在媒体库内找到任何歌曲</value>
+  </data>
+  <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
+    <value>文件夹</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>从文件导入</value>
@@ -528,11 +543,26 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>隐私政策</value>
   </data>
+  <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
+    <value>留空则自动生成默认名称</value>
+  </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>密码</value>
   </data>
   <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
     <value>路径</value>
+  </data>
+  <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
+    <value>找不到指定的文件夹路径</value>
+  </data>
+  <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
+    <value>路径为必填项</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>端口</value>

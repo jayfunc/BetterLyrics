@@ -37,33 +37,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             AppSettings = _settingsService.AppSettings;
         }
 
-        private void AddFolderAsync(string path)
-        {
-            var normalizedPath = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
-
-            if (AppSettings.LocalMediaFolders.Any(x => Path.GetFullPath(x.UriPath).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
-            {
-                ToastHelper.ShowToast("SettingsPagePathExistedInfo", null, InfoBarSeverity.Warning);
-            }
-            else if (AppSettings.LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
-            {
-                // 添加的文件夹是现有文件夹的子文件夹
-                ToastHelper.ShowToast("SettingsPagePathBeIncludedInfo", null, InfoBarSeverity.Warning);
-            }
-            else if (AppSettings.LocalMediaFolders.Any(item => Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase))
-            )
-            {
-                // 添加的文件夹是现有文件夹的父文件夹
-                ToastHelper.ShowToast("SettingsPagePathIncludingOthersInfo", null, InfoBarSeverity.Warning);
-            }
-            else
-            {
-                var tempFolder = new MediaFolder(path);
-                AppSettings.LocalMediaFolders.Add(tempFolder);
-                _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
-            }
-        }
-
         public void RemoveFolder(MediaFolder folder)
         {
             _ = Task.Run(async () =>
@@ -84,24 +57,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private async Task SelectAndAddFolderAsync(UIElement sender)
-        {
-            var folder = await PickerHelper.PickSingleFolderAsync<SettingsWindow>();
-
-            if (folder != null)
-            {
-                AddFolderAsync(folder.Path);
-            }
-        }
-
-        [RelayCommand]
-        private async Task AddRemoteSourceAsync(string protocolType)
+        private async Task AddMediaSourceAsync(string protocolType)
         {
             var dialog = new ContentDialog
             {
                 XamlRoot = WindowHook.GetWindow<SettingsWindow>()?.Content.XamlRoot,
                 Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                Title = protocolType,
+                Title = protocolType == "Local" ? _localizationService.GetLocalizedString("MediaSettingsControlLocalFolder") : protocolType,
                 PrimaryButtonText = _localizationService.GetLocalizedString("Add"),
                 CloseButtonText = _localizationService.GetLocalizedString("Cancel"),
                 DefaultButton = ContentDialogButton.Primary,
@@ -111,50 +73,100 @@ namespace BetterLyrics.WinUI3.ViewModels
             dialog.PrimaryButtonClick += async (s, e) =>
             {
                 var configControl = (RemoteServerConfigControl)dialog.Content;
-
                 var deferral = e.GetDeferral();
-
-                e.Cancel = true;
+                e.Cancel = true; // 默认阻止关闭，直到验证通过
 
                 dialog.IsPrimaryButtonEnabled = false;
                 configControl.IsEnabled = false;
                 configControl.SetProgressBarVisibility(Visibility.Visible);
+                // 清除之前的错误信息
+                configControl.ShowError(null);
 
-                var tempFolder = configControl.GetConfig();
-
-                bool isConnected = await Task.Run(async () =>
+                try
                 {
-                    try
+                    var tempFolder = configControl.GetConfig();
+
+                    if (protocolType == "Local")
                     {
-                        using var provider = tempFolder.CreateFileSystem();
-                        if (provider == null) return false;
+                        string path = tempFolder.UriPath;
 
-                        return await provider.ConnectAsync();
+                        if (!System.IO.Directory.Exists(path))
+                        {
+                            throw new System.IO.DirectoryNotFoundException(_localizationService.GetLocalizedString("RemoteServerConfigControlPathNotExisted"));
+                        }
+
+                        var normalizedPath = Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+
+                        // 是否完全重复
+                        if (AppSettings.LocalMediaFolders.Any(x => Path.GetFullPath(x.UriPath).TrimEnd(Path.DirectorySeparatorChar).Equals(normalizedPath.TrimEnd(Path.DirectorySeparatorChar), StringComparison.OrdinalIgnoreCase)))
+                        {
+                            configControl.ShowError(_localizationService.GetLocalizedString("SettingsPagePathExistedInfo"));
+                            deferral.Complete();
+                            return;
+                        }
+                        // 是否是子文件夹
+                        else if (AppSettings.LocalMediaFolders.Any(item => normalizedPath.StartsWith(Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            configControl.ShowError(_localizationService.GetLocalizedString("SettingsPagePathBeIncludedInfo"));
+                            deferral.Complete();
+                            return;
+                        }
+                        // 是否是父文件夹
+                        else if (AppSettings.LocalMediaFolders.Any(item => Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar).StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            configControl.ShowError(_localizationService.GetLocalizedString("SettingsPagePathIncludingOthersInfo"));
+                            deferral.Complete();
+                            return;
+                        }
+
+                        AppSettings.LocalMediaFolders.Add(tempFolder);
+                        _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
+
+                        e.Cancel = false; // 允许关闭
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        ShowErrorTip(configControl, ex.Message);
-                        return false;
+                        bool isConnected = await Task.Run(async () =>
+                        {
+                            try
+                            {
+                                using var provider = tempFolder.CreateFileSystem();
+                                if (provider == null) return false;
+                                return await provider.ConnectAsync();
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine(ex);
+                                return false;
+                            }
+                        });
+
+                        if (isConnected)
+                        {
+                            AppSettings.LocalMediaFolders.Add(tempFolder);
+                            PasswordVaultHelper.Save(Constants.App.AppName, tempFolder.VaultKey, tempFolder.Password);
+                            _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
+                            e.Cancel = false; // 允许关闭
+                        }
+                        else
+                        {
+                            configControl.ShowError(_localizationService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
+                        }
                     }
-                });
-
-                if (isConnected)
-                {
-                    AppSettings.LocalMediaFolders.Add(tempFolder);
-                    PasswordVaultHelper.Save(Constants.App.AppName, tempFolder.VaultKey, tempFolder.Password);
-
-                    _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
-
-                    e.Cancel = false;
                 }
-                else
+                catch (Exception ex)
                 {
-                    ShowErrorTip(configControl, _localizationService.GetLocalizedString("SettingsPageServerTestFailedInfo"));
+                    configControl.ShowError(ex.Message);
                 }
-
-                dialog.IsPrimaryButtonEnabled = true;
-                configControl.IsEnabled = true;
-                configControl.SetProgressBarVisibility(Visibility.Collapsed);
+                finally
+                {
+                    if (e.Cancel)
+                    {
+                        dialog.IsPrimaryButtonEnabled = true;
+                        configControl.IsEnabled = true;
+                        configControl.SetProgressBarVisibility(Visibility.Collapsed);
+                    }
+                }
 
                 deferral.Complete();
             };

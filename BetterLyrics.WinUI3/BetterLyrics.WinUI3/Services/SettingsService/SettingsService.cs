@@ -24,11 +24,13 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
         private readonly DispatcherQueueTimer _writeAppSettingsTimer;
+        private readonly ILocalizationService _localizationService;
 
         public AppSettings AppSettings { get; set; }
 
-        public SettingsService()
+        public SettingsService(ILocalizationService localizationService)
         {
+            _localizationService = localizationService;
             _writeAppSettingsTimer = _dispatcherQueue.CreateTimer();
 
             AppSettings = ReadAppSettings();
@@ -60,6 +62,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.Version = MetadataHelper.AppVersion;
 
             EnsureMediaSourceProvidersInfo();
+            EnsureStarredPlaylists();
         }
 
         private void EnsureMediaSourceProvidersInfo()
@@ -99,6 +102,20 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
                     if (!Enum.IsDefined(typeof(AlbumArtSearchProvider), x.AlbumArtSearchProvidersInfo[i].Provider))
                         x.AlbumArtSearchProvidersInfo.RemoveAt(i);
                 }
+            }
+        }
+
+        private void EnsureStarredPlaylists()
+        {
+            if (!AppSettings.StarredPlaylists.Any(x => x.IsDefault))
+            {
+                AppSettings.StarredPlaylists.Insert(0, new SongsTabInfo
+                {
+                    Name = _localizationService.GetLocalizedString("MusicGalleryPageAllSongs"),
+                    Icon = "\uE8A9",
+                    FilterProperty = CommonSongProperty.Title,
+                    FilterValue = string.Empty
+                });
             }
         }
 

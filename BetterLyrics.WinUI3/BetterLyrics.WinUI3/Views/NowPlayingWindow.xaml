@@ -227,8 +227,8 @@
                         <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}" ShouldConstrainToRootBounds="False">
                             <Grid
                                 x:Name="TopCommandFlyoutContainer"
-                                Width="400"
-                                Height="36" />
+                                Width="450"
+                                Height="38" />
                         </Flyout>
                     </Button.Flyout>
                 </Button>

@@ -34,7 +34,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class MusicGalleryPageViewModel : BaseViewModel,
         IRecipient<PropertyChangedMessage<DateTime?>>,
-        IRecipient<PropertyChangedMessage<bool>>
+        IRecipient<PropertyChangedMessage<bool>>,
+        IRecipient<PropertyChangedMessage<string>>
     {
         private readonly ISettingsService _settingsService;
         private readonly ILocalizationService _localizationService;
@@ -51,9 +52,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         private IUnifiedFileSystem? _currentProvider;
 
         // All songs
-        private List<ExtendedTrack> _tracks = [];
-        // Songs in current playlist
-        private List<ExtendedTrack> _playlistTracks = [];
+        private List<ExtendedTrack> _allTracks = [];
+        // Songs in current playlist or songs in current file tree
+        private List<ExtendedTrack> _middleTracks = [];
         // Filtered songs based on search query for current playlist
         private List<ExtendedTrack> _filteredTracks = [];
 
@@ -87,12 +88,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial CommonSongProperty SongOrderType { get; set; } = CommonSongProperty.Title;
 
         [ObservableProperty]
-        public partial ObservableCollection<SongsTabInfo> SongsTabInfoList { get; set; } = [];
-
-        [ObservableProperty]
         public partial int SelectedSongsTabInfoIndex { get; set; } = 0;
 
-        public SongsTabInfo? SelectedSongsTabInfo => SongsTabInfoList.ElementAtOrDefault(SelectedSongsTabInfoIndex);
+        public SongsTabInfo? SelectedSongsTabInfo => AppSettings.StarredPlaylists.ElementAtOrDefault(SelectedSongsTabInfoIndex);
 
         [ObservableProperty] public partial bool IsDataLoading { get; set; } = false;
 
@@ -100,6 +98,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty]
         public partial string SongSearchQuery { get; set; } = string.Empty;
+
+        public ObservableCollection<FolderNode> FolderRoots { get; } = new();
 
         public MusicGalleryPageViewModel(
             ISettingsService settingsService,
@@ -117,8 +117,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             TrackPlayingQueue = [.. AppSettings.MusicGallerySettings.PlayQueuePaths.Select(x => new PlayQueueItem(new ExtendedTrack(x)))];
             TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
-
-            SongsTabInfoList.Add(new SongsTabInfo(_localizationService.GetLocalizedString("MusicGalleryPageAllSongs"), "\uE8A9", false, false, CommonSongProperty.Title, string.Empty));
 
             RefreshSongs();
 
@@ -142,7 +140,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void TrackPlayingQueue_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.UriPath)];
+            AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.DecodedAbsoluteUri)];
         }
 
         private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -286,6 +284,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         .ToList();
 
                     var cachedFiles = await _fileSystemService.GetParsedFilesAsync(enabledFolderIds);
+                    cachedFiles = cachedFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
                     var newTrackList = cachedFiles
                         .Select(x => new ExtendedTrack(x))
@@ -293,7 +292,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     _dispatcherQueue.TryEnqueue(() =>
                     {
-                        _tracks = newTrackList;
+                        _allTracks = newTrackList;
+
+                        // 更新文件夹树
+                        RefreshTreeView();
 
                         // 应用过滤器
                         ApplyPlaylist();
@@ -313,23 +315,23 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (SelectedSongsTabInfo?.FilterValue == string.Empty)
             {
-                _playlistTracks = _tracks;
+                _middleTracks = _allTracks;
             }
             else
             {
                 switch (SelectedSongsTabInfo?.FilterProperty)
                 {
                     case CommonSongProperty.Title:
-                        _playlistTracks = _tracks.Where(t => t.Title.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t => t.Title.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                         break;
                     case CommonSongProperty.Album:
-                        _playlistTracks = _tracks.Where(t => t.Album.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t => t.Album.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                         break;
                     case CommonSongProperty.Artist:
-                        _playlistTracks = _tracks.Where(t => t.Artist.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t => t.Artist.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                         break;
                     case CommonSongProperty.Folder:
-                        _playlistTracks = _tracks.Where(t => t.ParentFolderPath.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t => t.ParentFolderPath.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
                         break;
                     case CommonSongProperty.M3UFilePath:
                         if (SelectedSongsTabInfo.FilterValue is string path)
@@ -337,11 +339,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                             if (File.Exists(path))
                             {
                                 var m3uFileContent = File.ReadAllText(path);
-                                _playlistTracks = _tracks.Where(t => m3uFileContent.Contains(t.UriPath)).ToList();
+                                _middleTracks = _allTracks.Where(t => m3uFileContent.Contains(t.DecodedAbsoluteUri)).ToList();
                             }
                             else
                             {
-                                _playlistTracks = [];
+                                _middleTracks = [];
                                 ToastHelper.ShowToast("PlaylistViewFailed", path, InfoBarSeverity.Success);
                             }
                         }
@@ -359,10 +361,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SongSearchQuery))
             {
-                _filteredTracks = _playlistTracks;
+                _filteredTracks = _middleTracks;
                 return;
             }
-            _filteredTracks = _playlistTracks.Where(t =>
+            _filteredTracks = _middleTracks.Where(t =>
                     t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
@@ -403,17 +405,52 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void UpdateSelectedPlaylist(SongsTabInfo playlist)
+        private void RefreshTreeView()
         {
-            var found = SongsTabInfoList.FirstOrDefault(x => x.FilterProperty == playlist.FilterProperty && x.FilterValue == playlist.FilterValue);
+            var roots = FolderTreeBuilder.Build(_allTracks, AppSettings.LocalMediaFolders.ToList());
+
+            FolderRoots.Clear();
+            foreach (var r in roots) FolderRoots.Add(r);
+        }
+
+        public void SelectFolder(FolderNode? folder)
+        {
+            if (folder == null) return;
+            if (_allTracks == null) return;
+
+            string baseUri = folder.FolderPath;
+            if (!baseUri.EndsWith("/")) baseUri += "/";
+
+            _middleTracks = _allTracks.Where(track =>
+            {
+                if (track.MediaFolderId != folder.MediaFolderId) return false;
+
+                string trackUriDecoded = System.Net.WebUtility.UrlDecode(track.Uri);
+
+                if (!trackUriDecoded.StartsWith(baseUri, StringComparison.OrdinalIgnoreCase)) return false;
+
+                string relativePart = trackUriDecoded.Substring(baseUri.Length);
+
+                return !relativePart.Contains('/');
+            }).ToList();
+
+            ApplySongSearchQuery();
+            IsLocalMediaNotFound = !_filteredTracks.Any();
+            ApplySongOrderType();
+        }
+
+        public void AddToPlaylists(SongsTabInfo playlist)
+        {
+            var starredPlaylists = AppSettings.StarredPlaylists;
+            var found = starredPlaylists.FirstOrDefault(x => x.FilterProperty == playlist.FilterProperty && x.FilterValue == playlist.FilterValue);
             if (found == null)
             {
-                SongsTabInfoList.Add(playlist);
-                SelectedSongsTabInfoIndex = SongsTabInfoList.Count - 1;
+                starredPlaylists.Add(playlist);
+                SelectedSongsTabInfoIndex = starredPlaylists.Count - 1;
             }
             else
             {
-                SelectedSongsTabInfoIndex = SongsTabInfoList.IndexOf(found);
+                SelectedSongsTabInfoIndex = starredPlaylists.IndexOf(found);
             }
             ApplyPlaylist();
         }
@@ -428,6 +465,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _timelineController.Pause();
             _mediaPlayer.Source = null;
 
+            // 清理旧资源
             _currentStream?.Dispose();
             _currentNetStream?.Dispose();
             _currentStream = null;
@@ -445,50 +483,66 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 try
                 {
-                    // ★ 1. 查找对应的 MediaFolder 配置
-                    // 现在的 PlayingTrack.Uri 是标准的完整 URI (例如 smb://host/share/file.mp3)
-                    // 我们通过对比前缀来找到它属于哪个 MediaFolder
                     var targetFolder = _settingsService.AppSettings.LocalMediaFolders.FirstOrDefault(f =>
-                        PlayingTrack.Uri.StartsWith(f.GetStandardUri().AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                    {
+                        var fUri = f.GetStandardUri().AbsoluteUri;
+                        return PlayingTrack.Uri.StartsWith(fUri, StringComparison.OrdinalIgnoreCase);
+                    });
 
                     if (targetFolder == null)
                     {
+                        
                         throw new Exception($"找不到文件 {PlayingTrack.FileName} 对应的存储配置。请检查服务器设置是否已启用。");
                     }
 
-                    // ★ 2. 创建 Provider 并连接
                     _currentProvider = targetFolder.CreateFileSystem();
                     if (_currentProvider == null) return;
 
                     await _currentProvider.ConnectAsync();
 
-                    // ★ 3. 构造实体对象进行读取
-                    // FileSystemService.OpenFileAsync 现在只需要 entity.Uri 就能工作
                     var fileCacheStub = new FileCacheEntity
                     {
                         Uri = PlayingTrack.Uri
                     };
 
-                    _currentNetStream = await _fileSystemService.OpenFileAsync(_currentProvider, fileCacheStub);
+                    var sourceStream = await _fileSystemService.OpenFileAsync(_currentProvider, fileCacheStub);
+
+                    if (sourceStream == null)
+                    {
+                        throw new FileNotFoundException("无法打开文件流");
+                    }
+
+                    if (sourceStream.CanSeek)
+                    {
+                        _currentNetStream = sourceStream;
+                    }
+                    else
+                    {
+                        var memStream = new MemoryStream();
+
+                        await sourceStream.CopyToAsync(memStream);
+                        memStream.Position = 0;
+
+                        sourceStream.Dispose();
+
+                        _currentNetStream = memStream;
+                    }
 
                     _currentStream = _currentNetStream.AsRandomAccessStream();
 
-                    // 获取 MIME 类型 (使用 FileName 或 Uri 都可以)
                     string contentType = GetMimeType(PlayingTrack.FileName);
                     var mediaSource = MediaSource.CreateFromStream(_currentStream, contentType);
 
                     _mediaPlayer.Source = mediaSource;
 
-                    // --- SMTC 更新逻辑 (基本保持不变) ---
                     var updater = _smtc.DisplayUpdater;
                     updater.Type = MediaPlaybackType.Music;
 
                     updater.MusicProperties.Title = PlayingTrack.Title ?? PlayingTrack.FileName;
-                    updater.MusicProperties.Artist = PlayingTrack.Artist ?? "Unknown Artist";
+                    updater.MusicProperties.Artist = PlayingTrack.Artist ?? "";
                     updater.MusicProperties.AlbumTitle = PlayingTrack.Album ?? "";
 
                     updater.MusicProperties.Genres.Clear();
-                    // 注意：这里改用 FileName 获取文件名，因为 UriPath 已被移除
                     updater.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(PlayingTrack.FileName)}");
 
                     updater.AppMediaId = Package.Current.Id.FullName;
@@ -507,10 +561,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    // 建议：播放失败时弹个 Toast 或者在 UI 上显示错误
-                    System.Diagnostics.Debug.WriteLine($"PlayTrackAsync Error: {ex.Message}");
-
-                    // 自动跳过或停止
+                    ToastHelper.ShowToast($"PlayTrackAsync: Error", ex.Message, InfoBarSeverity.Error);
                     _timelineController.Pause();
                 }
             }
@@ -552,8 +603,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 FilterProperty = CommonSongProperty.M3UFilePath,
                 FilterValue = file.Path,
                 Icon = "\uE7BC",
-                IsStarred = true,
-                IsClosable = true,
                 Name = file.Name
             });
         }
@@ -615,6 +664,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(MediaFolder.IsEnabled))
                 {
                     RefreshSongs();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<string> message)
+        {
+            if (message.Sender is MediaFolder)
+            {
+                if (message.PropertyName == nameof(MediaFolder.Name))
+                {
+                    RefreshTreeView();
                 }
             }
         }

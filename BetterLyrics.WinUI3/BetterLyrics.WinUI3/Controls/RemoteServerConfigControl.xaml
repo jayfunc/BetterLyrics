@@ -9,56 +9,85 @@
     mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Width="400" Spacing="16">
-            <ProgressBar
-                x:Name="ProgressBar"
-                IsIndeterminate="True"
-                Visibility="Collapsed" />
-            <InfoBar
-                x:Name="ErrorInfoBar"
-                IsClosable="True"
-                IsOpen="False"
-                Severity="Error" />
+        <ScrollViewer>
+            <StackPanel Width="400" Spacing="16">
+                <ProgressBar
+                    x:Name="ProgressBar"
+                    IsIndeterminate="True"
+                    Visibility="Collapsed" />
+                <InfoBar
+                    x:Name="ErrorInfoBar"
+                    IsClosable="True"
+                    IsOpen="False"
+                    Severity="Error" />
 
-            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
                 <TextBox
-                    x:Name="HostBox"
-                    x:Uid="RemoteServerConfigControlServerAddress"
-                    Grid.Column="0"
-                    InputScope="Url"
-                    PlaceholderText="192.168.1.x"
+                    x:Name="NameBox"
+                    x:Uid="RemoteServerConfigControlName"
                     TextWrapping="Wrap" />
 
-                <NumberBox
-                    x:Name="PortBox"
-                    x:Uid="RemoteServerConfigControlPort"
-                    Grid.Column="1"
-                    MinWidth="100"
-                    LargeChange="10"
-                    SmallChange="1"
-                    SpinButtonPlacementMode="Inline"
-                    ToolTipService.ToolTip="80"
-                    Value="80" />
-            </Grid>
+                <StackPanel x:Name="RemoteFieldsPanel" Spacing="16">
+                    <Grid ColumnDefinitions="*, Auto" ColumnSpacing="12">
+                        <TextBox
+                            x:Name="HostBox"
+                            x:Uid="RemoteServerConfigControlServerAddress"
+                            Grid.Column="0"
+                            InputScope="Url"
+                            PlaceholderText="192.168.1.x"
+                            TextWrapping="Wrap" />
 
-            <TextBox
-                x:Name="PathBox"
-                x:Uid="RemoteServerConfigControlPath"
-                TextWrapping="Wrap" />
+                        <NumberBox
+                            x:Name="PortBox"
+                            x:Uid="RemoteServerConfigControlPort"
+                            Grid.Column="1"
+                            MinWidth="100"
+                            LargeChange="10"
+                            SmallChange="1"
+                            SpinButtonPlacementMode="Inline"
+                            ToolTipService.ToolTip="80"
+                            Value="80" />
+                    </Grid>
+                </StackPanel>
 
-            <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
-                <TextBox
-                    x:Name="UserBox"
-                    x:Uid="RemoteServerConfigControlUsername"
-                    Grid.Column="0"
-                    TextWrapping="Wrap" />
+                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="8">
+                    <TextBox
+                        x:Name="PathBox"
+                        x:Uid="RemoteServerConfigControlPath"
+                        Grid.Column="0"
+                        TextChanged="PathBox_TextChanged"
+                        TextWrapping="Wrap" />
 
-                <PasswordBox
-                    x:Name="PwdBox"
-                    x:Uid="RemoteServerConfigControlPassword"
-                    Grid.Column="1"
-                    PasswordRevealMode="Peek" />
-            </Grid>
-        </StackPanel>
+                    <Button
+                        x:Name="BrowseButton"
+                        x:Uid="RemoteServerConfigControlBrowse"
+                        Grid.Column="1"
+                        VerticalAlignment="Bottom"
+                        Click="BrowseButton_Click"
+                        Visibility="Collapsed" />
+                </Grid>
+
+                <InfoBar
+                    x:Name="PathWarningBar"
+                    IsClosable="False"
+                    IsOpen="False"
+                    Severity="Warning" />
+
+                <StackPanel x:Name="AuthFieldsPanel" Spacing="16">
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                        <TextBox
+                            x:Name="UserBox"
+                            x:Uid="RemoteServerConfigControlUsername"
+                            Grid.Column="0"
+                            TextWrapping="Wrap" />
+
+                        <PasswordBox
+                            x:Name="PwdBox"
+                            x:Uid="RemoteServerConfigControlPassword"
+                            Grid.Column="1"
+                            PasswordRevealMode="Peek" />
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

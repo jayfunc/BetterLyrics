@@ -180,6 +180,12 @@
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value />
   </data>
+  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
+    <value />
+  </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value />
   </data>
@@ -378,6 +384,12 @@
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
     <value />
   </data>
+  <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
+    <value />
+  </data>
+  <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
+    <value />
+  </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value />
   </data>
@@ -437,6 +449,9 @@
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>Aucune chanson trouvée dans la bibliothèque multimédia</value>
+  </data>
+  <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
+    <value />
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>Importer depuis un fichier</value>
@@ -528,11 +543,26 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>Politique de confidentialité</value>
   </data>
+  <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
+    <value />
+  </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
   <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
     <value>Chemin</value>
+  </data>
+  <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
+    <value />
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>Port</value>

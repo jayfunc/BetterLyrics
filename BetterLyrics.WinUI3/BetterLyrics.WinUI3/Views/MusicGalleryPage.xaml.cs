@@ -51,7 +51,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private async void SongPathHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            await LauncherHelper.SelectAndShowFile(((ExtendedTrack)((HyperlinkButton)sender).DataContext).UriPath);
+            await LauncherHelper.SelectAndShowFile(((ExtendedTrack)((HyperlinkButton)sender).DataContext).DecodedAbsoluteUri);
         }
 
         private async void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -140,36 +140,47 @@ namespace BetterLyrics.WinUI3.Views
         private void ArtistHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
             var artist = ((ExtendedTrack)((FrameworkElement)sender).DataContext).Artist;
-            var playlist = new SongsTabInfo(artist, "\uEFA9", true, false, CommonSongProperty.Artist, artist);
-            ViewModel.UpdateSelectedPlaylist(playlist);
+            var playlist = new SongsTabInfo
+            {
+                Name = artist,
+                Icon = "\uEFA9",
+                FilterProperty = CommonSongProperty.Artist,
+                FilterValue = artist
+            };
+            ViewModel.AddToPlaylists(playlist);
         }
 
         private void AlbumHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
             var album = ((ExtendedTrack)((FrameworkElement)sender).DataContext).Album;
-            var playlist = new SongsTabInfo(album, "\uE93C", true, false, CommonSongProperty.Album, album);
-            ViewModel.UpdateSelectedPlaylist(playlist);
+            var playlist = new SongsTabInfo
+            {
+                Name = album,
+                Icon = "\uE93C",
+                FilterProperty = CommonSongProperty.Album,
+                FilterValue = album
+            };
+            ViewModel.AddToPlaylists(playlist);
         }
 
         private void PathHyperlibkButton_Click(object sender, RoutedEventArgs e)
         {
             var track = ((ExtendedTrack)((FrameworkElement)sender).DataContext);
-            var playlist = new SongsTabInfo(track.ParentFolderName, "\uE8B7", true, false, CommonSongProperty.Folder, track.ParentFolderPath);
-            ViewModel.UpdateSelectedPlaylist(playlist);
+            var playlist = new SongsTabInfo
+            {
+                Name = track.ParentFolderName,
+                Icon = "\uE8B7",
+                FilterProperty = CommonSongProperty.Folder,
+                FilterValue = track.ParentFolderPath
+            };
+            ViewModel.AddToPlaylists(playlist);
         }
 
         private void PlaylistGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            FolderTreeView.SelectedItem = null;
             var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
-            ViewModel.UpdateSelectedPlaylist(playlist);
-        }
-
-        private void PlaylistCloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
-            ViewModel.SongsTabInfoList.Remove(playlist);
-            ViewModel.SelectedSongsTabInfoIndex = 0;
-            ViewModel.ApplyPlaylist();
+            ViewModel.AddToPlaylists(playlist);
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -181,28 +192,12 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void PlaylistFavButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveFromPlaylistButton_Click(object sender, RoutedEventArgs e)
         {
             var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
-            var targetStatus = !playlist.IsStarred;
-            if (targetStatus)
-            {
-                ViewModel.AppSettings.StarredPlaylists.Add(playlist);
-            }
-            else
-            {
-                ViewModel.AppSettings.StarredPlaylists.Remove(playlist);
-            }
-            playlist.IsStarred = targetStatus;
-        }
-
-        private void StarredPlaylistsListViewItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var songsTabInfo = ((SongsTabInfo)((FrameworkElement)sender).DataContext);
-            if (!ViewModel.SongsTabInfoList.Contains(songsTabInfo))
-            {
-                ViewModel.SongsTabInfoList.Add(songsTabInfo);
-            }
+            ViewModel.AppSettings.StarredPlaylists.Remove(playlist);
+            ViewModel.SelectedSongsTabInfoIndex = 0;
+            ViewModel.ApplyPlaylist();
         }
 
         private void SongListViewItemMoreButton_Click(object sender, RoutedEventArgs e)
@@ -223,7 +218,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AddToPlaylistMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
-            ((MenuFlyoutItem)sender).ContextFlyout.ShowAt(PlaylistButton);
+            //((MenuFlyoutItem)sender).ContextFlyout.ShowAt(PlaylistButton);
         }
 
         private void ToBeAddedPlaylistsListViewItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -236,7 +231,7 @@ namespace BetterLyrics.WinUI3.Views
                     if (File.Exists(path))
                     {
                         var content = File.ReadAllText(path);
-                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.UriPath).ToList())
+                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.DecodedAbsoluteUri).ToList())
                         {
                             if (!content.Contains(item))
                             {
@@ -279,5 +274,13 @@ namespace BetterLyrics.WinUI3.Views
             ScrollToPlayingItem();
         }
 
+        private void FolderTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
+        {
+            ViewModel.SelectedSongsTabInfoIndex = -1;
+            if (args.InvokedItem is FolderNode selectedFolder)
+            {
+                ViewModel.SelectFolder(selectedFolder);
+            }
+        }
     }
 }

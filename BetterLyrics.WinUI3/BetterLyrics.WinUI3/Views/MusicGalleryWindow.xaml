@@ -16,7 +16,7 @@
         Loaded="RootGrid_Loaded"
         Unloaded="RootGrid_Unloaded">
 
-        <local:MusicGalleryPage x:Name="MusicGalleryPage" Margin="0,40,0,0" />
+        <local:MusicGalleryPage x:Name="MusicGalleryPage" />
 
         <local:NowPlayingPage
             x:Name="NowPlayingPage"
