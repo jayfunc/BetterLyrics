@@ -17,12 +17,20 @@ namespace BetterLyrics.WinUI3.Hooks
 
         static SystemVolumeHook()
         {
-            _deviceEnumerator = new MMDeviceEnumerator();
-            _defaultDevice = _deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-
-            if (_defaultDevice != null)
+            try
             {
-                _defaultDevice.AudioEndpointVolume.OnVolumeNotification += AudioEndpointVolume_OnVolumeNotification;
+                _deviceEnumerator = new MMDeviceEnumerator();
+                // 找不到设备会抛出异常，在这里截获它
+                _defaultDevice = _deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+
+                if (_defaultDevice != null)
+                {
+                    _defaultDevice.AudioEndpointVolume.OnVolumeNotification += AudioEndpointVolume_OnVolumeNotification;
+                }
+            }
+            catch (Exception ex)
+            {
+                _defaultDevice = null;
             }
         }
 

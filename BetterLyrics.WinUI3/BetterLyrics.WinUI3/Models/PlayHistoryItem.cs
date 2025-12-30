@@ -5,6 +5,7 @@ using System.Text;
 
 namespace BetterLyrics.WinUI3.Models
 {
+    [Preserve(AllMembers = true)]
     [Table("PlayHistory")]
     public class PlayHistoryItem
     {
