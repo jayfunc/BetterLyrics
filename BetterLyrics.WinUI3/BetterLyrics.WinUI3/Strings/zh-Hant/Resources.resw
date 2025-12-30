@@ -160,7 +160,7 @@
     <value>停靠模式</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>錯誤</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>匯出成功</value>
@@ -187,7 +187,7 @@
     <value>準備清除快取...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value>Ready</value>
+    <value>準備就緒</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>已偵測到根目錄路徑。全磁碟索引可能包含大量非媒體檔案，導致掃描時間過長。建議指定特定的子目錄。</value>
@@ -415,7 +415,7 @@
     <value>所有音樂</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>The data is being processed. You can check the detailed progress in the settings.</value>
+    <value>資料正在處理中。您可以在設定中檢查詳細進度。</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>清除播放佇列</value>
@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>啟動</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>統計資料</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>關閉音樂庫視窗時停止播放</value>
   </data>
@@ -1454,6 +1457,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>標準模式</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>來源</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>本月</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>本季</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>本週</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>今年</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>今天</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>頂級藝術家</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>熱門曲目</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>頂端來源</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>總時間</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>播放曲目</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>結束程式</value>
