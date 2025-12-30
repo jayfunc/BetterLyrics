@@ -160,7 +160,7 @@
     <value>Mod Dok</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Ralat</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>Eksport berjaya</value>
@@ -169,7 +169,7 @@
     <value>Tidak dapat menyambung ke pelayan LX Music, sila pergi ke Tetapan - Sumber Main Balik - LX Music - Pelayan LX Music untuk menyemak sama ada pautan dimasukkan dengan betul</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>Membersihkan cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>Sambungan gagal</value>
@@ -178,22 +178,22 @@
     <value>Menyambung...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>Fetching file list...</value>
+    <value>Mengambil senarai fail...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>Menghurai...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value>Preparing to clean cache...</value>
+    <value>Bersedia untuk membersihkan cache...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value>Ready</value>
+    <value>Sedia</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory.</value>
+    <value>Laluan direktori akar telah dikesan. Indeks cakera penuh mungkin mengandungi sejumlah besar fail bukan media dan menyebabkan imbasan mengambil masa terlalu lama. Adalah disyorkan untuk menentukan subdirektori tertentu.</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Preparing to scan...</value>
+    <value>Bersedia untuk mengimbas...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Mod Skrin Penuh</value>
@@ -391,10 +391,10 @@
     <value>Masa Segerak Akhir</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value>Local Folder</value>
+    <value>Folder setempat</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value>Name</value>
+    <value>Nama</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>Segerak sekarang</value>
@@ -409,13 +409,13 @@
     <value>Item seterusnya</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>Add to playing queue</value>
+    <value>Tambah ke turutan lagu</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>Semua Muzik</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>The data is being processed. You can check the detailed progress in the settings.</value>
+    <value>Data sedang diproses. Anda boleh menyemak kemajuan terperinci dalam tetapan.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Kosongkan baris gilir main</value>
@@ -460,13 +460,13 @@
     <value>Tiada lagu ditemui dalam pustaka media</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
-    <value>Folders</value>
+    <value>Folder</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>Import dari fail</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>Create playlist</value>
+    <value>Cipta senarai main</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>Baris Gilir Main</value>
@@ -475,7 +475,7 @@
     <value>Baris gilir main kosong</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>Playlists</value>
+    <value>Senarai Main</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>Gelung senarai</value>
@@ -520,7 +520,7 @@
     <value>Galeri Muzik - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>Auto-sync Frequency</value>
+    <value>Kekerapan penyegerakan automatik</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
     <value>Tak pernah</value>
@@ -535,7 +535,7 @@
     <value>Setiap jam</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>Every 6 Hours</value>
+    <value>Setiap 6 Jam</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Mod Sempit</value>
@@ -553,13 +553,13 @@
     <value>Dasar Privasi</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value>Browse</value>
+    <value>Layari</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
-    <value>Name</value>
+    <value>Nama</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value>Leaving it blank will automatically generate a default name.</value>
+    <value>Membiarkan ia kosong akan menjana nama lalai secara automatik.</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>Kata Laluan</value>
@@ -568,10 +568,10 @@
     <value>Laluan</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value>The specified folder path could not be found</value>
+    <value>Laluan folder yang dinyatakan tidak dapat ditemui</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
-    <value>Path is required</value>
+    <value>Laluan diperlukan</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>Port</value>
@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Permulaan</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Hentikan main balik apabila tetingkap galeri muzik ditutup</value>
   </data>
@@ -1454,6 +1457,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>Mod Standard</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>Sumber</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>Bulan Ini</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>Suku Tahun Ini</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>Minggu Ini</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>Tahun Ini</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>Hari ini</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>Artis Teratas</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>Lagu top</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>Sumber Utama</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>Jumlah Tempoh</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>Trek Dimainkan</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>Keluar Program</value>
