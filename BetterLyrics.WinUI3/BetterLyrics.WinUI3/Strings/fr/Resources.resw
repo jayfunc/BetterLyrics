@@ -160,7 +160,7 @@
     <value>Mode Ancré</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Erreur</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>Exportation réussie</value>
@@ -187,7 +187,7 @@
     <value>Préparation du nettoyage du cache...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value>Ready</value>
+    <value>Prêt</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>Le chemin du répertoire racine a été détecté. Un index de disque complet peut contenir un grand nombre de fichiers non multimédias et faire durer l'analyse trop longtemps. Il est recommandé de spécifier un sous-répertoire spécifique.</value>
@@ -415,7 +415,7 @@
     <value>Toute la musique</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>The data is being processed. You can check the detailed progress in the settings.</value>
+    <value>Les données sont en cours de traitement. Vous pouvez vérifier l'état d'avancement détaillé dans les paramètres.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Vider la file d'attente</value>
@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Démarrage</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>Statistiques</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Arrêter la lecture à la fermeture de la Galerie</value>
   </data>
@@ -1454,6 +1457,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>Mode Standard</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>Sources d'information</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>Ce mois-ci</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>Ce trimestre</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>Cette semaine</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>Cette année</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>Aujourd'hui</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>Artistes de haut niveau</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>Top Tracks</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>Source supérieure</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>Durée totale</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>Pistes jouées</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>Quitter</value>
