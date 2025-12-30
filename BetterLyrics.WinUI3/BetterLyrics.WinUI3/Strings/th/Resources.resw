@@ -160,7 +160,7 @@
     <value>โหมดเชื่อมต่อ (Docked)</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>ข้อผิดพลาด</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>ส่งออกสำเร็จ</value>
@@ -187,7 +187,7 @@
     <value>กำลังเตรียมล้างแคช...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value>Ready</value>
+    <value>พร้อม</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>พบเส้นทางไดเรกทอรีรากแล้ว ดัชนีของดิสก์ทั้งหมดอาจมีไฟล์ที่ไม่ใช่สื่อจำนวนมากและทำให้การสแกนใช้เวลานานเกินไป ขอแนะนำให้ระบุไดเรกทอรีย่อยเฉพาะ</value>
@@ -415,7 +415,7 @@
     <value>เพลงทั้งหมด</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>The data is being processed. You can check the detailed progress in the settings.</value>
+    <value>กำลังประมวลผลข้อมูลอยู่ คุณสามารถตรวจสอบความคืบหน้าโดยละเอียดได้ในการตั้งค่า</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>ล้างคิวการเล่น</value>
@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>การเริ่มระบบ</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>สถิติ</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>หยุดเล่นเมื่อปิดหน้าต่างคลังเพลง</value>
   </data>
@@ -1454,6 +1457,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>โหมดมาตรฐาน</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>แหล่งข้อมูล</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>เดือนนี้</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>ไตรมาสนี้</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>สัปดาห์นี้</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>ปีนี้</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>วันนี้</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>ศิลปินชั้นนำ</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>เพลงยอดนิยม</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>แหล่งข้อมูลหลัก</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>ระยะเวลาทั้งหมด</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>เพลงที่เล่น</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>ออกจากโปรแกรม</value>
