@@ -10,7 +10,6 @@ namespace BetterLyrics.WinUI3.Models
         public string PlayerId { get; set; }
         public int PlayCount { get; set; }
 
-        public double DisplayWidth { get; set; }
         public string PlayerName => PlayerIdHelper.GetDisplayName(PlayerId);
     }
 }
