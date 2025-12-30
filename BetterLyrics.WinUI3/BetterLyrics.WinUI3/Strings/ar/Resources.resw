@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>بدء التشغيل</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>الإحصائيات</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>إيقاف التشغيل عند إغلاق نافذة مكتبة الموسيقى</value>
   </data>

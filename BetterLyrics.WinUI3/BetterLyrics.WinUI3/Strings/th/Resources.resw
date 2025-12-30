@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>การเริ่มระบบ</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>สถิติ</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>หยุดเล่นเมื่อปิดหน้าต่างคลังเพลง</value>
   </data>

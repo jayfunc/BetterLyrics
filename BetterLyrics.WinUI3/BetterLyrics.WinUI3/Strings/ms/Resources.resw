@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Permulaan</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Hentikan main balik apabila tetingkap galeri muzik ditutup</value>
   </data>

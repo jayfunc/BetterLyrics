@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>시작</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>통계</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>음악 갤러리 창을 닫을 때 재생 중지</value>
   </data>

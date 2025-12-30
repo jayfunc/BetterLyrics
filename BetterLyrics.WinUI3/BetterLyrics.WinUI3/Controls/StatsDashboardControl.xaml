@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:statsmodels="using:BetterLyrics.WinUI3.Models.Stats"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -28,13 +29,15 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Pivot x:Name="TimeRangePivot" SelectionChanged="Pivot_SelectionChanged">
-            <PivotItem x:Uid="StatsDashboardControlToday" Tag="Day" />
-            <PivotItem x:Uid="StatsDashboardControlThisWeek" Tag="Week" />
-            <PivotItem x:Uid="StatsDashboardControlThisMonth" Tag="Month" />
-            <PivotItem x:Uid="StatsDashboardControlThisQuarter" Tag="Quarter" />
-            <PivotItem x:Uid="StatsDashboardControlThisYear" Tag="Year" />
-        </Pivot>
+        <Grid Grid.Row="0" Margin="20,0">
+            <Pivot x:Name="TimeRangePivot" SelectionChanged="Pivot_SelectionChanged">
+                <PivotItem x:Uid="StatsDashboardControlToday" Tag="Day" />
+                <PivotItem x:Uid="StatsDashboardControlThisWeek" Tag="Week" />
+                <PivotItem x:Uid="StatsDashboardControlThisMonth" Tag="Month" />
+                <PivotItem x:Uid="StatsDashboardControlThisQuarter" Tag="Quarter" />
+                <PivotItem x:Uid="StatsDashboardControlThisYear" Tag="Year" />
+            </Pivot>
+        </Grid>
 
         <ScrollViewer Grid.Row="1" Padding="20,0">
             <Grid>
@@ -283,7 +286,8 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GenerateTestDataCommand}"
-            Content="Generate test data" />
+            Content="Generate test data"
+            Visibility="Collapsed" />
 
     </Grid>
 </UserControl>
