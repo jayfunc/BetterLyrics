@@ -160,7 +160,7 @@
     <value>الوضع المثبت (Docked)</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>خطأ</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>تم التصدير بنجاح</value>
@@ -187,7 +187,7 @@
     <value>التحضير لتنظيف ذاكرة التخزين المؤقت...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value>Ready</value>
+    <value>جاهز</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>تم اكتشاف مسار الدليل الجذر. قد يحتوي فهرس القرص الكامل على عدد كبير من الملفات غير الوسائط ويتسبب في استغراق الفحص وقتاً طويلاً جداً. يوصى بتحديد دليل فرعي محدد.</value>
@@ -415,7 +415,7 @@
     <value>كل الموسيقى</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>The data is being processed. You can check the detailed progress in the settings.</value>
+    <value>البيانات قيد المعالجة. يمكنك التحقق من التقدم المفصل في الإعدادات.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>مسح قائمة الانتظار</value>
@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>بدء التشغيل</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>الإحصائيات</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>إيقاف التشغيل عند إغلاق نافذة مكتبة الموسيقى</value>
   </data>
@@ -1454,6 +1457,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>الوضع القياسي</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>المصادر</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>هذا الشهر</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>هذا الربع</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>هذا الأسبوع</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>هذا العام</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>اليوم</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>كبار الفنانين</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>أعلى المسارات</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>المصدر الأعلى</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>المدة الإجمالية</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>المسارات التي تم تشغيلها</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>خروج</value>
