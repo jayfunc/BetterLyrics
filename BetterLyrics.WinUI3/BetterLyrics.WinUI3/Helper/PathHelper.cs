@@ -56,8 +56,9 @@ namespace BetterLyrics.WinUI3.Helper
         public static string iTunesAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "itunes");
         public static string LocalAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "local");
 
-        public static string PlayQueuePath => Path.Combine(CacheFolder, "play-queue.m3u");
-        public static string FilesCachePath => Path.Combine(CacheFolder, "files_cache.db");
+        public static string PlayQueuePath => Path.Combine(LocalFolder, "play-queue.m3u");
+        public static string PlayHistoryPath => Path.Combine(LocalFolder, "play-history.db");
+        public static string FilesCachePath => Path.Combine(CacheFolder, "files-cache.db");
 
         public static void EnsureDirectories()
         {

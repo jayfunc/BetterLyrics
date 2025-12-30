@@ -118,13 +118,21 @@
                                         </HyperlinkButton>
                                         <HyperlinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="*" />
+                                    <Grid ColumnSpacing="6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Text="*" />
                                         <TextBlock
                                             x:Uid="SetingsPageThanks"
+                                            Grid.Column="1"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             TextWrapping="Wrap" />
-                                    </StackPanel>
+                                    </Grid>
                                 </StackPanel>
                             </dev:SettingsCard>
 
