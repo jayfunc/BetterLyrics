@@ -160,7 +160,7 @@
     <value>ドッキングモード</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>エラー</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>エクスポートが成功しました</value>
@@ -187,7 +187,7 @@
     <value>キャッシュ・クリーン準備中</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value>Ready</value>
+    <value>準備完了</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>ルートディレクトリのパスが検出された。フルディスクインデックスにはメディア以外のファイルが多数含まれている可能性があり、スキャンに時間がかかりすぎる。特定のサブディレクトリを指定することを推奨する。</value>
@@ -415,7 +415,7 @@
     <value>すべてのミュージック</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>The data is being processed. You can check the detailed progress in the settings.</value>
+    <value>データ処理中です。詳細な進捗状況は設定で確認できます。</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>キューをクリア</value>
@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>スタートアップ</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>統計</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>ミュージックギャラリーウィンドウを閉じたときに再生を停止する</value>
   </data>
@@ -1454,6 +1457,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>標準モード</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>情報源</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>今月</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>今期</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>今週</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>今年</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>今日</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>トップアーティスト</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>トップトラック</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>トップ・ソース</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>総所要時間</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>演奏曲目</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>終了</value>
