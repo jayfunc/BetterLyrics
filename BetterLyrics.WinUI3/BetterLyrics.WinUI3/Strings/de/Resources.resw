@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>Statistik</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Wiedergabe stoppen, wenn Musikgalerie-Fenster geschlossen wird</value>
   </data>

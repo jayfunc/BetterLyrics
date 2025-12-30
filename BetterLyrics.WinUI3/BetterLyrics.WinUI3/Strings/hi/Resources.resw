@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>स्टार्टअप</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>आंकड़े</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>संगीत गैलरी विंडो बंद होने पर प्लेबैक रोकें</value>
   </data>

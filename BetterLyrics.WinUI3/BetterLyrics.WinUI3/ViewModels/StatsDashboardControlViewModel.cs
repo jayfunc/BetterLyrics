@@ -22,19 +22,15 @@ namespace BetterLyrics.WinUI3.ViewModels
             _playHistoryService = playHistoryService;
         }
 
-        // === 状态属性 ===
         [ObservableProperty] public partial bool IsLoading { get; set; }
 
-        // === 核心指标 ===
         [ObservableProperty] public partial TimeSpan TotalDuration { get; set; }
         [ObservableProperty] public partial int TotalTracksPlayed { get; set; }
         [ObservableProperty] public partial string TopPlayerName { get; set; } = "N/A";
 
-        // === 列表集合 (用于绑定 UI) ===
         public ObservableCollection<SongPlayCount> TopSongs { get; } = new();
         public ObservableCollection<ArtistPlayCount> TopArtists { get; } = new();
 
-        // 专门为 UI 优化的播放器分布数据（包含进度条宽度）
         public ObservableCollection<PlayerStatDisplayItem> PlayerStats { get; } = new();
 
         /// <summary>
@@ -96,7 +92,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <summary>
         /// 将原始统计数据转换为带进度条宽度的 UI 数据
         /// </summary>
-        private void UpdatePlayerStats(System.Collections.Generic.List<PlayerStats> stats)
+        private void UpdatePlayerStats(List<PlayerStats> stats)
         {
             PlayerStats.Clear();
 
@@ -106,23 +102,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 return;
             }
 
-            // 找出最大值，作为进度条 100% 的基准
             double maxCount = stats.Max(x => x.Count);
             if (maxCount == 0) maxCount = 1;
 
-            // 设置“最活跃来源”
             var topPlayer = stats.OrderByDescending(x => x.Count).FirstOrDefault();
             TopPlayerName = topPlayer?.PlayerID ?? "None";
 
-            // 转换数据
             foreach (var item in stats.OrderByDescending(x => x.Count))
             {
-                // 假设 UI 上进度条最大可用宽度大约是 150px (你可以根据 Grid 列宽调整这个基数)
-                // 或者如果是用 GridLength 比例，这里可以算百分比 (0-100)
                 double maxBarWidth = 150.0;
                 double calculatedWidth = (item.Count / maxCount) * maxBarWidth;
 
-                // 最小给个 2px，防止看起来像是没数据
                 if (calculatedWidth < 2 && item.Count > 0) calculatedWidth = 2;
 
                 PlayerStats.Add(new PlayerStatDisplayItem

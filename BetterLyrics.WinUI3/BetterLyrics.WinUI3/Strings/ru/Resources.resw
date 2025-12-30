@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Запуск</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>Статистика</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Останавливать воспроизведение при закрытии Галереи</value>
   </data>

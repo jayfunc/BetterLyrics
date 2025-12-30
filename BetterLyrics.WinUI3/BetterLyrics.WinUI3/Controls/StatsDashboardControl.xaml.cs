@@ -34,7 +34,6 @@ public sealed partial class StatsDashboardControl : UserControl
 
     private async void StatsDashboardControl_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        // 默认加载第一个 tab (Today)
         await ViewModel.LoadDataAsync(StatsRange.Day);
     }
 

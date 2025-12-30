@@ -51,7 +51,7 @@
                     Tag="PlaybackLib" />
 
                 <NavigationViewItem
-                    Content="Stats"
+                    x:Uid="SettingsPageStats"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE9D2;}"
                     Tag="Stats" />

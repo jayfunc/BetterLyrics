@@ -1383,6 +1383,9 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Khởi động</value>
   </data>
+  <data name="SettingsPageStats.Content" xml:space="preserve">
+    <value>Thống kê</value>
+  </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Dừng phát khi đóng cửa sổ thư viện nhạc</value>
   </data>
