@@ -104,16 +104,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             foreach (var item in stats.OrderByDescending(x => x.Count))
             {
-                double maxBarWidth = 150.0;
-                double calculatedWidth = (item.Count / maxCount) * maxBarWidth;
-
-                if (calculatedWidth < 2 && item.Count > 0) calculatedWidth = 2;
-
                 PlayerStats.Add(new PlayerStatDisplayItem
                 {
                     PlayerId = item.PlayerId,
                     PlayCount = item.Count,
-                    DisplayWidth = calculatedWidth
                 });
             }
         }

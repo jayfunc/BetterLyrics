@@ -333,7 +333,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                                 _scrobbleStopwatch.Elapsed.TotalMilliseconds >= (lastSong.DurationMs / 2))
                             {
                                 // 写入本地播放记录
-                                var playHistoryItem = CurrentSongInfo.ToPlayHistoryItem(_scrobbleStopwatch.Elapsed.TotalMilliseconds);
+                                var playHistoryItem = lastSong.ToPlayHistoryItem(_scrobbleStopwatch.Elapsed.TotalMilliseconds);
                                 if (playHistoryItem != null)
                                 {
                                     // 后台

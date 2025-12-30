@@ -194,47 +194,25 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="models:PlayerStatDisplayItem">
                                         <Grid Margin="0,4">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock
-                                                    FontSize="13"
-                                                    Style="{ThemeResource BodyTextBlockStyle}"
-                                                    Text="{x:Bind PlayerName}" />
-                                                <TextBlock
-                                                    Grid.Column="1"
-                                                    VerticalAlignment="Center"
-                                                    FontWeight="SemiBold">
-                                                    <Run Text="{x:Bind PlayCount}" />
-                                                    <Run
-                                                        FontSize="10"
-                                                        FontWeight="Normal"
-                                                        Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
-                                                        Text="plays" />
-                                                </TextBlock>
-                                            </Grid>
-                                            <Grid
-                                                Grid.Row="1"
-                                                Height="4"
-                                                Margin="0,4,0,0"
-                                                CornerRadius="2">
-                                                <Rectangle
-                                                    Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                                    RadiusX="2"
-                                                    RadiusY="2" />
-                                                <Rectangle
-                                                    Width="{x:Bind DisplayWidth}"
-                                                    HorizontalAlignment="Left"
-                                                    Fill="{ThemeResource AccentFillColorDefaultBrush}"
-                                                    RadiusX="2"
-                                                    RadiusY="2" />
-                                            </Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock
+                                                FontSize="13"
+                                                Style="{ThemeResource BodyTextBlockStyle}"
+                                                Text="{x:Bind PlayerName}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                FontWeight="SemiBold">
+                                                <Run Text="{x:Bind PlayCount}" />
+                                                <Run
+                                                    FontSize="10"
+                                                    FontWeight="Normal"
+                                                    Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                    Text="plays" />
+                                            </TextBlock>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

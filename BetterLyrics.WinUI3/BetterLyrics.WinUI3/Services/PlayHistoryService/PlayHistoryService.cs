@@ -149,7 +149,6 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
         {
             var random = new Random();
 
-            // === 1. 扩充的数据池 (涵盖多语言、多风格) ===
             var presetSongs = new List<(string Title, string Artist, string Album)>
             {
                 // --- 欧美流行 ---
@@ -208,9 +207,8 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                 ("Summer", "Calvin Harris", "Motion"),
             };
 
-                    // 模拟播放器分布：假设 Spotify 和 MusicBee 用得最多
-                    var playerIds = new[] {
-                "Spotify", "Spotify", "Spotify", // 权重高
+            var playerIds = new[] {
+                "Spotify", "Spotify", "Spotify",
                 "MusicBee", "MusicBee",
                 "QQMusic",
                 "NeteaseCloudMusic",
@@ -219,20 +217,16 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
 
             int addedCount = 0;
 
-            // 我们用 while 循环，直到凑够 count 条有效的记录为止
             while (addedCount < count)
             {
-                // 随机挑一首歌
                 var song = presetSongs[random.Next(presetSongs.Count)];
 
-                // 随机挑一个播放器
                 var playerId = playerIds[random.Next(playerIds.Length)];
 
-                // 生成时间：过去 60 天内均匀分布
-                var daysBack = random.Next(0, 60);
+                // 生成时间：过去 365 天内均匀分布
+                var daysBack = random.Next(0, 365);
                 var hoursBack = random.Next(0, 24);
                 var minutesBack = random.Next(0, 60);
-                // 加一点随机秒数，防止时间完全重叠
                 var secondsBack = random.Next(0, 60);
 
                 var startedAt = DateTime.Now
