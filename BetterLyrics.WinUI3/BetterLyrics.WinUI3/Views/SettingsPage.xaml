@@ -50,11 +50,11 @@
                                        Glyph=&#xEA69;}"
                     Tag="PlaybackLib" />
 
-                <!--<NavigationViewItem
+                <NavigationViewItem
                     Content="Stats"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE9D2;}"
-                    Tag="Stats" />-->
+                    Tag="Stats" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPageAbout"
@@ -92,9 +92,9 @@
                 </controls:Case>
 
                 <!--  Stats  -->
-                <!--<controls:Case Value="Stats">
+                <controls:Case Value="Stats">
                     <uc:StatsDashboardControl />
-                </controls:Case>-->
+                </controls:Case>
 
                 <!--  About  -->
                 <controls:Case Value="About">

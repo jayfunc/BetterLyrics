@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -160,7 +160,7 @@
     <value>도킹 모드</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value />
+    <value>오류</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>내보내기 성공</value>
@@ -187,7 +187,7 @@
     <value>캐시 정리 준비 중...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value />
+    <value>준비</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>루트 디렉터리 경로가 감지되었습니다. 전체 디스크 인덱스에 미디어가 아닌 파일이 많이 포함되어 있어 스캔 시간이 너무 오래 걸릴 수 있습니다. 특정 하위 디렉터리를 지정하는 것이 좋습니다.</value>
@@ -415,7 +415,7 @@
     <value>모든 음악</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value />
+    <value>데이터가 처리 중입니다. 설정에서 자세한 진행 상황을 확인할 수 있습니다.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>재생 대기열 비우기</value>
@@ -1454,6 +1454,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>표준 모드</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>출처</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>이번 달</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>이번 분기</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>이번 주</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>올해</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>오늘</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>톱 아티스트</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>인기 트랙</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>상위 소스</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>총 기간</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>재생된 트랙</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>종료</value>
