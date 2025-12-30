@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BetterLyrics.WinUI3.Models.Stats
+{
+    public class PlayerStats
+    {
+        public string PlayerID { get; set; }
+        public int Count { get; set; }
+
+        public double DisplayWidth => (TotalCount > 0) ? (Count / (double)TotalCount) * 150 : 0;
+
+        public int TotalCount { get; set; }
+    }
+}

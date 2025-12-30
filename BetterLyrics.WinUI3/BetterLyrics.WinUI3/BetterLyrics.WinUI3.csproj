@@ -46,6 +46,7 @@
 		<None Remove="Controls\PropertyRow.xaml" />
 		<None Remove="Controls\RemoteServerConfigControl.xaml" />
 		<None Remove="Controls\ShortcutTextBox.xaml" />
+		<None Remove="Controls\StatsDashboardControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
@@ -246,6 +247,11 @@
 	  <Content Update="Assets\Wiki82.profile.xml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\StatsDashboardControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\FontFamilyAutoSuggestBox.xaml">

@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
@@ -133,6 +134,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IDiscordService, DiscordService>()
                     .AddSingleton<ILocalizationService, LocalizationService>()
                     .AddSingleton<IFileSystemService, FileSystemService>()
+                    .AddSingleton<IPlayHistoryService, PlayHistoryService>()
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()
@@ -147,6 +149,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<MusicGalleryPageViewModel>()
                     .AddSingleton<AboutControlViewModel>()
                     .AddSingleton<MusicGalleryWindowViewModel>()
+                    .AddSingleton<StatsDashboardControlViewModel>()
 
                     .AddTransient<NowPlayingWindowViewModel>()
                     .AddTransient<NowPlayingPageViewModel>()

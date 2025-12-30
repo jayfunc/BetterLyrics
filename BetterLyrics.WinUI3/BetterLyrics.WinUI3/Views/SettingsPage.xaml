@@ -50,6 +50,12 @@
                                        Glyph=&#xEA69;}"
                     Tag="PlaybackLib" />
 
+                <!--<NavigationViewItem
+                    Content="Stats"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE9D2;}"
+                    Tag="Stats" />-->
+
                 <NavigationViewItem
                     x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -84,6 +90,11 @@
                 <controls:Case Value="MediaLib">
                     <uc:MediaSettingsControl />
                 </controls:Case>
+
+                <!--  Stats  -->
+                <!--<controls:Case Value="Stats">
+                    <uc:StatsDashboardControl />
+                </controls:Case>-->
 
                 <!--  About  -->
                 <controls:Case Value="About">

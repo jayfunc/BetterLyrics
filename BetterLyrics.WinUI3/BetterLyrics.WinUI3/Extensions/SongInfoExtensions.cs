@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models;
+using System;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
@@ -29,6 +30,22 @@ namespace BetterLyrics.WinUI3.Extensions
             {
                 songInfo.Album = value;
                 return songInfo;
+            }
+
+            public PlayHistoryItem? ToPlayHistoryItem(double actualPlayedMs)
+            {
+                if (songInfo == null) return null;
+
+                return new PlayHistoryItem
+                {
+                    Title = songInfo.Title,
+                    Artist = songInfo.DisplayArtists,
+                    Album = songInfo.Album,
+                    PlayerID = songInfo.PlayerId ?? "N/A",
+                    TotalDurationMs = songInfo.DurationMs,
+                    DurationPlayedMs = actualPlayedMs,
+                    StartedAt = DateTime.Now.AddMilliseconds(-actualPlayedMs)
+                };
             }
         }
     }

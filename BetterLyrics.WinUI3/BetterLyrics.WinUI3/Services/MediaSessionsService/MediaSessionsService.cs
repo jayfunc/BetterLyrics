@@ -12,6 +12,7 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
+using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
@@ -54,12 +55,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly ITransliterationService _transliterationService;
         private readonly ISettingsService _settingsService;
         private readonly IDiscordService _discordService;
+        private readonly IPlayHistoryService _playHistoryService;
         private readonly ILogger<MediaSessionsService> _logger;
 
         private double _lxMusicPositionSeconds = 0;
         private byte[]? _lxMusicAlbumArtBytes = null;
 
         private readonly DispatcherQueueTimer? _onMediaPropsChangedTimer;
+
+        private readonly Stopwatch _scrobbleStopwatch = new();
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool CurrentIsPlaying { get; private set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TimeSpan CurrentPosition { get; private set; } = TimeSpan.Zero;
@@ -74,6 +78,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             IDiscordService discordService,
             ITranslationService libreTranslateService,
             ITransliterationService transliterationService,
+            IPlayHistoryService playHistoryService,
             ILogger<MediaSessionsService> logger)
         {
             _settingsService = settingsService;
@@ -82,6 +87,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _translationService = libreTranslateService;
             _transliterationService = transliterationService;
             _discordService = discordService;
+            _playHistoryService = playHistoryService;
             _logger = logger;
 
             _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
@@ -311,6 +317,27 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         var linkedFileName = mediaProperties?.Genres
                             .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?
                             .Replace(ExtendedGenreFiled.FileName, "");
+
+                        // 统计
+                        if (CurrentSongInfo != null && CurrentSongInfo != SongInfoExtensions.Placeholder)
+                        {
+                            // 必须捕获一个副本给异步任务，因为 CurrentSongInfo 马上就要变了
+                            var lastSong = CurrentSongInfo;
+
+                            // 当前秒表时间 >= 上一首总时长 / 2
+                            if (lastSong.DurationMs > 0 &&
+                                _scrobbleStopwatch.Elapsed.TotalMilliseconds >= (lastSong.DurationMs / 2))
+                            {
+                                var playHistoryItem = CurrentSongInfo.ToPlayHistoryItem(_scrobbleStopwatch.Elapsed.TotalMilliseconds);
+                                if (playHistoryItem != null)
+                                {
+                                    // 后台
+                                    _ = Task.Run(() => _playHistoryService.AddLogAsync(playHistoryItem));
+                                    _logger.LogInformation($"[Scrobble] 结算成功: {lastSong.Title}");
+                                }
+                            }
+                        }
+                        _scrobbleStopwatch.Restart();
 
                         CurrentSongInfo = new SongInfo
                         {
