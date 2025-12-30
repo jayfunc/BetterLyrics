@@ -3,27 +3,24 @@ using System;
 
 namespace BetterLyrics.WinUI3.Models
 {
+    [Preserve(AllMembers = true)]
     [Table("FileCache")]
     public class FileCacheEntity
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        // 【新增】关键字段！
         // 关联到 MediaFolder.Id。
-        // 作用：
-        // 1. 区分不同配置（即使两个配置连的是同一个 SMB，但在 APP 里视为不同源）。
-        // 2. 删除配置时，可以由 MediaFolderId 快速级联删除所有缓存。
+        // 区分不同配置（即使两个配置连的是同一个 SMB，但在 APP 里视为不同源）。
+        // 删除配置时，可以由 MediaFolderId 快速级联删除所有缓存。
         [Indexed]
         public string MediaFolderId { get; set; }
 
-        // 【修改】从 ParentPath 改为 ParentUri
         // 存储父文件夹的标准 URI (smb://host/share/parent)
         // 根目录文件的 ParentUri 可以为空，或者等于 MediaFolder 的 Base Uri
         [Indexed]
         public string? ParentUri { get; set; }
 
-        // 【核心】标准化的完整 URI (smb://host/share/folder/file.ext)
         // 确保它是 URL 编码过且格式统一的
         [Indexed(Unique = true)]
         public string Uri { get; set; }
@@ -38,7 +35,6 @@ namespace BetterLyrics.WinUI3.Models
         // 记录修改时间，同步时对比使用
         public DateTime? LastModified { get; set; }
 
-        // ------ 元数据部分 (保持不变) ------
         public string Title { get; set; } = "";
         public string Artists { get; set; } = "";
         public string Album { get; set; } = "";
