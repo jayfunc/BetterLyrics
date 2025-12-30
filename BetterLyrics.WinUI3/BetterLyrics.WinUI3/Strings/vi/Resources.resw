@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -160,7 +160,7 @@
     <value>Chế độ neo (Docked)</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value />
+    <value>Lỗi</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>Xuất thành công</value>
@@ -187,7 +187,7 @@
     <value>Đang chuẩn bị xóa bộ nhớ cache...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value />
+    <value>Sẵn sàng</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>Đường dẫn thư mục gốc đã được phát hiện. Chỉ mục đĩa đầy đủ có thể chứa một lượng lớn tệp không phải phương tiện và khiến quá trình quét mất quá nhiều thời gian. Khuyến nghị chỉ định một thư mục con cụ thể.</value>
@@ -415,7 +415,7 @@
     <value>Tất cả bài hát</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value />
+    <value>Dữ liệu đang được xử lý. Bạn có thể kiểm tra tiến độ chi tiết trong phần cài đặt.</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Xóa hàng đợi phát</value>
@@ -1454,6 +1454,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>Chế độ tiêu chuẩn</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>Nguồn</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>Tháng này</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>Quý này</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>Tuần này</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>Năm nay</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>Hôm nay</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>Những nghệ sĩ hàng đầu</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>Các bài hát hàng đầu</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>Nguồn hàng đầu</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>Thời gian tổng cộng</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>Các bài hát đã phát</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>Thoát chương trình</value>

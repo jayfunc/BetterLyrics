@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -160,7 +160,7 @@
     <value>डॉक्ड मोड</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value />
+    <value>त्रुटि</value>
   </data>
   <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>निर्यात सफल रहा</value>
@@ -169,7 +169,7 @@
     <value>LX Music सर्वर से कनेक्ट नहीं हो सकता, कृपया सेटिंग्स - प्लेबैक स्रोत - LX Music - LX Music सर्वर पर जाएं और जांचें कि लिंक सही तरीके से दर्ज किया गया है या नहीं</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>कैश साफ़ हो रहा है...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>कनेक्शन विफल रहा</value>
@@ -178,22 +178,22 @@
     <value>कनेक्टिंग ...</value>
   </data>
   <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
-    <value>Fetching file list...</value>
+    <value>फ़ाइल लिस्ट लाई जा रही है...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>Parsing...</value>
+    <value>पार्सिंग...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value>Preparing to clean cache...</value>
+    <value>कैश साफ़ करने की तैयारी...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
-    <value />
+    <value>तैयार</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory.</value>
+    <value>रूट डायरेक्टरी पाथ का पता चल गया है। एक फुल डिस्क इंडेक्स में बड़ी संख्या में नॉन-मीडिया फ़ाइलें हो सकती हैं और स्कैन में बहुत ज़्यादा समय लग सकता है। एक खास सबडायरेक्टरी बताने की सलाह दी जाती है।</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>Preparing to scan...</value>
+    <value>स्कैन करने की तैयारी...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>फुलस्क्रीन मोड</value>
@@ -388,13 +388,13 @@
     <value>विभाजित दृश्य</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
-    <value>Last Sync Time</value>
+    <value>अंतिम सिंक समय</value>
   </data>
   <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
-    <value>Local Folder</value>
+    <value>स्थानीय फोल्डर</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value>Name</value>
+    <value>नाम</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>अभी सिंक्रनाइज़ करें</value>
@@ -409,13 +409,13 @@
     <value>अगला आइटम</value>
   </data>
   <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
-    <value>Add to playing queue</value>
+    <value>प्लेइंग क्यू में जोड़ें</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>सभी गाने</value>
   </data>
   <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value />
+    <value>डेटा प्रोसेस हो रहा है। आप सेटिंग्स में डिटेल्ड प्रोग्रेस देख सकते हैं।</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार साफ़ करें</value>
@@ -460,13 +460,13 @@
     <value>मीडिया लाइब्रेरी में कोई गाना नहीं मिला</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
-    <value>Folders</value>
+    <value>फ़ोल्डर्स</value>
   </data>
   <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>फ़ाइल से आयात करें</value>
   </data>
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
-    <value>Create playlist</value>
+    <value>प्लेलिस्ट बनायें</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार</value>
@@ -475,7 +475,7 @@
     <value>प्लेइंग कतार खाली है</value>
   </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
-    <value>Playlists</value>
+    <value>प्लेलिस्ट</value>
   </data>
   <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>सूची लूप</value>
@@ -520,7 +520,7 @@
     <value>संगीत लाइब्रेरी - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>Auto-sync Frequency</value>
+    <value>ऑटो-सिंक आवृत्ति</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
     <value>कभी नहीं</value>
@@ -553,13 +553,13 @@
     <value>गोपनीयता नीति</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value>Browse</value>
+    <value>ब्राउज करें</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
-    <value>Name</value>
+    <value>नाम</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value>Leaving it blank will automatically generate a default name.</value>
+    <value>इसे खाली छोड़ने से अपने आप एक डिफ़ॉल्ट नाम बन जाएगा।</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>पासवर्ड</value>
@@ -568,10 +568,10 @@
     <value>पथ</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value>The specified folder path could not be found</value>
+    <value>बताया गया फ़ोल्डर पाथ नहीं मिला</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
-    <value>Path is required</value>
+    <value>पथ आवश्यक है</value>
   </data>
   <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>पोर्ट</value>
@@ -1454,6 +1454,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>मानक मोड</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>स्रोत</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>इस महीने</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>इस तिमाही</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>इस सप्ताह</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>इस वर्ष</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>आज</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>शीर्ष कलाकार</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>शीर्ष रास्ता</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>शीर्ष स्रोत</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>कुल अवधि</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>बजाए गए ट्रैक</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>कार्यक्रम से बाहर निकलें</value>

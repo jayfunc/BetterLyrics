@@ -169,7 +169,7 @@
     <value>Unable to connect to LX Music Server. Please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>Cleaning cache...</value>
+    <value>Clearing cache...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>Connection failed</value>
@@ -184,7 +184,7 @@
     <value>Parsing...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value>Preparing to clean cache...</value>
+    <value>Preparing to clear cache...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
     <value>Ready</value>
@@ -1454,6 +1454,39 @@
   </data>
   <data name="StandardMode" xml:space="preserve">
     <value>Standard Mode</value>
+  </data>
+  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <value>Sources</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+    <value>This Quarter</value>
+  </data>
+  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+    <value>This Week</value>
+  </data>
+  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+    <value>This Year</value>
+  </data>
+  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <value>Top Artists</value>
+  </data>
+  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <value>Top Tracks</value>
+  </data>
+  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <value>Top Source</value>
+  </data>
+  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <value>Total Duration</value>
+  </data>
+  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <value>Tracks Played</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>Exit</value>
