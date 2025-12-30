@@ -11,6 +11,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
+using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -56,6 +57,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly ISettingsService _settingsService;
         private readonly IDiscordService _discordService;
         private readonly IPlayHistoryService _playHistoryService;
+        private readonly ILastFMService _lastFMService;
         private readonly ILogger<MediaSessionsService> _logger;
 
         private double _lxMusicPositionSeconds = 0;
@@ -79,6 +81,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             ITranslationService libreTranslateService,
             ITransliterationService transliterationService,
             IPlayHistoryService playHistoryService,
+            ILastFMService lastFMService,
             ILogger<MediaSessionsService> logger)
         {
             _settingsService = settingsService;
@@ -88,6 +91,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             _transliterationService = transliterationService;
             _discordService = discordService;
             _playHistoryService = playHistoryService;
+            _lastFMService = lastFMService;
             _logger = logger;
 
             _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
@@ -150,7 +154,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id);
             if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened)
             {
-                if (PlayerIDHelper.IsBetterLyrics(found?.Provider))
+                if (PlayerIdHelper.IsBetterLyrics(found?.Provider))
                 {
                     return found?.IsEnabled ?? true;
                 }
@@ -275,7 +279,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                     {
                         CurrentSongInfo = SongInfoExtensions.Placeholder;
 
-                        if (PlayerIDHelper.IsLXMusic(sessionId))
+                        if (PlayerIdHelper.IsLXMusic(sessionId))
                         {
                             StopSSE();
                         }
@@ -294,20 +298,20 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         string? fixedAlbum = mediaProperties?.AlbumTitle;
                         string? songId = null;
 
-                        if (PlayerIDHelper.IsAppleMusic(sessionId))
+                        if (PlayerIdHelper.IsAppleMusic(sessionId))
                         {
                             fixedArtist = mediaProperties?.Artist.Split(" — ").FirstOrDefault();
                             fixedAlbum = mediaProperties?.Artist.Split(" — ").LastOrDefault();
                             fixedAlbum = fixedAlbum?.Replace(" - Single", "");
                             fixedAlbum = fixedAlbum?.Replace(" - EP", "");
                         }
-                        else if (PlayerIDHelper.IsNeteaseFamily(sessionId))
+                        else if (PlayerIdHelper.IsNeteaseFamily(sessionId))
                         {
                             songId = mediaProperties?.Genres
                                 .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
                                 .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
                         }
-                        else if (sessionId == PlayerID.QQMusic)
+                        else if (sessionId == PlayerId.QQMusic)
                         {
                             songId = mediaProperties?.Genres
                                 .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.QQMusicTrackID))?
@@ -318,8 +322,8 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?
                             .Replace(ExtendedGenreFiled.FileName, "");
 
-                        // 统计
-                        if (CurrentSongInfo != null && CurrentSongInfo != SongInfoExtensions.Placeholder)
+                        // 写入播放记录
+                        if (CurrentSongInfo != null && CurrentSongInfo.Title != "N/A")
                         {
                             // 必须捕获一个副本给异步任务，因为 CurrentSongInfo 马上就要变了
                             var lastSong = CurrentSongInfo;
@@ -328,12 +332,20 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             if (lastSong.DurationMs > 0 &&
                                 _scrobbleStopwatch.Elapsed.TotalMilliseconds >= (lastSong.DurationMs / 2))
                             {
+                                // 写入本地播放记录
                                 var playHistoryItem = CurrentSongInfo.ToPlayHistoryItem(_scrobbleStopwatch.Elapsed.TotalMilliseconds);
                                 if (playHistoryItem != null)
                                 {
                                     // 后台
                                     _ = Task.Run(() => _playHistoryService.AddLogAsync(playHistoryItem));
                                     _logger.LogInformation($"[Scrobble] 结算成功: {lastSong.Title}");
+                                }
+                                // 写入 Last.fm 播放记录
+                                var isLastFMEnabled = CurrentMediaSourceProviderInfo?.IsLastFMTrackEnabled ?? false;
+                                if (isLastFMEnabled)
+                                {
+                                    // 后台
+                                    _ = Task.Run(() => _lastFMService.TrackAsync(lastSong));
                                 }
                             }
                         }
@@ -350,7 +362,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             LinkedFileName = linkedFileName
                         };
 
-                        if (PlayerIDHelper.IsLXMusic(sessionId))
+                        if (PlayerIdHelper.IsLXMusic(sessionId))
                         {
                             StartSSE();
                         }
@@ -359,7 +371,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             StopSSE();
                         }
 
-                        if (PlayerIDHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
+                        if (PlayerIdHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
                         {
                             _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
                         }
@@ -550,7 +562,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         {
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
-                if (PlayerIDHelper.IsLXMusic(CurrentSongInfo?.PlayerId))
+                if (PlayerIdHelper.IsLXMusic(CurrentSongInfo?.PlayerId))
                 {
                     var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
                     if (data.ValueKind == JsonValueKind.Number)

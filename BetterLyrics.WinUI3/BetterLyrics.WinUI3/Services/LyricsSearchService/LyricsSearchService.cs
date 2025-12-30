@@ -558,11 +558,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             ISearchResult? result;
 
-            if (songInfo.SongId != null && searcher == Searchers.Netease && PlayerIDHelper.IsNeteaseFamily(songInfo.PlayerId))
+            if (songInfo.SongId != null && searcher == Searchers.Netease && PlayerIdHelper.IsNeteaseFamily(songInfo.PlayerId))
             {
                 result = new NeteaseSearchResult(songInfo.Title, songInfo.Artists, songInfo.Album, [], (int)songInfo.DurationMs, songInfo.SongId);
             }
-            else if (songInfo.SongId != null && searcher == Searchers.QQMusic && songInfo.PlayerId == Constants.PlayerID.QQMusic)
+            else if (songInfo.SongId != null && searcher == Searchers.QQMusic && songInfo.PlayerId == Constants.PlayerId.QQMusic)
             {
                 result = new QQMusicSearchResult(songInfo.Title, songInfo.Artists, songInfo.Album, [], (int)songInfo.DurationMs, songInfo.SongId, "");
             }

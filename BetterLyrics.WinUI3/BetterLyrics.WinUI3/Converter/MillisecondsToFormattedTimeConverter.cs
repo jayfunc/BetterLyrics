@@ -3,18 +3,37 @@ using System;
 
 namespace BetterLyrics.WinUI3.Converter
 {
-    public class MillisecondsToFormattedTimeConverter : IValueConverter
+    public partial class MillisecondsToFormattedTimeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value is int milliseconds)
+            double? milliseconds = null;
+
+            if (value is int iVal) milliseconds = iVal;
+            else if (value is double dVal) milliseconds = dVal;
+            else if (value is long lVal) milliseconds = lVal;
+
+            if (milliseconds.HasValue)
             {
-                return TimeSpan.FromMilliseconds(milliseconds).ToString(@"mm\:ss\.fff");
+                var ts = TimeSpan.FromMilliseconds(milliseconds.Value);
+
+                string? format = parameter?.ToString();
+
+                if (string.IsNullOrEmpty(format))
+                {
+                    format = @"mm\:ss\.fff";
+                }
+
+                try
+                {
+                    return ts.ToString(format);
+                }
+                catch (FormatException)
+                {
+                    return ts.ToString();
+                }
             }
-            else if (value is double doubleMilliseconds)
-            {
-                return TimeSpan.FromMilliseconds(doubleMilliseconds).ToString(@"mm\:ss\.fff");
-            }
+
             return value?.ToString() ?? "";
         }
 

@@ -20,6 +20,6 @@ namespace BetterLyrics.WinUI3.Models
         public double TotalDurationMs { get; set; }
 
         [Indexed]
-        public string PlayerID { get; set; }
+        public string PlayerId { get; set; }
     }
 }

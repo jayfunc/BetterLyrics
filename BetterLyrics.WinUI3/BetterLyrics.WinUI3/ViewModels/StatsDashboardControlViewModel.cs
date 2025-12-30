@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Stats;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
@@ -44,37 +45,30 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             try
             {
-                // 1. 计算时间范围
                 var (start, end) = CalculateDateRange(range);
 
-                // 2. 并行获取所有数据 (性能优化：不等待一个查完再查下一个，而是同时查)
                 var durationTask = _playHistoryService.GetTotalListeningDurationAsync(start, end);
-                var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start, end); // 用来算总数
+                var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start, end);
                 var topSongsTask = _playHistoryService.GetTopSongsAsync(start, end, 10);
-                var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start, end, 5); // 只要前5名
+                var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start, end, 10);
                 var playersTask = _playHistoryService.GetPlayerDistributionAsync(start, end);
 
                 await Task.WhenAll(durationTask, logsTask, topSongsTask, topArtistsTask, playersTask);
 
-                // 3. 更新 UI 数据
                 TotalDuration = await durationTask;
                 var logs = await logsTask;
                 TotalTracksPlayed = logs.Count;
 
-                // 更新歌曲列表
                 TopSongs.Clear();
                 foreach (var item in await topSongsTask) TopSongs.Add(item);
 
-                // 更新歌手列表
                 TopArtists.Clear();
                 foreach (var item in await topArtistsTask) TopArtists.Add(item);
 
-                // 更新播放器分布 (需要特殊处理进度条宽度)
                 UpdatePlayerStats(await playersTask);
             }
             catch (Exception ex)
             {
-                // 这里可以记录日志 _logger.LogError(ex, ...)
                 System.Diagnostics.Debug.WriteLine($"Error loading stats: {ex.Message}");
             }
             finally
@@ -98,7 +92,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             if (stats == null || stats.Count == 0)
             {
-                TopPlayerName = "None";
+                TopPlayerName = "N/A";
                 return;
             }
 
@@ -106,7 +100,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (maxCount == 0) maxCount = 1;
 
             var topPlayer = stats.OrderByDescending(x => x.Count).FirstOrDefault();
-            TopPlayerName = topPlayer?.PlayerID ?? "None";
+            TopPlayerName = PlayerIdHelper.GetDisplayName(topPlayer?.PlayerId) ?? "N/A";
 
             foreach (var item in stats.OrderByDescending(x => x.Count))
             {
@@ -117,7 +111,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 PlayerStats.Add(new PlayerStatDisplayItem
                 {
-                    PlayerId = item.PlayerID,
+                    PlayerId = item.PlayerId,
                     PlayCount = item.Count,
                     DisplayWidth = calculatedWidth
                 });
@@ -126,32 +120,35 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private (DateTime Start, DateTime End) CalculateDateRange(StatsRange range)
         {
-            DateTime now = DateTime.Now;
-            DateTime start = now;
+            DateTime nowLocal = DateTime.Now;
+            DateTime startLocal = nowLocal.Date; // 默认为本地今天 00:00
 
             switch (range)
             {
                 case StatsRange.Day:
-                    start = now.Date; // 今天 00:00
                     break;
                 case StatsRange.Week:
-                    // 假设周一为一周开始
-                    int diff = (7 + (now.DayOfWeek - DayOfWeek.Monday)) % 7;
-                    start = now.Date.AddDays(-1 * diff);
+                    int dayOfWeek = (int)nowLocal.DayOfWeek;
+                    if (dayOfWeek == 0) dayOfWeek = 7; // 处理周日
+                    startLocal = nowLocal.Date.AddDays(-(dayOfWeek - 1));
                     break;
                 case StatsRange.Month:
-                    start = new DateTime(now.Year, now.Month, 1);
+                    startLocal = new DateTime(nowLocal.Year, nowLocal.Month, 1);
                     break;
                 case StatsRange.Quarter:
-                    int quarter = (now.Month - 1) / 3 + 1;
-                    start = new DateTime(now.Year, (quarter - 1) * 3 + 1, 1);
+                    int quarterStartMonth = (nowLocal.Month - 1) / 3 * 3 + 1;
+                    startLocal = new DateTime(nowLocal.Year, quarterStartMonth, 1);
                     break;
                 case StatsRange.Year:
-                    start = new DateTime(now.Year, 1, 1);
+                    startLocal = new DateTime(nowLocal.Year, 1, 1);
                     break;
             }
 
-            return (start, now);
+            // 数据库里的 StartedAt 是 UTC，所以查询条件必须也是 UTC
+            DateTime startUtc = startLocal.ToUniversalTime();
+            DateTime endUtc = nowLocal.ToUniversalTime();
+
+            return (startUtc, endUtc);
         }
     }
 }

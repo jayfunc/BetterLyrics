@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             _logger = logger;
             _localizationService = localizationService;
             _settingsService = settingsService;
-            _db = new SQLiteAsyncConnection(PathHelper.FilesCachePath);
+            _db = new SQLiteAsyncConnection(PathHelper.FilesIndexPath);
         }
 
         public async Task InitializeAsync()

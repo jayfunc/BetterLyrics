@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.Extensions
                     Title = songInfo.Title,
                     Artist = songInfo.DisplayArtists,
                     Album = songInfo.Album,
-                    PlayerID = songInfo.PlayerId ?? "N/A",
+                    PlayerId = songInfo.PlayerId ?? "N/A",
                     TotalDurationMs = songInfo.DurationMs,
                     DurationPlayedMs = actualPlayedMs,
                     StartedAt = DateTime.Now.AddMilliseconds(-actualPlayedMs)
