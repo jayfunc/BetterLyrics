@@ -35,11 +35,11 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchType LyricsSearchType { get; set; } = LyricsSearchType.Sequential;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int MatchingThreshold { get; set; } = 40;
 
-        [JsonIgnore] public string LogoPath => PlayerIDHelper.GetLogoPath(Provider);
+        [JsonIgnore] public string LogoPath => PlayerIdHelper.GetLogoPath(Provider);
 
-        [JsonIgnore] public string? DisplayName => PlayerIDHelper.GetDisplayName(Provider);
+        [JsonIgnore] public string? DisplayName => PlayerIdHelper.GetDisplayName(Provider);
 
-        [JsonIgnore] public bool IsLXMusic => PlayerIDHelper.IsLXMusic(Provider);
+        [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
 
         public MediaSourceProviderInfo()
         {
@@ -53,7 +53,7 @@ namespace BetterLyrics.WinUI3.Models
             IsEnabled = isEnable;
             switch (provider)
             {
-                case Constants.PlayerID.AppleMusic:
+                case Constants.PlayerId.AppleMusic:
                     // Apple Music 的特性
                     TimelineSyncThreshold = 1000;
                     PositionOffset = 1000;

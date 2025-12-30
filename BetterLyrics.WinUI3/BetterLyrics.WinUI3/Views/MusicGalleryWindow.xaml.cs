@@ -102,7 +102,6 @@ namespace BetterLyrics.WinUI3.Views
 
         private void NowPlayingBar_SongInfoTapped(object sender, System.EventArgs e)
         {
-            NowPlayingBar.IsPlayingQueueOpened = false;
             NowPlayingBar.ShowSongInfo = false;
             NowPlayingBar.ShowTime = true;
             NowPlayingBar.IsAutoHideEnabled = true;

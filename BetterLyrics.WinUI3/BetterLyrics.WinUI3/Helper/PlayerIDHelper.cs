@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public static class PlayerIDHelper
+    public static class PlayerIdHelper
     {
         private static readonly List<string> neteaseFamilyRegex =
         [
@@ -25,64 +25,64 @@ namespace BetterLyrics.WinUI3.Helper
             return false;
         }
 
-        public static bool IsLXMusic(string? id) => id is PlayerID.LXMusic or PlayerID.LXMusicPortable;
+        public static bool IsLXMusic(string? id) => id is PlayerId.LXMusic or PlayerId.LXMusicPortable;
 
-        public static bool IsAppleMusic(string? id) => id is PlayerID.AppleMusic or PlayerID.AppleMusicAlternative;
+        public static bool IsAppleMusic(string? id) => id is PlayerId.AppleMusic or PlayerId.AppleMusicAlternative;
 
-        public static bool IsBetterLyrics(string? id) => id is PlayerID.BetterLyrics or PlayerID.BetterLyricsDebug;
+        public static bool IsBetterLyrics(string? id) => id is PlayerId.BetterLyrics or PlayerId.BetterLyricsDebug;
 
         public static string? GetDisplayName(string? id) => id switch
         {
-            PlayerID.Spotify => PlayerName.Spotify,
-            PlayerID.AppleMusic => PlayerName.AppleMusic,
-            PlayerID.iTunes => PlayerName.iTunes,
-            PlayerID.KugouMusic => PlayerName.KugouMusic,
-            PlayerID.NetEaseCloudMusic => PlayerName.NetEaseCloudMusic,
-            PlayerID.QQMusic => PlayerName.QQMusic,
-            PlayerID.LXMusic => PlayerName.LXMusic,
-            PlayerID.LXMusicPortable => PlayerName.LXMusicPortable,
-            PlayerID.MediaPlayerWindows11 => PlayerName.MediaPlayerWindows11,
-            PlayerID.AIMP => PlayerName.AIMP,
-            PlayerID.Foobar2000 => PlayerName.Foobar2000,
-            PlayerID.MusicBee => PlayerName.MusicBee,
-            PlayerID.PotPlayer => PlayerName.PotPlayer,
-            PlayerID.Chrome => PlayerName.Chrome,
-            PlayerID.Edge => PlayerName.Edge,
-            PlayerID.BetterLyrics => PlayerName.BetterLyrics,
-            PlayerID.BetterLyricsDebug => PlayerName.BetterLyricsDebug,
-            PlayerID.SaltPlayerForWindowsMS => PlayerName.SaltPlayerForWindowsMS,
-            PlayerID.SaltPlayerForWindowsSteam => PlayerName.SaltPlayerForWindowsSteam,
-            PlayerID.MoeKoeMusic => PlayerName.MoeKoeMusic,
-            PlayerID.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
-            PlayerID.Listen1 => PlayerName.Listen1,
+            PlayerId.Spotify => PlayerName.Spotify,
+            PlayerId.AppleMusic => PlayerName.AppleMusic,
+            PlayerId.iTunes => PlayerName.iTunes,
+            PlayerId.KugouMusic => PlayerName.KugouMusic,
+            PlayerId.NetEaseCloudMusic => PlayerName.NetEaseCloudMusic,
+            PlayerId.QQMusic => PlayerName.QQMusic,
+            PlayerId.LXMusic => PlayerName.LXMusic,
+            PlayerId.LXMusicPortable => PlayerName.LXMusicPortable,
+            PlayerId.MediaPlayerWindows11 => PlayerName.MediaPlayerWindows11,
+            PlayerId.AIMP => PlayerName.AIMP,
+            PlayerId.Foobar2000 => PlayerName.Foobar2000,
+            PlayerId.MusicBee => PlayerName.MusicBee,
+            PlayerId.PotPlayer => PlayerName.PotPlayer,
+            PlayerId.Chrome => PlayerName.Chrome,
+            PlayerId.Edge => PlayerName.Edge,
+            PlayerId.BetterLyrics => PlayerName.BetterLyrics,
+            PlayerId.BetterLyricsDebug => PlayerName.BetterLyricsDebug,
+            PlayerId.SaltPlayerForWindowsMS => PlayerName.SaltPlayerForWindowsMS,
+            PlayerId.SaltPlayerForWindowsSteam => PlayerName.SaltPlayerForWindowsSteam,
+            PlayerId.MoeKoeMusic => PlayerName.MoeKoeMusic,
+            PlayerId.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
+            PlayerId.Listen1 => PlayerName.Listen1,
             _ => id,
         };
 
         public static string GetLogoPath(string? id) => id switch
         {
-            PlayerID.Spotify => PathHelper.SpotifyLogoPath,
-            PlayerID.AppleMusic => PathHelper.AppleMusicLogoPath,
-            PlayerID.AppleMusicAlternative => PathHelper.AppleMusicLogoPath,
-            PlayerID.iTunes => PathHelper.iTunesLogoPath,
-            PlayerID.KugouMusic => PathHelper.KugouMusicLogoPath,
-            PlayerID.NetEaseCloudMusic => PathHelper.NetEaseCloudMusicLogoPath,
-            PlayerID.QQMusic => PathHelper.QQMusicLogoPath,
-            PlayerID.LXMusic => PathHelper.LXMusicLogoPath,
-            PlayerID.LXMusicPortable => PathHelper.LXMusicLogoPath,
-            PlayerID.MediaPlayerWindows11 => PathHelper.MediaPlayerWindows11LogoPath,
-            PlayerID.AIMP => PathHelper.AIMPLogoPath,
-            PlayerID.Foobar2000 => PathHelper.Foobar2000LogoPath,
-            PlayerID.MusicBee => PathHelper.MusicBeeLogoPath,
-            PlayerID.PotPlayer => PathHelper.PotPlayerLogoPath,
-            PlayerID.Chrome => PathHelper.ChromeLogoPath,
-            PlayerID.Edge => PathHelper.EdgeLogoPath,
-            PlayerID.BetterLyrics => PathHelper.LogoPath,
-            PlayerID.BetterLyricsDebug => PathHelper.LogoPath,
-            PlayerID.SaltPlayerForWindowsMS => PathHelper.SaltPlayerForWindowsLogoPath,
-            PlayerID.SaltPlayerForWindowsSteam => PathHelper.SaltPlayerForWindowsLogoPath,
-            PlayerID.MoeKoeMusic => PathHelper.MoeKoeMusicLogoPath,
-            PlayerID.MoeKoeMusicAlternative => PathHelper.MoeKoeMusicLogoPath,
-            PlayerID.Listen1 => PathHelper.Listen1LogoPath,
+            PlayerId.Spotify => PathHelper.SpotifyLogoPath,
+            PlayerId.AppleMusic => PathHelper.AppleMusicLogoPath,
+            PlayerId.AppleMusicAlternative => PathHelper.AppleMusicLogoPath,
+            PlayerId.iTunes => PathHelper.iTunesLogoPath,
+            PlayerId.KugouMusic => PathHelper.KugouMusicLogoPath,
+            PlayerId.NetEaseCloudMusic => PathHelper.NetEaseCloudMusicLogoPath,
+            PlayerId.QQMusic => PathHelper.QQMusicLogoPath,
+            PlayerId.LXMusic => PathHelper.LXMusicLogoPath,
+            PlayerId.LXMusicPortable => PathHelper.LXMusicLogoPath,
+            PlayerId.MediaPlayerWindows11 => PathHelper.MediaPlayerWindows11LogoPath,
+            PlayerId.AIMP => PathHelper.AIMPLogoPath,
+            PlayerId.Foobar2000 => PathHelper.Foobar2000LogoPath,
+            PlayerId.MusicBee => PathHelper.MusicBeeLogoPath,
+            PlayerId.PotPlayer => PathHelper.PotPlayerLogoPath,
+            PlayerId.Chrome => PathHelper.ChromeLogoPath,
+            PlayerId.Edge => PathHelper.EdgeLogoPath,
+            PlayerId.BetterLyrics => PathHelper.LogoPath,
+            PlayerId.BetterLyricsDebug => PathHelper.LogoPath,
+            PlayerId.SaltPlayerForWindowsMS => PathHelper.SaltPlayerForWindowsLogoPath,
+            PlayerId.SaltPlayerForWindowsSteam => PathHelper.SaltPlayerForWindowsLogoPath,
+            PlayerId.MoeKoeMusic => PathHelper.MoeKoeMusicLogoPath,
+            PlayerId.MoeKoeMusicAlternative => PathHelper.MoeKoeMusicLogoPath,
+            PlayerId.Listen1 => PathHelper.Listen1LogoPath,
             _ => PathHelper.UnknownPlayerLogoPath,
         };
     }

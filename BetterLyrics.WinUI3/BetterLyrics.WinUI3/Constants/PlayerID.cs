@@ -1,6 +1,6 @@
 ﻿namespace BetterLyrics.WinUI3.Constants
 {
-    public static class PlayerID
+    public static class PlayerId
     {
         public const string LXMusic = "cn.toside.music.desktop";
         public const string LXMusicPortable = "lx-music-desktop.exe";

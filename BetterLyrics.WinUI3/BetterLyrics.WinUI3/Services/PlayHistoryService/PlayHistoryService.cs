@@ -71,17 +71,15 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
         {
             await InitializeAsync();
 
-            // 使用 SQL 查询比在内存里 GroupBy 更快且省内存
             // SQLite 语法: Group By Title 和 Artist
             string query = @"
-                SELECT Title, Artist, AlbumArtHash, COUNT(*) as PlayCount 
+                SELECT Title, Artist, COUNT(*) as PlayCount 
                 FROM PlayHistory 
                 WHERE StartedAt >= ? AND StartedAt <= ? 
                 GROUP BY Title, Artist 
                 ORDER BY PlayCount DESC 
                 LIMIT ?";
 
-            // 注意：SQLite存的是Ticks或者ISO8601，sqlite-net-pcl会自动处理DateTime参数
             return await _db.QueryAsync<SongPlayCount>(query, start, end, limit);
         }
 
@@ -126,10 +124,10 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
             await InitializeAsync();
 
             string query = @"
-                SELECT PlayerID, COUNT(*) as Count
+                SELECT PlayerId, COUNT(*) as Count
                 FROM PlayHistory
                 WHERE StartedAt >= ? AND StartedAt <= ?
-                GROUP BY PlayerID
+                GROUP BY PlayerId
                 ORDER BY Count DESC";
 
             return await _db.QueryAsync<PlayerStats>(query, start, end);
@@ -265,7 +263,7 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                         Title = song.Title,
                         Artist = song.Artist,
                         Album = song.Album,
-                        PlayerID = playerId,
+                        PlayerId = playerId,
                         StartedAt = startedAt,
                         TotalDurationMs = totalDurationMs,
                         DurationPlayedMs = playedDurationMs

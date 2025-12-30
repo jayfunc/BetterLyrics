@@ -42,7 +42,6 @@ namespace BetterLyrics.WinUI3.Controls
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
-        private readonly ILastFMService _lastFMService = Ioc.Default.GetRequiredService<ILastFMService>();
 
         private readonly LyricsRenderer _lyricsRenderer = new();
         private readonly FluidBackgroundRenderer _fluidRenderer = new();
@@ -660,22 +659,6 @@ namespace BetterLyrics.WinUI3.Controls
                 _songPosition += elapsedTime;
                 _totalPlayedTime += elapsedTime;
                 _songPositionWithOffset = _songPosition + TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
-                CheckAndScrobbleLastFM();
-            }
-        }
-
-        private void CheckAndScrobbleLastFM()
-        {
-            bool isEnabled = _mediaSessionsService.CurrentMediaSourceProviderInfo?.IsLastFMTrackEnabled ?? false;
-            if (!isEnabled || _isLastFMTracked) return;
-
-            var songInfo = _mediaSessionsService.CurrentSongInfo;
-            if (songInfo == null || songInfo.Duration <= 0) return;
-
-            if (_totalPlayedTime.TotalSeconds >= songInfo.Duration * 0.5)
-            {
-                _isLastFMTracked = true;
-                _lastFMService.TrackAsync(songInfo);
             }
         }
 

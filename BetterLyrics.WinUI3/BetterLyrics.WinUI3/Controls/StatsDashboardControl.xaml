@@ -54,6 +54,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
+                    <!--  总播放时长  -->
                     <Border Grid.Column="0" Style="{StaticResource StatsCardStyle}">
                         <StackPanel>
                             <StackPanel
@@ -63,14 +64,26 @@
                                 <FontIcon FontSize="14" Glyph="&#xE916;" />
                                 <TextBlock x:Uid="StatsDashboardControlTotalDuration" Style="{ThemeResource CaptionTextBlockStyle}" />
                             </StackPanel>
-                            <TextBlock
+                            <StackPanel
                                 Margin="0,8,0,0"
-                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                Style="{ThemeResource SubtitleTextBlockStyle}"
-                                Text="{x:Bind ViewModel.TotalDuration, Mode=OneWay, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                                Orientation="Horizontal"
+                                Spacing="4">
+                                <TextBlock
+                                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                                    Text="{x:Bind ViewModel.TotalDuration.TotalHours, Mode=OneWay}" />
+                                <TextBlock
+                                    Margin="0,0,0,2"
+                                    VerticalAlignment="Bottom"
+                                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                    Opacity="0.8"
+                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                    Text="Hrs" />
+                            </StackPanel>
                         </StackPanel>
                     </Border>
 
+                    <!--  总播放歌曲次数  -->
                     <Border Grid.Column="1" Style="{StaticResource StatsCardStyle}">
                         <StackPanel>
                             <StackPanel
@@ -87,6 +100,7 @@
                         </StackPanel>
                     </Border>
 
+                    <!--  Top source  -->
                     <Border
                         Grid.Column="2"
                         Margin="0,0,0,12"
@@ -113,6 +127,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
+                    <!--  Top artists  -->
                     <Border Grid.Column="0" Style="{StaticResource StatsCardStyle}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -127,7 +142,7 @@
                             <ItemsControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.TopArtists, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="statsmodels:ArtistPlayCount">
-                                        <Grid Margin="0,8">
+                                        <Grid Margin="0,4">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="Auto" />
@@ -145,8 +160,14 @@
                                             <TextBlock
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
-                                                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
-                                                Text="{x:Bind PlayCount}" />
+                                                FontWeight="SemiBold">
+                                                <Run Text="{x:Bind PlayCount}" />
+                                                <Run
+                                                    FontSize="10"
+                                                    FontWeight="Normal"
+                                                    Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                    Text="plays" />
+                                            </TextBlock>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -154,6 +175,7 @@
                         </Grid>
                     </Border>
 
+                    <!--  Top sources  -->
                     <Border
                         Grid.Column="1"
                         Margin="0,0,0,12"
@@ -171,7 +193,7 @@
                             <ItemsControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.PlayerStats, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="models:PlayerStatDisplayItem">
-                                        <Grid Margin="0,6">
+                                        <Grid Margin="0,4">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
                                                 <RowDefinition Height="Auto" />
@@ -184,9 +206,17 @@
                                                 <TextBlock
                                                     FontSize="13"
                                                     Style="{ThemeResource BodyTextBlockStyle}"
-                                                    Text="{x:Bind PlayerId}" />
-                                                <TextBlock Grid.Column="1" Style="{ThemeResource CaptionTextBlockStyle}">
+                                                    Text="{x:Bind PlayerName}" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    FontWeight="SemiBold">
                                                     <Run Text="{x:Bind PlayCount}" />
+                                                    <Run
+                                                        FontSize="10"
+                                                        FontWeight="Normal"
+                                                        Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                        Text="plays" />
                                                 </TextBlock>
                                             </Grid>
                                             <Grid
@@ -213,6 +243,7 @@
                     </Border>
                 </Grid>
 
+                <!--  Top song  -->
                 <Border
                     Grid.Row="2"
                     Margin="0,0,0,20"

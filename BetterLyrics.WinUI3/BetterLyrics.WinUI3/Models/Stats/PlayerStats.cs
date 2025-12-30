@@ -6,7 +6,7 @@ namespace BetterLyrics.WinUI3.Models.Stats
 {
     public class PlayerStats
     {
-        public string PlayerID { get; set; }
+        public string PlayerId { get; set; }
         public int Count { get; set; }
 
         public double DisplayWidth => (TotalCount > 0) ? (Count / (double)TotalCount) * 150 : 0;
