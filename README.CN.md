@@ -127,7 +127,10 @@
 本项目采用 **GNU General Public License v3.0** 许可证。
 
 <details>
-<summary><b>💖 特别致谢与引用</b></summary>
+<summary><b>💖 特别致谢、引用与灵感</b></summary>
+<br>
+
+**依赖与引用：**
 
 | 项目/包 | 描述 |
 | :--- | :--- |
@@ -143,6 +146,17 @@
 | [DevWinUI](https://github.com/ghost1372/DevWinUI) | WinUI 3 开发辅助工具 |
 
 查看 [完整依赖列表](https://github.com/jayfunc/BetterLyrics/network/dependencies)。
+
+<br>
+
+**💡 灵感来源：**
+
+部分设计理念参考了以下插件/软件（仅作为设计思路参考，不涉及代码引用）：
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
+- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
+
 </details>
 
 ## 💭 分享到社交媒体
