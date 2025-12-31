@@ -104,18 +104,11 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 ## 🖼️ Screenshots
 
-![](Screenshots/fs2.png)
 ![](Screenshots/std.png)
 ![](Screenshots/narrow.png)
-![](Screenshots/Snipaste_2025-10-31_19-23-17.png)
-![](Screenshots/Snipaste_2025-10-31_19-27-34.png)
-![](Screenshots/dock.png)
-![](Screenshots/desktop.png)
-
-> ⚠️ Due to GIF format and frame rate limitations, the displayed effect is for preview only. Please refer to the actual device for the actual effect.
-
-![](Screenshots/PixPin_2025-10-24_18-13-44.gif)
-![](Screenshots/PixPin_2025-10-24_18-17-17.gif)
+![](Screenshots/effect.png)
+![](Screenshots/all-in-one.png)
+![](Screenshots/fs3.png)
 
 ## 📹 Demonstration
 
