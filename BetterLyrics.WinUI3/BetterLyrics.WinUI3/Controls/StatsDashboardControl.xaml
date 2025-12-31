@@ -71,7 +71,7 @@
                                 <TextBlock
                                     Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                     Style="{ThemeResource SubtitleTextBlockStyle}"
-                                    Text="{x:Bind ViewModel.TotalDuration.TotalHours, Mode=OneWay}" />
+                                    Text="{x:Bind ViewModel.TotalDuration.TotalHours, Mode=OneWay, Converter={StaticResource DoubleToDecimalConverter}}" />
                                 <TextBlock
                                     Margin="0,0,0,2"
                                     VerticalAlignment="Bottom"

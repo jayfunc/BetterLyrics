@@ -76,6 +76,7 @@
             <converter:LyricsLayoutOrientationNegationToOrientationConverter x:Key="LyricsLayoutOrientationNegationToOrientationConverter" />
             <converter:FileSourceTypeToIconConverter x:Key="FileSourceTypeToIconConverter" />
             <converter:PathToImageConverter x:Key="PathToImageConverter" />
+            <converter:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

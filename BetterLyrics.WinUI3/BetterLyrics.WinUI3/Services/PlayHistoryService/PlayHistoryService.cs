@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
 
             var totalMs = await context.PlayHistory
                 .Where(x => x.StartedAt >= start && x.StartedAt <= end)
-                .SumAsync(x => x.DurationPlayedMs); // 直接在数据库层面求和
+                .SumAsync(x => Math.Min(x.DurationPlayedMs, x.TotalDurationMs)); // 防止超过歌曲本身时长
 
             return TimeSpan.FromMilliseconds(totalMs);
         }
