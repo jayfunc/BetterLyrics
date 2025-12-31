@@ -414,8 +414,11 @@
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>Semua Muzik</value>
   </data>
-  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>Data sedang diproses. Anda boleh menyemak kemajuan terperinci dalam tetapan.</value>
+  <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
+    <value>Media Library sync in progress...</value>
+  </data>
+  <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
+    <value>There is a problem with Media Library sync</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>Kosongkan baris gilir main</value>
@@ -700,7 +703,7 @@
     <value>Jumlah Kabur</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>Termasuk fail log, cache lirik rangkaian</value>
+    <value>Includes log files, online lyrics cache, media library index</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>Cache</value>
@@ -854,6 +857,9 @@
   </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>Keluar dari program apabila tetingkap lirik ditutup</value>
+  </data>
+  <data name="SettingsPageExportPlayHistoryButton.Content" xml:space="preserve">
+    <value>Export play history</value>
   </data>
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>Eksport Tetapan</value>
@@ -1307,6 +1313,9 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>Pengurus Tetapan</value>
+  </data>
+  <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
+    <value>Play History</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Layari Hab Perkongsian Sumber Dalam Talian</value>
