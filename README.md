@@ -71,50 +71,36 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 
 [QQ 群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) | [Discord Server](https://discord.gg/5yAQPnyCKv) | [Telegram Group](https://t.me/+svhSLZ7awPsxNGY1)
 
-## 🌟 Highlighted features
+## 🌟 Highlighted Features
 
-- 🌠 **Pleasing User Interface**
-  - Smooth and highly personalized style, animations and effects
-    - Immersive fluid background
-    - Perspective/fan-shaped lyrics
-    - Snowflake effect
-    - Multiple lyrics scrolling functions
-    - ... (and more)
-- ↔️ **Strong Lyrics Translation**
-  - Offline machine translation (supporting 30+ languages)
-  - Auto-reading local lyrics files for embedded translation
-- 🧩 **Various Lyrics Source**
-  - 💾 Local storage
-    - Music files (with embedded lyrics)
-    - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) files (with both core format and enhanced format)
-    - [.eslrc](https://github.com/ESLyric/release) files
-    - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) files
-  - ☁️ Online lyrics providers
-    - QQ 音乐
-    - 网易云音乐
-    - 酷狗音乐
-    - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
-    - [LRCLIB](https://lrclib.net/)
-    - <details><summary>⚠️ Apple Music (additional config needed)</summary>
+- 🎨 **Stunning Visuals & UI**
+  - **Elegant Design:** Smooth, highly personalized style powered by WinUI3 & Win2D.
+  - **Immersive Effects:** Fluid backgrounds, 3D/Fan-shaped lyrics, snowflake particles, and more.
+  - **Deep Customization:** Configure animations, fonts, and behaviors to your taste.
 
-  		- Open the Apple Music web app and the Developer Tools window. Refresh the page. Return to the Developer Tools window, select Fetch/XHR, select a request, find the Media-User-Token header in the request header, and copy its value.
-		- Open BetterLyrics and go to the Playback Source settings. Enter the copied value in the Media-User-Token (for Apple Music) setting and click the accept icon on the right-hand side.
- 
-- 🎶 **Multiple Music Players Supported**
+- 🎧 **Versatile Playback & Connectivity**
+  - **Built-in Player:**
+    - Play from **Local Drives**.
+    - Stream via **Network Protocols** (SMB, WebDAV).
+    - Supports embedded lyrics reading.
+  - **External Integration:**
+    - Visualizes music from Spotify, Apple Music, NetEase, and [many others](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide#known-supported-music-players-configuration-guide).
 
-  - Check it out [here](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide#known-supported-music-players-configuration-guide) for detailed info
+- 🌐 **Advanced Lyrics System**
+  - **Offline Translation:** Privacy-focused local machine translation (30+ languages).
+  - **Comprehensive Sources:**
+    - 💾 **Files:** .lrc (Standard/Enhanced), .eslrc, .ttml, and embedded tags.
+    - ☁️ **Online:** QQ Music, NetEase, KuGou, LRCLIB, amll-ttml-db.
+    - 🍎 **Apple Music:** (Requires token configuration).
 
-- 🪟 **Multiple Display Modes**
-  - **Standard Mode**
-    - Enjoy an immersive listening journey with rich lyrics, animations and beautifully dynamic backgrounds
-  - **Docked Mode**
-    - A smart animated lyrics bar docked to your screen edge
-  - **Desktop Mode**
-    - Enjoy immersive lyrics floating above your apps
-  - **And More...**
-    - Waiting for you to discover... 
+- 🪟 **Display Modes for Every Scenario**
+  - **Standard:** Full immersive experience.
+  - **Docked:** A sleek bar attached to your screen edge.
+  - **Desktop Overlay:** Lyrics floating above all apps.
+  - ...and more to discover.
+
 - 🧠 **Smart Behaviors**
-  - Auto hide when music paused
+  - Auto-hides when music pauses.
 
 ## 🖼️ Screenshots
 
