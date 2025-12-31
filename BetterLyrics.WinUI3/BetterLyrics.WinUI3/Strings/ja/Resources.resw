@@ -259,13 +259,13 @@
     <value>歌詞の言語</value>
   </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
-    <value>歌詞提供者</value>
+    <value>歌詞提供元</value>
   </data>
   <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
     <value>歌詞検索</value>
   </data>
   <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>歌詞ウィンドウのショートカット</value>
+    <value>歌詞ウィンドウのショートカット設定</value>
   </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>一致率</value>
@@ -289,7 +289,7 @@
     <value>翻訳提供元</value>
   </data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
-    <value>翻訳提供元</value>
+    <value>ルビ提供元</value>
   </data>
   <data name="LyricsParseError" xml:space="preserve">
     <value>歌詞の解析に失敗しました</value>
@@ -307,7 +307,7 @@
     <value>曲の長さ</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
-    <value>* 変更は保存後すぐに反映され、マッピング情報とターゲットの歌詞を使用して後続の曲の歌詞が取得されます。 「Instrumental」としてマークすると、「Instrumental」プレースホルダの歌詞に直接戻ります。 リセットすると元のデータの検索が復元されます。</value>
+    <value>* 変更は保存後すぐに反映され、以降はマッピング情報に基づいた歌詞取得が行われます。「インストゥルメンタル」としてマークすると、専用のプレースホルダー歌詞に切り替わります。リセットを実行すると、元のデータ取得状態に戻ります。</value>
   </data>
   <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>検索時にキャッシュを無視する</value>
@@ -316,7 +316,7 @@
     <value>マッピング先</value>
   </data>
   <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
-    <value>インストとしてマーク</value>
+    <value>インストゥルメンタルとしてマーク</value>
   </data>
   <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
     <value>見つかりません</value>
@@ -367,7 +367,7 @@
     <value>さらにモードを追加するには「設定」に移動します</value>
   </data>
   <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
-    <value>歌詞ウィンドウ切替</value>
+    <value>歌詞ウィンドウスイッチャー</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>アルバムアートのみ表示</value>
@@ -415,7 +415,7 @@
     <value>すべてのミュージック</value>
   </data>
   <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
-    <value>メディアライブラリの同期中...</value>
+    <value>メディアライブラリーの同期中...</value>
   </data>
   <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
     <value>メディアライブラリの同期に問題が発生しました</value>
@@ -613,7 +613,7 @@
     <value>デザイン参考</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
-    <value>[実験的] 深度エフェクト</value>
+    <value>[実験的] 奥行きのエフェクト</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>深度</value>
@@ -688,10 +688,10 @@
     <value>起動時にデフォルトの歌詞ウィンドウを自動的に開く</value>
   </data>
   <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>起動時にギャラリーウィンドウを開く</value>
+    <value>起動時にミュージックギャラリーウィンドウを開く</value>
   </data>
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
-    <value>ギャラリーウィンドウを開いたときに自動的に再生を再開</value>
+    <value>ミュージックギャラリーを開いたときに自動的に再生を再開する</value>
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動起動</value>
@@ -712,7 +712,7 @@
     <value>中央揃え</value>
   </data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
-    <value>キー割り当ての確認</value>
+    <value>ショートカットキーの確認</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>ピンインルビ</value>
@@ -886,7 +886,7 @@
     <value>定期チェックで最前面表示を強制維持します</value>
   </data>
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
-    <value>常に上部に強制的に表示</value>
+    <value>常にトップに強制的に表示</value>
   </data>
   <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
     <value>現在の歌詞に文字単位の情報がない場合でも、文字単位の歌詞シミュレーションをします</value>
@@ -1021,7 +1021,7 @@
     <value>現在の行の位置</value>
   </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
-    <value>歌詞エフェクト</value>
+    <value>歌詞のエフェクト</value>
   </data>
   <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>超極太</value>
@@ -1108,7 +1108,7 @@
     <value>順次：以下のリストの優先順位に従って検索し、最初に見つかった結果を返します。ベストマッチ：有効なすべてのソースを検索し、一致スコアが最も高い結果を自動的に選択します</value>
   </data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
-    <value>歌詞検索方法</value>
+    <value>歌詞検索の方法</value>
   </data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
     <value>中太</value>
@@ -1117,7 +1117,7 @@
     <value>準細</value>
   </data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
-    <value>歌詞スタイル</value>
+    <value>歌詞のスタイル</value>
   </data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
     <value>極細</value>
@@ -1138,13 +1138,13 @@
     <value>歌詞ウィンドウマネージャー</value>
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
-    <value>歌詞ウィンドウ状態切り替えショートカット</value>
+    <value>歌詞ウィンドウスイッチャーのショートカットキー</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>この値を調整すると、順次検索とベストマッチ検索の結果に影響しますが、手動歌詞検索インターフェイスの検索結果には影響しません</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
-    <value>一致度の最低ライン</value>
+    <value>最小一致しきい値</value>
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
     <value>メディアライブラリ</value>
@@ -1216,7 +1216,7 @@
     <value>歌詞のルビ</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>ルビのサイズ</value>
+    <value>ルビ</value>
   </data>
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>タスクバーにピン留め</value>
@@ -1243,10 +1243,10 @@
     <value>"soundcloud.com" で "Cut to the Feeling" を再生</value>
   </data>
   <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
-    <value>再生/一時停止のショートカット</value>
+    <value>再生/一時停止のショートカットキー</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
-    <value>前の曲へのショートカット</value>
+    <value>前の曲へのショートカットキー</value>
   </data>
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>単色のレイヤー</value>
@@ -1321,7 +1321,7 @@
     <value>オンライン共有センターを閲覧する</value>
   </data>
   <data name="SettingsPageShortcut.Text" xml:space="preserve">
-    <value>ショートカット</value>
+    <value>ショートカットキー</value>
   </data>
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>ホットキーの登録に失敗しました</value>
@@ -1336,7 +1336,7 @@
     <value>アーティストを表示</value>
   </data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
-    <value>歌詞ウィンドウの表示/非表示ショートカット</value>
+    <value>歌詞ウィンドウの表示/非表示のショートカットキー</value>
   </data>
   <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
     <value>例: Alt + Tab、タスクバー</value>
@@ -1522,7 +1522,7 @@
     <value>設定を開く</value>
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
-    <value>歌詞ウィンドウ切り替え</value>
+    <value>歌詞ウィンドウスイッチャー</value>
   </data>
   <data name="TaskbarMode" xml:space="preserve">
     <value>タスクバー モード</value>
