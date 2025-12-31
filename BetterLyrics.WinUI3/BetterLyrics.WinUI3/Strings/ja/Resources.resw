@@ -370,7 +370,7 @@
     <value>歌詞ウィンドウ切替</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>アルバムアートエリアのみ表示</value>
+    <value>アルバムアートのみ表示</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>歌詞のみ表示</value>
@@ -394,7 +394,7 @@
     <value>ローカルフォルダー</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value>名称</value>
+    <value>名前</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>今すぐ同期</value>
