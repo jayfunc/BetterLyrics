@@ -9,7 +9,7 @@ BetterLyrics
 </h2>
 
 <h4 align="center">
-🤩 一款优雅且高度自定义的歌词/播放器应用，基于 WinUI3/Win2D 构建
+🤩 一款优雅且高度自定义的歌词可视化与全能音乐播放应用，基于 WinUI3/Win2D 构建
 </h4>
 
 <div align="center">
