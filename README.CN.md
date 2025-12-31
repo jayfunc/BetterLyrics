@@ -65,50 +65,36 @@ BetterLyrics
 
 [QQ 群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) | [Discord Server](https://discord.gg/5yAQPnyCKv) | [Telegram Group](https://t.me/+svhSLZ7awPsxNGY1)
 
-## 🌟 特色功能
+## 🌟 核心功能亮点
 
-- 🌠 **精美的用户界面**
-  - 流畅、高度自定义的样式、动画、动效
-    - 沉浸式流体背景
-    - 透视/扇形歌词
-    - 雪花效果
-    - 多种歌词滚动函数
-    - ...
-- ↔️ **强大的歌词翻译**
-  - 本地机器翻译 (支持 30 多种语言)
-  - 自动读取本地音乐文件内嵌歌词
-- 🧩 **多种歌词源**
-  - 💾 本地源
-    - 音乐文件 (内嵌歌词)
-    - [.lrc](<https://en.wikipedia.org/wiki/LRC_(file_format)>) 文件 (传统格式、增强格式)
-    - [.eslrc](https://github.com/ESLyric/release) 文件
-    - [.ttml](https://en.wikipedia.org/wiki/Timed_Text_Markup_Language) 文件
-  - ☁️ 在线源
-    - QQ 音乐
-    - 网易云音乐
-    - 酷狗音乐
-    - [amll-ttml-db](https://github.com/Steve-xmh/amll-ttml-db)
-    - [LRCLIB](https://lrclib.net/)
-    - <details><summary>⚠️ Apple Music (需要额外配置)</summary>
+- 🎨 **惊艳的视觉体验**
+  - **优雅设计**：基于 WinUI 3 与 Win2D 打造，风格丝滑流畅，支持高度个性化定制。
+  - **沉浸特效**：流体背景、3D/扇形歌词渲染、雪花粒子效果等。
+  - **深度定制**：动画、字体、交互行为均可随心配置。
 
-  		- 浏览器打开 Apple Music，打开开发者工具。刷新网页，回到开发者工具窗口，筛选出 Fetch/XHR，选择一个请求，在请求标头中找到 media-user-token 并复制其值。
-		- 打开 BetterLyrics 转到播放源设置。在 Media-User-Token (for Apple Music) 中粘贴复制的值并点按右侧对勾。
- 
-- 🎶 **支持众多音乐播放器**
+- 🎧 **全能播放与连接**
+  - **内置播放器**：
+    - 直接播放 **本地硬盘** 音乐。
+    - 通过 **网络协议** (SMB, WebDAV) 流式传输。
+    - 支持读取音频文件的内嵌歌词。
+  - **外部集成**：
+    - 完美适配并可视化来自 Spotify, Apple Music, 网易云音乐及 [更多播放器](https://github.com/jayfunc/BetterLyrics/wiki/使用指南#已知支持的音乐播放器配置指南) 的音乐。
 
-  - 点击 [此处](https://github.com/jayfunc/BetterLyrics/wiki/使用指南#已知支持的音乐播放器配置指南) 查看详细信息
+- 🌐 **强大的歌词系统**
+  - **离线翻译**：注重隐私的本地机器翻译（支持 30+ 种语言）。
+  - **全能歌词源**：
+    - 💾 **文件**：.lrc (标准/增强), .eslrc, .ttml 以及内嵌标签。
+    - ☁️ **在线**：QQ 音乐、网易云音乐、酷狗音乐、LRCLIB、amll-ttml-db。
+    - 🍎 **Apple Music**：（需额外配置 Token）。
 
-- 🪟 **多种显示模式**
-  - **标准模式**
-    - 标准的歌词窗口样式，沉浸式的音乐歌词体验。
-  - **停靠模式**
-    - 停靠在屏幕上/下边缘的轻量歌词窗口，工作休闲互不打扰。
-  - **桌面模式**
-    - 悬浮在所有应用上层，不能被选中，但能直击你的使用需求。
-  - **更多模式...**
-    - 等你来发现... 
-- 🧠 **智能化行为**
-  - 根据歌曲播放状态自动显隐歌词窗口
+- 🪟 **多场景显示模式**
+  - **标准模式**：完整的沉浸式视听体验。
+  - **停靠模式**：吸附在屏幕边缘的精致动态歌词栏。
+  - **桌面模式**：悬浮于所有应用之上的歌词挂件。
+  - ...更多模式等你探索。
+
+- 🧠 **智能交互**
+  - 音乐暂停时自动隐藏。
 
 ## 🖼️ 屏幕截图
 
