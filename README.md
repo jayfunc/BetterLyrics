@@ -82,7 +82,7 @@
 | :---: | :---: |
 | <img src="Screenshots/std.png" width="100%"> | <img src="Screenshots/narrow.png" width="100%"> |
 
-| Desktop Effects | All-in-One |
+| Lyrics Visual Effects | Coexisting Modes |
 | :---: | :---: |
 | <img src="Screenshots/effect.png" width="100%"> | <img src="Screenshots/all-in-one.png" width="100%"> |
 
