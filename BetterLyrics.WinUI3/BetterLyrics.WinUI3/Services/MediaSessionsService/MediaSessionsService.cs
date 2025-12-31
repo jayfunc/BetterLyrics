@@ -239,7 +239,6 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                 var desiredSession = GetCurrentSession();
 
-                //RecordMediaSourceProviderInfo(mediaSession);
                 if (mediaSession != desiredSession) return;
 
                 if (!IsMediaSourceEnabled(mediaSession.Id))
@@ -253,6 +252,15 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                         GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => true,
                         _ => false,
                     };
+                }
+
+                if (CurrentIsPlaying)
+                {
+                    _scrobbleStopwatch.Start();
+                }
+                else
+                {
+                    _scrobbleStopwatch.Stop();
                 }
             }));
         }
@@ -349,7 +357,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                                 }
                             }
                         }
-                        _scrobbleStopwatch.Restart();
+                        _scrobbleStopwatch.Reset();
 
                         CurrentSongInfo = new SongInfo
                         {
