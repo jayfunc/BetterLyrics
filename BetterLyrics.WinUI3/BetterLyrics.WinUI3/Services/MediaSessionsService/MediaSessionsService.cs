@@ -357,7 +357,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                                 }
                             }
                         }
-                        _scrobbleStopwatch.Reset();
+                        _scrobbleStopwatch.Restart();
 
                         CurrentSongInfo = new SongInfo
                         {
