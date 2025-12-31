@@ -9,7 +9,7 @@ BetterLyrics
 </h2>
 
 <h4 align="center">
-🤩 An elegant and deeply customizable lyrics & player app, built with WinUI3/Win2D
+🤩 An elegant and deeply customizable lyrics visualizer & versatile music player, built with WinUI3/Win2D
 </h4>
 
 <div align="center">
