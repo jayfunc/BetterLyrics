@@ -169,7 +169,7 @@
     <value>LX Music サーバーに接続できません。「設定」-「再生ソース」-「LX Music」-「LX Music サーバー」に移動し、リンクが正しく入力されているか確認してください</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>キャッシュをクリーニング中...</value>
+    <value>キャッシュをクリア中...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>接続に失敗しました</value>
@@ -181,19 +181,19 @@
     <value>ファイルリストを取得しています...</value>
   </data>
   <data name="FileSystemServiceParsing" xml:space="preserve">
-    <value>Parsing...</value>
+    <value>解析中...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value>キャッシュ・クリーン準備中</value>
+    <value>キャッシュのクリアを準備中...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
     <value>準備完了</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value>ルートディレクトリのパスが検出された。フルディスクインデックスにはメディア以外のファイルが多数含まれている可能性があり、スキャンに時間がかかりすぎる。特定のサブディレクトリを指定することを推奨する。</value>
+    <value>ルートディレクトリが指定されました。フルディスクのインデックス作成には大量の非メディアファイルが含まれる可能性があり、スキャンに時間がかかる恐れがあります。特定のサブディレクトリを指定することをお勧めします。</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
-    <value>スキャンを待っています...</value>
+    <value>スキャン準備中...</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全画面モード</value>
@@ -370,7 +370,7 @@
     <value>歌詞ウィンドウ切替</value>
   </data>
   <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>アルバムアートエリアのみ表示</value>
+    <value>アルバムアートのみ表示</value>
   </data>
   <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>歌詞のみ表示</value>
@@ -394,7 +394,7 @@
     <value>ローカルフォルダー</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value>名称</value>
+    <value>名前</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>今すぐ同期</value>
@@ -415,10 +415,10 @@
     <value>すべてのミュージック</value>
   </data>
   <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
-    <value>メディアライブラリー同期中...</value>
+    <value>メディアライブラリの同期中...</value>
   </data>
   <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
-    <value>メディアライブラリの同期に問題があります</value>
+    <value>メディアライブラリの同期に問題が発生しました</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>キューをクリア</value>
@@ -523,22 +523,22 @@
     <value>ミュージックギャラリー - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
-    <value>自動同期周波数</value>
+    <value>自動同期の頻度</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
-    <value>一切なし</value>
+    <value>なし</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
     <value>毎日</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
-    <value>15分ごと</value>
+    <value>15分間隔</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
-    <value>1時間ごと</value>
+    <value>1時間間隔</value>
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
-    <value>6時間ごと</value>
+    <value>6時間間隔</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>狭い表示モード</value>
@@ -556,13 +556,13 @@
     <value>個人情報保護方針</value>
   </data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
-    <value>ブラウズ</value>
+    <value>参照</value>
   </data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
     <value>名称</value>
   </data>
   <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
-    <value>空白のままにしておくと、自動的にデフォルトの名前が生成される。</value>
+    <value>空欄のままにすると、デフォルトの名前が自動生成されます。</value>
   </data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>パスワード</value>
@@ -571,7 +571,7 @@
     <value>パス</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
-    <value>指定されたフォルダのパスが見つかりません</value>
+    <value>指定されたパスが見つかりません</value>
   </data>
   <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
     <value>パスが必要</value>
@@ -703,7 +703,7 @@
     <value>ぼかし量</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>ログファイル、オンライン歌詞キャッシュを含む</value>
+    <value>ログファイル、オンライン歌詞キャッシュを含みます</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>キャッシュ</value>
@@ -859,7 +859,7 @@
     <value>歌詞ウィンドウを閉じたときにアプリを終了する</value>
   </data>
   <data name="SettingsPageExportPlayHistoryButton.Content" xml:space="preserve">
-    <value>プレー履歴のエクスポート</value>
+    <value>再生履歴をエクスポート</value>
   </data>
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>設定をエクスポート</value>
@@ -1315,7 +1315,7 @@
     <value>設定マネージャー</value>
   </data>
   <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
-    <value>プレーの歴史</value>
+    <value>再生履歴</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>オンライン共有センターを閲覧する</value>
@@ -1393,7 +1393,7 @@
     <value>スタートアップ</value>
   </data>
   <data name="SettingsPageStats.Content" xml:space="preserve">
-    <value>統計</value>
+    <value>統計データ</value>
   </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>ミュージックギャラリーウィンドウを閉じたときに再生を停止する</value>
@@ -1468,7 +1468,7 @@
     <value>標準モード</value>
   </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
-    <value>情報源</value>
+    <value>再生ソース</value>
   </data>
   <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
     <value>今月</value>
@@ -1492,13 +1492,13 @@
     <value>トップトラック</value>
   </data>
   <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
-    <value>トップ・ソース</value>
+    <value>よく使う再生ソース</value>
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
-    <value>総所要時間</value>
+    <value>総再生時間</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
-    <value>演奏曲目</value>
+    <value>再生された曲の数</value>
   </data>
   <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>終了</value>
