@@ -703,7 +703,7 @@
     <value>模糊量</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>包括日志文件，网络歌词缓存，媒体库索引</value>
+    <value>包括日志文件，网络歌词缓存</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>缓存</value>

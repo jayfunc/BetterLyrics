@@ -25,5 +25,6 @@
         public const string MoeKoeMusic = "cn.MoeKoe.Music";
         public const string MoeKoeMusicAlternative = "electron.app.MoeKoe Music";
         public const string Listen1 = "com.listen1.listen1";
+        public const string OriginalSoundHQPlayer = "SennpaiStudio.528762A6196EF_z79ft30j24epr!App";
     }
 }

@@ -703,7 +703,7 @@
     <value>Blur Amount</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>Includes log files, online lyrics cache, media library index</value>
+    <value>Includes log files, online lyrics cache</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>Cache</value>

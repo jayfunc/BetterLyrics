@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -414,8 +414,11 @@
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>เพลงทั้งหมด</value>
   </data>
+  <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
+    <value>กำลังซิงค์คลังสื่อ...</value>
+  </data>
   <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
-    <value />
+    <value>มีปัญหาเกี่ยวกับการซิงค์ไลบรารีมีเดีย</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>ล้างคิวการเล่น</value>
@@ -700,7 +703,7 @@
     <value>ปริมาณความเบลอ</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>รวมไฟล์บันทึก, แคชเนื้อเพลงจากเครือข่าย</value>
+    <value>รวมถึงไฟล์บันทึก, แคชเนื้อเพลงออนไลน์</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>แคช</value>
@@ -854,6 +857,9 @@
   </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>ออกจากโปรแกรมเมื่อปิดหน้าต่างเนื้อเพลง</value>
+  </data>
+  <data name="SettingsPageExportPlayHistoryButton.Content" xml:space="preserve">
+    <value>ส่งออกประวัติการเล่น</value>
   </data>
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>ส่งออกการตั้งค่า</value>
@@ -1309,7 +1315,7 @@
     <value>ตัวจัดการการตั้งค่า</value>
   </data>
   <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
-    <value>Play History</value>
+    <value>ประวัติการเล่น</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>เรียกดูศูนย์แบ่งปันทรัพยากรออนไลน์</value>

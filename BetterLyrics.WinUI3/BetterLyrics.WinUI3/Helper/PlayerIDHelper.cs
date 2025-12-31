@@ -55,6 +55,7 @@ namespace BetterLyrics.WinUI3.Helper
             PlayerId.MoeKoeMusic => PlayerName.MoeKoeMusic,
             PlayerId.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
             PlayerId.Listen1 => PlayerName.Listen1,
+            PlayerId.OriginalSoundHQPlayer => PlayerName.OriginalSoundHQPlayer,
             _ => id,
         };
 
@@ -83,6 +84,7 @@ namespace BetterLyrics.WinUI3.Helper
             PlayerId.MoeKoeMusic => PathHelper.MoeKoeMusicLogoPath,
             PlayerId.MoeKoeMusicAlternative => PathHelper.MoeKoeMusicLogoPath,
             PlayerId.Listen1 => PathHelper.Listen1LogoPath,
+            PlayerId.OriginalSoundHQPlayer => PathHelper.OriginalSoundHQPlayerLogoPath,
             _ => PathHelper.UnknownPlayerLogoPath,
         };
     }
