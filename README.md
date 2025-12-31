@@ -74,7 +74,7 @@ Check out the article: [BetterLyrics – An immersive and smooth lyrics display 
 ## 🌟 Highlighted Features
 
 - 🎨 **Stunning Visuals & UI**
-  - **Elegant Design:** Smooth, highly personalized style powered by WinUI 3 & Win2D.
+  - **Elegant Design:** Smooth, highly personalized style powered by WinUI3 & Win2D.
   - **Immersive Effects:** Fluid backgrounds, 3D/Fan-shaped lyrics, snowflake particles, and more.
   - **Deep Customization:** Configure animations, fonts, and behaviors to your taste.
 
