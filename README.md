@@ -127,7 +127,10 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 This project is licensed under the **GNU General Public License v3.0**.
 
 <details>
-<summary><b>💖 Special Thanks & Credits</b></summary>
+<summary><b>💖 Special Thanks, Credits & Inspiration</b></summary>
+<br>
+
+**Dependencies & References:**
 
 | Projects/Packages | Description |
 | :--- | :--- |
@@ -143,6 +146,17 @@ This project is licensed under the **GNU General Public License v3.0**.
 | [DevWinUI](https://github.com/ghost1372/DevWinUI) | WinUI 3 helpers |
 
 See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for full list.
+
+<br>
+
+**💡 Inspired by:**
+
+Some design ideas are referenced from the following projects (design inspiration only):
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
+- [Salt Player](https://moriafly.com/program/salt-player)
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
+
 </details>
 
 ## 💭 Share on Social Media
