@@ -98,18 +98,11 @@ BetterLyrics
 
 ## 🖼️ 屏幕截图
 
-![](Screenshots/fs2.png)
 ![](Screenshots/std.png)
 ![](Screenshots/narrow.png)
-![](Screenshots/Snipaste_2025-10-31_19-23-17.png)
-![](Screenshots/Snipaste_2025-10-31_19-27-34.png)
-![](Screenshots/dock.png)
-![](Screenshots/desktop.png)
-
-> ⚠️ 由于 GIF 格式帧率限制，效果仅作展示。请以实机效果为准。
-
-![](Screenshots/PixPin_2025-10-24_18-13-44.gif)
-![](Screenshots/PixPin_2025-10-24_18-17-17.gif)
+![](Screenshots/effect.png)
+![](Screenshots/all-in-one.png)
+![](Screenshots/fs3.png)
 
 ## 📹 演示
 
