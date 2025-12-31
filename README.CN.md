@@ -86,8 +86,13 @@
 | :---: | :---: |
 | <img src="Screenshots/effect.png" width="100%"> | <img src="Screenshots/all-in-one.png" width="100%"> |
 
-<img src="Screenshots/fs3.png" alt="Fullscreen" width="100%">
-<br><i>全屏模式</i>
+| 全屏模式 | 全屏模式 |
+| :---: | :---: |
+| <img src="Screenshots/fs3.png" width="100%"> | <img src="Screenshots/fs2.png" width="100%"> |
+
+| 音乐库 | 播放统计 |
+| :---: | :---: |
+| <img src="Screenshots/music-gallery.png" width="100%"> | <img src="Screenshots/stats.png" width="100%"> |
 
 </div>
 

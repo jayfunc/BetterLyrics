@@ -86,8 +86,13 @@
 | :---: | :---: |
 | <img src="Screenshots/effect.png" width="100%"> | <img src="Screenshots/all-in-one.png" width="100%"> |
 
-<img src="Screenshots/fs3.png" alt="Fullscreen" width="100%">
-<br><i>Fullscreen Mode</i>
+| Fullscreen Mode | Fullscreen Mode |
+| :---: | :---: |
+| <img src="Screenshots/fs3.png" width="100%"> | <img src="Screenshots/fs2.png" width="100%"> |
+
+| Music Gallery | Playback Statistics |
+| :---: | :---: |
+| <img src="Screenshots/music-gallery.png" width="100%"> | <img src="Screenshots/stats.png" width="100%"> |
 
 </div>
 
