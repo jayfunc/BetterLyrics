@@ -1,218 +1,164 @@
-![](Promotion/banner.png)
-
-<div align=center>
-  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="" width="96">
-</div>
-
-<h2 align=center>
-BetterLyrics
-</h2>
-
-<h4 align="center">
-🤩 一款优雅且高度自定义的歌词可视化与全能音乐播放应用，基于 WinUI3/Win2D 构建
-</h4>
+[**中文**](README.CN.md) | [**English**](README.md)
 
 <div align="center">
-	
-[使用指南](https://github.com/jayfunc/BetterLyrics/wiki/使用指南) | [隐私政策](PrivacyPolicy.CN.md) | [服务协议](TermsofService.CN.md)
+  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="Logo" width="120">
+  
+  <h1>BetterLyrics</h1>
+
+  <h4>
+    🤩 一款优雅且高度自定义的歌词可视化与全能音乐播放应用 <br>
+    基于 WinUI3 / Win2D 构建
+  </h4>
+
+  <div>
+    <img src="https://img.shields.io/badge/Language-C%23-purple" alt="C#">
+    <img src="https://img.shields.io/badge/Framework-WinUI%203-blue" alt="WinUI 3">
+    <img src="https://img.shields.io/badge/License-GPL_v3.0-blue" alt="License">
+    <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
+    <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
+  </div>
+
+  <br>
+
+  <img src="Promotion/banner.png" alt="Banner" width="100%" style="border-radius: 10px;">
 
 </div>
 
-<div align=center>
-	
-![Static Badge](https://img.shields.io/badge/Language-C%23-purple)
-![Static Badge](https://img.shields.io/badge/License-GPL_v3.0-blue)
-![Static Badge](https://img.shields.io/badge/IDE-Visual%20Studio-purple)
-![Static Badge](https://img.shields.io/badge/Framework-WinUI%203-blue)
+<br>
 
-</div>
-
-<div align=center>
-
-[![GitHub Repo stars](https://img.shields.io/github/stars/jayfunc/BetterLyrics)](https://github.com/jayfunc/BetterLyrics/stargazers)
-[![Crowdin](https://badges.crowdin.net/betterlyrics/localized.svg)](https://crowdin.com/project/betterlyrics)
-
-</div>
-
-<div align=center>
-
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jayfunc/BetterLyrics)
-[![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/jayfunc/BetterLyrics)
-
-</div>
+## 🔥 精选推荐与社区
 
 <div align="center">
 
-<mark>**_💞 BetterLyrics 的发展离不开每一位贡献者、反馈者和用户的全力支持。_**</mark>
+| HelloGitHub 推荐 | 少数派 SSPAI 推荐 | 🤖 AI 问答 |
+| :---: | :---: | :---: |
+| <a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="HelloGitHub" height="40"></a> | [**阅读评测文章**](https://sspai.com/post/101028) | [![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jayfunc/BetterLyrics) <br> [![Zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTk5QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/jayfunc/BetterLyrics) |
 
-<mark>**_项目持续活跃开发中，可能会遇到未知问题。_**</mark>
+**交流群：** [QQ 群 (1054700388)](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) | [Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
 
 </div>
 
-## ✍️ 协助翻译
+## 🧪 下载与安装
 
-找不到你的语言？有更好的翻译？没关系！😆 访问 [此处](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) 查看如何贡献翻译！
+<div align="center">
 
-## 🎉 该项目入选 HelloGitHub 推荐！
+| Microsoft Store (推荐) | 手动安装 |
+| :---: | :---: |
+| <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>无限期免费试用（功能与付费版一致） | [**📦 最新版本 (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>[查看安装指南](https://jayfunc.blog/blog/how-to-install-zip) |
 
-<a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+[📖 用户指南](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide) | [🔒 隐私政策](PrivacyPolicy.md) | [⚖️ 服务条款](TermsofService.md)
 
-## 🎉 该项目入选少数派推荐！
+</div>
 
-文章链接：[BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)。
+## 🌟 核心功能
 
-## 🔈 反馈交流群
+- 🎨 **绝美视觉与 UI**
+  - **优雅设计：** 基于 WinUI3 & Win2D 的流畅、高度个性化风格。
+  - **沉浸特效：** 支持流体背景、3D/扇形歌词、雪花粒子等多种效果。
+  - **深度定制：** 按需配置动画、字体和行为逻辑，打造你的专属播放器。
 
-[QQ 群](https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info) (1054700388) | [Discord Server](https://discord.gg/5yAQPnyCKv) | [Telegram Group](https://t.me/+svhSLZ7awPsxNGY1)
-
-## 🌟 核心功能亮点
-
-- 🎨 **惊艳的视觉体验**
-  - **优雅设计**：基于 WinUI3 与 Win2D 打造，风格丝滑流畅，支持高度个性化定制。
-  - **沉浸特效**：流体背景、3D/扇形歌词渲染、雪花粒子效果等。
-  - **深度定制**：动画、字体、交互行为均可随心配置。
-
-- 🎧 **全能播放与连接**
-  - **内置播放器**：
-    - 直接播放 **本地硬盘** 音乐。
-    - 通过 **网络协议** (SMB, WebDAV) 流式传输。
-    - 支持读取音频文件的内嵌歌词。
-  - **外部集成**：
-    - 完美适配并可视化来自 Spotify, Apple Music, 网易云音乐及 [更多播放器](https://github.com/jayfunc/BetterLyrics/wiki/使用指南#已知支持的音乐播放器配置指南) 的音乐。
+- 🎧 **多功能播放与连接**
+  - **内置播放器：** 支持播放 **本地硬盘** 文件或通过 **网络协议** (SMB, WebDAV) 流式播放。
+  - **外部集成：** 可视化来自 Spotify, Apple Music, 网易云音乐及 [其他多种播放器](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide#known-supported-music-players-configuration-guide) 的音乐。
 
 - 🌐 **强大的歌词系统**
-  - **离线翻译**：注重隐私的本地机器翻译（支持 30+ 种语言）。
-  - **全能歌词源**：
-    - 💾 **文件**：.lrc (标准/增强), .eslrc, .ttml 以及内嵌标签。
-    - ☁️ **在线**：QQ 音乐、网易云音乐、酷狗音乐、LRCLIB、amll-ttml-db。
-    - 🍎 **Apple Music**：（需额外配置 Token）。
+  - **离线翻译：** 注重隐私的本地机器翻译（支持 30+ 种语言）。
+  - **全面源支持：** 支持 .lrc (标准/增强), .eslrc, .ttml, 内嵌标签，以及在线源（QQ 音乐, 网易云, LRCLIB）。
+  - **Apple Music：** 支持歌词获取（需配置 Token）。
 
-- 🪟 **多场景显示模式**
-  - **标准模式**：完整的沉浸式视听体验。
-  - **停靠模式**：吸附在屏幕边缘的精致动态歌词栏。
-  - **桌面模式**：悬浮于所有应用之上的歌词挂件。
-  - ...更多模式等你探索。
+- 🪟 **全场景显示模式**
+  - **标准模式：** 全屏沉浸式体验。
+  - **停靠模式：** 贴附于屏幕边缘的精致侧边栏。
+  - **桌面悬浮：** 悬浮于所有应用之上的歌词挂件。
 
-- 🧠 **智能交互**
+- 🧠 **智能行为**
   - 音乐暂停时自动隐藏。
 
-## 🖼️ 屏幕截图
+## 🖼️ 软件截图
 
-![](Screenshots/std.png)
-![](Screenshots/narrow.png)
-![](Screenshots/effect.png)
-![](Screenshots/all-in-one.png)
-![](Screenshots/fs3.png)
+<div align="center">
 
-## 📹 演示
+| 标准视图 | 侧边栏模式 |
+| :---: | :---: |
+| <img src="Screenshots/std.png" width="100%"> | <img src="Screenshots/narrow.png" width="100%"> |
 
-在 [哔哩哔哩](https://www.bilibili.com/video/BV1QRstz1EGt/) 上观看于 2025 年 10 月 21 日上传的演示视频。
+| 歌词视觉特效 | 多模式共存 |
+| :---: | :---: |
+| <img src="Screenshots/effect.png" width="100%"> | <img src="Screenshots/all-in-one.png" width="100%"> |
 
-## 🧪 即刻体验
+<img src="Screenshots/fs3.png" alt="Fullscreen" width="100%">
+<br><i>全屏模式</i>
 
-<a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct">
-	<img src="https://get.microsoft.com/images/zh-cn%20dark.svg" width="200"/>
-</a>
+</div>
 
-**无限期**免费试用版和付费版**无任何区别**。
+## 📹 演示视频
 
-如果喜欢该软件，请考虑 [捐赠](#-捐赠) 或在 **Microsoft Store** 购买，感谢您的支持！ 🥰
+> 观看我们在 Bilibili 发布的演示视频（上传于 2025 年 10 月 21 日）：[点击观看](https://www.bilibili.com/video/BV1QRstz1EGt/)。
 
-无法从 Microsoft Store 下载？尝试以下方法：
-- [从 Microsoft Store 外部下载](https://www.cnblogs.com/jayfunc/p/19212083)
-- 转至 [最新发布页](https://github.com/jayfunc/BetterLyrics/releases/latest) 并从 `Assets`（资产）列表下载 `.zip` 文件。(安装方法参考 [此文档](https://www.cnblogs.com/jayfunc/p/19212078)。)
+## ✍️ 贡献与构建
 
-## 🏗️ 构建
+**协助翻译：** 找不到你的语言？[点此开始翻译](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file)。
 
-在构建之前确保：
-- 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\DiscordTemplate.cs`.
-- 替换文件 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFMTemplate` 为 `BetterLyrics\BetterLyrics.WinUI3\BetterLyrics.WinUI3\Constants\LastFM.cs`。
+**从源码构建：**
+> 构建前，请确保已替换 `Constants` 文件夹下的 `DiscordTemplate.cs` 和 `LastFM.cs`。
 
-## 🤑 捐赠
+## 🤑 赞助与捐赠
 
-如果你喜欢本应用，请考虑捐赠支持开发者。这将有助于本应用的长远发展。
+如果你喜欢 BetterLyrics，请考虑支持它。你的支持有助于项目持续发展！
 
-通过以下途径捐赠：
-- [PayPal](https://paypal.me/zhefangpay)
-- [Buy Me a Coffee](https://buymeacoffee.com/founchoo)
-- [爱发电](https://afdian.com/a/jayfunc)
-- <details><summary>支付宝</summary>
-    
-  ![](Donate/Alipay.jpg)
-  
-  </detais>
+<div align="center">
 
-- <details><summary>微信</summary>
-    
-  ![](Donate/WeChatReward.png)
-  
-  </details>
+| 网页平台 | 支付宝 (扫码) | 微信 (扫码) |
+| :---: | :---: | :---: |
+| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="Donate/Alipay.jpg" width="150"> | <img src="Donate/WeChatReward.png" width="150"> |
 
-本项目的持续发展离不开大家的支持。**[查看完整鸣谢名单](SPONSORS.md)**
+**[查看完整赞助者名单 (Hall of Fame)](SPONSORS.md)**
 
-## 📄 许可证
+</div>
 
-本项目采用 GNU 通用公共许可证 v3.0 授权。详情请参阅 [LICENSE](https://github.com/jayfunc/BetterLyrics/blob/dev/LICENSE) 文件。
+## ⭐ Star 历史趋势
 
-## 💖 感谢
+<div align="center">
+  <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date" width="100%">
+</div>
 
-部分功能及代码引用或修改自公开资料库，包括但不限于下述开源项目/包、教程等，在此一并感谢。
+## 📄 许可与致谢
+
+本项目采用 **GNU General Public License v3.0** 许可证。
+
+<details>
+<summary><b>💖 特别致谢与引用</b></summary>
 
 | 项目/包 | 描述 |
 | :--- | :--- |
-| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | 为 QQ、网易、酷狗在线歌词源提供歌词抓取、解密、解析等一系列方法 |
-| [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB 歌词 API |
-| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music 歌词抓取（Python 实现） |
-| [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet) | 从音乐文件提取图片 |
-| [WinUIEx](https://github.com/dotMorten/WinUIEx) | 提供有关窗口的开箱即用的 Win32 API |
-| [TagLib#](https://github.com/mono/taglib-sharp) | 读取音乐文件内嵌的原始歌词内容 |
-| [Vanara](https://github.com/dahall/Vanara) | 提供开箱即用的 Win32 API |
-| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | 离线翻译核心 |
-| [Isolation](https://github.com/Storyteller-Studios/Isolation) | 动态流体背景 |
-| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | 频谱图 |
-| [DevWinUI](https://github.com/ghost1372/DevWinUI) | 为 WinUI3 提供众多开箱即用的功能 |
-| ... | ... |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | QQ、网易云、酷狗歌词获取与解密 |
+| [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB 歌词 API 提供方 |
+| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music 歌词获取 |
+| [Audio Tools Library (ATL)](https://github.com/Zeugma440/atldotnet) | 从音乐文件中提取图片 |
+| [WinUIEx](https://github.com/dotMorten/WinUIEx) | 简化 Win32 API 的窗口访问 |
+| [TagLib#](https://github.com/mono/taglib-sharp) | 读取原始歌词内容 |
+| [Vanara](https://github.com/dahall/Vanara) | Win32 API 封装库 |
+| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | 离线歌词翻译支持 |
+| [Isolation](https://github.com/Storyteller-Studios/Isolation) | 动态流体背景实现 |
+| [DevWinUI](https://github.com/ghost1372/DevWinUI) | WinUI 3 开发辅助工具 |
 
-点按 [此处](https://github.com/jayfunc/BetterLyrics/network/dependencies) 查看所有依赖。
+查看 [完整依赖列表](https://github.com/jayfunc/BetterLyrics/network/dependencies)。
+</details>
 
-### 教程、博客等
+## 💭 分享到社交媒体
 
-- [Stackoverflow - How to animate Margin property in WPF](https://stackoverflow.com/a/21542882/11048731)
-- [Bilibili -【WinUI3】SystemBackdropController：定义云母、亚克力效果](https://www.bilibili.com/video/BV1PY4FevEkS)
-- [cnblogs - .NET App 与 Windows 系统媒体控制(SMTC)交互](https://www.cnblogs.com/TwilightLemon/p/18279496)
-- [Win2D 中的游戏循环：CanvasAnimatedControl](https://www.cnblogs.com/walterlv/p/10236395.html)
-- [r2d2rigo/Win2D-Samples](https://github.com/r2d2rigo/Win2D-Samples/blob/master/IrisBlurWin2D/IrisBlurWin2D/MainPage.xaml.cs)
-- [CommunityToolkit - 从入门到精通](https://mvvm.coldwind.top/)
-
-## 💡 灵感来源
-
-部分设计思路参考自下述插件/软件（不含间接或直接引用、修改的代码，仅作为设计思路指导方向）。
-
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
-- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
-- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
-
-## ⭐ 星标记录
-
-<div style="display: flex; justify-content: space-around; align-items: flex-start;">
-  <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date)](https://www.star-history.com/#jayfunc/BetterLyrics&Date" width="100%" >
+<details>
+<summary><b>点击展开</b></summary>
+<br>
+<div align="center">
+  <img src="https://socialify.git.ci/jayfunc/BetterLyrics/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Light" width="48%">
+  <img src="https://opengraph.githubassets.com/<any_hash_number>/jayfunc/BetterLyrics" width="48%">
 </div>
+</details>
 
-## 🤗 欢迎反馈问题、提交代码
+<br>
 
-如果发现 Bug 请在 Issues 内提出，同时也欢迎任何想法、建议。
-
-## ⚠️ 免责声明
-
-本项目按“原样”提供，不提供任何形式的担保。
-所有歌词、字体、图标及其他第三方资源均为其各自版权所有者的财产。
-本项目作者不主张对这些资源的所有权。
-本项目为非商业用途，不得用于侵犯任何权利。
-用户有责任确保其使用符合适用的法律和许可协议。
-
-## 💭 社交媒体分享
-
-![BetterLyrics](https://socialify.git.ci/jayfunc/BetterLyrics/image?description=1&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Light)
-
-![BetterLyrics](https://opengraph.githubassets.com/<any_hash_number>/jayfunc/BetterLyrics)
+<div align="center">
+  <mark><i>本项目正处于积极开发阶段；可能会出现意外问题。</i></mark><br>
+  <sub>免责声明：本项目“按原样”提供。所有第三方资源归其各自所有者所有。</sub>
+</div>
