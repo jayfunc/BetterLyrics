@@ -46,7 +46,7 @@
 | :---: | :---: |
 | <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>无限期免费试用（功能与付费版一致） | [**📦 最新版本 (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>[查看安装指南](https://jayfunc.blog/blog/how-to-install-zip) |
 
-[📖 用户指南](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide) | [🔒 隐私政策](PrivacyPolicy.md) | [⚖️ 服务条款](TermsofService.md)
+[📖 用户指南](https://github.com/jayfunc/BetterLyrics/wiki/使用指南) | [🔒 隐私政策](PrivacyPolicy.CN.md) | [⚖️ 服务条款](TermsofService.CN.md)
 
 </div>
 
