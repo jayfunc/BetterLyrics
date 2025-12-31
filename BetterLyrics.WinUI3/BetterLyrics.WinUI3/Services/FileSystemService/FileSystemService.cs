@@ -1,15 +1,16 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Db;
 using BetterLyrics.WinUI3.Services.FileSystemService.Providers;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Controls;
-using SQLite;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -28,7 +29,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         private readonly ILocalizationService _localizationService;
         private readonly ILogger<FileSystemService> _logger;
 
-        private readonly SQLiteAsyncConnection _db;
+        private readonly IDbContextFactory<FilesIndexDbContext> _contextFactory;
+
         private bool _isInitialized = false;
 
         // 定时器字典
@@ -36,54 +38,37 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         // 当前正在执行的扫描任务字典
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _activeScanTokens = new();
 
-        private static readonly SemaphoreSlim _dbLock = new(1, 1);
         private static readonly SemaphoreSlim _folderScanLock = new(1, 1);
 
-        public FileSystemService(ISettingsService settingsService, ILocalizationService localizationService, ILogger<FileSystemService> logger)
+        public FileSystemService(
+            ISettingsService settingsService,
+            ILocalizationService localizationService,
+            ILogger<FileSystemService> logger,
+            IDbContextFactory<FilesIndexDbContext> contextFactory)
         {
             _logger = logger;
             _localizationService = localizationService;
             _settingsService = settingsService;
-            _db = new SQLiteAsyncConnection(PathHelper.FilesIndexPath);
+            _contextFactory = contextFactory;
         }
 
-        public async Task InitializeAsync()
+        public async Task<List<FilesIndexItem>> GetFilesAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder, string configId, bool forceRefresh = false)
         {
-            if (_isInitialized) return;
+            string queryParentUri = parentFolder == null ? "" : parentFolder.Uri;
+            if (parentFolder == null && !forceRefresh) forceRefresh = true;
 
-            await _db.CreateTableAsync<FileCacheEntity>();
+            using var context = await _contextFactory.CreateDbContextAsync();
 
-            _isInitialized = true;
-        }
-
-        public async Task<List<FileCacheEntity>> GetFilesAsync(IUnifiedFileSystem provider, FileCacheEntity? parentFolder, string configId, bool forceRefresh = false)
-        {
-            await InitializeAsync();
-
-            string queryParentUri;
-            if (parentFolder == null)
-            {
-                if (!forceRefresh) forceRefresh = true;
-                queryParentUri = "";
-            }
-            else
-            {
-                queryParentUri = parentFolder.Uri;
-            }
-
-            List<FileCacheEntity> cachedEntities = new List<FileCacheEntity>();
-
-            if (parentFolder != null)
-            {
-                cachedEntities = await _db.Table<FileCacheEntity>()
-                    .Where(x => x.MediaFolderId == configId && x.ParentUri == queryParentUri)
-                    .ToListAsync();
-            }
+            var cachedEntities = await context.FilesIndex
+                .AsNoTracking() // 读操作不追踪，提升性能
+                .Where(x => x.MediaFolderId == configId && x.ParentUri == queryParentUri)
+                .ToListAsync();
 
             bool needSync = forceRefresh || cachedEntities.Count == 0;
 
             if (needSync)
             {
+                // SyncAsync 内部自己管理 Context
                 cachedEntities = await SyncAsync(provider, parentFolder, configId);
             }
 
@@ -91,17 +76,11 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         }
 
         /// <summary>
-        /// 从远端/本地同步文件至数据库，该阶段不会解析文件全部元数据。
-        /// <para/>
-        /// 如果某个已有文件被修改或有新文件被添加，会预留空位，等待后续填充（通常交给 <see cref="ScanMediaFolderAsync"/> 完成）
+        /// 从远端/本地同步文件至数据库
         /// </summary>
-        /// <param name="provider"></param>
-        /// <param name="parentFolder"></param>
-        /// <param name="configId"></param>
-        /// <returns></returns>
-        private async Task<List<FileCacheEntity>> SyncAsync(IUnifiedFileSystem provider, FileCacheEntity? parentFolder, string configId)
+        private async Task<List<FilesIndexItem>> SyncAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder, string configId)
         {
-            List<FileCacheEntity> remoteItems;
+            List<FilesIndexItem> remoteItems;
             try
             {
                 remoteItems = await provider.GetFilesAsync(parentFolder);
@@ -116,80 +95,79 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
             string targetParentUri = "";
             if (remoteItems.Count > 0)
-            {
                 targetParentUri = remoteItems[0].ParentUri ?? "";
-            }
             else if (parentFolder != null)
-            {
                 targetParentUri = parentFolder.Uri;
-            }
             else
-            {
                 return [];
-            }
 
             try
             {
-                await _db.RunInTransactionAsync(conn =>
+                using var context = await _contextFactory.CreateDbContextAsync();
+
+                // 开启事务 (EF Core 也能管理事务)
+                using var transaction = await context.Database.BeginTransactionAsync();
+
+                // 1. 获取数据库中现有的该目录下的文件
+                var dbItems = await context.FilesIndex
+                    .Where(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri)
+                    .ToListAsync();
+
+                var dbMap = dbItems.ToDictionary(x => x.Uri, x => x);
+
+                // 2. 远端数据去重（防止 Provider 返回重复 Uri）
+                var remoteDistinct = remoteItems
+                    .GroupBy(x => x.Uri)
+                    .Select(g => g.First())
+                    .ToList();
+
+                var remoteUris = new HashSet<string>();
+
+                // 3. 处理 新增 和 更新
+                foreach (var remote in remoteDistinct)
                 {
-                    var dbItems = conn.Table<FileCacheEntity>()
-                        .Where(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri)
-                        .ToList();
+                    remoteUris.Add(remote.Uri);
 
-                    var dbMap = dbItems.ToDictionary(x => x.Uri, x => x);
-
-                    var remoteMap = remoteItems
-                        .GroupBy(x => x.Uri)
-                        .Select(g => g.First())
-                        .ToDictionary(x => x.Uri, x => x);
-
-                    var toInsert = new List<FileCacheEntity>();
-                    var toUpdate = new List<FileCacheEntity>();
-                    var toDelete = new List<FileCacheEntity>();
-
-                    foreach (var remote in remoteItems)
+                    if (dbMap.TryGetValue(remote.Uri, out var existing))
                     {
-                        if (dbMap.TryGetValue(remote.Uri, out var existing))
-                        {
-                            bool isChanged = existing.FileSize != remote.FileSize ||
-                                             existing.LastModified != remote.LastModified;
+                        // 检查是否变更
+                        bool isChanged = existing.FileSize != remote.FileSize ||
+                                         existing.LastModified != remote.LastModified;
 
-                            if (isChanged)
-                            {
-                                existing.FileSize = remote.FileSize;
-                                existing.LastModified = remote.LastModified;
-                                existing.IsMetadataParsed = false; // 标记为未解析，下次会重新读取元数据
-
-                                toUpdate.Add(existing);
-                            }
-                            else
-                            {
-                                // 数据库里原有的 Title, Artist, LocalAlbumArtPath 都会被完美保留
-                            }
-                        }
-                        else
+                        if (isChanged)
                         {
-                            toInsert.Add(remote);
+                            existing.FileSize = remote.FileSize;
+                            existing.LastModified = remote.LastModified;
+                            existing.IsMetadataParsed = false; // 标记重新解析
+
+                            // EF Core 自动追踪 existing 的变化，无需手动 Update
                         }
                     }
-
-                    foreach (var dbItem in dbItems)
+                    else
                     {
-                        if (!remoteMap.ContainsKey(dbItem.Uri))
-                        {
-                            toDelete.Add(dbItem);
-                        }
+                        // 新增
+                        // 注意：如果 Id 是自增的，不要手动赋值 Id，除非是 Guid
+                        context.FilesIndex.Add(remote);
                     }
+                }
 
-                    if (toInsert.Count > 0) conn.InsertAll(toInsert);
-                    if (toUpdate.Count > 0) conn.UpdateAll(toUpdate);
-                    if (toDelete.Count > 0)
+                // 4. 处理 删除 (数据库有，远端没有)
+                foreach (var dbItem in dbItems)
+                {
+                    if (!remoteUris.Contains(dbItem.Uri))
                     {
-                        foreach (var item in toDelete) conn.Delete(item);
+                        context.FilesIndex.Remove(dbItem);
                     }
-                });
+                }
 
-                var finalItems = await _db.Table<FileCacheEntity>()
+                await context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                // 5. 返回最新数据
+                // 这里的 dbItems 已经被 Update 更新了内存状态，但 Remove 的还在列表里，Add 的不在列表里
+                // 所以最稳妥的是重新查一次，或者手动维护列表。为了准确性，重新查询 (AsNoTracking)
+                var finalItems = await context.FilesIndex
+                    .AsNoTracking()
                     .Where(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri)
                     .ToListAsync();
 
@@ -204,37 +182,34 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             }
         }
 
-        public async Task UpdateMetadataAsync(FileCacheEntity entity)
+        public async Task UpdateMetadataAsync(FilesIndexItem entity)
         {
-            // 现在的实体已经包含了完整信息，直接 Update 即可
-            // 我们只需要确保 Where 子句用的是主键或者 Uri
+            using var context = await _contextFactory.CreateDbContextAsync();
 
-            // 简化版 SQL，直接用 ORM 的 Update
-            // 但因为 entity 对象可能包含一些不应该被覆盖的旧数据（如果多线程操作），
-            // 手写 SQL 只更新 Metadata 字段更安全。
-
-            string sql = @"
-                UPDATE FileCache 
-                SET 
-                    Title = ?, Artists = ?, Album = ?, 
-                    Year = ?, Bitrate = ?, SampleRate = ?, BitDepth = ?, 
-                    Duration = ?, AudioFormatName = ?, AudioFormatShortName = ?, Encoder = ?,
-                    EmbeddedLyrics = ?, LocalAlbumArtPath = ?, 
-                    IsMetadataParsed = 1 
-                WHERE Id = ?"; // 推荐用 Id (主键) 最快，如果没有 Id 则用 Uri
-
-            await _db.ExecuteAsync(sql,
-                entity.Title, entity.Artists, entity.Album,
-                entity.Year, entity.Bitrate, entity.SampleRate, entity.BitDepth,
-                entity.Duration, entity.AudioFormatName, entity.AudioFormatShortName, entity.Encoder,
-                entity.EmbeddedLyrics, entity.LocalAlbumArtPath,
-                entity.Id // WHERE Id = ?
-            );
+            // 使用 EF Core 7.0+ 的 ExecuteUpdateAsync 高效更新
+            // 这会直接生成 UPDATE SQL，不经过内存加载，性能极高
+            await context.FilesIndex
+                .Where(x => x.Id == entity.Id) // 优先用 Id
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(p => p.Title, entity.Title)
+                    .SetProperty(p => p.Artists, entity.Artists)
+                    .SetProperty(p => p.Album, entity.Album)
+                    .SetProperty(p => p.Year, entity.Year)
+                    .SetProperty(p => p.Bitrate, entity.Bitrate)
+                    .SetProperty(p => p.SampleRate, entity.SampleRate)
+                    .SetProperty(p => p.BitDepth, entity.BitDepth)
+                    .SetProperty(p => p.Duration, entity.Duration)
+                    .SetProperty(p => p.AudioFormatName, entity.AudioFormatName)
+                    .SetProperty(p => p.AudioFormatShortName, entity.AudioFormatShortName)
+                    .SetProperty(p => p.Encoder, entity.Encoder)
+                    .SetProperty(p => p.EmbeddedLyrics, entity.EmbeddedLyrics)
+                    .SetProperty(p => p.LocalAlbumArtPath, entity.LocalAlbumArtPath)
+                    .SetProperty(p => p.IsMetadataParsed, true)
+                );
         }
 
-        public async Task<Stream?> OpenFileAsync(IUnifiedFileSystem provider, FileCacheEntity entity)
+        public async Task<Stream?> OpenFileAsync(IUnifiedFileSystem provider, FilesIndexItem entity)
         {
-            // 直接传递实体给 Provider
             return await provider.OpenReadAsync(entity);
         }
 
@@ -258,7 +233,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             if (_activeScanTokens.TryGetValue(folder.Id, out var activeScanCts))
             {
                 activeScanCts.Cancel();
-                // 强制终止正在扫描的操作
             }
 
             try
@@ -272,17 +246,16 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                         folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceCleaningCache");
                     });
 
-                    await InitializeAsync();
+                    using var context = await _contextFactory.CreateDbContextAsync();
 
-                    await _dbLock.WaitAsync();
-                    try
+                    await context.FilesIndex
+                        .Where(x => x.MediaFolderId == folder.Id)
+                        .ExecuteDeleteAsync();
+
+                    // VACUUM 是 SQLite 特有的命令
+                    if (context.Database.IsSqlite())
                     {
-                        await _db.ExecuteAsync("DELETE FROM FileCache WHERE MediaFolderId = ?", folder.Id);
-                        await _db.ExecuteAsync("VACUUM");
-                    }
-                    finally
-                    {
-                        _dbLock.Release();
+                        await context.Database.ExecuteSqlRawAsync("VACUUM");
                     }
                 }
                 finally
@@ -325,8 +298,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                 _dispatcherQueue.TryEnqueue(() => folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceConnecting"));
 
-                await InitializeAsync();
-
                 using var fs = folder.CreateFileSystem();
                 if (fs == null || !await fs.ConnectAsync())
                 {
@@ -340,8 +311,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                 _dispatcherQueue.TryEnqueue(() => folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceFetchingFileList"));
 
-                var filesToProcess = new List<FileCacheEntity>();
-                var foldersToScan = new Queue<FileCacheEntity?>();
+                var filesToProcess = new List<FilesIndexItem>();
+                var foldersToScan = new Queue<FilesIndexItem?>();
                 foldersToScan.Enqueue(null); // 根目录
 
                 while (foldersToScan.Count > 0)
@@ -349,7 +320,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                     if (scanCts.Token.IsCancellationRequested) return;
 
                     var currentParent = foldersToScan.Dequeue();
-
                     var items = await GetFilesAsync(fs, currentParent, folder.Id, forceRefresh: true);
 
                     foreach (var item in items)
@@ -414,10 +384,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                             if (track.Duration > 0)
                             {
-                                // 保存封面
                                 string? artPath = await SaveAlbumArtToDiskAsync(track);
 
-                                // 填充实体
                                 item.Title = track.Title;
                                 item.Artists = track.Artist;
                                 item.Album = track.Album;
@@ -429,7 +397,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                                 item.AudioFormatName = track.AudioFormatName;
                                 item.AudioFormatShortName = track.AudioFormatShortName;
                                 item.Encoder = track.Encoder;
-                                item.EmbeddedLyrics = track.RawLyrics; // 内嵌歌词
+                                item.EmbeddedLyrics = track.RawLyrics;
                                 item.LocalAlbumArtPath = artPath;
                                 item.IsMetadataParsed = true;
                             }
@@ -441,7 +409,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                             {
                                 using var reader = new StreamReader(stream);
                                 string content = await reader.ReadToEndAsync();
-
                                 item.EmbeddedLyrics = content;
                                 item.IsMetadataParsed = true;
                             }
@@ -449,15 +416,10 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                         if (item.IsMetadataParsed)
                         {
-                            await _dbLock.WaitAsync(token);
-                            try
-                            {
-                                await UpdateMetadataAsync(item);
-                            }
-                            finally
-                            {
-                                _dbLock.Release();
-                            }
+                            // 更新操作：直接调用 UpdateMetadataAsync
+                            // 此时不需要 _dbLock，因为 UpdateMetadataAsync 内部会 CreateDbContextAsync
+                            // 而 _folderScanLock 已经保证了当前文件夹扫描的独占性
+                            await UpdateMetadataAsync(item);
                         }
                     }
                     catch (Exception ex)
@@ -488,7 +450,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             finally
             {
                 _folderScanLock.Release();
-
                 _activeScanTokens.TryRemove(folder.Id, out _);
 
                 _dispatcherQueue.TryEnqueue(() =>
@@ -499,23 +460,22 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             }
         }
 
-        public async Task<List<FileCacheEntity>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds)
+        public async Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds)
         {
-            await InitializeAsync();
-
             if (enabledConfigIds == null || !enabledConfigIds.Any())
             {
-                return new List<FileCacheEntity>();
+                return new List<FilesIndexItem>();
             }
 
             var idList = enabledConfigIds.ToList();
 
-            // SQL 逻辑: SELECT * FROM FileCache WHERE IsMetadataParsed = 1 AND MediaFolderId IN (...)
-            var results = await _db.Table<FileCacheEntity>()
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            // SQL: SELECT * FROM FileCache WHERE IsMetadataParsed = 1 AND MediaFolderId IN (...)
+            return await context.FilesIndex
+                .AsNoTracking()
                 .Where(x => x.IsMetadataParsed && idList.Contains(x.MediaFolderId))
                 .ToListAsync();
-
-            return results;
         }
 
         public void StartAllFolderTimers()
@@ -575,11 +535,11 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             }, newCts.Token);
         }
 
-        // 参数为 string parentUri，表示哪个文件夹的内容变了
         public event EventHandler<string>? FolderUpdated;
 
         private async Task<string?> SaveAlbumArtToDiskAsync(ExtendedTrack track)
         {
+            // 代码未变，纯 IO 操作
             var picData = track.AlbumArtByteArray;
             if (picData == null || picData.Length == 0) return null;
 
@@ -632,6 +592,5 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                 }
             }
         }
-
     }
 }

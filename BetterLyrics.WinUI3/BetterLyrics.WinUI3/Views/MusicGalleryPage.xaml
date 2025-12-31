@@ -247,7 +247,7 @@
                     </Flyout>
                 </Grid.Tag>
 
-                <StackPanel Grid.Row="1" Spacing="6">
+                <StackPanel Grid.Row="0" Spacing="6">
 
                     <AutoSuggestBox
                         x:Name="SongSearchBox"
@@ -306,10 +306,17 @@
                 </StackPanel>
 
                 <InfoBar
-                    x:Uid="MusicGalleryPageDataLoading"
-                    Grid.Row="2"
+                    x:Uid="MusicGalleryPageDataSync"
+                    Grid.Row="1"
                     IsClosable="False"
-                    IsOpen="{x:Bind ViewModel.IsDataLoading, Mode=OneWay}" />
+                    IsOpen="{x:Bind ViewModel.IsDataSyncing, Mode=OneWay}" />
+
+                <InfoBar
+                    x:Uid="MusicGalleryPageDataSyncError"
+                    Grid.Row="1"
+                    IsClosable="False"
+                    IsOpen="{x:Bind ViewModel.IsDataSyncError, Mode=OneWay}"
+                    Severity="Error" />
 
                 <SemanticZoom Grid.Row="2">
                     <SemanticZoom.ZoomedInView>

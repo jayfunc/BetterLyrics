@@ -1,157 +1,155 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Db;
 using BetterLyrics.WinUI3.Models.Stats;
-using SQLite;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.PlayHistoryService
 {
     public class PlayHistoryService : IPlayHistoryService
     {
-        private SQLiteAsyncConnection _db;
-        private readonly string _dbPath;
+        private readonly IDbContextFactory<PlayHistoryDbContext> _contextFactory;
 
-        public PlayHistoryService()
+        public PlayHistoryService(IDbContextFactory<PlayHistoryDbContext> contextFactory)
         {
-            _dbPath = PathHelper.PlayHistoryPath;
+            _contextFactory = contextFactory;
         }
 
-        public async Task InitializeAsync()
-        {
-            if (_db != null) return;
-
-            _db = new SQLiteAsyncConnection(_dbPath);
-            await _db.CreateTableAsync<PlayHistoryItem>();
-        }
-
-        /// <summary>
-        /// 添加一条播放记录
-        /// </summary>
         public async Task AddLogAsync(PlayHistoryItem item)
         {
-            await InitializeAsync();
-            // 再次确保这里是 UTC 时间，方便跨时区统计
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            // 确保 UTC
             if (item.StartedAt.Kind != DateTimeKind.Utc)
             {
                 item.StartedAt = item.StartedAt.ToUniversalTime();
             }
-            await _db.InsertAsync(item);
+
+            context.PlayHistory.Add(item);
+            await context.SaveChangesAsync();
         }
 
-        /// <summary>
-        /// 获取最近的播放记录 (用于“最近播放”列表)
-        /// </summary>
         public async Task<List<PlayHistoryItem>> GetRecentLogsAsync(int limit = 50)
         {
-            await InitializeAsync();
-            return await _db.Table<PlayHistoryItem>()
-                            .OrderByDescending(x => x.StartedAt)
-                            .Take(limit)
-                            .ToListAsync();
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            return await context.PlayHistory
+                .AsNoTracking() // 读操作，不需要追踪状态，提升性能
+                .OrderByDescending(x => x.StartedAt)
+                .Take(limit)
+                .ToListAsync();
         }
 
-        /// <summary>
-        /// 获取特定时间段的所有原始记录 (用于生成复杂的图表，如 Hourly Heatmap)
-        /// </summary>
         public async Task<List<PlayHistoryItem>> GetLogsByDateRangeAsync(DateTime start, DateTime end)
         {
-            await InitializeAsync();
-            return await _db.Table<PlayHistoryItem>()
-                            .Where(x => x.StartedAt >= start && x.StartedAt <= end)
-                            .ToListAsync();
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            return await context.PlayHistory
+                .AsNoTracking()
+                .Where(x => x.StartedAt >= start && x.StartedAt <= end)
+                .ToListAsync();
         }
 
-        /// <summary>
-        /// 统计时间段内 Top N 歌曲
-        /// </summary>
         public async Task<List<SongPlayCount>> GetTopSongsAsync(DateTime start, DateTime end, int limit = 10)
         {
-            await InitializeAsync();
+            using var context = await _contextFactory.CreateDbContextAsync();
 
-            // SQLite 语法: Group By Title 和 Artist
-            string query = @"
-                SELECT Title, Artist, COUNT(*) as PlayCount 
-                FROM PlayHistory 
-                WHERE StartedAt >= ? AND StartedAt <= ? 
-                GROUP BY Title, Artist 
-                ORDER BY PlayCount DESC 
-                LIMIT ?";
-
-            return await _db.QueryAsync<SongPlayCount>(query, start, end, limit);
+            // EF Core 会自动将这个 LINQ 翻译成高效的 GROUP BY SQL
+            return await context.PlayHistory
+                .AsNoTracking()
+                .Where(x => x.StartedAt >= start && x.StartedAt <= end)
+                .GroupBy(x => new { x.Title, x.Artist }) // 组合分组
+                .Select(g => new SongPlayCount
+                {
+                    Title = g.Key.Title,
+                    Artist = g.Key.Artist,
+                    PlayCount = g.Count()
+                })
+                .OrderByDescending(x => x.PlayCount)
+                .Take(limit)
+                .ToListAsync();
         }
 
-        /// <summary>
-        /// 统计时间段内 Top N 歌手
-        /// </summary>
         public async Task<List<ArtistPlayCount>> GetTopArtistsAsync(DateTime start, DateTime end, int limit = 10)
         {
-            await InitializeAsync();
+            using var context = await _contextFactory.CreateDbContextAsync();
 
-            // 同时统计播放次数和总播放时长(秒)
-            string query = @"
-                SELECT Artist, COUNT(*) as PlayCount, SUM(DurationPlayedMs)/1000.0 as TotalDurationSeconds
-                FROM PlayHistory 
-                WHERE StartedAt >= ? AND StartedAt <= ? 
-                GROUP BY Artist 
-                ORDER BY PlayCount DESC 
-                LIMIT ?";
-
-            return await _db.QueryAsync<ArtistPlayCount>(query, start, end, limit);
+            return await context.PlayHistory
+                .AsNoTracking()
+                .Where(x => x.StartedAt >= start && x.StartedAt <= end)
+                .GroupBy(x => x.Artist)
+                .Select(g => new ArtistPlayCount
+                {
+                    Artist = g.Key,
+                    PlayCount = g.Count(),
+                    // 注意：SQLite 存储 double 精度，这里求和后转秒
+                    TotalDurationSeconds = g.Sum(x => x.DurationPlayedMs) / 1000.0
+                })
+                .OrderByDescending(x => x.PlayCount)
+                .Take(limit)
+                .ToListAsync();
         }
 
-        /// <summary>
-        /// 获取总听歌时长
-        /// </summary>
         public async Task<TimeSpan> GetTotalListeningDurationAsync(DateTime start, DateTime end)
         {
-            await InitializeAsync();
+            using var context = await _contextFactory.CreateDbContextAsync();
 
-            var result = await _db.ExecuteScalarAsync<double>(
-                "SELECT SUM(DurationPlayedMs) FROM PlayHistory WHERE StartedAt >= ? AND StartedAt <= ?",
-                start, end);
+            var totalMs = await context.PlayHistory
+                .Where(x => x.StartedAt >= start && x.StartedAt <= end)
+                .SumAsync(x => x.DurationPlayedMs); // 直接在数据库层面求和
 
-            return TimeSpan.FromMilliseconds(result);
+            return TimeSpan.FromMilliseconds(totalMs);
         }
 
-        /// <summary>
-        /// 获取播放器来源分布
-        /// </summary>
         public async Task<List<PlayerStats>> GetPlayerDistributionAsync(DateTime start, DateTime end)
         {
-            await InitializeAsync();
+            using var context = await _contextFactory.CreateDbContextAsync();
 
-            string query = @"
-                SELECT PlayerId, COUNT(*) as Count
-                FROM PlayHistory
-                WHERE StartedAt >= ? AND StartedAt <= ?
-                GROUP BY PlayerId
-                ORDER BY Count DESC";
-
-            return await _db.QueryAsync<PlayerStats>(query, start, end);
+            return await context.PlayHistory
+                .AsNoTracking()
+                .Where(x => x.StartedAt >= start && x.StartedAt <= end)
+                .GroupBy(x => x.PlayerId)
+                .Select(g => new PlayerStats
+                {
+                    PlayerId = g.Key,
+                    Count = g.Count()
+                })
+                .OrderByDescending(x => x.Count)
+                .ToListAsync();
         }
 
         public async Task DeleteLogAsync(int id)
         {
-            await InitializeAsync();
-            await _db.DeleteAsync<PlayHistoryItem>(id);
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            // EF Core 删除需要先查询，或者使用 ExecuteDeleteAsync (EF Core 7+)
+            // 写法 1 (传统):
+            // var item = await context.PlayHistory.FindAsync(id);
+            // if (item != null) { context.PlayHistory.Remove(item); await context.SaveChangesAsync(); }
+
+            // 写法 2 (EF Core 7.0+ 高效写法，直接生成 DELETE SQL):
+            await context.PlayHistory
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
         }
 
         public async Task ClearHistoryAsync()
         {
-            await InitializeAsync();
-            await _db.DeleteAllAsync<PlayHistoryItem>();
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            // 高效清空表
+            await context.PlayHistory.ExecuteDeleteAsync();
         }
 
         public async Task GenerateTestDataAsync(int count = 100)
         {
+            // 这里的逻辑稍微重构了一下，使用批量插入提升性能
             var random = new Random();
-
             var presetSongs = new List<(string Title, string Artist, string Album)>
             {
-                // --- 欧美流行 ---
                 ("Anti-Hero", "Taylor Swift", "Midnights"),
                 ("Cruel Summer", "Taylor Swift", "Lover"),
                 ("Blank Space", "Taylor Swift", "1989"),
@@ -164,8 +162,6 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                 ("Bad Guy", "Billie Eilish", "When We All Fall Asleep, Where Do We Go?"),
                 ("Flowers", "Miley Cyrus", "Endless Summer Vacation"),
                 ("Stay", "The Kid LAROI & Justin Bieber", "F*ck Love 3: Over You"),
-        
-                // --- 华语流行 ---
                 ("七里香", "周杰伦", "七里香"),
                 ("晴天", "周杰伦", "叶惠美"),
                 ("一路向北", "周杰伦", "11月的肖邦"),
@@ -179,8 +175,6 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                 ("泡沫", "G.E.M. 邓紫棋", "Xposed"),
                 ("因为爱情", "王菲 & 陈奕迅", "Stranger Under My Skin"),
                 ("红豆", "王菲", "唱游"),
-        
-                // --- 摇滚/经典 ---
                 ("Bohemian Rhapsody", "Queen", "A Night at the Opera"),
                 ("Don't Stop Me Now", "Queen", "Jazz"),
                 ("Numb", "Linkin Park", "Meteora"),
@@ -189,8 +183,6 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                 ("Viva La Vida", "Coldplay", "Viva La Vida"),
                 ("Smells Like Teen Spirit", "Nirvana", "Nevermind"),
                 ("Hotel California", "Eagles", "Hotel California"),
-
-                // --- 日韩/二次元 ---
                 ("Lemon", "米津玄師", "Lemon"),
                 ("Kick Back", "米津玄師", "KICK BACK"),
                 ("アイドル", "YOASOBI", "アイドル"),
@@ -200,59 +192,49 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                 ("Butter", "BTS", "Butter"),
                 ("How You Like That", "BLACKPINK", "The Album"),
                 ("Ditto", "NewJeans", "OMG"),
-        
-                // --- 电子/纯音乐 ---
                 ("Get Lucky", "Daft Punk", "Random Access Memories"),
                 ("The Nights", "Avicii", "The Days / Nights"),
                 ("Summer", "Calvin Harris", "Motion"),
             };
 
-            var playerIds = new[] {
-                "Spotify", "Spotify", "Spotify",
-                "MusicBee", "MusicBee",
-                "QQMusic",
-                "NeteaseCloudMusic",
-                "AppleMusic"
-            };
+            var playerIds = new[] { "Spotify", "Spotify", "Spotify", "MusicBee", "MusicBee", "QQMusic", "NeteaseCloudMusic", "AppleMusic" };
 
-            int addedCount = 0;
+            var batchList = new List<PlayHistoryItem>();
 
-            while (addedCount < count)
+            // 我们尝试生成 count 条有效数据
+            // 为了防止死循环，加个硬上限
+            int attempts = 0;
+            while (batchList.Count < count && attempts < count * 5)
             {
+                attempts++;
                 var song = presetSongs[random.Next(presetSongs.Count)];
-
                 var playerId = playerIds[random.Next(playerIds.Length)];
 
-                // 生成时间：过去 365 天内均匀分布
                 var daysBack = random.Next(0, 365);
                 var hoursBack = random.Next(0, 24);
                 var minutesBack = random.Next(0, 60);
                 var secondsBack = random.Next(0, 60);
 
-                var startedAt = DateTime.Now
+                var startedAt = DateTime.UtcNow // 直接用 UTC
                     .AddDays(-daysBack)
                     .AddHours(-hoursBack)
                     .AddMinutes(-minutesBack)
                     .AddSeconds(-secondsBack);
 
-                // 歌曲总时长 (3分钟 - 5分钟)
                 var totalDurationMs = random.Next(180, 300) * 1000.0;
-
-                // 模拟听歌习惯：
-                // 70% 的概率是听完的 (0.9 - 1.0)
-                // 20% 的概率是切歌 (0.3 - 0.8)
-                // 10% 的概率是刚听就切了 (0.05 - 0.3)
                 double playedRatio;
                 double roll = random.NextDouble();
-                if (roll > 0.3) playedRatio = 0.9 + (random.NextDouble() * 0.1); // 听完
-                else if (roll > 0.1) playedRatio = 0.3 + (random.NextDouble() * 0.5); // 听一半
-                else playedRatio = 0.05 + (random.NextDouble() * 0.25); // 秒切
+
+                if (roll > 0.3) playedRatio = 0.9 + (random.NextDouble() * 0.1);
+                else if (roll > 0.1) playedRatio = 0.3 + (random.NextDouble() * 0.5);
+                else playedRatio = 0.05 + (random.NextDouble() * 0.25);
 
                 var playedDurationMs = totalDurationMs * playedRatio;
 
+                // 只有听了一半以上的才算作记录
                 if (playedDurationMs >= (totalDurationMs / 2))
                 {
-                    var item = new PlayHistoryItem
+                    batchList.Add(new PlayHistoryItem
                     {
                         Title = song.Title,
                         Artist = song.Artist,
@@ -261,13 +243,16 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                         StartedAt = startedAt,
                         TotalDurationMs = totalDurationMs,
                         DurationPlayedMs = playedDurationMs
-                    };
-
-                    await AddLogAsync(item);
-                    addedCount++; // 只有成功写入才计数
+                    });
                 }
             }
-        }
 
+            if (batchList.Count > 0)
+            {
+                using var context = await _contextFactory.CreateDbContextAsync();
+                await context.PlayHistory.AddRangeAsync(batchList);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

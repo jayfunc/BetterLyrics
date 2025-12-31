@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Ude;
 
 namespace BetterLyrics.WinUI3.Helper
@@ -27,6 +28,18 @@ namespace BetterLyrics.WinUI3.Helper
                 return Encoding.UTF8;
             }
             return Encoding.GetEncoding(encoding);
+        }
+
+        public static async Task CopyFileAsync(string sourcePath, string destinationPath)
+        {
+            var dir = Path.GetDirectoryName(destinationPath);
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+            using (var sourceStream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var destinationStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                await sourceStream.CopyToAsync(destinationStream);
+            }
         }
 
         public static string SanitizeFileName(string fileName, char replacement = '_')

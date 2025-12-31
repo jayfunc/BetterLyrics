@@ -42,29 +42,22 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
         public async Task<bool> ConnectAsync()
         {
-            try
-            {
-                _client = new SMB2Client();
+            _client = new SMB2Client();
 
-                // 连接主机
-                bool connected = _client.Connect(_config.UriHost, SMBTransportType.DirectTCPTransport);
-                if (!connected) return false;
+            // 连接主机
+            bool connected = _client.Connect(_config.UriHost, SMBTransportType.DirectTCPTransport);
+            if (!connected) return false;
 
-                // 登录
-                var status = _client.Login(string.Empty, _config.UserName, _config.Password);
-                if (status != NTStatus.STATUS_SUCCESS) return false;
+            // 登录
+            var status = _client.Login(string.Empty, _config.UserName, _config.Password);
+            if (status != NTStatus.STATUS_SUCCESS) return false;
 
-                // 连接共享目录 (TreeConnect)
-                // SMBLibrary 必须先连接到 Share，后续所有文件操作都是基于这个 Share 的相对路径
-                if (string.IsNullOrEmpty(_shareName)) return false;
+            // 连接共享目录 (TreeConnect)
+            // SMBLibrary 必须先连接到 Share，后续所有文件操作都是基于这个 Share 的相对路径
+            if (string.IsNullOrEmpty(_shareName)) return false;
 
-                _fileStore = _client.TreeConnect(_shareName, out status);
-                return status == NTStatus.STATUS_SUCCESS;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            _fileStore = _client.TreeConnect(_shareName, out status);
+            return status == NTStatus.STATUS_SUCCESS;
         }
 
         /// <summary>
@@ -74,9 +67,9 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
         /// 传入要列出的文件夹实体。
         /// 如果传入 null，则默认列出 MediaFolder 配置的根目录。
         /// </param>
-        public async Task<List<FileCacheEntity>> GetFilesAsync(FileCacheEntity? parentFolder = null)
+        public async Task<List<FilesIndexItem>> GetFilesAsync(FilesIndexItem? parentFolder = null)
         {
-            var result = new List<FileCacheEntity>();
+            var result = new List<FilesIndexItem>();
             if (_fileStore == null) return result;
 
             string smbPath = GetPathRelativeToShare(parentFolder);
@@ -128,7 +121,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                         var baseUri = new Uri(parentUriString);
                         var newUri = new Uri(baseUri, item.FileName);
 
-                        result.Add(new FileCacheEntity
+                        result.Add(new FilesIndexItem
                         {
                             MediaFolderId = _config.Id,
                             ParentUri = parentFolder?.Uri ?? _config.GetStandardUri().AbsoluteUri,
@@ -155,7 +148,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
         /// 打开文件流
         /// </summary>
         /// <param name="file">只需要传入文件实体即可</param>
-        public async Task<Stream?> OpenReadAsync(FileCacheEntity file)
+        public async Task<Stream?> OpenReadAsync(FilesIndexItem file)
         {
             if (_fileStore == null || file == null) return null;
 
@@ -181,7 +174,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             _client?.Disconnect();
         }
 
-        private string GetPathRelativeToShare(FileCacheEntity? entity)
+        private string GetPathRelativeToShare(FilesIndexItem? entity)
         {
             Uri targetUri;
 

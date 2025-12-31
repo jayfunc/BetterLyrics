@@ -87,6 +87,11 @@
 		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
@@ -97,7 +102,6 @@
 		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="SMBLibrary" Version="1.5.5.1" />
-		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="System.Drawing.Common" Version="10.0.1" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.1" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
@@ -130,6 +134,10 @@
 	<ItemGroup>
 		<TrimmerRootAssembly Include="FlaUI.UIA3" />
 		<TrimmerRootAssembly Include="Interop.UIAutomationClient" />
+		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore" />
+		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Abstractions" />
+		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Relational" />
+		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Sqlite" />
 		<TrimmerRootAssembly Include="NAudio.Wasapi" />
 		<TrimmerRootAssembly Include="TagLibSharp" />
 		<TrimmerRootAssembly Include="Vanara.PInvoke.DwmApi" />

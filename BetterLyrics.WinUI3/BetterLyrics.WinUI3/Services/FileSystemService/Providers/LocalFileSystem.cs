@@ -20,12 +20,20 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
         public Task<bool> ConnectAsync()
         {
-            return Task.FromResult(Directory.Exists(_rootLocalPath));
+            var isExisted = Directory.Exists(_rootLocalPath);
+            if (isExisted)
+            {
+                return Task.FromResult(true);
+            }
+            else
+            {
+                throw new FileNotFoundException(null, _rootLocalPath);
+            }
         }
 
-        public async Task<List<FileCacheEntity>> GetFilesAsync(FileCacheEntity? parentFolder = null)
+        public async Task<List<FilesIndexItem>> GetFilesAsync(FilesIndexItem? parentFolder = null)
         {
-            var result = new List<FileCacheEntity>();
+            var result = new List<FilesIndexItem>();
 
             string targetPath;
             string parentUriString;
@@ -70,7 +78,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                         size = fi.Length;
                     }
 
-                    result.Add(new FileCacheEntity
+                    result.Add(new FilesIndexItem
                     {
                         MediaFolderId = _config.Id, // 关联配置 ID
 
@@ -94,7 +102,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             return await Task.FromResult(result);
         }
 
-        public async Task<Stream?> OpenReadAsync(FileCacheEntity entity)
+        public async Task<Stream?> OpenReadAsync(FilesIndexItem entity)
         {
             if (entity == null) return null;
 

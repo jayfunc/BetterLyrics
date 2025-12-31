@@ -42,22 +42,14 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
         public async Task<bool> ConnectAsync()
         {
-            try
-            {
-                if (_client.IsConnected) return true;
-                await _client.AutoConnect(); // AutoConnect 会自动尝试 FTP/FTPS
-                return _client.IsConnected;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"FTP连接失败: {ex.Message}");
-                return false;
-            }
+            if (_client.IsConnected) return true;
+            await _client.AutoConnect(); // AutoConnect 会自动尝试 FTP/FTPS
+            return _client.IsConnected;
         }
 
-        public async Task<List<FileCacheEntity>> GetFilesAsync(FileCacheEntity? parentFolder = null)
+        public async Task<List<FilesIndexItem>> GetFilesAsync(FilesIndexItem? parentFolder = null)
         {
-            var result = new List<FileCacheEntity>();
+            var result = new List<FilesIndexItem>();
 
             string targetServerPath;
             Uri parentUri;
@@ -104,7 +96,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                         Path = item.FullName
                     };
 
-                    result.Add(new FileCacheEntity
+                    result.Add(new FilesIndexItem
                     {
                         MediaFolderId = _config.Id,
                         // 如果是根目录扫描，ParentUri 用 Config 的；否则用传入文件夹的
@@ -130,7 +122,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             return result;
         }
 
-        public async Task<Stream?> OpenReadAsync(FileCacheEntity file)
+        public async Task<Stream?> OpenReadAsync(FilesIndexItem file)
         {
             if (file == null) return null;
 

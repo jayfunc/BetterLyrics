@@ -279,7 +279,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         {
             int maxScore = 0;
 
-            FileCacheEntity? bestFileEntity = null;
+            FilesIndexItem? bestFileEntity = null;
             MediaFolder? bestFolderConfig = null;
 
             var lyricsSearchResult = new LyricsSearchResult();
@@ -345,7 +345,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
             allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
-            FileCacheEntity? bestFile = null;
+            FilesIndexItem? bestFile = null;
             int maxScore = 0;
 
             foreach (var item in allFiles)
