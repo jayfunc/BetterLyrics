@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -70,6 +71,19 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (folder != null)
             {
                 _settingsService.ExportSettings(folder.Path);
+                ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
+            }
+        }
+
+        [RelayCommand]
+        private async Task ExportPlayHistoryAsync()
+        {
+            var folder = await PickerHelper.PickSingleFolderAsync<SettingsWindow>();
+
+            if (folder != null)
+            {
+                var dest = Path.Combine(folder.Path, $"BetterLyrics_Play_History_Export_{DateTime.Now:yyyyMMdd_HHmmss}.db");
+                await FileHelper.CopyFileAsync(PathHelper.PlayHistoryPath, dest);
                 ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
             }
         }

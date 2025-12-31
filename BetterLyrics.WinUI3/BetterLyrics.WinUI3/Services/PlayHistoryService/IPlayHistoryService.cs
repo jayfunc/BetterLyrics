@@ -9,7 +9,6 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
 {
     public interface IPlayHistoryService
     {
-        Task InitializeAsync();
         Task AddLogAsync(PlayHistoryItem item);
         Task<List<PlayHistoryItem>> GetRecentLogsAsync(int limit = 50);
         Task<List<PlayHistoryItem>> GetLogsByDateRangeAsync(DateTime start, DateTime end);

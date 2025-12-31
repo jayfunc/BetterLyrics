@@ -36,22 +36,13 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
         public async Task<bool> ConnectAsync()
         {
-            try
-            {
-                // 测试连接：Propfind 请求配置的根路径
-                // GetStandardUri 已经包含了用户设置的路径
-                var result = await _client.Propfind(_config.GetStandardUri().AbsoluteUri);
-                return result.IsSuccessful;
-            }
-            catch
-            {
-                return false;
-            }
+            var result = await _client.Propfind(_config.GetStandardUri().AbsoluteUri);
+            return result.IsSuccessful;
         }
 
-        public async Task<List<FileCacheEntity>> GetFilesAsync(FileCacheEntity? parentFolder = null)
+        public async Task<List<FilesIndexItem>> GetFilesAsync(FilesIndexItem? parentFolder = null)
         {
-            var list = new List<FileCacheEntity>();
+            var list = new List<FilesIndexItem>();
 
             Uri targetUri;
             if (parentFolder == null)
@@ -98,7 +89,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                         if (string.IsNullOrEmpty(extension) || !FileHelper.AllSupportedExtensions.Contains(extension)) continue;
                     }
 
-                    list.Add(new FileCacheEntity
+                    list.Add(new FilesIndexItem
                     {
                         MediaFolderId = _config.Id,
 
@@ -118,7 +109,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
             return list;
         }
 
-        public async Task<Stream?> OpenReadAsync(FileCacheEntity entity)
+        public async Task<Stream?> OpenReadAsync(FilesIndexItem entity)
         {
             if (entity == null) return null;
 

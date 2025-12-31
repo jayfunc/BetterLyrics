@@ -1,8 +1,6 @@
-﻿// 2025/6/23 by Zhe Fang
-
-using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Models.Db;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.FileSystemService;
@@ -17,36 +15,42 @@ using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching; // 关键：用于线程调度
 using Microsoft.UI.Xaml;
-using Microsoft.Windows.ApplicationModel.Resources;
-using Microsoft.Windows.Globalization;
+using Microsoft.Windows.AppLifecycle; // 关键：App生命周期管理
 using Serilog;
 using System;
-using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3
 {
     public partial class App : Application
     {
-
+        private Window? m_window;
         private readonly ILogger<App> _logger;
-
         public static new App Current => (App)Application.Current;
 
-        private static Mutex? _instanceMutex;
+        private readonly string _appKey = Windows.ApplicationModel.Package.Current.Id.FamilyName;
 
         public App()
         {
-            this.InitializeComponent();
+            // Must be done before InitializeComponent
+            if (!TryHandleSingleInstance())
+            {
+                // 如果移交成功直接退出当前进程
+                Environment.Exit(0);
+                return;
+            }
 
-            EnsureSingleInstance();
+            this.InitializeComponent();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             PathHelper.EnsureDirectories();
@@ -54,28 +58,81 @@ namespace BetterLyrics.WinUI3
 
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
+            // 注册全局异常捕获
             UnhandledException += App_UnhandledException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
 
-        private void EnsureSingleInstance()
+        /// <summary>
+        /// 处理单实例逻辑。
+        /// 返回 true 表示我是主实例，继续运行。
+        /// 返回 false 表示我是第二个实例，已通知主实例，我应该退出。
+        /// </summary>
+        private bool TryHandleSingleInstance()
         {
-            _instanceMutex = new Mutex(true, Constants.App.AppName, out bool createdNew);
+            // 尝试查找或注册当前实例
+            var mainInstance = AppInstance.FindOrRegisterForKey(_appKey);
 
-            if (!createdNew)
+            // 如果当前实例就是注册的那个主实例
+            if (mainInstance.IsCurrent)
             {
-                User32.MessageBox(HWND.NULL, new ResourceLoader().GetString("TryRunMultipleInstance"), null, User32.MB_FLAGS.MB_APPLMODAL);
-                Environment.Exit(0);
+                // 监听 "Activated" 事件。
+                // 当第二个实例启动并重定向过来时，这个事件会被触发。
+                mainInstance.Activated += OnMainInstanceActivated;
+                return true;
+            }
+            else
+            {
+                // 我不是主实例，我是后来者。
+                // 获取当前实例的激活参数（比如是通过文件双击打开的，这里能拿到文件路径）
+                var args = AppInstance.GetCurrent().GetActivatedEventArgs();
+
+                // 将激活请求重定向给主实例
+                // 注意：这里是同步等待，确保发送成功后再退出
+                try
+                {
+                    mainInstance.RedirectActivationToAsync(args).AsTask().Wait();
+                }
+                catch (Exception)
+                {
+                    // 即使重定向失败，作为第二个实例也应该退出
+                }
+
+                return false;
             }
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        /// <summary>
+        /// 当第二个实例试图启动时，主实例会收到此回调
+        /// </summary>
+        private void OnMainInstanceActivated(object? sender, AppActivationArguments e)
         {
-            var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+            // 这个事件是在后台线程触发的，必须切回 UI 线程操作窗口
+            m_window?.DispatcherQueue.TryEnqueue(() =>
+            {
+                HandleActivation();
+            });
+        }
 
+        /// <summary>
+        /// 唤醒逻辑
+        /// </summary>
+        private void HandleActivation()
+        {
+            WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+        }
+
+        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            // 初始化数据库
+            await EnsureDatabasesAsync();
+
+            var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
             var fileSystemService = Ioc.Default.GetRequiredService<IFileSystemService>();
+
+            // 开始后台扫描任务
             foreach (var item in settingsService.AppSettings.LocalMediaFolders)
             {
                 if (item.LastSyncTime == null)
@@ -85,8 +142,10 @@ namespace BetterLyrics.WinUI3
             }
             fileSystemService.StartAllFolderTimers();
 
-            WindowHook.OpenOrShowWindow<SystemTrayWindow>();
+            // 初始化托盘
+            m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
+            // 根据设置打开歌词窗口
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
             {
                 var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
@@ -102,9 +161,98 @@ namespace BetterLyrics.WinUI3
                     }
                 }
             }
+
+            // 根据设置自动打开主界面
             if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
             {
                 WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
+            }
+        }
+
+        private async Task EnsureDatabasesAsync()
+        {
+            var playHistoryFactory = Ioc.Default.GetRequiredService<IDbContextFactory<PlayHistoryDbContext>>();
+            var fileCacheFactory = Ioc.Default.GetRequiredService<IDbContextFactory<FilesIndexDbContext>>();
+
+            await SafeInitDatabaseAsync(
+                "PlayHistory",
+                PathHelper.PlayHistoryPath,
+                async () =>
+                {
+                    using var db = await playHistoryFactory.CreateDbContextAsync();
+                    await db.Database.EnsureCreatedAsync();
+                },
+                isCritical: true
+            );
+
+            await SafeInitDatabaseAsync(
+                "FileCache",
+                PathHelper.FilesIndexPath,
+                async () =>
+                {
+                    using var db = await fileCacheFactory.CreateDbContextAsync();
+                    await db.Database.EnsureCreatedAsync();
+                },
+                isCritical: false
+            );
+        }
+
+        private async Task SafeInitDatabaseAsync(string dbName, string dbPath, Func<Task> initAction, bool isCritical)
+        {
+            try
+            {
+                await initAction();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[DB Error] {dbName} init failed: {ex.Message}");
+
+                try
+                {
+                    if (File.Exists(dbPath))
+                    {
+                        // 尝试清理连接池
+                        SqliteConnection.ClearAllPools();
+
+                        if (isCritical)
+                        {
+                            var backupPath = dbPath + ".bak_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                            File.Move(dbPath, backupPath, true);
+                            await ShowErrorDialogAsync("Database Recovery", $"Database {dbName} is damaged, the old database has been backed up to {backupPath}, and the program will create a new database.");
+                        }
+                        else
+                        {
+                            File.Delete(dbPath);
+                        }
+                    }
+                    await initAction();
+                    System.Diagnostics.Debug.WriteLine($"[DB Info] {dbName} recovered successfully.");
+                }
+                catch (Exception fatalEx)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[] : {fatalEx.Message}");
+                    await ShowErrorDialogAsync("Fatal Error", $"{dbName} recovery failed, please delete the file at {dbPath} and try again by restarting the program. ({fatalEx.Message})");
+                }
+            }
+        }
+
+        private async Task ShowErrorDialogAsync(string title, string content)
+        {
+            // 这里假设 m_window 已经存在。如果没有显示主窗口，这个弹窗可能无法显示。
+            // 在 App 启动极早期的错误，可能需要退化为 Log 或者 System.Diagnostics.Process.Start 打开记事本报错
+            if (m_window != null)
+            {
+                m_window.DispatcherQueue.TryEnqueue(async () =>
+                {
+                    var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
+                    {
+                        Title = title,
+                        Content = content,
+                        CloseButtonText = "OK",
+                        XamlRoot = m_window.Content?.XamlRoot // 确保 Content 不为空
+                    };
+                    if (dialog.XamlRoot != null) await dialog.ShowAsync();
+                });
             }
         }
 
@@ -115,14 +263,19 @@ namespace BetterLyrics.WinUI3
                 .WriteTo.File(PathHelper.LogFilePattern, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
-            // Register services
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
+                    // 数据库工厂
+                    .AddDbContextFactory<PlayHistoryDbContext>(options => options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
+                    .AddDbContextFactory<FilesIndexDbContext>(options => options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
+
+                    // 日志
                     .AddLogging(loggingBuilder =>
                     {
                         loggingBuilder.ClearProviders();
                         loggingBuilder.AddSerilog();
                     })
+
                     // Services
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<IMediaSessionsService, MediaSessionsService>()
@@ -135,6 +288,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILocalizationService, LocalizationService>()
                     .AddSingleton<IFileSystemService, FileSystemService>()
                     .AddSingleton<IPlayHistoryService, PlayHistoryService>()
+
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()
@@ -167,7 +321,8 @@ namespace BetterLyrics.WinUI3
 
         private void CurrentDomain_FirstChanceException(object? sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
         {
-            _logger.LogError(e.Exception, "CurrentDomain_FirstChanceException");
+            // FirstChance 异常非常多（比如内部 try-catch 也会触发），通常建议只在 Debug 模式记录，或者过滤特定类型
+            // _logger.LogError(e.Exception, "CurrentDomain_FirstChanceException"); 
         }
 
         private void CurrentDomain_UnhandledException(object sender, System.UnhandledExceptionEventArgs e)

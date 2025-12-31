@@ -92,7 +92,8 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public SongsTabInfo? SelectedSongsTabInfo => AppSettings.StarredPlaylists.ElementAtOrDefault(SelectedSongsTabInfoIndex);
 
-        [ObservableProperty] public partial bool IsDataLoading { get; set; } = false;
+        [ObservableProperty] public partial bool IsDataSyncing { get; set; } = false;
+        [ObservableProperty] public partial bool IsDataSyncError { get; set; } = false;
 
         [ObservableProperty] public partial ExtendedTrack TrackRightTapped { get; set; } = new();
 
@@ -121,6 +122,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             RefreshSongs();
 
             _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
+            _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
 
             _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
@@ -136,6 +138,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             _smtc.IsPreviousEnabled = true;
             _smtc.ButtonPressed += Smtc_ButtonPressed;
             _smtc.PlaybackPositionChangeRequested += Smtc_PlaybackPositionChangeRequested;
+        }
+
+        private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
+        {
+            IsDataSyncError = AppSettings.LocalMediaFolders.Any(x => x.StatusSeverity == InfoBarSeverity.Error);
         }
 
         private void TrackPlayingQueue_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -495,7 +502,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     await _currentProvider.ConnectAsync();
 
-                    var fileCacheStub = new FileCacheEntity
+                    var fileCacheStub = new FilesIndexItem
                     {
                         Uri = PlayingTrack.Uri
                     };
@@ -656,7 +663,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else if (message.PropertyName == nameof(MediaFolder.IsProcessing))
                 {
-                    IsDataLoading = message.NewValue;
+                    IsDataSyncing = message.NewValue;
                 }
             }
         }

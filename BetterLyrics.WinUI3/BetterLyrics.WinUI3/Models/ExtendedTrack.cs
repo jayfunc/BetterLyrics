@@ -136,7 +136,7 @@ namespace BetterLyrics.WinUI3.Models
             SetFromTrack(track);
         }
 
-        public ExtendedTrack(FileCacheEntity? entity, Stream? stream = null) : base()
+        public ExtendedTrack(FilesIndexItem? entity, Stream? stream = null) : base()
         {
             if (entity == null) return;
 
