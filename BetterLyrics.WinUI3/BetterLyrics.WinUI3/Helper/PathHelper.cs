@@ -33,6 +33,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string SaltPlayerForWindowsLogoPath => Path.Combine(AssetsFolder, "SaltPlayerForWindows.png");
         public static string MoeKoeMusicLogoPath => Path.Combine(AssetsFolder, "MoeKoeMusic.png");
         public static string Listen1LogoPath => Path.Combine(AssetsFolder, "Listen1.png");
+        public static string OriginalSoundHQPlayerLogoPath => Path.Combine(AssetsFolder, "OriginalSoundHQPlayer.png");
         public static string UnknownPlayerLogoPath => Path.Combine(AssetsFolder, "Question.png");
 
         public static string LogDirectory => Path.Combine(CacheFolder, "logs");
@@ -58,7 +59,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string PlayQueuePath => Path.Combine(LocalFolder, "play-queue.m3u");
         public static string PlayHistoryPath => Path.Combine(LocalFolder, "play-history.db");
-        public static string FilesIndexPath => Path.Combine(CacheFolder, "files-index.db");
+        public static string FilesIndexPath => Path.Combine(LocalFolder, "files-index.db");
 
         public static void EnsureDirectories()
         {

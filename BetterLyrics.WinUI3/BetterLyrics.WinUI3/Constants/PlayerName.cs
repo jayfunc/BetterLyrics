@@ -24,5 +24,6 @@
         public const string SaltPlayerForWindowsSteam = "Salt Player for Windows (Steam)";
         public const string MoeKoeMusic = "MoeKoe Music";
         public const string Listen1 = "Listen 1";
+        public const string OriginalSoundHQPlayer = "Original Sound HQ Player";
     }
 }

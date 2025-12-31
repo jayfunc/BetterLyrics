@@ -225,6 +225,9 @@
 	  <Content Update="Assets\NetEaseCloudMusic.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Update="Assets\OriginalSoundHQPlayer.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="Assets\Page.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
