@@ -414,8 +414,11 @@
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>所有音樂</value>
   </data>
-  <data name="MusicGalleryPageDataLoading.Message" xml:space="preserve">
-    <value>資料正在處理中。您可以在設定中檢查詳細進度。</value>
+  <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
+    <value>Media Library sync in progress...</value>
+  </data>
+  <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
+    <value>There is a problem with Media Library sync</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>清除播放佇列</value>
@@ -700,7 +703,7 @@
     <value>模糊量</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>包括記錄檔，網路歌詞快取</value>
+    <value>Includes log files, online lyrics cache, media library index</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>快取</value>
@@ -854,6 +857,9 @@
   </data>
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>關閉歌詞視窗時結束程式</value>
+  </data>
+  <data name="SettingsPageExportPlayHistoryButton.Content" xml:space="preserve">
+    <value>Export play history</value>
   </data>
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>匯出設定</value>
@@ -1307,6 +1313,9 @@
   </data>
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>設定管理器</value>
+  </data>
+  <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
+    <value>Play History</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>瀏覽線上資源共享中心</value>
