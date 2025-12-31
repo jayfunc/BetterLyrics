@@ -203,6 +203,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                 if (!_mediaManager.IsStarted) return;
                 if (mediaSession == null)
                 {
+                    _scrobbleStopwatch.Reset();
                     CurrentPosition = TimeSpan.Zero;
                     return;
                 }
@@ -213,6 +214,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                 if (!IsMediaSourceEnabled(mediaSession.Id))
                 {
+                    _scrobbleStopwatch.Reset();
                     CurrentPosition = TimeSpan.Zero;
                 }
                 else
@@ -477,6 +479,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
                 CurrentMediaSourceProviderInfo = GetCurrentMediaSourceProviderInfo();
 
+                _scrobbleStopwatch.Reset();
                 CurrentPosition = TimeSpan.Zero;
 
                 _discordService.Disable();
