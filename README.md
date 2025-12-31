@@ -59,6 +59,10 @@ BetterLyrics
 
 Cannot find your language? Or have better translations? Don't worry! Start translating and becoming one of the contributors! 😆 See [here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) for more info on how to contribute.
 
+## 🎉 This project was recommended by HelloGithub!
+
+<a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 ## 🎉 This project was featured by SSPAI!
 
 Check out the article: [BetterLyrics – An immersive and smooth lyrics display tool designed for Windows](https://sspai.com/post/101028).

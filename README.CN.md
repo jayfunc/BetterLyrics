@@ -53,6 +53,10 @@ BetterLyrics
 
 找不到你的语言？有更好的翻译？没关系！😆 访问 [此处](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file) 查看如何贡献翻译！
 
+## 🎉 该项目已被 HelloGithub 推荐！
+
+<a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="Featured｜HelloGitHub" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
 ## 🎉 该项目入选少数派推荐文章！
 
 文章链接：[BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)。
