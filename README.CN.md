@@ -137,18 +137,20 @@
 
 **依赖与引用：**
 
-| 项目/包 | 描述 |
+| 项目/包 (Projects/Packages) | 描述 (Description) |
 | :--- | :--- |
-| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | QQ、网易云、酷狗歌词获取与解密 |
-| [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB 歌词 API 提供方 |
-| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music 歌词获取 |
-| [Audio Tools Library (ATL)](https://github.com/Zeugma440/atldotnet) | 从音乐文件中提取图片 |
-| [WinUIEx](https://github.com/dotMorten/WinUIEx) | 简化 Win32 API 的窗口访问 |
-| [TagLib#](https://github.com/mono/taglib-sharp) | 读取原始歌词内容 |
+| [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet) | 用于从音乐文件中提取图片（封面） |
+| [cutlet](https://github.com/polm/cutlet) | 提供将日语转换为罗马音 (Romaji) 的功能 |
+| [DevWinUI](https://github.com/ghost1372/DevWinUI) | 为构建 WinUI 3 应用程序提供许多开箱即用的功能 |
+| [Isolation](https://github.com/Storyteller-Studios/Isolation) | 动态流体背景的实现 |
+| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | 提供离线歌词翻译功能 |
+| [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB 歌词 API 数据源 |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | 提供 QQ、网易云音乐和酷狗音乐源的歌词抓取、解密及解析功能 |
+| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | 使用 Python 获取 Apple Music 歌词 |
+| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | 音频频谱可视化参考 |
+| [TagLib#](https://github.com/mono/taglib-sharp) | 用于读取原始歌词内容（元数据） |
 | [Vanara](https://github.com/dahall/Vanara) | Win32 API 封装库 |
-| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | 离线歌词翻译支持 |
-| [Isolation](https://github.com/Storyteller-Studios/Isolation) | 动态流体背景实现 |
-| [DevWinUI](https://github.com/ghost1372/DevWinUI) | WinUI 3 开发辅助工具 |
+| [WinUIEx](https://github.com/dotMorten/WinUIEx) | 提供访问与窗口管理相关的 Win32 API 的便捷方式 |
 
 查看 [完整依赖列表](https://github.com/jayfunc/BetterLyrics/network/dependencies)。
 
