@@ -139,16 +139,17 @@ This project is licensed under the **GNU General Public License v3.0**.
 
 | Projects/Packages | Description |
 | :--- | :--- |
-| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | Lyrics fetch/decrypt for QQ, Netease, Kugou |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources |
 | [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB lyrics API provider |
-| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music lyrics fetch |
-| [Audio Tools Library (ATL)](https://github.com/Zeugma440/atldotnet) | Picture extraction from music files |
-| [WinUIEx](https://github.com/dotMorten/WinUIEx) | Win32 API windowing access |
-| [TagLib#](https://github.com/mono/taglib-sharp) | Reading original lyrics content |
+| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music lyrics fetch using Python |
+| [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet) | Used for extracting pictures from music files |
+| [WinUIEx](https://github.com/dotMorten/WinUIEx) | Provide easy ways to access the Win32 API regarding windowing |
+| [TagLib#](https://github.com/mono/taglib-sharp) | Used for reading the original lyrics content |
 | [Vanara](https://github.com/dahall/Vanara) | Win32 API wrapper |
-| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | Offline lyrics translation |
-| [Isolation](https://github.com/Storyteller-Studios/Isolation) | Dynamic fluid background |
-| [DevWinUI](https://github.com/ghost1372/DevWinUI) | WinUI 3 helpers |
+| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | Provide the ability for offline lyrics translation |
+| [Isolation](https://github.com/Storyteller-Studios/Isolation) | Dynamic fluid background implementation |
+| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | Audio visualization reference |
+| [DevWinUI](https://github.com/ghost1372/DevWinUI) | Provide many out-of-the-box features for building WinUI 3 applications |
 
 See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for full list.
 
