@@ -124,7 +124,14 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <dev:SettingsCard Style="{StaticResource DefaultSettingsExpanderItemStyle}">
+                    <StackPanel
+                        Margin="0,6,0,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <Button Command="{x:Bind ViewModel.OpenMusicGalleryWindowCommand}">
+                            <TextBlock x:Uid="SystemTrayMusicGallery" />
+                        </Button>
                         <DropDownButton x:Uid="SettingsPageAddFolderButton">
                             <DropDownButton.Flyout>
                                 <MenuFlyout>
@@ -169,7 +176,7 @@
                                 </MenuFlyout>
                             </DropDownButton.Flyout>
                         </DropDownButton>
-                    </dev:SettingsCard>
+                    </StackPanel>
 
                 </StackPanel>
             </Grid>

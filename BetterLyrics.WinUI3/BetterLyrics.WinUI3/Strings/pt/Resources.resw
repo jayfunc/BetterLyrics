@@ -1467,22 +1467,46 @@
   <data name="StandardMode" xml:space="preserve">
     <value>Modo Padrão</value>
   </data>
+  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <value>Atividade por hora</value>
+  </data>
+  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <value>Personalizado</value>
+  </data>
+  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <value>Fim</value>
+  </data>
+  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <value>Menos ativo</value>
+  </data>
+  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <value>Mais activos</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>Fontes</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <value>Início</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>Este mês</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
     <value>Este trimestre</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>Esta semana</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
     <value>Este ano</value>
   </data>
-  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <value>Intervalo de tempo</value>
+  </data>
+  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <value>Tempos</value>
+  </data>
+  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>Hoje</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
@@ -1496,6 +1520,12 @@
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>Duração total</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <value>Tempos</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <value>Tempos</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>Faixas reproduzidas</value>

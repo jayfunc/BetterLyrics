@@ -169,7 +169,7 @@
     <value>LX Music サーバーに接続できません。「設定」-「再生ソース」-「LX Music」-「LX Music サーバー」に移動し、リンクが正しく入力されているか確認してください</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
-    <value>キャッシュをクリア中...</value>
+    <value>キャッシュクリア中...</value>
   </data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>接続に失敗しました</value>
@@ -184,7 +184,7 @@
     <value>解析中...</value>
   </data>
   <data name="FileSystemServicePrepareToClean" xml:space="preserve">
-    <value>キャッシュのクリアを準備中...</value>
+    <value>キャッシュクリア準備中...</value>
   </data>
   <data name="FileSystemServiceReady" xml:space="preserve">
     <value>準備完了</value>
@@ -394,7 +394,7 @@
     <value>ローカルフォルダー</value>
   </data>
   <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
-    <value>名前</value>
+    <value>名称</value>
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>今すぐ同期</value>
@@ -412,13 +412,13 @@
     <value>再生キューに追加</value>
   </data>
   <data name="MusicGalleryPageAllSongs" xml:space="preserve">
-    <value>すべてのミュージック</value>
+    <value>すべての曲</value>
   </data>
   <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
-    <value>メディアライブラリの同期中...</value>
+    <value>メディアライブラリーの同期中...</value>
   </data>
   <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
-    <value>メディアライブラリの同期に問題が発生しました</value>
+    <value>メディアライブラリーの同期に問題が発生しました</value>
   </data>
   <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>キューをクリア</value>
@@ -460,7 +460,7 @@
     <value>年</value>
   </data>
   <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
-    <value>メディアライブラリに曲が見つかりません</value>
+    <value>メディアライブラリーに曲が見つかりません</value>
   </data>
   <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
     <value>フォルダ</value>
@@ -640,7 +640,7 @@
     <value>アルバムアートの高さ</value>
   </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
-    <value>アルバムアートのレイヤー</value>
+    <value>アルバムアートレイヤー</value>
   </data>
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>アルバムアートのソースを編集する</value>
@@ -712,13 +712,13 @@
     <value>中央揃え</value>
   </data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
-    <value>ショートカットキーの確認</value>
+    <value>ショートカットキー確認</value>
   </data>
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>ピンインルビ</value>
   </data>
   <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
-    <value>中国語の歌詞</value>
+    <value>中国語歌詞</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>簡体字から繁体字へ変換</value>
@@ -730,7 +730,7 @@
     <value>クリア</value>
   </data>
   <data name="SettingsPageClearCache.Content" xml:space="preserve">
-    <value>キャッシュファイルをクリア</value>
+    <value>キャッシュファイルクリア</value>
   </data>
   <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
     <value>閉じる</value>
@@ -874,13 +874,13 @@
     <value>流体レイヤー</value>
   </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
-    <value>霧のレイヤー</value>
+    <value>霧レイヤー</value>
   </data>
   <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>システムに従う</value>
   </data>
   <data name="SettingsPageFontColor.Header" xml:space="preserve">
-    <value>フォントの色</value>
+    <value>フォント色</value>
   </data>
   <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>定期チェックで最前面表示を強制維持します</value>
@@ -907,7 +907,7 @@
     <value>このアプリの翻訳に協力する 🌏</value>
   </data>
   <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>音楽の再生が停止した場合、自動的に歌詞ウィンドウを非表示/表示する</value>
+    <value>ミュージックの再生が停止した場合、自動的に歌詞ウィンドウを非表示/表示する</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>ウィンドウの自動非表示/表示</value>
@@ -1099,7 +1099,7 @@
     <value>ベストマッチ</value>
   </data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
-    <value>歌詞元の設定</value>
+    <value>歌詞ソースの設定</value>
   </data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
     <value>順次</value>
@@ -1147,7 +1147,7 @@
     <value>最小一致しきい値</value>
   </data>
   <data name="SettingsPageMediaLib.Content" xml:space="preserve">
-    <value>メディアライブラリ</value>
+    <value>メディアライブラリー</value>
   </data>
   <data name="SettingsPageMedianCut.Content" xml:space="preserve">
     <value>保守的</value>
@@ -1156,7 +1156,7 @@
     <value>この再生ソースを監視する</value>
   </data>
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
-    <value>テスト音楽を再生</value>
+    <value>テストミュージックを再生</value>
   </data>
   <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
     <value>マルチウィンドウ モード</value>
@@ -1171,10 +1171,10 @@
     <value>ミュージック ギャラリーが開いているため、他の再生ソースを無視します</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
-    <value>音楽または歌詞が含まれるフォルダを追加</value>
+    <value>ミュージックまたは歌詞が含まれるフォルダを追加</value>
   </data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve">
-    <value>ローカルメディアライブラリ</value>
+    <value>ローカルメディアライブラリー</value>
   </data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
     <value>狭い表示モード</value>
@@ -1213,7 +1213,7 @@
     <value>スポンサー</value>
   </data>
   <data name="SettingsPagePhonetic.Text" xml:space="preserve">
-    <value>歌詞のルビ</value>
+    <value>歌詞ルビ</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>ルビ</value>
@@ -1246,10 +1246,10 @@
     <value>再生/一時停止のショートカットキー</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
-    <value>前の曲へのショートカットキー</value>
+    <value>次のトラックのショートカットキー</value>
   </data>
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
-    <value>単色のレイヤー</value>
+    <value>単色レイヤー</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>リアルタイムステータス</value>
@@ -1351,7 +1351,7 @@
     <value>スライド</value>
   </data>
   <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
-    <value>雪のレイヤー</value>
+    <value>雪レイヤー</value>
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>楽曲情報</value>
@@ -1435,7 +1435,7 @@
     <value>訳文</value>
   </data>
   <data name="SettingsPageTranslation.Text" xml:space="preserve">
-    <value>歌詞の翻訳</value>
+    <value>歌詞翻訳</value>
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate サービス</value>
@@ -1467,22 +1467,46 @@
   <data name="StandardMode" xml:space="preserve">
     <value>標準モード</value>
   </data>
+  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <value>時間帯別アクティビティ</value>
+  </data>
+  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <value>最少アクティブ</value>
+  </data>
+  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <value>最多アクティブ</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>再生ソース</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>今月</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
     <value>今期</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>今週</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
     <value>今年</value>
   </data>
-  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <value>期間</value>
+  </data>
+  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <value>タイムズ</value>
+  </data>
+  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>今日</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
@@ -1496,6 +1520,12 @@
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>総再生時間</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <value>タイムズ</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <value>タイムズ</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>再生された曲の数</value>
@@ -1516,7 +1546,7 @@
     <value>再起動</value>
   </data>
   <data name="SystemTraySearch.Text" xml:space="preserve">
-    <value>歌詞の検索ウィンドウ</value>
+    <value>歌詞検索ウィンドウ</value>
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>設定を開く</value>

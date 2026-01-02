@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Hooks;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -15,6 +16,16 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class ColorHelper
     {
+        public static Color GetSystemAccentColor()
+        {
+            if (Application.Current.Resources.TryGetValue("SystemAccentColor", out var resource) &&
+                resource is Color uiColor)
+            {
+                return uiColor;
+            }
+            return Color.FromArgb(255, 0, 120, 215);
+        }
+
         public static ElementTheme GetElementThemeFromBackgroundColor(Color backgroundColor)
         {
             // 计算亮度（YIQ公式）

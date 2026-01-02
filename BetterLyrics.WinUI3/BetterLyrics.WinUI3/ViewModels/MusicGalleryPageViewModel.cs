@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.FileSystemService;
@@ -10,6 +11,7 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -640,6 +642,14 @@ namespace BetterLyrics.WinUI3.ViewModels
         private async Task StopTrackAsync()
         {
             await PlayTrackAtAsync(-1);
+        }
+
+        [RelayCommand]
+        private void OpenMediaSettings()
+        {
+            WindowHook.OpenOrShowWindow<SettingsWindow>();
+            var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
+            settingsPageViewModel.NavViewSelectedItemTag = "MediaLib";
         }
 
         public void Receive(PropertyChangedMessage<DateTime?> message)

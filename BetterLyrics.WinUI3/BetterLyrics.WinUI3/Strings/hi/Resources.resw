@@ -1467,22 +1467,46 @@
   <data name="StandardMode" xml:space="preserve">
     <value>मानक मोड</value>
   </data>
+  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <value>घंटे के हिसाब से गतिविधि</value>
+  </data>
+  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <value>कस्टम</value>
+  </data>
+  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <value>समाप्त</value>
+  </data>
+  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <value>सबसे कम सक्रिय</value>
+  </data>
+  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <value>सर्वाधिक सक्रिय</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>स्रोत</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <value>शुरू करें</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>इस महीने</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
     <value>इस तिमाही</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>इस सप्ताह</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
     <value>इस वर्ष</value>
   </data>
-  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <value>समय सीमा</value>
+  </data>
+  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <value>दूसरे दर्जे का</value>
+  </data>
+  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>आज</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
@@ -1496,6 +1520,12 @@
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>कुल अवधि</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <value>दूसरे दर्जे का</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <value>दूसरे दर्जे का</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>बजाए गए ट्रैक</value>

@@ -1467,22 +1467,46 @@
   <data name="StandardMode" xml:space="preserve">
     <value>Mod Standard</value>
   </data>
+  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <value>Aktiviti mengikut Jam</value>
+  </data>
+  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <value>Tersuai</value>
+  </data>
+  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <value>Penamat</value>
+  </data>
+  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <value>Kurang Aktif</value>
+  </data>
+  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <value>Paling Aktif</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>Sumber</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <value>Mula</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>Bulan Ini</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
-    <value>Suku Tahun Ini</value>
+  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
+    <value>Suku ini</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>Minggu Ini</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
-    <value>Tahun Ini</value>
+  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
+    <value>Tahun ini</value>
   </data>
-  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <value>Julat masa</value>
+  </data>
+  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <value>Kelas kedua</value>
+  </data>
+  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>Hari ini</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
@@ -1496,6 +1520,12 @@
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>Jumlah Tempoh</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <value>Kelas kedua</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <value>Kelas kedua</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>Trek Dimainkan</value>

@@ -1467,22 +1467,46 @@
   <data name="StandardMode" xml:space="preserve">
     <value>표준 모드</value>
   </data>
+  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <value>시간별 활동</value>
+  </data>
+  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <value>사용자 지정</value>
+  </data>
+  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <value>종료</value>
+  </data>
+  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <value>최소 활성</value>
+  </data>
+  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <value>가장 활동적인</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>출처</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <value>시작</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>이번 달</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
     <value>이번 분기</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>이번 주</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
     <value>올해</value>
   </data>
-  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <value>시간 범위</value>
+  </data>
+  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <value>시간</value>
+  </data>
+  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>오늘</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
@@ -1496,6 +1520,12 @@
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>총 기간</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <value>시간</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <value>시간</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>재생된 트랙</value>

@@ -235,5 +235,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             await dialog.ShowAsync();
         }
 
+        [RelayCommand]
+        private void OpenMusicGalleryWindow()
+        {
+            WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
+        }
+
     }
 }

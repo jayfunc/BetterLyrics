@@ -1467,22 +1467,46 @@
   <data name="StandardMode" xml:space="preserve">
     <value>โหมดมาตรฐาน</value>
   </data>
+  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <value>กิจกรรมตามชั่วโมง</value>
+  </data>
+  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <value>กำหนดเอง</value>
+  </data>
+  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <value>สิ้นสุด</value>
+  </data>
+  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <value>น้อยที่สุด</value>
+  </data>
+  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <value>กิจกรรมล่าสุด</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>แหล่งข้อมูล</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <value>เริ่มต้น</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>เดือนนี้</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
     <value>ไตรมาสนี้</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>สัปดาห์นี้</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
     <value>ปีนี้</value>
   </data>
-  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
+  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <value>ช่วงเวลา</value>
+  </data>
+  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <value>เวลา</value>
+  </data>
+  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>วันนี้</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
@@ -1496,6 +1520,12 @@
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>ระยะเวลาทั้งหมด</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <value>เวลา</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <value>เวลา</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>เพลงที่เล่น</value>
