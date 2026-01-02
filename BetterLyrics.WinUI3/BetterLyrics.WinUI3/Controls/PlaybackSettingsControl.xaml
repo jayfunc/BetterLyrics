@@ -356,8 +356,8 @@
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
                                 <local:PropertyRow
                                     x:Uid="LyricsPageCachePath"
-                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay}" />
+                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DecodedAbsoluteUri, TargetNullValue=N/A, Mode=OneWay}"
+                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DecodedAbsoluteUri, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 

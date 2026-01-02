@@ -34,6 +34,20 @@ namespace BetterLyrics.WinUI3.Models
 
         public string? SelfPath { get; set; }
 
+        [JsonIgnore] public string DecodedAbsoluteUri
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(SelfPath)) return "";
+                try
+                {
+                    var u = new Uri(SelfPath);
+                    return u.IsFile ? u.LocalPath : System.Net.WebUtility.UrlDecode(u.AbsoluteUri);
+                }
+                catch { return SelfPath; }
+            }
+        }
+
         [JsonIgnore] public bool IsFound => !string.IsNullOrEmpty(Raw);
 
         [JsonIgnore] public LyricsSearchProvider? ProviderIfFound => IsFound ? Provider : null;
