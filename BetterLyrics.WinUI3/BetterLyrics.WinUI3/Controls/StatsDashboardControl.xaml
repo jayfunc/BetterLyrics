@@ -235,145 +235,132 @@
 
                     <!--  Top artists  -->
                     <Border Grid.Column="0" Style="{StaticResource StatsCardStyle}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition MinHeight="250" />
-                            </Grid.RowDefinitions>
+                        <StackPanel>
                             <TextBlock
                                 x:Uid="StatsDashboardControlTopArtists"
                                 Margin="0,0,0,12"
                                 Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                            <lvc:CartesianChart
-                                Grid.Row="1"
-                                Margin="0,8,0,0"
-                                Background="Transparent">
+                            <ItemsControl ItemsSource="{x:Bind ViewModel.TopArtists, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="statsmodels:ArtistPlayCount">
+                                        <Grid Margin="0,4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                                <PersonPicture
+                                                    Width="32"
+                                                    Height="32"
+                                                    DisplayName="{x:Bind Artist}" />
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                                    Text="{x:Bind Artist}" />
+                                            </StackPanel>
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                FontWeight="SemiBold">
+                                                <Run Text="{x:Bind PlayCount}" />
+                                                <Run
+                                                    x:Uid="StatsDashboardControlTrackCountText"
+                                                    FontSize="10"
+                                                    FontWeight="Normal"
+                                                    Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
 
-                                <lvc:CartesianChart.XAxes>
-                                    <lvc:AxesCollection>
-                                        <lvc:XamlAxis x:Uid="StatsDashboardControlTrackCountAxis" NameTextSize="{StaticResource BodyTextBlockFontSize}" />
-                                    </lvc:AxesCollection>
-                                </lvc:CartesianChart.XAxes>
-
-                                <lvc:CartesianChart.YAxes>
-                                    <lvc:AxesCollection>
-                                        <lvc:XamlAxis IsInverted="True" IsVisible="False" />
-                                    </lvc:AxesCollection>
-                                </lvc:CartesianChart.YAxes>
-
-                                <lvc:CartesianChart.Series>
-                                    <lvc:SeriesCollection>
-                                        <lvc:XamlRowSeries
-                                            Padding="4"
-                                            DataLabelsFormatter="{x:Bind ViewModel.ArtistsLabelsFormatter}"
-                                            DataLabelsSize="{StaticResource BodyTextBlockFontSize}"
-                                            Rx="4"
-                                            Ry="4"
-                                            ShowDataLabels="True"
-                                            Values="{x:Bind ViewModel.ArtistSeriesValues, Mode=OneWay}" />
-                                    </lvc:SeriesCollection>
-                                </lvc:CartesianChart.Series>
-
-                            </lvc:CartesianChart>
-
-                        </Grid>
+                        </StackPanel>
                     </Border>
 
-                    <!--  播放源分布  -->
+                    <!--  Top tracks  -->
                     <Border
                         Grid.Column="1"
                         Margin="0,0,0,12"
                         Style="{StaticResource StatsCardStyle}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
+                        <StackPanel>
                             <TextBlock
-                                x:Uid="StatsDashboardControlSources"
+                                x:Uid="StatsDashboardControlTopSongs"
                                 Margin="0,0,0,12"
                                 Style="{ThemeResource SubtitleTextBlockStyle}" />
+                            <ItemsControl ItemsSource="{x:Bind ViewModel.TopSongs, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="statsmodels:SongPlayCount">
+                                        <Grid Margin="0,4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid
+                                                Width="40"
+                                                Height="40"
+                                                Margin="0,0,12,0"
+                                                Background="{ThemeResource LayerFillColorAltBrush}"
+                                                CornerRadius="4">
+                                                <FontIcon
+                                                    FontSize="16"
+                                                    Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                    Glyph="&#xE8D6;" />
+                                            </Grid>
 
-                            <lvc:PieChart
-                                Grid.Row="1"
-                                MinHeight="160"
-                                Background="Transparent"
-                                LegendPosition="Right"
-                                LegendTextSize="{StaticResource BodyTextBlockFontSize}"
-                                Series="{x:Bind ViewModel.SourceSeries, Mode=OneWay}"
-                                TooltipPosition="Center" />
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="{x:Bind Title}" />
+                                                <TextBlock
+                                                    Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                                    Text="{x:Bind Artist}" />
+                                            </StackPanel>
 
-                        </Grid>
+                                            <TextBlock
+                                                Grid.Column="2"
+                                                VerticalAlignment="Center"
+                                                FontWeight="SemiBold">
+                                                <Run Text="{x:Bind PlayCount}" />
+                                                <Run
+                                                    x:Uid="StatsDashboardControlTrackCountText"
+                                                    FontSize="10"
+                                                    FontWeight="Normal"
+                                                    Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+                                            </TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </Border>
+
                 </Grid>
 
-                <!--  Top tracks  -->
+                <!--  播放源分布  -->
                 <Border
                     Grid.Row="3"
                     Margin="0,0,0,20"
                     Style="{StaticResource StatsCardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <TextBlock
-                            x:Uid="StatsDashboardControlTopSongs"
-                            Margin="0,0,0,18"
+                            x:Uid="StatsDashboardControlSources"
+                            Margin="0,0,0,12"
                             Style="{ThemeResource SubtitleTextBlockStyle}" />
-                        <dev:OpacityMaskView Grid.Row="1" Margin="-20,0">
-                            <dev:OpacityMaskView.OpacityMask>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Offset="0" Color="Transparent" />
-                                    <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="1" Color="Transparent" />
-                                </LinearGradientBrush>
-                            </dev:OpacityMaskView.OpacityMask>
-                            <ListView
-                                Padding="20,0"
-                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
-                                ItemsSource="{x:Bind ViewModel.TopSongs, Mode=OneWay}"
-                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                ScrollViewer.HorizontalScrollMode="Enabled"
-                                ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                                ScrollViewer.VerticalScrollMode="Disabled"
-                                SelectionMode="None">
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <ItemsStackPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="statsmodels:SongPlayCount">
-                                        <Grid
-                                            MinWidth="200"
-                                            Margin="6,0"
-                                            Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
-                                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                            BorderThickness="1"
-                                            CornerRadius="4">
-                                            <StackPanel Margin="20">
-                                                <TextBlock
-                                                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                                    Style="{StaticResource SubtitleTextBlockStyle}"
-                                                    Text="{x:Bind Title}"
-                                                    TextWrapping="Wrap" />
-                                                <RichTextBlock>
-                                                    <Paragraph>
-                                                        <Run Text="{x:Bind Artist}" />
-                                                        <Run Text="·" />
-                                                        <Run Text="{x:Bind PlayCount}" />
-                                                        <Run x:Uid="StatsDashboardControlTrackCountText" />
-                                                    </Paragraph>
-                                                </RichTextBlock>
-                                            </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </dev:OpacityMaskView>
+
+                        <lvc:PieChart
+                            Grid.Row="1"
+                            MinHeight="250"
+                            Background="Transparent"
+                            LegendPosition="Bottom"
+                            LegendTextSize="{StaticResource BodyTextBlockFontSize}"
+                            Series="{x:Bind ViewModel.SourceSeries, Mode=OneWay}"
+                            TooltipPosition="Center" />
+
                     </Grid>
                 </Border>
 
@@ -385,7 +372,6 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GenerateTestDataCommand}"
-            Content="Generate test data"
-            Visibility="Collapsed" />
+            Content="Generate test data" />
     </Grid>
 </UserControl>

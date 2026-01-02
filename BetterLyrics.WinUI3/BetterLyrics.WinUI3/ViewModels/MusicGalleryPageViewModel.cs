@@ -149,7 +149,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void TrackPlayingQueue_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.DecodedAbsoluteUri)];
+            AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
         }
 
         private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -344,7 +344,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                             if (File.Exists(path))
                             {
                                 var m3uFileContent = File.ReadAllText(path);
-                                _middleTracks = _allTracks.Where(t => m3uFileContent.Contains(t.DecodedAbsoluteUri)).ToList();
+                                _middleTracks = _allTracks.Where(t => m3uFileContent.Contains(t.Uri.ToDecodedAbsoluteUri())).ToList();
                             }
                             else
                             {
@@ -496,7 +496,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     if (targetFolder == null)
                     {
-                        throw new FileNotFoundException(null, PlayingTrack.DecodedAbsoluteUri);
+                        throw new FileNotFoundException(null, PlayingTrack.Uri.ToDecodedAbsoluteUri());
                     }
 
                     _currentProvider = targetFolder.CreateFileSystem();

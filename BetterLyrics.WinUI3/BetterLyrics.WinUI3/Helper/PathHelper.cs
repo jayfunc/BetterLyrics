@@ -81,5 +81,6 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
             Directory.CreateDirectory(LocalAlbumArtCacheDirectory);
         }
+
     }
 }

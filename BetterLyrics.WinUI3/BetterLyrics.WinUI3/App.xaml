@@ -77,6 +77,7 @@
             <converter:FileSourceTypeToIconConverter x:Key="FileSourceTypeToIconConverter" />
             <converter:PathToImageConverter x:Key="PathToImageConverter" />
             <converter:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
+            <converter:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolNegationConverter x:Key="BoolNegationConverter" />

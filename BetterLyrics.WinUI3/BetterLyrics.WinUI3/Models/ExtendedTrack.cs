@@ -10,20 +10,6 @@ namespace BetterLyrics.WinUI3.Models
     {
         public string Uri { get; private set; } = "";
 
-        public string DecodedAbsoluteUri
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(Uri)) return "";
-                try
-                {
-                    var u = new Uri(Uri);
-                    return u.IsFile ? u.LocalPath : System.Net.WebUtility.UrlDecode(u.AbsoluteUri);
-                }
-                catch { return Uri; }
-            }
-        }
-
         public string? RawLyrics { get; set; }
         public string? LocalAlbumArtPath { get; set; }
         public byte[]? AlbumArtByteArray { get; set; }
