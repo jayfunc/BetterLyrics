@@ -345,8 +345,8 @@
                                 <local:PropertyRow x:Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LanguageCode, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
                                 <local:PropertyRow
                                     x:Uid="LyricsPageLyricsProviderPrefix"
-                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay}"
+                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
+                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
                                 <local:PropertyRow x:Uid="LyricsPageTransliterationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.TransliterationProvider, Mode=OneWay, Converter={StaticResource TransliterationSearchProviderToDisplayNameConverter}}" />
                                 <local:PropertyRow x:Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.TranslationProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
@@ -356,8 +356,8 @@
                                     Value="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
                                 <local:PropertyRow
                                     x:Uid="LyricsPageCachePath"
-                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DecodedAbsoluteUri, TargetNullValue=N/A, Mode=OneWay}"
-                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.DecodedAbsoluteUri, TargetNullValue=N/A, Mode=OneWay}" />
+                                    Link="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
+                                    ToolTipService.ToolTip="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}" />
                             </StackPanel>
                         </Expander>
 

@@ -38,8 +38,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         // 时间筛选
         [ObservableProperty] public partial StatsRange SelectedTimeRange { get; set; }
         [ObservableProperty] public partial bool IsCustomRangeSelected { get; set; }
-        [ObservableProperty] public partial DateTimeOffset CustomStartDate { get; set; }
-        [ObservableProperty] public partial DateTimeOffset CustomEndDate { get; set; } = DateTimeOffset.Now;
+        [ObservableProperty] public partial DateTimeOffset? CustomStartDate { get; set; }
+        [ObservableProperty] public partial DateTimeOffset? CustomEndDate { get; set; }
 
         // 顶部基础数据
         [ObservableProperty] public partial TimeSpan TotalDuration { get; set; }
@@ -54,8 +54,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         // 歌手
         [ObservableProperty] public partial ObservableCollection<ArtistPlayCount> TopArtists { get; set; } = new();
-        [ObservableProperty] public partial ObservableCollection<int> ArtistSeriesValues { get; set; } = new();
-        public Func<ChartPoint, string> ArtistsLabelsFormatter { get; set; }
 
         // 播放源
         [ObservableProperty] public partial ObservableCollection<ISeries> SourceSeries { get; set; } = new();
@@ -71,11 +69,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
 
-            ArtistsLabelsFormatter = (point) =>
-            {
-                return TopArtists.ElementAtOrDefault(point.Index)?.Artist ?? "N/A";
-            };
-
             SelectedTimeRange = StatsRange.Today;
 
             CustomStartDate = DateTimeOffset.Now.AddDays(-7);
@@ -85,13 +78,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         async partial void OnSelectedTimeRangeChanged(StatsRange value)
         {
             IsCustomRangeSelected = value == StatsRange.Custom;
-            if (!IsCustomRangeSelected)
-            {
-                await LoadDataAsync();
-            }
+            await LoadDataAsync();
         }
-        async partial void OnCustomEndDateChanged(DateTimeOffset value) => await LoadDataAsync();
-        async partial void OnCustomStartDateChanged(DateTimeOffset value) => await LoadDataAsync();
+        async partial void OnCustomEndDateChanged(DateTimeOffset? value) => await LoadDataAsync();
+        async partial void OnCustomStartDateChanged(DateTimeOffset? value) => await LoadDataAsync();
 
         private void ProcessHourlyStats(List<PlayHistoryItem> logs)
         {
@@ -117,16 +107,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             HourlySeriesValues = [.. hourCounts];
         }
-        private void ProcessArtistStats(List<ArtistPlayCount> artists)
-        {
-            if (artists == null || !artists.Any())
-            {
-                ArtistSeriesValues = new();
-                return;
-            }
 
-            ArtistSeriesValues = [.. artists.Select(x => x.PlayCount)];
-        }
         private void UpdatePlayerStats(List<PlayerStats> stats)
         {
             SourceSeries = new();
@@ -152,12 +133,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             })];
         }
 
-        private (DateTime Start, DateTime End) CalculateDateRange()
+        private (DateTime? Start, DateTime? End) CalculateDateRange()
         {
-            // 如果是自定义，直接返回 Picker 的值 (转为 UTC)
             if (IsCustomRangeSelected)
             {
-                return (CustomStartDate.UtcDateTime, CustomEndDate.UtcDateTime);
+                return (CustomStartDate?.UtcDateTime, CustomEndDate?.UtcDateTime);
             }
 
             DateTime nowLocal = DateTime.Now;
@@ -166,8 +146,8 @@ namespace BetterLyrics.WinUI3.ViewModels
             switch (SelectedTimeRange)
             {
                 case StatsRange.Today:
-                    startLocal = nowLocal.Date.AddDays(-1);
-                    return (startLocal.ToUniversalTime(), nowLocal.Date.ToUniversalTime());
+                    startLocal = new DateTime(nowLocal.Year, nowLocal.Month, nowLocal.Day);
+                    break;
                 case StatsRange.ThisWeek:
                     int dayOfWeek = (int)nowLocal.DayOfWeek;
                     if (dayOfWeek == 0) dayOfWeek = 7;
@@ -198,11 +178,16 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 var (start, end) = CalculateDateRange();
 
-                var durationTask = _playHistoryService.GetTotalListeningDurationAsync(start, end);
-                var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start, end);
-                var topSongsTask = _playHistoryService.GetTopSongsAsync(start, end, 10);
-                var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start, end, 10);
-                var playersTask = _playHistoryService.GetPlayerDistributionAsync(start, end);
+                if (start == null || end == null)
+                {
+                    start = end = DateTime.Now.ToUniversalTime();
+                }
+
+                var durationTask = _playHistoryService.GetTotalListeningDurationAsync(start.Value, end.Value);
+                var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start.Value, end.Value);
+                var topSongsTask = _playHistoryService.GetTopSongsAsync(start.Value, end.Value, 10);
+                var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start.Value, end.Value, 10);
+                var playersTask = _playHistoryService.GetPlayerDistributionAsync(start.Value, end.Value);
 
                 await Task.WhenAll(durationTask, logsTask, topSongsTask, topArtistsTask, playersTask);
 
@@ -216,7 +201,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 UpdatePlayerStats(pStats);
 
                 TopArtists = [.. await topArtistsTask];
-                ProcessArtistStats(TopArtists.ToList());
 
                 ProcessHourlyStats(logs);
             }

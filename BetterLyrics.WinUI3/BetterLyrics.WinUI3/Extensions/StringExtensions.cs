@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using System;
 using System.Linq;
 
 namespace BetterLyrics.WinUI3.Extensions
@@ -75,6 +76,18 @@ namespace BetterLyrics.WinUI3.Extensions
                     return null;
                 }
             }
+
+            public string ToDecodedAbsoluteUri()
+            {
+                if (string.IsNullOrEmpty(str)) return "";
+                try
+                {
+                    var u = new Uri(str);
+                    return u.IsFile ? u.LocalPath : System.Net.WebUtility.UrlDecode(u.AbsoluteUri);
+                }
+                catch { return str; }
+            }
+
         }
     }
 }

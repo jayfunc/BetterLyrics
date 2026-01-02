@@ -169,7 +169,12 @@
                             x:Uid="MusicGalleryPageFolder"
                             Margin="1,4,0,6"
                             Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <Button Command="{x:Bind ViewModel.OpenMediaSettingsCommand}" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE713;}" Style="{StaticResource GhostButtonStyle}" />
+                        <Button
+                            Command="{x:Bind ViewModel.OpenMediaSettingsCommand}"
+                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                  FontSize=12,
+                                                  Glyph=&#xE713;}"
+                            Style="{StaticResource GhostButtonStyle}" />
                     </StackPanel>
 
                     <TreeView
@@ -244,7 +249,10 @@
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormatName, Mode=OneWay}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoPath" Value="{x:Bind ViewModel.TrackRightTapped.DecodedAbsoluteUri, Mode=OneWay}" />
+                                    <uc:PropertyRow
+                                        x:Uid="MusicGalleryPageFileInfoPath"
+                                        Link="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
+                                        Value="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}" />
                                     <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped.RawLyrics, Mode=OneWay}" />
                                 </StackPanel>
                             </Grid>
