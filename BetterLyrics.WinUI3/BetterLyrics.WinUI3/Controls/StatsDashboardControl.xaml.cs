@@ -29,30 +29,6 @@ public sealed partial class StatsDashboardControl : UserControl
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<StatsDashboardControlViewModel>();
-        this.Loaded += StatsDashboardControl_Loaded;
     }
 
-    private async void StatsDashboardControl_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        await ViewModel.LoadDataAsync(StatsRange.Day);
-    }
-
-    private async void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (ViewModel == null) return;
-
-        if (TimeRangePivot.SelectedItem is PivotItem item && item.Tag is string tag)
-        {
-            var range = tag switch
-            {
-                "Day" => StatsRange.Day,
-                "Week" => StatsRange.Week,
-                "Month" => StatsRange.Month,
-                "Quarter" => StatsRange.Quarter,
-                "Year" => StatsRange.Year,
-                _ => StatsRange.Day
-            };
-            await ViewModel.LoadDataAsync(range);
-        }
-    }
 }

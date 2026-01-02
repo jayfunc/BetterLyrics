@@ -161,11 +161,16 @@
 
                     <NavigationViewItemSeparator Grid.Row="2" />
 
-                    <TextBlock
-                        x:Uid="MusicGalleryPageFolder"
+                    <StackPanel
                         Grid.Row="3"
-                        Margin="1,4,0,6"
-                        Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        Orientation="Horizontal"
+                        Spacing="3">
+                        <TextBlock
+                            x:Uid="MusicGalleryPageFolder"
+                            Margin="1,4,0,6"
+                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <Button Command="{x:Bind ViewModel.OpenMediaSettingsCommand}" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE713;}" Style="{StaticResource GhostButtonStyle}" />
+                    </StackPanel>
 
                     <TreeView
                         x:Name="FolderTreeView"

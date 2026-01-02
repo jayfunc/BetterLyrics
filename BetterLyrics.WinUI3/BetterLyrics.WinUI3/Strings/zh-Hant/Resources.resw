@@ -1467,35 +1467,65 @@
   <data name="StandardMode" xml:space="preserve">
     <value>標準模式</value>
   </data>
+  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <value>每小時的活動</value>
+  </data>
+  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <value>自訂</value>
+  </data>
+  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <value>結束</value>
+  </data>
+  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <value>最不活躍</value>
+  </data>
+  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <value>最活躍</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>來源</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Header" xml:space="preserve">
+  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>本月</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
     <value>本季</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Header" xml:space="preserve">
+  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>本週</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Header" xml:space="preserve">
-    <value>今年</value>
+  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
+    <value>本年</value>
   </data>
-  <data name="StatsDashboardControlToday.Header" xml:space="preserve">
-    <value>今天</value>
+  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <value>時間範圍</value>
+  </data>
+  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <value>次</value>
+  </data>
+  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
+    <value>今日</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
-    <value>頂級藝術家</value>
+    <value>常聽的藝術家</value>
   </data>
   <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
-    <value>熱門曲目</value>
+    <value>常聽的曲目</value>
   </data>
   <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
-    <value>頂端來源</value>
+    <value>常用的播放來源</value>
   </data>
   <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>總時間</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <value>次</value>
+  </data>
+  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <value>次</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>播放曲目</value>

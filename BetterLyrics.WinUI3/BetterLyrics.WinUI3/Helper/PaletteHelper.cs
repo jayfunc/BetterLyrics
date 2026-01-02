@@ -1,4 +1,5 @@
 ﻿using ColorThiefDotNet;
+using CommunityToolkit.WinUI.Helpers;
 using Impressionist.Abstractions;
 using Impressionist.Implementations;
 using System;
@@ -50,7 +51,29 @@ namespace BetterLyrics.WinUI3.Helper
             return paletteResult;
         }
 
-        public static async Task<Dictionary<Vector3, int>> GetPixelColor(BitmapDecoder bitmapDecoder)
+        public static List<Windows.UI.Color> GenerateChartColors(Windows.UI.Color baseColor, int count)
+        {
+            List<Windows.UI.Color> results = [];
+
+            var baseHsl = baseColor.ToHsl();
+            double baseHue = baseHsl.H;
+            double baseSaturation = baseHsl.S;
+            double baseBrightness = baseHsl.L;
+
+            double step = 360.0 / count;
+
+            for (int i = 0; i < count; i++)
+            {
+                double newHue = (baseHue + (step * i)) % 360;
+
+                Windows.UI.Color newColor = CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(newHue, baseSaturation, baseBrightness);
+                results.Add(newColor);
+            }
+
+            return results;
+        }
+
+        private static async Task<Dictionary<Vector3, int>> GetPixelColor(BitmapDecoder bitmapDecoder)
         {
             var pixelDataProvider = await bitmapDecoder.GetPixelDataAsync();
             var pixels = pixelDataProvider.DetachPixelData();
