@@ -198,7 +198,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties? timelineProperties)
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 if (!_mediaManager.IsStarted) return;
                 if (mediaSession == null)
@@ -230,7 +230,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo? playbackInfo)
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, (() =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 if (!_mediaManager.IsStarted) return;
                 if (mediaSession == null)
@@ -264,14 +264,14 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 {
                     _scrobbleStopwatch.Stop();
                 }
-            }));
+            });
         }
 
         private void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProperties)
         {
             _onMediaPropsChangedTimer?.Debounce(() =>
             {
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+                _dispatcherQueue.TryEnqueue(async () =>
                 {
                     if (!_mediaManager.IsStarted) return;
                     if (mediaSession == null)
@@ -419,13 +419,13 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
         }
 
-        private void MediaManager_OnAnySessionOpened(MediaManager.MediaSession mediaSession)
+        private async void MediaManager_OnAnySessionOpened(MediaManager.MediaSession mediaSession)
         {
             if (!_mediaManager.IsStarted) return;
             if (mediaSession == null) return;
 
             RecordMediaSourceProviderInfo(mediaSession);
-            SendFocusedMessagesAsync().ConfigureAwait(false);
+            await SendFocusedMessagesAsync();
         }
 
         private MediaManager.MediaSession? GetCurrentSession()
