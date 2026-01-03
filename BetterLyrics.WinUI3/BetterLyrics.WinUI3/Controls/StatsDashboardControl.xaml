@@ -29,46 +29,58 @@
     <Grid Margin="0,20,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="36,12">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <ProgressBar
+            Grid.Row="0"
+            Background="Transparent"
+            IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
 
-            <StackPanel Orientation="Horizontal" Spacing="12">
-                <ComboBox
-                    x:Uid="StatsDashboardControlTimeRange"
-                    Header="Time Range"
-                    SelectedIndex="{x:Bind ViewModel.SelectedTimeRange, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                    <ComboBoxItem x:Uid="StatsDashboardControlToday" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisWeek" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisMonth" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisQuarter" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisYear" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlCustom" />
-                </ComboBox>
+        <controls:WrapPanel
+            Grid.Row="1"
+            Margin="36,12"
+            HorizontalSpacing="12"
+            Orientation="Horizontal"
+            VerticalSpacing="12">
+            <ComboBox
+                x:Uid="StatsDashboardControlTimeRange"
+                Header="Time Range"
+                SelectedIndex="{x:Bind ViewModel.SelectedTimeRange, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                <ComboBoxItem x:Uid="StatsDashboardControlToday" />
+                <ComboBoxItem x:Uid="StatsDashboardControlThisWeek" />
+                <ComboBoxItem x:Uid="StatsDashboardControlThisMonth" />
+                <ComboBoxItem x:Uid="StatsDashboardControlThisQuarter" />
+                <ComboBoxItem x:Uid="StatsDashboardControlThisYear" />
+                <ComboBoxItem x:Uid="StatsDashboardControlCustom" />
+            </ComboBox>
 
-                <StackPanel
-                    Margin="0,0,0,5"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal"
-                    Spacing="8"
-                    Visibility="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <CalendarDatePicker x:Uid="StatsDashboardControlStart" Date="{x:Bind ViewModel.CustomStartDate, Mode=TwoWay}" />
-                    <TextBlock
-                        Margin="0,26,0,0"
-                        VerticalAlignment="Center"
-                        Text="-" />
-                    <CalendarDatePicker x:Uid="StatsDashboardControlEnd" Date="{x:Bind ViewModel.CustomEndDate, Mode=TwoWay}" />
-                </StackPanel>
-            </StackPanel>
-        </Grid>
+            <CalendarDatePicker
+                x:Uid="StatsDashboardControlStart"
+                Date="{x:Bind ViewModel.CustomStartDate, Mode=TwoWay}"
+                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
+            <TimePicker
+                VerticalAlignment="Bottom"
+                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
+                Time="{x:Bind ViewModel.CustomStartTime, Mode=TwoWay}" />
+            <CalendarDatePicker
+                x:Uid="StatsDashboardControlEnd"
+                Date="{x:Bind ViewModel.CustomEndDate, Mode=TwoWay}"
+                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
+            <TimePicker
+                VerticalAlignment="Bottom"
+                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
+                Time="{x:Bind ViewModel.CustomEndTime, Mode=TwoWay}" />
+            <Button
+                VerticalAlignment="Bottom"
+                Command="{x:Bind ViewModel.RefreshDataCommand}"
+                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                      FontSize=16,
+                                      Glyph=&#xE72C;}" />
+        </controls:WrapPanel>
 
-        <ScrollViewer Grid.Row="1" Padding="36,0">
+        <ScrollViewer Grid.Row="2" Padding="36,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -367,11 +379,11 @@
             </Grid>
         </ScrollViewer>
 
-        <Button
-            Grid.Row="1"
+        <!--<Button
+            Grid.Row="2"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GenerateTestDataCommand}"
-            Content="Generate test data" />
+            Content="Generate test data" />-->
     </Grid>
 </UserControl>
