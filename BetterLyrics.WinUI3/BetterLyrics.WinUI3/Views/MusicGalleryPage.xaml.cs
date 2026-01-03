@@ -180,7 +180,11 @@ namespace BetterLyrics.WinUI3.Views
             var settings = ViewModel.AppSettings.MusicGallerySettings;
             if (settings.AutoPlay)
             {
-                _ = _smtcService.PlayTrackAtAsync(settings.PlayQueueIndex);
+                Task.Run(async () =>
+                {
+                    await Task.Delay(1000);
+                    _ = _smtcService.PlayTrackAtAsync(settings.PlayQueueIndex);
+                });
             }
         }
 
