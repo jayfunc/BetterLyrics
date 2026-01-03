@@ -7,12 +7,14 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.WinUI;
 using LiveChartsCore;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.Themes;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using SkiaSharp;
 using SkiaSharp.Views.Windows;
@@ -25,7 +27,7 @@ using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class StatsDashboardControlViewModel : ObservableObject
+    public partial class StatsDashboardControlViewModel : BaseViewModel
     {
         private readonly IPlayHistoryService _playHistoryService;
         private readonly ILocalizationService _localizationService;
@@ -33,13 +35,17 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private string _localizedTimesValue;
 
-        [ObservableProperty] public partial bool IsLoading { get; set; }
+        private readonly DispatcherQueueTimer _timer;
+
+        [ObservableProperty] public partial bool IsLoading { get; set; } = false;
 
         // 时间筛选
-        [ObservableProperty] public partial StatsRange SelectedTimeRange { get; set; }
-        [ObservableProperty] public partial bool IsCustomRangeSelected { get; set; }
-        [ObservableProperty] public partial DateTimeOffset? CustomStartDate { get; set; }
-        [ObservableProperty] public partial DateTimeOffset? CustomEndDate { get; set; }
+        [ObservableProperty] public partial StatsRange SelectedTimeRange { get; set; } = StatsRange.Today;
+        [ObservableProperty] public partial bool IsCustomRangeSelected { get; set; } = false;
+        [ObservableProperty] public partial DateTimeOffset? CustomStartDate { get; set; } = DateTime.Now;
+        [ObservableProperty] public partial DateTimeOffset? CustomEndDate { get; set; } = DateTime.Now;
+        [ObservableProperty] public partial TimeSpan CustomStartTime { get; set; } = TimeSpan.Zero;
+        [ObservableProperty] public partial TimeSpan CustomEndTime { get; set; } = TimeSpan.Zero;
 
         // 顶部基础数据
         [ObservableProperty] public partial TimeSpan TotalDuration { get; set; }
@@ -69,19 +75,20 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
 
-            SelectedTimeRange = StatsRange.Today;
+            _timer = _dispatcherQueue.CreateTimer();
 
-            CustomStartDate = DateTimeOffset.Now.AddDays(-7);
-            CustomEndDate = DateTimeOffset.Now;
+            UpdateDateRange();
         }
 
-        async partial void OnSelectedTimeRangeChanged(StatsRange value)
+        partial void OnSelectedTimeRangeChanged(StatsRange value)
         {
             IsCustomRangeSelected = value == StatsRange.Custom;
-            await LoadDataAsync();
+            UpdateDateRange();
         }
-        async partial void OnCustomEndDateChanged(DateTimeOffset? value) => await LoadDataAsync();
-        async partial void OnCustomStartDateChanged(DateTimeOffset? value) => await LoadDataAsync();
+        partial void OnCustomEndDateChanged(DateTimeOffset? value) => LoadData();
+        partial void OnCustomStartDateChanged(DateTimeOffset? value) => LoadData();
+        partial void OnCustomStartTimeChanged(TimeSpan value) => LoadData();
+        partial void OnCustomEndTimeChanged(TimeSpan value) => LoadData();
 
         private void ProcessHourlyStats(List<PlayHistoryItem> logs)
         {
@@ -135,11 +142,24 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private (DateTime? Start, DateTime? End) CalculateDateRange()
         {
-            if (IsCustomRangeSelected)
-            {
-                return (CustomStartDate?.UtcDateTime, CustomEndDate?.UtcDateTime);
-            }
+            if (CustomStartDate == null || CustomEndDate == null) return (null, null);
 
+            return (
+                new DateTime(
+                    DateOnly.FromDateTime(CustomStartDate.Value.LocalDateTime),
+                    TimeOnly.FromTimeSpan(CustomStartTime),
+                    DateTimeKind.Local)
+                .ToUniversalTime(),
+                new DateTime(
+                    DateOnly.FromDateTime(CustomEndDate.Value.LocalDateTime),
+                    TimeOnly.FromTimeSpan(CustomEndTime),
+                    DateTimeKind.Local)
+                .ToUniversalTime()
+            );
+        }
+
+        private void UpdateDateRange()
+        {
             DateTime nowLocal = DateTime.Now;
             DateTime startLocal = nowLocal.Date;
 
@@ -152,6 +172,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     int dayOfWeek = (int)nowLocal.DayOfWeek;
                     if (dayOfWeek == 0) dayOfWeek = 7;
                     startLocal = nowLocal.Date.AddDays(-(dayOfWeek - 1));
+                    startLocal = new DateTime(startLocal.Year, startLocal.Month, startLocal.Day);
                     break;
                 case StatsRange.ThisMonth:
                     startLocal = new DateTime(nowLocal.Year, nowLocal.Month, 1);
@@ -165,60 +186,82 @@ namespace BetterLyrics.WinUI3.ViewModels
                     break;
             }
 
-            return (startLocal.ToUniversalTime(), nowLocal.ToUniversalTime());
+            CustomStartDate = startLocal.Date;
+            CustomEndDate = nowLocal.Date;
+
+            CustomStartTime = startLocal.TimeOfDay;
+            CustomEndTime = nowLocal.TimeOfDay;
         }
 
         [RelayCommand]
-        public async Task LoadDataAsync()
+        private void RefreshData()
         {
-            if (IsLoading) return;
-            IsLoading = true;
-
-            try
+            if (IsCustomRangeSelected)
             {
-                var (start, end) = CalculateDateRange();
+                LoadData();
+            }
+            else
+            {
+                UpdateDateRange();
+            }
+        }
 
-                if (start == null || end == null)
+        [RelayCommand]
+        public void LoadData()
+        {
+            _timer.Debounce(async () =>
+            {
+                if (IsLoading) return;
+                IsLoading = true;
+
+                try
                 {
-                    start = end = DateTime.Now.ToUniversalTime();
+                    await Task.Delay(Constants.Time.WaitingDuration);
+
+                    var (start, end) = CalculateDateRange();
+
+                    if (start == null || end == null)
+                    {
+                        start = end = DateTime.Now.ToUniversalTime();
+                    }
+
+                    var durationTask = _playHistoryService.GetTotalListeningDurationAsync(start.Value, end.Value);
+                    var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start.Value, end.Value);
+                    var topSongsTask = _playHistoryService.GetTopSongsAsync(start.Value, end.Value, 10);
+                    var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start.Value, end.Value, 10);
+                    var playersTask = _playHistoryService.GetPlayerDistributionAsync(start.Value, end.Value);
+
+                    await Task.WhenAll(durationTask, logsTask, topSongsTask, topArtistsTask, playersTask);
+
+                    TotalDuration = await durationTask;
+                    var logs = await logsTask;
+                    TotalTracksPlayed = logs.Count;
+
+                    TopSongs = [.. await topSongsTask];
+
+                    var pStats = await playersTask;
+                    UpdatePlayerStats(pStats);
+
+                    TopArtists = [.. await topArtistsTask];
+
+                    ProcessHourlyStats(logs);
                 }
-
-                var durationTask = _playHistoryService.GetTotalListeningDurationAsync(start.Value, end.Value);
-                var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start.Value, end.Value);
-                var topSongsTask = _playHistoryService.GetTopSongsAsync(start.Value, end.Value, 10);
-                var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start.Value, end.Value, 10);
-                var playersTask = _playHistoryService.GetPlayerDistributionAsync(start.Value, end.Value);
-
-                await Task.WhenAll(durationTask, logsTask, topSongsTask, topArtistsTask, playersTask);
-
-                TotalDuration = await durationTask;
-                var logs = await logsTask;
-                TotalTracksPlayed = logs.Count;
-
-                TopSongs = [.. await topSongsTask];
-
-                var pStats = await playersTask;
-                UpdatePlayerStats(pStats);
-
-                TopArtists = [.. await topArtistsTask];
-
-                ProcessHourlyStats(logs);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error loading stats: {ex.Message}");
-            }
-            finally
-            {
-                IsLoading = false;
-            }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error loading stats: {ex.Message}");
+                }
+                finally
+                {
+                    IsLoading = false;
+                }
+            }, Constants.Time.DebounceTimeout);
         }
 
         [RelayCommand]
         private async Task GenerateTestDataAsync()
         {
             await _playHistoryService.GenerateTestDataAsync(1000);
-            await LoadDataAsync(); // 生成完刷新
+            LoadData(); // 生成完刷新
         }
 
     }

@@ -254,15 +254,15 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                         GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => true,
                         _ => false,
                     };
-                }
 
-                if (CurrentIsPlaying)
-                {
-                    _scrobbleStopwatch.Start();
-                }
-                else
-                {
-                    _scrobbleStopwatch.Stop();
+                    if (CurrentIsPlaying)
+                    {
+                        _scrobbleStopwatch.Start();
+                    }
+                    else
+                    {
+                        _scrobbleStopwatch.Stop();
+                    }
                 }
             });
         }
