@@ -31,8 +31,6 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
         private readonly IDbContextFactory<FilesIndexDbContext> _contextFactory;
 
-        private bool _isInitialized = false;
-
         // 定时器字典
         private readonly ConcurrentDictionary<string, CancellationTokenSource> _folderTimerTokens = new();
         // 当前正在执行的扫描任务字典
@@ -458,6 +456,17 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                     folder.IndexingProgress = 0;
                 });
             }
+        }
+
+        public async Task<List<FilesIndexItem>> GetParsedFilesAsync()
+        {
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            // SQL: SELECT * FROM FileCache WHERE IsMetadataParsed = 1 AND MediaFolderId IN (...)
+            return await context.FilesIndex
+                .AsNoTracking()
+                .Where(x => x.IsMetadataParsed)
+                .ToListAsync();
         }
 
         public async Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds)

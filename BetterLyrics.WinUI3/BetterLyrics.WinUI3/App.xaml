@@ -3,8 +3,6 @@
     x:Class="BetterLyrics.WinUI3.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converter="using:BetterLyrics.WinUI3.Converter"
-    xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:globalization="using:Windows.Globalization"
     xmlns:local="using:BetterLyrics.WinUI3"
     xmlns:media="using:CommunityToolkit.WinUI.Media">
@@ -13,8 +11,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--  Merged dictionaries here  -->
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
                 <ResourceDictionary Source="ms-appx:///DevWinUI.Controls/Themes/Generic.xaml" />
+
+                <ResourceDictionary Source="/Styles/Converters.xaml" />
+                <ResourceDictionary Source="/Styles/InteractiveListViewHeaderStyle.xaml" />
+                <ResourceDictionary Source="/Styles/GhostSliderStyle.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Theme  -->
@@ -41,48 +45,6 @@
             <ExponentialEase x:Key="EaseInOut" EasingMode="EaseInOut" />
             <ExponentialEase x:Key="EaseOut" EasingMode="EaseOut" />
             <ExponentialEase x:Key="EaseIn" EasingMode="EaseIn" />
-
-            <!--  Converter  -->
-            <converter:EnumToIntConverter x:Key="EnumToIntConverter" />
-            <converter:ColorToBrushConverter x:Key="ColorToBrushConverter" />
-            <converter:MatchedLocalFilesPathToVisibilityConverter x:Key="MatchedLocalFilesPathToVisibilityConverter" />
-            <converter:IntToCornerRadius x:Key="IntToCornerRadius" />
-            <converter:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
-            <converter:LyricsSearchProviderToDisplayNameConverter x:Key="LyricsSearchProviderToDisplayNameConverter" />
-            <converter:TranslationSearchProviderToDisplayNameConverter x:Key="TranslationSearchProviderToDisplayNameConverter" />
-            <converter:TransliterationSearchProviderToDisplayNameConverter x:Key="TransliterationSearchProviderToDisplayNameConverter" />
-            <converter:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
-            <converter:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
-            <converter:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
-            <converter:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
-            <converter:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
-            <converter:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
-            <converter:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
-            <converter:BoolToPartialOpacityConverter x:Key="BoolToPartialOpacityConverter" />
-            <converter:BoolNegationToOpacityConverter x:Key="BoolNegationToOpacityConverter" />
-            <converter:RectToMarginConverter x:Key="RectToMarginConverter" />
-            <converter:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
-            <converter:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
-            <converter:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
-            <converter:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />
-            <converter:IntToBoolConverter x:Key="IntToBoolConverter" />
-            <converter:IndexToDisplayConverter x:Key="IndexToDisplayConverter" />
-            <converter:IntToDoubleConverter x:Key="IntToDoubleConverter" />
-            <converter:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
-            <converter:PictureInfosToImageSourceConverter x:Key="PictureInfosToImageSourceConverter" />
-            <converter:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
-            <converter:TextAlignmentTypeToHorizontalAlignmentConverter x:Key="TextAlignmentTypeToHorizontalAlignmentConverter" />
-            <converter:LyricsLayoutOrientationToOrientationConverter x:Key="LyricsLayoutOrientationToOrientationConverter" />
-            <converter:LyricsLayoutOrientationNegationToOrientationConverter x:Key="LyricsLayoutOrientationNegationToOrientationConverter" />
-            <converter:FileSourceTypeToIconConverter x:Key="FileSourceTypeToIconConverter" />
-            <converter:PathToImageConverter x:Key="PathToImageConverter" />
-            <converter:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
-            <converter:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
-
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-            <converters:BoolNegationConverter x:Key="BoolNegationConverter" />
-            <converters:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
-            <converters:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
 
             <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
@@ -111,7 +73,7 @@
             </Style>
             <Style
                 x:Key="TitleBarToggleButtonStyle"
-                BasedOn="{StaticResource ToggleButtonRevealStyle}"
+                BasedOn="{StaticResource DefaultToggleButtonStyle}"
                 TargetType="ToggleButton">
                 <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="CornerRadius" Value="4" />
@@ -119,7 +81,10 @@
                 <Setter Property="Padding" Value="14,6,14,9" />
                 <Setter Property="Background" Value="Transparent" />
             </Style>
-            <Style x:Key="GhostToggleButtonStyle" TargetType="ToggleButton">
+            <Style
+                x:Key="GhostToggleButtonStyle"
+                BasedOn="{StaticResource DefaultToggleButtonStyle}"
+                TargetType="ToggleButton">
                 <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="VerticalAlignment" Value="Stretch" />
                 <Setter Property="BorderThickness" Value="0" />
@@ -131,190 +96,6 @@
                 <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="CornerRadius" Value="6" />
-            </Style>
-
-            <Style x:Key="GhostSliderStyle" TargetType="Slider">
-                <Setter Property="Background" Value="{ThemeResource ControlStrokeColorOnAccentDefaultBrush}" />
-                <Setter Property="BorderThickness" Value="{ThemeResource SliderBorderThemeThickness}" />
-                <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
-                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-                <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
-                <Setter Property="ManipulationMode" Value="None" />
-                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-                <Setter Property="FocusVisualMargin" Value="-7,0,-7,0" />
-                <Setter Property="IsFocusEngagementEnabled" Value="True" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Slider">
-                            <Grid Margin="{TemplateBinding Padding}">
-                                <Grid.Resources>
-                                    <Style x:Key="SliderThumbStyle" TargetType="Thumb">
-                                        <Setter Property="BorderThickness" Value="0" />
-                                        <Setter Property="Background" Value="{ThemeResource TextFillColorPrimaryBrush}" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="Thumb">
-                                                    <Border
-                                                        Background="{TemplateBinding Background}"
-                                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                                        CornerRadius="0,1,1,0" />
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Grid.Resources>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <ContentPresenter
-                                    x:Name="HeaderContentPresenter"
-                                    Grid.Row="0"
-                                    Margin="{ThemeResource SliderTopHeaderMargin}"
-                                    x:DeferLoadStrategy="Lazy"
-                                    Content="{TemplateBinding Header}"
-                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                    FontWeight="{ThemeResource SliderHeaderThemeFontWeight}"
-                                    Foreground="{ThemeResource SliderHeaderForeground}"
-                                    TextWrapping="Wrap"
-                                    Visibility="Collapsed" />
-                                <Grid
-                                    x:Name="SliderContainer"
-                                    Grid.Row="1"
-                                    Background="{ThemeResource SliderContainerBackground}"
-                                    Control.IsTemplateFocusTarget="True">
-                                    <Grid x:Name="HorizontalTemplate" MinHeight="{ThemeResource SliderHorizontalHeight}">
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="{ThemeResource SliderPreContentMargin}" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="{ThemeResource SliderPostContentMargin}" />
-                                        </Grid.RowDefinitions>
-                                        <Rectangle
-                                            x:Name="HorizontalTrackRect"
-                                            Grid.Row="1"
-                                            Grid.ColumnSpan="3"
-                                            Height="2"
-                                            Fill="{TemplateBinding Background}" />
-                                        <Rectangle
-                                            x:Name="HorizontalDecreaseRect"
-                                            Grid.Row="1"
-                                            Fill="{TemplateBinding Foreground}" />
-                                        <TickBar
-                                            x:Name="TopTickBar"
-                                            Grid.ColumnSpan="3"
-                                            Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                            Margin="0,0,0,4"
-                                            VerticalAlignment="Bottom"
-                                            Fill="{ThemeResource SliderTickBarFill}"
-                                            Visibility="Collapsed" />
-                                        <TickBar
-                                            x:Name="HorizontalInlineTickBar"
-                                            Grid.Row="1"
-                                            Grid.ColumnSpan="3"
-                                            Height="2"
-                                            Fill="{ThemeResource SliderInlineTickBarFill}"
-                                            Visibility="Collapsed" />
-                                        <TickBar
-                                            x:Name="BottomTickBar"
-                                            Grid.Row="2"
-                                            Grid.ColumnSpan="3"
-                                            Height="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                            Margin="0,4,0,0"
-                                            VerticalAlignment="Top"
-                                            Fill="{ThemeResource SliderTickBarFill}"
-                                            Visibility="Collapsed" />
-                                        <Thumb
-                                            x:Name="HorizontalThumb"
-                                            Grid.Row="0"
-                                            Grid.RowSpan="3"
-                                            Grid.Column="1"
-                                            Width="2"
-                                            Height="2"
-                                            AutomationProperties.AccessibilityView="Raw"
-                                            DataContext="{TemplateBinding Value}"
-                                            FocusVisualMargin="-14,-6,-14,-6"
-                                            Style="{StaticResource SliderThumbStyle}" />
-                                    </Grid>
-                                    <Grid
-                                        x:Name="VerticalTemplate"
-                                        MinWidth="{ThemeResource SliderVerticalWidth}"
-                                        Visibility="Collapsed">
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="{ThemeResource SliderPreContentMargin}" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="{ThemeResource SliderPostContentMargin}" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle
-                                            x:Name="VerticalTrackRect"
-                                            Grid.RowSpan="3"
-                                            Grid.Column="1"
-                                            Width="{ThemeResource SliderTrackThemeHeight}"
-                                            Fill="{TemplateBinding Background}" />
-                                        <Rectangle
-                                            x:Name="VerticalDecreaseRect"
-                                            Grid.Row="2"
-                                            Grid.Column="1"
-                                            Fill="{TemplateBinding Foreground}" />
-                                        <TickBar
-                                            x:Name="LeftTickBar"
-                                            Grid.RowSpan="3"
-                                            Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                            Margin="0,0,4,0"
-                                            HorizontalAlignment="Right"
-                                            Fill="{ThemeResource SliderTickBarFill}"
-                                            Visibility="Collapsed" />
-                                        <TickBar
-                                            x:Name="VerticalInlineTickBar"
-                                            Grid.RowSpan="3"
-                                            Grid.Column="1"
-                                            Width="{ThemeResource SliderTrackThemeHeight}"
-                                            Fill="{ThemeResource SliderInlineTickBarFill}"
-                                            Visibility="Collapsed" />
-                                        <TickBar
-                                            x:Name="RightTickBar"
-                                            Grid.RowSpan="3"
-                                            Grid.Column="2"
-                                            Width="{ThemeResource SliderOutsideTickBarThemeHeight}"
-                                            Margin="4,0,0,0"
-                                            HorizontalAlignment="Left"
-                                            Fill="{ThemeResource SliderTickBarFill}"
-                                            Visibility="Collapsed" />
-                                        <Thumb
-                                            x:Name="VerticalThumb"
-                                            Grid.Row="1"
-                                            Grid.Column="0"
-                                            Grid.ColumnSpan="3"
-                                            Width="24"
-                                            Height="8"
-                                            AutomationProperties.AccessibilityView="Raw"
-                                            DataContext="{TemplateBinding Value}"
-                                            FocusVisualMargin="-6,-14,-6,-14"
-                                            Style="{StaticResource SliderThumbStyle}" />
-                                    </Grid>
-
-                                </Grid>
-
-                            </Grid>
-
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
             </Style>
 
             <Style
@@ -359,10 +140,6 @@
                 <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
             </Style>
-
-            <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="TextFillColorPrimaryBrush" />
-            <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
-            <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="TextFillColorPrimaryBrush" />
 
             <!--  Dimensions  -->
 

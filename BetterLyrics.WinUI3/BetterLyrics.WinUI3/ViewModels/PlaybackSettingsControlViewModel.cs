@@ -2,7 +2,7 @@
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslationService;
@@ -20,7 +20,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class PlaybackSettingsControlViewModel : BaseViewModel
     {
-        public IMediaSessionsService MediaSessionsService;
+        public IGSMTCService GSMTCService;
         private readonly ITranslationService _translationService;
         private readonly ILastFMService _lastFMService;
         private readonly ISettingsService _settingsService;
@@ -55,12 +55,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public PlaybackSettingsControlViewModel(
             ISettingsService settingsService,
-            IMediaSessionsService mediaSessionsService,
+            IGSMTCService gsmtcService,
             ITranslationService libreTranslationService,
             ILastFMService lastFMService,
             ITransliterationService transliterationService)
         {
-            MediaSessionsService = mediaSessionsService;
+            GSMTCService = gsmtcService;
 
             _settingsService = settingsService;
             _translationService = libreTranslationService;
@@ -206,7 +206,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             PasswordVaultHelper.Delete(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey);
             PasswordVaultHelper.Save(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey, AppleMusicMediaUserToken);
-            MediaSessionsService.UpdateLyrics();
+            GSMTCService.UpdateLyrics();
         }
 
         partial void OnSelectedTargetLanguageIndexChanged(int value)

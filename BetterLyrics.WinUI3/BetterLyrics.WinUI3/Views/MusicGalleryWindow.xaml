@@ -16,7 +16,7 @@
         Loaded="RootGrid_Loaded"
         Unloaded="RootGrid_Unloaded">
 
-        <local:MusicGalleryPage x:Name="MusicGalleryPage" IsPlayingQueueOpened="{Binding ElementName=NowPlayingBar, Path=IsPlayingQueueOpened, Mode=OneWay}" />
+        <local:MusicGalleryPage x:Name="MusicGalleryPage" />
 
         <local:NowPlayingPage
             x:Name="NowPlayingPage"
@@ -32,15 +32,28 @@
             x:Name="NowPlayingBar"
             VerticalAlignment="Bottom"
             IsAutoHideEnabled="False"
+            PlayQueueButtonClick="NowPlayingBar_PlayingQueueClick"
             PlaybackOrder="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=TwoWay}"
             ShowPlaybackOrderButton="True"
             ShowPlayingQueueButton="True"
             ShowSongInfo="True"
+            ShowStopButton="True"
             SongInfoTapped="NowPlayingBar_SongInfoTapped"
-            TimeTapped="NowPlayingBar_TimeTapped" />
-
-        <!--  Title bar  -->
-        <StackPanel VerticalAlignment="Top" Orientation="Horizontal" />
+            TimeTapped="NowPlayingBar_TimeTapped">
+            <uc:NowPlayingBar.ContextFlyout>
+                <Flyout x:Name="PlayQueueFlyout" ShouldConstrainToRootBounds="False">
+                    <Flyout.FlyoutPresenterStyle>
+                        <Style BasedOn="{StaticResource FlyoutGhostStyle}" TargetType="FlyoutPresenter">
+                            <Setter Property="MaxHeight" Value="600" />
+                        </Style>
+                    </Flyout.FlyoutPresenterStyle>
+                    <uc:PlayQueue
+                        x:Name="PlayQueue"
+                        Width="300"
+                        MaxHeight="600" />
+                </Flyout>
+            </uc:NowPlayingBar.ContextFlyout>
+        </uc:NowPlayingBar>
 
     </Grid>
 

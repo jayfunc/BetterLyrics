@@ -5,7 +5,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Views
         public LyricsWindowStatus LyricsWindowStatus { get; private set; }
 
         public NowPlayingWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<NowPlayingWindowViewModel>();
-        private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+        private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         public NowPlayingWindow(LyricsWindowStatus status)
@@ -141,7 +141,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateAlbumArtThemeColors()
         {
-            var result = _mediaSessionsService.CalculateAlbumArtThemeColors(LyricsWindowStatus, _backdropAccentColor);
+            var result = _gsmtcService.CalculateAlbumArtThemeColors(LyricsWindowStatus, _backdropAccentColor);
 
             NowPlayingPage.AlbumArtThemeColors = result;
             RootGrid.RequestedTheme = result.ThemeType;
@@ -231,7 +231,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnAutoShowOrHideWindowChanged()
         {
-            this.SetLyricsWindowVisibilityByPlayingStatus(_mediaSessionsService.CurrentIsPlaying, DispatcherQueue);
+            this.SetLyricsWindowVisibilityByPlayingStatus(_gsmtcService.CurrentIsPlaying, DispatcherQueue);
         }
 
         private void OnIsAdaptToEnvironmentChanged()
@@ -466,9 +466,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.CurrentIsPlaying))
+                if (message.PropertyName == nameof(IGSMTCService.CurrentIsPlaying))
                 {
                     OnAutoShowOrHideWindowChanged();
                 }
@@ -520,9 +520,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<BitmapImage?> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
+                if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
                 {
                     UpdateAlbumArtThemeColors();
                 }

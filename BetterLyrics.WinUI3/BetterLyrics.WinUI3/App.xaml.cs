@@ -4,12 +4,13 @@ using BetterLyrics.WinUI3.Models.Db;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.FileSystemService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -19,7 +20,6 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching; // 关键：用于线程调度
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle; // 关键：App生命周期管理
 using Serilog;
@@ -278,7 +278,8 @@ namespace BetterLyrics.WinUI3
 
                     // Services
                     .AddSingleton<ISettingsService, SettingsService>()
-                    .AddSingleton<IMediaSessionsService, MediaSessionsService>()
+                    .AddSingleton<ISMTCService, SMTCService>()
+                    .AddSingleton<IGSMTCService, GSMTCService>()
                     .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
                     .AddSingleton<ILyricsSearchService, LyricsSearchService>()
                     .AddSingleton<ITranslationService, TranslationService>()
@@ -304,6 +305,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<AboutControlViewModel>()
                     .AddSingleton<MusicGalleryWindowViewModel>()
                     .AddSingleton<StatsDashboardControlViewModel>()
+                    .AddSingleton<PlayQueueViewModel>()
 
                     .AddTransient<NowPlayingWindowViewModel>()
                     .AddTransient<NowPlayingPageViewModel>()

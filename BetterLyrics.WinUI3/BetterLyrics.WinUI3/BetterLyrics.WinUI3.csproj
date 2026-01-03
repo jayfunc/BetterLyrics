@@ -43,12 +43,15 @@
 		<None Remove="Controls\MediaSettingsControl.xaml" />
 		<None Remove="Controls\NowPlayingBar.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
+		<None Remove="Controls\PlayQueue.xaml" />
 		<None Remove="Controls\PropertyRow.xaml" />
 		<None Remove="Controls\RemoteServerConfigControl.xaml" />
 		<None Remove="Controls\ShortcutTextBox.xaml" />
 		<None Remove="Controls\StatsDashboardControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
+		<None Remove="Styles\GhostSliderStyle.xaml" />
+		<None Remove="Styles\InteractiveListViewHeaderStyle.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
 		<None Remove="Views\LyricsWindowSwitchWindow.xaml" />
 		<None Remove="Views\MusicGalleryPage.xaml" />
@@ -260,6 +263,21 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
+	  <Page Update="Styles\GhostSliderStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\Converters.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\PlayQueue.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
 	  <Page Update="Controls\StatsDashboardControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
@@ -406,6 +424,11 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\AboutControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\InteractiveListViewHeaderStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

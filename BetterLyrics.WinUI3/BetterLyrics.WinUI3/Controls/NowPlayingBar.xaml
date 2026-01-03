@@ -176,13 +176,13 @@
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="True">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                                 </interactivity:DataTriggerBehavior>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="False">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
@@ -196,13 +196,13 @@
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="True">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                                 </interactivity:DataTriggerBehavior>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.MediaSessionsService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="False">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
@@ -215,12 +215,16 @@
                                                   Glyph=&#xE623;}"
                             Style="{StaticResource GhostButtonStyle}" />
                         <!--  播放队列按钮  -->
-                        <ToggleButton
+                        <Button
                             Click="PlayingQueueButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                   Glyph=&#xE8FD;}"
-                            Style="{StaticResource GhostToggleButtonStyle}"
-                            Visibility="{x:Bind ShowPlayingQueueButton, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                            Style="{StaticResource GhostButtonStyle}"
+                            Visibility="{x:Bind ShowPlayingQueueButton, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="MusicGalleryPagePlayingQueue" />
+                            </ToolTipService.ToolTip>
+                        </Button>
                     </StackPanel>
                 </Grid>
 
@@ -230,6 +234,19 @@
                         Padding="16"
                         Orientation="Horizontal"
                         Spacing="3">
+
+                        <!--  Stop media session  -->
+                        <Button
+                            Command="{x:Bind ViewModel.StopTrackCommand}"
+                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                  FontSize=16,
+                                                  Glyph=&#xE71A;}"
+                            Style="{StaticResource GhostButtonStyle}"
+                            Visibility="{x:Bind ShowStopButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="MusicGalleryPageStopTrack" />
+                            </ToolTipService.ToolTip>
+                        </Button>
 
                         <!--  Volume  -->
                         <Button Click="VolumeButton_Click" Style="{StaticResource GhostButtonStyle}">
@@ -402,7 +419,7 @@
                     Margin="0,-14,0,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
-                    Maximum="{x:Bind ViewModel.MediaSessionsService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
+                    Maximum="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}" />

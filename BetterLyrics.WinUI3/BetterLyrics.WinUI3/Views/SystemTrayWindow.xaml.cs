@@ -3,7 +3,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Views;
 public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChangedMessage<List<string>>>
 {
     private ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-    private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+    private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
 
     private WindowMessageMonitor _wmm;
 
@@ -92,13 +92,13 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
     {
         GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
         {
-            if (_mediaSessionsService.CurrentIsPlaying)
+            if (_gsmtcService.CurrentIsPlaying)
             {
-                _ = _mediaSessionsService.PauseAsync();
+                _ = _gsmtcService.PauseAsync();
             }
             else
             {
-                _ = _mediaSessionsService.PlayAsync();
+                _ = _gsmtcService.PlayAsync();
             }
         }));
     }
@@ -107,7 +107,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
     {
         GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
         {
-            _ = _mediaSessionsService.PreviousAsync();
+            _ = _gsmtcService.PreviousAsync();
         });
     }
 
@@ -115,7 +115,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
     {
         GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
         {
-            _ = _mediaSessionsService.NextAsync();
+            _ = _gsmtcService.NextAsync();
         });
     }
 

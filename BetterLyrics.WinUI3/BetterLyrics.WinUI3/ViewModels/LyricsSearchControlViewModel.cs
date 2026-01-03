@@ -4,7 +4,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Parsers.LyricsParser;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -20,7 +20,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         IRecipient<PropertyChangedMessage<SongInfo?>>
     {
         private readonly ILyricsSearchService _lyricsSearchService;
-        private readonly IMediaSessionsService _mediaSessionsService;
+        private readonly IGSMTCService _gsmtcService;
         private readonly ISettingsService _settingsService;
 
         private LatestOnlyTaskRunner _lyricsSearchRunner = new();
@@ -43,10 +43,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial bool IsSearching { get; set; } = false;
 
-        public LyricsSearchControlViewModel(ILyricsSearchService lyricsSearchService, IMediaSessionsService mediaSessionsService, ISettingsService settingsService)
+        public LyricsSearchControlViewModel(ILyricsSearchService lyricsSearchService, IGSMTCService gsmtcService, ISettingsService settingsService)
         {
             _lyricsSearchService = lyricsSearchService;
-            _mediaSessionsService = mediaSessionsService;
+            _gsmtcService = gsmtcService;
             _settingsService = settingsService;
 
             AppSettings = _settingsService.AppSettings;
@@ -58,19 +58,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             LyricsSearchResults.Clear();
             LyricsDataArr = null;
-            if (_mediaSessionsService.CurrentSongInfo != null)
+            if (_gsmtcService.CurrentSongInfo != null)
             {
                 var found = GetMappedSongSearchQueryFromSettings();
                 if (found == null)
                 {
                     MappedSongSearchQuery = new MappedSongSearchQuery
                     {
-                        OriginalTitle = _mediaSessionsService.CurrentSongInfo.Title,
-                        OriginalArtist = _mediaSessionsService.CurrentSongInfo.DisplayArtists,
-                        OriginalAlbum = _mediaSessionsService.CurrentSongInfo.Album,
-                        MappedTitle = _mediaSessionsService.CurrentSongInfo.Title,
-                        MappedArtist = _mediaSessionsService.CurrentSongInfo.DisplayArtists,
-                        MappedAlbum = _mediaSessionsService.CurrentSongInfo.Album,
+                        OriginalTitle = _gsmtcService.CurrentSongInfo.Title,
+                        OriginalArtist = _gsmtcService.CurrentSongInfo.DisplayArtists,
+                        OriginalAlbum = _gsmtcService.CurrentSongInfo.Album,
+                        MappedTitle = _gsmtcService.CurrentSongInfo.Title,
+                        MappedArtist = _gsmtcService.CurrentSongInfo.DisplayArtists,
+                        MappedAlbum = _gsmtcService.CurrentSongInfo.Album,
                     };
                 }
                 else
@@ -82,16 +82,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private MappedSongSearchQuery? GetMappedSongSearchQueryFromSettings()
         {
-            if (_mediaSessionsService.CurrentSongInfo == null)
+            if (_gsmtcService.CurrentSongInfo == null)
             {
                 return null;
             }
 
             var found = AppSettings.MappedSongSearchQueries
                 .FirstOrDefault(x =>
-                    x.OriginalTitle == _mediaSessionsService.CurrentSongInfo.Title &&
-                    x.OriginalArtist == _mediaSessionsService.CurrentSongInfo.DisplayArtists &&
-                    x.OriginalAlbum == _mediaSessionsService.CurrentSongInfo.Album);
+                    x.OriginalTitle == _gsmtcService.CurrentSongInfo.Title &&
+                    x.OriginalArtist == _gsmtcService.CurrentSongInfo.DisplayArtists &&
+                    x.OriginalAlbum == _gsmtcService.CurrentSongInfo.Album);
 
             return found;
         }
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 return;
             }
-            _mediaSessionsService.ChangePosition(value.StartMs / 1000.0);
+            _gsmtcService.ChangePosition(value.StartMs / 1000.0);
         }
 
         [RelayCommand]
@@ -121,7 +121,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 LyricsSearchResults = [..await Task.Run(async () =>
                 {
                     var result = await _lyricsSearchService.SearchAllAsync(
-                        ((SongInfo?)_mediaSessionsService.CurrentSongInfo?.Clone() ?? new())
+                        ((SongInfo?)_gsmtcService.CurrentSongInfo?.Clone() ?? new())
                             .WithTitle(MappedSongSearchQuery.MappedTitle)
                             .WithArtist(MappedSongSearchQuery.MappedArtist.SplitByCommonSplitter())
                             .WithAlbum(MappedSongSearchQuery.MappedAlbum),
@@ -196,9 +196,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void Receive(PropertyChangedMessage<SongInfo?> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.CurrentSongInfo))
+                if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
                 {
                     InitMappedSongSearchQuery();
                 }

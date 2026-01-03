@@ -8,7 +8,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Renderer;
 using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.Controls
         IRecipient<PropertyChangedMessage<IRandomAccessStream?>>
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+        private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
 
         private readonly LyricsRenderer _lyricsRenderer = new();
         private readonly FluidBackgroundRenderer _fluidRenderer = new();
@@ -98,8 +98,6 @@ namespace BetterLyrics.WinUI3.Controls
 
         private TimeSpan _songPositionWithOffset;
         private TimeSpan _songPosition; // 当前歌曲时刻
-        private TimeSpan _totalPlayedTime; // 当前歌曲播放总时长（包括来来回回重复播放的时间）
-        private bool _isLastFMTracked = false;
 
         private double _renderLyricsStartX = 0;
         private double _renderLyricsStartY = 0;
@@ -345,7 +343,7 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsStyle = _lyricsWindowStatus.LyricsStyleSettings;
             var lyricsEffect = _lyricsWindowStatus.LyricsEffectSettings;
 
-            double songDuration = _mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0;
+            double songDuration = _gsmtcService.CurrentSongInfo?.DurationMs ?? 0;
             bool isForceWordByWord = _settingsService.AppSettings.GeneralSettings.IsForceWordByWordEffect;
 
             Color overlayColor;
@@ -459,7 +457,7 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsBg = _lyricsWindowStatus.LyricsBackgroundSettings;
             var lyricsStyle = _lyricsWindowStatus.LyricsStyleSettings;
             var lyricsEffect = _lyricsWindowStatus.LyricsEffectSettings;
-            var lyricsData = _mediaSessionsService.CurrentLyricsData;
+            var lyricsData = _gsmtcService.CurrentLyricsData;
 
             TimeSpan elapsedTime = args.Timing.ElapsedTime;
 
@@ -654,25 +652,22 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UpdatePlaybackState(TimeSpan elapsedTime)
         {
-            if (_mediaSessionsService.CurrentIsPlaying)
+            if (_gsmtcService.CurrentIsPlaying)
             {
                 _songPosition += elapsedTime;
-                _totalPlayedTime += elapsedTime;
-                _songPositionWithOffset = _songPosition + TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
+                _songPositionWithOffset = _songPosition + TimeSpan.FromMilliseconds(_gsmtcService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
             }
         }
 
         private void ResetPlaybackState()
         {
             _songPosition = TimeSpan.Zero;
-            _totalPlayedTime = TimeSpan.Zero;
-            _isLastFMTracked = false;
         }
 
         private void UpdateRenderLyricsLines()
         {
             _renderLyricsLines = null;
-            _renderLyricsLines = _mediaSessionsService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine()
+            _renderLyricsLines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine()
             {
                 LyricsSyllables = x.LyricsSyllables,
                 StartMs = x.StartMs,
@@ -685,7 +680,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async Task ReloadCoverBackgroundResourcesAsync()
         {
-            if (_mediaSessionsService.AlbumArtBitmapStream is IRandomAccessStream stream)
+            if (_gsmtcService.AlbumArtBitmapStream is IRandomAccessStream stream)
             {
                 stream.Seek(0);
                 CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(Canvas, stream);
@@ -695,26 +690,19 @@ namespace BetterLyrics.WinUI3.Controls
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.CurrentPosition))
+                if (message.PropertyName == nameof(IGSMTCService.CurrentPosition))
                 {
                     var realPosition = message.NewValue;
 
                     var diff = Math.Abs(_songPosition.TotalMilliseconds - realPosition.TotalMilliseconds);
-                    var timelineSyncThreshold = _mediaSessionsService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0;
+                    var timelineSyncThreshold = _gsmtcService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0;
 
                     // 偏差 or seek
                     if (diff >= timelineSyncThreshold)
                     {
                         _songPosition = realPosition;
-
-                        // 如果跳回了开头，重置 LastFM 统计状态
-                        if (_songPosition.TotalSeconds <= 1)
-                        {
-                            _totalPlayedTime = TimeSpan.Zero;
-                            _isLastFMTracked = false;
-                        }
                     }
 
                     // 拖动进度条等大跨度
@@ -728,9 +716,9 @@ namespace BetterLyrics.WinUI3.Controls
 
         public void Receive(PropertyChangedMessage<LyricsData?> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.CurrentLyricsData))
+                if (message.PropertyName == nameof(IGSMTCService.CurrentLyricsData))
                 {
                     UpdateRenderLyricsLines();
                     _isLayoutChanged = true;
@@ -740,9 +728,9 @@ namespace BetterLyrics.WinUI3.Controls
 
         public void Receive(PropertyChangedMessage<SongInfo?> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.CurrentSongInfo))
+                if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
                 {
                     ResetPlaybackState();
                 }
@@ -895,9 +883,9 @@ namespace BetterLyrics.WinUI3.Controls
 
         public void Receive(PropertyChangedMessage<IRandomAccessStream?> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapStream))
+                if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapStream))
                 {
                     _ = ReloadCoverBackgroundResourcesAsync();
                 }

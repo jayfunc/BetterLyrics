@@ -39,6 +39,8 @@ namespace BetterLyrics.WinUI3.Renderer
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.PhoneticCanvasTextLayout.LayoutBounds;
 
+            if (double.IsNaN(opacity)) return;
+
             var destRect = new Rect(
                 bounds.X + line.PhoneticPosition.X,
                 bounds.Y + line.PhoneticPosition.Y,
@@ -70,6 +72,8 @@ namespace BetterLyrics.WinUI3.Renderer
             var opacity = line.TranslatedOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
             var bounds = line.TranslatedCanvasTextLayout.LayoutBounds;
+
+            if (double.IsNaN(opacity)) return;
 
             var destRect = new Rect(
                 bounds.X + line.TranslatedPosition.X,
