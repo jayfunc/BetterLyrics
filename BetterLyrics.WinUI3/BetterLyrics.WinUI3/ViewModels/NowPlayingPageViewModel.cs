@@ -2,7 +2,7 @@
 
 using BetterLyrics.WinUI3.Hooks;
 
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.Input;
 
@@ -10,9 +10,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class NowPlayingPageViewModel : BaseViewModel
     {
-        public IMediaSessionsService MediaSessionsService { get; private set; }
+        public IGSMTCService MediaSessionsService { get; private set; }
 
-        public NowPlayingPageViewModel(IMediaSessionsService mediaSessionsService)
+        public NowPlayingPageViewModel(IGSMTCService mediaSessionsService)
         {
             MediaSessionsService = mediaSessionsService;
         }

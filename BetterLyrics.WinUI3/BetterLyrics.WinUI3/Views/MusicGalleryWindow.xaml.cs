@@ -4,7 +4,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -14,6 +14,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
+using static Vanara.PInvoke.AdvApi32;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -30,7 +31,7 @@ namespace BetterLyrics.WinUI3.Views
     {
         public MusicGalleryWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
 
-        private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+        private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
 
         public MusicGalleryWindow()
         {
@@ -47,7 +48,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateAlbumArtThemeColors()
         {
-            var result = _mediaSessionsService.CalculateAlbumArtThemeColors(
+            var result = _gsmtcService.CalculateAlbumArtThemeColors(
                 ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
             NowPlayingPage.AlbumArtThemeColors = result;
@@ -69,9 +70,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<BitmapImage?> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
+                if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
                 {
                     UpdateAlbumArtThemeColors();
                 }
@@ -131,7 +132,14 @@ namespace BetterLyrics.WinUI3.Views
 
         private void NowPlayingBar_PlayingQueueClick(object sender, System.EventArgs e)
         {
-            MusicGalleryPage.IsPlayingQueueOpened = !MusicGalleryPage.IsPlayingQueueOpened;
+            if (PlayQueueFlyout.IsOpen)
+            {
+                PlayQueueFlyout.Hide();
+            }
+            else
+            {
+                PlayQueueFlyout.ShowAt(NowPlayingBar);
+            }
         }
     }
 }

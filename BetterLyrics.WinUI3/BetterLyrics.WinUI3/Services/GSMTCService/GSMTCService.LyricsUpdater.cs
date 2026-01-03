@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Services.MediaSessionsService
+namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
-    public partial class MediaSessionsService : IMediaSessionsService
+    public partial class GSMTCService : IGSMTCService
     {
         private LatestOnlyTaskRunner _refreshLyricsRunner = new();
 

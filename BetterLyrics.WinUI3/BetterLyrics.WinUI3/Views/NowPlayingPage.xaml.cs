@@ -6,7 +6,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>
     {
-        private readonly IMediaSessionsService _mediaSessionsService = Ioc.Default.GetRequiredService<IMediaSessionsService>();
+        private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
 
         private readonly DispatcherQueueTimer _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
         private readonly DispatcherQueueTimer _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
@@ -114,9 +114,9 @@ namespace BetterLyrics.WinUI3.Views
             var artistsFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.ArtistNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
             var albumFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.AlbumNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
 
-            RenderTextBlock(TitleTextBlock, _mediaSessionsService.CurrentSongInfo?.Title, titleFontSize);
-            RenderTextBlock(ArtistsTextBlock, _mediaSessionsService.CurrentSongInfo?.DisplayArtists, artistsFontSize);
-            RenderTextBlock(AlbumTextBlock, _mediaSessionsService.CurrentSongInfo?.Album, albumFontSize);
+            RenderTextBlock(TitleTextBlock, _gsmtcService.CurrentSongInfo?.Title, titleFontSize);
+            RenderTextBlock(ArtistsTextBlock, _gsmtcService.CurrentSongInfo?.DisplayArtists, artistsFontSize);
+            RenderTextBlock(AlbumTextBlock, _gsmtcService.CurrentSongInfo?.Album, albumFontSize);
         }
 
         private void UpdateSongInfoOpacity()
@@ -555,7 +555,7 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsScrollViewer_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMousePressing = false;
-            _mediaSessionsService.ChangeLyricsLine(LyricsCanvas.CurrentHoveringLineIndex);
+            _gsmtcService.ChangeLyricsLine(LyricsCanvas.CurrentHoveringLineIndex);
         }
 
         private void LyricsScrollViewer_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -577,9 +577,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public async void Receive(PropertyChangedMessage<SongInfo?> message)
         {
-            if (message.Sender is IMediaSessionsService)
+            if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IMediaSessionsService.CurrentSongInfo))
+                if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
                 {
                     SongInfoStackPanel.Opacity = 0;
                     await Task.Delay(Constants.Time.AnimationDuration);

@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI;
 
-namespace BetterLyrics.WinUI3.Services.MediaSessionsService
+namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
-    public interface IMediaSessionsService : INotifyPropertyChanged
+    /// <summary>
+    /// Interface for GlobalSystemMediaTransportControlsSession Service 
+    /// </summary>
+    public interface IGSMTCService : INotifyPropertyChanged
     {
         Task PlayAsync();
         Task PauseAsync();

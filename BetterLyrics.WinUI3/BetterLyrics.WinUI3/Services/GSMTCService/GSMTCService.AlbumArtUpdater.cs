@@ -17,9 +17,9 @@ using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI;
 
-namespace BetterLyrics.WinUI3.Services.MediaSessionsService
+namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
-    public partial class MediaSessionsService : IMediaSessionsService
+    public partial class GSMTCService : IGSMTCService
     {
         private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
 

@@ -50,7 +50,13 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         Task ScanMediaFolderAsync(MediaFolder folder, CancellationToken token = default);
 
         /// <summary>
-        /// 从数据库拉取
+        /// 从数据库拉取全部已解析的数据
+        /// </summary>
+        /// <returns></returns>
+        Task<List<FilesIndexItem>> GetParsedFilesAsync();
+
+        /// <summary>
+        /// 从数据库拉取全部已解析的且其所属的 MediaFolder 在应用内处于开启状态的数据
         /// </summary>
         /// <param name="enabledConfigIds"></param>
         /// <returns></returns>

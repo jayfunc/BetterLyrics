@@ -38,9 +38,9 @@ using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
 
-namespace BetterLyrics.WinUI3.Services.MediaSessionsService
+namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
-    public partial class MediaSessionsService : BaseViewModel, IMediaSessionsService,
+    public partial class GSMTCService : BaseViewModel, IGSMTCService,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
         private readonly IDiscordService _discordService;
         private readonly IPlayHistoryService _playHistoryService;
         private readonly ILastFMService _lastFMService;
-        private readonly ILogger<MediaSessionsService> _logger;
+        private readonly ILogger<GSMTCService> _logger;
 
         private double _lxMusicPositionSeconds = 0;
         private byte[]? _lxMusicAlbumArtBytes = null;
@@ -73,7 +73,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
 
         [ObservableProperty] public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
 
-        public MediaSessionsService(
+        public GSMTCService(
             ISettingsService settingsService,
             IAlbumArtSearchService albumArtSearchService,
             ILyricsSearchService lyricsSearchService,
@@ -82,7 +82,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
             ITransliterationService transliterationService,
             IPlayHistoryService playHistoryService,
             ILastFMService lastFMService,
-            ILogger<MediaSessionsService> logger)
+            ILogger<GSMTCService> logger)
         {
             _settingsService = settingsService;
             _albumArtSearchService = albumArtSearchService;
@@ -333,7 +333,7 @@ namespace BetterLyrics.WinUI3.Services.MediaSessionsService
                             .Replace(ExtendedGenreFiled.FileName, "");
 
                         // 写入播放记录
-                        if (CurrentSongInfo != null && CurrentSongInfo.Title != "N/A")
+                        if (CurrentSongInfo != null && !string.IsNullOrWhiteSpace(CurrentSongInfo.Title) && CurrentSongInfo.Title != "N/A")
                         {
                             // 必须捕获一个副本给异步任务，因为 CurrentSongInfo 马上就要变了
                             var lastSong = CurrentSongInfo;

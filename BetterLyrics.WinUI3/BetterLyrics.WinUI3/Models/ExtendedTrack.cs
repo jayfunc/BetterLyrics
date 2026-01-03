@@ -105,14 +105,13 @@ namespace BetterLyrics.WinUI3.Models
 
         public ExtendedTrack() : base() { }
 
-        public ExtendedTrack(string uriString) : base()
+        public ExtendedTrack(string decodedUriString) : base()
         {
-            Uri = uriString;
-
-            string atlPath = uriString;
+            string atlPath = decodedUriString;
             try
             {
-                var u = new Uri(uriString);
+                var u = new Uri(decodedUriString);
+                Uri = u.AbsoluteUri;
                 if (u.IsFile) atlPath = u.LocalPath;
             }
             catch { }

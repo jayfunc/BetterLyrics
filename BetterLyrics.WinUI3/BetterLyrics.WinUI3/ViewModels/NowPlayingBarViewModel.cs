@@ -1,7 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
+using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,7 +12,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class NowPlayingBarViewModel : BaseViewModel
     {
-        public IMediaSessionsService MediaSessionsService { get; private set; }
+        public IGSMTCService GSMTCService { get; private set; }
+
+        private readonly ISMTCService _smtcService;
 
         [ObservableProperty]
         public partial int Volume { get; set; }
@@ -31,9 +34,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial double BottomCommandFlyoutTriggerOpacity { get; set; }
 
-        public NowPlayingBarViewModel(IMediaSessionsService mediaSessionsService)
+        public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISMTCService smtcService)
         {
-            MediaSessionsService = mediaSessionsService;
+            GSMTCService = mediaSessionsService;
+            _smtcService = smtcService;
 
             Volume = SystemVolumeHook.MasterVolume;
             SystemVolumeHook.VolumeNotification += SystemVolumeHelper_VolumeNotification;
@@ -46,32 +50,38 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         partial void OnTimelineSliderThumbSecondsChanged(double value)
         {
-            TimelineSliderThumbLyricsLine = MediaSessionsService.CurrentLyricsData?.GetLyricsLine(value);
+            TimelineSliderThumbLyricsLine = GSMTCService.CurrentLyricsData?.GetLyricsLine(value);
         }
 
 
         [RelayCommand]
         private async Task PlaySongAsync()
         {
-            await MediaSessionsService.PlayAsync();
+            await GSMTCService.PlayAsync();
         }
 
         [RelayCommand]
         private async Task PauseSongAsync()
         {
-            await MediaSessionsService.PauseAsync();
+            await GSMTCService.PauseAsync();
         }
 
         [RelayCommand]
         private async Task PreviousSongAsync()
         {
-            await MediaSessionsService.PreviousAsync();
+            await GSMTCService.PreviousAsync();
         }
 
         [RelayCommand]
         private async Task NextSongAsync()
         {
-            await MediaSessionsService.NextAsync();
+            await GSMTCService.NextAsync();
+        }
+
+        [RelayCommand]
+        private async Task StopTrackAsync()
+        {
+            await _smtcService.PlayTrackAtAsync(-1);
         }
 
         [RelayCommand]

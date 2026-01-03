@@ -2,7 +2,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.MediaSessionsService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -30,6 +30,7 @@ public sealed partial class NowPlayingBar : UserControl,
 
     public event EventHandler? SongInfoTapped;
     public event EventHandler? TimeTapped;
+    public event EventHandler? PlayQueueButtonClick;
 
     public bool ShowTime
     {
@@ -64,6 +65,15 @@ public sealed partial class NowPlayingBar : UserControl,
         set { SetValue(ShowPlaybackOrderButtonProperty, value); }
     }
 
+    public static readonly DependencyProperty ShowStopButtonProperty =
+        DependencyProperty.Register(nameof(ShowStopButton), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
+
+    public bool ShowStopButton
+    {
+        get { return (bool)GetValue(ShowStopButtonProperty); }
+        set { SetValue(ShowStopButtonProperty, value); }
+    }
+
     public static readonly DependencyProperty ShowPlaybackOrderButtonProperty =
         DependencyProperty.Register(nameof(ShowPlaybackOrderButton), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
 
@@ -75,15 +85,6 @@ public sealed partial class NowPlayingBar : UserControl,
 
     public static readonly DependencyProperty PlaybackOrderProperty =
         DependencyProperty.Register(nameof(PlaybackOrder), typeof(PlaybackOrder), typeof(NowPlayingBar), new PropertyMetadata(PlaybackOrder.RepeatAll));
-
-    public bool IsPlayingQueueOpened
-    {
-        get { return (bool)GetValue(IsPlayingQueueOpenedProperty); }
-        set { SetValue(IsPlayingQueueOpenedProperty, value); }
-    }
-
-    public static readonly DependencyProperty IsPlayingQueueOpenedProperty =
-        DependencyProperty.Register(nameof(IsPlayingQueueOpened), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
 
     public bool IsCompactMode
     {
@@ -206,7 +207,7 @@ public sealed partial class NowPlayingBar : UserControl,
         var grid = (Grid)sender;
         var pos = e.GetCurrentPoint(grid).Position;
         var ratio = pos.X / grid.ActualWidth;
-        ViewModel.MediaSessionsService.ChangePosition(TimelineSlider.Maximum * ratio);
+        ViewModel.GSMTCService.ChangePosition(TimelineSlider.Maximum * ratio);
     }
 
     private void TimelineSliderOverlay_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -303,7 +304,7 @@ public sealed partial class NowPlayingBar : UserControl,
 
     private void PlayingQueueButton_Click(object sender, RoutedEventArgs e)
     {
-        IsPlayingQueueOpened = !IsPlayingQueueOpened;
+        PlayQueueButtonClick?.Invoke(sender, EventArgs.Empty);
     }
 
     private void PlaybackOrderButton_Click(object sender, RoutedEventArgs e)
@@ -313,9 +314,9 @@ public sealed partial class NowPlayingBar : UserControl,
 
     public void Receive(PropertyChangedMessage<SongInfo?> message)
     {
-        if (message.Sender is IMediaSessionsService)
+        if (message.Sender is IGSMTCService)
         {
-            if (message.PropertyName == nameof(IMediaSessionsService.CurrentSongInfo))
+            if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
             {
                 TitleTextBlock.Text = message.NewValue?.Title;
                 ArtistsTextBlock.Text = message.NewValue?.DisplayArtists;
@@ -324,9 +325,9 @@ public sealed partial class NowPlayingBar : UserControl,
     }
     public void Receive(PropertyChangedMessage<BitmapImage?> message)
     {
-        if (message.Sender is IMediaSessionsService)
+        if (message.Sender is IGSMTCService)
         {
-            if (message.PropertyName == nameof(IMediaSessionsService.AlbumArtBitmapImage))
+            if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
             {
                 AlbumArtImageSwitcher.Source = message.NewValue;
             }
@@ -335,9 +336,9 @@ public sealed partial class NowPlayingBar : UserControl,
 
     public void Receive(PropertyChangedMessage<TimeSpan> message)
     {
-        if (message.Sender is IMediaSessionsService)
+        if (message.Sender is IGSMTCService)
         {
-            if (message.PropertyName == nameof(IMediaSessionsService.CurrentPosition))
+            if (message.PropertyName == nameof(IGSMTCService.CurrentPosition))
             {
                 TimelineSlider.Value = message.NewValue.TotalSeconds;
             }
