@@ -105,7 +105,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             _scrobbleTimer.Tick += ScrobbleTimer_Tick;
 
             _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
-            _refreshLyricsTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
 

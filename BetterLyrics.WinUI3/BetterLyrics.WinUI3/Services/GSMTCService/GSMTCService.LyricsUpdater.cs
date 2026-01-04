@@ -13,13 +13,13 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
     public partial class GSMTCService : IGSMTCService
     {
-        private readonly DispatcherQueueTimer _refreshLyricsTimer;
+        private LatestOnlyTaskRunner _refreshLyricsRunner = new();
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsData? CurrentLyricsData { get; private set; }
 
         [ObservableProperty] public partial LyricsSearchResult? CurrentLyricsSearchResult { get; private set; }
 
-        private async Task RefreshLyricsAsync()
+        private async Task RefreshLyricsAsync(CancellationToken token)
         {
             _logger.LogInformation("RefreshLyricsAsync");
 
@@ -29,7 +29,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
                 CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
-                    CurrentSongInfo, true, CurrentMediaSourceProviderInfo?.LyricsSearchType, CancellationToken.None));
+                    CurrentSongInfo, true, CurrentMediaSourceProviderInfo?.LyricsSearchType, token), token);
 
                 if (CurrentLyricsSearchResult != null)
                 {
@@ -37,8 +37,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
                     (CurrentLyricsData, CurrentLyricsSearchResult.TransliterationProvider, CurrentLyricsSearchResult.TranslationProvider) =
                         await Task.Run(async () => await lyricsParser.Parse(
-                            _translationService, _transliterationService, _settingsService.AppSettings.TranslationSettings, CurrentLyricsSearchResult,
-                            CancellationToken.None));
+                            _translationService, _transliterationService, _settingsService.AppSettings.TranslationSettings, CurrentLyricsSearchResult, token), token);
                 }
             }
 
@@ -50,10 +49,10 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         public async void UpdateLyrics()
         {
-            _refreshLyricsTimer.Debounce(async () =>
+            await _refreshLyricsRunner.RunAsync(async (token) =>
             {
-                await RefreshLyricsAsync();
-            }, Constants.Time.DebounceTimeout);
+                await RefreshLyricsAsync(token);
+            });
         }
 
     }
