@@ -6,7 +6,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public partial class SongInfo : ObservableObject, ICloneable
+    public partial class SongInfo : ObservableRecipient, ICloneable
     {
         [ObservableProperty]
         public partial string Album { get; set; }
@@ -25,6 +25,8 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty]
         public partial string? SongId { get; set; } = null;
+
+        [ObservableProperty] public partial long StartedAt { get; set; } = DateTime.Now.ToBinary();
 
         public string? LinkedFileName { get; set; } = null;
 
@@ -45,6 +47,7 @@ namespace BetterLyrics.WinUI3.Models
                 PlayerId = this.PlayerId,
                 SongId = this.SongId,
                 LinkedFileName = this.LinkedFileName,
+                StartedAt = this.StartedAt,
             };
         }
 

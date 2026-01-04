@@ -22,7 +22,7 @@ using BetterLyrics.WinUI3.Extensions;
 namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class NowPlayingBar : UserControl,
-    IRecipient<PropertyChangedMessage<SongInfo?>>,
+    IRecipient<PropertyChangedMessage<SongInfo>>,
     IRecipient<PropertyChangedMessage<BitmapImage?>>,
     IRecipient<PropertyChangedMessage<TimeSpan>>
 {
@@ -312,14 +312,14 @@ public sealed partial class NowPlayingBar : UserControl,
         PlaybackOrder = PlaybackOrder.GetNext();
     }
 
-    public void Receive(PropertyChangedMessage<SongInfo?> message)
+    public void Receive(PropertyChangedMessage<SongInfo> message)
     {
         if (message.Sender is IGSMTCService)
         {
             if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
             {
-                TitleTextBlock.Text = message.NewValue?.Title;
-                ArtistsTextBlock.Text = message.NewValue?.DisplayArtists;
+                TitleTextBlock.Text = message.NewValue.Title;
+                ArtistsTextBlock.Text = message.NewValue.DisplayArtists;
             }
         }
     }
@@ -344,5 +344,4 @@ public sealed partial class NowPlayingBar : UserControl,
             }
         }
     }
-
 }

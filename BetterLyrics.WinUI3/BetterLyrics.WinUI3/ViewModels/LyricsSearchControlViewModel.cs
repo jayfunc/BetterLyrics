@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsSearchControlViewModel : BaseViewModel,
-        IRecipient<PropertyChangedMessage<SongInfo?>>
+        IRecipient<PropertyChangedMessage<SongInfo>>
     {
         private readonly ILyricsSearchService _lyricsSearchService;
         private readonly IGSMTCService _gsmtcService;
@@ -121,7 +121,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 LyricsSearchResults = [..await Task.Run(async () =>
                 {
                     var result = await _lyricsSearchService.SearchAllAsync(
-                        ((SongInfo?)_gsmtcService.CurrentSongInfo?.Clone() ?? new())
+                        ((SongInfo)_gsmtcService.CurrentSongInfo.Clone())
                             .WithTitle(MappedSongSearchQuery.MappedTitle)
                             .WithArtist(MappedSongSearchQuery.MappedArtist.SplitByCommonSplitter())
                             .WithAlbum(MappedSongSearchQuery.MappedAlbum),
@@ -194,7 +194,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void Receive(PropertyChangedMessage<SongInfo?> message)
+        public void Receive(PropertyChangedMessage<SongInfo> message)
         {
             if (message.Sender is IGSMTCService)
             {

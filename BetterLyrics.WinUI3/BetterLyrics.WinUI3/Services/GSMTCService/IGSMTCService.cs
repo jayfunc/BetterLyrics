@@ -31,7 +31,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         TimeSpan TargetScrobbledDuration { get; }
 
         bool CurrentIsPlaying { get; }
-        SongInfo? CurrentSongInfo { get; }
+        SongInfo CurrentSongInfo { get; }
         TimeSpan CurrentPosition { get; }
         LyricsData? CurrentLyricsData { get; }
 
