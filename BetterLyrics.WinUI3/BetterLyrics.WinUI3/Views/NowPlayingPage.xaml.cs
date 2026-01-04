@@ -27,7 +27,7 @@ using Windows.Storage.Streams;
 namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class NowPlayingPage : Page,
-        IRecipient<PropertyChangedMessage<SongInfo?>>,
+        IRecipient<PropertyChangedMessage<SongInfo>>,
         IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
         IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
         IRecipient<PropertyChangedMessage<int>>,
@@ -114,9 +114,9 @@ namespace BetterLyrics.WinUI3.Views
             var artistsFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.ArtistNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
             var albumFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.AlbumNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
 
-            RenderTextBlock(TitleTextBlock, _gsmtcService.CurrentSongInfo?.Title, titleFontSize);
-            RenderTextBlock(ArtistsTextBlock, _gsmtcService.CurrentSongInfo?.DisplayArtists, artistsFontSize);
-            RenderTextBlock(AlbumTextBlock, _gsmtcService.CurrentSongInfo?.Album, albumFontSize);
+            RenderTextBlock(TitleTextBlock, _gsmtcService.CurrentSongInfo.Title, titleFontSize);
+            RenderTextBlock(ArtistsTextBlock, _gsmtcService.CurrentSongInfo.DisplayArtists, artistsFontSize);
+            RenderTextBlock(AlbumTextBlock, _gsmtcService.CurrentSongInfo.Album, albumFontSize);
         }
 
         private void UpdateSongInfoOpacity()
@@ -137,6 +137,15 @@ namespace BetterLyrics.WinUI3.Views
                 default:
                     break;
             }
+        }
+
+        private async void RefreshSongInfo()
+        {
+            SongInfoStackPanel.Opacity = 0;
+            await Task.Delay(Constants.Time.AnimationDuration);
+            RenderSongInfo();
+            SongInfoStackPanel.Opacity = 1;
+            UpdateSongInfoOpacity();
         }
 
         // ==== AlbumArt
@@ -575,17 +584,13 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        public async void Receive(PropertyChangedMessage<SongInfo?> message)
+        public async void Receive(PropertyChangedMessage<SongInfo> message)
         {
             if (message.Sender is IGSMTCService)
             {
                 if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
                 {
-                    SongInfoStackPanel.Opacity = 0;
-                    await Task.Delay(Constants.Time.AnimationDuration);
-                    RenderSongInfo();
-                    SongInfoStackPanel.Opacity = 1;
-                    UpdateSongInfoOpacity();
+                    RefreshSongInfo();
                 }
             }
         }
@@ -686,5 +691,6 @@ namespace BetterLyrics.WinUI3.Views
             }
 
         }
+
     }
 }

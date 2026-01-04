@@ -105,6 +105,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             _scrobbleTimer.Tick += ScrobbleTimer_Tick;
 
             _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
+            _refreshLyricsTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
 
@@ -340,13 +341,17 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                         .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?
                         .Replace(ExtendedGenreFiled.FileName, "");
 
-                    CurrentSongInfo.Title = fixedTitle;
-                    CurrentSongInfo.Artists = fixedArtist.SplitByCommonSplitter();
-                    CurrentSongInfo.Album = fixedAlbum;
-                    CurrentSongInfo.DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds;
-                    CurrentSongInfo.PlayerId = sessionId;
-                    CurrentSongInfo.SongId = songId;
-                    CurrentSongInfo.LinkedFileName = linkedFileName;
+                    CurrentSongInfo = new()
+                    {
+                        Title = fixedTitle,
+                        Artists = fixedArtist.SplitByCommonSplitter(),
+                        Album = fixedAlbum,
+                        DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
+                        PlayerId = sessionId,
+                        SongId = songId,
+                        LinkedFileName = linkedFileName,
+                        StartedAt = DateTime.Now.ToBinary(),
+                    };
 
                     UpdateTargetScrobbledDuration();
                     IsScrobbled = false;
@@ -647,7 +652,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         {
             if (WindowHook.GetWindowHandle<NowPlayingWindow>() is IntPtr hwnd)
             {
-                TaskbarList.SetProgressValue(hwnd, (ulong)value.TotalSeconds, (ulong)(CurrentSongInfo?.Duration ?? value.TotalSeconds));
+                TaskbarList.SetProgressValue(hwnd, (ulong)value.TotalSeconds, (ulong)(CurrentSongInfo.Duration));
             }
         }
 

@@ -3,7 +3,9 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Parsers.LyricsParser;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,13 +13,13 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
     public partial class GSMTCService : IGSMTCService
     {
-        private LatestOnlyTaskRunner _refreshLyricsRunner = new();
+        private readonly DispatcherQueueTimer _refreshLyricsTimer;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsData? CurrentLyricsData { get; private set; }
 
         [ObservableProperty] public partial LyricsSearchResult? CurrentLyricsSearchResult { get; private set; }
 
-        private async Task RefreshLyricsAsync(CancellationToken token)
+        private async Task RefreshLyricsAsync()
         {
             _logger.LogInformation("RefreshLyricsAsync");
 
@@ -27,12 +29,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
                 CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
-                    CurrentSongInfo,
-                    true,
-                    CurrentMediaSourceProviderInfo?.LyricsSearchType,
-                    token),
-                token);
-                if (token.IsCancellationRequested) return;
+                    CurrentSongInfo, true, CurrentMediaSourceProviderInfo?.LyricsSearchType, CancellationToken.None));
 
                 if (CurrentLyricsSearchResult != null)
                 {
@@ -40,12 +37,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
                     (CurrentLyricsData, CurrentLyricsSearchResult.TransliterationProvider, CurrentLyricsSearchResult.TranslationProvider) =
                         await Task.Run(async () => await lyricsParser.Parse(
-                            _translationService,
-                            _transliterationService,
-                            _settingsService.AppSettings.TranslationSettings,
-                            CurrentLyricsSearchResult,
-                            token),
-                    token);
+                            _translationService, _transliterationService, _settingsService.AppSettings.TranslationSettings, CurrentLyricsSearchResult,
+                            CancellationToken.None));
                 }
             }
 
@@ -57,10 +50,10 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         public async void UpdateLyrics()
         {
-            await _refreshLyricsRunner.RunAsync(async (token) =>
+            _refreshLyricsTimer.Debounce(async () =>
             {
-                await RefreshLyricsAsync(token);
-            });
+                await RefreshLyricsAsync();
+            }, Constants.Time.DebounceTimeout);
         }
 
     }

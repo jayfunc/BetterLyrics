@@ -31,7 +31,7 @@ namespace BetterLyrics.WinUI3.Controls
     public sealed partial class LyricsCanvas : UserControl,
         IRecipient<PropertyChangedMessage<TimeSpan>>,
         IRecipient<PropertyChangedMessage<LyricsData?>>,
-        IRecipient<PropertyChangedMessage<SongInfo?>>,
+        IRecipient<PropertyChangedMessage<SongInfo>>,
         IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<double>>,
         IRecipient<PropertyChangedMessage<bool>>,
@@ -343,7 +343,7 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsStyle = _lyricsWindowStatus.LyricsStyleSettings;
             var lyricsEffect = _lyricsWindowStatus.LyricsEffectSettings;
 
-            double songDuration = _gsmtcService.CurrentSongInfo?.DurationMs ?? 0;
+            double songDuration = _gsmtcService.CurrentSongInfo.DurationMs;
             bool isForceWordByWord = _settingsService.AppSettings.GeneralSettings.IsForceWordByWordEffect;
 
             Color overlayColor;
@@ -726,7 +726,7 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        public void Receive(PropertyChangedMessage<SongInfo?> message)
+        public void Receive(PropertyChangedMessage<SongInfo> message)
         {
             if (message.Sender is IGSMTCService)
             {
@@ -891,5 +891,6 @@ namespace BetterLyrics.WinUI3.Controls
                 }
             }
         }
+
     }
 }
