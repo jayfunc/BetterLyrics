@@ -5,7 +5,7 @@ namespace BetterLyrics.WinUI3.Extensions
 {
     public static class SongInfoExtensions
     {
-        public static SongInfo Placeholder => new SongInfo
+        public static SongInfo Placeholder => new()
         {
             Title = "N/A",
             Album = "N/A",

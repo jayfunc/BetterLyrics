@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Db;
 using BetterLyrics.WinUI3.Models.Stats;
+using BetterLyrics.WinUI3.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

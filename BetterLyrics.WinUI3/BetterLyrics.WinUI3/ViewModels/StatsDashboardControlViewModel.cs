@@ -194,7 +194,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void RefreshData()
+        public void RefreshData()
         {
             if (IsCustomRangeSelected)
             {

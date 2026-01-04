@@ -42,14 +42,12 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         {
             _logger.LogInformation("RefreshArtAlbum");
 
-            if (CurrentSongInfo == null)
+            IBuffer? buffer = null;
+            if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
-                _logger.LogWarning("CurrentSongInfo == null");
-                return;
+                buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(CurrentSongInfo, _SMTCAlbumArtBuffer, token), token);
+                if (token.IsCancellationRequested) return;
             }
-
-            IBuffer? buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(CurrentSongInfo, _SMTCAlbumArtBuffer, token), token);
-            if (token.IsCancellationRequested) return;
 
             if (buffer == null)
             {
