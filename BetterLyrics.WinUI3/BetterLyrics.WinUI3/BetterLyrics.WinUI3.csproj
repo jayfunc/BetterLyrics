@@ -42,6 +42,7 @@
 		<None Remove="Controls\LyricsWindowSwitchControl.xaml" />
 		<None Remove="Controls\MediaSettingsControl.xaml" />
 		<None Remove="Controls\NowPlayingBar.xaml" />
+		<None Remove="Controls\PatronControl.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
 		<None Remove="Controls\PlayQueue.xaml" />
 		<None Remove="Controls\PropertyRow.xaml" />
@@ -246,6 +247,9 @@
 	  <Content Update="Assets\Question.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Update="Assets\RevolvingHearts.gif">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <Content Update="Assets\SaltPlayerForWindows.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
@@ -261,6 +265,11 @@
 	  <Content Update="Assets\Wiki82.profile.xml">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\PatronControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Styles\GhostSliderStyle.xaml">

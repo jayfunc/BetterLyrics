@@ -57,12 +57,12 @@
 
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
-                                    <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
                                         <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
                                         <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
                                         <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
                                         <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
-                                    </StackPanel>
+                                    </dev:WrapPanel>
                                 </StackPanel>
 
                             </dev:SettingsCard>
@@ -70,18 +70,18 @@
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
                                     <TextBlock x:Uid="SetingsPageFeedback" />
-                                    <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
                                         <HyperlinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
                                         <HyperlinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
                                         <HyperlinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
-                                    </StackPanel>
+                                    </dev:WrapPanel>
                                 </StackPanel>
                             </dev:SettingsCard>
 
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
                                     <TextBlock x:Uid="SetingsPageDonation" />
-                                    <StackPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
                                         <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
                                         <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
                                         <HyperlinkButton
@@ -117,7 +117,7 @@
                                             </HyperlinkButton.ContextFlyout>
                                         </HyperlinkButton>
                                         <HyperlinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
-                                    </StackPanel>
+                                    </dev:WrapPanel>
                                     <Grid ColumnSpacing="6">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -136,15 +136,6 @@
                                 </StackPanel>
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageThanksList">
-                                <Button
-                                    Click="Patron_Click"
-                                    Content="{ui:FontIcon FontSize=16,
-                                                          FontFamily={StaticResource IconFontFamily},
-                                                          Glyph=&#xE7FD;}"
-                                    Style="{StaticResource AccentButtonStyle}" />
-                            </dev:SettingsCard>
-
                         </dev:SettingsExpander.Items>
                         <dev:SettingsExpander.ItemsFooter>
                             <InfoBar
@@ -155,6 +146,96 @@
                                 IsOpen="True"
                                 Severity="Warning" />
                         </dev:SettingsExpander.ItemsFooter>
+                    </dev:SettingsExpander>
+
+                    <dev:SettingsExpander x:Uid="SettingsPageThanksList">
+                        <dev:SettingsExpander.HeaderIcon>
+                            <ImageIcon Source="ms-appx:///Assets/RevolvingHearts.gif" />
+                        </dev:SettingsExpander.HeaderIcon>
+                        <dev:SettingsExpander.Items>
+
+                            <!--  贡献者  -->
+                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <RichTextBlock>
+                                        <Paragraph>
+                                            <Run x:Uid="SetingsPageContributors" />
+                                            <Run Text="(Code)" />
+                                        </Paragraph>
+                                    </RichTextBlock>
+                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                        <HyperlinkButton Content="jayfunc" NavigateUri="https://github.com/jayfunc" />
+                                        <HyperlinkButton Content="Raspberry-Monster" NavigateUri="https://github.com/Raspberry-Monster" />
+                                        <HyperlinkButton Content="ZHider" NavigateUri="https://github.com/ZHider" />
+                                        <HyperlinkButton Content="kusutori" NavigateUri="https://github.com/kusutori" />
+                                    </dev:WrapPanel>
+                                </StackPanel>
+                            </dev:SettingsCard>
+
+                            <!--  贡献者 (Translator)  -->
+                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <RichTextBlock>
+                                        <Paragraph>
+                                            <Run x:Uid="SetingsPageContributors" />
+                                            <Run Text="(Translator)" />
+                                        </Paragraph>
+                                    </RichTextBlock>
+                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                        <HyperlinkButton Content="borcolasky" NavigateUri="https://crowdin.com/profile/borcolasky" />
+                                        <HyperlinkButton Content="SuHeAndZl" NavigateUri="https://crowdin.com/profile/SuHeAndZl" />
+                                    </dev:WrapPanel>
+                                </StackPanel>
+                            </dev:SettingsCard>
+
+                            <!--  赞助  -->
+                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <TextBlock x:Uid="SettingsPagePatrons" />
+                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                        <uc:PatronControl Date="Dec 3, 2025" PatronName="YE" />
+                                        <uc:PatronControl Date="Nov 23, 2025" PatronName="**玄" />
+                                        <uc:PatronControl Date="Nov 21, 2025" PatronName="**智" />
+                                        <uc:PatronControl Date="Nov 17, 2025" PatronName="*鹤" />
+                                        <uc:PatronControl Date="Nov 2, 2025" PatronName="借过" />
+                                        <uc:PatronControl Date="Aug 28, 2025" PatronName="**华" />
+                                        <TextBlock x:Uid="SettingsPageUserWhoPurchased" Margin="12,8" />
+                                    </dev:WrapPanel>
+                                </StackPanel>
+                            </dev:SettingsCard>
+
+                            <!--  特别鸣谢  -->
+                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <TextBlock x:Uid="SetingsPageSpecialThanks" />
+                                    <TextBlock x:Uid="SettingsPageYouNowUsing" Margin="0,8" />
+                                </StackPanel>
+                            </dev:SettingsCard>
+
+                            <!--  代码参考  -->
+                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <TextBlock x:Uid="SetingsPageDeps" />
+                                    <HyperlinkButton Margin="-12,0,0,0" NavigateUri="https://github.com/jayfunc/BetterLyrics/network/dependencies">
+                                        <TextBlock x:Uid="SetingsPageDeps" />
+                                    </HyperlinkButton>
+                                </StackPanel>
+                            </dev:SettingsCard>
+
+                            <!--  UI/UX 参考  -->
+                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <TextBlock x:Uid="SetingsPageUIUXRef" />
+                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                        <HyperlinkButton Content="refined-now-playing-netease" NavigateUri="https://github.com/solstice23/refined-now-playing-netease" />
+                                        <HyperlinkButton Content="Lyricify" NavigateUri="https://github.com/WXRIW/Lyricify-App" />
+                                        <HyperlinkButton Content="椒盐音乐 Salt Player" NavigateUri="https://moriafly.com/program/salt-player" />
+                                        <HyperlinkButton Content="MyToolBar" NavigateUri="https://github.com/TwilightLemon/MyToolBar" />
+                                    </dev:WrapPanel>
+                                </StackPanel>
+                            </dev:SettingsCard>
+
+                        </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
                     <dev:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
@@ -209,194 +290,28 @@
                             Value="{x:Bind ViewModel.AppSettings.AdvancedSettings.FPS, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <RichTextBlock
+                        Margin="0,16,0,0"
+                        HorizontalAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        LineHeight="28">
+                        <Paragraph FontWeight="Bold">
+                            <Run Text="{x:Bind const:App.AppName}" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="An elegant and deeply customizable lyrics visualizer &amp; versatile music player" />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run Text="Proudly built by" />
+                            <Hyperlink NavigateUri="{x:Bind const:Link.AuthorGitHub}">
+                                <Run Text="{x:Bind const:App.AppAuthor}" />
+                            </Hyperlink>
+                        </Paragraph>
+                    </RichTextBlock>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-
-        <Grid
-            x:Name="CreditsReel"
-            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-            Opacity="0"
-            SizeChanged="CreditsReel_SizeChanged"
-            Tapped="CreditsReel_Tapped"
-            Visibility="Collapsed">
-            <Grid.OpacityTransition>
-                <ScalarTransition />
-            </Grid.OpacityTransition>
-            <ScrollViewer
-                x:Name="CreditsReelScrollViewer"
-                ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                ScrollViewer.VerticalScrollMode="Disabled">
-                <RichTextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    HorizontalTextAlignment="Center"
-                    LineHeight="28"
-                    PointerEntered="RichTextBlock_PointerEntered"
-                    PointerExited="RichTextBlock_PointerExited">
-
-                    <Paragraph x:Name="CreditsReelHeader" />
-
-                    <!--  贡献者  -->
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageContributors" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/jayfunc">
-                            <Run Text="jayfunc" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/Raspberry-Monster">
-                            <Run Text="Raspberry-Monster" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/ZHider">
-                            <Run Text="ZHider" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/kusutori">
-                            <Run Text="kusutori" />
-                        </Hyperlink>
-                    </Paragraph>
-
-                    <!--  赞助  -->
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SettingsPagePatrons" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run Text="YE" />
-                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Dec 3, 2025" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run Text="**玄" />
-                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 23, 2025" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run Text="**智" />
-                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 21, 2025" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run Text="*鹤" />
-                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 17, 2025" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run Text="借过" />
-                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Nov 2, 2025" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run Text="**华" />
-                        <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Aug 28, 2025" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run x:Uid="SettingsPageUserWhoPurchased" />
-                    </Paragraph>
-
-                    <!--  特别鸣谢  -->
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageSpecialThanks" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run x:Uid="SettingsPageYouNowUsing" />
-                    </Paragraph>
-
-                    <!--  代码参考  -->
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageDeps" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce">
-                            <Run Text="Get album artwork from ITunes (with Python3 or C#)" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://stackoverflow.com/a/32013610/11048731">
-                            <Run Text="FullyObservableCollection" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/Storyteller-Studios/Impressionist">
-                            <Run Text="Impressionist" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/Storyteller-Studios/ColorThief.WinUI3">
-                            <Run Text="ColorThief.WinUI3" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/Johnwikix/SpectrumVisualization">
-                            <Run Text="SpectrumVisualization" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.shadertoy.com/view/Mdt3Df">
-                            <Run Text="Snow (as shown in sweden)" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://www.shadertoy.com/view/lllSR2">
-                            <Run Text="w10" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/mo-jinran/Taskbar-Lyrics">
-                            <Run Text="Taskbar-Lyrics" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/jayfunc/BetterLyrics/network/dependencies">
-                            <Run Text="..." />
-                        </Hyperlink>
-                    </Paragraph>
-
-                    <!--  UI/UX 设计参考  -->
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run x:Uid="SetingsPageUIUXRef" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/solstice23/refined-now-playing-netease">
-                            <Run Text="refined-now-playing-netease" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/WXRIW/Lyricify-App">
-                            <Run Text="Lyricify" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://moriafly.com/program/salt-player">
-                            <Run Text="椒盐音乐 Salt Player" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="https://github.com/TwilightLemon/MyToolBar">
-                            <Run Text="MyToolBar" />
-                        </Hyperlink>
-                    </Paragraph>
-                    <Paragraph>
-                        <Hyperlink NavigateUri="">
-                            <Run Text="" />
-                        </Hyperlink>
-                    </Paragraph>
-
-                    <Paragraph Margin="0,20,0,0" FontWeight="Bold">
-                        <Run Text="{x:Bind const:App.AppName}" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run Text="Proudly built by" />
-                        <Hyperlink NavigateUri="{x:Bind const:Link.AuthorGitHub}">
-                            <Run Text="{x:Bind const:App.AppAuthor}" />
-                        </Hyperlink>
-                    </Paragraph>
-
-                    <Paragraph x:Name="CreditsReelFooter" />
-
-                </RichTextBlock>
-            </ScrollViewer>
-        </Grid>
 
     </Grid>
 </UserControl>
