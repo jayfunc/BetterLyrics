@@ -60,16 +60,16 @@
                             </interactivity:Interaction.Behaviors>
                             <Grid VerticalAlignment="Center" CornerRadius="4">
                                 <local:ImageSwitcher
-                                    x:Name="AlbumArtImageSwitcher"
                                     Width="36"
-                                    Height="36" />
+                                    Height="36"
+                                    Source="{x:Bind ViewModel.GSMTCService.AlbumArtBitmapImage, Mode=OneWay}" />
                             </Grid>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock x:Name="TitleTextBlock" />
+                                <TextBlock Text="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
                                 <TextBlock
-                                    x:Name="ArtistsTextBlock"
                                     FontSize="12"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.DisplayArtists, Mode=OneWay}" />
                             </StackPanel>
                         </StackPanel>
 
@@ -423,7 +423,8 @@
                     Maximum="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
-                    ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}" />
+                    ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
+                    Value="{x:Bind ViewModel.GSMTCService.CurrentPosition.TotalSeconds, Mode=OneWay}" />
 
                 <Grid
                     x:Name="TimelineSliderLyricsLineInfo"

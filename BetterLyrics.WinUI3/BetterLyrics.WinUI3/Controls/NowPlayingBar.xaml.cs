@@ -21,10 +21,7 @@ using BetterLyrics.WinUI3.Extensions;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class NowPlayingBar : UserControl,
-    IRecipient<PropertyChangedMessage<SongInfo>>,
-    IRecipient<PropertyChangedMessage<BitmapImage?>>,
-    IRecipient<PropertyChangedMessage<TimeSpan>>
+public sealed partial class NowPlayingBar : UserControl
 {
     public NowPlayingBarViewModel ViewModel => (NowPlayingBarViewModel)DataContext;
 
@@ -110,8 +107,6 @@ public sealed partial class NowPlayingBar : UserControl,
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
-
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -310,38 +305,5 @@ public sealed partial class NowPlayingBar : UserControl,
     private void PlaybackOrderButton_Click(object sender, RoutedEventArgs e)
     {
         PlaybackOrder = PlaybackOrder.GetNext();
-    }
-
-    public void Receive(PropertyChangedMessage<SongInfo> message)
-    {
-        if (message.Sender is IGSMTCService)
-        {
-            if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
-            {
-                TitleTextBlock.Text = message.NewValue.Title;
-                ArtistsTextBlock.Text = message.NewValue.DisplayArtists;
-            }
-        }
-    }
-    public void Receive(PropertyChangedMessage<BitmapImage?> message)
-    {
-        if (message.Sender is IGSMTCService)
-        {
-            if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
-            {
-                AlbumArtImageSwitcher.Source = message.NewValue;
-            }
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<TimeSpan> message)
-    {
-        if (message.Sender is IGSMTCService)
-        {
-            if (message.PropertyName == nameof(IGSMTCService.CurrentPosition))
-            {
-                TimelineSlider.Value = message.NewValue.TotalSeconds;
-            }
-        }
     }
 }

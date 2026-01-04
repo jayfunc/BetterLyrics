@@ -260,6 +260,7 @@ namespace BetterLyrics.WinUI3
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Is(Serilog.Events.LogEventLevel.Verbose)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Error)
                 .WriteTo.File(PathHelper.LogFilePattern, rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
