@@ -53,8 +53,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private MediaManager.MediaSession? _currentDesiredSession = null;
 
-        private readonly StatsDashboardControlViewModel _statsDashboardControlViewModel;
-
         private readonly IAlbumArtSearchService _albumArtSearchService;
         private readonly ILyricsSearchService _lyrcsSearchService;
         private readonly ITranslationService _translationService;
@@ -71,7 +69,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         private readonly DispatcherQueueTimer? _onMediaPropsChangedTimer;
         private readonly DispatcherTimer _scrobbleTimer;
 
-        [ObservableProperty] public partial bool IsScrobbled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsScrobbled { get; set; } = false;
         [ObservableProperty] public partial TimeSpan ScrobbledDuration { get; set; } = TimeSpan.Zero;
         [ObservableProperty] public partial TimeSpan TargetScrobbledDuration { get; set; } = TimeSpan.Zero;
 
@@ -82,7 +80,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         [ObservableProperty] public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
 
         public GSMTCService(
-            StatsDashboardControlViewModel statsDashboardControlViewModel,
             ISettingsService settingsService,
             IAlbumArtSearchService albumArtSearchService,
             ILyricsSearchService lyricsSearchService,
@@ -93,8 +90,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             ILastFMService lastFMService,
             ILogger<GSMTCService> logger)
         {
-            _statsDashboardControlViewModel = statsDashboardControlViewModel;
-
             _settingsService = settingsService;
             _albumArtSearchService = albumArtSearchService;
             _lyrcsSearchService = lyricsSearchService;
@@ -138,10 +133,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                             _ = Task.Run(async () =>
                             {
                                 await _playHistoryService.AddLogAsync(playHistoryItem);
-                                _dispatcherQueue.TryEnqueue(() =>
-                                {
-                                    _statsDashboardControlViewModel.RefreshData();
-                                });
                             });
                             _logger.LogInformation("ScrobbleTimer_Tick: {} scrobbled", CurrentSongInfo.Title);
                         }
@@ -273,6 +264,11 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 CurrentPosition = timelineProperties.Position;
                 CurrentSongInfo.DurationMs = timelineProperties.EndTime.TotalMilliseconds;
                 UpdateTargetScrobbledDuration();
+                if (CurrentPosition.TotalSeconds == 0)
+                {
+                    IsScrobbled = false;
+                    ScrobbledDuration = TimeSpan.Zero;
+                }
             });
         }
 
@@ -315,6 +311,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                         currentMediaSourceProviderInfo?.PositionOffset = 0;
                     }
 
+                    string fixedTitle = mediaProperties.Title;
                     string fixedArtist = mediaProperties.Artist;
                     string fixedAlbum = mediaProperties.AlbumTitle;
                     string? songId = null;
@@ -343,7 +340,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                         .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?
                         .Replace(ExtendedGenreFiled.FileName, "");
 
-                    CurrentSongInfo.Title = mediaProperties.Title;
+                    CurrentSongInfo.Title = fixedTitle;
                     CurrentSongInfo.Artists = fixedArtist.SplitByCommonSplitter();
                     CurrentSongInfo.Album = fixedAlbum;
                     CurrentSongInfo.DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds;
@@ -351,11 +348,9 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     CurrentSongInfo.SongId = songId;
                     CurrentSongInfo.LinkedFileName = linkedFileName;
 
-                    _scrobbleTimer.Stop();
+                    UpdateTargetScrobbledDuration();
                     IsScrobbled = false;
                     ScrobbledDuration = TimeSpan.Zero;
-                    UpdateTargetScrobbledDuration();
-                    _scrobbleTimer.Start();
 
                     if (PlayerIdHelper.IsLXMusic(sessionId))
                     {
@@ -410,22 +405,16 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         private MediaManager.MediaSession? GetCurrentDesiredSession()
         {
             var focusedSession = _mediaManager.GetFocusedSession();
-            if (focusedSession == null)
-            {
-                return null;
-            }
-            if (IsMediaSourceEnabled(focusedSession.Id))
+            if (focusedSession != null && IsMediaSourceEnabled(focusedSession.Id))
             {
                 return focusedSession;
             }
-            else
+
+            foreach (var session in _mediaManager.CurrentMediaSessions.Values)
             {
-                foreach (var session in _mediaManager.CurrentMediaSessions.Values)
+                if (IsMediaSourceEnabled(session.Id))
                 {
-                    if (IsMediaSourceEnabled(session.Id))
-                    {
-                        return session;
-                    }
+                    return session;
                 }
             }
             return null;
