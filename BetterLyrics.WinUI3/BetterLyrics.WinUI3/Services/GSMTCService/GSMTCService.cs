@@ -223,6 +223,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         {
             _mediaManager.Start();
 
+            _mediaManager.CurrentMediaSessions.ToList().ForEach(x => RecordMediaSession(x.Value.Id));
+
             _mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;
             _mediaManager.OnAnySessionClosed += MediaManager_OnAnySessionClosed;
             _mediaManager.OnFocusedSessionChanged += MediaManager_OnFocusedSessionChanged;
@@ -230,7 +232,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             _mediaManager.OnAnyPlaybackStateChanged += MediaManager_OnAnyPlaybackStateChanged;
             _mediaManager.OnAnyTimelinePropertyChanged += MediaManager_OnAnyTimelinePropertyChanged;
 
-            _mediaManager.CurrentMediaSessions.ToList().ForEach(x => RecordMediaSourceProviderInfo(x.Value));
             OnDesiredSessionChanged(true);
         }
 
@@ -403,8 +404,22 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         {
             if (mediaSession == null) return;
 
-            RecordMediaSourceProviderInfo(mediaSession);
-            OnDesiredSessionChanged();
+            var id = mediaSession.Id;
+
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                RecordMediaSession(id);
+                OnDesiredSessionChanged();
+            });
+        }
+
+        private void RecordMediaSession(string id)
+        {
+            var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
+            if (found == null)
+            {
+                _settingsService.AppSettings.MediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id, _settingsService.AppSettings.GeneralSettings.ListenOnNewPlaybackSource));
+            }
         }
 
         private MediaManager.MediaSession? GetCurrentDesiredSession()
@@ -423,23 +438,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 }
             }
             return null;
-        }
-
-        private void RecordMediaSourceProviderInfo(MediaManager.MediaSession mediaSession)
-        {
-            if (mediaSession == null) return;
-
-            var id = mediaSession?.Id;
-            if (string.IsNullOrEmpty(id)) return;
-
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-            {
-                var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
-                if (found == null)
-                {
-                    _settingsService.AppSettings.MediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id, _settingsService.AppSettings.GeneralSettings.ListenOnNewPlaybackSource));
-                }
-            });
         }
 
         private void SendNullMessages()
