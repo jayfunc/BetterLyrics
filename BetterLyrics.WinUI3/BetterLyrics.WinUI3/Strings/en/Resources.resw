@@ -1482,6 +1482,9 @@
   <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
     <value>Most Active</value>
   </data>
+  <data name="StatsDashboardControlRecording.Title" xml:space="preserve">
+    <value>Scrobbling...</value>
+  </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>Sources</value>
   </data>

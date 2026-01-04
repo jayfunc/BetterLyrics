@@ -3,10 +3,13 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Stats;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using LiveChartsCore;
 using LiveChartsCore.Kernel;
@@ -27,7 +30,7 @@ using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class StatsDashboardControlViewModel : BaseViewModel
+    public partial class StatsDashboardControlViewModel : BaseViewModel, IRecipient<PropertyChangedMessage<bool>>
     {
         private readonly IPlayHistoryService _playHistoryService;
         private readonly ILocalizationService _localizationService;
@@ -36,6 +39,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private string _localizedTimesValue;
 
         private readonly DispatcherQueueTimer _timer;
+
+        [ObservableProperty] public partial IGSMTCService GSMTCService { get; set; }
 
         [ObservableProperty] public partial bool IsLoading { get; set; } = false;
 
@@ -67,11 +72,16 @@ namespace BetterLyrics.WinUI3.ViewModels
         // 歌曲
         [ObservableProperty] public partial ObservableCollection<SongPlayCount> TopSongs { get; set; } = new();
 
-        public StatsDashboardControlViewModel(IPlayHistoryService playHistoryService, ILocalizationService localizationService, IAlbumArtSearchService albumArtSearchService)
+        public StatsDashboardControlViewModel(
+            IPlayHistoryService playHistoryService, 
+            ILocalizationService localizationService, 
+            IAlbumArtSearchService albumArtSearchService,
+            IGSMTCService gsmtcService)
         {
             _playHistoryService = playHistoryService;
             _localizationService = localizationService;
             _albumArtSearchService = albumArtSearchService;
+            GSMTCService = gsmtcService;
 
             _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
 
@@ -194,7 +204,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        public void RefreshData()
+        private void RefreshData()
         {
             if (IsCustomRangeSelected)
             {
@@ -264,5 +274,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             LoadData(); // 生成完刷新
         }
 
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is IGSMTCService)
+            {
+                if (message.PropertyName == nameof(IGSMTCService.IsScrobbled))
+                {
+                    if (message.NewValue == true)
+                    {
+                        RefreshData();
+                    }
+                }
+            }
+        }
     }
 }

@@ -26,8 +26,9 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="0,20,0,0">
+    <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -36,11 +37,31 @@
         <ProgressBar
             Grid.Row="0"
             Background="Transparent"
-            IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />
+            IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+            Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.GSMTCService.IsScrobbled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <InfoBar
+                x:Uid="StatsDashboardControlRecording"
+                Grid.Row="0"
+                IsClosable="False"
+                IsOpen="True"
+                Message="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
+            <ProgressBar
+                Grid.Row="1"
+                Background="Transparent"
+                Maximum="{x:Bind ViewModel.GSMTCService.TargetScrobbledDuration.TotalSeconds, Mode=OneWay}"
+                ShowPaused="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                Value="{x:Bind ViewModel.GSMTCService.ScrobbledDuration.TotalSeconds, Mode=OneWay}" />
+        </Grid>
 
         <controls:WrapPanel
-            Grid.Row="1"
-            Margin="36,12"
+            Grid.Row="2"
+            Margin="36,36,36,12"
             HorizontalSpacing="12"
             Orientation="Horizontal"
             VerticalSpacing="12">
@@ -80,7 +101,7 @@
                                       Glyph=&#xE72C;}" />
         </controls:WrapPanel>
 
-        <ScrollViewer Grid.Row="2" Padding="36,0">
+        <ScrollViewer Grid.Row="3" Padding="36,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
