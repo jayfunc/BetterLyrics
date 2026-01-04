@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -514,7 +514,7 @@
     <value>タイトル</value>
   </data>
   <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
-    <value>ソートタイプ</value>
+    <value>並べ替えタイプ</value>
   </data>
   <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
     <value>停止</value>
@@ -544,7 +544,7 @@
     <value>狭い表示モード</value>
   </data>
   <data name="PictureInPictureMode" xml:space="preserve">
-    <value>ピクチャー イン ピクチャー モード</value>
+    <value>ピクチャーインピクチャーモード</value>
   </data>
   <data name="Pinyin" xml:space="preserve">
     <value>ピンイン (中国語)</value>
@@ -775,7 +775,7 @@
     <value>Discord Presence で視聴ステータスを表示</value>
   </data>
   <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>レイアウト</value>
+    <value>レイアウトモード</value>
   </data>
   <data name="SettingsPageDockedMode.Text" xml:space="preserve">
     <value>ドッキングモード</value>
@@ -1159,7 +1159,7 @@
     <value>テストミュージックを再生</value>
   </data>
   <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
-    <value>マルチウィンドウ モード</value>
+    <value>マルチウィンドウモード</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>ミュージックギャラリー</value>
@@ -1393,7 +1393,7 @@
     <value>スタートアップ</value>
   </data>
   <data name="SettingsPageStats.Content" xml:space="preserve">
-    <value>統計データ</value>
+    <value>ミュージックレポート</value>
   </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>ミュージックギャラリーウィンドウを閉じたときに再生を停止する</value>
@@ -1468,7 +1468,7 @@
     <value>標準モード</value>
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
-    <value>時間帯別アクティビティ</value>
+    <value>アクティブ時間帯</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>カスタム</value>
@@ -1483,7 +1483,7 @@
     <value>最多アクティブ</value>
   </data>
   <data name="StatsDashboardControlRecording.Title" xml:space="preserve">
-    <value />
+    <value>再生記録中...</value>
   </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>再生ソース</value>
@@ -1507,16 +1507,16 @@
     <value>期間</value>
   </data>
   <data name="StatsDashboardControlTimes" xml:space="preserve">
-    <value>タイムズ</value>
+    <value>回</value>
   </data>
   <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>今日</value>
   </data>
   <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
-    <value>トップアーティスト</value>
+    <value>よく聴くアーティスト</value>
   </data>
   <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
-    <value>トップトラック</value>
+    <value>よく聴く曲</value>
   </data>
   <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
     <value>よく使う再生ソース</value>
@@ -1525,10 +1525,10 @@
     <value>総再生時間</value>
   </data>
   <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
-    <value>タイムズ</value>
+    <value>回</value>
   </data>
   <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
-    <value>タイムズ</value>
+    <value>回</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>再生された曲の数</value>
@@ -1558,7 +1558,7 @@
     <value>歌詞ウィンドウスイッチャー</value>
   </data>
   <data name="TaskbarMode" xml:space="preserve">
-    <value>タスクバー モード</value>
+    <value>タスクバーモード</value>
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>利用規約</value>
