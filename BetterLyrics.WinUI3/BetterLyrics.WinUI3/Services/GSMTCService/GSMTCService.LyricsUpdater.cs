@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             CurrentLyricsSearchResult = null;
             CurrentLyricsData = LyricsData.GetLoadingPlaceholder();
 
-            if (CurrentSongInfo != null)
+            if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
                 CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
                     CurrentSongInfo,
@@ -47,6 +47,11 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                             token),
                     token);
                 }
+            }
+
+            if (CurrentLyricsSearchResult == null)
+            {
+                CurrentLyricsData = LyricsData.GetNotfoundPlaceholder();
             }
         }
 
