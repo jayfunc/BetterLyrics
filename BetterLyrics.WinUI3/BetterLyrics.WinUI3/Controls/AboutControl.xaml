@@ -160,7 +160,8 @@
                                     <RichTextBlock>
                                         <Paragraph>
                                             <Run x:Uid="SetingsPageContributors" />
-                                            <Run Text="(Code)" />
+                                            <Run Text="-" />
+                                            <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Code" />
                                         </Paragraph>
                                     </RichTextBlock>
                                     <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
@@ -178,7 +179,8 @@
                                     <RichTextBlock>
                                         <Paragraph>
                                             <Run x:Uid="SetingsPageContributors" />
-                                            <Run Text="(Translator)" />
+                                            <Run Text="-" />
+                                            <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Translator" />
                                         </Paragraph>
                                     </RichTextBlock>
                                     <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
@@ -196,10 +198,13 @@
                                         <uc:PatronControl Date="Dec 3, 2025" PatronName="YE" />
                                         <uc:PatronControl Date="Nov 23, 2025" PatronName="**玄" />
                                         <uc:PatronControl Date="Nov 21, 2025" PatronName="**智" />
-                                        <uc:PatronControl Date="Nov 17, 2025" PatronName="*鹤" />
+                                        <uc:PatronControl Date="Nov 17, 2025" PatronName="SuHeAndZl" />
                                         <uc:PatronControl Date="Nov 2, 2025" PatronName="借过" />
                                         <uc:PatronControl Date="Aug 28, 2025" PatronName="**华" />
-                                        <TextBlock x:Uid="SettingsPageUserWhoPurchased" Margin="12,8" />
+                                        <TextBlock
+                                            x:Uid="SettingsPageUserWhoPurchased"
+                                            Margin="12,8"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                     </dev:WrapPanel>
                                 </StackPanel>
                             </dev:SettingsCard>
@@ -208,7 +213,10 @@
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                                 <StackPanel Spacing="6">
                                     <TextBlock x:Uid="SetingsPageSpecialThanks" />
-                                    <TextBlock x:Uid="SettingsPageYouNowUsing" Margin="0,8" />
+                                    <TextBlock
+                                        x:Uid="SettingsPageYouNowUsing"
+                                        Margin="0,8"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 </StackPanel>
                             </dev:SettingsCard>
 
