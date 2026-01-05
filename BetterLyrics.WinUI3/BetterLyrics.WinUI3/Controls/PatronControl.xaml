@@ -10,8 +10,8 @@
 
     <Grid Margin="12,8">
         <StackPanel Orientation="Horizontal" Spacing="6">
-            <TextBlock Text="{x:Bind PatronName, Mode=OneWay}" />
-            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind Date, Mode=OneWay}" />
+            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind PatronName, Mode=OneWay}" />
+            <TextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}" Text="{x:Bind Date, Mode=OneWay}" />
         </StackPanel>
     </Grid>
 </UserControl>
