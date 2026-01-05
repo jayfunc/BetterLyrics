@@ -9,7 +9,7 @@ Special thanks to the following people for their support!
 | Dec 2, 2025 | \<Anonymous\> |
 | Nov 23, 2025 | \*\*玄 |
 | Nov 21, 2025 | \*\*智 |
-| Nov 17, 2025 | \*鹤 |
+| Nov 17, 2025 | SuHeAndZl |
 | Nov 2, 2025 | 借过 |
 | Aug 28, 2025 | \*\*华 |
 
