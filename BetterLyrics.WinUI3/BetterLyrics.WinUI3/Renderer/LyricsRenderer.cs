@@ -41,6 +41,7 @@ namespace BetterLyrics.WinUI3.Renderer
             Color strokeColor,
             Color bgColor,
             Color fgColor,
+            double currentProgressMs,
             Func<int, LinePlaybackState> getPlaybackState)
         {
             using (var opacityLayer = ds.CreateLayer((float)lyricsOpacity))
@@ -70,6 +71,7 @@ namespace BetterLyrics.WinUI3.Renderer
                                 strokeColor,
                                 bgColor,
                                 fgColor,
+                                currentProgressMs,
                                 getPlaybackState);
                         }
 
@@ -101,6 +103,7 @@ namespace BetterLyrics.WinUI3.Renderer
                         strokeColor,
                         bgColor,
                         fgColor,
+                        currentProgressMs,
                         getPlaybackState);
                 }
             }
@@ -125,6 +128,7 @@ namespace BetterLyrics.WinUI3.Renderer
             Color strokeColor,
             Color bgColor,
             Color fgColor,
+            double currentProgressMs,
             Func<int, LinePlaybackState> getPlaybackState)
         {
             if (lines == null) return;
@@ -162,10 +166,12 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 using (var textOnlyLayer = RenderBaseTextLayer(control, line, styleSettings.LyricsFontStrokeWidth, strokeColor, line.ColorTransition.Value))
                 {
-                    if (i == playingLineIndex)
+                    bool isPlaying = currentProgressMs >= line.StartMs && currentProgressMs <= line.EndMs;
+                    if (i == playingLineIndex) isPlaying = true;
+
+                    if (isPlaying)
                     {
                         var state = getPlaybackState(i);
-
                         _playingRenderer.Draw(control, ds, textOnlyLayer, line, state, bgColor, fgColor, effectSettings);
                     }
                     else

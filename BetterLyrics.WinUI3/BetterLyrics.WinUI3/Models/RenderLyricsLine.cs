@@ -57,6 +57,16 @@ namespace BetterLyrics.WinUI3.Models
         public CanvasGeometry? TranslatedCanvasGeometry { get; private set; }
         public CanvasGeometry? PhoneticCanvasGeometry { get; private set; }
 
+        /// <summary>
+        /// 轨道索引 (0 = 主轨道, 1 = 第一副轨道, etc.)
+        /// 用于布局计算时的堆叠逻辑
+        /// </summary>
+        public int LaneIndex { get; set; } = 0;
+        /// <summary>
+        /// 是否为背景人声/和声
+        /// </summary>
+        public bool IsPlayingLastFrame { get; set; } = false;
+
         public RenderLyricsLine()
         {
             AngleTransition = new(

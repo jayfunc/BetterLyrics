@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 using Windows.UI;
+using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Controls
 {
@@ -398,6 +399,7 @@ namespace BetterLyrics.WinUI3.Controls
                 strokeColor: _albumArtThemeColors.StrokeFontColor,
                 bgColor: _albumArtThemeColors.BgFontColor,
                 fgColor: _albumArtThemeColors.FgFontColor,
+                currentProgressMs: _songPositionWithOffset.TotalMilliseconds,
                 getPlaybackState: (lineIndex) =>
                 {
                     if (_renderLyricsLines == null) return new LinePlaybackState();
@@ -433,19 +435,19 @@ namespace BetterLyrics.WinUI3.Controls
                 );
             }
 
-#if DEBUG
-            //args.DrawingSession.DrawText(
-            //        $"Lyrics render start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
-            //        $"Lyrics render size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
-            //        $"Lyrics actual height: {LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines)}\n" +
-            //        $"Playing line (idx): {_playingLineIndex}\n" +
-            //        $"Mouse hovering line (idx): {_mouseHoverLineIndex}\n" +
-            //        $"Visible lines range (idx): [{_visibleRange.Start}, {_visibleRange.End}]\n" +
-            //        $"Total line count: {LyricsLayoutManager.CalculateMaxRange(_renderLyricsLines).End + 1}\n" +
-            //        $"Played: {_songPosition} / {TimeSpan.FromMilliseconds(_mediaSessionsService.CurrentSongInfo?.DurationMs ?? 0)}\n" +
-            //        $"Y offset: {_canvasYScrollTransition.Value}\n" +
-            //        $"User scroll offset: {_mouseYScrollTransition.Value}",
-            //    new Vector2(0, 0), Colors.Red);
+#if DEBUG && false
+            args.DrawingSession.DrawText(
+                    $"Lyrics render start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
+                    $"Lyrics render size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
+                    $"Lyrics actual height: {LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines)}\n" +
+                    $"Playing line (idx): {_playingLineIndex}\n" +
+                    $"Mouse hovering line (idx): {_mouseHoverLineIndex}\n" +
+                    $"Visible lines range (idx): [{_visibleRange.Start}, {_visibleRange.End}]\n" +
+                    $"Total line count: {LyricsLayoutManager.CalculateMaxRange(_renderLyricsLines).End + 1}\n" +
+                    $"Played: {_songPosition} / {TimeSpan.FromMilliseconds(_gsmtcService.CurrentSongInfo.DurationMs)}\n" +
+                    $"Y offset: {_canvasYScrollTransition.Value}\n" +
+                    $"User scroll offset: {_mouseYScrollTransition.Value}",
+                new Vector2(0, 0), Colors.Red);
 #endif
 
         }
@@ -475,7 +477,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             #region UpdatePlayingLineIndex
 
-            int newPlayingIndex = _synchronizer.GetCurrentLineIndex(_songPositionWithOffset.TotalMilliseconds, lyricsData);
+            int newPlayingIndex = _synchronizer.GetCurrentLineIndex(_songPositionWithOffset.TotalMilliseconds, _renderLyricsLines);
             bool isPlayingLineChanged = newPlayingIndex != _playingLineIndex;
             _playingLineIndex = newPlayingIndex;
 
@@ -536,7 +538,8 @@ namespace BetterLyrics.WinUI3.Controls
                 _isMouseScrolling,
                 _isLayoutChanged,
                 isPlayingLineChanged,
-                _isMouseScrollingChanged
+                _isMouseScrollingChanged,
+                _songPositionWithOffset.TotalMilliseconds
             );
 
             _isMouseScrollingChanged = false;
@@ -667,7 +670,7 @@ namespace BetterLyrics.WinUI3.Controls
         private void UpdateRenderLyricsLines()
         {
             _renderLyricsLines = null;
-            _renderLyricsLines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine()
+            var lines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine()
             {
                 LyricsSyllables = x.LyricsSyllables,
                 StartMs = x.StartMs,
@@ -676,6 +679,11 @@ namespace BetterLyrics.WinUI3.Controls
                 OriginalText = x.OriginalText,
                 TranslatedText = x.TranslatedText
             }).ToList();
+            if (lines != null)
+            {
+                LyricsLayoutManager.CalculateLanes(lines);
+            }
+            _renderLyricsLines = lines;
         }
 
         private async Task ReloadCoverBackgroundResourcesAsync()

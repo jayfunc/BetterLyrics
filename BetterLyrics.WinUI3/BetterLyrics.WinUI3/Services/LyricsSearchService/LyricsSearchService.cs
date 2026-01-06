@@ -99,6 +99,8 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
 
             var lyricsSearchResult = new LyricsSearchResult();
+            //lyricsSearchResult.Raw = File.ReadAllText("C:\\Users\\Zhe\\Desktop\\Debug_Complex_3min.ttml");
+            //return lyricsSearchResult;
 
             string overridenTitle = songInfo.Title;
             string[] overridenArtists = songInfo.Artists;

@@ -187,6 +187,37 @@ namespace BetterLyrics.WinUI3.Logic
             return lines.Last().BottomRightPosition.Y;
         }
 
+        public static void CalculateLanes(IList<RenderLyricsLine>? lines, int toleranceMs = 50)
+        {
+            if (lines == null) return;
+            var lanesEndMs = new List<int> { 0 };
+
+            foreach (var line in lines)
+            {
+                var start = line.StartMs;
+                var end = line.EndMs;
+
+                int assignedLane = -1;
+                for (int i = 0; i < lanesEndMs.Count; i++)
+                {
+                    if (lanesEndMs[i] <= start + toleranceMs)
+                    {
+                        assignedLane = i;
+                        break;
+                    }
+                }
+
+                if (assignedLane == -1)
+                {
+                    assignedLane = lanesEndMs.Count;
+                    lanesEndMs.Add(0);
+                }
+
+                lanesEndMs[assignedLane] = end ?? 0;
+                line.LaneIndex = assignedLane;
+            }
+        }
+
         public static int FindMouseHoverLineIndex(
             IList<RenderLyricsLine>? lines,
             bool isMouseInLyricsArea,
