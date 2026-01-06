@@ -8,6 +8,7 @@ using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.LyricsCacheService;
 using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using Lyricify.Lyrics.Helpers;
 using Lyricify.Lyrics.Searchers;
 using Microsoft.Extensions.Logging;
@@ -32,18 +33,21 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         private readonly ISettingsService _settingsService;
         private readonly IFileSystemService _fileSystemService;
         private readonly ILyricsCacheService _lyricsCacheService;
+        private readonly ISongSearchMapService _songSearchMapService;
         private readonly ILogger _logger;
 
         public LyricsSearchService(
-            ISettingsService settingsService, 
-            IFileSystemService fileSystemService, 
-            ILyricsCacheService lyricsCacheService, 
+            ISettingsService settingsService,
+            IFileSystemService fileSystemService,
+            ILyricsCacheService lyricsCacheService,
+            ISongSearchMapService songSearchMapService,
             ILogger<LyricsSearchService> logger
         )
         {
             _settingsService = settingsService;
             _fileSystemService = fileSystemService;
             _lyricsCacheService = lyricsCacheService;
+            _songSearchMapService = songSearchMapService;
             _logger = logger;
 
             _lrcLibHttpClient = new();
@@ -117,11 +121,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             _logger.LogInformation("SearchSmartlyAsync {SongInfo}", songInfo);
 
             // 先检查该曲目是否已被用户映射
-            var found = _settingsService.AppSettings.MappedSongSearchQueries
-                .FirstOrDefault(x =>
-                    x.OriginalTitle == overridenTitle &&
-                    x.OriginalArtist == overridenArtist &&
-                    x.OriginalAlbum == overridenAlbum);
+            var found = await _songSearchMapService.GetMappingAsync(overridenTitle, overridenArtist, overridenAlbum);
 
             if (found != null)
             {
@@ -408,7 +408,6 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 }
             }
 
-            int bestScore = 0;
             string? rawLyricFile = null;
             await foreach (var line in File.ReadLinesAsync(PathHelper.AmllTtmlDbIndexPath))
             {
@@ -445,7 +444,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         Artist = artist,
                         Album = album,
                     });
-                    if (score > bestScore)
+                    if (score > lyricsSearchResult.MatchPercentage)
                     {
                         if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
                         {
@@ -453,14 +452,12 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                             lyricsSearchResult.Title = title;
                             lyricsSearchResult.Artist = artist;
                             lyricsSearchResult.Album = album;
-                            bestScore = score;
+                            lyricsSearchResult.MatchPercentage = score;
                         }
                     }
                 }
                 catch { }
             }
-
-            lyricsSearchResult.MatchPercentage = MetadataComparer.CalculateScore(songInfo, lyricsSearchResult);
 
             if (string.IsNullOrWhiteSpace(rawLyricFile))
             {

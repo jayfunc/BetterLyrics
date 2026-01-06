@@ -44,9 +44,9 @@ namespace BetterLyrics.WinUI3.Helper
                     ? $"{local.Title} {local.Artist}"
                     : Path.GetFileNameWithoutExtension(local.LinkedFileName);
 
-                string remoteQuery = remoteHasMetadata
+                string? remoteQuery = remoteHasMetadata
                     ? $"{remote.Title} {remote.Artist}"
-                    : Path.GetFileNameWithoutExtension(remote.Reference);
+                    : null;
 
                 string fp1 = CreateSortedFingerprint(localQuery);
                 string fp2 = CreateSortedFingerprint(remoteQuery);
