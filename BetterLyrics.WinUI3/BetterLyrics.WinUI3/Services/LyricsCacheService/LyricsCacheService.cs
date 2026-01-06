@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
         }
 
         /// <summary>
-        /// Write or update cache to DB
+        /// Write cache to DB
         /// </summary>
         public async Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result)
         {
@@ -46,16 +46,17 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
             var existingItem = await context.LyricsCache
                 .FirstOrDefaultAsync(x => x.CacheKey == key && x.Provider == result.Provider);
 
-            var newItem = (LyricsCacheItem)result.Clone();
-            newItem.CacheKey = key;
+            if (existingItem == null)
+            {
+                var newItem = (LyricsCacheItem)result.Clone();
+                newItem.CacheKey = key;
 
-            if (existingItem != null)
-            {                
-                context.LyricsCache.Update(newItem);
+                await context.LyricsCache.AddAsync(newItem);
             }
             else
             {
-                await context.LyricsCache.AddAsync(newItem);
+                // No need to handle this case
+                return;
             }
 
             await context.SaveChangesAsync();

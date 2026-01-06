@@ -1,10 +1,18 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BetterLyrics.WinUI3.Models
 {
-    public partial class MappedSongSearchQuery : ObservableRecipient
+    [Table("SongSearchMap")]
+    [Index(nameof(OriginalTitle), nameof(OriginalArtist), nameof(OriginalAlbum))]
+    public partial class MappedSongSearchQuery : ObservableRecipient, ICloneable
     {
+        [Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)] public string Id { get; set; }
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string OriginalTitle { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string OriginalArtist { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string OriginalAlbum { get; set; } = string.Empty;
@@ -17,7 +25,7 @@ namespace BetterLyrics.WinUI3.Models
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsSearchProvider? LyricsSearchProvider { get; set; }
 
-        public MappedSongSearchQuery Clone()
+        public object Clone()
         {
             return new MappedSongSearchQuery
             {

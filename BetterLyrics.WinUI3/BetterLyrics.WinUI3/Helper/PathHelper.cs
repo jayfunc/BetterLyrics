@@ -51,6 +51,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string PlayQueuePath => Path.Combine(LocalFolder, "play-queue.m3u");
         public static string PlayHistoryPath => Path.Combine(LocalFolder, "play-history.db");
         public static string FilesIndexPath => Path.Combine(LocalFolder, "files-index.db");
+        public static string SongSearchMapPath => Path.Combine(LocalFolder, "song-search-map.db");
         public static string LyricsCachePath => Path.Combine(LyricsCacheDirectory, "lyrics-cache.db");
 
         public static void EnsureDirectories()

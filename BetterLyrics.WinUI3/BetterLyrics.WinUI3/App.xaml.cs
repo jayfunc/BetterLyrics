@@ -12,6 +12,7 @@ using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.SMTCService;
+using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -127,13 +128,25 @@ namespace BetterLyrics.WinUI3
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            // 初始化数据库
-            await EnsureDatabasesAsync();
+            await InitDatabasesAsync();
 
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
+            // Migrate MappedSongSearchQueries
+            var songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
+            var obsoleteSongSearchMap = settingsService.AppSettings.MappedSongSearchQueries;
+            if (obsoleteSongSearchMap.Count > 0)
+            {
+                foreach (var item in obsoleteSongSearchMap)
+                {
+                    await songSearchMapService.SaveMappingAsync(item);
+                }
+                obsoleteSongSearchMap.Clear();
+            }
+
+            // Start scan tasks in background
             var fileSystemService = Ioc.Default.GetRequiredService<IFileSystemService>();
 
-            // 开始后台扫描任务
             foreach (var item in settingsService.AppSettings.LocalMediaFolders)
             {
                 if (item.LastSyncTime == null)
@@ -143,10 +156,10 @@ namespace BetterLyrics.WinUI3
             }
             fileSystemService.StartAllFolderTimers();
 
-            // 初始化托盘
+            // Init system tray
             m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
 
-            // 根据设置打开歌词窗口
+            // Open lyrics window if set
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
             {
                 var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
@@ -163,109 +176,39 @@ namespace BetterLyrics.WinUI3
                 }
             }
 
-            // 根据设置自动打开主界面
+            // Open music gallery if set
             if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
             {
                 WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
             }
         }
 
-        private async Task EnsureDatabasesAsync()
+        private async Task InitDatabasesAsync()
         {
+            // Init databases
             var playHistoryFactory = Ioc.Default.GetRequiredService<IDbContextFactory<PlayHistoryDbContext>>();
+            var songSearchMapFactory = Ioc.Default.GetRequiredService<IDbContextFactory<SongSearchMapDbContext>>();
             var filesIndexFactory = Ioc.Default.GetRequiredService<IDbContextFactory<FilesIndexDbContext>>();
             var lyricsCacheFactory = Ioc.Default.GetRequiredService<IDbContextFactory<LyricsCacheDbContext>>();
 
-            await SafeInitDatabaseAsync(
-                "PlayHistory",
-                PathHelper.PlayHistoryPath,
-                async () =>
-                {
-                    using var db = await playHistoryFactory.CreateDbContextAsync();
-                    await db.Database.EnsureCreatedAsync();
-                },
-                isCritical: true
-            );
-
-            await SafeInitDatabaseAsync(
-                "FileCache",
-                PathHelper.FilesIndexPath,
-                async () =>
-                {
-                    using var db = await filesIndexFactory.CreateDbContextAsync();
-                    await db.Database.EnsureCreatedAsync();
-                },
-                isCritical: false
-            );
-
-            await SafeInitDatabaseAsync(
-                "LyricsCache",
-                PathHelper.FilesIndexPath,
-                async () =>
-                {
-                    using var db = await lyricsCacheFactory.CreateDbContextAsync();
-                    await db.Database.EnsureCreatedAsync();
-                },
-                isCritical: false
-            );
-        }
-
-        private async Task SafeInitDatabaseAsync(string dbName, string dbPath, Func<Task> initAction, bool isCritical)
-        {
-            try
+            using (var playHistoryDb = await playHistoryFactory.CreateDbContextAsync())
             {
-                await initAction();
+                await playHistoryDb.Database.EnsureCreatedAsync();
             }
-            catch (Exception ex)
+
+            using (var songSearchMapDb = await songSearchMapFactory.CreateDbContextAsync())
             {
-                System.Diagnostics.Debug.WriteLine($"[DB Error] {dbName} init failed: {ex.Message}");
-
-                try
-                {
-                    if (File.Exists(dbPath))
-                    {
-                        // 尝试清理连接池
-                        SqliteConnection.ClearAllPools();
-
-                        if (isCritical)
-                        {
-                            var backupPath = dbPath + ".bak_" + DateTime.Now.ToString("yyyyMMddHHmmss");
-                            File.Move(dbPath, backupPath, true);
-                            await ShowErrorDialogAsync("Database Recovery", $"Database {dbName} is damaged, the old database has been backed up to {backupPath}, and the program will create a new database.");
-                        }
-                        else
-                        {
-                            File.Delete(dbPath);
-                        }
-                    }
-                    await initAction();
-                    System.Diagnostics.Debug.WriteLine($"[DB Info] {dbName} recovered successfully.");
-                }
-                catch (Exception fatalEx)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[] : {fatalEx.Message}");
-                    await ShowErrorDialogAsync("Fatal Error", $"{dbName} recovery failed, please delete the file at {dbPath} and try again by restarting the program. ({fatalEx.Message})");
-                }
+                await songSearchMapDb.Database.EnsureCreatedAsync();
             }
-        }
 
-        private async Task ShowErrorDialogAsync(string title, string content)
-        {
-            // 这里假设 m_window 已经存在。如果没有显示主窗口，这个弹窗可能无法显示。
-            // 在 App 启动极早期的错误，可能需要退化为 Log 或者 System.Diagnostics.Process.Start 打开记事本报错
-            if (m_window != null)
+            using (var filesIndexDb = await filesIndexFactory.CreateDbContextAsync())
             {
-                m_window.DispatcherQueue.TryEnqueue(async () =>
-                {
-                    var dialog = new Microsoft.UI.Xaml.Controls.ContentDialog
-                    {
-                        Title = title,
-                        Content = content,
-                        CloseButtonText = "OK",
-                        XamlRoot = m_window.Content?.XamlRoot // 确保 Content 不为空
-                    };
-                    if (dialog.XamlRoot != null) await dialog.ShowAsync();
-                });
+                await filesIndexDb.Database.EnsureCreatedAsync();
+            }
+
+            using (var lyricsCacheDb = await lyricsCacheFactory.CreateDbContextAsync())
+            {
+                await lyricsCacheDb.Database.EnsureCreatedAsync();
             }
         }
 
@@ -283,6 +226,7 @@ namespace BetterLyrics.WinUI3
                     .AddDbContextFactory<PlayHistoryDbContext>(options => options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
                     .AddDbContextFactory<FilesIndexDbContext>(options => options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
                     .AddDbContextFactory<LyricsCacheDbContext>(options => options.UseSqlite($"Data Source={PathHelper.LyricsCachePath}"))
+                    .AddDbContextFactory<SongSearchMapDbContext>(options => options.UseSqlite($"Data Source={PathHelper.SongSearchMapPath}"))
 
                     // 日志
                     .AddLogging(loggingBuilder =>
@@ -305,6 +249,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IFileSystemService, FileSystemService>()
                     .AddSingleton<IPlayHistoryService, PlayHistoryService>()
                     .AddSingleton<ILyricsCacheService, LyricsCacheService>()
+                    .AddSingleton<ISongSearchMapService, SongSearchMapService>()
 
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()

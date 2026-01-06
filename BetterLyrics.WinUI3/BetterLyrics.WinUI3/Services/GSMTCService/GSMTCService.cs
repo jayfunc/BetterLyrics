@@ -110,9 +110,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
             _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
 
-            _settingsService.AppSettings.MappedSongSearchQueries.CollectionChanged += MappedSongSearchQueries_CollectionChanged;
-            _settingsService.AppSettings.MappedSongSearchQueries.ItemPropertyChanged += MappedSongSearchQueries_ItemPropertyChanged;
-
             InitMediaManager();
         }
 
@@ -149,16 +146,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     }
                 }
             }
-        }
-
-        private void MappedSongSearchQueries_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
-        {
-            UpdateLyrics();
-        }
-
-        private void MappedSongSearchQueries_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            UpdateLyrics();
         }
 
         private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

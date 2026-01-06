@@ -10,9 +10,7 @@ namespace BetterLyrics.WinUI3.Models
     [Index(nameof(Uri), IsUnique = true)] // 唯一索引
     public class FilesIndexItem
     {
-        [Key] // 主键
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // 明确指定为自增 (Identity)
-        public int Id { get; set; }
+        [Key][DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int Id { get; set; }
 
         // 关联到 MediaFolder.Id
         // 注意：作为索引列，必须限制长度，否则 SQL Server 会报错 (索引最大900字节)

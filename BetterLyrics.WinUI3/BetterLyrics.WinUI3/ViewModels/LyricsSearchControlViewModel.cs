@@ -3,9 +3,10 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Parsers.LyricsParser;
-using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.GSMTCService;
+using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -22,6 +23,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ILyricsSearchService _lyricsSearchService;
         private readonly IGSMTCService _gsmtcService;
         private readonly ISettingsService _settingsService;
+        private readonly ISongSearchMapService _songSearchMapService;
 
         private LatestOnlyTaskRunner _lyricsSearchRunner = new();
 
@@ -43,24 +45,34 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial bool IsSearching { get; set; } = false;
 
-        public LyricsSearchControlViewModel(ILyricsSearchService lyricsSearchService, IGSMTCService gsmtcService, ISettingsService settingsService)
+        public LyricsSearchControlViewModel(
+            ILyricsSearchService lyricsSearchService,
+            IGSMTCService gsmtcService,
+            ISettingsService settingsService,
+            ISongSearchMapService songSearchMapService
+        )
         {
             _lyricsSearchService = lyricsSearchService;
             _gsmtcService = gsmtcService;
             _settingsService = settingsService;
+            _songSearchMapService = songSearchMapService;
 
             AppSettings = _settingsService.AppSettings;
 
-            InitMappedSongSearchQuery();
+            _ = InitMappedSongSearchQueryAsync();
         }
 
-        private void InitMappedSongSearchQuery()
+        private async Task InitMappedSongSearchQueryAsync()
         {
             LyricsSearchResults.Clear();
             LyricsDataArr = null;
             if (_gsmtcService.CurrentSongInfo != null)
             {
-                var found = GetMappedSongSearchQueryFromSettings();
+                var found = await _songSearchMapService.GetMappingAsync(
+                    _gsmtcService.CurrentSongInfo.Title,
+                    _gsmtcService.CurrentSongInfo.Artist,
+                    _gsmtcService.CurrentSongInfo.Album);
+
                 if (found == null)
                 {
                     MappedSongSearchQuery = new MappedSongSearchQuery
@@ -75,25 +87,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 else
                 {
-                    MappedSongSearchQuery = found.Clone();
+                    MappedSongSearchQuery = (MappedSongSearchQuery)found.Clone();
                 }
             }
-        }
-
-        private MappedSongSearchQuery? GetMappedSongSearchQueryFromSettings()
-        {
-            if (_gsmtcService.CurrentSongInfo == null)
-            {
-                return null;
-            }
-
-            var found = AppSettings.MappedSongSearchQueries
-                .FirstOrDefault(x =>
-                    x.OriginalTitle == _gsmtcService.CurrentSongInfo.Title &&
-                    x.OriginalArtist == _gsmtcService.CurrentSongInfo.Artist &&
-                    x.OriginalAlbum == _gsmtcService.CurrentSongInfo.Album);
-
-            return found;
         }
 
         public void PlayLyricsLine(LyricsLine? value)
@@ -134,32 +130,27 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void Save()
+        private async Task SaveAsync()
         {
             if (MappedSongSearchQuery == null)
             {
                 return;
             }
 
-            var existing = GetMappedSongSearchQueryFromSettings();
-            if (existing != null)
-            {
-                AppSettings.MappedSongSearchQueries.Remove(existing);
-            }
-            AppSettings.MappedSongSearchQueries.Add(MappedSongSearchQuery);
-            MappedSongSearchQuery = MappedSongSearchQuery.Clone();
+            await _songSearchMapService.SaveMappingAsync(MappedSongSearchQuery);
+            MappedSongSearchQuery = (MappedSongSearchQuery)MappedSongSearchQuery.Clone();
+            _gsmtcService.UpdateLyrics();
         }
 
         [RelayCommand]
-        private void Reset()
+        private async Task ResetAsync()
         {
-            var existing = GetMappedSongSearchQueryFromSettings();
-            if (existing != null)
-            {
-                AppSettings.MappedSongSearchQueries.Remove(existing);
-            }
-            InitMappedSongSearchQuery();
+            if (MappedSongSearchQuery == null) return;
+
+            await _songSearchMapService.DeleteMappingAsync(MappedSongSearchQuery);
+            await InitMappedSongSearchQueryAsync();
             SelectedLyricsSearchResult = null;
+            _gsmtcService.UpdateLyrics();
         }
 
         [RelayCommand]
@@ -200,7 +191,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
                 {
-                    InitMappedSongSearchQuery();
+                    _ = InitMappedSongSearchQueryAsync();
                 }
             }
         }
