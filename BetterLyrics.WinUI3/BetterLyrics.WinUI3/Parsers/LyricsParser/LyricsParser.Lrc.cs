@@ -56,17 +56,19 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     var bracketMatches = bracketRegex.Matches(line);
 
                     string content = line;
-                    int? lineStartTime = null;
+                    int lineStartMs;
                     if (bracketMatches.Count > 0)
                     {
                         var match = bracketMatches[0];
                         int min = int.Parse(match.Groups[1].Value);
                         int sec = int.Parse(match.Groups[2].Value);
                         int ms = int.Parse(match.Groups[4].Value.PadRight(3, '0'));
-                        lineStartTime = min * 60_000 + sec * 1000 + ms;
+                        lineStartMs = min * 60_000 + sec * 1000 + ms;
+
                         content = bracketRegex!.Replace(line, "").Trim();
                         if (content == "//") content = "";
-                        lrcLines.Add(new LyricsLine { StartMs = lineStartTime.Value, OriginalText = content });
+
+                        lrcLines.Add(new LyricsLine { StartMs = lineStartMs, OriginalText = content });
                     }
                 }
             }

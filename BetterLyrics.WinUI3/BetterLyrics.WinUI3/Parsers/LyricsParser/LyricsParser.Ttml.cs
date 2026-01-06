@@ -2,12 +2,15 @@
 using BetterLyrics.WinUI3.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.Parsers.LyricsParser
 {
     public partial class LyricsParser
     {
+        private readonly XNamespace _ttml = "http://www.w3.org/ns/ttml#metadata";
+
         private void ParseTtml(string raw)
         {
             try
@@ -19,120 +22,146 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 var xdoc = XDocument.Parse(raw, LoadOptions.PreserveWhitespace);
                 var body = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "body");
                 if (body == null) return;
+
                 var ps = body.Descendants().Where(e => e.Name.LocalName == "p");
+
                 foreach (var p in ps)
                 {
-                    // 句级时间
-                    string? pBegin = p.Attribute("begin")?.Value;
-                    string? pEnd = p.Attribute("end")?.Value;
-                    int pStartMs = ParseTtmlTime(pBegin);
-                    int pEndMs = ParseTtmlTime(pEnd);
+                    ParseTtmlSegment(
+                        container: p,
+                        originalDest: originalLines,
+                        transDest: translationLines,
+                        romanDest: romanLines,
+                        isBackground: false
+                    );
 
-                    // 只获取一级span
-                    var spans = p.Elements()
-                        .Where(s => s.Name.LocalName == "span")
-                        .ToList();
+                    var bgSpans = p.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
 
-                    var originalTextSpans = spans
-                        .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value == null)
-                        .ToList();
-
-                    // 处理原文span后的空白
-                    for (int i = 0; i < originalTextSpans.Count; i++)
+                    foreach (var bgSpan in bgSpans)
                     {
-                        var span = originalTextSpans[i];
-                        var nextNode = span.NodesAfterSelf().FirstOrDefault();
-                        if (nextNode is XText textNode)
-                        {
-                            span.Value += textNode.Value;
-                        }
+                        // 把 span 当作一个容器，再调一次通用解析方法
+                        ParseTtmlSegment(
+                            container: bgSpan,
+                            originalDest: originalLines,
+                            transDest: translationLines,
+                            romanDest: romanLines,
+                            isBackground: true
+                        );
                     }
-                    // 拼接空白字符后的原文
-                    string originalText = string.Concat(originalTextSpans.Select(s => s.Value));
-
-                    var originalCharTimings = new List<LyricsSyllable>();
-                    int originalStartIndex = 0;
-                    foreach (var span in originalTextSpans)
-                    {
-                        string? sBegin = span.Attribute("begin")?.Value;
-                        string? sEnd = span.Attribute("end")?.Value;
-                        int sStartMs = ParseTtmlTime(sBegin);
-                        int sEndMs = ParseTtmlTime(sEnd);
-                        originalCharTimings.Add(new LyricsSyllable
-                        {
-                            StartMs = sStartMs,
-                            EndMs = sEndMs,
-                            StartIndex = originalStartIndex,
-                            Text = span.Value
-                        });
-                        originalStartIndex += span.Value.Length;
-                    }
-                    if (originalTextSpans.Count == 0)
-                    {
-                        originalText = p.Value;
-                    }
-
-                    originalLines.Add(new LyricsLine
-                    {
-                        StartMs = pStartMs,
-                        EndMs = pEndMs,
-                        OriginalText = originalText,
-                        LyricsSyllables = originalCharTimings,
-                    });
-
-                    // 解析 x-role
-                    ParseTtmlXRole(spans, translationLines, "x-translation", pStartMs, pEndMs);
-                    ParseTtmlXRole(spans, romanLines, "x-roman", pStartMs, pEndMs);
                 }
 
                 _lyricsDataArr.Add(new LyricsData(originalLines));
+
                 if (translationLines.Count > 0)
                 {
                     _lyricsDataArr.Add(new LyricsData(translationLines));
                 }
+
                 if (romanLines.Count > 0)
                 {
                     _lyricsDataArr.Add(new LyricsData(romanLines) { LanguageCode = PhoneticHelper.RomanCode });
                 }
             }
-            catch
-            {
-                // 解析失败，忽略
-            }
+            catch { }
         }
 
-        private void ParseTtmlXRole(List<XElement> sourceSpans, List<LyricsLine> saveLyricsLines, string xRole, int pStartMs, int? pEndMs)
+        private void ParseTtmlSegment(
+            XElement container,
+            List<LyricsLine> originalDest,
+            List<LyricsLine> transDest,
+            List<LyricsLine> romanDest,
+            bool isBackground)
         {
-            var textSpans = sourceSpans
-                .Where(s => s.Attribute(XName.Get("role", "http://www.w3.org/ns/ttml#metadata"))?.Value == xRole)
+            int containerStartMs = ParseTtmlTime(container.Attribute("begin")?.Value);
+            int containerEndMs = ParseTtmlTime(container.Attribute("end")?.Value);
+
+            var contentSpans = container.Elements()
+                .Where(s => s.Name.LocalName == "span")
+                .Where(s =>
+                {
+                    var role = s.Attribute(_ttml + "role")?.Value;
+                    return role == null;
+                })
                 .ToList();
 
-            string text = string.Concat(textSpans.Select(s => s.Value));
-            var charTimings = new List<LyricsSyllable>();
-            int startIndex = 0;
-            foreach (var span in textSpans)
+            for (int i = 0; i < contentSpans.Count; i++)
             {
-                string? sBegin = span.Attribute("begin")?.Value;
-                string? sEnd = span.Attribute("end")?.Value;
-                int sStartMs = ParseTtmlTime(sBegin);
-                int sEndMs = ParseTtmlTime(sEnd);
-                charTimings.Add(new LyricsSyllable
+                var span = contentSpans[i];
+                var nextNode = span.NodesAfterSelf().FirstOrDefault();
+                if (nextNode is XText textNode)
+                {
+                    span.Value += textNode.Value;
+                }
+            }
+
+            var syllables = new List<LyricsSyllable>();
+            int startIndex = 0;
+            var sbText = new System.Text.StringBuilder();
+
+            foreach (var span in contentSpans)
+            {
+                int sStartMs = ParseTtmlTime(span.Attribute("begin")?.Value);
+                int sEndMs = ParseTtmlTime(span.Attribute("end")?.Value);
+                string text = span.Value;
+
+                syllables.Add(new LyricsSyllable
                 {
                     StartMs = sStartMs,
                     EndMs = sEndMs,
                     StartIndex = startIndex,
-                    Text = span.Value
+                    Text = text
                 });
-                startIndex += span.Value.Length;
+
+                sbText.Append(text);
+                startIndex += text.Length;
             }
-            if (textSpans.Count > 0)
+
+            string fullOriginalText = sbText.ToString();
+
+            if (contentSpans.Count == 0)
             {
-                saveLyricsLines.Add(new LyricsLine
+                fullOriginalText = container.Value;
+            }
+
+            originalDest.Add(new LyricsLine
+            {
+                StartMs = containerStartMs,
+                EndMs = containerEndMs,
+                OriginalText = fullOriginalText,
+                LyricsSyllables = syllables
+            });
+
+            var transSpan = container.Elements()
+                .FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-translation");
+
+            AddAuxiliaryLine(transDest, transSpan, containerStartMs, containerEndMs);
+
+            var romanSpan = container.Elements()
+                .FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-roman");
+
+            AddAuxiliaryLine(romanDest, romanSpan, containerStartMs, containerEndMs);
+        }
+
+        private void AddAuxiliaryLine(List<LyricsLine> destList, XElement? span, int startMs, int endMs)
+        {
+            if (span != null)
+            {
+                string text = span.Value;
+
+                destList.Add(new LyricsLine
                 {
-                    StartMs = pStartMs,
-                    EndMs = pEndMs,
-                    OriginalText = text,
-                    LyricsSyllables = charTimings,
+                    StartMs = startMs,
+                    EndMs = endMs,
+                    OriginalText = text
+                });
+            }
+            else
+            {
+                destList.Add(new LyricsLine
+                {
+                    StartMs = startMs,
+                    EndMs = endMs,
+                    OriginalText = ""
                 });
             }
         }

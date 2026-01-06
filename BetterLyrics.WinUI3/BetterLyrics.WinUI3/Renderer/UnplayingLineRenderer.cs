@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
+using System;
 using System.Numerics;
 using Windows.Foundation;
 
@@ -28,15 +29,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (line.OriginalCanvasTextLayout != null)
             {
-                double opacity;
-                if (line.PlayedOriginalOpacityTransition.StartValue > line.UnplayedOriginalOpacityTransition.StartValue)
-                {
-                    opacity = line.PlayedOriginalOpacityTransition.Value;
-                }
-                else
-                {
-                    opacity = line.UnplayedOriginalOpacityTransition.Value;
-                }
+                double opacity = Math.Max(line.PlayedOriginalOpacityTransition.Value, line.UnplayedOriginalOpacityTransition.Value);
                 DrawPart(ds, textOnlyLayer,
                     line.OriginalCanvasTextLayout,
                     line.OriginalPosition,

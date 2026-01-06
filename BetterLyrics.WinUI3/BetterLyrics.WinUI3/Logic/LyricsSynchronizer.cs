@@ -13,30 +13,53 @@ namespace BetterLyrics.WinUI3.Logic
             _lastFoundIndex = 0;
         }
 
-        public int GetCurrentLineIndex(double currentTimeMs, LyricsData? lyricsData)
+        public int GetCurrentLineIndex(double currentTimeMs, IList<RenderLyricsLine>? lines)
         {
-            if (lyricsData == null || lyricsData.LyricsLines.Count == 0) return 0;
-            var lines = lyricsData.LyricsLines;
+            if (lines == null || lines.Count == 0) return 0;
 
-            // Cache hit
-            if (IsTimeInLine(currentTimeMs, lines, _lastFoundIndex)) return _lastFoundIndex;
-            if (_lastFoundIndex + 1 < lines.Count && IsTimeInLine(currentTimeMs, lines, _lastFoundIndex + 1))
+            if (_lastFoundIndex >= 0 && _lastFoundIndex < lines.Count)
             {
-                _lastFoundIndex++;
-                return _lastFoundIndex;
+                var lastLine = lines[_lastFoundIndex];
+                if (lastLine.LaneIndex == 0 && IsTimeInLine(currentTimeMs, lines, _lastFoundIndex))
+                {
+                    return _lastFoundIndex;
+                }
             }
 
-            // Cache miss
+            int bestCandidateIndex = -1;
+            int bestCandidateLane = int.MaxValue;
+
             for (int i = 0; i < lines.Count; i++)
             {
                 if (IsTimeInLine(currentTimeMs, lines, i))
                 {
-                    _lastFoundIndex = i;
-                    return i;
+                    var currentLine = lines[i];
+                    int currentLane = currentLine.LaneIndex;
+
+                    if (currentLane == 0)
+                    {
+                        _lastFoundIndex = i;
+                        return i;
+                    }
+
+                    if (currentLane < bestCandidateLane)
+                    {
+                        bestCandidateIndex = i;
+                        bestCandidateLane = currentLane;
+                    }
+                }
+                else if (lines[i].StartMs > currentTimeMs + 1000)
+                {
+                    break;
                 }
             }
 
-            // Default
+            if (bestCandidateIndex != -1)
+            {
+                _lastFoundIndex = bestCandidateIndex;
+                return bestCandidateIndex;
+            }
+
             return Math.Min(_lastFoundIndex, lines.Count - 1);
         }
 
@@ -140,7 +163,7 @@ namespace BetterLyrics.WinUI3.Logic
             return state;
         }
 
-        private bool IsTimeInLine(double time, IList<LyricsLine> lines, int index)
+        private bool IsTimeInLine(double time, IList<RenderLyricsLine> lines, int index)
         {
             if (index < 0 || index >= lines.Count) return false;
             var line = lines[index];
