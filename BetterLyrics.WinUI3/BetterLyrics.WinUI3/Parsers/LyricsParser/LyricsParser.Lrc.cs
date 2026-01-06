@@ -40,11 +40,24 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     startIndex += text.Length;
                 }
 
-                if (syllables.Count > 1)
+                int lineEndMs = 0;
+
+                if (syllables.Count > 0)
+                {
+                    var lastSyllable = syllables[syllables.Count - 1];
+                    if (string.IsNullOrWhiteSpace(lastSyllable.Text))
+                    {
+                        lineEndMs = lastSyllable.StartMs;
+                        syllables.RemoveAt(syllables.Count - 1);
+                    }
+                }
+
+                if (syllables.Count > 0)
                 {
                     lrcLines.Add(new LyricsLine
                     {
                         StartMs = syllables[0].StartMs,
+                        EndMs = lineEndMs,
                         OriginalText = string.Concat(syllables.Select(s => s.Text)),
                         LyricsSyllables = syllables
                     });
