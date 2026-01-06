@@ -115,7 +115,7 @@ namespace BetterLyrics.WinUI3.Views
             var albumFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.AlbumNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
 
             RenderTextBlock(TitleTextBlock, _gsmtcService.CurrentSongInfo.Title, titleFontSize);
-            RenderTextBlock(ArtistsTextBlock, _gsmtcService.CurrentSongInfo.DisplayArtists, artistsFontSize);
+            RenderTextBlock(ArtistsTextBlock, _gsmtcService.CurrentSongInfo.Artist, artistsFontSize);
             RenderTextBlock(AlbumTextBlock, _gsmtcService.CurrentSongInfo.Album, albumFontSize);
         }
 

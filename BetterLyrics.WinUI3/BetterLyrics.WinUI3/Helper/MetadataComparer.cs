@@ -17,7 +17,7 @@ namespace BetterLyrics.WinUI3.Helper
         // JaroWinkler 适合短字符串匹配
         private static readonly JaroWinkler _algo = new();
 
-        public static int CalculateScore(SongInfo local, LyricsSearchResult remote)
+        public static int CalculateScore(SongInfo local, LyricsCacheItem remote)
         {
             if (local == null || remote == null) return 0;
 
@@ -29,7 +29,7 @@ namespace BetterLyrics.WinUI3.Helper
             if (localHasMetadata && remoteHasMetadata)
             {
                 double titleScore = GetStringSimilarity(local.Title, remote.Title);
-                double artistScore = GetArtistSimilarity(local.Artists, remote.Artists);
+                double artistScore = GetStringSimilarity(local.Artist, remote.Artist);
                 double albumScore = GetStringSimilarity(local.Album, remote.Album);
                 double durationScore = GetDurationSimilarity(local.DurationMs, remote.Duration);
 
@@ -41,11 +41,11 @@ namespace BetterLyrics.WinUI3.Helper
             else
             {
                 string? localQuery = localHasMetadata
-                    ? $"{local.Title} {string.Join(" ", local.Artists ?? [])}"
+                    ? $"{local.Title} {local.Artist}"
                     : Path.GetFileNameWithoutExtension(local.LinkedFileName);
 
                 string remoteQuery = remoteHasMetadata
-                    ? $"{remote.Title} {string.Join(" ", remote.Artists ?? [])}"
+                    ? $"{remote.Title} {remote.Artist}"
                     : Path.GetFileNameWithoutExtension(remote.Reference);
 
                 string fp1 = CreateSortedFingerprint(localQuery);

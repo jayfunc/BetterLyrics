@@ -8,21 +8,6 @@ namespace BetterLyrics.WinUI3.Extensions
     {
         extension(LyricsSearchProvider provider)
         {
-            public string GetCacheDirectory() => provider switch
-            {
-                LyricsSearchProvider.LrcLib => PathHelper.LrcLibLyricsCacheDirectory,
-                LyricsSearchProvider.QQ => PathHelper.QQLyricsCacheDirectory,
-                LyricsSearchProvider.Netease => PathHelper.NeteaseLyricsCacheDirectory,
-                LyricsSearchProvider.Kugou => PathHelper.KugouLyricsCacheDirectory,
-                LyricsSearchProvider.AmllTtmlDb => PathHelper.AmllTtmlDbLyricsCacheDirectory,
-                LyricsSearchProvider.AppleMusic => PathHelper.AppleMusicCacheDirectory,
-                LyricsSearchProvider.LocalMusicFile => PathHelper.LocalMusicCacheDirectory,
-                LyricsSearchProvider.LocalLrcFile => PathHelper.LocalLrcCacheDirectory,
-                LyricsSearchProvider.LocalEslrcFile => PathHelper.LocalEslrcCacheDirectory,
-                LyricsSearchProvider.LocalTtmlFile => PathHelper.LocalTtmlCacheDirectory,
-                _ => throw new ArgumentOutOfRangeException(nameof(provider)),
-            };
-
             public LyricsFormat GetLyricsFormat() => provider switch
             {
                 LyricsSearchProvider.LrcLib => LyricsFormat.Lrc,

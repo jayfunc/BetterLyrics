@@ -40,16 +40,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
 
         public static string LyricsCacheDirectory => Path.Combine(CacheFolder, "lyrics");
-        public static string LrcLibLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "lrclib");
-        public static string NeteaseLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "netease");
-        public static string QQLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "qq");
-        public static string KugouLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "kugou");
         public static string AmllTtmlDbLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "amll-ttml-db");
-        public static string AppleMusicCacheDirectory => Path.Combine(LyricsCacheDirectory, "apple-music");
-        public static string LocalMusicCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-music");
-        public static string LocalLrcCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-lrc");
-        public static string LocalEslrcCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-eslrc");
-        public static string LocalTtmlCacheDirectory => Path.Combine(LyricsCacheDirectory, "local-ttml");
         public static string AmllTtmlDbIndexPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-index.jsonl");
         public static string AmllTtmlDbLastUpdatedPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-last-updated.txt");
 
@@ -60,6 +51,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string PlayQueuePath => Path.Combine(LocalFolder, "play-queue.m3u");
         public static string PlayHistoryPath => Path.Combine(LocalFolder, "play-history.db");
         public static string FilesIndexPath => Path.Combine(LocalFolder, "files-index.db");
+        public static string LyricsCachePath => Path.Combine(LyricsCacheDirectory, "lyrics-cache.db");
 
         public static void EnsureDirectories()
         {
@@ -67,16 +59,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             Directory.CreateDirectory(LogDirectory);
 
-            Directory.CreateDirectory(LrcLibLyricsCacheDirectory);
-            Directory.CreateDirectory(QQLyricsCacheDirectory);
-            Directory.CreateDirectory(KugouLyricsCacheDirectory);
-            Directory.CreateDirectory(NeteaseLyricsCacheDirectory);
             Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
-            Directory.CreateDirectory(AppleMusicCacheDirectory);
-            Directory.CreateDirectory(LocalMusicCacheDirectory);
-            Directory.CreateDirectory(LocalLrcCacheDirectory);
-            Directory.CreateDirectory(LocalEslrcCacheDirectory);
-            Directory.CreateDirectory(LocalTtmlCacheDirectory);
 
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
             Directory.CreateDirectory(LocalAlbumArtCacheDirectory);

@@ -17,7 +17,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsData? CurrentLyricsData { get; private set; }
 
-        [ObservableProperty] public partial LyricsSearchResult? CurrentLyricsSearchResult { get; private set; }
+        [ObservableProperty] public partial LyricsCacheItem? CurrentLyricsSearchResult { get; private set; }
 
         private async Task RefreshLyricsAsync(CancellationToken token)
         {

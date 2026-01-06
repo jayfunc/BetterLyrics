@@ -97,19 +97,6 @@
                                         Style="{StaticResource GhostButtonStyle}" />
                                 </Grid>
 
-                                <RichTextBlock
-                                    FontSize="12"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    TextWrapping="Wrap">
-                                    <Paragraph>
-                                        <Run Text="*" />
-                                        <Run x:Uid="ArtistsSplitHint" />
-                                    </Paragraph>
-                                    <Paragraph>
-                                        <Run Text=";    ,    /    ；    、    ，" />
-                                    </Paragraph>
-                                </RichTextBlock>
-
                             </StackPanel>
                         </Grid>
 
@@ -169,7 +156,7 @@
             <Grid Grid.Column="1">
                 <ListView ItemsSource="{x:Bind ViewModel.LyricsSearchResults, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedLyricsSearchResult, Mode=TwoWay}">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:LyricsSearchResult">
+                        <DataTemplate x:DataType="models:LyricsCacheItem">
                             <ListViewItem IsEnabled="{x:Bind IsFound}">
                                 <StackPanel Padding="0,6" Opacity="{x:Bind IsFound, Converter={StaticResource BoolToPartialOpacityConverter}}">
                                     <local:PropertyRow
@@ -180,17 +167,13 @@
                                     <!--  Lyrics search result  -->
                                     <StackPanel Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                        <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind Artist, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow
                                             x:Uid="LyricsPageMatchPercentage"
                                             Unit="%"
                                             Value="{x:Bind MatchPercentage, Mode=OneWay}" />
-                                        <local:PropertyRow
-                                            x:Uid="LyricsPageCachePath"
-                                            Link="{x:Bind SelfPath, TargetNullValue=N/A, Mode=OneWay}"
-                                            ToolTipService.ToolTip="{x:Bind SelfPath, TargetNullValue=N/A, Mode=OneWay}" />
                                     </StackPanel>
                                     <!--  NOT FOUND  -->
                                     <TextBlock

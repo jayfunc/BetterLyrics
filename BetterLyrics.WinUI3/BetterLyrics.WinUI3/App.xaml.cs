@@ -7,6 +7,7 @@ using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.WinUI3.Services.LyricsCacheService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -172,7 +173,8 @@ namespace BetterLyrics.WinUI3
         private async Task EnsureDatabasesAsync()
         {
             var playHistoryFactory = Ioc.Default.GetRequiredService<IDbContextFactory<PlayHistoryDbContext>>();
-            var fileCacheFactory = Ioc.Default.GetRequiredService<IDbContextFactory<FilesIndexDbContext>>();
+            var filesIndexFactory = Ioc.Default.GetRequiredService<IDbContextFactory<FilesIndexDbContext>>();
+            var lyricsCacheFactory = Ioc.Default.GetRequiredService<IDbContextFactory<LyricsCacheDbContext>>();
 
             await SafeInitDatabaseAsync(
                 "PlayHistory",
@@ -190,7 +192,18 @@ namespace BetterLyrics.WinUI3
                 PathHelper.FilesIndexPath,
                 async () =>
                 {
-                    using var db = await fileCacheFactory.CreateDbContextAsync();
+                    using var db = await filesIndexFactory.CreateDbContextAsync();
+                    await db.Database.EnsureCreatedAsync();
+                },
+                isCritical: false
+            );
+
+            await SafeInitDatabaseAsync(
+                "LyricsCache",
+                PathHelper.FilesIndexPath,
+                async () =>
+                {
+                    using var db = await lyricsCacheFactory.CreateDbContextAsync();
                     await db.Database.EnsureCreatedAsync();
                 },
                 isCritical: false
@@ -269,6 +282,7 @@ namespace BetterLyrics.WinUI3
                     // 数据库工厂
                     .AddDbContextFactory<PlayHistoryDbContext>(options => options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
                     .AddDbContextFactory<FilesIndexDbContext>(options => options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
+                    .AddDbContextFactory<LyricsCacheDbContext>(options => options.UseSqlite($"Data Source={PathHelper.LyricsCachePath}"))
 
                     // 日志
                     .AddLogging(loggingBuilder =>
@@ -290,6 +304,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ILocalizationService, LocalizationService>()
                     .AddSingleton<IFileSystemService, FileSystemService>()
                     .AddSingleton<IPlayHistoryService, PlayHistoryService>()
+                    .AddSingleton<ILyricsCacheService, LyricsCacheService>()
 
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()

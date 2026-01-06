@@ -53,22 +53,6 @@ namespace BetterLyrics.WinUI3.Helper
             return sb.ToString();
         }
 
-        public static LyricsSearchResult? ReadLyricsCache(SongInfo songInfo, LyricsSearchProvider lyricsSearchProvider)
-        {
-            var cacheFilePath = Path.Combine(
-                lyricsSearchProvider.GetCacheDirectory(),
-                SanitizeFileName($"{songInfo.ToFileName()}.json"));
-
-            if (File.Exists(cacheFilePath))
-            {
-                var json = File.ReadAllText(cacheFilePath);
-                var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LyricsSearchResult);
-                data?.SelfPath = cacheFilePath;
-                return data;
-            }
-            return null;
-        }
-
         public static byte[]? ReadAlbumArtCache(string album, string artist, string format, string cacheFolderPath)
         {
             var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {album}{format}"));
@@ -79,19 +63,9 @@ namespace BetterLyrics.WinUI3.Helper
             return null;
         }
 
-        public static void WriteLyricsCache(SongInfo songInfo, LyricsSearchResult lyricsSearchResult)
-        {
-            var cacheFilePath = Path.Combine(
-                lyricsSearchResult.Provider.GetCacheDirectory(),
-                SanitizeFileName($"{songInfo.ToFileName()}.json"));
-            lyricsSearchResult.SelfPath = cacheFilePath;
-            var json = System.Text.Json.JsonSerializer.Serialize(lyricsSearchResult, SourceGenerationContext.Default.LyricsSearchResult);
-            File.WriteAllText(cacheFilePath, json);
-        }
-
         public static void WriteAlbumArtCache(SongInfo songInfo, byte[] img, string format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.DisplayArtists} - {songInfo.Album}{format}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.Artist} - {songInfo.Album}{format}"));
             File.WriteAllBytes(cacheFilePath, img);
         }
 

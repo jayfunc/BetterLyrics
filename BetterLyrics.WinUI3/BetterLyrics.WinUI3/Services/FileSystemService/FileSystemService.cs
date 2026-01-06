@@ -190,7 +190,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                 .Where(x => x.Id == entity.Id) // 优先用 Id
                 .ExecuteUpdateAsync(setters => setters
                     .SetProperty(p => p.Title, entity.Title)
-                    .SetProperty(p => p.Artists, entity.Artists)
+                    .SetProperty(p => p.Artist, entity.Artist)
                     .SetProperty(p => p.Album, entity.Album)
                     .SetProperty(p => p.Year, entity.Year)
                     .SetProperty(p => p.Bitrate, entity.Bitrate)
@@ -385,7 +385,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                                 string? artPath = await SaveAlbumArtToDiskAsync(track);
 
                                 item.Title = track.Title;
-                                item.Artists = track.Artist;
+                                item.Artist = track.Artist;
                                 item.Album = track.Album;
                                 item.Year = track.Year;
                                 item.Bitrate = track.Bitrate;
