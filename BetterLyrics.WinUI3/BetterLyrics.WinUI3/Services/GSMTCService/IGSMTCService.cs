@@ -40,6 +40,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         AlbumArtThemeColors CalculateAlbumArtThemeColors(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
 
-        LyricsSearchResult? CurrentLyricsSearchResult { get; }
+        LyricsCacheItem? CurrentLyricsSearchResult { get; }
     }
 }

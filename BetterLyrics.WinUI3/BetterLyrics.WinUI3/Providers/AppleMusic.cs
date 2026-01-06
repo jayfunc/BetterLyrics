@@ -111,14 +111,14 @@ namespace BetterLyrics.WinUI3.Providers
             return null;
         }
 
-        public async Task<LyricsSearchResult> SearchSongInfoAsync(Models.SongInfo songInfo)
+        public async Task<LyricsCacheItem> SearchSongInfoAsync(Models.SongInfo songInfo)
         {
-            LyricsSearchResult lyricsSearchResult = new()
+            LyricsCacheItem lyricsSearchResult = new()
             {
                 Provider = Enums.LyricsSearchProvider.AppleMusic
             };
 
-            var query = $"{songInfo.DisplayArtists} {songInfo.Title}";
+            var query = $"{songInfo.Artist} {songInfo.Title}";
             var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/search";
             var url = apiUrl + $"?term={WebUtility.UrlEncode(query)}&types=songs&limit=1&l={_language}";
             var resp = await _client.GetStringAsync(url);
@@ -133,7 +133,7 @@ namespace BetterLyrics.WinUI3.Providers
                 var attr = song.GetProperty("attributes");
 
                 lyricsSearchResult.Title = attr.GetProperty("name").ToString();
-                lyricsSearchResult.Artists = attr.GetProperty("artistName").ToString().SplitByCommonSplitter();
+                lyricsSearchResult.Artist = attr.GetProperty("artistName").ToString();
                 lyricsSearchResult.Album = attr.GetProperty("albumName").ToString();
                 lyricsSearchResult.Duration = attr.GetProperty("durationInMillis").GetInt32() / 1000.0;
 

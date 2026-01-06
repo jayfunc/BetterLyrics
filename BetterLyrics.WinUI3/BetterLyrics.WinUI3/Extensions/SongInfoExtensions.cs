@@ -1,5 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Models;
 using System;
+using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
@@ -9,7 +12,7 @@ namespace BetterLyrics.WinUI3.Extensions
         {
             Title = "N/A",
             Album = "N/A",
-            Artists = ["N/A"],
+            Artist = "N/A",
         };
 
         extension(SongInfo songInfo)
@@ -20,9 +23,9 @@ namespace BetterLyrics.WinUI3.Extensions
                 return songInfo;
             }
 
-            public SongInfo WithArtist(string[] value)
+            public SongInfo WithArtist(string value)
             {
-                songInfo.Artists = value;
+                songInfo.Artist = value;
                 return songInfo;
             }
 
@@ -39,13 +42,30 @@ namespace BetterLyrics.WinUI3.Extensions
                 return new PlayHistoryItem
                 {
                     Title = songInfo.Title,
-                    Artist = songInfo.DisplayArtists,
+                    Artist = songInfo.Artist,
                     Album = songInfo.Album,
                     PlayerId = songInfo.PlayerId ?? "N/A",
                     TotalDurationMs = songInfo.DurationMs,
                     DurationPlayedMs = actualPlayedMs,
                     StartedAt = DateTime.FromBinary(songInfo.StartedAt)
                 };
+            }
+
+            public string GetCacheKey()
+            {
+                string title = songInfo.Title?.Trim() ?? "";
+                string album = songInfo.Album?.Trim() ?? "";
+
+                string artists = songInfo.Artist?.Trim() ?? "";
+
+                long seconds = (long)Math.Round(songInfo.Duration);
+                string durationPart = seconds.ToString(CultureInfo.InvariantCulture);
+
+                string rawKey = $"{title}|{artists}|{album}|{durationPart}";
+
+                using var sha256 = SHA256.Create();
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(rawKey));
+                return Convert.ToHexString(bytes);
             }
         }
     }

@@ -12,7 +12,7 @@ namespace BetterLyrics.WinUI3.Models
         public partial string Album { get; set; }
 
         [ObservableProperty]
-        public partial string[] Artists { get; set; }
+        public partial string Artist { get; set; }
 
         [ObservableProperty]
         public partial double DurationMs { get; set; }
@@ -32,8 +32,6 @@ namespace BetterLyrics.WinUI3.Models
 
         public double Duration => DurationMs / 1000;
 
-        public string DisplayArtists => Artists.Join(ATL.Settings.DisplayValueSeparator.ToString());
-
         public SongInfo() { }
 
         public object Clone()
@@ -41,7 +39,7 @@ namespace BetterLyrics.WinUI3.Models
             return new SongInfo()
             {
                 Title = this.Title,
-                Artists = this.Artists,
+                Artist = this.Artist,
                 Album = this.Album,
                 DurationMs = this.DurationMs,
                 PlayerId = this.PlayerId,
@@ -55,7 +53,7 @@ namespace BetterLyrics.WinUI3.Models
         {
             return
                 $"Title: {Title}, " +
-                $"Artist: {DisplayArtists}, " +
+                $"Artist: {Artist}, " +
                 $"Album: {Album}, " +
                 $"Duration: {Duration} sec, " +
                 $"Plauer ID: {PlayerId}, " +
@@ -65,7 +63,7 @@ namespace BetterLyrics.WinUI3.Models
 
         public string ToFileName()
         {
-            return $"{DisplayArtists} - {Title} - {Album} - {Duration}";
+            return $"{Artist} - {Title} - {Album} - {Duration}";
         }
     }
 }

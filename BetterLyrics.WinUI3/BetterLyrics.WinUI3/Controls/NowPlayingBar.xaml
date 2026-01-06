@@ -69,7 +69,7 @@
                                 <TextBlock
                                     FontSize="12"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Text="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.DisplayArtists, Mode=OneWay}" />
+                                    Text="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}" />
                             </StackPanel>
                         </StackPanel>
 

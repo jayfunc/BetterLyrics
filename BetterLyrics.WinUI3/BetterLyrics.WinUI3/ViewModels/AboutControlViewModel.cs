@@ -95,10 +95,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             DirectoryHelper.DeleteAllFiles(PathHelper.LyricsCacheDirectory);
             DirectoryHelper.DeleteAllFiles(PathHelper.AmllTtmlDbLyricsCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.KugouLyricsCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.LrcLibLyricsCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.NeteaseLyricsCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.QQLyricsCacheDirectory);
 
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 

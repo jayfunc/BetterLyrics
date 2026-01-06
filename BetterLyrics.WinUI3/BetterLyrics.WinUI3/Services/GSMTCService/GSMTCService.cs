@@ -344,7 +344,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     CurrentSongInfo = new()
                     {
                         Title = fixedTitle,
-                        Artists = fixedArtist.SplitByCommonSplitter(),
+                        Artist = fixedArtist,
                         Album = fixedAlbum,
                         DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
                         PlayerId = sessionId,

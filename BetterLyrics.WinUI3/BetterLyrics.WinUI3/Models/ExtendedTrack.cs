@@ -129,7 +129,7 @@ namespace BetterLyrics.WinUI3.Models
             this.Uri = entity.Uri;
 
             this.Title = entity.Title;
-            this.Artist = entity.Artists;
+            this.Artist = entity.Artist;
             this.Album = entity.Album;
             this.Year = entity.Year;
             this.Bitrate = entity.Bitrate;

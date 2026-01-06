@@ -12,7 +12,7 @@ namespace BetterLyrics.WinUI3.Serialization
     [JsonSerializable(typeof(CutletDockerResponse))]
     [JsonSerializable(typeof(JsonElement))]
     [JsonSerializable(typeof(AppSettings))]
-    [JsonSerializable(typeof(LyricsSearchResult))]
+    [JsonSerializable(typeof(LyricsCacheItem))]
     [JsonSourceGenerationOptions(WriteIndented = true)]
     internal partial class SourceGenerationContext : JsonSerializerContext { }
 }

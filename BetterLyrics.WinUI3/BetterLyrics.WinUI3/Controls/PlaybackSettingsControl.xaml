@@ -326,7 +326,7 @@
                             HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
                                 <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Artist, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Album, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.DurationMs, TargetNullValue=N/A, Converter={StaticResource MillisecondsToFormattedTimeConverter}, Mode=OneWay}" />
                             </StackPanel>
@@ -339,7 +339,7 @@
                             HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
                                 <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.DisplayArtists, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.Artist, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.Album, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsData.LanguageCode, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
@@ -354,10 +354,6 @@
                                     x:Uid="LyricsPageMatchPercentage"
                                     Unit="%"
                                     Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
-                                <local:PropertyRow
-                                    x:Uid="LyricsPageCachePath"
-                                    Link="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
-                                    ToolTipService.ToolTip="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.SelfPath, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}" />
                             </StackPanel>
                         </Expander>
 

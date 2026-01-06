@@ -30,7 +30,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
         {
         }
 
-        public List<LyricsData> Parse(LyricsSearchResult? lyricsSearchResult)
+        public List<LyricsData> Parse(LyricsCacheItem? lyricsSearchResult)
         {
             _logger.LogInformation("LyricsParser.Parse");
             _lyricsDataArr = [];
@@ -75,7 +75,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             ITranslationService translationService,
             ITransliterationService transliterationService,
             TranslationSettings settings,
-            LyricsSearchResult? lyricsSearchResult,
+            LyricsCacheItem? lyricsSearchResult,
             CancellationToken token
         )
         {
@@ -180,7 +180,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             return (main, transliterationSearchProvider, translationSearchProvider);
         }
 
-        private void LoadTranslation(LyricsSearchResult? lyricsSearchResult)
+        private void LoadTranslation(LyricsCacheItem? lyricsSearchResult)
         {
             if (!string.IsNullOrWhiteSpace(lyricsSearchResult?.Translation))
             {
@@ -197,7 +197,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             }
         }
 
-        private void LoadTransliteration(LyricsSearchResult? lyricsSearchResult)
+        private void LoadTransliteration(LyricsCacheItem? lyricsSearchResult)
         {
             if (!string.IsNullOrWhiteSpace(lyricsSearchResult?.Transliteration))
             {

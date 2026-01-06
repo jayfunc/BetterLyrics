@@ -97,11 +97,11 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                 var ext = Path.GetExtension(item.FileName).ToLower();
                 if (!FileHelper.MusicExtensions.Contains(ext)) continue;
 
-                bool isMetadataMatch = (item.Title == songInfo.Title && item.Artists == songInfo.DisplayArtists);
+                bool isMetadataMatch = (item.Title == songInfo.Title && item.Artist == songInfo.Artist);
 
                 bool isFilenameMatch = StringHelper.IsSwitchableNormalizedMatch(
                     Path.GetFileNameWithoutExtension(item.FileName),
-                    songInfo.DisplayArtists,
+                    songInfo.Artist,
                     songInfo.Title
                 );
 
@@ -138,7 +138,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             try
             {
                 string format = ".jpg";
-                var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo.DisplayArtists, songInfo.Album, format, PathHelper.iTunesAlbumArtCacheDirectory);
+                var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo.Artist, songInfo.Album, format, PathHelper.iTunesAlbumArtCacheDirectory);
 
                 if (cachedAlbumArt != null)
                 {
@@ -146,7 +146,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                 }
 
                 // Build the iTunes API URL
-                string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode($"{songInfo.Artists} {songInfo.Album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
+                string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode($"{songInfo.Artist} {songInfo.Album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
 
                 // Make a request to the API
                 using HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url);

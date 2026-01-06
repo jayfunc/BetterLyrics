@@ -29,10 +29,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial AppSettings AppSettings { get; set; }
 
         [ObservableProperty]
-        public partial ObservableCollection<LyricsSearchResult> LyricsSearchResults { get; set; } = [];
+        public partial ObservableCollection<LyricsCacheItem> LyricsSearchResults { get; set; } = [];
 
         [ObservableProperty]
-        public partial LyricsSearchResult? SelectedLyricsSearchResult { get; set; }
+        public partial LyricsCacheItem? SelectedLyricsSearchResult { get; set; }
 
         [ObservableProperty]
         public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
@@ -66,10 +66,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                     MappedSongSearchQuery = new MappedSongSearchQuery
                     {
                         OriginalTitle = _gsmtcService.CurrentSongInfo.Title,
-                        OriginalArtist = _gsmtcService.CurrentSongInfo.DisplayArtists,
+                        OriginalArtist = _gsmtcService.CurrentSongInfo.Artist,
                         OriginalAlbum = _gsmtcService.CurrentSongInfo.Album,
                         MappedTitle = _gsmtcService.CurrentSongInfo.Title,
-                        MappedArtist = _gsmtcService.CurrentSongInfo.DisplayArtists,
+                        MappedArtist = _gsmtcService.CurrentSongInfo.Artist,
                         MappedAlbum = _gsmtcService.CurrentSongInfo.Album,
                     };
                 }
@@ -90,7 +90,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             var found = AppSettings.MappedSongSearchQueries
                 .FirstOrDefault(x =>
                     x.OriginalTitle == _gsmtcService.CurrentSongInfo.Title &&
-                    x.OriginalArtist == _gsmtcService.CurrentSongInfo.DisplayArtists &&
+                    x.OriginalArtist == _gsmtcService.CurrentSongInfo.Artist &&
                     x.OriginalAlbum == _gsmtcService.CurrentSongInfo.Album);
 
             return found;
@@ -123,7 +123,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     var result = await _lyricsSearchService.SearchAllAsync(
                         ((SongInfo)_gsmtcService.CurrentSongInfo.Clone())
                             .WithTitle(MappedSongSearchQuery.MappedTitle)
-                            .WithArtist(MappedSongSearchQuery.MappedArtist.SplitByCommonSplitter())
+                            .WithArtist(MappedSongSearchQuery.MappedArtist)
                             .WithAlbum(MappedSongSearchQuery.MappedAlbum),
                         !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching,
                         token);
@@ -180,7 +180,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             MappedSongSearchQuery?.MappedAlbum = MappedSongSearchQuery?.OriginalAlbum ?? string.Empty;
         }
 
-        partial void OnSelectedLyricsSearchResultChanged(LyricsSearchResult? value)
+        partial void OnSelectedLyricsSearchResultChanged(LyricsCacheItem? value)
         {
             MappedSongSearchQuery?.LyricsSearchProvider = value?.Provider;
             if (value?.Raw != null)
