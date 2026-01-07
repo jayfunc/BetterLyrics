@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.Models
         // 下面的元数据字段通常不需要索引，可以使用 MaxLength 稍微优化空间，
         // 或者直接留空（默认为 nvarchar(max)）
         public string Title { get; set; } = "";
-        public string Artist { get; set; } = "";
+        [Column("Artists")] public string Artist { get; set; } = "";
         public string Album { get; set; } = "";
         public int? Year { get; set; }
         public int Bitrate { get; set; }
