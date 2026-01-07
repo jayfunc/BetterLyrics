@@ -92,10 +92,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void ClearCacheFiles()
         {
             DirectoryHelper.DeleteAllFiles(PathHelper.LogDirectory);
-
             DirectoryHelper.DeleteAllFiles(PathHelper.LyricsCacheDirectory);
-            DirectoryHelper.DeleteAllFiles(PathHelper.AmllTtmlDbLyricsCacheDirectory);
-
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
             ToastHelper.ShowToast("ActionCompleted", null, InfoBarSeverity.Success);

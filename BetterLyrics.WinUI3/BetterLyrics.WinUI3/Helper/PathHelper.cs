@@ -40,7 +40,6 @@ namespace BetterLyrics.WinUI3.Helper
         public static string LogFilePattern => Path.Combine(LogDirectory, "log-.txt");
 
         public static string LyricsCacheDirectory => Path.Combine(CacheFolder, "lyrics");
-        public static string AmllTtmlDbLyricsCacheDirectory => Path.Combine(LyricsCacheDirectory, "amll-ttml-db");
         public static string AmllTtmlDbIndexPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-index.jsonl");
         public static string AmllTtmlDbLastUpdatedPath => Path.Combine(LyricsCacheDirectory, "amll-ttml-db-last-updated.txt");
 
@@ -57,11 +56,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static void EnsureDirectories()
         {
             Directory.CreateDirectory(SettingsDirectory);
-
             Directory.CreateDirectory(LogDirectory);
-
-            Directory.CreateDirectory(AmllTtmlDbLyricsCacheDirectory);
-
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
             Directory.CreateDirectory(LocalAlbumArtCacheDirectory);
         }
