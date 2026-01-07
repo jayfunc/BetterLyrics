@@ -4,6 +4,7 @@ Special thanks to the following people for their support!
 
 | Date / 日期 | Name / 昵称 |
 | :--- | :--- |
+| Jan 3, 2026 | \*\*轩 |
 | Dec 13, 2025 | \<Anonymous\> |
 | Dec 3, 2025 | YE |
 | Dec 2, 2025 | \<Anonymous\> |
