@@ -14,19 +14,15 @@ namespace BetterLyrics.WinUI3.Models
 
         // 关联到 MediaFolder.Id
         // 注意：作为索引列，必须限制长度，否则 SQL Server 会报错 (索引最大900字节)
-        [MaxLength(450)]
-        public string MediaFolderId { get; set; }
+        [MaxLength(450)] public string MediaFolderId { get; set; }
 
         // 存储父文件夹的标准 URI
         // 允许为空
-        [MaxLength(450)]
-        public string? ParentUri { get; set; }
+        [MaxLength(450)] public string? ParentUri { get; set; }
 
         // 唯一索引列
         // 必须限制长度。450字符 * 2字节/字符 = 900字节 (正好卡在 SQL Server 限制内)
-        [Required]
-        [MaxLength(450)]
-        public string Uri { get; set; }
+        [Required][MaxLength(450)] public string Uri { get; set; }
 
         public string FileName { get; set; } = "";
 
@@ -47,11 +43,9 @@ namespace BetterLyrics.WinUI3.Models
         public int BitDepth { get; set; }
         public int Duration { get; set; }
 
-        [MaxLength(50)] // 格式名称通常很短，限制一下是个好习惯
-        public string AudioFormatName { get; set; } = "";
+        [MaxLength(50)] public string AudioFormatName { get; set; } = "";
 
-        [MaxLength(20)]
-        public string AudioFormatShortName { get; set; } = "";
+        [MaxLength(20)] public string AudioFormatShortName { get; set; } = "";
 
         public string Encoder { get; set; } = "";
 
