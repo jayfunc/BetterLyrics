@@ -57,6 +57,7 @@ namespace BetterLyrics.WinUI3.Helper
         {
             Directory.CreateDirectory(SettingsDirectory);
             Directory.CreateDirectory(LogDirectory);
+            Directory.CreateDirectory(LyricsCacheDirectory);
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
             Directory.CreateDirectory(LocalAlbumArtCacheDirectory);
         }
