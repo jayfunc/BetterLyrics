@@ -12,21 +12,13 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using LiveChartsCore;
-using LiveChartsCore.Kernel;
-using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.Themes;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
-using SkiaSharp;
-using SkiaSharp.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -73,8 +65,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty] public partial ObservableCollection<SongPlayCount> TopSongs { get; set; } = new();
 
         public StatsDashboardControlViewModel(
-            IPlayHistoryService playHistoryService, 
-            ILocalizationService localizationService, 
+            IPlayHistoryService playHistoryService,
+            ILocalizationService localizationService,
             IAlbumArtSearchService albumArtSearchService,
             IGSMTCService gsmtcService)
         {

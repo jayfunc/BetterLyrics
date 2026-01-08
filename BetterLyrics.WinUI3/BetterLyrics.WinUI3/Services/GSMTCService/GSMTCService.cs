@@ -3,7 +3,6 @@
 using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
@@ -29,7 +28,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;

@@ -2,7 +2,6 @@
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Stats;
-using BetterLyrics.WinUI3.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -199,11 +198,11 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
                 ("Summer", "Calvin Harris", "Motion"),
             };
 
-            var playerIds = new[] 
-            { 
-                PlayerId.Spotify, PlayerId.Spotify, PlayerId.Spotify, 
-                PlayerId.MusicBee, PlayerId.MusicBee, 
-                PlayerId.QQMusic, 
+            var playerIds = new[]
+            {
+                PlayerId.Spotify, PlayerId.Spotify, PlayerId.Spotify,
+                PlayerId.MusicBee, PlayerId.MusicBee,
+                PlayerId.QQMusic,
                 PlayerId.NetEaseCloudMusic,
                 PlayerId.AppleMusic,
             };

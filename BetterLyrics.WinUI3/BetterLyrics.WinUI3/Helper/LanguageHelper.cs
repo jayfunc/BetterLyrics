@@ -3,7 +3,6 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using NTextCat;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Globalization;
 using System.Linq;
 using Windows.Globalization;

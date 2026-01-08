@@ -2,7 +2,6 @@ using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -14,7 +13,6 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
-using static Vanara.PInvoke.AdvApi32;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

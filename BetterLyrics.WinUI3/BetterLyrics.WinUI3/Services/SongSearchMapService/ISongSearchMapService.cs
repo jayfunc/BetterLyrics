@@ -1,7 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.SongSearchMapService

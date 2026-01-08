@@ -1,7 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using NTextCat.Commons;
 using System;
 
 namespace BetterLyrics.WinUI3.Models

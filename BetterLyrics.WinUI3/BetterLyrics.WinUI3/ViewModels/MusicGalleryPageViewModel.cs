@@ -22,16 +22,10 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.Media;
-using Windows.Media.Core;
-using Windows.Media.Playback;
 using Windows.Storage;
-using Windows.Storage.Streams;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -370,9 +364,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void ToggleSongListViewSelectionMode()
         {
-            SongListViewSelectionMode = 
-                SongListViewSelectionMode == ListViewSelectionMode.Single ? 
-                ListViewSelectionMode.Multiple : 
+            SongListViewSelectionMode =
+                SongListViewSelectionMode == ListViewSelectionMode.Single ?
+                ListViewSelectionMode.Multiple :
                 ListViewSelectionMode.Single;
         }
 

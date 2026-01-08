@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Models.DbContext
 {
@@ -9,6 +6,6 @@ namespace BetterLyrics.WinUI3.Models.DbContext
     {
         public LyricsCacheDbContext(DbContextOptions<LyricsCacheDbContext> options) : base(options) { }
 
-        public DbSet<LyricsCacheItem> LyricsCache { get; set; } 
+        public DbSet<LyricsCacheItem> LyricsCache { get; set; }
     }
 }

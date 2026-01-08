@@ -6,7 +6,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Text.Json.Serialization;
-using System.Threading;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {

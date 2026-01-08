@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BetterLyrics.WinUI3.Models.Lyrics
+﻿namespace BetterLyrics.WinUI3.Models.Lyrics
 {
     public class LyricsChar
     {

@@ -2,7 +2,6 @@
 using BetterLyrics.WinUI3.Models.Lyrics;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.Parsers.LyricsParser

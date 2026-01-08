@@ -13,7 +13,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
