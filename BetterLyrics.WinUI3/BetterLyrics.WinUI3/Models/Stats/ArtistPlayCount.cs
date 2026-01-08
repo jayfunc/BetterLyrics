@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BetterLyrics.WinUI3.Models.Stats
+﻿namespace BetterLyrics.WinUI3.Models.Stats
 {
     public class ArtistPlayCount
     {

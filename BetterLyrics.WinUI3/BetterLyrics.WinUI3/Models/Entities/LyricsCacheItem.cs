@@ -1,8 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.EntityFrameworkCore;
-using NTextCat.Commons;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

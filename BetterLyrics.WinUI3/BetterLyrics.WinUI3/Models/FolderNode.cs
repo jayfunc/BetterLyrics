@@ -1,9 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Models
 {

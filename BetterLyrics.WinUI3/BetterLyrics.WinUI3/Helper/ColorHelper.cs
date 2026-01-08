@@ -4,7 +4,6 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Hooks;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
-using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;

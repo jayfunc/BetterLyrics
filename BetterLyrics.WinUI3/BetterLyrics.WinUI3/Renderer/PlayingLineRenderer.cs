@@ -8,7 +8,6 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
-using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;

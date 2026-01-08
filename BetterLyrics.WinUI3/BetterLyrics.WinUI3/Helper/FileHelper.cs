@@ -3,7 +3,6 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;

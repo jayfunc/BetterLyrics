@@ -2,9 +2,7 @@
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Converter
 {

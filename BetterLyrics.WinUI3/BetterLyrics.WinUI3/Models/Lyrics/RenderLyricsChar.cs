@@ -1,8 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics

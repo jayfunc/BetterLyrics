@@ -4,7 +4,6 @@ using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.LocalizationService;
@@ -12,10 +11,8 @@ using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using System;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService

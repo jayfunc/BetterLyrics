@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Settings;
 using FluentFTP;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net; // 用于 WebUtility.UrlDecode
-using System.Text; // ★ 修复 Encoding 报错的关键
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers

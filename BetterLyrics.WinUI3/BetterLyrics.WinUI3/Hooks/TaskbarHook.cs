@@ -7,7 +7,6 @@ using FlaUI.Core.EventHandlers;
 using FlaUI.UIA3;
 using Microsoft.UI.Dispatching;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 

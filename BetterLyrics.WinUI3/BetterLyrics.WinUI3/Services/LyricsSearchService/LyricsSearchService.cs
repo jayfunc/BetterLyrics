@@ -14,7 +14,6 @@ using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using Lyricify.Lyrics.Helpers;
 using Lyricify.Lyrics.Searchers;
 using Microsoft.Extensions.Logging;
-using NTextCat.Commons;
 using System;
 using System.Collections.Generic;
 using System.IO;

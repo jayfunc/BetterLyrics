@@ -18,7 +18,6 @@ using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,7 +25,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle; // 关键：App生命周期管理
 using Serilog;
 using System;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;

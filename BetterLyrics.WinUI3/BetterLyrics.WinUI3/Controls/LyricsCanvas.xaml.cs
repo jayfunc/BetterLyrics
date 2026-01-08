@@ -5,9 +5,9 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Logic;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Renderer;
-using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -25,8 +25,6 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 using Windows.UI;
-using System.Numerics;
-using BetterLyrics.WinUI3.Models.Lyrics;
 
 namespace BetterLyrics.WinUI3.Controls
 {
