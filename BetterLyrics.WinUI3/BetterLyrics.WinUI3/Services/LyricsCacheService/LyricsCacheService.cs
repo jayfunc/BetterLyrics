@@ -1,7 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Db;
+using BetterLyrics.WinUI3.Models.DbContext;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

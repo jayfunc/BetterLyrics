@@ -10,6 +10,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -50,7 +51,7 @@
                         ItemsSource="{x:Bind ViewModel.AppSettings.LocalMediaFolders, Mode=OneWay}"
                         SelectionMode="None">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:MediaFolder">
+                            <DataTemplate x:DataType="settingsmodels:MediaFolder">
                                 <dev:SettingsExpander IsExpanded="True">
 
                                     <dev:SettingsExpander.HeaderIcon>

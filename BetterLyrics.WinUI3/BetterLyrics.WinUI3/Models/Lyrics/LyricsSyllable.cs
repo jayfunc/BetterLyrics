@@ -1,6 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Lyrics
 {
     public class LyricsSyllable
     {

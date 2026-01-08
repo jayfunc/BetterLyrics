@@ -3,7 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class LyricsSearchProviderInfo : ObservableRecipient
     {

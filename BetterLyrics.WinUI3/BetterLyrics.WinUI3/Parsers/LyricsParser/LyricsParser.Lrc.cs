@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Models.Lyrics;
 using System;
 using System.Collections.Generic;
 using System.Linq;

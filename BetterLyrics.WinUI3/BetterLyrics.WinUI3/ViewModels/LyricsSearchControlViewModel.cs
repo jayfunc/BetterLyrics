@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Parsers.LyricsParser;
 using BetterLyrics.WinUI3.Services.GSMTCService;

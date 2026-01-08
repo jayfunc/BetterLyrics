@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Entities
 {
     [Index(nameof(MediaFolderId))] // 普通索引
     [Index(nameof(ParentUri))]     // 普通索引

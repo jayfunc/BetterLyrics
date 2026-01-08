@@ -16,6 +16,7 @@
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:muxm="using:Microsoft.UI.Xaml.Media"
+    xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="Page_Loaded"
@@ -65,7 +66,7 @@
                             ItemsSource="{x:Bind ViewModel.AppSettings.StarredPlaylists, Mode=OneWay}"
                             SelectedIndex="{x:Bind ViewModel.SelectedSongsTabInfoIndex, Mode=TwoWay}">
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:SongsTabInfo">
+                                <DataTemplate x:DataType="settingsmodels:SongsTabInfo">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />

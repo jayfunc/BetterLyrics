@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BetterLyrics.WinUI3.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BetterLyrics.WinUI3.Models.Db
+namespace BetterLyrics.WinUI3.Models.DbContext
 {
-    public partial class PlayHistoryDbContext : DbContext
+    public partial class PlayHistoryDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public PlayHistoryDbContext(DbContextOptions<PlayHistoryDbContext> options) : base(options) { }
 

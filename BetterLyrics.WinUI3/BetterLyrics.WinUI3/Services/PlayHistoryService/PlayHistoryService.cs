@@ -1,6 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Constants;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Db;
+using BetterLyrics.WinUI3.Models.DbContext;
+using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Stats;
 using BetterLyrics.WinUI3.ViewModels;
 using Microsoft.EntityFrameworkCore;

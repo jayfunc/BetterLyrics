@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Text.Json.Serialization;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class MediaSourceProviderInfo : ObservableRecipient
     {

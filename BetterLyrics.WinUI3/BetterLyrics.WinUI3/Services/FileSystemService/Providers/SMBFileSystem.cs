@@ -1,5 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Entities;
+using BetterLyrics.WinUI3.Models.Settings;
 using SMBLibrary;
 using SMBLibrary.Client;
 using System;

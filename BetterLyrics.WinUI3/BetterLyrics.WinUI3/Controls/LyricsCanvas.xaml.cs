@@ -26,6 +26,7 @@ using Windows.Foundation;
 using Windows.Storage.Streams;
 using Windows.UI;
 using System.Numerics;
+using BetterLyrics.WinUI3.Models.Lyrics;
 
 namespace BetterLyrics.WinUI3.Controls
 {

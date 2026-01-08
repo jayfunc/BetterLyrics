@@ -1,6 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.ComponentModel;
