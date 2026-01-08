@@ -1,6 +1,6 @@
 ﻿namespace BetterLyrics.WinUI3.Enums
 {
-    public enum ShortcutID
+    public enum ShortcutId
     {
         LyricsWindowShowOrHide,
         LyricsWindowSwitch,
