@@ -5,14 +5,22 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
+using System.Windows.Documents;
+using Windows.Foundation;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models
 {
     public class RenderLyricsLine : LyricsLine
     {
+        public List<RenderLyricsChar> RenderLyricsOriginalChars { get; set; } = [];
+
         public double AnimationDuration { get; set; } = 0.3;
+
         public ValueTransition<double> AngleTransition { get; set; }
         public ValueTransition<double> BlurAmountTransition { get; set; }
         public ValueTransition<double> PhoneticOpacityTransition { get; set; }
@@ -228,6 +236,27 @@ namespace BetterLyrics.WinUI3.Models
             if (TranslatedCanvasTextLayout != null)
             {
                 TranslatedCanvasGeometry = CanvasGeometry.CreateText(TranslatedCanvasTextLayout);
+            }
+        }
+
+        public void RecalculateCharacterGeometries()
+        {
+            RenderLyricsOriginalChars.Clear();
+            if (OriginalCanvasTextLayout == null) return;
+
+            var textLength = OriginalText.Length;
+
+            for (int i = 0; i < textLength; i++)
+            {
+                var region = OriginalCanvasTextLayout.GetCharacterRegions(i, 1).FirstOrDefault();
+                var bounds = region.LayoutBounds;
+
+                RenderLyricsOriginalChars.Add(new RenderLyricsChar()
+                {
+                    Index = i,
+                    LayoutRect = bounds,
+                    Text = OriginalText[i].ToString()
+                });
             }
         }
 

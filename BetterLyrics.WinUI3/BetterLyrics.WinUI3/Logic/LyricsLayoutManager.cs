@@ -123,6 +123,8 @@ namespace BetterLyrics.WinUI3.Logic
 
                 // 更新中心点
                 line.UpdateCenterPosition(lyricsWidth, style.LyricsAlignmentType);
+
+                line.RecalculateCharacterGeometries();
             }
         }
 
