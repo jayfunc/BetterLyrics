@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
@@ -10,7 +9,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using Windows.Foundation;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
     {

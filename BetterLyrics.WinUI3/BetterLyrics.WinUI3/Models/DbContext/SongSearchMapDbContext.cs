@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BetterLyrics.WinUI3.Models.Db
+namespace BetterLyrics.WinUI3.Models.DbContext
 {
-    public partial class SongSearchMapDbContext : DbContext
+    public partial class SongSearchMapDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         public DbSet<MappedSongSearchQuery> SongSearchMap { get; set; }
 

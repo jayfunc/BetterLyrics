@@ -8,6 +8,7 @@
     xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -242,7 +243,7 @@
                         </interactivity:DataTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
                     <Pivot.HeaderTemplate>
-                        <DataTemplate x:DataType="models:LyricsData">
+                        <DataTemplate x:DataType="lyricsmodels:LyricsData">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind LanguageCode, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
                                 <InfoBadge
@@ -254,13 +255,13 @@
                         </DataTemplate>
                     </Pivot.HeaderTemplate>
                     <Pivot.ItemTemplate>
-                        <DataTemplate x:DataType="models:LyricsData">
+                        <DataTemplate x:DataType="lyricsmodels:LyricsData">
                             <ListView
                                 ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind LyricsLines, Mode=OneWay}"
                                 SelectionMode="None">
                                 <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="models:LyricsLine">
+                                    <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                         <Grid Margin="0,6" ColumnSpacing="6">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />

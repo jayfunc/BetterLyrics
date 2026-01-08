@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Http;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using System;

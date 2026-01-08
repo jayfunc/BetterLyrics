@@ -13,7 +13,7 @@ using System.Windows.Documents;
 using Windows.Foundation;
 using Windows.UI;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Lyrics
 {
     public class RenderLyricsLine : LyricsLine
     {

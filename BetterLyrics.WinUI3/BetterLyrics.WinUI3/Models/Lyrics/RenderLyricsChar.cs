@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Windows.Foundation;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Lyrics
 {
     public class RenderLyricsChar : LyricsChar
     {

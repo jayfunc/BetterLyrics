@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Entities;
 using System;
 using System.Globalization;
 using System.Security.Cryptography;

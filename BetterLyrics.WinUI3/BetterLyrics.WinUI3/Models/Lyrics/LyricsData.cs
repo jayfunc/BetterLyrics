@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Lyrics
 {
     public class LyricsData
     {

@@ -13,6 +13,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -60,7 +61,7 @@
                         ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
                         SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="models:MediaSourceProviderInfo">
+                            <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
                                 <Grid Padding="2,4" ColumnSpacing="12">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -172,7 +173,7 @@
                                 <ScalarTransition />
                             </ListView.OpacityTransition>
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:AlbumArtSearchProviderInfo">
+                                <DataTemplate x:DataType="settingsmodels:AlbumArtSearchProviderInfo">
                                     <dev:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
                                         <dev:SettingsCard.HeaderIcon>
                                             <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
@@ -219,7 +220,7 @@
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:LyricsSearchProviderInfo">
+                                <DataTemplate x:DataType="settingsmodels:LyricsSearchProviderInfo">
                                     <Grid>
                                         <dev:SettingsExpander Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}" IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
                                             <dev:SettingsExpander.HeaderIcon>

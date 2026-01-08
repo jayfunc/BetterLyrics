@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Lyrics
 {
     public class LyricsLine
     {

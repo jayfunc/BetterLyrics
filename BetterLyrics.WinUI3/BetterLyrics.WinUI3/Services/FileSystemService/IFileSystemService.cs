@@ -1,4 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Entities;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.FileSystemService.Providers;
 using System;
 using System.Collections.Generic;

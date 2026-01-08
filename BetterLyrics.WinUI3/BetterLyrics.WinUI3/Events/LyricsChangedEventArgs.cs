@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Models.Lyrics;
 using System;
 
 namespace BetterLyrics.WinUI3.Events

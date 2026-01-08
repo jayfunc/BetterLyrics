@@ -1,5 +1,6 @@
 ﻿using ATL;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models.Entities;
 using System;
 using System.IO;
 using System.Linq;

@@ -8,7 +8,7 @@ using System;
 using System.Text.Json.Serialization;
 using System.Threading;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class MediaFolder : ObservableRecipient
     {

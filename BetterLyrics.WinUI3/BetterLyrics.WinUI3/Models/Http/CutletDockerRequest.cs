@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BetterLyrics.WinUI3.Models
+namespace BetterLyrics.WinUI3.Models.Http
 {
     public class CutletDockerRequest
     {
