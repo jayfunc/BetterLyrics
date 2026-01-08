@@ -17,32 +17,32 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             var blurAmount = (float)line.BlurAmountTransition.Value;
 
-            if (line.PhoneticCanvasTextLayout != null)
+            if (line.TertiaryTextLayout != null)
             {
                 var opacity = line.PhoneticOpacityTransition.Value;
                 DrawPart(ds, textOnlyLayer,
-                    line.PhoneticCanvasTextLayout,
-                    line.PhoneticPosition,
+                    line.TertiaryTextLayout,
+                    line.TertiaryPosition,
                     blurAmount,
                     (float)opacity);
             }
 
-            if (line.OriginalCanvasTextLayout != null)
+            if (line.PrimaryTextLayout != null)
             {
                 double opacity = Math.Max(line.PlayedOriginalOpacityTransition.Value, line.UnplayedOriginalOpacityTransition.Value);
                 DrawPart(ds, textOnlyLayer,
-                    line.OriginalCanvasTextLayout,
-                    line.OriginalPosition,
+                    line.PrimaryTextLayout,
+                    line.PrimaryPosition,
                     blurAmount,
                     (float)opacity);
             }
 
-            if (line.TranslatedCanvasTextLayout != null)
+            if (line.SecondaryTextLayout != null)
             {
                 var opacity = line.TranslatedOpacityTransition.Value;
                 DrawPart(ds, textOnlyLayer,
-                    line.TranslatedCanvasTextLayout,
-                    line.TranslatedPosition,
+                    line.SecondaryTextLayout,
+                    line.SecondaryPosition,
                     blurAmount,
                     (float)opacity);
             }

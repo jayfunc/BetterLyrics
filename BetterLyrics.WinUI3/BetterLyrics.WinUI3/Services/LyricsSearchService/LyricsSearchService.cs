@@ -104,7 +104,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
         }
 
-        public async Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, bool checkCache, LyricsSearchType? lyricsSearchType, CancellationToken token)
+        public async Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType, CancellationToken token)
         {
             if (lyricsSearchType == null)
             {
@@ -112,8 +112,6 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
 
             var lyricsSearchResult = new LyricsCacheItem();
-            //lyricsSearchResult.Raw = File.ReadAllText("C:\\Users\\Zhe\\Desktop\\星河回响 (Tech Demo).lrc");
-            //return lyricsSearchResult;
 
             string overridenTitle = songInfo.Title;
             string overridenArtist = songInfo.Artist;
@@ -150,7 +148,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                             .WithTitle(overridenTitle)
                             .WithArtist(overridenArtist)
                             .WithAlbum(overridenAlbum),
-                        targetProvider.Value, checkCache, token);
+                        targetProvider.Value, true, token);
                 }
             }
 
@@ -172,7 +170,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                             .WithTitle(overridenTitle)
                             .WithArtist(overridenArtist)
                             .WithAlbum(overridenAlbum),
-                        provider.Provider, checkCache, token);
+                        provider.Provider, !provider.IgnoreCacheWhenSearching, token);
 
                     int matchingThreshold = mediaSourceProviderInfo.MatchingThreshold;
                     if (provider.IsMatchingThresholdOverwritten)
@@ -288,7 +286,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         private async Task<LyricsCacheItem> SearchFile(SongInfo songInfo, LyricsFormat format)
         {
-            int maxScore = 0;
+            int maxScore = -1;
 
             FilesIndexItem? bestFileEntity = null;
             MediaFolder? bestFolderConfig = null;
@@ -316,7 +314,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 if (item.FileName.EndsWith(targetExt, StringComparison.OrdinalIgnoreCase))
                 {
-                    int score = MetadataComparer.CalculateScore(songInfo, new LyricsCacheItem { Reference = item.FileName });
+                    int score = MetadataComparer.CalculateScore(songInfo, item);
 
                     if (score > maxScore)
                     {
@@ -363,13 +361,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 if (string.IsNullOrEmpty(item.EmbeddedLyrics)) continue;
 
-                int score = MetadataComparer.CalculateScore(songInfo, new LyricsCacheItem
-                {
-                    Title = item.Title,
-                    Artist = item.Artist,
-                    Album = item.Album,
-                    Duration = item.Duration
-                });
+                int score = MetadataComparer.CalculateScore(songInfo, item);
 
                 if (score > maxScore)
                 {
@@ -444,6 +436,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         Title = title,
                         Artist = artist,
                         Album = album,
+                        Duration = 0,
                     });
                     if (score > lyricsSearchResult.MatchPercentage)
                     {

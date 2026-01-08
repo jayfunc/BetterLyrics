@@ -167,14 +167,14 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.OriginalText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.OriginalText) : ChineseHelper.ToSC(item.OriginalText);
+                    item.PrimaryText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.PrimaryText) : ChineseHelper.ToSC(item.PrimaryText);
                 }
             }
             if (settings.SelectedTargetLanguageCode == LanguageHelper.ChineseCode)
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.TranslatedText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.TranslatedText) : ChineseHelper.ToSC(item.TranslatedText);
+                    item.SecondaryText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.SecondaryText) : ChineseHelper.ToSC(item.SecondaryText);
                 }
             }
 
@@ -235,8 +235,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                             {
                                 StartMs = line.StartMs,
                                 EndMs = line.EndMs,
-                                OriginalText = PhoneticHelper.ToPinyin(line.OriginalText),
-                                LyricsSyllables = line.LyricsSyllables.Select(c => new LyricsSyllable
+                                PrimaryText = PhoneticHelper.ToPinyin(line.PrimaryText),
+                                PrimarySyllables = line.PrimarySyllables.Select(c => new BaseLyrics
                                 {
                                     StartMs = c.StartMs,
                                     EndMs = c.EndMs,
@@ -256,8 +256,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                             {
                                 StartMs = line.StartMs,
                                 EndMs = line.EndMs,
-                                OriginalText = PhoneticHelper.ToJyutping(line.OriginalText),
-                                LyricsSyllables = line.LyricsSyllables.Select(c => new LyricsSyllable
+                                PrimaryText = PhoneticHelper.ToJyutping(line.PrimaryText),
+                                PrimarySyllables = line.PrimarySyllables.Select(c => new BaseLyrics
                                 {
                                     StartMs = c.StartMs,
                                     EndMs = c.EndMs,

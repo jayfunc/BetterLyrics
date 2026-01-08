@@ -243,6 +243,9 @@
   <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
     <value>e.g. http://localhost:5000</value>
   </data>
+  <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
+    <value>Duration</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Loading lyrics...</value>
   </data>

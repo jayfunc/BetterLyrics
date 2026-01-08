@@ -93,7 +93,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 }
             }
 
-            var syllables = new List<LyricsSyllable>();
+            var syllables = new List<BaseLyrics>();
             int startIndex = 0;
             var sbText = new System.Text.StringBuilder();
 
@@ -103,7 +103,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 int sEndMs = ParseTtmlTime(span.Attribute("end")?.Value);
                 string text = span.Value;
 
-                syllables.Add(new LyricsSyllable
+                syllables.Add(new BaseLyrics
                 {
                     StartMs = sStartMs,
                     EndMs = sEndMs,
@@ -126,8 +126,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             {
                 StartMs = containerStartMs,
                 EndMs = containerEndMs,
-                OriginalText = fullOriginalText,
-                LyricsSyllables = syllables
+                PrimaryText = fullOriginalText,
+                PrimarySyllables = syllables
             });
 
             var transSpan = container.Elements()
@@ -151,7 +151,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 {
                     StartMs = startMs,
                     EndMs = endMs,
-                    OriginalText = text
+                    PrimaryText = text
                 });
             }
             else
@@ -160,7 +160,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 {
                     StartMs = startMs,
                     EndMs = endMs,
-                    OriginalText = ""
+                    PrimaryText = ""
                 });
             }
         }

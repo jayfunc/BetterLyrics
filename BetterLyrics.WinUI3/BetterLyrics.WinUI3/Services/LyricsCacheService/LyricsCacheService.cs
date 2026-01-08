@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
         }
 
         /// <summary>
-        /// Write cache to DB
+        /// Write or update cache to DB
         /// </summary>
         public async Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result)
         {
@@ -52,8 +52,18 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
             }
             else
             {
-                // No need to handle this case
-                return;
+                existingItem.Title = result.Title;
+                existingItem.Artist = result.Artist;
+                existingItem.Album = result.Album;
+
+                existingItem.TransliterationProvider = result.TransliterationProvider;
+                existingItem.TranslationProvider = result.TranslationProvider;
+
+                existingItem.Raw = result.Raw;
+                existingItem.Translation = result.Translation;
+
+                existingItem.MatchPercentage = result.MatchPercentage;
+                existingItem.Reference = result.Reference;
             }
 
             await context.SaveChangesAsync();

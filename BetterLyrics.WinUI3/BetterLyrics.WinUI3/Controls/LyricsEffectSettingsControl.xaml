@@ -108,6 +108,14 @@
                                     Minimum="0"
                                     Value="{x:Bind LyricsEffectSettings.LyricsFloatAnimationAmount, Mode=TwoWay}" />
                             </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="LyricsEffectSettingsControlAnimationDuration">
+                                <local:ExtendedSlider
+                                    Default="450"
+                                    Maximum="2000"
+                                    Minimum="0"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsFloatAnimationDuration, Mode=TwoWay}" />
+                            </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 

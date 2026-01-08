@@ -17,12 +17,13 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 for (int lineIndex = 0; lineIndex < lines.Count; lineIndex++)
                 {
                     var lineRead = lines[lineIndex];
+                    var nextLineRead = lines.ElementAtOrDefault(lineIndex + 1);
                     var lineWrite = new LyricsLine
                     {
                         StartMs = lineRead.StartTime ?? 0,
-                        EndMs = lineRead.EndTime ?? 0,
-                        OriginalText = lineRead.Text,
-                        LyricsSyllables = [],
+                        EndMs = lineRead.EndTime ?? (nextLineRead?.StartTime ?? 0),
+                        PrimaryText = lineRead.Text,
+                        PrimarySyllables = [],
                     };
 
                     var syllables = (lineRead as Lyricify.Lyrics.Models.SyllableLineInfo)?.Syllables;
@@ -36,14 +37,14 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                         )
                         {
                             var syllable = syllables[syllableIndex];
-                            var charTiming = new LyricsSyllable
+                            var charTiming = new BaseLyrics
                             {
                                 StartMs = syllable.StartTime,
                                 EndMs = syllable.EndTime,
                                 Text = syllable.Text,
                                 StartIndex = startIndex,
                             };
-                            lineWrite.LyricsSyllables.Add(charTiming);
+                            lineWrite.PrimarySyllables.Add(charTiming);
                             startIndex += syllable.Text.Length;
                         }
                     }

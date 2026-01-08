@@ -24,6 +24,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFloatAnimationEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFloatAnimationAmountAutoAdjust { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFloatAnimationAmount { get; set; } = 8;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFloatAnimationDuration { get; set; } = 450; // 450ms
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial EasingType LyricsScrollEasingType { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScrollDuration { get; set; }
@@ -71,6 +72,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsLyricsFloatAnimationEnabled = this.IsLyricsFloatAnimationEnabled,
                 IsLyricsFloatAnimationAmountAutoAdjust = this.IsLyricsFloatAnimationAmountAutoAdjust,
                 LyricsFloatAnimationAmount = this.LyricsFloatAnimationAmount,
+                LyricsFloatAnimationDuration = this.LyricsFloatAnimationDuration,
 
                 LyricsScrollEasingType = this.LyricsScrollEasingType,
                 LyricsScrollDuration = this.LyricsScrollDuration,

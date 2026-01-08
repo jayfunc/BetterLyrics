@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.WinUI3.Constants;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using DevWinUI;
@@ -49,15 +50,15 @@ namespace BetterLyrics.WinUI3.Logic
                 var line = lines.ElementAtOrDefault(i);
                 if (line == null) continue;
 
-                bool isSecondaryLinePlaying = line.StartMs <= currentPositionMs && currentPositionMs <= line.EndMs;
-                if (i == primaryPlayingLineIndex) isSecondaryLinePlaying = true;
+                bool isSecondaryLinePlaying = line.GetIsPlaying(currentPositionMs);
                 bool isSecondaryLinePlayingChanged = line.IsPlayingLastFrame != isSecondaryLinePlaying;
                 line.IsPlayingLastFrame = isSecondaryLinePlaying;
 
+                // 行动画
                 if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged || isSecondaryLinePlayingChanged)
                 {
                     int lineCountDelta = i - primaryPlayingLineIndex;
-                    double distanceFromPlayingLine = Math.Abs(line.OriginalPosition.Y - currentPlayingLine.OriginalPosition.Y);
+                    double distanceFromPlayingLine = Math.Abs(line.PrimaryPosition.Y - currentPlayingLine.PrimaryPosition.Y);
 
                     double distanceFactor;
                     if (lineCountDelta < 0)
@@ -151,91 +152,113 @@ namespace BetterLyrics.WinUI3.Logic
                     line.YOffsetTransition.StartTransition(targetYScrollOffset);
                 }
 
-                if (line.RenderLyricsOriginalChars != null)
+                var maxAnimationDurationMs = Math.Max(line.EndMs - currentPositionMs, 0);
+
+                // 字符动画
+                foreach (var renderChar in line.PrimaryRenderChars)
                 {
-                    foreach (var renderChar in line.RenderLyricsOriginalChars)
+                    renderChar.ProgressPlayed = renderChar.GetPlayProgress(currentPositionMs);
+
+                    bool isCharPlaying = renderChar.GetIsPlaying(currentPositionMs);
+                    bool isCharPlayingChanged = renderChar.IsPlayingLastFrame != isCharPlaying;
+
+                    if (isSecondaryLinePlayingChanged || isCharPlayingChanged)
                     {
-                        var syllable = line.LyricsSyllables.FirstOrDefault(x => x.StartIndex <= renderChar.Index && renderChar.Index <= x.EndIndex);
-                        if (syllable == null) continue;
-
-                        var avgCharDuration = syllable.DurationMs / syllable.Length;
-                        if (avgCharDuration == null || avgCharDuration == 0) continue;
-
-                        var charStartMs = syllable.StartMs + (renderChar.Index - syllable.StartIndex) * avgCharDuration.Value;
-                        var charEndMs = charStartMs + avgCharDuration;
-                        var progressPlayed = (currentPositionMs - charStartMs) / avgCharDuration.Value;
-                        progressPlayed = Math.Clamp(progressPlayed, 0, 1);
-                        renderChar.ProgressPlayed = progressPlayed;
-
-                        bool isCharPlaying = charStartMs <= currentPositionMs && currentPositionMs <= charEndMs;
-                        bool isCharPlayingChanged = renderChar.IsPlayingLastFrame != isCharPlaying;
-
-                        if (isSecondaryLinePlayingChanged || isCharPlayingChanged)
+                        if (lyricsEffect.IsLyricsGlowEffectEnabled)
                         {
-                            if (lyricsEffect.IsLyricsScaleEffectEnabled)
+                            double targetGlow = lyricsEffect.IsLyricsGlowEffectAmountAutoAdjust ? renderChar.LayoutRect.Height * 0.2 : lyricsEffect.LyricsGlowEffectAmount;
+                            switch (lyricsEffect.LyricsGlowEffectScope)
                             {
-                                double targetScale =
-                                    lyricsEffect.IsLyricsScaleEffectAmountAutoAdjust ? 1.15 : lyricsEffect.LyricsScaleEffectAmount / 100.0;
-
-                                if (isCharPlayingChanged)
-                                {
-                                    if (syllable.DurationMs >= lyricsEffect.LyricsScaleEffectLongSyllableDuration)
+                                case Enums.LyricsEffectScope.LineStartToCurrentChar:
+                                    if (isSecondaryLinePlayingChanged)
                                     {
-                                        renderChar.ScaleTransition.SetDuration((syllable.DurationMs ?? 0) / 1000.0 / 2);
-                                        renderChar.ScaleTransition.StartTransition(isCharPlaying ? targetScale : 1);
+                                        renderChar.GlowTransition.SetDurationMs(Math.Min(Time.AnimationDuration.TotalMilliseconds, maxAnimationDurationMs));
+                                        renderChar.GlowTransition.StartTransition(isSecondaryLinePlaying ? targetGlow : 0);
                                     }
-                                }
+                                    break;
+                                default:
+                                    break;
                             }
-
-                            if (lyricsEffect.IsLyricsGlowEffectEnabled)
-                            {
-                                double targetGlow = lyricsEffect.IsLyricsGlowEffectAmountAutoAdjust ? renderChar.LayoutRect.Height * 0.2 : lyricsEffect.LyricsGlowEffectAmount;
-                                switch (lyricsEffect.LyricsGlowEffectScope)
-                                {
-                                    case Enums.LyricsEffectScope.LongDurationSyllable:
-                                        if (isCharPlayingChanged)
-                                        {
-                                            if (syllable.DurationMs >= lyricsEffect.LyricsGlowEffectLongSyllableDuration)
-                                            {
-                                                renderChar.GlowTransition.SetDuration((syllable.DurationMs ?? 0) / 1000.0 / 2);
-                                                renderChar.GlowTransition.StartTransition(isCharPlaying ? targetGlow : 0);
-                                            }
-                                        }
-                                        break;
-                                    case Enums.LyricsEffectScope.LineStartToCurrentChar:
-                                        if (isSecondaryLinePlayingChanged)
-                                        {
-                                            renderChar.GlowTransition.SetDuration(renderChar.AnimationDuration);
-                                            renderChar.GlowTransition.StartTransition(isSecondaryLinePlaying ? targetGlow : 0);
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-
-                            if (lyricsEffect.IsLyricsFloatAnimationEnabled)
-                            {
-                                double targetFloat =
-                                    lyricsEffect.IsLyricsFloatAnimationAmountAutoAdjust ? renderChar.LayoutRect.Height * 0.1 : lyricsEffect.LyricsFloatAnimationAmount;
-
-                                if (isSecondaryLinePlayingChanged)
-                                {
-                                    renderChar.FloatTransition.StartTransition(isSecondaryLinePlaying ? targetFloat : 0);
-                                }
-                                if (isCharPlayingChanged)
-                                {
-                                    renderChar.FloatTransition.StartTransition(0);
-                                }
-                            }
-
-                            renderChar.IsPlayingLastFrame = isCharPlaying;
                         }
 
-                        renderChar.ScaleTransition.Update(elapsedTime);
-                        renderChar.GlowTransition.Update(elapsedTime);
-                        renderChar.FloatTransition.Update(elapsedTime);
+                        if (lyricsEffect.IsLyricsFloatAnimationEnabled)
+                        {
+                            double targetFloat =
+                                lyricsEffect.IsLyricsFloatAnimationAmountAutoAdjust ? renderChar.LayoutRect.Height * 0.1 : lyricsEffect.LyricsFloatAnimationAmount;
+
+                            if (isSecondaryLinePlayingChanged)
+                            {
+                                renderChar.FloatTransition.StartTransition(isSecondaryLinePlaying ? targetFloat : 0);
+                            }
+                            if (isCharPlayingChanged)
+                            {
+                                renderChar.FloatTransition.SetDurationMs(Math.Min(lyricsEffect.LyricsFloatAnimationDuration, maxAnimationDurationMs));
+                                renderChar.FloatTransition.StartTransition(0);
+                            }
+                        }
+
+                        if (isCharPlayingChanged)
+                        {
+                            renderChar.IsPlayingLastFrame = isCharPlaying;
+                        }
                     }
+                }
+
+                // 音节动画
+                foreach (var syllable in line.PrimaryRenderSyllables)
+                {
+                    bool isSyllablePlaying = syllable.GetIsPlaying(currentPositionMs);
+                    bool isSyllablePlayingChanged = syllable.IsPlayingLastFrame != isSyllablePlaying;
+
+                    if (isSyllablePlayingChanged)
+                    {
+                        var syllableHeight = syllable.ChildrenRenderLyricsChars.FirstOrDefault()?.LayoutRect.Height ?? 0;
+
+                        if (lyricsEffect.IsLyricsScaleEffectEnabled)
+                        {
+                            double targetScale =
+                                lyricsEffect.IsLyricsScaleEffectAmountAutoAdjust ? 1.15 : lyricsEffect.LyricsScaleEffectAmount / 100.0;
+
+                            foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
+                            {
+                                if (syllable.DurationMs >= lyricsEffect.LyricsScaleEffectLongSyllableDuration)
+                                {
+                                    renderChar.ScaleTransition.SetDurationMs(Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 2.0);
+                                    renderChar.ScaleTransition.StartTransition(isSyllablePlaying ? targetScale : 1);
+                                }
+                            }
+                        }
+
+                        if (lyricsEffect.IsLyricsGlowEffectEnabled)
+                        {
+                            double targetGlow = lyricsEffect.IsLyricsGlowEffectAmountAutoAdjust ? syllableHeight * 0.2 : lyricsEffect.LyricsGlowEffectAmount;
+                            switch (lyricsEffect.LyricsGlowEffectScope)
+                            {
+                                case Enums.LyricsEffectScope.LongDurationSyllable:
+                                    if (syllable.DurationMs >= lyricsEffect.LyricsGlowEffectLongSyllableDuration)
+                                    {
+                                        foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
+                                        {
+                                            renderChar.GlowTransition.SetDurationMs(Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 2.0);
+                                            renderChar.GlowTransition.StartTransition(isSyllablePlaying ? targetGlow : 0);
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        syllable.IsPlayingLastFrame = isSyllablePlaying;
+                    }
+                }
+
+                // 更新动画
+                foreach (var renderChar in line.PrimaryRenderChars)
+                {
+                    renderChar.ScaleTransition.Update(elapsedTime);
+                    renderChar.GlowTransition.Update(elapsedTime);
+                    renderChar.FloatTransition.Update(elapsedTime);
                 }
 
                 line.AngleTransition.Update(elapsedTime);

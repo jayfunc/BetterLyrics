@@ -33,17 +33,17 @@ namespace BetterLyrics.WinUI3.Renderer
 
         private void DrawPhonetic(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
         {
-            if (line.PhoneticCanvasTextLayout == null) return;
+            if (line.TertiaryTextLayout == null) return;
 
             var opacity = line.PhoneticOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
-            var bounds = line.PhoneticCanvasTextLayout.LayoutBounds;
+            var bounds = line.TertiaryTextLayout.LayoutBounds;
 
             if (double.IsNaN(opacity)) return;
 
             var destRect = new Rect(
-                bounds.X + line.PhoneticPosition.X,
-                bounds.Y + line.PhoneticPosition.Y,
+                bounds.X + line.TertiaryPosition.X,
+                bounds.Y + line.TertiaryPosition.Y,
                 bounds.Width,
                 bounds.Height
             );
@@ -67,17 +67,17 @@ namespace BetterLyrics.WinUI3.Renderer
 
         private void DrawTranslated(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
         {
-            if (line.TranslatedCanvasTextLayout == null) return;
+            if (line.SecondaryTextLayout == null) return;
 
             var opacity = line.TranslatedOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
-            var bounds = line.TranslatedCanvasTextLayout.LayoutBounds;
+            var bounds = line.SecondaryTextLayout.LayoutBounds;
 
             if (double.IsNaN(opacity)) return;
 
             var destRect = new Rect(
-                bounds.X + line.TranslatedPosition.X,
-                bounds.Y + line.TranslatedPosition.Y,
+                bounds.X + line.SecondaryPosition.X,
+                bounds.Y + line.SecondaryPosition.Y,
                 bounds.Width,
                 bounds.Height
             );
@@ -109,12 +109,12 @@ namespace BetterLyrics.WinUI3.Renderer
             Color fgColor,
             LyricsEffectSettings settings)
         {
-            if (line.OriginalCanvasTextLayout == null) return;
+            if (line.PrimaryTextLayout == null) return;
 
             var curCharIndex = state.SyllableStartIndex + state.SyllableLength * state.SyllableProgress;
-            float fadeWidth = (1f / Math.Max(1, line.OriginalText.Length)) * 0.5f;
+            float fadeWidth = (1f / Math.Max(1, line.PrimaryText.Length)) * 0.5f;
 
-            var lineRegions = line.OriginalCanvasTextLayout.GetCharacterRegions(0, line.OriginalText.Length);
+            var lineRegions = line.PrimaryTextLayout.GetCharacterRegions(0, line.PrimaryText.Length);
 
             foreach (var subLineRegion in lineRegions)
             {
@@ -139,8 +139,8 @@ namespace BetterLyrics.WinUI3.Renderer
 
             var subLineLayoutBounds = subLineRegion.LayoutBounds;
             Rect subLineRect = new(
-                subLineLayoutBounds.X + line.OriginalPosition.X,
-                subLineLayoutBounds.Y + line.OriginalPosition.Y,
+                subLineLayoutBounds.X + line.PrimaryPosition.X,
+                subLineLayoutBounds.Y + line.PrimaryPosition.Y,
                 subLineLayoutBounds.Width,
                 subLineLayoutBounds.Height
             );
@@ -208,14 +208,14 @@ namespace BetterLyrics.WinUI3.Renderer
             int charIndex,
             ICanvasImage source)
         {
-            if (charIndex >= line.RenderLyricsOriginalChars.Count) return;
+            if (charIndex >= line.PrimaryRenderChars.Count) return;
 
-            RenderLyricsChar renderChar = line.RenderLyricsOriginalChars[charIndex];
+            RenderLyricsChar renderChar = line.PrimaryRenderChars[charIndex];
 
             var rect = renderChar.LayoutRect;
             var sourceCharRect = new Rect(
-                rect.X + line.OriginalPosition.X,
-                rect.Y + line.OriginalPosition.Y,
+                rect.X + line.PrimaryPosition.X,
+                rect.Y + line.PrimaryPosition.Y,
                 rect.Width,
                 rect.Height
             );

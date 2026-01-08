@@ -10,7 +10,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 {
     public interface ILyricsSearchService
     {
-        Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, bool checkCache, LyricsSearchType? lyricsSearchType, CancellationToken token);
+        Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType, CancellationToken token);
 
         Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache, CancellationToken token);
     }

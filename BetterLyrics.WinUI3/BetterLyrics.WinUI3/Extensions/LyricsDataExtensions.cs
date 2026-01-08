@@ -19,7 +19,7 @@ namespace BetterLyrics.WinUI3.Extensions
                         {
                             StartMs = 0,
                             EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                            OriginalText = "● ● ●",
+                            PrimaryText = "● ● ●",
                         },
                     ],
                     LanguageCode = "N/A",
@@ -37,12 +37,12 @@ namespace BetterLyrics.WinUI3.Extensions
                     if (transLine != null)
                     {
                         // 此处 transLine.OriginalText 指翻译中的“原文”属性
-                        line.TranslatedText = transLine.OriginalText;
+                        line.SecondaryText = transLine.PrimaryText;
                     }
                     else
                     {
                         // 没有匹配的翻译
-                        line.TranslatedText = "";
+                        line.SecondaryText = "";
                     }
                 }
             }
@@ -58,12 +58,12 @@ namespace BetterLyrics.WinUI3.Extensions
                     if (transLine != null)
                     {
                         // 此处 transLine.OriginalText 指音译中的“原文”属性
-                        line.PhoneticText = transLine.OriginalText;
+                        line.TertiaryText = transLine.PrimaryText;
                     }
                     else
                     {
                         // 没有匹配的音译
-                        line.PhoneticText = "";
+                        line.TertiaryText = "";
                     }
                 }
             }
@@ -76,11 +76,11 @@ namespace BetterLyrics.WinUI3.Extensions
                 {
                     if (i >= translationArr.Count)
                     {
-                        line.TranslatedText = ""; // No translation available, keep empty
+                        line.SecondaryText = ""; // No translation available, keep empty
                     }
                     else
                     {
-                        line.TranslatedText = translationArr[i];
+                        line.SecondaryText = translationArr[i];
                     }
                     i++;
                 }
@@ -94,11 +94,11 @@ namespace BetterLyrics.WinUI3.Extensions
                 {
                     if (i >= transliterationArr.Count)
                     {
-                        line.PhoneticText = ""; // No transliteration available, keep empty
+                        line.TertiaryText = ""; // No transliteration available, keep empty
                     }
                     else
                     {
-                        line.PhoneticText = transliterationArr[i];
+                        line.TertiaryText = transliterationArr[i];
                     }
                     i++;
                 }

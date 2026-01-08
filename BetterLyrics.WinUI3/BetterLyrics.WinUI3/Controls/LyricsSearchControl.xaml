@@ -291,7 +291,7 @@
                                                     </interactivity:Interaction.Behaviors>
                                                 </Button>
                                             </Grid>
-                                            <local:PropertyRow Grid.Column="1" Value="{x:Bind OriginalText, Mode=OneWay}" />
+                                            <local:PropertyRow Grid.Column="1" Value="{x:Bind PrimaryText, Mode=OneWay}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
