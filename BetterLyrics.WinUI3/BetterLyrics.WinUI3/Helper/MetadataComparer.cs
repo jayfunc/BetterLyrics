@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Entities;
 using F23.StringSimilarity;
 using System;
 using System.IO;
@@ -17,21 +18,31 @@ namespace BetterLyrics.WinUI3.Helper
         // JaroWinkler 适合短字符串匹配
         private static readonly JaroWinkler _algo = new();
 
-        public static int CalculateScore(SongInfo local, LyricsCacheItem remote)
+        public static int CalculateScore(SongInfo songInfo, LyricsCacheItem remote)
         {
-            if (local == null || remote == null) return 0;
+            return CalculateScore(songInfo, remote.Title, remote.Artist, remote.Album, remote.Duration * 1000);
+        }
 
+        public static int CalculateScore(SongInfo songInfo, FilesIndexItem local)
+        {
+            return CalculateScore(songInfo, local.Title, local.Artist, local.Album, local.Duration * 1000, local.FileName);
+        }
+
+        public static int CalculateScore(
+            SongInfo songInfo, 
+            string? compareTitle, string? compareArtist, string? compareAlbum, double? compareDurationMs, string? compareFileName = null)
+        {
             double totalScore = 0;
 
-            bool localHasMetadata = !string.IsNullOrWhiteSpace(local.Title);
-            bool remoteHasMetadata = !string.IsNullOrWhiteSpace(remote.Title);
+            bool localHasMetadata = !string.IsNullOrWhiteSpace(songInfo.Title);
+            bool remoteHasMetadata = !string.IsNullOrWhiteSpace(compareTitle);
 
             if (localHasMetadata && remoteHasMetadata)
             {
-                double titleScore = GetStringSimilarity(local.Title, remote.Title);
-                double artistScore = GetStringSimilarity(local.Artist, remote.Artist);
-                double albumScore = GetStringSimilarity(local.Album, remote.Album);
-                double durationScore = GetDurationSimilarity(local.DurationMs, remote.Duration);
+                double titleScore = GetStringSimilarity(songInfo.Title, compareTitle);
+                double artistScore = GetStringSimilarity(songInfo.Artist, compareArtist);
+                double albumScore = GetStringSimilarity(songInfo.Album, compareAlbum);
+                double durationScore = GetDurationSimilarity(songInfo.DurationMs, compareDurationMs);
 
                 totalScore = (titleScore * WeightTitle) +
                                     (artistScore * WeightArtist) +
@@ -41,12 +52,12 @@ namespace BetterLyrics.WinUI3.Helper
             else
             {
                 string? localQuery = localHasMetadata
-                    ? $"{local.Title} {local.Artist}"
-                    : Path.GetFileNameWithoutExtension(local.LinkedFileName);
+                    ? $"{songInfo.Title} {songInfo.Artist}"
+                    : Path.GetFileNameWithoutExtension(songInfo.LinkedFileName);
 
                 string? remoteQuery = remoteHasMetadata
-                    ? $"{remote.Title} {remote.Artist}"
-                    : null;
+                    ? $"{compareTitle} {compareArtist}"
+                    : Path.GetFileNameWithoutExtension(compareFileName);
 
                 string fp1 = CreateSortedFingerprint(localQuery);
                 string fp2 = CreateSortedFingerprint(remoteQuery);

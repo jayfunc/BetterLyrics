@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
                 CurrentLyricsSearchResult = await Task.Run(async () => await _lyrcsSearchService.SearchSmartlyAsync(
-                    CurrentSongInfo, true, CurrentMediaSourceProviderInfo?.LyricsSearchType, token), token);
+                    CurrentSongInfo, CurrentMediaSourceProviderInfo?.LyricsSearchType, token), token);
 
                 if (CurrentLyricsSearchResult != null)
                 {

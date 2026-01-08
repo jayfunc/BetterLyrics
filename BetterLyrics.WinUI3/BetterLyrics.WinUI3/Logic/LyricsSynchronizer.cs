@@ -66,19 +66,14 @@ namespace BetterLyrics.WinUI3.Logic
 
         public LinePlaybackState GetLinePlayingProgress(
             double currentTimeMs,
-            LyricsLine line,
-            LyricsLine? nextLine,
-            double songDurationMs,
+            RenderLyricsLine line,
             bool isForceWordByWord)
         {
             var state = new LinePlaybackState { SyllableStartIndex = 0, SyllableLength = 0, SyllableProgress = 0 };
 
             if (line == null) return state;
 
-            double lineEndMs;
-            if (line.EndMs != null) lineEndMs = line.EndMs.Value;
-            else if (nextLine != null) lineEndMs = nextLine.StartMs;
-            else lineEndMs = songDurationMs;
+            double lineEndMs = line.EndMs;
 
             // 还没到
             if (currentTimeMs < line.StartMs) return state;
@@ -87,42 +82,43 @@ namespace BetterLyrics.WinUI3.Logic
             if (currentTimeMs > lineEndMs)
             {
                 state.SyllableProgress = 1f;
-                state.SyllableStartIndex = Math.Max(0, line.OriginalText.Length - 1);
+                state.SyllableStartIndex = Math.Max(0, line.PrimaryText.Length - 1);
                 state.SyllableLength = 1;
                 return state;
             }
 
             // 逐字
-            if (line.LyricsSyllables != null && line.LyricsSyllables.Count > 1)
+            if (line.PrimaryRenderSyllables != null && line.PrimaryRenderSyllables.Count > 1)
             {
                 return CalculateSyllableProgress(currentTimeMs, line, lineEndMs);
             }
 
             // 强制逐字
-            if (isForceWordByWord && line.OriginalText.Length > 0)
+            if (isForceWordByWord && line.PrimaryText.Length > 0)
             {
                 return CalculateSimulatedProgress(currentTimeMs, line, lineEndMs);
             }
             else
             {
                 // 普通行
-                state.SyllableStartIndex = line.OriginalText.Length;
+                state.SyllableStartIndex = line.PrimaryText.Length;
                 state.SyllableProgress = 1f;
                 return state;
             }
         }
 
-        private LinePlaybackState CalculateSyllableProgress(double time, LyricsLine line, double lineEndMs)
+        private LinePlaybackState CalculateSyllableProgress(double time, RenderLyricsLine line, double lineEndMs)
         {
             var state = new LinePlaybackState();
-            int count = line.LyricsSyllables.Count;
+            int count = line.PrimaryRenderSyllables.Count;
 
             for (int i = 0; i < count; i++)
             {
-                var timing = line.LyricsSyllables[i];
-                var nextTiming = (i + 1 < count) ? line.LyricsSyllables[i + 1] : null;
+                var timing = line.PrimaryRenderSyllables[i];
+                var nextTiming = (i + 1 < count) ? line.PrimaryRenderSyllables[i + 1] : null;
 
-                double timingEndMs = timing.EndMs ?? nextTiming?.StartMs ?? lineEndMs;
+                //double timingEndMs = timing.EndMs ?? nextTiming?.StartMs ?? lineEndMs;
+                double timingEndMs = timing.EndMs;
 
                 // 在当前字范围内
                 if (time >= timing.StartMs && time <= timingEndMs)
@@ -146,10 +142,10 @@ namespace BetterLyrics.WinUI3.Logic
             return state;
         }
 
-        private LinePlaybackState CalculateSimulatedProgress(double time, LyricsLine line, double lineEndMs)
+        private LinePlaybackState CalculateSimulatedProgress(double time, RenderLyricsLine line, double lineEndMs)
         {
             var state = new LinePlaybackState();
-            int textLength = line.OriginalText.Length;
+            int textLength = line.PrimaryText.Length;
 
             double progress = (time - line.StartMs) / (lineEndMs - line.StartMs);
             progress = Math.Clamp(progress, 0, 1);

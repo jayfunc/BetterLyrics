@@ -26,7 +26,6 @@ namespace BetterLyrics.WinUI3.Renderer
             ICanvasAnimatedControl control,
             CanvasDrawingSession ds,
             IList<RenderLyricsLine>? lines,
-            int playingLineIndex,
             int mouseHoverLineIndex,
             bool isMousePressing,
             int startVisibleIndex,
@@ -57,7 +56,6 @@ namespace BetterLyrics.WinUI3.Renderer
                                 control,
                                 layerDs,
                                 lines,
-                                playingLineIndex,
                                 mouseHoverLineIndex,
                                 isMousePressing,
                                 startVisibleIndex,
@@ -89,7 +87,6 @@ namespace BetterLyrics.WinUI3.Renderer
                         control,
                         ds,
                         lines,
-                        playingLineIndex,
                         mouseHoverLineIndex,
                         isMousePressing,
                         startVisibleIndex,
@@ -114,7 +111,6 @@ namespace BetterLyrics.WinUI3.Renderer
             ICanvasAnimatedControl control,
             CanvasDrawingSession ds,
             IList<RenderLyricsLine>? lines,
-            int playingLineIndex,
             int mouseHoverLineIndex,
             bool isMousePressing,
             int startVisibleIndex,
@@ -134,9 +130,6 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (lines == null) return;
 
-            var currentPlayingLine = lines.ElementAtOrDefault(playingLineIndex);
-            if (currentPlayingLine == null) return;
-
             var effectSettings = windowStatus.LyricsEffectSettings;
             var styleSettings = windowStatus.LyricsStyleSettings;
 
@@ -148,8 +141,8 @@ namespace BetterLyrics.WinUI3.Renderer
                 var line = lines.ElementAtOrDefault(i);
                 if (line == null) continue;
 
-                if (line.OriginalCanvasTextLayout == null) continue;
-                if (line.OriginalCanvasTextLayout.LayoutBounds.Width <= 0) continue;
+                if (line.PrimaryTextLayout == null) continue;
+                if (line.PrimaryTextLayout.LayoutBounds.Width <= 0) continue;
 
                 double xOffset = lyricsX;
                 double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
@@ -167,8 +160,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 using (var textOnlyLayer = RenderBaseTextLayer(control, line, styleSettings.LyricsFontStrokeWidth, strokeColor, line.ColorTransition.Value))
                 {
-                    bool isPlaying = currentProgressMs >= line.StartMs && currentProgressMs <= line.EndMs;
-                    if (i == playingLineIndex) isPlaying = true;
+                    bool isPlaying = line.GetIsPlaying(currentProgressMs);
 
                     if (isPlaying)
                     {
@@ -206,14 +198,14 @@ namespace BetterLyrics.WinUI3.Renderer
             {
                 if (strokeWidth > 0)
                 {
-                    DrawGeometrySafely(clds, line.PhoneticCanvasGeometry, line.PhoneticPosition, strokeColor, strokeWidth);
-                    DrawGeometrySafely(clds, line.OriginalCanvasGeometry, line.OriginalPosition, strokeColor, strokeWidth);
-                    DrawGeometrySafely(clds, line.TranslatedCanvasGeometry, line.TranslatedPosition, strokeColor, strokeWidth);
+                    DrawGeometrySafely(clds, line.TertiaryCanvasGeometry, line.TertiaryPosition, strokeColor, strokeWidth);
+                    DrawGeometrySafely(clds, line.PrimaryCanvasGeometry, line.PrimaryPosition, strokeColor, strokeWidth);
+                    DrawGeometrySafely(clds, line.SecondaryCanvasGeometry, line.SecondaryPosition, strokeColor, strokeWidth);
                 }
 
-                DrawTextLayoutSafely(clds, line.PhoneticCanvasTextLayout, line.PhoneticPosition, fillColor);
-                DrawTextLayoutSafely(clds, line.OriginalCanvasTextLayout, line.OriginalPosition, fillColor);
-                DrawTextLayoutSafely(clds, line.TranslatedCanvasTextLayout, line.TranslatedPosition, fillColor);
+                DrawTextLayoutSafely(clds, line.TertiaryTextLayout, line.TertiaryPosition, fillColor);
+                DrawTextLayoutSafely(clds, line.PrimaryTextLayout, line.PrimaryPosition, fillColor);
+                DrawTextLayoutSafely(clds, line.SecondaryTextLayout, line.SecondaryPosition, fillColor);
             }
             return commandList;
         }

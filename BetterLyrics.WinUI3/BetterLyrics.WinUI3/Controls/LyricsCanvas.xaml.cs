@@ -119,7 +119,7 @@ namespace BetterLyrics.WinUI3.Controls
         private bool _isLayoutChanged = true;
         private bool _isMouseScrollingChanged = false;
 
-        private int _playingLineIndex;
+        private int _primaryPlayingLineIndex;
         private (int Start, int End) _visibleRange;
         private double _canvasTargetScrollOffset;
 
@@ -382,7 +382,6 @@ namespace BetterLyrics.WinUI3.Controls
                 control: sender,
                 ds: args.DrawingSession,
                 lines: _renderLyricsLines,
-                playingLineIndex: _playingLineIndex,
                 mouseHoverLineIndex: _mouseHoverLineIndex,
                 isMousePressing: _isMousePressing,
                 startVisibleIndex: _visibleRange.Start,
@@ -411,8 +410,6 @@ namespace BetterLyrics.WinUI3.Controls
                     return _synchronizer.GetLinePlayingProgress(
                         _songPositionWithOffset.TotalMilliseconds,
                         line,
-                        nextLine,
-                        songDuration,
                         isForceWordByWord
                     );
                 }
@@ -476,17 +473,17 @@ namespace BetterLyrics.WinUI3.Controls
 
             #region UpdatePlayingLineIndex
 
-            int newPlayingIndex = _synchronizer.GetCurrentLineIndex(_songPositionWithOffset.TotalMilliseconds, _renderLyricsLines);
-            bool isPlayingLineChanged = newPlayingIndex != _playingLineIndex;
-            _playingLineIndex = newPlayingIndex;
+            int primaryPlayingIndex = _synchronizer.GetCurrentLineIndex(_songPositionWithOffset.TotalMilliseconds, _renderLyricsLines);
+            bool isPrimaryPlayingLineChanged = primaryPlayingIndex != _primaryPlayingLineIndex;
+            _primaryPlayingLineIndex = primaryPlayingIndex;
 
             #endregion
 
             #region UpdateTargetScrollOffset
 
-            if (isPlayingLineChanged || _isLayoutChanged)
+            if (isPrimaryPlayingLineChanged || _isLayoutChanged)
             {
-                var targetScroll = LyricsLayoutManager.CalculateTargetScrollOffset(_renderLyricsLines, _playingLineIndex);
+                var targetScroll = LyricsLayoutManager.CalculateTargetScrollOffset(_renderLyricsLines, _primaryPlayingLineIndex);
                 if (targetScroll.HasValue) _canvasTargetScrollOffset = targetScroll.Value;
 
                 _canvasYScrollTransition.SetEasingType(lyricsEffect.LyricsScrollEasingType);
@@ -524,7 +521,7 @@ namespace BetterLyrics.WinUI3.Controls
                 _renderLyricsLines,
                 _isMouseScrolling ? maxRange.Start : _visibleRange.Start,
                 _isMouseScrolling ? maxRange.End : _visibleRange.End,
-                _playingLineIndex,
+                _primaryPlayingLineIndex,
                 sender.Size.Height,
                 _canvasTargetScrollOffset,
                 lyricsStyle.PlayingLineTopOffset / 100.0,
@@ -536,7 +533,7 @@ namespace BetterLyrics.WinUI3.Controls
                 elapsedTime,
                 _isMouseScrolling,
                 _isLayoutChanged,
-                isPlayingLineChanged,
+                isPrimaryPlayingLineChanged,
                 _isMouseScrollingChanged,
                 _songPositionWithOffset.TotalMilliseconds
             );
@@ -669,15 +666,7 @@ namespace BetterLyrics.WinUI3.Controls
         private void UpdateRenderLyricsLines()
         {
             _renderLyricsLines = null;
-            var lines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine()
-            {
-                LyricsSyllables = x.LyricsSyllables,
-                StartMs = x.StartMs,
-                EndMs = x.EndMs,
-                PhoneticText = x.PhoneticText,
-                OriginalText = x.OriginalText,
-                TranslatedText = x.TranslatedText
-            }).ToList();
+            var lines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
             if (lines != null)
             {
                 LyricsLayoutManager.CalculateLanes(lines);

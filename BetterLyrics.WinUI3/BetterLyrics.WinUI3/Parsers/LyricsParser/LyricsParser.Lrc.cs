@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             foreach (var line in lines)
             {
                 var matches = syllableRegex.Matches(line);
-                var syllables = new List<LyricsSyllable>();
+                var syllables = new List<BaseLyrics>();
 
                 int startIndex = 0;
                 for (int i = 0; i < matches.Count; i++)
@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     int totalMs = min * 60_000 + sec * 1000 + ms;
                     string text = match.Groups[6].Value;
 
-                    syllables.Add(new LyricsSyllable { StartMs = totalMs, Text = text, StartIndex = startIndex });
+                    syllables.Add(new BaseLyrics { StartMs = totalMs, Text = text, StartIndex = startIndex });
                     startIndex += text.Length;
                 }
 
@@ -58,8 +58,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     {
                         StartMs = syllables[0].StartMs,
                         EndMs = lineEndMs,
-                        OriginalText = string.Concat(syllables.Select(s => s.Text)),
-                        LyricsSyllables = syllables
+                        PrimaryText = string.Concat(syllables.Select(s => s.Text)),
+                        PrimarySyllables = syllables
                     });
                 }
                 else
@@ -81,7 +81,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                         content = bracketRegex!.Replace(line, "").Trim();
                         if (content == "//") content = "";
 
-                        lrcLines.Add(new LyricsLine { StartMs = lineStartMs, OriginalText = content });
+                        lrcLines.Add(new LyricsLine { StartMs = lineStartMs, PrimaryText = content });
                     }
                 }
             }

@@ -64,6 +64,16 @@ namespace BetterLyrics.WinUI3.Helper
             _durationSeconds = seconds;
         }
 
+        public void SetDurationMs(double millionSeconds)
+        {
+            SetDuration(millionSeconds / 1000.0);
+        }
+
+        public void SetDuration(TimeSpan timeSpan)
+        {
+            SetDuration(timeSpan.TotalSeconds);
+        }
+
         public void SetDelay(double seconds)
         {
             _delaySeconds = seconds;

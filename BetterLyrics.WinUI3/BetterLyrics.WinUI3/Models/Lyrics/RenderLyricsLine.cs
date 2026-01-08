@@ -12,9 +12,10 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics
 {
-    public class RenderLyricsLine : LyricsLine
+    public class RenderLyricsLine : BaseRenderLyrics
     {
-        public List<RenderLyricsChar> RenderLyricsOriginalChars { get; set; } = [];
+        public List<RenderLyricsChar> PrimaryRenderChars { get; private set; } = [];
+        public List<RenderLyricsSyllable> PrimaryRenderSyllables { get; private set; }
 
         public double AnimationDuration { get; set; } = 0.3;
 
@@ -28,22 +29,22 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public ValueTransition<double> YOffsetTransition { get; set; }
         public ValueTransition<Color> ColorTransition { get; set; }
 
-        public CanvasTextLayout? OriginalCanvasTextLayout { get; private set; }
-        public CanvasTextLayout? TranslatedCanvasTextLayout { get; private set; }
-        public CanvasTextLayout? PhoneticCanvasTextLayout { get; private set; }
+        public CanvasTextLayout? PrimaryTextLayout { get; private set; }
+        public CanvasTextLayout? SecondaryTextLayout { get; private set; }
+        public CanvasTextLayout? TertiaryTextLayout { get; private set; }
 
         /// <summary>
         /// 原文坐标（相对于坐标原点）
         /// </summary>
-        public Vector2 OriginalPosition { get; set; }
+        public Vector2 PrimaryPosition { get; set; }
         /// <summary>
         /// 译文坐标（相对于坐标原点）
         /// </summary>
-        public Vector2 TranslatedPosition { get; set; }
+        public Vector2 SecondaryPosition { get; set; }
         /// <summary>
         /// 注音坐标（相对于坐标原点）
         /// </summary>
-        public Vector2 PhoneticPosition { get; set; }
+        public Vector2 TertiaryPosition { get; set; }
 
         /// <summary>
         /// 顶部坐标（相对于坐标原点）
@@ -58,21 +59,21 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         /// </summary>
         public Vector2 BottomRightPosition { get; set; }
 
-        public CanvasGeometry? OriginalCanvasGeometry { get; private set; }
-        public CanvasGeometry? TranslatedCanvasGeometry { get; private set; }
-        public CanvasGeometry? PhoneticCanvasGeometry { get; private set; }
+        public CanvasGeometry? PrimaryCanvasGeometry { get; private set; }
+        public CanvasGeometry? SecondaryCanvasGeometry { get; private set; }
+        public CanvasGeometry? TertiaryCanvasGeometry { get; private set; }
+
+        public string PrimaryText { get; set; } = "";
+        public string SecondaryText { get; set; } = "";
+        public string TertiaryText { get; set; } = "";
 
         /// <summary>
         /// 轨道索引 (0 = 主轨道, 1 = 第一副轨道, etc.)
         /// 用于布局计算时的堆叠逻辑
         /// </summary>
         public int LaneIndex { get; set; } = 0;
-        /// <summary>
-        /// 是否为背景人声/和声
-        /// </summary>
-        public bool IsPlayingLastFrame { get; set; } = false;
 
-        public RenderLyricsLine()
+        public RenderLyricsLine(LyricsLine lyricsLine) : base(lyricsLine)
         {
             AngleTransition = new(
                 initialValue: 0,
@@ -119,11 +120,18 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 durationSeconds: 0.3f,
                 interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
             );
+
+            StartMs = lyricsLine.StartMs;
+            EndMs = lyricsLine.EndMs;
+            TertiaryText = lyricsLine.TertiaryText;
+            PrimaryText = lyricsLine.PrimaryText;
+            SecondaryText = lyricsLine.SecondaryText;
+            PrimaryRenderSyllables = lyricsLine.PrimarySyllables.Select(x => new RenderLyricsSyllable(x)).ToList();
         }
 
         public void UpdateCenterPosition(double maxWidth, TextAlignmentType type)
         {
-            if (OriginalCanvasTextLayout == null)
+            if (PrimaryTextLayout == null)
             {
                 return;
             }
@@ -141,14 +149,14 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
         public void DisposeTextLayout()
         {
-            PhoneticCanvasTextLayout?.Dispose();
-            PhoneticCanvasTextLayout = null;
+            TertiaryTextLayout?.Dispose();
+            TertiaryTextLayout = null;
 
-            OriginalCanvasTextLayout?.Dispose();
-            OriginalCanvasTextLayout = null;
+            PrimaryTextLayout?.Dispose();
+            PrimaryTextLayout = null;
 
-            TranslatedCanvasTextLayout?.Dispose();
-            TranslatedCanvasTextLayout = null;
+            SecondaryTextLayout?.Dispose();
+            SecondaryTextLayout = null;
         }
 
         public void RecreateTextLayout(
@@ -161,9 +169,9 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         {
             DisposeTextLayout();
 
-            if (createPhonetic && PhoneticText != "")
+            if (createPhonetic && TertiaryText != "")
             {
-                PhoneticCanvasTextLayout = new CanvasTextLayout(control, PhoneticText, new CanvasTextFormat
+                TertiaryTextLayout = new CanvasTextLayout(control, TertiaryText, new CanvasTextFormat
                 {
                     HorizontalAlignment = CanvasHorizontalAlignment.Left,
                     VerticalAlignment = CanvasVerticalAlignment.Top,
@@ -173,10 +181,10 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 {
                     HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
                 };
-                PhoneticCanvasTextLayout.SetFontFamily(PhoneticText, fontFamilyCJK, fontFamilyWestern);
+                TertiaryTextLayout.SetFontFamily(TertiaryText, fontFamilyCJK, fontFamilyWestern);
             }
 
-            OriginalCanvasTextLayout = new CanvasTextLayout(control, OriginalText, new CanvasTextFormat
+            PrimaryTextLayout = new CanvasTextLayout(control, PrimaryText, new CanvasTextFormat
             {
                 HorizontalAlignment = CanvasHorizontalAlignment.Left,
                 VerticalAlignment = CanvasVerticalAlignment.Top,
@@ -186,11 +194,11 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             {
                 HorizontalAlignment = type.ToCanvasHorizontalAlignment()
             };
-            OriginalCanvasTextLayout.SetFontFamily(OriginalText, fontFamilyCJK, fontFamilyWestern);
+            PrimaryTextLayout.SetFontFamily(PrimaryText, fontFamilyCJK, fontFamilyWestern);
 
-            if (createTranslated && TranslatedText != "")
+            if (createTranslated && SecondaryText != "")
             {
-                TranslatedCanvasTextLayout = new CanvasTextLayout(control, TranslatedText, new CanvasTextFormat
+                SecondaryTextLayout = new CanvasTextLayout(control, SecondaryText, new CanvasTextFormat
                 {
                     HorizontalAlignment = CanvasHorizontalAlignment.Left,
                     VerticalAlignment = CanvasVerticalAlignment.Top,
@@ -200,60 +208,77 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 {
                     HorizontalAlignment = type.ToCanvasHorizontalAlignment()
                 };
-                TranslatedCanvasTextLayout.SetFontFamily(TranslatedText, fontFamilyCJK, fontFamilyWestern);
+                SecondaryTextLayout.SetFontFamily(SecondaryText, fontFamilyCJK, fontFamilyWestern);
             }
         }
 
         public void DisposeTextGeometry()
         {
-            PhoneticCanvasGeometry?.Dispose();
-            PhoneticCanvasGeometry = null;
+            TertiaryCanvasGeometry?.Dispose();
+            TertiaryCanvasGeometry = null;
 
-            OriginalCanvasGeometry?.Dispose();
-            OriginalCanvasGeometry = null;
+            PrimaryCanvasGeometry?.Dispose();
+            PrimaryCanvasGeometry = null;
 
-            TranslatedCanvasGeometry?.Dispose();
-            TranslatedCanvasGeometry = null;
+            SecondaryCanvasGeometry?.Dispose();
+            SecondaryCanvasGeometry = null;
         }
 
         public void RecreateTextGeometry()
         {
             DisposeTextGeometry();
 
-            if (PhoneticCanvasTextLayout != null)
+            if (TertiaryTextLayout != null)
             {
-                PhoneticCanvasGeometry = CanvasGeometry.CreateText(PhoneticCanvasTextLayout);
+                TertiaryCanvasGeometry = CanvasGeometry.CreateText(TertiaryTextLayout);
             }
 
-            if (OriginalCanvasTextLayout != null)
+            if (PrimaryTextLayout != null)
             {
-                OriginalCanvasGeometry = CanvasGeometry.CreateText(OriginalCanvasTextLayout);
+                PrimaryCanvasGeometry = CanvasGeometry.CreateText(PrimaryTextLayout);
             }
 
-            if (TranslatedCanvasTextLayout != null)
+            if (SecondaryTextLayout != null)
             {
-                TranslatedCanvasGeometry = CanvasGeometry.CreateText(TranslatedCanvasTextLayout);
+                SecondaryCanvasGeometry = CanvasGeometry.CreateText(SecondaryTextLayout);
             }
         }
 
-        public void RecalculateCharacterGeometries()
+        public void RecreateRenderChars()
         {
-            RenderLyricsOriginalChars.Clear();
-            if (OriginalCanvasTextLayout == null) return;
+            PrimaryRenderChars.Clear();
+            if (PrimaryTextLayout == null) return;
 
-            var textLength = OriginalText.Length;
-
-            for (int i = 0; i < textLength; i++)
+            foreach (var syllable in PrimaryRenderSyllables)
             {
-                var region = OriginalCanvasTextLayout.GetCharacterRegions(i, 1).FirstOrDefault();
+                syllable.ChildrenRenderLyricsChars.Clear();
+            }
+
+            var textLength = PrimaryText.Length;
+
+            for (int startCharIndex = 0; startCharIndex < textLength; startCharIndex++)
+            {
+                var region = PrimaryTextLayout.GetCharacterRegions(startCharIndex, 1).FirstOrDefault();
                 var bounds = region.LayoutBounds;
 
-                RenderLyricsOriginalChars.Add(new RenderLyricsChar()
+                var syllable = PrimaryRenderSyllables.FirstOrDefault(x => x.StartIndex <= startCharIndex && startCharIndex <= x.EndIndex);
+                if (syllable == null) continue;
+
+                var avgCharDuration = syllable.DurationMs / syllable.Length;
+                var charStartMs = syllable.StartMs + (startCharIndex - syllable.StartIndex) * avgCharDuration;
+                var charEndMs = charStartMs + avgCharDuration;
+
+                var renderLyricsChar = new RenderLyricsChar(new BaseLyrics
                 {
-                    Index = i,
-                    LayoutRect = bounds,
-                    Text = OriginalText[i].ToString()
-                });
+                    StartIndex = startCharIndex,
+                    Text = PrimaryText[startCharIndex].ToString(),
+                    StartMs = charStartMs,
+                    EndMs = charEndMs,
+                }, bounds);
+
+                syllable.ChildrenRenderLyricsChars.Add(renderLyricsChar);
+
+                PrimaryRenderChars.Add(renderLyricsChar);
             }
         }
 

@@ -79,52 +79,52 @@ namespace BetterLyrics.WinUI3.Logic
                 // 左上角坐标
                 line.TopLeftPosition = new Vector2(0, (float)currentY);
                 // 注音层
-                line.PhoneticPosition = line.TopLeftPosition;
-                if (line.PhoneticCanvasTextLayout != null)
+                line.TertiaryPosition = line.TopLeftPosition;
+                if (line.TertiaryTextLayout != null)
                 {
-                    currentY += line.PhoneticCanvasTextLayout.LayoutBounds.Height;
+                    currentY += line.TertiaryTextLayout.LayoutBounds.Height;
                     // 间距
-                    currentY += (line.PhoneticCanvasTextLayout.LayoutBounds.Height / line.PhoneticCanvasTextLayout.LineCount) * 0.1;
+                    currentY += (line.TertiaryTextLayout.LayoutBounds.Height / line.TertiaryTextLayout.LineCount) * 0.1;
 
-                    actualWidth = Math.Max(actualWidth, line.PhoneticCanvasTextLayout.LayoutBounds.Width);
+                    actualWidth = Math.Max(actualWidth, line.TertiaryTextLayout.LayoutBounds.Width);
                 }
 
                 // 原文层
-                line.OriginalPosition = new Vector2(0, (float)currentY);
-                if (line.OriginalCanvasTextLayout != null)
+                line.PrimaryPosition = new Vector2(0, (float)currentY);
+                if (line.PrimaryTextLayout != null)
                 {
-                    currentY += line.OriginalCanvasTextLayout.LayoutBounds.Height;
+                    currentY += line.PrimaryTextLayout.LayoutBounds.Height;
 
-                    actualWidth = Math.Max(actualWidth, line.OriginalCanvasTextLayout.LayoutBounds.Width);
+                    actualWidth = Math.Max(actualWidth, line.PrimaryTextLayout.LayoutBounds.Width);
                 }
 
                 // 翻译层
-                if (line.TranslatedCanvasTextLayout != null)
+                if (line.SecondaryTextLayout != null)
                 {
                     // 间距
-                    currentY += (line.TranslatedCanvasTextLayout.LayoutBounds.Height / line.TranslatedCanvasTextLayout.LineCount) * 0.1;
+                    currentY += (line.SecondaryTextLayout.LayoutBounds.Height / line.SecondaryTextLayout.LineCount) * 0.1;
                 }
-                line.TranslatedPosition = new Vector2(0, (float)currentY);
-                if (line.TranslatedCanvasTextLayout != null)
+                line.SecondaryPosition = new Vector2(0, (float)currentY);
+                if (line.SecondaryTextLayout != null)
                 {
-                    currentY += line.TranslatedCanvasTextLayout.LayoutBounds.Height;
+                    currentY += line.SecondaryTextLayout.LayoutBounds.Height;
 
-                    actualWidth = Math.Max(actualWidth, line.TranslatedCanvasTextLayout.LayoutBounds.Width);
+                    actualWidth = Math.Max(actualWidth, line.SecondaryTextLayout.LayoutBounds.Width);
                 }
 
                 // 右下角坐标
                 line.BottomRightPosition = new Vector2(0 + (float)actualWidth, (float)currentY);
 
                 // 行间距
-                if (line.OriginalCanvasTextLayout != null)
+                if (line.PrimaryTextLayout != null)
                 {
-                    currentY += (line.OriginalCanvasTextLayout.LayoutBounds.Height / line.OriginalCanvasTextLayout.LineCount) * style.LyricsLineSpacingFactor;
+                    currentY += (line.PrimaryTextLayout.LayoutBounds.Height / line.PrimaryTextLayout.LineCount) * style.LyricsLineSpacingFactor;
                 }
 
                 // 更新中心点
                 line.UpdateCenterPosition(lyricsWidth, style.LyricsAlignmentType);
 
-                line.RecalculateCharacterGeometries();
+                line.RecreateRenderChars();
             }
         }
 
@@ -140,9 +140,9 @@ namespace BetterLyrics.WinUI3.Logic
             var currentLine = lines.ElementAtOrDefault(playingLineIndex);
             var firstLine = lines.FirstOrDefault();
 
-            if (currentLine?.OriginalCanvasTextLayout == null || firstLine == null) return null;
+            if (currentLine?.PrimaryTextLayout == null || firstLine == null) return null;
 
-            return -currentLine.OriginalPosition.Y + firstLine.OriginalPosition.Y
+            return -currentLine.PrimaryPosition.Y + firstLine.PrimaryPosition.Y
                 - (currentLine.BottomRightPosition.Y - currentLine.TopLeftPosition.Y) / 2.0;
         }
 
@@ -215,7 +215,7 @@ namespace BetterLyrics.WinUI3.Logic
                     lanesEndMs.Add(0);
                 }
 
-                lanesEndMs[assignedLane] = end ?? 0;
+                lanesEndMs[assignedLane] = end;
                 line.LaneIndex = assignedLane;
             }
         }
@@ -241,7 +241,7 @@ namespace BetterLyrics.WinUI3.Logic
             {
                 int mid = (left + right) / 2;
                 var line = lines[mid];
-                if (line.OriginalCanvasTextLayout == null) break;
+                if (line.PrimaryTextLayout == null) break;
                 double value = offset + line.BottomRightPosition.Y;
                 if (value >= mousePosition.Y) { result = mid; right = mid - 1; }
                 else { left = mid + 1; }
@@ -267,7 +267,7 @@ namespace BetterLyrics.WinUI3.Logic
             {
                 int mid = (left + right) / 2;
                 var line = lines[mid];
-                if (line.OriginalCanvasTextLayout == null) break;
+                if (line.PrimaryTextLayout == null) break;
                 double value = offset + line.BottomRightPosition.Y;
                 // 理论上说应该使用下面这一行来精确计算视野内的首个可见行，但是考虑到动画视觉效果，还是注释掉了
                 //if (value >= lyricsY) { result = mid; right = mid - 1; }
@@ -284,7 +284,7 @@ namespace BetterLyrics.WinUI3.Logic
             {
                 int mid = (left + right) / 2;
                 var line = lines[mid];
-                if (line.OriginalCanvasTextLayout == null) break;
+                if (line.PrimaryTextLayout == null) break;
                 double value = offset + line.BottomRightPosition.Y;
                 // 同理
                 //if (value >= lyricsY + lyricsHeight) { result = mid; right = mid - 1; }

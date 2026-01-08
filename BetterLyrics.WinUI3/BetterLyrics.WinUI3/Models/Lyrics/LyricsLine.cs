@@ -1,29 +1,46 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics
 {
-    public class LyricsLine
+    public class LyricsLine : BaseLyrics
     {
-        public List<LyricsSyllable> LyricsSyllables { get; set; } = [];
+        public List<BaseLyrics> PrimarySyllables { get; set; } = [];
+        public List<BaseLyrics> SecondarySyllables { get; set; } = [];
+        public List<BaseLyrics> TertiarySyllables { get; set; } = [];
 
-        public int? DurationMs => EndMs - StartMs;
-        public int? EndMs { get; set; }
-        public int StartMs { get; set; }
+        public List<BaseLyrics> PrimaryChars { get; private set; } = [];
+        public List<BaseLyrics> SecondaryChars { get; private set; } = [];
+        public List<BaseLyrics> TertiaryChars { get; private set; } = [];
 
-        /// <summary>
-        /// 原文
-        /// </summary>
-        public string OriginalText { get; set; } = "";
-        /// <summary>
-        /// 译文
-        /// </summary>
-        public string TranslatedText { get; set; } = "";
-        /// <summary>
-        /// 注音
-        /// </summary>
-        public string PhoneticText { get; set; } = "";
+        public string PrimaryText { get; set; } = "";
+        public string SecondaryText { get; set; } = "";
+        public string TertiaryText { get; set; } = "";
+
+        public LyricsLine()
+        {
+            for (int charStartIndex = 0; charStartIndex < PrimaryText.Length; charStartIndex++)
+            {
+                var syllable = PrimarySyllables.FirstOrDefault(x => x.StartIndex <= charStartIndex && charStartIndex <= x.EndIndex);
+                if (syllable == null) continue;
+
+                var avgCharDuration = syllable.DurationMs / syllable.Length;
+                if (avgCharDuration == 0) continue;
+
+                var charStartMs = syllable.StartMs + (charStartIndex - syllable.StartIndex) * avgCharDuration;
+                var charEndMs = charStartMs + avgCharDuration;
+
+                PrimaryChars.Add(new BaseLyrics
+                {
+                    StartIndex = charStartIndex,
+                    StartMs = charStartMs,
+                    EndMs = charEndMs,
+                    Text = PrimaryText[charStartIndex].ToString()
+                });
+            }
+        }
 
     }
 }

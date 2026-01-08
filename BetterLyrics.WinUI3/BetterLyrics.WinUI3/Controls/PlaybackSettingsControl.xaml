@@ -228,6 +228,9 @@
                                             </dev:SettingsExpander.HeaderIcon>
                                             <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
                                             <dev:SettingsExpander.Items>
+                                                <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
+                                                    <CheckBox IsChecked="{Binding IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
                                                 <dev:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
                                                     <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />
                                                 </dev:SettingsCard>
