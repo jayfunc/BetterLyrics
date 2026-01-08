@@ -79,7 +79,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
 
     private void UpdateLyricsWindowSwitchShortcut()
     {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.LyricsWindowSwitch,
+        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.LyricsWindowSwitch,
             _settingsService.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut,
             () =>
             {
@@ -90,7 +90,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
 
     private void UpdatePlayOrPauseSongShortcut()
     {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
+        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.PlayOrPauseSong, _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, (() =>
         {
             if (_gsmtcService.CurrentIsPlaying)
             {
@@ -105,7 +105,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
 
     private void UpdatePreviousSongShortcut()
     {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
+        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.PreviousSong, _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut, () =>
         {
             _ = _gsmtcService.PreviousAsync();
         });
@@ -113,7 +113,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
 
     private void UpdateNextSongShortcut()
     {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
+        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.NextSong, _settingsService.AppSettings.GeneralSettings.NextSongShortcut, () =>
         {
             _ = _gsmtcService.NextAsync();
         });
@@ -121,7 +121,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
 
     private void UpdateLyricsWindowShowHideShortcut()
     {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutID.LyricsWindowShowOrHide,
+        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.LyricsWindowShowOrHide,
             _settingsService.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut,
             () =>
             {

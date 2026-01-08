@@ -96,11 +96,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             LastFMUser = e.User;
         }
 
-        private void MediaSessionsService_SessionIdsChanged(object? sender, Events.MediaSourceProvidersInfoEventArgs e)
-        {
-            SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
-        }
-
         [RelayCommand]
         private void LibreTranslateServerTest()
         {
