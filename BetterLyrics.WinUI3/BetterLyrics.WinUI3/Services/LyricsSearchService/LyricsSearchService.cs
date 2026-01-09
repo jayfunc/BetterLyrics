@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
@@ -29,7 +30,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
     {
         private readonly HttpClient _amllTtmlDbHttpClient;
         private readonly HttpClient _lrcLibHttpClient;
-        private readonly AppleMusic _appleMusic;
+        private readonly Providers.AppleMusic _appleMusic;
 
         private readonly ISettingsService _settingsService;
         private readonly IFileSystemService _fileSystemService;
@@ -54,10 +55,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             _lrcLibHttpClient = new();
             _lrcLibHttpClient.DefaultRequestHeaders.Add(
                 "User-Agent",
-                $"{Constants.App.AppName} {MetadataHelper.AppVersion} ({Constants.Link.BetterLyricsGitHub})"
+                $"{Constants.App.AppName} {MetadataHelper.AppVersion} ({Link.BetterLyricsGitHub})"
             );
             _amllTtmlDbHttpClient = new();
-            _appleMusic = new AppleMusic();
+            _appleMusic = new Providers.AppleMusic();
         }
 
         private static bool IsAmllTtmlDbIndexInvalid()
@@ -402,6 +403,8 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
 
             string? rawLyricFile = null;
+            string? bestNcmMusicId = null;
+
             await foreach (var line in File.ReadLinesAsync(PathHelper.AmllTtmlDbIndexPath))
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -416,6 +419,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     string? title = null;
                     string? artist = null;
                     string? album = null;
+                    string? ncmMusicId = null;
 
                     foreach (var meta in metadataArr.EnumerateArray())
                     {
@@ -429,6 +433,8 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                             artist = string.Join(" / ", valueArr.EnumerateArray());
                         if (key == "album" && valueArr.GetArrayLength() > 0)
                             album = valueArr[0].GetString();
+                        if (key == "ncmMusicId" && valueArr.GetArrayLength() > 0)
+                            ncmMusicId = valueArr[0].GetString();
                     }
 
                     int score = MetadataComparer.CalculateScore(songInfo, new LyricsCacheItem
@@ -436,12 +442,12 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         Title = title,
                         Artist = artist,
                         Album = album,
-                        Duration = 0,
                     });
                     if (score > lyricsSearchResult.MatchPercentage)
                     {
                         if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
                         {
+                            bestNcmMusicId = ncmMusicId;
                             rawLyricFile = rawLyricFileProp.GetString();
                             lyricsSearchResult.Title = title;
                             lyricsSearchResult.Artist = artist;
@@ -458,19 +464,28 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 return lyricsSearchResult;
             }
 
-            // 下载歌词内容
-            var url = $"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{Constants.AmllTTmlDB.QueryPrefix}/{rawLyricFile}";
+            var url = $"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{AmllTTmlDB.QueryPrefix}/{rawLyricFile}";
             lyricsSearchResult.Reference = url;
             try
             {
+                // 下载写入歌词
                 using var response = await _amllTtmlDbHttpClient.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
                     return lyricsSearchResult;
                 }
                 string lyrics = await response.Content.ReadAsStringAsync();
-
                 lyricsSearchResult.Raw = lyrics;
+
+                // 反查时长
+                if (bestNcmMusicId != null && lyricsSearchResult.Duration == null)
+                {
+                    var tmp = await SearchQQNeteaseKugouAsync(
+                        ((SongInfo)songInfo.Clone()).WithSongId($"{ExtendedGenreFiled.NetEaseCloudMusicTrackID}{bestNcmMusicId}"),
+                        Searchers.Netease);
+                    lyricsSearchResult.Duration = tmp.Duration;
+                    lyricsSearchResult.MatchPercentage = MetadataComparer.CalculateScore(songInfo, lyricsSearchResult);
+                }
             }
             catch
             {
@@ -633,7 +648,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
 
             lyricsSearchResult.Title = result?.Title;
-            lyricsSearchResult.Artist = string.Join(" / ", result?.Artists ?? []);
+            lyricsSearchResult.Artist = result?.Artist;
             lyricsSearchResult.Album = result?.Album;
             lyricsSearchResult.Duration = result?.DurationMs / 1000;
 

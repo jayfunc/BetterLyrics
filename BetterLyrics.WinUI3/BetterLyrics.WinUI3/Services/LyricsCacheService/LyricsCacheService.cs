@@ -55,6 +55,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
                 existingItem.Title = result.Title;
                 existingItem.Artist = result.Artist;
                 existingItem.Album = result.Album;
+                existingItem.Duration = result.Duration;
 
                 existingItem.TransliterationProvider = result.TransliterationProvider;
                 existingItem.TranslationProvider = result.TranslationProvider;

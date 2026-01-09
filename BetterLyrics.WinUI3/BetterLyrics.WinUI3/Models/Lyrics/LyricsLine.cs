@@ -19,6 +19,9 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public string SecondaryText { get; set; } = "";
         public string TertiaryText { get; set; } = "";
 
+        public new string Text => PrimaryText;
+        public new int StartIndex = 0;
+
         public LyricsLine()
         {
             for (int charStartIndex = 0; charStartIndex < PrimaryText.Length; charStartIndex++)

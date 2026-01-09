@@ -10,27 +10,27 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static partial class MetadataComparer
     {
-        private const double WeightTitle = 0.40;
-        private const double WeightArtist = 0.40;
+        private const double WeightTitle = 0.30;
+        private const double WeightArtist = 0.30;
         private const double WeightAlbum = 0.10;
-        private const double WeightDuration = 0.10;
+        private const double WeightDuration = 0.30;
 
         // JaroWinkler 适合短字符串匹配
         private static readonly JaroWinkler _algo = new();
 
         public static int CalculateScore(SongInfo songInfo, LyricsCacheItem remote)
         {
-            return CalculateScore(songInfo, remote.Title, remote.Artist, remote.Album, remote.Duration * 1000);
+            return CalculateScore(songInfo, remote.Title, remote.Artist, remote.Album, remote.Duration);
         }
 
         public static int CalculateScore(SongInfo songInfo, FilesIndexItem local)
         {
-            return CalculateScore(songInfo, local.Title, local.Artist, local.Album, local.Duration * 1000, local.FileName);
+            return CalculateScore(songInfo, local.Title, local.Artist, local.Album, local.Duration, local.FileName);
         }
 
         public static int CalculateScore(
             SongInfo songInfo, 
-            string? compareTitle, string? compareArtist, string? compareAlbum, double? compareDurationMs, string? compareFileName = null)
+            string? compareTitle, string? compareArtist, string? compareAlbum, double? compareDuration, string? compareFileName = null)
         {
             double totalScore = 0;
 
@@ -42,7 +42,7 @@ namespace BetterLyrics.WinUI3.Helper
                 double titleScore = GetStringSimilarity(songInfo.Title, compareTitle);
                 double artistScore = GetStringSimilarity(songInfo.Artist, compareArtist);
                 double albumScore = GetStringSimilarity(songInfo.Album, compareAlbum);
-                double durationScore = GetDurationSimilarity(songInfo.DurationMs, compareDurationMs);
+                double durationScore = GetDurationSimilarity(songInfo.Duration, compareDuration);
 
                 totalScore = (titleScore * WeightTitle) +
                                     (artistScore * WeightArtist) +
@@ -94,19 +94,18 @@ namespace BetterLyrics.WinUI3.Helper
             return _algo.Similarity(s1, s2);
         }
 
-        private static double GetDurationSimilarity(double localMs, double? remoteSeconds)
+        private static double GetDurationSimilarity(double localSeconds, double? remoteSeconds)
         {
             if (remoteSeconds == null || remoteSeconds == 0) return 0.0; // 远程没有时长数据，不匹配
 
-            double localSeconds = localMs / 1000.0;
             double diff = Math.Abs(localSeconds - remoteSeconds.Value);
 
-            // 差距 <= 3秒：100% 相似
-            // 差距 >= 20秒：0% 相似
+            // 差距 <= 1 秒：100 % 相似
+            // 差距 >= 10 秒：0 % 相似
             // 中间线性插值
 
-            const double PerfectTolerance = 3.0;
-            const double MaxTolerance = 20.0;
+            const double PerfectTolerance = 1.0;
+            const double MaxTolerance = 10.0;
 
             if (diff <= PerfectTolerance) return 1.0;
             if (diff >= MaxTolerance) return 0.0;
