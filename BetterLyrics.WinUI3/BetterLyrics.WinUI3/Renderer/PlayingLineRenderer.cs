@@ -26,12 +26,12 @@ namespace BetterLyrics.WinUI3.Renderer
             Color fgColor,
             LyricsEffectSettings settings)
         {
-            DrawPhonetic(ds, textOnlyLayer, line);
-            DrawOriginalText(control, ds, textOnlyLayer, line, playbackState, bgColor, fgColor, settings);
-            DrawTranslated(ds, textOnlyLayer, line);
+            DrawTertiaryText(ds, textOnlyLayer, line);
+            DrawPrimaryText(control, ds, textOnlyLayer, line, playbackState, bgColor, fgColor, settings);
+            DrawSecondaryText(ds, textOnlyLayer, line);
         }
 
-        private void DrawPhonetic(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
+        private void DrawTertiaryText(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
         {
             if (line.TertiaryTextLayout == null) return;
 
@@ -65,7 +65,7 @@ namespace BetterLyrics.WinUI3.Renderer
             });
         }
 
-        private void DrawTranslated(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
+        private void DrawSecondaryText(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
         {
             if (line.SecondaryTextLayout == null) return;
 
@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.Renderer
             });
         }
 
-        private void DrawOriginalText(
+        private void DrawPrimaryText(
             ICanvasResourceCreator resourceCreator,
             CanvasDrawingSession ds,
             ICanvasImage source,

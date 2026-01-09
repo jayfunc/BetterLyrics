@@ -74,6 +74,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         /// </summary>
         public int LaneIndex { get; set; } = 0;
 
+        public double? PrimaryLineHeight => PrimaryRenderChars.FirstOrDefault()?.LayoutRect.Height;
+
         public RenderLyricsLine(LyricsLine lyricsLine) : base(lyricsLine)
         {
             AngleTransition = new(
