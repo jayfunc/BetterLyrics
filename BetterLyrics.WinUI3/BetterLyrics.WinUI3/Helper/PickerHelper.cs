@@ -42,19 +42,23 @@ namespace BetterLyrics.WinUI3.Helper
             return file;
         }
 
-        public static async Task<StorageFile?> PickSaveFileAsync<T>(IDictionary<string, IList<string>> fileTypeChoices)
+        public static async Task<StorageFile?> PickSaveFileAsync<T>(IDictionary<string, IList<string>> fileTypeChoices, string? suggestedFileName = null)
         {
             var window = WindowHook.GetWindow<T>();
 
-            return await PickSaveFileAsync(window, fileTypeChoices);
+            return await PickSaveFileAsync(window, fileTypeChoices, suggestedFileName);
         }
 
-        public static async Task<StorageFile?> PickSaveFileAsync<T>(T? window, IDictionary<string, IList<string>> fileTypeChoices)
+        public static async Task<StorageFile?> PickSaveFileAsync<T>(T? window, IDictionary<string, IList<string>> fileTypeChoices, string? suggestedFileName = null)
         {
             if (window == null) return null;
 
             var picker = new Windows.Storage.Pickers.FileSavePicker();
             picker.FileTypeChoices.AddRange(fileTypeChoices);
+            if (suggestedFileName != null)
+            {
+                picker.SuggestedFileName = suggestedFileName;
+            }
 
             var hwnd = WindowNative.GetWindowHandle(window);
             InitializeWithWindow.Initialize(picker, hwnd);

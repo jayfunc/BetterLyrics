@@ -888,12 +888,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>常にトップに強制的に表示</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>現在の歌詞に文字単位の情報がない場合でも、文字単位の歌詞シミュレーションをします</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>文字単位の歌詞効果を強制する</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>描画 FPS</value>
   </data>
@@ -1574,5 +1568,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>ユーザーガイド</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value />
   </data>
 </root>

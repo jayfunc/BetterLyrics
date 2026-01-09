@@ -365,10 +365,6 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <dev:SettingsCard x:Uid="SettingsPageForceWordByWordEffect">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IsForceWordByWordEffect, Mode=TwoWay}" />
-                        </dev:SettingsCard>
-
                         <!--  Lyrics translation  -->
                         <TextBlock x:Uid="SettingsPageTranslation" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <dev:SettingsExpander x:Uid="LyricsPageTranslationEnabled" IsExpanded="True">

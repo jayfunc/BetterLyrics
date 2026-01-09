@@ -888,12 +888,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>บังคับให้อยู่บนสุดเสมอ</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>บังคับจำลองเอฟเฟกต์ทีละคำแม้ว่าเนื้อเพลงปัจจุบันจะไม่มีข้อมูลทีละคำ</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>บังคับเปิดใช้เอฟเฟกต์ทีละคำ</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>เฟรมเรตการเรนเดอร์</value>
   </data>
@@ -1574,5 +1568,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>คู่มือผู้ใช้</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value />
   </data>
 </root>

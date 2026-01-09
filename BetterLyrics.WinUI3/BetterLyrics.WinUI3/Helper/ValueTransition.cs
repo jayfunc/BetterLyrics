@@ -1,163 +1,252 @@
-﻿// 2025/6/23 by Zhe Fang
-
-using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using System;
+using System.Collections.Generic;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class ValueTransition<T>
-        where T : struct
+    public class ValueTransition<T> where T : struct
     {
+        // 状态变量
         private T _currentValue;
-        private double _durationSeconds;
-        private double _delaySeconds;
-        private double _delayRemaining;
-        private EasingType? _easingType;
-        private Func<T, T, double, T> _interpolator;
-        private bool _isTransitioning;
-        private double _progress;
         private T _startValue;
         private T _targetValue;
 
-        public double DurationSeconds => _durationSeconds;
-        public double DelaySeconds => _delaySeconds;
+        // 核心队列
+        private readonly Queue<Keyframe<T>> _keyframeQueue = new Queue<Keyframe<T>>();
 
-        public bool IsTransitioning => _isTransitioning;
+        // 时间控制
+        private double _stepDuration;             // 当前这一段的时长 (动态变化)
+        private double _totalDurationForAutoSplit; // 自动均分模式的总时长
+        private double _configuredDelaySeconds;    // 配置的延迟时长
+
+        // 动画状态
+        private Enums.EasingType? _easingType;
+        private Func<T, T, double, T> _interpolator;
+        private bool _isTransitioning;
+        private double _progress; // 当前段的进度 (0.0 ~ 1.0)
+
+        // 公开属性
         public T Value => _currentValue;
-        public T StartValue => _startValue;
-        public T TargetValue => _targetValue;
-        public EasingType? EasingType => _easingType;
-        public double Progress => _progress;
+        public bool IsTransitioning => _isTransitioning;
+        public T TargetValue => _targetValue; // 获取当前段的目标值
+        public Enums.EasingType? EasingType => _easingType;
+        public double DurationSeconds => _totalDurationForAutoSplit;
 
-        public ValueTransition(T initialValue, double durationSeconds, Func<T, T, double, T>? interpolator = null, EasingType? easingType = null, double delaySeconds = 0)
+        public ValueTransition(T initialValue, double defaultTotalDuration = 0.3, EasingType? defaultEasingType = null, Func<T, T, double, T>? interpolator = null)
         {
             _currentValue = initialValue;
             _startValue = initialValue;
             _targetValue = initialValue;
-            _durationSeconds = durationSeconds;
-            _delaySeconds = delaySeconds;
-            _delayRemaining = 0;
-            _progress = 1f;
-            _isTransitioning = false;
+            _totalDurationForAutoSplit = defaultTotalDuration;
+
+            if (interpolator == null)
+            {
+                // 默认缓动
+                SetEasingType(Enums.EasingType.EaseInOutQuad);
+            }
+            else
+            {
+                _easingType = null;
+                _interpolator = interpolator;
+            }
 
             if (interpolator != null)
             {
                 _interpolator = interpolator;
                 _easingType = null;
             }
-            else if (easingType.HasValue)
+            else if (defaultEasingType != null)
             {
-                _easingType = easingType;
-                _interpolator = GetInterpolatorByEasingType(_easingType.Value);
+                SetEasingType(defaultEasingType);
             }
             else
             {
-                _easingType = Enums.EasingType.EaseInOutQuad;
-                _interpolator = GetInterpolatorByEasingType(_easingType.Value);
+                SetEasingType(Enums.EasingType.EaseInOutQuad);
             }
         }
+
+        #region Configuration
 
         public void SetDuration(double seconds)
         {
-            if (seconds < 0)
-                throw new ArgumentOutOfRangeException(nameof(seconds), "Duration must be positive.");
-            _durationSeconds = seconds;
+            if (seconds < 0) throw new ArgumentOutOfRangeException(nameof(seconds));
+            _totalDurationForAutoSplit = seconds;
         }
 
-        public void SetDurationMs(double millionSeconds)
-        {
-            SetDuration(millionSeconds / 1000.0);
-        }
+        public void SetDurationMs(double millionSeconds) => SetDuration(millionSeconds / 1000.0);
 
-        public void SetDuration(TimeSpan timeSpan)
-        {
-            SetDuration(timeSpan.TotalSeconds);
-        }
-
+        /// <summary>
+        /// 设置启动延迟。
+        /// 原理：在动画队列最前方插入一个“数值不变”的关键帧。
+        /// </summary>
         public void SetDelay(double seconds)
         {
-            _delaySeconds = seconds;
+            _configuredDelaySeconds = seconds;
         }
 
-        private void JumpTo(T value)
+        public void SetEasingType(Enums.EasingType? easingType)
         {
+            _easingType = easingType;
+            _interpolator = GetInterpolatorByEasingType(easingType);
+        }
+
+        #endregion
+
+        #region Control Methods
+
+        /// <summary>
+        /// 立即跳转到指定值（停止动画）
+        /// </summary>
+        public void JumpTo(T value)
+        {
+            _keyframeQueue.Clear();
             _currentValue = value;
             _startValue = value;
             _targetValue = value;
-            _progress = 1f;
-            _delayRemaining = 0;
             _isTransitioning = false;
+            _progress = 0;
         }
 
-        public void Reset(T value)
+        /// <summary>
+        /// 模式 A: 精确控制模式
+        /// 显式指定每一段的目标值和时长。
+        /// </summary>
+        public void Start(params Keyframe<T>[] keyframes)
         {
-            _currentValue = value;
-            _startValue = value;
-            _targetValue = value;
-            _progress = 0f;
-            _delayRemaining = 0;
-            _isTransitioning = false;
-        }
+            if (keyframes == null || keyframes.Length == 0) return;
 
-        public void StartTransition(T targetValue, bool jumpTo = false)
-        {
-            if (jumpTo)
+            PrepareStart();
+
+            // 1. 处理延迟 (插入静止帧)
+            if (_configuredDelaySeconds > 0)
             {
-                JumpTo(targetValue);
-                return;
+                _keyframeQueue.Enqueue(new Keyframe<T>(_currentValue, _configuredDelaySeconds));
             }
 
-            if (!targetValue.Equals(_currentValue))
+            // 2. 入队用户帧
+            foreach (var kf in keyframes)
             {
-                _startValue = _currentValue;
-                _targetValue = targetValue;
-                _progress = 0f;
-                _delayRemaining = _delaySeconds;
-                _isTransitioning = true;
+                _keyframeQueue.Enqueue(kf);
             }
+
+            MoveToNextSegment(firstStart: true);
         }
 
-        public static bool Equals(double x, double y, double tolerance)
+        /// <summary>
+        /// 模式 B: 自动均分模式 (兼容旧写法)
+        /// 指定一串目标值，系统根据 SetDuration 的总时长平均分配。
+        /// </summary>
+        public void Start(params T[] values)
         {
-            var diff = Math.Abs(x - y);
-            return diff <= tolerance || diff <= Math.Max(Math.Abs(x), Math.Abs(y)) * tolerance;
+            if (values == null || values.Length == 0) return;
+
+            // 如果目标就是当前值且只有1帧，直接跳过以省性能
+            if (values.Length == 1 && values[0].Equals(_currentValue) && _configuredDelaySeconds <= 0) return;
+
+            PrepareStart();
+
+            // 1. 处理延迟
+            if (_configuredDelaySeconds > 0)
+            {
+                _keyframeQueue.Enqueue(new Keyframe<T>(_currentValue, _configuredDelaySeconds));
+            }
+
+            // 2. 计算均分时长
+            double autoStepDuration = _totalDurationForAutoSplit / values.Length;
+
+            // 3. 入队生成帧
+            foreach (var val in values)
+            {
+                _keyframeQueue.Enqueue(new Keyframe<T>(val, autoStepDuration));
+            }
+
+            MoveToNextSegment(firstStart: true);
+        }
+
+        #endregion
+
+        #region Core Logic
+
+        private void PrepareStart()
+        {
+            _keyframeQueue.Clear();
+            _isTransitioning = true;
+        }
+
+        private void MoveToNextSegment(bool firstStart = false)
+        {
+            if (_keyframeQueue.Count > 0)
+            {
+                var kf = _keyframeQueue.Dequeue();
+
+                // 起点逻辑：如果是刚开始，起点是当前值；如果是中间切换，起点是上一段的终点
+                _startValue = firstStart ? _currentValue : _targetValue;
+                _targetValue = kf.Value;
+                _stepDuration = kf.Duration;
+
+                if (firstStart) _progress = 0f;
+                // 注意：非 firstStart 时不重置 _progress，保留溢出值以平滑过渡
+            }
+            else
+            {
+                // 队列耗尽，动画结束
+                _currentValue = _targetValue;
+                _isTransitioning = false;
+                _progress = 1f;
+            }
         }
 
         public void Update(TimeSpan elapsedTime)
         {
             if (!_isTransitioning) return;
 
-            if (_delayRemaining > 0)
-            {
-                double consume = Math.Min(_delayRemaining, elapsedTime.TotalSeconds);
-                _delayRemaining -= consume;
-                if (_delayRemaining > 0)
-                    return;
-                elapsedTime = TimeSpan.FromSeconds(elapsedTime.TotalSeconds - consume);
-            }
+            double timeStep = elapsedTime.TotalSeconds;
 
-            if (_durationSeconds <= 0)
+            // 使用 while 处理单帧时间过长跨越多段的情况
+            while (timeStep > 0 && _isTransitioning)
             {
-                _progress = 1f;
-            }
-            else
-            {
-                _progress += elapsedTime.TotalSeconds / _durationSeconds;
-            }
+                // 计算当前帧的步进比例
+                // 极小值保护，防止除以0
+                double progressDelta = (_stepDuration > 0.000001) ? (timeStep / _stepDuration) : 1.0;
 
-            if (_progress >= 1f)
-            {
-                _progress = 1f;
-                _currentValue = _targetValue;
-                _isTransitioning = false;
-            }
-            else
-            {
-                _currentValue = _interpolator(_startValue, _targetValue, _progress);
+                if (_progress + progressDelta >= 1.0)
+                {
+                    // === 当前段结束 ===
+
+                    // 1. 计算这一段实际消耗的时间
+                    double timeConsumed = (1.0 - _progress) * _stepDuration;
+
+                    // 2. 剩余时间留给下一段
+                    timeStep -= timeConsumed;
+
+                    // 3. 修正当前值到目标值
+                    _progress = 1.0;
+                    _currentValue = _targetValue;
+
+                    // 4. 切换到下一段
+                    MoveToNextSegment();
+
+                    // 5. 如果还有下一段，进度归零
+                    if (_isTransitioning) _progress = 0f;
+                }
+                else
+                {
+                    // === 当前段进行中 ===
+                    _progress += progressDelta;
+                    timeStep = 0; // 时间耗尽
+
+                    // 插值计算
+                    _currentValue = _interpolator(_startValue, _targetValue, _progress);
+                }
             }
         }
 
-        private Func<T, T, double, T> GetInterpolatorByEasingType(EasingType? type)
+        #endregion
+
+        #region Interpolators
+
+        private Func<T, T, double, T> GetInterpolatorByEasingType(Enums.EasingType? type)
         {
             if (typeof(T) == typeof(double))
             {
@@ -166,58 +255,32 @@ namespace BetterLyrics.WinUI3.Helper
                     double s = (double)(object)start;
                     double e = (double)(object)end;
                     double t = progress;
+
+                    // 使用 EasingHelper (假设您的项目中已有此辅助类)
                     switch (type)
                     {
-                        case Enums.EasingType.EaseInOutSine:
-                            t = EasingHelper.EaseInOutSine(t);
-                            break;
-                        case Enums.EasingType.EaseInOutQuad:
-                            t = EasingHelper.EaseInOutQuad(t);
-                            break;
-                        case Enums.EasingType.EaseInOutCubic:
-                            t = EasingHelper.EaseInOutCubic(t);
-                            break;
-                        case Enums.EasingType.EaseInOutQuart:
-                            t = EasingHelper.EaseInOutQuart(t);
-                            break;
-                        case Enums.EasingType.EaseInOutQuint:
-                            t = EasingHelper.EaseInOutQuint(t);
-                            break;
-                        case Enums.EasingType.EaseInOutExpo:
-                            t = EasingHelper.EaseInOutExpo(t);
-                            break;
-                        case Enums.EasingType.EaseInOutCirc:
-                            t = EasingHelper.EaseInOutCirc(t);
-                            break;
-                        case Enums.EasingType.EaseInOutBack:
-                            t = EasingHelper.EaseInOutBack(t);
-                            break;
-                        case Enums.EasingType.EaseInOutElastic:
-                            t = EasingHelper.EaseInOutElastic(t);
-                            break;
-                        case Enums.EasingType.EaseInOutBounce:
-                            t = EasingHelper.EaseInOutBounce(t);
-                            break;
-                        case Enums.EasingType.SmoothStep:
-                            t = EasingHelper.SmoothStep(t);
-                            break;
-                        case Enums.EasingType.Linear:
-                            t = EasingHelper.Linear(t);
-                            break;
-                        default:
-                            t = EasingHelper.EaseInOutQuad(t);
-                            break;
+                        case Enums.EasingType.EaseInOutSine: t = EasingHelper.EaseInOutSine(t); break;
+                        case Enums.EasingType.EaseInOutQuad: t = EasingHelper.EaseInOutQuad(t); break;
+                        case Enums.EasingType.EaseInOutCubic: t = EasingHelper.EaseInOutCubic(t); break;
+                        case Enums.EasingType.EaseInOutQuart: t = EasingHelper.EaseInOutQuart(t); break;
+                        case Enums.EasingType.EaseInOutQuint: t = EasingHelper.EaseInOutQuint(t); break;
+                        case Enums.EasingType.EaseInOutExpo: t = EasingHelper.EaseInOutExpo(t); break;
+                        case Enums.EasingType.EaseInOutCirc: t = EasingHelper.EaseInOutCirc(t); break;
+                        case Enums.EasingType.EaseInOutBack: t = EasingHelper.EaseInOutBack(t); break;
+                        case Enums.EasingType.EaseInOutElastic: t = EasingHelper.EaseInOutElastic(t); break;
+                        case Enums.EasingType.EaseInOutBounce: t = EasingHelper.EaseInOutBounce(t); break;
+                        case Enums.EasingType.SmoothStep: t = EasingHelper.SmoothStep(t); break;
+                        case Enums.EasingType.Linear: t = EasingHelper.Linear(t); break;
+                        default: t = EasingHelper.EaseInOutQuad(t); break;
                     }
+
                     return (T)(object)(s + (e - s) * t);
                 };
             }
-            throw new NotSupportedException($"Easing type {type} is not supported for type {typeof(T)}.");
+
+            throw new NotSupportedException($"Type {typeof(T)} is not supported.");
         }
 
-        public void SetEasingType(EasingType? easingType)
-        {
-            _easingType = easingType;
-            _interpolator = GetInterpolatorByEasingType(easingType);
-        }
+        #endregion
     }
 }

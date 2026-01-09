@@ -2,27 +2,35 @@
 using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.LyricsCacheService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Data.Sqlite;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Threading.Tasks;
+using Windows.Storage;
+using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class AboutControlViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
+        private readonly ILyricsCacheService _lyricsCacheService;
 
         [ObservableProperty]
         public partial AppSettings AppSettings { get; set; }
 
-        public AboutControlViewModel(ISettingsService settingsService)
+        public AboutControlViewModel(ISettingsService settingsService, ILyricsCacheService lyricsCacheService)
         {
             _settingsService = settingsService;
+            _lyricsCacheService = lyricsCacheService;
             AppSettings = _settingsService.AppSettings;
         }
 
@@ -47,18 +55,34 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task ImportSettingsAsync()
         {
-            var file = await PickerHelper.PickSingleFileAsync<SettingsWindow>([".json"]);
+            var file = await PickerHelper.PickSingleFileAsync<SettingsWindow>([".zip"]);
 
             if (file != null)
             {
-                var succeed = _settingsService.ImportSettings(file.Path);
-                if (succeed)
+                try
                 {
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+
+                    SqliteConnection.ClearAllPools();
+
+                    string tempExtractPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+                    Directory.CreateDirectory(tempExtractPath);
+
+                    using (var stream = await file.OpenStreamForReadAsync())
+                    {
+                        ZipFile.ExtractToDirectory(stream, tempExtractPath);
+                    }
+
+                    DirectoryHelper.CopyDirectory(tempExtractPath, PathHelper.LocalFolder, true);
+
+                    Directory.Delete(tempExtractPath, true);
+
                     WindowHook.RestartApp();
                 }
-                else
+                catch (Exception ex)
                 {
-                    ToastHelper.ShowToast("ImportSettingsFailed", null, InfoBarSeverity.Error);
+                    ToastHelper.ShowToast("ImportSettingsFailed", ex.Message, InfoBarSeverity.Error);
                 }
             }
         }
@@ -66,31 +90,49 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task ExportSettingsAsync()
         {
-            var folder = await PickerHelper.PickSingleFolderAsync<SettingsWindow>();
-
-            if (folder != null)
+            try
             {
-                _settingsService.ExportSettings(folder.Path);
+                var suggestedFileName = $"{Constants.App.AppName}_{_settingsService.AppSettings.Version}_{DateTime.Now:yyyyMMdd_HHmmss}";
+                IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
+                {
+                    { "Zip Archive", new List<string>() { ".zip" } }
+                };
+
+                var destinationFile = await PickerHelper.PickSaveFileAsync<SettingsWindow>(fileTypeChoices, suggestedFileName);
+                if (destinationFile == null) return;
+
+                string tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+                Directory.CreateDirectory(tempDir);
+
+                DirectoryHelper.CopyDirectory(PathHelper.LocalFolder, tempDir, true);
+
+                string tempZipPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".zip");
+
+                ZipFile.CreateFromDirectory(tempDir, tempZipPath);
+
+                using (var sourceStream = File.OpenRead(tempZipPath))
+                using (var destStream = await destinationFile.OpenStreamForWriteAsync())
+                {
+                    sourceStream.CopyTo(destStream);
+                    destStream.SetLength(sourceStream.Length);
+                }
+
+                Directory.Delete(tempDir, true);
+                File.Delete(tempZipPath);
+
                 ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
+            }
+            catch (Exception ex)
+            {
+                ToastHelper.ShowToast("Error", ex.Message, InfoBarSeverity.Error);
             }
         }
 
         [RelayCommand]
-        private async Task ExportPlayHistoryAsync()
+        private async Task ClearCacheFilesAsync()
         {
-            var folder = await PickerHelper.PickSingleFolderAsync<SettingsWindow>();
+            await _lyricsCacheService.ClearCacheAsync();
 
-            if (folder != null)
-            {
-                var dest = Path.Combine(folder.Path, $"BetterLyrics_Play_History_Export_{DateTime.Now:yyyyMMdd_HHmmss}.db");
-                await FileHelper.CopyFileAsync(PathHelper.PlayHistoryPath, dest);
-                ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
-            }
-        }
-
-        [RelayCommand]
-        private void ClearCacheFiles()
-        {
             DirectoryHelper.DeleteAllFiles(PathHelper.LogDirectory);
             DirectoryHelper.DeleteAllFiles(PathHelper.LyricsCacheDirectory);
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);

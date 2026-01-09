@@ -6,6 +6,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     {
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial WordByWordEffectMode WordByWordEffectMode { get; set; } = WordByWordEffectMode.Auto;
+     
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsBlurEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFadeOutEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsOutOfSightEffectEnabled { get; set; } = true;
@@ -54,6 +56,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
         {
             return new LyricsEffectSettings(this.LyricsScrollTopDuration, this.LyricsScrollDuration, this.LyricsScrollBottomDuration, this.LyricsScrollEasingType)
             {
+                WordByWordEffectMode = this.WordByWordEffectMode,
+
                 IsLyricsBlurEffectEnabled = this.IsLyricsBlurEffectEnabled,
                 IsLyricsFadeOutEffectEnabled = this.IsLyricsFadeOutEffectEnabled,
                 IsLyricsOutOfSightEffectEnabled = this.IsLyricsOutOfSightEffectEnabled,

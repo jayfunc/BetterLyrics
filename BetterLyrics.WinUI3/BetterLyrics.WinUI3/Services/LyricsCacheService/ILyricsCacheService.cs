@@ -8,5 +8,6 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
     {
         Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider);
         Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result);
+        Task ClearCacheAsync();
     }
 }

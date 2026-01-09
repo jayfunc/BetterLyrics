@@ -5,6 +5,7 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -77,47 +78,47 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         {
             AngleTransition = new(
                 initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutSine
+                defaultTotalDuration: AnimationDuration,
+                defaultEasingType: EasingType.EaseInOutSine
             );
             BlurAmountTransition = new(
                  initialValue: 0,
-                 durationSeconds: AnimationDuration,
-                 easingType: EasingType.EaseInOutSine
+                 defaultTotalDuration: AnimationDuration,
+                 defaultEasingType: EasingType.EaseInOutSine
              );
             PhoneticOpacityTransition = new(
                 initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutSine
+                defaultTotalDuration: AnimationDuration,
+                defaultEasingType: EasingType.EaseInOutSine
             );
             PlayedOriginalOpacityTransition = new(
                 initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutSine
+                defaultTotalDuration: AnimationDuration,
+                defaultEasingType: EasingType.EaseInOutSine
             );
             UnplayedOriginalOpacityTransition = new(
                 initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutSine
+                defaultTotalDuration: AnimationDuration,
+                defaultEasingType: EasingType.EaseInOutSine
             );
             TranslatedOpacityTransition = new(
                 initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutSine
+                defaultTotalDuration: AnimationDuration,
+                defaultEasingType: EasingType.EaseInOutSine
             );
             ScaleTransition = new(
                 initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutSine
+                defaultTotalDuration: AnimationDuration,
+                defaultEasingType: EasingType.EaseInOutSine
             );
             YOffsetTransition = new(
                 initialValue: 0,
-                durationSeconds: AnimationDuration,
-                easingType: EasingType.EaseInOutSine
+                defaultTotalDuration: AnimationDuration,
+                defaultEasingType: EasingType.EaseInOutSine
             );
             ColorTransition = new(
                 initialValue: Colors.Transparent,
-                durationSeconds: 0.3f,
+                defaultTotalDuration: 0.3f,
                 interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
             );
 
@@ -280,6 +281,19 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
                 PrimaryRenderChars.Add(renderLyricsChar);
             }
+        }
+
+        public void Update(TimeSpan elapsedTime)
+        {
+            AngleTransition.Update(elapsedTime);
+            ScaleTransition.Update(elapsedTime);
+            BlurAmountTransition.Update(elapsedTime);
+            PhoneticOpacityTransition.Update(elapsedTime);
+            PlayedOriginalOpacityTransition.Update(elapsedTime);
+            UnplayedOriginalOpacityTransition.Update(elapsedTime);
+            TranslatedOpacityTransition.Update(elapsedTime);
+            YOffsetTransition.Update(elapsedTime);
+            ColorTransition.Update(elapsedTime);
         }
 
     }
