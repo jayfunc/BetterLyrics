@@ -40,17 +40,6 @@ namespace BetterLyrics.WinUI3.Helper
             _targetValue = initialValue;
             _totalDurationForAutoSplit = defaultTotalDuration;
 
-            if (interpolator == null)
-            {
-                // 默认缓动
-                SetEasingType(Enums.EasingType.EaseInOutQuad);
-            }
-            else
-            {
-                _easingType = null;
-                _interpolator = interpolator;
-            }
-
             if (interpolator != null)
             {
                 _interpolator = interpolator;
