@@ -206,7 +206,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         private void InitMediaManager()
         {
             _mediaManager.Start();
-
             _mediaManager.CurrentMediaSessions.ToList().ForEach(x => RecordMediaSession(x.Value.Id));
 
             _mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;

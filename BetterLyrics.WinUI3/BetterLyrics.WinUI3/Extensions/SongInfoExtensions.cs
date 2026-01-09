@@ -36,6 +36,12 @@ namespace BetterLyrics.WinUI3.Extensions
                 return songInfo;
             }
 
+            public SongInfo WithSongId(string value)
+            {
+                songInfo.SongId = value;
+                return songInfo;
+            }
+
             public PlayHistoryItem? ToPlayHistoryItem(double actualPlayedMs)
             {
                 if (songInfo == null) return null;
