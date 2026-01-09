@@ -244,7 +244,7 @@
     <value>Contoh: http://localhost:5000</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>Durasi</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Memuat lirik...</value>
@@ -1138,16 +1138,16 @@
     <value>Pintasan Pengalih Status Jendela Lirik</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>Word-by-word Animation Strategy</value>
+    <value>Strategi Animasi Kata per Kata</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>Always</value>
+    <value>Selalu</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Auto</value>
+    <value>Otomatis</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>Tidak pernah</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>Menyesuaikan nilai ini akan memengaruhi hasil pencarian berurutan dan pencarian kecocokan terbaik, tetapi tidak akan memengaruhi hasil pencarian di antarmuka pencarian manual lirik</value>
@@ -1478,6 +1478,9 @@
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>Aktivitas per Jam</value>
+  </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>Semua Waktu</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>Kustom</value>

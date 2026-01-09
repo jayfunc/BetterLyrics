@@ -186,6 +186,9 @@ namespace BetterLyrics.WinUI3.ViewModels
                 case StatsRange.ThisYear:
                     startLocal = new DateTime(nowLocal.Year, 1, 1);
                     break;
+                case StatsRange.AllTime:
+                    startLocal = DateTime.MinValue;
+                    break;
             }
 
             CustomStartDate = startLocal.Date;

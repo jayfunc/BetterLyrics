@@ -244,7 +244,7 @@
     <value>उदाहरण http://localhost:5000</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>समयांतराल</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>बोल लोड हो रहे हैं...</value>
@@ -1138,16 +1138,16 @@
     <value>बोल विंडो स्थिति स्विच शॉर्टकट</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>Word-by-word Animation Strategy</value>
+    <value>शब्द-दर-शब्द एनिमेशन रणनीति</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>Always</value>
+    <value>हमेशा</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Auto</value>
+    <value>स्वतः</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>कभी नहीं</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>इस मान को समायोजित करने से अनुक्रमिक खोज और सर्वोत्तम मिलान खोज परिणाम प्रभावित होंगे, लेकिन मैनुअल बोल खोज इंटरफ़ेस में खोज परिणाम प्रभावित नहीं होंगे</value>
@@ -1478,6 +1478,9 @@
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>घंटे के हिसाब से गतिविधि</value>
+  </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>अब तक के सारे</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>कस्टम</value>

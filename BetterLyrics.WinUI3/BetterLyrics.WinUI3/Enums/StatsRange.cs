@@ -7,6 +7,7 @@
         ThisMonth,
         ThisQuarter,
         ThisYear,
+        AllTime,
         Custom
     }
 }

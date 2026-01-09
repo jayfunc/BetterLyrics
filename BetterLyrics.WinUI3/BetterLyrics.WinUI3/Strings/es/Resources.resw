@@ -244,7 +244,7 @@
     <value>ej. http://localhost:5000</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>Duración</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Cargando letra...</value>
@@ -1138,16 +1138,16 @@
     <value>Atajo de cambio de estado de ventana de letras</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>Word-by-word Animation Strategy</value>
+    <value>Estrategia de animación palabra por palabra</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>Always</value>
+    <value>Siempre</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
     <value>Auto</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>Nunca</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>Ajustar este valor afectará a la búsqueda secuencial y a los resultados de la búsqueda de mejor coincidencia, pero no afectará a los resultados de búsqueda en la interfaz de búsqueda manual de letras</value>
@@ -1478,6 +1478,9 @@
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>Actividad por horas</value>
+  </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>Todos los tiempos</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>A medida</value>

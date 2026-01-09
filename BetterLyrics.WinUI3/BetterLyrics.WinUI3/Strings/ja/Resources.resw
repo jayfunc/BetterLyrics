@@ -1051,7 +1051,7 @@
     <value>カスタム</value>
   </data>
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>フォントファミリー</value>
+    <value>フォント</value>
   </data>
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>フォントサイズ</value>
@@ -1479,6 +1479,9 @@
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>アクティブ時間帯</value>
   </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>すべての時間</value>
+  </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>カスタム</value>
   </data>
@@ -1492,7 +1495,7 @@
     <value>最多アクティブ</value>
   </data>
   <data name="StatsDashboardControlRecording.Title" xml:space="preserve">
-    <value>再生記録中...</value>
+    <value>再生履歴記録中...</value>
   </data>
   <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>再生ソース</value>

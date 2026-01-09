@@ -244,7 +244,7 @@
     <value>ตัวอย่าง http://localhost:5000</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>ระยะเวลา</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>กำลังโหลดเนื้อเพลง...</value>
@@ -1138,16 +1138,16 @@
     <value>ทางลัดสลับสถานะหน้าต่างเนื้อเพลง</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>Word-by-word Animation Strategy</value>
+    <value>กลยุทธ์การสร้างแอนิเมชันแบบคำต่อคำ</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>Always</value>
+    <value>เสมอ</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Auto</value>
+    <value>ออโต้</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>ไม่เคย</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>การปรับค่านี้จะมีผลกับผลการค้นหาแบบตามลำดับและแบบตรงกันที่สุด แต่จะไม่มีผลกับผลการค้นหาในหน้าค้นหาเนื้อเพลงด้วยตนเอง</value>
@@ -1478,6 +1478,9 @@
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>กิจกรรมตามชั่วโมง</value>
+  </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>ตลอดเวลา</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>กำหนดเอง</value>

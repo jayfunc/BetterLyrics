@@ -244,7 +244,7 @@
     <value>Ví dụ: http://localhost:5000</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>Thời gian</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Đang tải lời bài hát...</value>
@@ -1138,16 +1138,16 @@
     <value>Phím tắt chuyển trạng thái cửa sổ lời bài hát</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>Word-by-word Animation Strategy</value>
+    <value>Chiến lược hoạt hình từng từ</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>Always</value>
+    <value>Luôn luôn</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Auto</value>
+    <value>Tự động</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>Không bao giờ</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>Điều chỉnh giá trị này sẽ ảnh hưởng đến kết quả tìm kiếm tuần tự và khớp nhất, nhưng sẽ không ảnh hưởng đến kết quả tìm kiếm trong giao diện tìm kiếm lời bài hát thủ công</value>
@@ -1478,6 +1478,9 @@
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>Hoạt động theo giờ</value>
+  </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>Mọi thời đại</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>Tùy chỉnh</value>

@@ -1479,6 +1479,9 @@
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>Activity by Hour</value>
   </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>All Time</value>
+  </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>Custom</value>
   </data>
