@@ -1480,7 +1480,7 @@
     <value>アクティブ時間帯</value>
   </data>
   <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
-    <value>すべての時間</value>
+    <value>全期間</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>カスタム</value>
