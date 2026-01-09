@@ -244,7 +244,7 @@
     <value>Contoh: http://localhost:5000</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>Durasi</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Memuatkan lirik...</value>
@@ -1138,16 +1138,16 @@
     <value>Pintasan Tukar Status Tetingkap Lirik</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>Word-by-word Animation Strategy</value>
+    <value>Strategi Animasi Perkataan demi Perkataan</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>Always</value>
+    <value>Sentiasa</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Auto</value>
+    <value>Automatik</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>Tak pernah</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>Melaraskan nilai ini akan mempengaruhi hasil carian jujukan dan carian padanan terbaik, tetapi tidak akan mempengaruhi hasil carian dalam antara muka carian lirik manual</value>
@@ -1478,6 +1478,9 @@
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>Aktiviti mengikut Jam</value>
+  </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>Semua</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>Tersuai</value>

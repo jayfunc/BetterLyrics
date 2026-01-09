@@ -74,6 +74,7 @@
                 <ComboBoxItem x:Uid="StatsDashboardControlThisMonth" />
                 <ComboBoxItem x:Uid="StatsDashboardControlThisQuarter" />
                 <ComboBoxItem x:Uid="StatsDashboardControlThisYear" />
+                <ComboBoxItem x:Uid="StatsDashboardControlAllTime" />
                 <ComboBoxItem x:Uid="StatsDashboardControlCustom" />
             </ComboBox>
 

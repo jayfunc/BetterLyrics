@@ -244,7 +244,7 @@
     <value>예: http://localhost:5000</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
-    <value>Duration</value>
+    <value>기간</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>가사 불러오는 중...</value>
@@ -1138,16 +1138,16 @@
     <value>가사 창 상태 전환 단축키</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>Word-by-word Animation Strategy</value>
+    <value>단어별 애니메이션 전략</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>Always</value>
+    <value>항상</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Auto</value>
+    <value>자동</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>Never</value>
+    <value>절대로</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>이 값을 조정하면 순차 검색 및 최적 일치 검색 결과에 영향을 미치지만 수동 가사 검색 인터페이스의 검색 결과에는 영향을 미치지 않습니다</value>
@@ -1478,6 +1478,9 @@
   </data>
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>시간별 활동</value>
+  </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>모든 시간</value>
   </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>사용자 지정</value>

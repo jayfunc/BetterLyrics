@@ -1479,6 +1479,9 @@
   <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>活跃时段</value>
   </data>
+  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <value>全部时间</value>
+  </data>
   <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>自定义</value>
   </data>
