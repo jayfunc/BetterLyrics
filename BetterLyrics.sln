@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.36105.23
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "BetterLyrics.WinUI3 (Package)", "BetterLyrics.WinUI3\BetterLyrics.WinUI3 (Package)\BetterLyrics.WinUI3 (Package).wapproj", "{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Impressionist", "Impressionist\Impressionist\Impressionist.csproj", "{A678BCA5-03DE-71E4-73C1-388B7550E4E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorThief.WinUI3", "ColorThief.WinUI3\ColorThief.WinUI3.csproj", "{8F2FE667-2D91-428E-0630-05E6330F9625}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Core", "BetterLyrics.Core\BetterLyrics.Core.csproj", "{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,18 @@ Global
 		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|x64.Build.0 = Release|Any CPU
 		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|x86.ActiveCfg = Release|Any CPU
 		{8F2FE667-2D91-428E-0630-05E6330F9625}.Release|x86.Build.0 = Release|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Debug|x64.Build.0 = Debug|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Debug|x86.Build.0 = Debug|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|ARM64.Build.0 = Release|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x64.ActiveCfg = Release|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x64.Build.0 = Release|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x86.ActiveCfg = Release|Any CPU
+		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

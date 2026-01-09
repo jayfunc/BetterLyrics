@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     }
                 }
 
-                if (syllables.Count > 0)
+                if (syllables.Count > 1)
                 {
                     lrcLines.Add(new LyricsLine
                     {

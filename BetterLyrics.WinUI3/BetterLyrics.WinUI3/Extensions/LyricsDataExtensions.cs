@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,22 @@ namespace BetterLyrics.WinUI3.Extensions
                             StartMs = 0,
                             EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
                             PrimaryText = "● ● ●",
+                            PrimarySyllables = [new BaseLyrics { Text = "● ● ●", StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }],
                         },
                     ],
                     LanguageCode = "N/A",
                 };
+            }
+
+            public static LyricsData GetNotfoundPlaceholder()
+            {
+                return new LyricsData([new LyricsLine
+                {
+                    StartMs = 0,
+                    EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
+                    PrimaryText = "N/A",
+                    PrimarySyllables = [new BaseLyrics { Text = "N/A", StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }],
+                }]);
             }
 
             public void SetTranslatedText(LyricsData translationData, int toleranceMs = 50)

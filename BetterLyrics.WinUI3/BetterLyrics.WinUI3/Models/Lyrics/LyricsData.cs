@@ -9,8 +9,6 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 {
     public class LyricsData
     {
-        private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
-
         public List<LyricsLine> LyricsLines { get; set; } = [];
         public string? LanguageCode
         {
@@ -27,16 +25,6 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public LyricsData(List<LyricsLine> lyricsLines)
         {
             LyricsLines = lyricsLines;
-        }
-
-        public static LyricsData GetNotfoundPlaceholder()
-        {
-            return new LyricsData([new LyricsLine
-            {
-                StartMs = 0,
-                EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                PrimaryText = _localizationService.GetLocalizedString("LyricsNotFound"),
-            }]);
         }
 
     }
