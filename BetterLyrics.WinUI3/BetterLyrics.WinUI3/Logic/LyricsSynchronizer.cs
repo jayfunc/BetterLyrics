@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using System;
 using System.Collections.Generic;
@@ -67,7 +68,7 @@ namespace BetterLyrics.WinUI3.Logic
         public LinePlaybackState GetLinePlayingProgress(
             double currentTimeMs,
             RenderLyricsLine line,
-            bool isForceWordByWord)
+            WordByWordEffectMode wordByWordEffectMode)
         {
             var state = new LinePlaybackState { SyllableStartIndex = 0, SyllableLength = 0, SyllableProgress = 0 };
 
@@ -87,23 +88,34 @@ namespace BetterLyrics.WinUI3.Logic
                 return state;
             }
 
-            // 逐字
-            if (line.PrimaryRenderSyllables != null && line.PrimaryRenderSyllables.Count > 1)
+            switch (wordByWordEffectMode)
             {
-                return CalculateSyllableProgress(currentTimeMs, line, lineEndMs);
-            }
-
-            // 强制逐字
-            if (isForceWordByWord && line.PrimaryText.Length > 0)
-            {
-                return CalculateSimulatedProgress(currentTimeMs, line, lineEndMs);
-            }
-            else
-            {
-                // 普通行
-                state.SyllableStartIndex = line.PrimaryText.Length;
-                state.SyllableProgress = 1f;
-                return state;
+                case WordByWordEffectMode.Auto:
+                    if (line.PrimaryRenderSyllables.Count > 1)
+                    {
+                        return CalculateSyllableProgress(currentTimeMs, line, lineEndMs);
+                    }
+                    else
+                    {
+                        state.SyllableStartIndex = line.PrimaryText.Length;
+                        state.SyllableProgress = 1f;
+                        return state;
+                    }
+                case WordByWordEffectMode.Never:
+                    state.SyllableStartIndex = line.PrimaryText.Length;
+                    state.SyllableProgress = 1f;
+                    return state;
+                case WordByWordEffectMode.Always:
+                    if (line.PrimaryRenderSyllables.Count > 1)
+                    {
+                        return CalculateSyllableProgress(currentTimeMs, line, lineEndMs);
+                    }
+                    else
+                    {
+                        return CalculateSimulatedProgress(currentTimeMs, line, lineEndMs);
+                    }
+                default:
+                    return state;
             }
         }
 

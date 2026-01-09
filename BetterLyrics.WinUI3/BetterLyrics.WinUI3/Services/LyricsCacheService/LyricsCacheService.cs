@@ -69,5 +69,13 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
             await context.SaveChangesAsync();
         }
 
+        public async Task ClearCacheAsync()
+        {
+            using var context = await _contextFactory.CreateDbContextAsync();
+
+            await context.LyricsCache.ExecuteDeleteAsync();
+            await context.Database.ExecuteSqlRawAsync("VACUUM;");
+        }
+
     }
 }

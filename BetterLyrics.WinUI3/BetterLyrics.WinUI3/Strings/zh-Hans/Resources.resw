@@ -891,12 +891,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>强制置于顶层</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>即使当前歌词没有逐字信息，仍强制模拟逐字效果</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>强制启用逐字歌词效果</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>渲染帧率</value>
   </data>
@@ -1142,6 +1136,15 @@
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>歌词窗口状态切换快捷键</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value />
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>调整此值将影响顺序搜索和最佳匹配搜索结果，但不会影响手动歌词搜索界面中的搜索结果</value>

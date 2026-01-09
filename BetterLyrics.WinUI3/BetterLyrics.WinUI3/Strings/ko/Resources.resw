@@ -888,12 +888,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>항상 위에 표시 강제</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>현재 가사에 글자 단위 정보가 없더라도 글자 단위 시뮬레이션을 강제합니다</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>단어 단위 효과 강제 적용</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>렌더링 FPS</value>
   </data>
@@ -1574,5 +1568,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>사용자 가이드</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value />
   </data>
 </root>

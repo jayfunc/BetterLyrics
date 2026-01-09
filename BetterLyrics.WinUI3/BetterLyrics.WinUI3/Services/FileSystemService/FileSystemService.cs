@@ -251,11 +251,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                         .Where(x => x.MediaFolderId == folder.Id)
                         .ExecuteDeleteAsync();
 
-                    // VACUUM 是 SQLite 特有的命令
-                    if (context.Database.IsSqlite())
-                    {
-                        await context.Database.ExecuteSqlRawAsync("VACUUM");
-                    }
+                    await context.Database.ExecuteSqlRawAsync("VACUUM");
                 }
                 finally
                 {

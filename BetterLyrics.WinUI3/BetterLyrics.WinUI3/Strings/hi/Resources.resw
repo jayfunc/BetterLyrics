@@ -888,12 +888,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>हमेशा शीर्ष पर रखने के लिए बाध्य करें</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>शब्द-दर-शब्द प्रभाव का अनुकरण करने के लिए बाध्य करें, भले ही वर्तमान बोल में शब्द-दर-शब्द जानकारी न हो</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>शब्द-दर-शब्द प्रभाव सक्षम करने के लिए बाध्य करें</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>रेंडरिंग फ्रेम दर</value>
   </data>
@@ -1574,5 +1568,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>उपयोगकर्ता गाइड</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value />
   </data>
 </root>

@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
         public CoverBackgroundRenderer()
         {
-            _crossfadeTransition = new ValueTransition<double>(1.0, 0.7, easingType: EasingType.Linear);
+            _crossfadeTransition = new ValueTransition<double>(1.0, 0.7, defaultEasingType: EasingType.Linear);
         }
 
         public void SetCoverBitmap(CanvasBitmap? newBitmap)
@@ -73,18 +73,18 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (_currentBitmap == null)
             {
-                _crossfadeTransition.StartTransition(1.0, jumpTo: true);
+                _crossfadeTransition.JumpTo(1.0);
             }
             else
             {
                 if (_previousBitmap == null)
                 {
-                    _crossfadeTransition.StartTransition(1.0, jumpTo: true);
+                    _crossfadeTransition.JumpTo(1.0);
                 }
                 else
                 {
-                    _crossfadeTransition.Reset(0.0);
-                    _crossfadeTransition.StartTransition(1.0);
+                    _crossfadeTransition.JumpTo(0.0);
+                    _crossfadeTransition.Start(1.0);
                 }
             }
 

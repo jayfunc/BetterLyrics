@@ -888,12 +888,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>Paksa Selalu di Atas</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>Paksa simulasi efek kata-demi-kata meskipun lirik saat ini tidak memiliki informasi kata-demi-kata</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>Paksa Aktifkan Efek Kata-demi-Kata</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>Frame Rate Rendering</value>
   </data>
@@ -1574,5 +1568,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>Panduan Pengguna</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value />
   </data>
 </root>

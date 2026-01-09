@@ -23,6 +23,14 @@
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                         Text="Effect" />
 
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsWordByWordEffectMode" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF714;}">
+                        <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.WordByWordEffectMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeAuto" />
+                            <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeNever" />
+                            <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeAlways" />
+                        </ComboBox>
+                    </dev:SettingsCard>
+
                     <!--  模糊效果  -->
                     <dev:SettingsCard x:Uid="SettingsPageLyricsBlurEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBlurEffectEnabled, Mode=TwoWay}" />

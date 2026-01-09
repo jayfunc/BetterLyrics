@@ -888,12 +888,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>فرض البقاء في المقدمة</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>فرض محاكاة تأثير كلمة بكلمة حتى إذا كانت الكلمات الحالية لا تحتوي على معلومات كلمة بكلمة</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>فرض تفعيل تأثير الكلمات كلمة بكلمة</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>معدل إطارات التصيير (FPS)</value>
   </data>
@@ -1574,5 +1568,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>دليل المستخدم</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value />
   </data>
 </root>

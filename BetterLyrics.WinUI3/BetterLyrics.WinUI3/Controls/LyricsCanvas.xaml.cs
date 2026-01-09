@@ -58,42 +58,42 @@ namespace BetterLyrics.WinUI3.Controls
 
         private readonly ValueTransition<Color> _immersiveBgColorTransition = new(
             initialValue: Colors.Transparent,
-            durationSeconds: 0.3f,
+            defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<double> _immersiveBgOpacityTransition = new(
             initialValue: 1f,
-            durationSeconds: 0.3f
+            defaultTotalDuration: 0.3f
         );
         private readonly ValueTransition<Color> _accentColor1Transition = new(
             initialValue: Colors.Transparent,
-            durationSeconds: 0.3f,
+            defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<Color> _accentColor2Transition = new(
             initialValue: Colors.Transparent,
-            durationSeconds: 0.3f,
+            defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<Color> _accentColor3Transition = new(
             initialValue: Colors.Transparent,
-            durationSeconds: 0.3f,
+            defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<Color> _accentColor4Transition = new(
             initialValue: Colors.Transparent,
-            durationSeconds: 0.3f,
+            defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<double> _canvasYScrollTransition = new(
             initialValue: 0f,
-            durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutSine
+            defaultTotalDuration: 0.3f,
+            defaultEasingType: EasingType.EaseInOutSine
         );
         private readonly ValueTransition<double> _mouseYScrollTransition = new(
             initialValue: 0f,
-            durationSeconds: 0.3f,
-            easingType: EasingType.EaseInOutSine
+            defaultTotalDuration: 0.3f,
+            defaultEasingType: EasingType.EaseInOutSine
         );
 
         private TimeSpan _songPositionWithOffset;
@@ -292,7 +292,7 @@ namespace BetterLyrics.WinUI3.Controls
                 }
                 else if (e.Property == MouseScrollOffsetProperty)
                 {
-                    canvas._mouseYScrollTransition.StartTransition(Convert.ToDouble(e.NewValue));
+                    canvas._mouseYScrollTransition.Start(Convert.ToDouble(e.NewValue));
                 }
                 else if (e.Property == MousePositionProperty)
                 {
@@ -318,11 +318,11 @@ namespace BetterLyrics.WinUI3.Controls
                 else if (e.Property == AlbumArtThemeColorsProperty)
                 {
                     var albumArtThemeColors = (AlbumArtThemeColors)e.NewValue;
-                    canvas._immersiveBgColorTransition.StartTransition(albumArtThemeColors.EnvColor);
-                    canvas._accentColor1Transition.StartTransition(albumArtThemeColors.AccentColor1);
-                    canvas._accentColor2Transition.StartTransition(albumArtThemeColors.AccentColor2);
-                    canvas._accentColor3Transition.StartTransition(albumArtThemeColors.AccentColor3);
-                    canvas._accentColor4Transition.StartTransition(albumArtThemeColors.AccentColor4);
+                    canvas._immersiveBgColorTransition.Start(albumArtThemeColors.EnvColor);
+                    canvas._accentColor1Transition.Start(albumArtThemeColors.AccentColor1);
+                    canvas._accentColor2Transition.Start(albumArtThemeColors.AccentColor2);
+                    canvas._accentColor3Transition.Start(albumArtThemeColors.AccentColor3);
+                    canvas._accentColor4Transition.Start(albumArtThemeColors.AccentColor4);
 
                     canvas._albumArtThemeColors = albumArtThemeColors;
                     canvas._isLayoutChanged = true;
@@ -344,7 +344,6 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsEffect = _lyricsWindowStatus.LyricsEffectSettings;
 
             double songDuration = _gsmtcService.CurrentSongInfo.DurationMs;
-            bool isForceWordByWord = _settingsService.AppSettings.GeneralSettings.IsForceWordByWordEffect;
 
             Color overlayColor;
             double finalOpacity;
@@ -410,7 +409,7 @@ namespace BetterLyrics.WinUI3.Controls
                     return _synchronizer.GetLinePlayingProgress(
                         _songPositionWithOffset.TotalMilliseconds,
                         line,
-                        isForceWordByWord
+                        lyricsEffect.WordByWordEffectMode
                     );
                 }
             );
@@ -486,9 +485,16 @@ namespace BetterLyrics.WinUI3.Controls
                 var targetScroll = LyricsLayoutManager.CalculateTargetScrollOffset(_renderLyricsLines, _primaryPlayingLineIndex);
                 if (targetScroll.HasValue) _canvasTargetScrollOffset = targetScroll.Value;
 
-                _canvasYScrollTransition.SetEasingType(lyricsEffect.LyricsScrollEasingType);
-                _canvasYScrollTransition.SetDuration(lyricsEffect.LyricsScrollDuration / 1000.0);
-                _canvasYScrollTransition.StartTransition(_canvasTargetScrollOffset, _isLayoutChanged);
+                if (_isLayoutChanged)
+                {
+                    _canvasYScrollTransition.JumpTo(_canvasTargetScrollOffset);
+                }
+                else
+                {
+                    _canvasYScrollTransition.SetDurationMs(lyricsEffect.LyricsScrollDuration);
+                    _canvasYScrollTransition.SetEasingType(lyricsEffect.LyricsScrollEasingType);
+                    _canvasYScrollTransition.Start(_canvasTargetScrollOffset);
+                }
             }
             _canvasYScrollTransition.Update(elapsedTime);
 

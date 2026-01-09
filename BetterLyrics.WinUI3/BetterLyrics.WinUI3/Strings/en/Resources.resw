@@ -891,12 +891,6 @@
   <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>Force Always on Top</value>
   </data>
-  <data name="SettingsPageForceWordByWordEffect.Description" xml:space="preserve">
-    <value>Force word-by-word simulation even if current lyrics don't have word-by-word info</value>
-  </data>
-  <data name="SettingsPageForceWordByWordEffect.Header" xml:space="preserve">
-    <value>Force Word-by-Word Effect</value>
-  </data>
   <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>Render FPS</value>
   </data>
@@ -1142,6 +1136,18 @@
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>Lyrics Window Status Switch Shortcut</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <value>Word-by-word Animation Strategy</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <value>Always</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <value>Never</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>Adjusting this value will affect sequential search and best match search results, but will not affect search results in the manual lyrics search interface</value>

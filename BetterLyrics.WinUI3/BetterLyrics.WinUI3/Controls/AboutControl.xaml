@@ -282,12 +282,6 @@
                         </dev:SettingsExpander.ItemsHeader>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageSettingsPlayHistory" Visibility="Collapsed">
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Button x:Uid="SettingsPageExportPlayHistoryButton" Command="{x:Bind ViewModel.ExportPlayHistoryCommand}" />
-                        </StackPanel>
-                    </dev:SettingsCard>
-
                     <dev:SettingsCard x:Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.IsFixedTimeStep, Mode=TwoWay}" />
                     </dev:SettingsCard>
