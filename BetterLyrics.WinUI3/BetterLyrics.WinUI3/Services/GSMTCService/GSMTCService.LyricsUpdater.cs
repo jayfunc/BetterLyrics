@@ -22,7 +22,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         {
             _logger.LogInformation("RefreshLyricsAsync");
 
-            CurrentLyricsSearchResult = null;
             CurrentLyricsData = LyricsData.GetLoadingPlaceholder();
 
             if (CurrentSongInfo != SongInfoExtensions.Placeholder)
