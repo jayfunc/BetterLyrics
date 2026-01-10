@@ -22,6 +22,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public new string Text => PrimaryText;
         public new int StartIndex = 0;
 
+        public bool IsPrimaryHasRealSyllableInfo { get; set; } = false;
+
         public LyricsLine()
         {
             for (int charStartIndex = 0; charStartIndex < PrimaryText.Length; charStartIndex++)

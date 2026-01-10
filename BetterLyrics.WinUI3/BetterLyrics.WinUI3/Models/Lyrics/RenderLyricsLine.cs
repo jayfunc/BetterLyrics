@@ -76,6 +76,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
         public double? PrimaryLineHeight => PrimaryRenderChars.FirstOrDefault()?.LayoutRect.Height;
 
+        public bool IsPrimaryHasRealSyllableInfo { get; set; }
+
         public RenderLyricsLine(LyricsLine lyricsLine) : base(lyricsLine)
         {
             AngleTransition = new(
@@ -130,6 +132,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             PrimaryText = lyricsLine.PrimaryText;
             SecondaryText = lyricsLine.SecondaryText;
             PrimaryRenderSyllables = lyricsLine.PrimarySyllables.Select(x => new RenderLyricsSyllable(x)).ToList();
+            IsPrimaryHasRealSyllableInfo = lyricsLine.IsPrimaryHasRealSyllableInfo;
         }
 
         public void UpdateCenterPosition(double maxWidth, TextAlignmentType type)

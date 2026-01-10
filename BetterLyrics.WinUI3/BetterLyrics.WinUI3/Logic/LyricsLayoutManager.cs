@@ -215,7 +215,7 @@ namespace BetterLyrics.WinUI3.Logic
                     lanesEndMs.Add(0);
                 }
 
-                lanesEndMs[assignedLane] = end;
+                lanesEndMs[assignedLane] = end ?? 0;
                 line.LaneIndex = assignedLane;
             }
         }

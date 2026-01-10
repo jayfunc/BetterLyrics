@@ -19,9 +19,10 @@ namespace BetterLyrics.WinUI3.Extensions
                         new LyricsLine
                         {
                             StartMs = 0,
-                            EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
+                            EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
                             PrimaryText = "● ● ●",
-                            PrimarySyllables = [new BaseLyrics { Text = "● ● ●", StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }],
+                            PrimarySyllables = [new BaseLyrics { Text = "● ● ●", StartMs = 0, EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds }],
+                            IsPrimaryHasRealSyllableInfo = true,
                         },
                     ],
                     LanguageCode = "N/A",
