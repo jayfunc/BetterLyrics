@@ -70,6 +70,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             GenerateTransliterationLyricsData();
 
             EnsureEndMs(lyricsSearchResult?.Duration);
+            EnsureSyllables();
 
             return _lyricsDataArr;
         }
@@ -308,6 +309,45 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                                 syllable.EndMs = lines[i].EndMs;
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Invoke this after <see cref="EnsureEndMs"/>
+        /// </summary>
+        private void EnsureSyllables()
+        {
+            foreach (var lyricsData in _lyricsDataArr)
+            {
+                if (lyricsData == null) continue;
+
+                var lines = lyricsData.LyricsLines;
+                if (lines == null) continue;
+
+                foreach (var line in lines)
+                {
+                    if (line == null) continue;
+                    if (line.IsPrimaryHasRealSyllableInfo) continue;
+                    if (line.PrimarySyllables.Count > 0) continue;
+
+                    var content = line.PrimaryText;
+                    var length = content.Length;
+                    if (length == 0) continue;
+
+                    var avgSyllableDuration = line.DurationMs / length;
+                    if (avgSyllableDuration == 0) continue;
+
+                    for (int j = 0; j < length; j++)
+                    {
+                        line.PrimarySyllables.Add(new BaseLyrics
+                        {
+                            Text = content[j].ToString(),
+                            StartIndex = j,
+                            StartMs = line.StartMs + avgSyllableDuration * j,
+                            EndMs = line.StartMs + avgSyllableDuration * (j + 1),
+                        });
                     }
                 }
             }

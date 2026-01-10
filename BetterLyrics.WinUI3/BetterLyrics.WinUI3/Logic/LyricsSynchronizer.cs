@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.Logic
             switch (wordByWordEffectMode)
             {
                 case WordByWordEffectMode.Auto:
-                    if (line.PrimaryRenderSyllables.Count > 1)
+                    if (line.IsPrimaryHasRealSyllableInfo)
                     {
                         return CalculateSyllableProgress(currentTimeMs, line, lineEndMs);
                     }
@@ -106,7 +106,7 @@ namespace BetterLyrics.WinUI3.Logic
                     state.SyllableProgress = 1f;
                     return state;
                 case WordByWordEffectMode.Always:
-                    if (line.PrimaryRenderSyllables.Count > 1)
+                    if (line.IsPrimaryHasRealSyllableInfo)
                     {
                         return CalculateSyllableProgress(currentTimeMs, line, lineEndMs);
                     }
