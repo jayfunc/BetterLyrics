@@ -127,7 +127,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 StartMs = containerStartMs,
                 EndMs = containerEndMs,
                 PrimaryText = fullOriginalText,
-                PrimarySyllables = syllables
+                PrimarySyllables = syllables,
+                IsPrimaryHasRealSyllableInfo = true,
             });
 
             var transSpan = container.Elements()
@@ -151,7 +152,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 {
                     StartMs = startMs,
                     EndMs = endMs,
-                    PrimaryText = text
+                    PrimaryText = text,
+                    IsPrimaryHasRealSyllableInfo = false,
                 });
             }
             else
@@ -160,7 +162,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                 {
                     StartMs = startMs,
                     EndMs = endMs,
-                    PrimaryText = ""
+                    PrimaryText = "",
+                    IsPrimaryHasRealSyllableInfo = false,
                 });
             }
         }
