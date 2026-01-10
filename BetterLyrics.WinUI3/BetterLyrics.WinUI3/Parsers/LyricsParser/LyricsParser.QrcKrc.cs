@@ -22,7 +22,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     {
                         StartMs = lineRead.StartTime ?? 0,
                         PrimaryText = lineRead.Text,
-                        PrimarySyllables = [],
+                        IsPrimaryHasRealSyllableInfo = true,
                     };
 
                     var syllables = (lineRead as Lyricify.Lyrics.Models.SyllableLineInfo)?.Syllables;

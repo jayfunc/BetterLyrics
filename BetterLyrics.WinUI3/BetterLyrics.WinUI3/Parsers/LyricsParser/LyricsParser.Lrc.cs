@@ -46,7 +46,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     {
                         StartMs = syllables[0].StartMs,
                         PrimaryText = string.Concat(syllables.Select(s => s.Text)),
-                        PrimarySyllables = syllables
+                        PrimarySyllables = syllables,
+                        IsPrimaryHasRealSyllableInfo = true
                     });
                 }
                 else
@@ -68,19 +69,13 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                         content = bracketRegex!.Replace(line, "").Trim();
                         if (content == "//") content = "";
 
-                        lrcLines.Add(new LyricsLine
+                        var lyricsLine = new LyricsLine
                         {
                             StartMs = lineStartMs,
-                            PrimarySyllables = [
-                                new BaseLyrics
-                                {
-                                    StartIndex = 0,
-                                    StartMs = lineStartMs,
-                                    Text = content
-                                }
-                            ],
-                            PrimaryText = content
-                        });
+                            PrimaryText = content,
+                            IsPrimaryHasRealSyllableInfo = false
+                        };
+                        lrcLines.Add(lyricsLine);
                     }
                 }
             }
