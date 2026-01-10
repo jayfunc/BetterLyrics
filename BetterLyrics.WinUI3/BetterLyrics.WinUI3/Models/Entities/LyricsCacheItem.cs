@@ -47,10 +47,15 @@ namespace BetterLyrics.WinUI3.Models
 
         [NotMapped][JsonIgnore] public LyricsSearchProvider? ProviderIfFound => IsFound ? Provider : null;
 
+        [MaxLength(128)]
+        public string? PluginId { get; set; }
+
         public object Clone()
         {
             return new LyricsCacheItem()
             {
+                PluginId = this.PluginId,
+
                 Provider = this.Provider,
                 TranslationProvider = this.TranslationProvider,
                 TransliterationProvider = this.TransliterationProvider,
