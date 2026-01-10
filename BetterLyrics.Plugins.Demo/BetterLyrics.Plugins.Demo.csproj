@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+  </ItemGroup>
+
 </Project>

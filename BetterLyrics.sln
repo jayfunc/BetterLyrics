@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.1.11312.151 d18.0
+VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "BetterLyrics.WinUI3 (Package)", "BetterLyrics.WinUI3\BetterLyrics.WinUI3 (Package)\BetterLyrics.WinUI3 (Package).wapproj", "{6576CD19-EF92-4099-B37D-E2D8EBDB6BF5}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorThief.WinUI3", "ColorThief.WinUI3\ColorThief.WinUI3.csproj", "{8F2FE667-2D91-428E-0630-05E6330F9625}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Core", "BetterLyrics.Core\BetterLyrics.Core.csproj", "{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Plugins.Demo", "BetterLyrics.Plugins.Demo\BetterLyrics.Plugins.Demo.csproj", "{87D235CA-4311-4766-8186-AD9B193DFABC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +91,18 @@ Global
 		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x64.Build.0 = Release|Any CPU
 		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x86.ActiveCfg = Release|Any CPU
 		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x86.Build.0 = Release|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x64.Build.0 = Debug|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x86.Build.0 = Debug|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|ARM64.Build.0 = Release|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x64.ActiveCfg = Release|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x64.Build.0 = Release|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x86.ActiveCfg = Release|Any CPU
+		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

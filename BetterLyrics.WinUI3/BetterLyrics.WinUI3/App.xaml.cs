@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.LyricsCacheService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
+using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Services.SongSearchMapService;
@@ -248,6 +249,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IPlayHistoryService, PlayHistoryService>()
                     .AddSingleton<ILyricsCacheService, LyricsCacheService>()
                     .AddSingleton<ISongSearchMapService, SongSearchMapService>()
+                    .AddSingleton<IPluginService, PluginService>()
 
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()

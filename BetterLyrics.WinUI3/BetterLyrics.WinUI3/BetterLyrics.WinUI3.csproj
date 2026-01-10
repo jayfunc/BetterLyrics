@@ -96,6 +96,10 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
@@ -121,6 +125,7 @@
 		<PackageReference Include="z440.atl.core" Version="7.9.0" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
 	  <ProjectReference Include="..\..\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
 	  <ProjectReference Include="..\..\Impressionist\Impressionist\Impressionist.csproj" />
 	</ItemGroup>
