@@ -176,7 +176,7 @@ namespace BetterLyrics.WinUI3.Logic
                     line.AngleTransition.SetDelay(yScrollDelay);
                     line.AngleTransition.Start(
                         (isFanEnabled && !isMouseScrolling) ?
-                        Math.PI * (fanAngleRad / 180.0) * distanceFactor * (i > primaryPlayingLineIndex ? 1 : -1) :
+                        fanAngleRad * distanceFactor * (i > primaryPlayingLineIndex ? 1 : -1) :
                         0);
 
                     line.YOffsetTransition.SetEasingType(canvasYScrollTransition.EasingType);
@@ -187,7 +187,7 @@ namespace BetterLyrics.WinUI3.Logic
                     line.YOffsetTransition.Start(targetYScrollOffset);
                 }
 
-                if (isLayoutChanged || isSecondaryLinePlayingChanged)
+                if (isSecondaryLinePlayingChanged)
                 {
                     // 辉光动画
                     if (isGlowEnabled && lyricsEffect.LyricsGlowEffectScope == Enums.LyricsEffectScope.LineStartToCurrentChar
