@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     var lineWrite = new LyricsLine
                     {
                         StartMs = lineRead.StartTime ?? 0,
-                        EndMs = lineRead.EndTime ?? (nextLineRead?.StartTime ?? 0),
+                        EndMs = lineRead.EndTime,
                         PrimaryText = lineRead.Text,
                         PrimarySyllables = [],
                     };

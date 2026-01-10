@@ -69,6 +69,8 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
             LoadTransliteration(lyricsSearchResult);
             GenerateTransliterationLyricsData();
 
+            EnsureEndMs(lyricsSearchResult?.Duration);
+
             return _lyricsDataArr;
         }
 
@@ -266,6 +268,46 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                                 }).ToList()
                             }).ToList()
                         });
+                    }
+                }
+            }
+        }
+
+        private void EnsureEndMs(double? duration)
+        {
+            foreach (var lyricsData in _lyricsDataArr)
+            {
+                var lines = lyricsData.LyricsLines;
+                // 计算结束时间
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    // 计算行结束时间
+                    if (lines[i].EndMs == null)
+                    {
+                        if (i + 1 < lines.Count)
+                        {
+                            lines[i].EndMs = lines[i + 1].StartMs;
+                        }
+                        else
+                        {
+                            lines[i].EndMs = (int)(duration ?? 0) * 1000;
+                        }
+                    }
+                    // 计算音节结束时间
+                    for (int j = 0; j < lines[i].PrimarySyllables.Count; j++)
+                    {
+                        var syllable = lines[i].PrimarySyllables[j];
+                        if (syllable.EndMs == null)
+                        {
+                            if (j < lines[i].PrimarySyllables.Count - 1)
+                            {
+                                syllable.EndMs = lines[i].PrimarySyllables[j + 1].StartMs;
+                            }
+                            else
+                            {
+                                syllable.EndMs = lines[i].EndMs;
+                            }
+                        }
                     }
                 }
             }

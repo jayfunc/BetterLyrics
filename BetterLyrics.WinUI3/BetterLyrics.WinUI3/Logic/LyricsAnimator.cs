@@ -83,7 +83,7 @@ namespace BetterLyrics.WinUI3.Logic
                     ? 1.15
                     : lyricsEffect.LyricsScaleEffectAmount / 100.0;
 
-                var maxAnimationDurationMs = Math.Max(line.EndMs - currentPositionMs, 0);
+                var maxAnimationDurationMs = Math.Max(line.EndMs ?? 0 - currentPositionMs, 0);
 
                 bool isSecondaryLinePlaying = line.GetIsPlaying(currentPositionMs);
                 bool isSecondaryLinePlayingChanged = line.IsPlayingLastFrame != isSecondaryLinePlaying;
