@@ -74,7 +74,7 @@ namespace BetterLyrics.WinUI3.Logic
 
             if (line == null) return state;
 
-            double lineEndMs = line.EndMs;
+            double lineEndMs = line.EndMs ?? 0;
 
             // 还没到
             if (currentTimeMs < line.StartMs) return state;
@@ -129,8 +129,7 @@ namespace BetterLyrics.WinUI3.Logic
                 var timing = line.PrimaryRenderSyllables[i];
                 var nextTiming = (i + 1 < count) ? line.PrimaryRenderSyllables[i + 1] : null;
 
-                //double timingEndMs = timing.EndMs ?? nextTiming?.StartMs ?? lineEndMs;
-                double timingEndMs = timing.EndMs;
+                double timingEndMs = timing.EndMs ?? 0;
 
                 // 在当前字范围内
                 if (time >= timing.StartMs && time <= timingEndMs)
