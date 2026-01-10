@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.Core.Interfaces;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
@@ -10,6 +11,7 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.LyricsCacheService;
+using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using Lyricify.Lyrics.Helpers;
@@ -36,6 +38,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         private readonly IFileSystemService _fileSystemService;
         private readonly ILyricsCacheService _lyricsCacheService;
         private readonly ISongSearchMapService _songSearchMapService;
+        private readonly IPluginService _pluginService;
         private readonly ILogger _logger;
 
         public LyricsSearchService(
@@ -43,6 +46,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             IFileSystemService fileSystemService,
             ILyricsCacheService lyricsCacheService,
             ISongSearchMapService songSearchMapService,
+            IPluginService pluginService,
             ILogger<LyricsSearchService> logger
         )
         {
@@ -50,6 +54,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             _fileSystemService = fileSystemService;
             _lyricsCacheService = lyricsCacheService;
             _songSearchMapService = songSearchMapService;
+            _pluginService = pluginService;
             _logger = logger;
 
             _lrcLibHttpClient = new();
@@ -207,11 +212,26 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         {
             _logger.LogInformation("SearchAllAsync {SongInfo}", songInfo);
             var results = new List<LyricsCacheItem>();
+            
             foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
+                if (provider == LyricsSearchProvider.Plugin) continue;
+
                 var searchResult = await SearchSingleAsync(songInfo, provider, checkCache, token);
                 results.Add(searchResult);
             }
+
+            if (_pluginService.Providers.Any())
+            {
+                foreach (var plugin in _pluginService.Providers)
+                {
+                    if (token.IsCancellationRequested) break;
+
+                    var pluginResult = await SearchPluginAsync(songInfo, plugin, token);
+                    results.Add(pluginResult);
+                }
+            }
+
             return results;
         }
 
@@ -673,5 +693,41 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             return lyricsSearchResult;
         }
+
+        private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, ILyricsProvider plugin, CancellationToken token)
+        {
+            var cacheItem = new LyricsCacheItem
+            {
+                Provider = LyricsSearchProvider.Plugin,
+                PluginId = plugin.Id,
+            };
+
+            try
+            {
+                var result = await plugin.GetLyricsAsync(songInfo.Title, songInfo.Artist, songInfo.Album, songInfo.Duration);
+
+                if (result != null && !string.IsNullOrEmpty(result.Raw))
+                {
+                    cacheItem.Title = result.Title;
+                    cacheItem.Artist = result.Artist;
+                    cacheItem.Album = result.Album;
+                    cacheItem.Duration = result.Duration;
+
+                    cacheItem.Raw = result.Raw;
+                    cacheItem.Translation = result.Translation;
+                    cacheItem.Transliteration = result.Transliteration;
+
+                    cacheItem.Reference = result.Reference ?? "about:blank";
+                    cacheItem.MatchPercentage = MetadataComparer.CalculateScore(songInfo, cacheItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Plugin {PluginName} failed to search", plugin.Name);
+            }
+
+            return cacheItem;
+        }
+
     }
 }
