@@ -555,6 +555,18 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Unable to view tracks because the path does not exist</value>
   </data>
+  <data name="PluginManagerControlInstall.Content" xml:space="preserve">
+    <value>Install plugin</value>
+  </data>
+  <data name="PluginManagerControlNoPluginsInstalled.Text" xml:space="preserve">
+    <value>No plugins installed</value>
+  </data>
+  <data name="PluginManagerControlTitle.Text" xml:space="preserve">
+    <value>Plugin Manager</value>
+  </data>
+  <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
+    <value>Uninstall plugin</value>
+  </data>
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>Privacy Policy</value>
   </data>

@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Core", "Better
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Plugins.Demo", "BetterLyrics.Plugins.Demo\BetterLyrics.Plugins.Demo.csproj", "{87D235CA-4311-4766-8186-AD9B193DFABC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Plugins.Romaji", "BetterLyrics.Plugins.Romaji\BetterLyrics.Plugins.Romaji.csproj", "{DD2D477F-94CD-4D4B-8B59-C127F2850E34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomajiConverter.Core", "RomajiConverter.Core\RomajiConverter.Core.csproj", "{351807DB-CD63-B939-8071-B1FBFF969569}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -103,6 +107,30 @@ Global
 		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x64.Build.0 = Release|Any CPU
 		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x86.ActiveCfg = Release|Any CPU
 		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x86.Build.0 = Release|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|x64.Build.0 = Debug|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|x86.Build.0 = Debug|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Release|ARM64.Build.0 = Release|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Release|x64.ActiveCfg = Release|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Release|x64.Build.0 = Release|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Release|x86.ActiveCfg = Release|Any CPU
+		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Release|x86.Build.0 = Release|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Debug|x64.Build.0 = Debug|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Debug|x86.Build.0 = Debug|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Release|ARM64.Build.0 = Release|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Release|x64.ActiveCfg = Release|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Release|x64.Build.0 = Release|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Release|x86.ActiveCfg = Release|Any CPU
+		{351807DB-CD63-B939-8071-B1FBFF969569}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

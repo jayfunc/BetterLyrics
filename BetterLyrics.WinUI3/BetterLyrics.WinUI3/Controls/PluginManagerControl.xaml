@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.PluginManagerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <Grid Padding="36,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock x:Uid="PluginManagerControlTitle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+        </Grid>
+
+        <ListView
+            Grid.Row="1"
+            ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+            ItemsSource="{x:Bind Plugins, Mode=OneWay}"
+            SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:PluginDisplayModel">
+                    <dev:SettingsExpander
+                        Description="{x:Bind Description}"
+                        Header="{x:Bind Name}"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE74C;}">
+                        <TextBlock Text="{x:Bind Version}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                                <StackPanel Spacing="6">
+                                    <local:PropertyRow Header="Author" Value="{x:Bind Author}" />
+                                    <local:PropertyRow Header="ID" Value="{x:Bind Id}" />
+                                </StackPanel>
+                            </dev:SettingsCard>
+                            <dev:SettingsCard>
+                                <Button
+                                    x:Uid="PluginManagerControlUninstall"
+                                    Click="OnUninstallClick"
+                                    Tag="{x:Bind Plugin}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="{x:Bind IsListEmpty, Mode=OneWay}">
+            <FontIcon
+                FontSize="48"
+                Glyph="&#xE74C;"
+                Opacity="0.3" />
+            <TextBlock
+                x:Uid="PluginManagerControlNoPluginsInstalled"
+                Margin="0,12,0,0"
+                Opacity="0.5" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="0,6,0,20">
+            <Button
+                x:Uid="PluginManagerControlInstall"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Click="OnInstallPluginClick"
+                Style="{StaticResource AccentButtonStyle}" />
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

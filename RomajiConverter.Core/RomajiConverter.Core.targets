@@ -1,0 +1,13 @@
+<Project>
+	<ItemGroup>
+		<UniDicFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\unidic\**\*" />
+		<CustomizeDict Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\customizeDict.txt" />
+		<VariantFiles Include="$(MSBuildThisFileDirectory)\..\contentFiles\any\any\Variants\**\*" />
+	</ItemGroup>
+
+	<Target Name="CopyFiles" BeforeTargets="Build">
+		<Copy SourceFiles="@(UniDicFiles)" DestinationFolder="$(TargetDir)unidic\%(RecursiveDir)" />
+		<Copy SourceFiles="@(CustomizeDict)" DestinationFolder="$(TargetDir)" />
+		<Copy SourceFiles="@(VariantFiles)" DestinationFolder="$(TargetDir)Variants\%(RecursiveDir)" />
+	</Target>
+</Project>
