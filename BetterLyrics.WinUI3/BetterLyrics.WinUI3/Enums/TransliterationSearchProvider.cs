@@ -13,6 +13,7 @@
         LocalEslrcFile,
         LocalTtmlFile,
         BetterLyrics,
-        CutletDocker
+        CutletDocker,
+        Plugin = 999,
     }
 }

@@ -14,5 +14,6 @@ namespace BetterLyrics.WinUI3.Enums
         LocalEslrcFile,
         LocalTtmlFile,
         AppleMusic,
+        Plugin = 999,
     }
 }
