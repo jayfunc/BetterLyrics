@@ -1,0 +1,34 @@
+﻿using BetterLyrics.Core.Interfaces;
+using RomajiConverter.Core.Helpers;
+using System.Reflection;
+
+namespace BetterLyrics.Plugins.Romaji
+{
+    public class RomajiPlugin : ILyricsTransliterationPlugin
+    {
+        public string Id => "jayfunc.romaji";
+
+        public string Name => "Romaji";
+
+        public string Description => "Convert Japanese lyrics to Romaji transliteration.";
+
+        public string Author => "jayfunc";
+
+        public void Initialize()
+        {
+            string? pluginPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            RomajiHelper.Init(pluginPath);
+        }
+
+        public Task<string?> GetTransliterationAsync(string text, string targetLangCode)
+        {
+            string? result = null;
+            if (targetLangCode == "ja-latin")
+            {
+                var lines = RomajiHelper.ToRomaji(text);
+                result = string.Join("\r\n", lines.Select(p => string.Join(" ", p.Units.Select(q => q.Romaji))));
+            }
+            return Task.FromResult(result);
+        }
+    }
+}

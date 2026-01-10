@@ -212,7 +212,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
         {
             _logger.LogInformation("SearchAllAsync {SongInfo}", songInfo);
             var results = new List<LyricsCacheItem>();
-            
+
             foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
                 if (provider == LyricsSearchProvider.Plugin) continue;
@@ -221,13 +221,13 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 results.Add(searchResult);
             }
 
-            if (_pluginService.Providers.Any())
+            foreach (var plugin in _pluginService.Plugins)
             {
-                foreach (var plugin in _pluginService.Providers)
-                {
-                    if (token.IsCancellationRequested) break;
+                if (token.IsCancellationRequested) break;
 
-                    var pluginResult = await SearchPluginAsync(songInfo, plugin, token);
+                if (plugin is ILyricsSearchPlugin lyricsSearchPlugin)
+                {
+                    var pluginResult = await SearchPluginAsync(songInfo, lyricsSearchPlugin, token);
                     results.Add(pluginResult);
                 }
             }
@@ -694,12 +694,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, ILyricsProvider plugin, CancellationToken token)
+        private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, ILyricsSearchPlugin plugin, CancellationToken token)
         {
             var cacheItem = new LyricsCacheItem
             {
                 Provider = LyricsSearchProvider.Plugin,
-                PluginId = plugin.Id,
             };
 
             try

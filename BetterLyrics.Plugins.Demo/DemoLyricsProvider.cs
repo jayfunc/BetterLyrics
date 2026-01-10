@@ -3,11 +3,15 @@ using BetterLyrics.Core.Models;
 
 namespace BetterLyrics.Plugins.Demo
 {
-    public class DemoLyricsProvider : ILyricsProvider
+    public class DemoLyricsProvider : ILyricsSearchPlugin
     {
         public string Id => "f7acc86b-6e3d-42c3-a9a9-8c05c5339412";
-        public string Name => "Demo Plugin";
+        public string Name => "Plugin name";
         public string Author => "jayfunc";
+
+        public string Description => "Plugin description";
+
+        public void Initialize() { }
 
         public async Task<LyricsSearchResult> GetLyricsAsync(string title, string artist, string album, double duration)
         {

@@ -57,6 +57,12 @@
                     Tag="Stats" />
 
                 <NavigationViewItem
+                    Content="Plugins"
+                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                       Glyph=&#xE74C;}"
+                    Tag="Plugins" />
+
+                <NavigationViewItem
                     x:Uid="SettingsPageAbout"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE946;}"
@@ -94,6 +100,11 @@
                 <!--  Stats  -->
                 <controls:Case Value="Stats">
                     <uc:StatsDashboardControl />
+                </controls:Case>
+
+                <!--  Plugins  -->
+                <controls:Case Value="Plugins">
+                    <uc:PluginManagerControl />
                 </controls:Case>
 
                 <!--  About  -->
