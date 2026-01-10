@@ -1,0 +1,20 @@
+name: Plugin Registry Check
+
+on:
+  pull_request:
+    paths:
+      - 'Community/plugins-registry.json'
+
+jobs:
+  check-collision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Run Hash Collision Check
+        run: node Community/scripts/check-hash-collision.js
