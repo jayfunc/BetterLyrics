@@ -936,9 +936,6 @@
   <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>Após a importação bem-sucedida, o programa será reiniciado automaticamente</value>
   </data>
-  <data name="SettingsPageJapanese.Description" xml:space="preserve">
-    <value>Dará prioridade à leitura da transliteração dentro da letra; se não houver correspondência, solicitará transliteração automática ao servidor cutlet-docker</value>
-  </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>Fonética Japonesa</value>
   </data>
@@ -1265,6 +1262,9 @@
   </data>
   <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>Atalho para Reproduzir e Pausar</value>
+  </data>
+  <data name="SettingsPagePlugins.Content" xml:space="preserve">
+    <value />
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>Atalho para Faixa Anterior</value>

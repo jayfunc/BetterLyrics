@@ -18,37 +18,25 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
         protected override Assembly? Load(AssemblyName assemblyName)
         {
-            var sharedAssemblies = new HashSet<string>
-            {
-                "BetterLyrics.Core",
-                "Microsoft.WindowsAppSDK",
-                "Microsoft.UI",
-                "Microsoft.UI.Xaml",
-                "Microsoft.Graphics",
-                "System.Runtime",
-                "Newtonsoft.Json"
-            };
-
-            if (assemblyName.Name == null || sharedAssemblies.Contains(assemblyName.Name))
-            {
-                return null;
-            }
-
-            string? assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
+            var assemblyPath = _resolver.ResolveAssemblyToPath(assemblyName);
             if (assemblyPath != null)
             {
                 return LoadFromAssemblyPath(assemblyPath);
             }
+
+            // return null to use the default AssemblyLoadContext
             return null;
         }
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
-            string? libraryPath = _resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+            var libraryPath = _resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
             if (libraryPath != null)
             {
                 return LoadUnmanagedDllFromPath(libraryPath);
             }
+
+            // return IntPtr.Zero to use the default AssemblyLoadContext
             return IntPtr.Zero;
         }
 

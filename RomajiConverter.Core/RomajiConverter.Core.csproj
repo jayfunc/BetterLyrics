@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+		<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
 		<PackageId>RomajiConverter.Core</PackageId>
 		<Version>2.1.0</Version>
 		<Authors>WL</Authors>
@@ -15,7 +16,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="MeCab.DotNet" Version="1.2.0" />
-		<PackageReference Include="OpenAI" Version="2.8.0" />
 	</ItemGroup>
 
 	<ItemGroup>

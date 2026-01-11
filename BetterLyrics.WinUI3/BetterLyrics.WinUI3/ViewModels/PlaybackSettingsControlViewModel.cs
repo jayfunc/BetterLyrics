@@ -40,9 +40,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLibreTranslateServerTesting { get; set; } = false;
 
         [ObservableProperty]
-        public partial bool IsCutletDockerServerTesting { get; set; } = false;
-
-        [ObservableProperty]
         public partial bool IsLXMusicServerTesting { get; set; } = false;
 
         [ObservableProperty]
@@ -121,35 +118,6 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     IsLibreTranslateServerTesting = false;
-                });
-            });
-        }
-
-        [RelayCommand]
-        private void CutletDockerServerTest()
-        {
-            IsCutletDockerServerTesting = true;
-            Task.Run(async () =>
-            {
-                try
-                {
-                    string result = await _transliterationService.TransliterateText(
-                        "こんにちは", PhoneticHelper.RomanCode, new System.Threading.CancellationToken());
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                    {
-                        ToastHelper.ShowToast("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
-                    });
-                }
-                catch (Exception)
-                {
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                    {
-                        ToastHelper.ShowToast("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
-                    });
-                }
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                {
-                    IsCutletDockerServerTesting = false;
                 });
             });
         }

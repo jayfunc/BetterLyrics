@@ -936,9 +936,6 @@
   <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>가져오기가 성공하면 프로그램이 자동으로 다시 시작됩니다</value>
   </data>
-  <data name="SettingsPageJapanese.Description" xml:space="preserve">
-    <value>가사 내의 발음 표기를 우선적으로 읽습니다. 일치하는 항목이 없으면 cutlet-docker 서버에 기계 음역을 요청합니다</value>
-  </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>일본어 발음 표기</value>
   </data>
@@ -1265,6 +1262,9 @@
   </data>
   <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>재생 및 일시정지 단축키</value>
+  </data>
+  <data name="SettingsPagePlugins.Content" xml:space="preserve">
+    <value />
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>이전 곡 단축키</value>

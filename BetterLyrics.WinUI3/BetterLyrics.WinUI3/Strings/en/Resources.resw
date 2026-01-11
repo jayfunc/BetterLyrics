@@ -936,9 +936,6 @@
   <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>The app will restart automatically after successful import</value>
   </data>
-  <data name="SettingsPageJapanese.Description" xml:space="preserve">
-    <value>Prioritize reading transliteration within lyrics; if no match, request machine transliteration from cutlet-docker server</value>
-  </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>Japanese Phonetic</value>
   </data>
@@ -1265,6 +1262,9 @@
   </data>
   <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>Play/Pause Shortcut</value>
+  </data>
+  <data name="SettingsPagePlugins.Content" xml:space="preserve">
+    <value>Plugins</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>Previous Track Shortcut</value>
