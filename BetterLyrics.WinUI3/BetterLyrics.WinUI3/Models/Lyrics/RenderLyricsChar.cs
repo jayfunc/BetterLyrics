@@ -20,18 +20,18 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         {
             ScaleTransition = new(
                 initialValue: 1.0,
-                defaultTotalDuration: Time.AnimationDuration.TotalSeconds,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: Time.AnimationDuration.TotalSeconds
             );
             GlowTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: Time.AnimationDuration.TotalSeconds,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: Time.AnimationDuration.TotalSeconds
             );
             FloatTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: Time.LongAnimationDuration.TotalSeconds,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: Time.LongAnimationDuration.TotalSeconds
             );
             LayoutRect = layoutRect;
         }
