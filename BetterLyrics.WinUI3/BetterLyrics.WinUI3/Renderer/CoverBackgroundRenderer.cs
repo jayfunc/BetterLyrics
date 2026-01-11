@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
         public CoverBackgroundRenderer()
         {
-            _crossfadeTransition = new ValueTransition<double>(1.0, 0.7, defaultEasingType: EasingType.Linear);
+            _crossfadeTransition = new ValueTransition<double>(1.0, EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Linear), 0.7);
         }
 
         public void SetCoverBitmap(CanvasBitmap? newBitmap)
