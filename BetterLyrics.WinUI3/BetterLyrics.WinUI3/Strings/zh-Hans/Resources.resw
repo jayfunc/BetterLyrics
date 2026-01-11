@@ -936,9 +936,6 @@
   <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>导入成功后，该程序将自动重新启动</value>
   </data>
-  <data name="SettingsPageJapanese.Description" xml:space="preserve">
-    <value>将优先读取歌词内音译，若无匹配则向 cutlet-docker 服务器请求机器音译</value>
-  </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>日语注音</value>
   </data>
@@ -1265,6 +1262,9 @@
   </data>
   <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>播放与暂停快捷键</value>
+  </data>
+  <data name="SettingsPagePlugins.Content" xml:space="preserve">
+    <value>插件</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>上一曲目快捷键</value>

@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorThief.WinUI3", "ColorT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Core", "BetterLyrics.Core\BetterLyrics.Core.csproj", "{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Plugins.Demo", "BetterLyrics.Plugins.Demo\BetterLyrics.Plugins.Demo.csproj", "{87D235CA-4311-4766-8186-AD9B193DFABC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterLyrics.Plugins.Romaji", "BetterLyrics.Plugins.Romaji\BetterLyrics.Plugins.Romaji.csproj", "{DD2D477F-94CD-4D4B-8B59-C127F2850E34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomajiConverter.Core", "RomajiConverter.Core\RomajiConverter.Core.csproj", "{351807DB-CD63-B939-8071-B1FBFF969569}"
@@ -95,18 +93,6 @@ Global
 		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x64.Build.0 = Release|Any CPU
 		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x86.ActiveCfg = Release|Any CPU
 		{0F47FE6F-D0AA-49E5-8F33-78DFDEB1F810}.Release|x86.Build.0 = Release|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x64.Build.0 = Debug|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Debug|x86.Build.0 = Debug|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|ARM64.Build.0 = Release|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x64.ActiveCfg = Release|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x64.Build.0 = Release|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x86.ActiveCfg = Release|Any CPU
-		{87D235CA-4311-4766-8186-AD9B193DFABC}.Release|x86.Build.0 = Release|Any CPU
 		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|ARM64.ActiveCfg = Debug|Any CPU
 		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{DD2D477F-94CD-4D4B-8B59-C127F2850E34}.Debug|x64.ActiveCfg = Debug|Any CPU

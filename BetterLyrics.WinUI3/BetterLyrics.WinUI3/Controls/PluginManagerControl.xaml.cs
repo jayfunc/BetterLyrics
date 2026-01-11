@@ -95,7 +95,7 @@ namespace BetterLyrics.WinUI3.Controls
                 ContentDialog deleteDialog = new ContentDialog
                 {
                     XamlRoot = this.XamlRoot,
-                    Title = "卸载插件?",
+                    Title = "卸载插件",
                     Content = $"确定要删除 \"{plugin.Name}\" 吗？此操作无法撤销。",
                     PrimaryButtonText = "删除",
                     CloseButtonText = "取消",
@@ -108,9 +108,7 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     try
                     {
-                        // TODO: 在 PluginService 里加一个 UninstallPlugin 方法
-                        // 逻辑：找到插件对应文件夹，Directory.Delete(path, true)
-                        // _pluginService.UninstallPlugin(plugin.Id);
+                        _pluginService.UninstallPlugin(plugin.Id);
 
                         // 暂时我们只能刷新列表演示
                         RefreshPluginList();
@@ -131,7 +129,7 @@ namespace BetterLyrics.WinUI3.Controls
                 XamlRoot = this.XamlRoot,
                 Title = title,
                 Content = content,
-                CloseButtonText = "好"
+                CloseButtonText = "关闭"
             };
             await dialog.ShowAsync();
         }

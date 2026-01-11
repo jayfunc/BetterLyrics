@@ -57,7 +57,7 @@
                     Tag="Stats" />
 
                 <NavigationViewItem
-                    Content="Plugins"
+                    x:Uid="SettingsPagePlugins"
                     Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                        Glyph=&#xE74C;}"
                     Tag="Plugins" />

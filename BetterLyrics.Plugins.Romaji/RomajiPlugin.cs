@@ -26,7 +26,7 @@ namespace BetterLyrics.Plugins.Romaji
             if (targetLangCode == "ja-latin")
             {
                 var lines = RomajiHelper.ToRomaji(text);
-                result = string.Join("\r\n", lines.Select(p => string.Join(" ", p.Units.Select(q => q.Romaji))));
+                result = string.Join("\n", lines.Select(p => string.Join(" ", p.Units.Select(q => q.Romaji))));
             }
             return Task.FromResult(result);
         }
