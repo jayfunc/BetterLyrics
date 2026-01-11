@@ -810,35 +810,47 @@
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>可拖动区域</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
-    <value>回弹缓入缓出</value>
+  <data name="SettingsPageEasingMode.Header" xml:space="preserve">
+    <value>缓动类型</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
-    <value>弹跳缓入缓出</value>
+  <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
+    <value>缓入</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
-    <value>圆形缓入缓出</value>
+  <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
+    <value>缓出</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
-    <value>三次缓入缓出</value>
+  <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
+    <value>缓入缓出</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
-    <value>弹性缓入缓出</value>
+  <data name="SettingsPageEasingTypeEaseBack.Content" xml:space="preserve">
+    <value>回弹</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
-    <value>指数缓入缓出</value>
+  <data name="SettingsPageEasingTypeEaseBounce.Content" xml:space="preserve">
+    <value>弹跳</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
-    <value>二次缓入缓出</value>
+  <data name="SettingsPageEasingTypeEaseCirc.Content" xml:space="preserve">
+    <value>圆形</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
-    <value>四次缓入缓出</value>
+  <data name="SettingsPageEasingTypeEaseCubic.Content" xml:space="preserve">
+    <value>三次</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
-    <value>五次缓入缓出</value>
+  <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
+    <value>弹性</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
-    <value>正弦缓入缓出</value>
+  <data name="SettingsPageEasingTypeEaseExpo.Content" xml:space="preserve">
+    <value>指数</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseQuad.Content" xml:space="preserve">
+    <value>二次</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
+    <value>四次</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
+    <value>五次</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
+    <value>正弦</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>线性</value>

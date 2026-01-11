@@ -19,7 +19,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="RomajiConverter.Core.targets" PackagePath="build/RomajiConverter.Core.targets" />
 		<None Include="docs\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 </Project>

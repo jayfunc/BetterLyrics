@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<linker>
+	<assembly fullname="FlaUI.UIA3" preserve="all" />
+	<assembly fullname="Interop.UIAutomationClient" preserve="all" />
+
+	<assembly fullname="Microsoft.EntityFrameworkCore" preserve="all" />
+	<assembly fullname="Microsoft.EntityFrameworkCore.Abstractions" preserve="all" />
+	<assembly fullname="Microsoft.EntityFrameworkCore.Relational" preserve="all" />
+	<assembly fullname="Microsoft.EntityFrameworkCore.Sqlite" preserve="all" />
+
+	<assembly fullname="NAudio.Wasapi" preserve="all" />
+	<assembly fullname="TagLibSharp" preserve="all" />
+
+	<assembly fullname="Vanara.PInvoke.DwmApi" preserve="all" />
+	<assembly fullname="Vanara.PInvoke.Gdi32" preserve="all" />
+	<assembly fullname="Vanara.PInvoke.Shell32" preserve="all" />
+	<assembly fullname="Vanara.PInvoke.User32" preserve="all" />
+	<assembly fullname="Vanara.Windows.Shell" preserve="all" />
+
+</linker>

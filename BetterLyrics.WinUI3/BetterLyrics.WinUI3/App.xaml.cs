@@ -23,7 +23,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-using Microsoft.Windows.AppLifecycle; // 关键：App生命周期管理
+using Microsoft.Windows.AppLifecycle;
 using Serilog;
 using System;
 using System.Linq;

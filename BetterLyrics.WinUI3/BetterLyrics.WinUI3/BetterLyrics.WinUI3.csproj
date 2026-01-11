@@ -83,7 +83,7 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
-		<PackageReference Include="DevWinUI.Controls" Version="9.8.1" />
+		<PackageReference Include="DevWinUI.Controls" Version="9.9.2" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.6" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
 		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
@@ -98,13 +98,13 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7175" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.251106002" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
@@ -123,12 +123,12 @@
 		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
 		<PackageReference Include="WebDav.Client" Version="2.9.0" />
 		<PackageReference Include="WinUIEx" Version="2.9.0" />
-		<PackageReference Include="z440.atl.core" Version="7.9.0" />
+		<PackageReference Include="z440.atl.core" Version="7.10.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
-	  <ProjectReference Include="..\..\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
-	  <ProjectReference Include="..\..\Impressionist\Impressionist\Impressionist.csproj" />
+		<ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+		<ProjectReference Include="..\..\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
+		<ProjectReference Include="..\..\Impressionist\Impressionist\Impressionist.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Rendering\InAppLyricsRenderer.xaml">
@@ -140,257 +140,245 @@
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
 	</ItemGroup>
-	<!--Disable Trimming for Specific Packages-->
 	<ItemGroup>
-		<TrimmerRootAssembly Include="FlaUI.UIA3" />
-		<TrimmerRootAssembly Include="Interop.UIAutomationClient" />
-		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore" />
-		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Abstractions" />
-		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Relational" />
-		<TrimmerRootAssembly Include="Microsoft.EntityFrameworkCore.Sqlite" />
-		<TrimmerRootAssembly Include="NAudio.Wasapi" />
-		<TrimmerRootAssembly Include="TagLibSharp" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.DwmApi" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.Gdi32" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.Shell32" />
-		<TrimmerRootAssembly Include="Vanara.PInvoke.User32" />
-		<TrimmerRootAssembly Include="Vanara.Windows.Shell" />
+		<TrimmerRootDescriptor Include="PluginConfigs\**\*_TrimmerRoots.xml" />
+		<TrimmerRootDescriptor Include="Core_TrimmerRoots.xml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Update="Assets\AIMP.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\AlbumArtPlaceholder.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Alipay.jpg">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\AMLLPlayer.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\AppleMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Chrome.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Edge.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\FluidEffect.bin">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Empty.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\EmptyBox.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\EmptyState.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Folder.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\foobar2000.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\HyPlayer.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\iTunes.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\KugouMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\LastFM.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Leaf.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Listen1.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Logo.ico">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Logo.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\LXMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\MediaPlayerWindows11.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\MoeKoeMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\MusicBee.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\NetEaseCloudMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\OriginalSoundHQPlayer.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Page.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\PlanetMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\PotPlayer.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\QQMusic.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Question.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\RevolvingHearts.gif">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\SaltPlayerForWindows.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Segoe Fluent Icons.ttf">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Spotify.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\WeChatReward.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Update="Assets\Wiki82.profile.xml">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="Assets\AIMP.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\AlbumArtPlaceholder.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Alipay.jpg">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\AMLLPlayer.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\AppleMusic.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Chrome.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Edge.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\FluidEffect.bin">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Empty.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\EmptyBox.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\EmptyState.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Folder.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\foobar2000.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\HyPlayer.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\iTunes.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\KugouMusic.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\LastFM.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Leaf.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Listen1.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Logo.ico">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Logo.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\LXMusic.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\MediaPlayerWindows11.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\MoeKoeMusic.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\MusicBee.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\NetEaseCloudMusic.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\OriginalSoundHQPlayer.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Page.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\PlanetMusic.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\PotPlayer.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\QQMusic.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Question.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\RevolvingHearts.gif">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\SaltPlayerForWindows.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Segoe Fluent Icons.ttf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Spotify.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\WeChatReward.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Wiki82.profile.xml">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\PluginManagerControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\PluginManagerControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\PatronControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\PatronControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Styles\GhostSliderStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Styles\GhostSliderStyle.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Styles\Converters.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Styles\Converters.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\PlayQueue.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\PlayQueue.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\StatsDashboardControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\StatsDashboardControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\FontFamilyAutoSuggestBox.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\FontFamilyAutoSuggestBox.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsStyleSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\LyricsStyleSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\LyricsWindowSwitchWindow.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\LyricsWindowSwitchWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsWindowSwitchControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\LyricsWindowSwitchControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\DemoWindowGrid.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\DemoWindowGrid.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsWindowSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\LyricsWindowSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\LyricsSearchWindow.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\LyricsSearchWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsSearchControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\LyricsSearchControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\ShortcutTextBox.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\ShortcutTextBox.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\ExtendedSlider.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\ExtendedSlider.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsEffectSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\LyricsEffectSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\MediaSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\MediaSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\PlaybackSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\PlaybackSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\AlbumArtAreaStyleSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\AlbumArtAreaStyleSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\LyricsBackgroundSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\LyricsBackgroundSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\AppSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\AppSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\MusicGalleryWindow.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\MusicGalleryWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\MusicGalleryPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\MusicGalleryPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Views\SettingsWindow.xaml">
@@ -403,54 +391,57 @@
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\RemoteServerConfigControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\RemoteServerConfigControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\NowPlayingBar.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\NowPlayingBar.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Views\SystemTrayWindow.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Views\SystemTrayWindow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\WindowSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\WindowSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\AlbumArtAreaEffectSettingsControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\AlbumArtAreaEffectSettingsControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\ImageSwitcher.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\ImageSwitcher.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\ShadowImage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\ShadowImage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\PropertyRow.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\PropertyRow.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\AboutControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\AboutControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Styles\InteractiveListViewHeaderStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Styles\InteractiveListViewHeaderStyle.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="PluginConfigs\" />
 	</ItemGroup>
 	<!-- Publish Properties -->
 	<PropertyGroup>

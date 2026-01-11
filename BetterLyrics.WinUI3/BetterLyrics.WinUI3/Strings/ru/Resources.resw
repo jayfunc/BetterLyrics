@@ -810,35 +810,38 @@
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>Перетаскиваемая область</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutBack.Content" xml:space="preserve">
-    <value>Back Ease In-Out</value>
+  <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
+    <value />
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutBounce.Content" xml:space="preserve">
-    <value>Bounce Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseBack.Content" xml:space="preserve">
+    <value>Back</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutCirc.Content" xml:space="preserve">
-    <value>Circular Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseBounce.Content" xml:space="preserve">
+    <value>Bounce</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutCubic.Content" xml:space="preserve">
-    <value>Cubic Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseCirc.Content" xml:space="preserve">
+    <value>Circular</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutElastic.Content" xml:space="preserve">
-    <value>Elastic Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseCubic.Content" xml:space="preserve">
+    <value>Cubic</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutExpo.Content" xml:space="preserve">
-    <value>Exponential Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
+    <value>Elastic</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuad.Content" xml:space="preserve">
-    <value>Quadratic Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseExpo.Content" xml:space="preserve">
+    <value>Exponential</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuart.Content" xml:space="preserve">
-    <value>Quartic Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseQuad.Content" xml:space="preserve">
+    <value>Quadratic</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutQuint.Content" xml:space="preserve">
-    <value>Quintic Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
+    <value>Quartic</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseInOutSine.Content" xml:space="preserve">
-    <value>Sine Ease In-Out</value>
+  <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
+    <value>Quintic</value>
+  </data>
+  <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
+    <value>Sine</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>Linear</value>
