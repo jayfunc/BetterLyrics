@@ -177,7 +177,7 @@ namespace BetterLyrics.WinUI3.Logic
                     line.ColorTransition.SetDelay(yScrollDelay);
                     line.ColorTransition.Start(isSecondaryLinePlaying ? fgColor : bgColor);
 
-                    line.AngleTransition.SetEasingType(canvasYScrollTransition.EasingType);
+                    line.AngleTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
                     line.AngleTransition.SetDuration(yScrollDuration);
                     line.AngleTransition.SetDelay(yScrollDelay);
                     line.AngleTransition.Start(
@@ -185,7 +185,7 @@ namespace BetterLyrics.WinUI3.Logic
                         fanAngleRad * distanceFactor * (i > primaryPlayingLineIndex ? 1 : -1) :
                         0);
 
-                    line.YOffsetTransition.SetEasingType(canvasYScrollTransition.EasingType);
+                    line.YOffsetTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
                     line.YOffsetTransition.SetDuration(yScrollDuration);
                     line.YOffsetTransition.SetDelay(yScrollDelay);
                     // 设计之初是当 isLayoutChanged 为真时 jumpTo
