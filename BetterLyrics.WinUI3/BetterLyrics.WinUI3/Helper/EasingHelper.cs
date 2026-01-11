@@ -1,114 +1,170 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using System;
+using System.Numerics;
+using BetterLyrics.WinUI3.Enums;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public class EasingHelper
     {
-        public static double EaseInOutSine(double t)
-        {
-            return -(Math.Cos(Math.PI * t) - 1f) / 2f;
-        }
-        public static double EaseInOutQuad(double t)
-        {
-            return t < 0.5f ? 2 * t * t : -1 + (4 - 2 * t) * t;
-        }
+        #region Interpolators
 
-        public static double EaseInOutCubic(double t)
+        public static Func<T, T, double, T> GetInterpolatorByEasingType<T>(EasingType? type, EaseMode easingMode = EaseMode.Out) 
+            where T : INumber<T>, IFloatingPointIeee754<T>
         {
-            return t < 0.5f ? 4 * t * t * t : 1 - Math.Pow(-2 * t + 2, 3) / 2;
-        }
-        public static double EaseInOutQuart(double t)
-        {
-            return t < 0.5f ? 8 * t * t * t * t : 1 - Math.Pow(-2 * t + 2, 4) / 2;
-        }
-
-        public static double EaseInOutQuint(double t)
-        {
-            return t < 0.5f ? 16 * t * t * t * t * t : 1 - Math.Pow(-2 * t + 2, 5) / 2;
-        }
-
-        public static double EaseInOutExpo(double t)
-        {
-            return t == 0
-              ? 0
-              : t == 1
-              ? 1
-              : t < 0.5 ? Math.Pow(2, 20 * t - 10) / 2
-              : (2 - Math.Pow(2, -20 * t + 10)) / 2;
-        }
-
-        public static double EaseInOutCirc(double t)
-        {
-            return t < 0.5f
-              ? (1 - Math.Sqrt(1 - Math.Pow(2 * t, 2))) / 2
-              : (Math.Sqrt(1 - Math.Pow(-2 * t + 2, 2)) + 1) / 2;
-        }
-
-        public static double EaseInOutBack(double t)
-        {
-            double c1 = 1.70158f;
-            double c2 = c1 * 1.525f;
-
-            return t < 0.5
-              ? (Math.Pow(2 * t, 2) * ((c2 + 1) * 2 * t - c2)) / 2
-              : (Math.Pow(2 * t - 2, 2) * ((c2 + 1) * (t * 2 - 2) + c2) + 2) / 2;
-        }
-
-        public static double EaseInOutElastic(double t)
-        {
-            if (t == 0 || t == 1) return t;
-            double p = 0.3f;
-            double s = p / 4;
-            return t < 0.5f
-              ? -(Math.Pow(2, 20 * t - 10) * Math.Sin((20 * t - 11.125f) * (2 * Math.PI) / p)) / 2
-              : (Math.Pow(2, -20 * t + 10) * Math.Sin((20 * t - 11.125f) * (2 * Math.PI) / p)) / 2 + 1;
-        }
-
-        private static double EaseOutBounce(double t)
-        {
-            if (t < 4 / 11f)
+            return (start, end, progress) =>
             {
-                return (121 * t * t) / 16f;
+                Func<T, T> easeInFunc = type switch
+                {
+                    EasingType.Sine => EaseInSine,
+                    EasingType.Quad => EaseInQuad,
+                    EasingType.Cubic => EaseInCubic,
+                    EasingType.Quart => EaseInQuart,
+                    EasingType.Quint => EaseInQuint,
+                    EasingType.Expo => EaseInExpo,
+                    EasingType.Circle => EaseInCircle,
+                    EasingType.Back => EaseInBack,
+                    EasingType.Elastic => EaseInElastic,
+                    EasingType.Bounce => EaseInBounce,
+                    EasingType.SmoothStep => SmoothStep,
+                    EasingType.Linear => Linear,
+                    _ => EaseInQuad,
+                };
+                double t = Ease(progress, easingMode, easeInFunc);
+                return start + ((end - start) * T.CreateChecked(t));
+            };
+        }
+
+        #endregion
+
+        public static double Ease<T>(double t, EaseMode mode, Func<T, T> easeIn)
+            where T : IFloatingPointIeee754<T>
+        {
+            t = Math.Clamp(t, 0.0, 1.0);
+
+            T tt = T.CreateChecked(t);
+            T half = T.CreateChecked(0.5);
+            T two = T.CreateChecked(2);
+            T tResult = mode switch
+            {
+                EaseMode.In => easeIn(tt),
+                EaseMode.Out => T.One - easeIn(T.One - tt),
+                EaseMode.InOut => tt < half
+                    ? easeIn(tt * two) / two
+                    : T.One - (easeIn((T.One - tt) * two) / two),
+                _ => easeIn(tt),
+            };
+
+            return double.CreateChecked(tResult);
+        }
+
+        public static T EaseInSine<T>(T t) where T : IFloatingPointIeee754<T>
+        {
+            return T.One - T.Cos((t * T.Pi) / T.CreateChecked(2));
+        }
+
+        public static T EaseInQuad<T>(T t) where T : INumber<T>
+        {
+            return t * t;
+        }
+
+        public static T EaseInCubic<T>(T t) where T : INumber<T>
+        {
+            return t * t * t;
+        }
+
+        public static T EaseInQuart<T>(T t) where T : INumber<T>
+        {
+            return t * t * t * t;
+        }
+
+        public static T EaseInQuint<T>(T t) where T : INumber<T>
+        {
+            return t * t * t * t * t;
+        }
+
+        public static T EaseInExpo<T>(T t) where T : IFloatingPointIeee754<T>
+        {
+            if (t == T.Zero)
+            {
+                return T.Zero;
             }
-            else if (t < 8 / 11f)
+
+            return T.Pow(T.CreateChecked(2), (T.CreateChecked(10) * t) - T.CreateChecked(10));
+        }
+
+        public static T EaseInCircle<T>(T t) where T : IFloatingPointIeee754<T>
+        {
+            return T.One - T.Sqrt(T.One - (t * t));
+        }
+
+        public static T EaseInBack<T>(T t) where T : IFloatingPointIeee754<T>
+        {
+            T c1 = T.CreateChecked(1.70158);
+            T c3 = c1 + T.One;
+
+            return (c3 * t * t * t) - (c1 * t * t);
+        }
+
+        public static T EaseInElastic<T>(T t) where T : IFloatingPointIeee754<T>
+        {
+            if (t == T.Zero || t == T.One)
             {
-                return (363 / 40f * t * t) - (99 / 10f * t) + 17 / 5f;
+                return t;
             }
-            else if (t < 9 / 10f)
+
+            const double springiness = 6;
+            const double oscillations = 1;
+
+            double td = double.CreateChecked(t);
+
+            double expo = (Math.Exp(springiness * td) - 1.0) / (Math.Exp(springiness) - 1.0);
+            double result = 0.7 * expo * Math.Sin((Math.PI * 2.0 * oscillations + (Math.PI * 0.5)) * td);
+
+            return T.CreateChecked(result);
+        }
+
+        private static T EaseOutBounce<T>(T t) where T : IFloatingPointIeee754<T>
+        {
+            if (t < T.CreateChecked(4.0 / 11.0))
             {
-                return (4356 / 361f * t * t) - (35442 / 1805f * t) + 16061 / 1805f;
+                return (T.CreateChecked(121) * t * t) / T.CreateChecked(16);
+            }
+            else if (t < T.CreateChecked(8.0 / 11.0))
+            {
+                return ((T.CreateChecked(363.0 / 40.0) * t * t) - (T.CreateChecked(99.0 / 10.0) * t)) + T.CreateChecked(17.0 / 5.0);
+            }
+            else if (t < T.CreateChecked(9.0 / 10.0))
+            {
+                return ((T.CreateChecked(4356.0 / 361.0) * t * t) - (T.CreateChecked(35442.0 / 1805.0) * t)) + T.CreateChecked(16061.0 / 1805.0);
             }
             else
             {
-                return (54 / 5f * t * t) - (513 / 25f * t) + 268 / 25f;
+                return ((T.CreateChecked(54.0 / 5.0) * t * t) - (T.CreateChecked(513.0 / 25.0) * t)) + T.CreateChecked(268.0 / 25.0);
             }
         }
 
-        public static double EaseInOutBounce(double t)
+        public static T EaseInBounce<T>(T t) where T : IFloatingPointIeee754<T>
         {
-            if (t < 0.5f)
-            {
-                return (1 - EaseOutBounce(1 - 2 * t)) / 2;
-            }
-            else
-            {
-                return (1 + EaseOutBounce(2 * t - 1)) / 2;
-            }
+            return T.One - EaseOutBounce(T.One - t);
         }
 
-        public static double SmoothStep(double t)
+        public static T SmoothStep<T>(T t) where T : IFloatingPointIeee754<T>
         {
-            return t * t * (3f - 2f * t);
+            return t * t * (T.CreateChecked(3) - (T.CreateChecked(2) * t));
         }
 
-        public static double CubicBezier(double t, double p0, double p1, double p2, double p3)
+        public static T CubicBezier<T>(T t, T p0, T p1, T p2, T p3) where T : IFloatingPointIeee754<T>
         {
-            double u = 1 - t;
-            return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
+            T u = T.One - t;
+
+            return (u * u * u * p0)
+                + (T.CreateChecked(3) * u * u * t * p1)
+                + (T.CreateChecked(3) * u * t * t * p2)
+                + (t * t * t * p3);
         }
 
-        public static double Linear(double t) => t;
+        public static T Linear<T>(T t) where T : INumber<T> => t;
     }
 }

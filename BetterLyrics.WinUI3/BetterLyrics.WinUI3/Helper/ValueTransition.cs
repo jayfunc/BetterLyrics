@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models;
 using System;
 using System.Collections.Generic;
+using static BetterLyrics.WinUI3.Helper.EasingHelper;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -21,7 +22,6 @@ namespace BetterLyrics.WinUI3.Helper
         private double _configuredDelaySeconds;    // 配置的延迟时长
 
         // 动画状态
-        private Enums.EasingType? _easingType;
         private Func<T, T, double, T> _interpolator;
         private bool _isTransitioning;
         private double _progress; // 当前段的进度 (0.0 ~ 1.0)
@@ -30,10 +30,11 @@ namespace BetterLyrics.WinUI3.Helper
         public T Value => _currentValue;
         public bool IsTransitioning => _isTransitioning;
         public T TargetValue => _targetValue; // 获取当前段的目标值
-        public Enums.EasingType? EasingType => _easingType;
         public double DurationSeconds => _totalDurationForAutoSplit;
 
-        public ValueTransition(T initialValue, double defaultTotalDuration = 0.3, EasingType? defaultEasingType = null, Func<T, T, double, T>? interpolator = null)
+        public Func<T, T, double, T> Interpolator => _interpolator;
+
+        public ValueTransition(T initialValue, Func<T, T, double, T>? interpolator, double defaultTotalDuration = 0.3)
         {
             _currentValue = initialValue;
             _startValue = initialValue;
@@ -43,15 +44,6 @@ namespace BetterLyrics.WinUI3.Helper
             if (interpolator != null)
             {
                 _interpolator = interpolator;
-                _easingType = null;
-            }
-            else if (defaultEasingType != null)
-            {
-                SetEasingType(defaultEasingType);
-            }
-            else
-            {
-                SetEasingType(Enums.EasingType.EaseInOutQuad);
             }
         }
 
@@ -74,10 +66,9 @@ namespace BetterLyrics.WinUI3.Helper
             _configuredDelaySeconds = seconds;
         }
 
-        public void SetEasingType(Enums.EasingType? easingType)
+        public void SetInterpolator(Func<T, T, double, T> interpolator)
         {
-            _easingType = easingType;
-            _interpolator = GetInterpolatorByEasingType(easingType);
+            _interpolator = interpolator;
         }
 
         #endregion
@@ -235,7 +226,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         #region Interpolators
 
-        private Func<T, T, double, T> GetInterpolatorByEasingType(Enums.EasingType? type)
+        public static Func<T, T, double, T> GetInterpolatorByEasingType(EasingType? type, EaseMode easingMode)
         {
             if (typeof(T) == typeof(double))
             {
@@ -243,25 +234,24 @@ namespace BetterLyrics.WinUI3.Helper
                 {
                     double s = (double)(object)start;
                     double e = (double)(object)end;
-                    double t = progress;
 
-                    // 使用 EasingHelper (假设您的项目中已有此辅助类)
-                    switch (type)
+                    Func<double, double> easeInFunc = type switch
                     {
-                        case Enums.EasingType.EaseInOutSine: t = EasingHelper.EaseInOutSine(t); break;
-                        case Enums.EasingType.EaseInOutQuad: t = EasingHelper.EaseInOutQuad(t); break;
-                        case Enums.EasingType.EaseInOutCubic: t = EasingHelper.EaseInOutCubic(t); break;
-                        case Enums.EasingType.EaseInOutQuart: t = EasingHelper.EaseInOutQuart(t); break;
-                        case Enums.EasingType.EaseInOutQuint: t = EasingHelper.EaseInOutQuint(t); break;
-                        case Enums.EasingType.EaseInOutExpo: t = EasingHelper.EaseInOutExpo(t); break;
-                        case Enums.EasingType.EaseInOutCirc: t = EasingHelper.EaseInOutCirc(t); break;
-                        case Enums.EasingType.EaseInOutBack: t = EasingHelper.EaseInOutBack(t); break;
-                        case Enums.EasingType.EaseInOutElastic: t = EasingHelper.EaseInOutElastic(t); break;
-                        case Enums.EasingType.EaseInOutBounce: t = EasingHelper.EaseInOutBounce(t); break;
-                        case Enums.EasingType.SmoothStep: t = EasingHelper.SmoothStep(t); break;
-                        case Enums.EasingType.Linear: t = EasingHelper.Linear(t); break;
-                        default: t = EasingHelper.EaseInOutQuad(t); break;
-                    }
+                        Enums.EasingType.Sine => EaseInSine,
+                        Enums.EasingType.Quad => EaseInQuad,
+                        Enums.EasingType.Cubic => EaseInCubic,
+                        Enums.EasingType.Quart => EaseInQuart,
+                        Enums.EasingType.Quint => EaseInQuint,
+                        Enums.EasingType.Expo => EaseInExpo,
+                        Enums.EasingType.Circle => EaseInCircle,
+                        Enums.EasingType.Back => EaseInBack,
+                        Enums.EasingType.Elastic => EaseInElastic,
+                        Enums.EasingType.Bounce => EaseInBounce,
+                        Enums.EasingType.SmoothStep => SmoothStep,
+                        Enums.EasingType.Linear => Linear,
+                        _ => EaseInQuad,
+                    };
+                    double t = Ease(progress, easingMode, easeInFunc);
 
                     return (T)(object)(s + (e - s) * t);
                 };

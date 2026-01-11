@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using static BetterLyrics.WinUI3.Helper.EasingHelper;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
@@ -29,6 +30,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFloatAnimationDuration { get; set; } = 450; // 450ms
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial EasingType LyricsScrollEasingType { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial EaseMode LyricsScrollEasingMode { get; set; } = EaseMode.Out;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScrollDuration { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScrollTopDuration { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScrollBottomDuration { get; set; }
@@ -79,6 +81,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsFloatAnimationDuration = this.LyricsFloatAnimationDuration,
 
                 LyricsScrollEasingType = this.LyricsScrollEasingType,
+                LyricsScrollEasingMode = this.LyricsScrollEasingMode,
                 LyricsScrollDuration = this.LyricsScrollDuration,
                 LyricsScrollTopDuration = this.LyricsScrollTopDuration,
                 LyricsScrollBottomDuration = this.LyricsScrollBottomDuration,
