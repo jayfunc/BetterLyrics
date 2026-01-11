@@ -82,43 +82,43 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         {
             AngleTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: AnimationDuration,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
             );
             BlurAmountTransition = new(
                  initialValue: 0,
-                 defaultTotalDuration: AnimationDuration,
-                 defaultEasingType: EasingType.EaseInOutSine
+                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                 defaultTotalDuration: AnimationDuration
              );
             PhoneticOpacityTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: AnimationDuration,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
             );
             PlayedOriginalOpacityTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: AnimationDuration,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
             );
             UnplayedOriginalOpacityTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: AnimationDuration,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
             );
             TranslatedOpacityTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: AnimationDuration,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
             );
             ScaleTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: AnimationDuration,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
             );
             YOffsetTransition = new(
                 initialValue: 0,
-                defaultTotalDuration: AnimationDuration,
-                defaultEasingType: EasingType.EaseInOutSine
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
             );
             ColorTransition = new(
                 initialValue: Colors.Transparent,

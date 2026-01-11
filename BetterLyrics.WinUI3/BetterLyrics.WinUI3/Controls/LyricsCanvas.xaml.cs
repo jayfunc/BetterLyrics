@@ -63,6 +63,7 @@ namespace BetterLyrics.WinUI3.Controls
         );
         private readonly ValueTransition<double> _immersiveBgOpacityTransition = new(
             initialValue: 1f,
+            EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
             defaultTotalDuration: 0.3f
         );
         private readonly ValueTransition<Color> _accentColor1Transition = new(
@@ -87,13 +88,13 @@ namespace BetterLyrics.WinUI3.Controls
         );
         private readonly ValueTransition<double> _canvasYScrollTransition = new(
             initialValue: 0f,
-            defaultTotalDuration: 0.3f,
-            defaultEasingType: EasingType.EaseInOutSine
+            EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+            defaultTotalDuration: 0.3f
         );
         private readonly ValueTransition<double> _mouseYScrollTransition = new(
             initialValue: 0f,
-            defaultTotalDuration: 0.3f,
-            defaultEasingType: EasingType.EaseInOutSine
+            EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+            defaultTotalDuration: 0.3f
         );
 
         private TimeSpan _songPositionWithOffset;
@@ -492,7 +493,7 @@ namespace BetterLyrics.WinUI3.Controls
                 else
                 {
                     _canvasYScrollTransition.SetDurationMs(lyricsEffect.LyricsScrollDuration);
-                    _canvasYScrollTransition.SetEasingType(lyricsEffect.LyricsScrollEasingType);
+                    _canvasYScrollTransition.SetInterpolator(EasingHelper.GetInterpolatorByEasingType<double>(lyricsEffect.LyricsScrollEasingType, lyricsEffect.LyricsScrollEasingMode));
                     _canvasYScrollTransition.Start(_canvasTargetScrollOffset);
                 }
             }

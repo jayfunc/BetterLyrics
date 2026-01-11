@@ -208,6 +208,13 @@
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutBounce" />
                         </ComboBox>
                         <dev:SettingsExpander.Items>
+                            <dev:SettingsCard Header="Easing Mode">
+                                <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem Content="EaseIn" />
+                                    <ComboBoxItem Content="EaseOut" />
+                                    <ComboBoxItem Content="EaseInOut" />
+                                </ComboBox>
+                            </dev:SettingsCard>
                             <dev:SettingsCard x:Uid="SettingsPageScrollTopDuration">
                                 <local:ExtendedSlider
                                     Default="500"
