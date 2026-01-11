@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Reflection;
 using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services.PluginService
@@ -45,58 +46,91 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
         private void TryLoadPlugin(string dllPath)
         {
+            // 1. Create Context
+            var loadContext = new PluginLoadContext(dllPath);
+
             try
             {
-                var loadContext = new PluginLoadContext(dllPath);
                 var assembly = loadContext.LoadFromAssemblyPath(dllPath);
-                bool isPluginFound = false;
+                int loadedCount = 0; // Track successfully loaded plugins
 
-                foreach (var type in assembly.GetExportedTypes())
+                // 2. [Safety Check] Safely retrieve types
+                IEnumerable<Type> types;
+                try
                 {
-                    if (typeof(IPlugin).IsAssignableFrom(type) && !type.IsAbstract)
+                    types = assembly.GetExportedTypes();
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    // If some types fail to load, only keep the usable ones!
+                    types = ex.Types.Where(t => t != null)!;
+                    foreach (var loaderEx in ex.LoaderExceptions)
                     {
-                        var plugin = (IPlugin?)Activator.CreateInstance(type);
-                        if (plugin == null) continue;
-
-                        if (_plugins.Any(p => p.Id == plugin.Id))
-                        {
-                            // 遇到重复 ID，我们选择跳过新的，保留旧的
-                            // (或者你也可以设计成卸载旧的加载新的，这取决于策略)
-                            // 由于我们已经加载了 assembly，现在决定不用它，必须卸载 context
-                            loadContext.Unload();
-                            return;
-                        }
-
-                        try
-                        {
-                            plugin.Initialize();
-                        }
-                        catch (Exception initEx)
-                        {
-                            _logger.LogError(initEx, "Failed to initialize plugin {id} from {path}", plugin.Id, dllPath);
-                            loadContext.Unload();
-                            return;
-                        }
-
-                        _plugins.Add(plugin);
-                        _pluginContexts.Add(plugin.Id, loadContext);
-                        isPluginFound = true;
+                        _logger.LogWarning("Partial type loading failure in DLL {path}: {msg}", dllPath, loaderEx?.Message);
                     }
                 }
 
-                if (isPluginFound)
+                foreach (var type in types)
+                {
+                    // 3. Check if it is a valid plugin class
+                    if (typeof(IPlugin).IsAssignableFrom(type) && !type.IsAbstract)
+                    {
+                        IPlugin? plugin = null;
+                        try
+                        {
+                            // 4. [Instantiation Guard] Prevent plugin constructor errors from crashing the main app
+                            plugin = (IPlugin?)Activator.CreateInstance(type);
+                            if (plugin == null) continue;
+
+                            // 5. Check for duplicate IDs
+                            if (_plugins.Any(p => p.Id == plugin.Id))
+                            {
+                                _logger.LogWarning("Skipping duplicate plugin: {id} ({path})", plugin.Id, dllPath);
+                                // Explicitly break reference to aid Unload
+                                plugin = null;
+                                continue;
+                            }
+
+                            // 6. Initialize
+                            plugin.Initialize();
+
+                            // 7. Add to collection
+                            _plugins.Add(plugin);
+                            _pluginContexts.Add(plugin.Id, loadContext);
+                            loadedCount++;
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Failed to initialize/instantiate plugin {type}", type.FullName);
+
+                            // If plugin initialization fails, explicitly dispose if possible
+                            if (plugin is IDisposable disposable)
+                            {
+                                try { disposable.Dispose(); } catch { }
+                            }
+                            plugin = null; // Break reference
+                        }
+                    }
+                }
+
+                // 8. Finalize: If no usable plugins were found in this DLL, unload Context
+                if (loadedCount > 0)
                 {
                     _loadedDllPaths.Add(dllPath);
+                    _logger.LogInformation("Successfully loaded {count} plugin(s) from {path}", loadedCount, dllPath);
                 }
                 else
                 {
-                    _logger.LogWarning("No valid plugin types found in assembly {path}", dllPath);
+                    _logger.LogWarning("No valid plugins found in {path}. Unloading context.", dllPath);
+                    // No plugin instances remain alive at this point, safe to unload
                     loadContext.Unload();
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to load plugin from {path}", dllPath);
+                _logger.LogError(ex, "Failed to load assembly: {path}", dllPath);
+                // Only unload here if the loading process completely crashed
+                try { loadContext.Unload(); } catch { }
             }
         }
 

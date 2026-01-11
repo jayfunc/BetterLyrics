@@ -129,7 +129,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     {
                         romaji = await transliterationService.TransliterateText(main.WrappedOriginalText, PhoneticHelper.RomanCode, token);
                         _lyricsDataArr.FirstOrDefault()?.SetTransliteration(romaji);
-                        transliterationSearchProvider = TransliterationSearchProvider.CutletDocker;
+                        transliterationSearchProvider = TransliterationSearchProvider.Plugin;
                     }
                     catch (TaskCanceledException) { }
                     catch (Exception)

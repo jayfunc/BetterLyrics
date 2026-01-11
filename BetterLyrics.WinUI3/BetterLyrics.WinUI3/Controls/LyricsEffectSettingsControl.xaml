@@ -196,23 +196,23 @@
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeLinear" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeSmoothStep" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutSine" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutQuad" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutCubic" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutQuart" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutQuint" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutExpo" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutCirc" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutBack" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutElastic" />
-                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseInOutBounce" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseSine" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseQuad" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseCubic" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseQuart" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseQuint" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseExpo" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseCirc" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseBack" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseElastic" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseBounce" />
                         </ComboBox>
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard Header="Easing Mode">
+                            <dev:SettingsCard x:Uid="SettingsPageEasingMode">
                                 <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem Content="EaseIn" />
-                                    <ComboBoxItem Content="EaseOut" />
-                                    <ComboBoxItem Content="EaseInOut" />
+                                    <ComboBoxItem x:Uid="SettingsPageEasingModeIn" />
+                                    <ComboBoxItem x:Uid="SettingsPageEasingModeOut" />
+                                    <ComboBoxItem x:Uid="SettingsPageEasingModeInOut" />
                                 </ComboBox>
                             </dev:SettingsCard>
                             <dev:SettingsCard x:Uid="SettingsPageScrollTopDuration">

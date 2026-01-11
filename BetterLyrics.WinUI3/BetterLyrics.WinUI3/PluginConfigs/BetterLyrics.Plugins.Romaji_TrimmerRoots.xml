@@ -1,0 +1,15 @@
+
+<linker>
+  <assembly fullname="System.Collections" preserve="all" />
+  <assembly fullname="System.IO.MemoryMappedFiles" preserve="all" />
+  <assembly fullname="System.Linq" preserve="all" />
+  <assembly fullname="System.Memory" preserve="all" />
+  <assembly fullname="System.ObjectModel" preserve="all" />
+  <assembly fullname="System.Runtime" preserve="all" />
+  <assembly fullname="System.Runtime.InteropServices" preserve="all" />
+  <assembly fullname="System.Text.RegularExpressions" preserve="all" />
+  <assembly fullname="System.Threading" preserve="all" />
+  <assembly fullname="BetterLyrics.WinUI3">
+    <type fullname="BetterLyrics.WinUI3.PluginConfigs.BetterLyrics_Plugins_Romaji_Config" preserve="all" />
+  </assembly>
+</linker>
