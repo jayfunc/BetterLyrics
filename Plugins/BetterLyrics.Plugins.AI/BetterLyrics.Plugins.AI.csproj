@@ -45,7 +45,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+	  <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
 	</ItemGroup>
 
 </Project>
