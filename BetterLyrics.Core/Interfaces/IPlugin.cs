@@ -11,7 +11,10 @@ namespace BetterLyrics.Core.Interfaces
         string Name { get; }
         string Description { get; }
         string Author { get; }
+        string Version { get; }
+        DateTime LastUpdated { get; }
 
-        void Initialize();
+        void OnLoad(IPluginContext context);
+        void OnUnload();
     }
 }

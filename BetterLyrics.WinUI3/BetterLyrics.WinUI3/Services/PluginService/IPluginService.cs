@@ -9,6 +9,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
     {
         IReadOnlyList<IPlugin> Plugins { get; }
 
+        T? GetPlugin<T>() where T : class, IPlugin;
         void LoadPlugins();
         void InstallPlugin(string zipPath);
         void UninstallPlugin(string pluginId);
