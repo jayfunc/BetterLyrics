@@ -20,7 +20,7 @@
 
   <br>
 
-  <img src="Promotion/banner.png" alt="Banner" width="100%" style="border-radius: 10px;">
+  <img src="docs/assets/promotion/banner.png" alt="Banner" width="100%" style="border-radius: 10px;">
 
 </div>
 
