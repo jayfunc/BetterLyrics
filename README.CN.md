@@ -46,7 +46,7 @@
 | :---: | :---: |
 | <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>无限期免费试用（功能与付费版一致） | [**📦 最新版本 (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>[查看安装指南](https://www.cnblogs.com/jayfunc/p/19212078) |
 
-[📖 用户指南](https://github.com/jayfunc/BetterLyrics/wiki/使用指南) | [🔒 隐私政策](PrivacyPolicy.CN.md) | [⚖️ 服务条款](TermsofService.CN.md)
+[📖 用户指南](https://github.com/jayfunc/BetterLyrics/wiki/使用指南) | [🔒 隐私政策](docs/PrivacyPolicy.CN.md) | [⚖️ 服务条款](docs/TermsofService.CN.md)
 
 </div>
 
@@ -80,19 +80,19 @@
 
 | 标准视图 | 侧边栏模式 |
 | :---: | :---: |
-| <img src="Screenshots/std.png" width="100%"> | <img src="Screenshots/narrow.png" width="100%"> |
+| <img src="docs/assets/screenshots/std.png" width="100%"> | <img src="docs/assets/screenshots/narrow.png" width="100%"> |
 
 | 歌词视觉特效 | 多模式共存 |
 | :---: | :---: |
-| <img src="Screenshots/effect.png" width="100%"> | <img src="Screenshots/all-in-one.png" width="100%"> |
+| <img src="docs/assets/screenshots/effect.png" width="100%"> | <img src="docs/assets/screenshots/all-in-one.png" width="100%"> |
 
 | 全屏模式 | 全屏模式 |
 | :---: | :---: |
-| <img src="Screenshots/fs3.png" width="100%"> | <img src="Screenshots/fs2.png" width="100%"> |
+| <img src="docs/assets/screenshots/fs3.png" width="100%"> | <img src="docs/assets/screenshots/fs2.png" width="100%"> |
 
 | 音乐库 | 播放统计 |
 | :---: | :---: |
-| <img src="Screenshots/music-gallery.png" width="100%"> | <img src="Screenshots/stats.png" width="100%"> |
+| <img src="docs/assets/screenshots/music-gallery.png" width="100%"> | <img src="docs/assets/screenshots/stats.png" width="100%"> |
 
 </div>
 
@@ -103,6 +103,8 @@
 ## ✍️ 贡献与构建
 
 **协助翻译：** 找不到你的语言？[点此开始翻译](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file)。
+
+**开发插件：** 想要扩展功能？[🧩 阅读插件开发指南](docs/PLUGIN_DEV.md)。
 
 **从源码构建：**
 > 构建前，请确保已替换 `Constants` 文件夹下的 `DiscordTemplate.cs` 和 `LastFM.cs`。
@@ -115,7 +117,7 @@
 
 | 网页平台 | 支付宝 (扫码) | 微信 (扫码) |
 | :---: | :---: | :---: |
-| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="Donate/Alipay.jpg" width="150"> | <img src="Donate/WeChatReward.png" width="150"> |
+| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donate/Alipay.jpg" width="150"> | <img src="docs/assets/donate/WeChatReward.png" width="150"> |
 
 **[查看完整赞助者名单 (Hall of Fame)](SPONSORS.md)**
 

@@ -1,3 +1,5 @@
+**中文** | [**English**](PLUGIN_DEV.md)
+
 # BetterLyrics 插件开发指南 🧩
 
 欢迎开发 BetterLyrics 插件！本文档将指导你如何创建一个标准插件，并利用我们的自动化构建工具链，完美解决 .NET 裁剪（Trimming）和依赖冲突问题。

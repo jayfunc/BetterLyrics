@@ -46,7 +46,7 @@
 | :---: | :---: |
 | <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>Unlimited free trial (Same as paid) | [**📦 Latest Release (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>See [Installation Guide](https://jayfunc.blog/blog/how-to-install-zip) |
 
-[📖 User Guide](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide) | [🔒 Privacy Policy](PrivacyPolicy.md) | [⚖️ Terms of Service](TermsofService.md)
+[📖 User Guide](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide) | [🔒 Privacy Policy](docs/PrivacyPolicy.md) | [⚖️ Terms of Service](docs/TermsofService.md)
 
 </div>
 
@@ -80,19 +80,19 @@
 
 | Standard View | Narrow Mode |
 | :---: | :---: |
-| <img src="Screenshots/std.png" width="100%"> | <img src="Screenshots/narrow.png" width="100%"> |
+| <img src="docs/assets/screenshots/std.png" width="100%"> | <img src="docs/assets/screenshots/narrow.png" width="100%"> |
 
 | Lyrics Visual Effects | Coexisting Modes |
 | :---: | :---: |
-| <img src="Screenshots/effect.png" width="100%"> | <img src="Screenshots/all-in-one.png" width="100%"> |
+| <img src="docs/assets/screenshots/effect.png" width="100%"> | <img src="docs/assets/screenshots/all-in-one.png" width="100%"> |
 
 | Fullscreen Mode | Fullscreen Mode |
 | :---: | :---: |
-| <img src="Screenshots/fs3.png" width="100%"> | <img src="Screenshots/fs2.png" width="100%"> |
+| <img src="docs/assets/screenshots/fs3.png" width="100%"> | <img src="docs/assets/screenshots/fs2.png" width="100%"> |
 
 | Music Gallery | Playback Statistics |
 | :---: | :---: |
-| <img src="Screenshots/music-gallery.png" width="100%"> | <img src="Screenshots/stats.png" width="100%"> |
+| <img src="docs/assets/screenshots/music-gallery.png" width="100%"> | <img src="docs/assets/screenshots/stats.png" width="100%"> |
 
 </div>
 
@@ -103,6 +103,8 @@
 ## ✍️ Contribute & Build
 
 **Help us translate:** Cannot find your language? [Start translating here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file).
+
+**Develop Plugins:** Want to extend functionality? [🧩 Read the Developer Guide](docs/PLUGIN_DEV.md).
 
 **Build from source:**
 > Before building, ensure you have replaced `DiscordTemplate.cs` and `LastFM.cs` in the `Constants` folder.
@@ -115,7 +117,7 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 
 | Web Platforms | Alipay (QR) | WeChat (QR) |
 | :---: | :---: | :---: |
-| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="Donate/Alipay.jpg" width="150"> | <img src="Donate/WeChatReward.png" width="150"> |
+| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donate/Alipay.jpg" width="150"> | <img src="docs/assets/donate/WeChatReward.png" width="150"> |
 
 **[View the full Hall of Fame (Sponsors)](SPONSORS.md)**
 

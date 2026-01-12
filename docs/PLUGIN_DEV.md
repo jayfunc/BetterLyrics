@@ -1,3 +1,5 @@
+[**中文**](PLUGIN_DEV.CN.md) | **English**
+
 # BetterLyrics Plugin Development Guide 🧩
 
 Welcome to BetterLyrics plugin development! This document guides you through creating a standard plugin and using our automated build toolchain to perfectly resolve .NET Trimming and dependency conflict issues.

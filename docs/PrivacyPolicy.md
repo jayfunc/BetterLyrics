@@ -1,3 +1,5 @@
+[**中文**](PrivacyPolicy.CN.md) | **English**
+
 # Privacy Policy for BetterLyrics
 
 **Effective Date:** June 3, 2025
