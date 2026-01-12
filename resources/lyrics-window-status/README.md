@@ -1,5 +1,3 @@
-# Welcome to ShareHub | 欢迎来到 ShareHub
-
 ## Shared lyrics window status | 已分享的歌词窗口状态
 
 Click on the links below to view and download the config files. | 点击以下链接查看和下载配置文件。
