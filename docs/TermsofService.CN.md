@@ -1,3 +1,5 @@
+**中文** | [**English**](TermsofService.md)
+
 # BetterLyrics 服务条款
 
 **生效日期：** 2025 年 6 月 3 日

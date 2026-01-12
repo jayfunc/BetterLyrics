@@ -1,3 +1,5 @@
+**中文** | [**English**](PrivacyPolicy.md)
+
 # BetterLyrics 隐私政策
 
 **生效日期：** 2025 年 6 月 3 日

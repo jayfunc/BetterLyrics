@@ -1,3 +1,5 @@
+[**жпнд**](TermsofService.CN.md) | **English**
+
 # Terms of Service for BetterLyrics
 
 **Effective Date:** June 3, 2025
