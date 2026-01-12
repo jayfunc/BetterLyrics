@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BetterLyrics.Core.Interfaces
+namespace BetterLyrics.Core.Interfaces.Features
 {
-    public interface ILyricsSearchPlugin : IPlugin
+    public interface ILyricsSource
     {
         Task<LyricsSearchResult> GetLyricsAsync(string title, string artist, string album, double duration);
     }

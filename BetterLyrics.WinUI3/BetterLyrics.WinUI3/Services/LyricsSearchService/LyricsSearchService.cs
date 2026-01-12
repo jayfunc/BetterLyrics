@@ -1,6 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.Core.Interfaces;
+using BetterLyrics.Core.Interfaces.Features;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
@@ -225,7 +225,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 if (token.IsCancellationRequested) break;
 
-                if (plugin is ILyricsSearchPlugin lyricsSearchPlugin)
+                if (plugin is ILyricsSource lyricsSearchPlugin)
                 {
                     var pluginResult = await SearchPluginAsync(songInfo, lyricsSearchPlugin, token);
                     results.Add(pluginResult);
@@ -694,7 +694,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, ILyricsSearchPlugin plugin, CancellationToken token)
+        private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, ILyricsSource plugin, CancellationToken token)
         {
             var cacheItem = new LyricsCacheItem
             {

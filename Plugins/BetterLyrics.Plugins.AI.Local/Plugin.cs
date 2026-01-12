@@ -1,12 +1,13 @@
 ﻿using BetterLyrics.Core.Interfaces;
+using BetterLyrics.Core.Interfaces.Services;
 using LLama;
 using LLama.Common;
 using System.Reflection;
 using System.Text;
 
-namespace BetterLyrics.Plugins.AI
+namespace BetterLyrics.Plugins.AI.Local
 {
-    public class AIPlugin : IAIServicePlugin
+    public class Plugin : IPlugin, IAIService
     {
         private LLamaWeights? _model;
         private ModelParams? _parameters;
