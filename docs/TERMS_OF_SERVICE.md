@@ -1,4 +1,4 @@
-[**ÖÐÎÄ**](TermsofService.CN.md) | **English**
+[**ä¸­æ–‡**](TermsofService.CN.md) | **English**
 
 # Terms of Service for BetterLyrics
 
