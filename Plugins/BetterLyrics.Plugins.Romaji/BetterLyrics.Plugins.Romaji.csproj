@@ -97,8 +97,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
-		<ProjectReference Include="..\RomajiConverter.Core\RomajiConverter.Core.csproj" />
+	  <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+	  <ProjectReference Include="..\..\RomajiConverter.Core\RomajiConverter.Core.csproj" />
 	</ItemGroup>
 
 	<Target Name="AutoExcludeSharedAssemblies" AfterTargets="ResolveAssemblyReferences">
@@ -110,12 +110,11 @@
 		
 		<ItemGroup>
 			<FilesToCopy Include="@(ReferenceCopyLocalPaths)" />
-			<SharedFiles Include="@(FilesToCopy)"
-						 Condition="Exists('$(HostOutputDir)%(Filename)%(Extension)')" />
+			<SharedFiles Include="@(FilesToCopy)" Condition="Exists('$(HostOutputDir)%(Filename)%(Extension)')" />
 			<ReferenceCopyLocalPaths Remove="@(SharedFiles)" />
 		</ItemGroup>
 
-		<Message Text="[Smart Trim] Excluded shared assemblies:%0a@(SharedFiles->'    -> %(Filename)%(Extension)', '%0a')" Importance="High" Condition="'@(SharedFiles)' != ''" />
+		<Message Text="[Smart Trim] Excluded shared assemblies:%0a@(SharedFiles->'    -&gt; %(Filename)%(Extension)', '%0a')" Importance="High" Condition="'@(SharedFiles)' != ''" />
 	</Target>
 
 	<Target Name="RunPluginAnalyzer" AfterTargets="Build">
