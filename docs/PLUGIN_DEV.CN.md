@@ -30,45 +30,40 @@
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <UseWinUI>true</UseWinUI>
-    <EnableDynamicLoading>true</EnableDynamicLoading>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj">
-      <Private>false</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </ProjectReference>
-    
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj">
+			<Private>false</Private>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</ProjectReference>
+	</ItemGroup>
 
-  <PropertyGroup>
-    <HostProjectDir>..\BetterLyrics.WinUI3\BetterLyrics.WinUI3</HostProjectDir>
-    
-    <HostOutputDir>$(HostProjectDir)\bin\x64\$(Configuration)\$(TargetFramework)\</HostOutputDir>
-    
-    <AnalyzerPath>..\PluginAnalyzer\bin\Debug\net8.0\PluginAnalyzer.exe</AnalyzerPath>
-  </PropertyGroup>
-
-  	<Target Name="AutoExcludeSharedAssemblies" AfterTargets="ResolveAssemblyReferences">
+	<Target Name="AutoExcludeSharedAssemblies" AfterTargets="ResolveAssemblyReferences">
 		<PropertyGroup>
-			<HostOutputDir>..\BetterLyrics.WinUI3\BetterLyrics.WinUI3\bin\x64\$(Configuration)\$(TargetFramework)\</HostOutputDir>
+			<HostOutputDir>
+				..\BetterLyrics.WinUI3\BetterLyrics.WinUI3\bin\x64\$(Configuration)\$(TargetFramework)\</HostOutputDir>
 		</PropertyGroup>
-		
+
 		<Message Text="[Debug] Searching for Host Assemblies in: $(HostOutputDir)" Importance="High" />
-		
+
 		<ItemGroup>
 			<FilesToCopy Include="@(ReferenceCopyLocalPaths)" />
 			<SharedFiles Include="@(FilesToCopy)"
-						 Condition="Exists('$(HostOutputDir)%(Filename)%(Extension)')" />
+				Condition="Exists('$(HostOutputDir)%(Filename)%(Extension)')" />
 			<ReferenceCopyLocalPaths Remove="@(SharedFiles)" />
 		</ItemGroup>
 
-		<Message Text="[Smart Trim] Excluded shared assemblies:%0a@(SharedFiles->'    -> %(Filename)%(Extension)', '%0a')" Importance="High" Condition="'@(SharedFiles)' != ''" />
+		<Message
+			Text="[Smart Trim] Excluded shared assemblies:%0a@(SharedFiles->'    -> %(Filename)%(Extension)', '%0a')"
+			Importance="High" Condition="'@(SharedFiles)' != ''" />
 	</Target>
 
 	<Target Name="RunPluginAnalyzer" AfterTargets="Build">
@@ -82,7 +77,8 @@
 		</PropertyGroup>
 
 		<Message Text="[Analyzer] Delivering configs to Main App..." Importance="High" />
-		<Exec Command="&quot;$(AnalyzerPath)&quot; &quot;$(ScanDir)\&quot; &quot;$(Ns)&quot; &quot;$(Prefix)&quot; &quot;$(OutputDir)\&quot;" />
+		<Exec
+			Command="&quot;$(AnalyzerPath)&quot; &quot;$(ScanDir)\&quot; &quot;$(Ns)&quot; &quot;$(Prefix)&quot; &quot;$(OutputDir)\&quot;" />
 	</Target>
 
 </Project>
