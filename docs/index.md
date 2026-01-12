@@ -5,7 +5,7 @@ nav_order: 1
 ---
 
 <div align="center">
-  <img src="assets/Logo.png" alt="Logo" width="120">
+  <img src="https://github.com/jayfunc/BetterLyrics/blob/dev/BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png?raw=true" alt="Logo" width="120">
   <h1>BetterLyrics</h1>
 
   <h4>
