@@ -8,50 +8,50 @@ Each link is accompanied by a preview image of the lyrics window in that specifi
 
 ---
 
-### [Desktop | 桌面](LyricsWindowStatus/desktop.json)
+### [Desktop | 桌面](desktop.json)
 
-  ![](LyricsWindowStatus/desktop.png)
-
----
-
-### [Docked (Bottom) | 停靠（底部）](LyricsWindowStatus/docked-bottom.json)
-
-  ![](LyricsWindowStatus/docked-bottom.png)
+  ![](desktop.png)
 
 ---
 
-### [Docked (Top) | 停靠（顶部）](LyricsWindowStatus/docked-top.json)
+### [Docked (Bottom) | 停靠（底部）](docked-bottom.json)
 
-  ![](LyricsWindowStatus/docked-top.png)
-
----
-
-### [Fullscreen (Horizontal) | 全屏（横屏）](LyricsWindowStatus/fs-horiz.json)
-
-  ![](LyricsWindowStatus/fs-horiz.png)
+  ![](docked-bottom.png)
 
 ---
 
-### [Fullscreen (Vertical) | 全屏（竖屏）](LyricsWindowStatus/fs-vert.json)
+### [Docked (Top) | 停靠（顶部）](docked-top.json)
 
-  ![](LyricsWindowStatus/fs-vert.png)
-
----
-
-### [Standard (Horizontal) | 标准（横屏）](LyricsWindowStatus/std-horiz.json)
-
-  ![](LyricsWindowStatus/std-horiz.png)
+  ![](docked-top.png)
 
 ---
 
-### [Standard (Vertical) | 标准（竖屏）](LyricsWindowStatus/std-vert.json)
+### [Fullscreen (Horizontal) | 全屏（横屏）](fs-horiz.json)
 
-  ![](LyricsWindowStatus/std-vert.png)
+  ![](fs-horiz.png)
 
 ---
 
-### [Taskbar | 任务栏](LyricsWindowStatus/taskbar.json)
+### [Fullscreen (Vertical) | 全屏（竖屏）](fs-vert.json)
 
-  ![](LyricsWindowStatus/taskbar.png)
+  ![](fs-vert.png)
+
+---
+
+### [Standard (Horizontal) | 标准（横屏）](std-horiz.json)
+
+  ![](std-horiz.png)
+
+---
+
+### [Standard (Vertical) | 标准（竖屏）](std-vert.json)
+
+  ![](std-vert.png)
+
+---
+
+### [Taskbar | 任务栏](taskbar.json)
+
+  ![](taskbar.png)
 
 ---
