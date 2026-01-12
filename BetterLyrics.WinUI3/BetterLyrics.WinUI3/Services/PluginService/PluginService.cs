@@ -24,6 +24,11 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             _logger = logger;
         }
 
+        public T? GetPlugin<T>() where T : class, IPlugin
+        {
+            return _plugins.OfType<T>().FirstOrDefault();
+        }
+
         public void LoadPlugins()
         {
             string pluginsRoot = Path.Combine(ApplicationData.Current.LocalFolder.Path, "plugins");
@@ -40,6 +45,28 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                     if (_loadedDllPaths.Contains(dllPath)) continue;
 
                     TryLoadPlugin(dllPath);
+                }
+            }
+
+            InitializePlugins();
+        }
+
+        private void InitializePlugins()
+        {
+            foreach (var plugin in _plugins)
+            {
+                try
+                {
+                    string dllPath = plugin.GetType().Assembly.Location;
+                    string? pluginDir = Path.GetDirectoryName(dllPath);
+                    if (pluginDir == null) continue;
+
+                    var context = new PluginContext(this, pluginDir);
+                    plugin.OnLoad(context);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to initialize plugin {Name}", plugin.Name);
                 }
             }
         }
@@ -90,9 +117,6 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                                 plugin = null;
                                 continue;
                             }
-
-                            // 6. Initialize
-                            plugin.Initialize();
 
                             // 7. Add to collection
                             _plugins.Add(plugin);

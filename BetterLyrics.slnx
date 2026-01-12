@@ -4,7 +4,9 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/Plugins/" />
   <Project Path="BetterLyrics.Core/BetterLyrics.Core.csproj" />
+  <Project Path="BetterLyrics.Plugins.AI/BetterLyrics.Plugins.AI.csproj" Id="ab01c4e5-1ba4-403a-8e5a-dc7add734ca6" />
   <Project Path="BetterLyrics.Plugins.Romaji/BetterLyrics.Plugins.Romaji.csproj" />
   <Project Path="BetterLyrics.WinUI3/BetterLyrics.WinUI3 (Package)/BetterLyrics.WinUI3 (Package).wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5">
     <Deploy />
