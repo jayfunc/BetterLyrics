@@ -96,7 +96,7 @@
 * **如果是私有库**（如 `MeCab`）：脚本检测到主程序没有，会将其保留在你的插件目录里。
 
 ### 2. 实现接口
-在代码中实现 `BetterLyrics.Core` 提供的接口（例如 `ILyricsProvider`）。
+在代码中实现 `BetterLyrics.Core` 提供的接口（例如 `ILyricsSearchPlugin`）。
 
 ```csharp
 using BetterLyrics.Core;
@@ -117,7 +117,6 @@ public class MyLyricsSearchPlugin : ILyricsSearchPlugin
     {
         // Do something if necessary ...
         // string? pluginPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        // Do something if necessary ...
     }
     
     public async Task<LyricsSearchResult> GetLyricsAsync(string title, string artist, string album, double duration)
