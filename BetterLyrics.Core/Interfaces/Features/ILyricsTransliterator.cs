@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BetterLyrics.Core.Interfaces
+namespace BetterLyrics.Core.Interfaces.Features
 {
-    public interface ILyricsTransliterationPlugin : IPlugin
+    public interface ILyricsTransliterator
     {
         Task<string?> GetTransliterationAsync(string text, string targetLangCode);
     }

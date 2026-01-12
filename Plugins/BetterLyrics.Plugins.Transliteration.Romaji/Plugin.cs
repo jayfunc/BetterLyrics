@@ -1,10 +1,10 @@
 ﻿using BetterLyrics.Core.Interfaces;
-using RomajiConverter.Core.Helpers;
-using System.Reflection;
+using BetterLyrics.Core.Interfaces.Features;
+using BetterLyrics.Plugins.Romaji.Helpers;
 
-namespace BetterLyrics.Plugins.Romaji
+namespace BetterLyrics.Plugins.Transliteration.Romaji
 {
-    public class RomajiPlugin : ILyricsTransliterationPlugin
+    public class Plugin : ILyricsTransliterator
     {
         public string Id => "jayfunc.romaji";
         public string Name => "Romaji";

@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Interfaces;
+﻿using BetterLyrics.Core.Interfaces.Features;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Http;
 using BetterLyrics.WinUI3.Serialization;
@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
                 throw new Exception(text + " is empty or null.");
             }
 
-            var plugin = (ILyricsTransliterationPlugin?)_pluginService.Plugins.FirstOrDefault(x => x is ILyricsTransliterationPlugin);
+            var plugin = _pluginService.Plugins.OfType<ILyricsTransliterator>().FirstOrDefault();
             if (plugin != null)
             {
                 result = await plugin.GetTransliterationAsync(text, PhoneticHelper.RomanCode);

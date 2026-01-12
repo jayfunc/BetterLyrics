@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BetterLyrics.Core.Interfaces.Services;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,6 +9,6 @@ namespace BetterLyrics.Core.Interfaces
     {
         string PluginDirectory { get; }
 
-        IAIServicePlugin? AIService { get; }
+        IAIService? AIService { get; }
     }
 }
