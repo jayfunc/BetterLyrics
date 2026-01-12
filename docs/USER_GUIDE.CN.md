@@ -136,7 +136,7 @@
 | [Google Chrome](https://www.google.com/chrome) | - | - |
 | [HyPlayer](https://github.com/HyPlayer/HyPlayer) | - | - |
 | [iTunes](https://apps.microsoft.com/detail/9pb2mz1zmb1s) | [插件](https://github.com/thewizrd/iTunes-SMTC) | - |
-| [酷狗音乐](https://www.kugou.com) | - | ![](https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/Snipaste_2025-11-01_12-51-44.png?raw=true) 时间轴有问题 |
+| [酷狗音乐](https://www.kugou.com) | - | ![](docs/assets/faq/Snipaste_2025-11-01_12-51-44.png?raw=true) 时间轴有问题 |
 | [Listen 1](https://listen1.github.io/listen1) | - | - |
 | [LX Music](https://github.com/lyswhut/lx-music-desktop) | - | 在 LX Music 设置 “开放 API” 中勾选 “启用开放 API 服务”；<br>在 BetterLyrics 设置 “播放源” 板块下的 “LX 音乐服务器” 中输入 LX Music 服务器地址。 |
 | [Microsoft Edge](https://www.microsoft.com/edge) | - | - |
@@ -148,7 +148,7 @@
 | [QQ 音乐](https://y.qq.com) | - | 确保使用较新版本，并在 QQ 音乐设置中启用 “显示系统媒体传输控制 (SMTC)”。 |
 | [Salt Player for Windows](https://moriafly.com/program/spw.html) | - | - |
 | [Spotify](https://open.spotify.com) | - | - |
-| [网易云音乐](https://music.163.com) | [BetterNCM](https://microblock.cc/betterncm) <br> [InfLink-rs](https://github.com/apoint123/inflink-rs) | ![](https://github.com/jayfunc/BetterLyrics/blob/dev/FAQ/Snipaste_2025-11-01_19-25-56.png?raw=true) |
+| [网易云音乐](https://music.163.com) | [BetterNCM](https://microblock.cc/betterncm) <br> [InfLink-rs](https://github.com/apoint123/inflink-rs) | ![](docs/assets/faq/Snipaste_2025-11-01_19-25-56.png?raw=true) |
 | [Windows Media Player](https://apps.microsoft.com/detail/9wzdncrfj3pt) | - | - |
 | ... | ... | ... |
 
