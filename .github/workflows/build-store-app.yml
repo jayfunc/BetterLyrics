@@ -29,9 +29,13 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.x' # 根据你的项目目标框架修改
+        cache: 'dotnet'
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
+
+    - name: Add Labs NuGet Source
+      run: dotnet nuget add source "https://pkgs.dev.azure.com/dotnet/CommunityToolkit/_packaging/CommunityToolkit-Labs/nuget/v3/index.json" -n CommunityToolkit-Labs
 
     - name: Restore NuGet packages
       run: nuget restore ${{ env.SOLUTION_NAME }}
