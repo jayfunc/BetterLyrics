@@ -1,0 +1,83 @@
+name: Build WinUI 3 for Store
+
+on:
+  push:
+    branches: [ "dev" ]
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      # 修改这里：你的解决方案文件名 (.sln) 或项目文件名 (.csproj)
+      SOLUTION_NAME: BetterLyrics.slnx
+      # 修改这里：通常是项目名，用于查找生成路径
+      PROJECT_NAME: BetterLyrics.WinUI3
+      CONFIGURATION: Release
+      PLATFORM: x64 # 或者 x86, arm64
+      # 临时证书路径
+      PFX_PATH: GitHubActionsWorkflow.pfx
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET 10.0
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.0' # 根据你的项目目标框架修改
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore NuGet packages
+      run: nuget restore ${{ env.SOLUTION_NAME }}
+
+    # 解码 Secret 中的证书并保存到本地文件
+    - name: Decode the pfx
+      run: |
+        $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
+        [IO.File]::WriteAllBytes("$env:PFX_PATH", $pfx_cert_byte)
+
+    # 核心构建步骤
+    # UapAppxPackageBuildMode=StoreUpload: 生成用于商店上传的 .msixupload 文件
+    # AppxBundle=Always: 确保生成 Bundle 包
+    - name: Build and Package for Store
+      run: |
+        msbuild ${{ env.SOLUTION_NAME }} `
+        /p:Configuration=${{ env.CONFIGURATION }} `
+        /p:Platform=${{ env.PLATFORM }} `
+        /p:UapAppxPackageBuildMode=StoreUpload `
+        /p:AppxBundle=Always `
+        /p:AppxBundlePlatforms="x86|x64" `
+        /p:AppxPackageSigningEnabled=true `
+        /p:PackageCertificateKeyFile=${{ env.PFX_PATH }} `
+        /p:PackageCertificatePassword=${{ secrets.PFX_PASSWORD }} `
+        /p:GenerateAppxPackageOnBuild=true
+
+    # 从 PFX 中提取公钥 (.cer)
+    - name: Export Public Certificate
+      run: |
+        $pfxPassword = ConvertTo-SecureString "${{ secrets.PFX_PASSWORD }}" -AsPlainText -Force
+        $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+        $cert.Import("$env:PFX_PATH", $pfxPassword, "Exportable")
+        # 将公钥导出为 BetterLyrics_Sideloadly_Cert.cer
+        [IO.File]::WriteAllBytes("BetterLyrics_Sideloadly_Cert.cer", $cert.Export("Cert"))
+
+    # 移除临时证书（安全清理）
+    - name: Remove the pfx
+      if: always()
+      run: Remove-Item -path ${{ env.PFX_PATH }}
+
+    # 上传构建产物 (.msixupload)
+    - name: Upload Store Package
+      uses: actions/upload-artifact@v4
+      with:
+        name: StorePackage
+        path: |
+          BetterLyrics_Sideloadly_Cert.cer
+          **/*.msixupload
+          **/*.msixbundle
