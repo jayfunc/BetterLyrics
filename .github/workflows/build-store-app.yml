@@ -25,10 +25,10 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Install .NET 10.0.2
+    - name: Install .NET 10
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '10.0.2' # 根据你的项目目标框架修改
+        dotnet-version: '10.x' # 根据你的项目目标框架修改
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
