@@ -24,12 +24,12 @@
         </Grid>
 
         <InfoBar
+            x:Uid="PluginManagerControlInfoBar"
             Grid.Row="1"
             BorderThickness="0"
-            CornerRadius="4"
+            CornerRadius="8"
             IsClosable="False"
             IsOpen="True"
-            Message="Restart will be automatically performed after install, uninstall or update any plugins"
             Severity="Warning" />
 
         <ListView
@@ -66,6 +66,9 @@
                             </RichTextBlock>
                         </dev:SettingsExpander.Header>
                         <dev:SettingsExpander.Items>
+                            <dev:SettingsCard>
+                                <ToggleSwitch IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
+                            </dev:SettingsCard>
                             <dev:SettingsCard Header="{x:Bind Plugin.Description}" />
                             <dev:SettingsCard>
                                 <Button x:Uid="PluginManagerControlUninstall" Click="UninstallPluginButton_Click" />

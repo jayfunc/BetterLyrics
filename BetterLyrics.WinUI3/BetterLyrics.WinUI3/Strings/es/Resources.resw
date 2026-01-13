@@ -810,9 +810,6 @@
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>Área arrastrable</value>
   </data>
-  <data name="SettingsPageEasingMode.Header" xml:space="preserve">
-    <value />
-  </data>
   <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
     <value />
   </data>
@@ -1604,5 +1601,11 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>Guía de usuario</value>
+  </data>
+  <data name="SettingsPageEasingMode.Header" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <value />
   </data>
 </root>

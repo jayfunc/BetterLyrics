@@ -1602,4 +1602,7 @@
   <data name="UserGuide.Content" xml:space="preserve">
     <value>ユーザーガイド</value>
   </data>
+  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <value />
+  </data>
 </root>

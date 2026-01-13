@@ -555,6 +555,9 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Unable to view tracks because the path does not exist</value>
   </data>
+  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <value>Restart will be automatically performed after install, uninstall or update any plugins</value>
+  </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value>Install plugin</value>
   </data>
