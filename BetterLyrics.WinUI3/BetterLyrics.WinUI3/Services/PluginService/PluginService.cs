@@ -1,4 +1,7 @@
 ﻿using BetterLyrics.Core.Interfaces;
+using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -6,35 +9,38 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
+using System.Runtime.Loader;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services.PluginService
 {
     public class PluginService : IPluginService
     {
-        private List<IPlugin> _plugins = new();
-        public IReadOnlyList<IPlugin> Plugins => _plugins;
         private Dictionary<string, PluginLoadContext> _pluginContexts = new();
         private HashSet<string> _loadedDllPaths = new();
 
+        private readonly ISettingsService _settingsService;
         private readonly ILogger<PluginService> _logger;
 
-        public PluginService(ILogger<PluginService> logger)
+        public PluginService(ISettingsService settingsService, ILogger<PluginService> logger)
         {
+            _settingsService = settingsService;
             _logger = logger;
         }
 
-        public T? GetPlugin<T>() where T : class, IPlugin
+        public T? GetPlugin<T>() where T : class
         {
-            return _plugins.OfType<T>().FirstOrDefault();
+            var plugins = _settingsService.AppSettings.PluginsInfo;
+
+            return plugins.OfType<T>().FirstOrDefault();
         }
 
         public void LoadPlugins()
         {
-            string pluginsRoot = Path.Combine(ApplicationData.Current.LocalFolder.Path, "plugins");
-            if (!Directory.Exists(pluginsRoot)) Directory.CreateDirectory(pluginsRoot);
-
-            var pluginFolders = Directory.GetDirectories(pluginsRoot);
+            var pluginFolders = Directory.GetDirectories(PathHelper.PluginsDirectory);
 
             foreach (var folder in pluginFolders)
             {
@@ -51,9 +57,87 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             InitializePlugins();
         }
 
+        public void UninstallPlugin(string pluginId)
+        {
+            var plugins = _settingsService.AppSettings.PluginsInfo;
+
+            var activePlugin = plugins.FirstOrDefault(p => p.Id == pluginId);
+            if (activePlugin != null)
+            {
+                plugins.Remove(activePlugin);
+            }
+        }
+
+        public void InstallPlugin(string zipPath)
+        {
+            var plugins = _settingsService.AppSettings.PluginsInfo;
+
+            string tempExtractPath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, Guid.NewGuid().ToString());
+            ZipFile.ExtractToDirectory(zipPath, tempExtractPath);
+
+            string pluginId = IdentifyPluginId(tempExtractPath);
+
+            string pendingDir = Path.Combine(PathHelper.PendingPluginsDirectory, pluginId);
+
+            if (Directory.Exists(pendingDir)) Directory.Delete(pendingDir, true);
+
+            Directory.Move(tempExtractPath, pendingDir);
+
+            plugins.Add(new PluginInfo(pluginId));
+            //throw new Exception("NeedRestart");
+        }
+
+        public void PerformFileSynchronization()
+        {
+            var plugins = _settingsService.AppSettings.PluginsInfo;
+
+            if (Directory.Exists(PathHelper.PendingPluginsDirectory))
+            {
+                foreach (var pendingDir in Directory.GetDirectories(PathHelper.PendingPluginsDirectory))
+                {
+                    string folderName = Path.GetFileName(pendingDir);
+                    string targetDir = Path.Combine(PathHelper.PluginsDirectory, folderName);
+
+                    try
+                    {
+                        if (Directory.Exists(targetDir))
+                        {
+                            Directory.Delete(targetDir, true);
+                        }
+
+                        Directory.Move(pendingDir, targetDir);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+            }
+
+            if (Directory.Exists(PathHelper.PluginsDirectory))
+            {
+                foreach (var pluginDir in Directory.GetDirectories(PathHelper.PluginsDirectory))
+                {
+                    string pluginId = Path.GetFileName(pluginDir);
+
+                    if (!plugins.Any(x => x.Id == pluginId))
+                    {
+                        try
+                        {
+                            Directory.Delete(pluginDir, true);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                }
+            }
+        }
+
         private void InitializePlugins()
         {
-            foreach (var plugin in _plugins)
+            var plugins = _settingsService.AppSettings.PluginsInfo;
+
+            foreach (var plugin in plugins)
             {
                 try
                 {
@@ -62,26 +146,29 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                     if (pluginDir == null) continue;
 
                     var context = new PluginContext(this, pluginDir);
-                    plugin.OnLoad(context);
+                    plugin.Plugin.OnLoad(context);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Failed to initialize plugin {Name}", plugin.Name);
+                    _logger.LogError(ex, "Failed to initialize plugin {Name}", plugin.Plugin.Name);
                 }
             }
         }
 
+        /// <summary>
+        /// Invoke this method only when the app starts
+        /// </summary>
+        /// <param name="dllPath"></param>
         private void TryLoadPlugin(string dllPath)
         {
-            // 1. Create Context
+            var plugins = _settingsService.AppSettings.PluginsInfo;
             var loadContext = new PluginLoadContext(dllPath);
 
             try
             {
                 var assembly = loadContext.LoadFromAssemblyPath(dllPath);
-                int loadedCount = 0; // Track successfully loaded plugins
+                int loadedCount = 0;
 
-                // 2. [Safety Check] Safely retrieve types
                 IEnumerable<Type> types;
                 try
                 {
@@ -89,7 +176,6 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                 }
                 catch (ReflectionTypeLoadException ex)
                 {
-                    // If some types fail to load, only keep the usable ones!
                     types = ex.Types.Where(t => t != null)!;
                     foreach (var loaderEx in ex.LoaderExceptions)
                     {
@@ -99,45 +185,47 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
                 foreach (var type in types)
                 {
-                    // 3. Check if it is a valid plugin class
                     if (typeof(IPlugin).IsAssignableFrom(type) && !type.IsAbstract)
                     {
                         IPlugin? plugin = null;
                         try
                         {
-                            // 4. [Instantiation Guard] Prevent plugin constructor errors from crashing the main app
                             plugin = (IPlugin?)Activator.CreateInstance(type);
                             if (plugin == null) continue;
 
-                            // 5. Check for duplicate IDs
-                            if (_plugins.Any(p => p.Id == plugin.Id))
+                            var pluginFound = plugins.FirstOrDefault(p => p.Id == plugin.Id);
+                            if (pluginFound == null)
                             {
-                                _logger.LogWarning("Skipping duplicate plugin: {id} ({path})", plugin.Id, dllPath);
-                                // Explicitly break reference to aid Unload
-                                plugin = null;
-                                continue;
+                                plugins.Add(new PluginInfo(plugin));
+                            }
+                            else if (pluginFound.Plugin == null)
+                            {
+                                pluginFound.Plugin = plugin;
                             }
 
-                            // 7. Add to collection
-                            _plugins.Add(plugin);
-                            _pluginContexts.Add(plugin.Id, loadContext);
-                            loadedCount++;
+                            if (_pluginContexts.ContainsKey(plugin.Id))
+                            {
+                                _pluginContexts.Add(plugin.Id, loadContext);
+                                loadedCount++;
+                            }
+                            else
+                            {
+                                _logger.LogWarning("Skipping duplicate plugin: {id} ({path})", plugin.Id, dllPath);
+                            }
                         }
                         catch (Exception ex)
                         {
                             _logger.LogError(ex, "Failed to initialize/instantiate plugin {type}", type.FullName);
 
-                            // If plugin initialization fails, explicitly dispose if possible
                             if (plugin is IDisposable disposable)
                             {
                                 try { disposable.Dispose(); } catch { }
                             }
-                            plugin = null; // Break reference
+                            plugin = null;
                         }
                     }
                 }
 
-                // 8. Finalize: If no usable plugins were found in this DLL, unload Context
                 if (loadedCount > 0)
                 {
                     _loadedDllPaths.Add(dllPath);
@@ -146,74 +234,60 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                 else
                 {
                     _logger.LogWarning("No valid plugins found in {path}. Unloading context.", dllPath);
-                    // No plugin instances remain alive at this point, safe to unload
                     loadContext.Unload();
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to load assembly: {path}", dllPath);
-                // Only unload here if the loading process completely crashed
                 try { loadContext.Unload(); } catch { }
             }
         }
 
-        public void UninstallPlugin(string pluginId)
+        private string? IdentifyPluginId(string folderPath)
         {
-            var plugin = _plugins.FirstOrDefault(p => p.Id == pluginId);
-            if (plugin == null) return;
+            // 1. 找到所有 DLL
+            var dllFiles = Directory.GetFiles(folderPath, "*.dll", SearchOption.AllDirectories);
 
-            var dllPath = plugin.GetType().Assembly.Location;
-            var folderPath = Path.GetDirectoryName(dllPath);
-
-            _plugins.Remove(plugin);
-            _loadedDllPaths.Remove(dllPath);
-
-            if (_pluginContexts.TryGetValue(pluginId, out var context))
-            {
-                context.Unload();
-                _pluginContexts.Remove(pluginId);
-            }
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            if (Directory.Exists(folderPath))
+            foreach (var dllPath in dllFiles)
             {
                 try
                 {
-                    Directory.Delete(folderPath, true);
+                    // 2. 使用 File.OpenRead 只读模式打开，用完即关，不留锁
+                    using var stream = File.OpenRead(dllPath);
+                    using var peReader = new PEReader(stream);
+
+                    // 检查是否有 .NET 元数据
+                    if (!peReader.HasMetadata) continue;
+
+                    var reader = peReader.GetMetadataReader();
+                    if (!reader.IsAssembly) continue;
+
+                    var assemblyDefinition = reader.GetAssemblyDefinition();
+                    string assemblyName = reader.GetString(assemblyDefinition.Name);
+
+                    if (assemblyName.Contains("BetterLyrics.Plugins") || IsReferencingCore(reader))
+                    {
+                        return assemblyName;
+                    }
                 }
-                catch (IOException ex)
+                catch
                 {
-                    _logger.LogError(ex, "Failed to delete plugin folder {}", folderPath);
                 }
             }
+            return null;
         }
 
-        public void InstallPlugin(string zipPath)
+        private bool IsReferencingCore(MetadataReader reader)
         {
-            string pluginsRoot = Path.Combine(ApplicationData.Current.LocalFolder.Path, "plugins");
-            string folderName = Path.GetFileNameWithoutExtension(zipPath);
-            string installDir = Path.Combine(pluginsRoot, folderName);
-
-            if (Directory.Exists(installDir))
+            foreach (var handle in reader.AssemblyReferences)
             {
-                // TODO: 最好是先 Find plugin by path -> UninstallPlugin(id)
-                // 否则文件被锁住无法 Delete
-                try
-                {
-                    Directory.Delete(installDir, true);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Failed to delete existing plugin folder {}", installDir);
-                    throw;
-                }
+                var reference = reader.GetAssemblyReference(handle);
+                string refName = reader.GetString(reference.Name);
+                if (refName == "BetterLyrics.Core") return true;
             }
-
-            Directory.CreateDirectory(installDir);
-            ZipFile.ExtractToDirectory(zipPath, installDir);
+            return false;
         }
+
     }
 }

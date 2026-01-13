@@ -18,6 +18,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [Obsolete][ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<MappedSongSearchQuery> MappedSongSearchQueries { get; set; } = [];
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsWindowStatus> WindowBoundsRecords { get; set; } = [];
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<SongsTabInfo> StarredPlaylists { get; set; } = [];
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<PluginInfo> PluginsInfo { get; set; } = [];
 
         public AppSettings() { }
     }

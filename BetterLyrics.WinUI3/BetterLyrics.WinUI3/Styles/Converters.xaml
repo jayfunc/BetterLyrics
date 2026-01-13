@@ -2,9 +2,16 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:bwc="using:BetterLyrics.WinUI3.Converter"
+    xmlns:bwc="using:BetterLyrics.WinUI3.Converters"
     xmlns:cwc="using:CommunityToolkit.WinUI.Converters">
 
+    <cwc:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <cwc:BoolNegationConverter x:Key="BoolNegationConverter" />
+    <cwc:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
+    <cwc:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
+
+    <bwc:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
+    <bwc:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
     <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
     <bwc:ColorToBrushConverter x:Key="ColorToBrushConverter" />
     <bwc:MatchedLocalFilesPathToVisibilityConverter x:Key="MatchedLocalFilesPathToVisibilityConverter" />
@@ -13,12 +20,10 @@
     <bwc:LyricsSearchProviderToDisplayNameConverter x:Key="LyricsSearchProviderToDisplayNameConverter" />
     <bwc:TranslationSearchProviderToDisplayNameConverter x:Key="TranslationSearchProviderToDisplayNameConverter" />
     <bwc:TransliterationSearchProviderToDisplayNameConverter x:Key="TransliterationSearchProviderToDisplayNameConverter" />
-    <bwc:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
     <bwc:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
     <bwc:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
     <bwc:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
     <bwc:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
-    <bwc:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
     <bwc:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
     <bwc:BoolToPartialOpacityConverter x:Key="BoolToPartialOpacityConverter" />
     <bwc:BoolNegationToOpacityConverter x:Key="BoolNegationToOpacityConverter" />
@@ -40,10 +45,5 @@
     <bwc:PathToImageConverter x:Key="PathToImageConverter" />
     <bwc:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
     <bwc:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
-
-    <cwc:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <cwc:BoolNegationConverter x:Key="BoolNegationConverter" />
-    <cwc:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
-    <cwc:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
 
 </ResourceDictionary>

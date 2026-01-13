@@ -102,7 +102,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+		<ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" >
+			<Private>false</Private>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</ProjectReference>
 	</ItemGroup>
 
 	<Target Name="AutoExcludeSharedAssemblies" AfterTargets="ResolveAssemblyReferences">

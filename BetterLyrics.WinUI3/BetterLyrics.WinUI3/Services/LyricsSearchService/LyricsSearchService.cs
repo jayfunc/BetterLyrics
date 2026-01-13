@@ -221,11 +221,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 results.Add(searchResult);
             }
 
-            foreach (var plugin in _pluginService.Plugins)
+            foreach (var plugin in _settingsService.AppSettings.PluginsInfo)
             {
                 if (token.IsCancellationRequested) break;
 
-                if (plugin is ILyricsSource lyricsSearchPlugin)
+                if (plugin.Plugin is ILyricsSource lyricsSearchPlugin)
                 {
                     var pluginResult = await SearchPluginAsync(songInfo, lyricsSearchPlugin, token);
                     results.Add(pluginResult);
@@ -722,7 +722,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Plugin {PluginName} failed to search", plugin.Name);
+                _logger.LogError(ex, "Plugin {PluginName} failed to search", plugin);
             }
 
             return cacheItem;

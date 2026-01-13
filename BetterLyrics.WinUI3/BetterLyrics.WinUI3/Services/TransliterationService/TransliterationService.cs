@@ -16,13 +16,11 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
     public class TransliterationService : ITransliterationService
     {
         private readonly ISettingsService _settingsService;
-        private readonly IPluginService _pluginService;
         private readonly HttpClient _httpClient;
 
-        public TransliterationService(ISettingsService settingsService, IPluginService pluginService)
+        public TransliterationService(ISettingsService settingsService)
         {
             _settingsService = settingsService;
-            _pluginService = pluginService;
             _httpClient = new HttpClient();
         }
 
@@ -34,7 +32,7 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
                 throw new Exception(text + " is empty or null.");
             }
 
-            var plugin = _pluginService.Plugins.OfType<ILyricsTransliterator>().FirstOrDefault();
+            var plugin = _settingsService.AppSettings.PluginsInfo.Select(x => x.Plugin).OfType<ILyricsTransliterator>().FirstOrDefault();
             if (plugin != null)
             {
                 result = await plugin.GetTransliterationAsync(text, PhoneticHelper.RomanCode);
