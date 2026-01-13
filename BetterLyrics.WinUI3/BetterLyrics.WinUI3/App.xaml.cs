@@ -157,6 +157,7 @@ namespace BetterLyrics.WinUI3
 
             // Ensure plugins
             var pluginService = Ioc.Default.GetRequiredService<IPluginService>();
+            pluginService.PerformFileSynchronization();
             pluginService.LoadPlugins();
 
             // Init system tray
@@ -271,6 +272,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<MusicGalleryWindowViewModel>()
                     .AddSingleton<StatsDashboardControlViewModel>()
                     .AddSingleton<PlayQueueViewModel>()
+                    .AddSingleton<PluginManagerControlViewModel>()
 
                     .AddTransient<NowPlayingWindowViewModel>()
                     .AddTransient<NowPlayingPageViewModel>()

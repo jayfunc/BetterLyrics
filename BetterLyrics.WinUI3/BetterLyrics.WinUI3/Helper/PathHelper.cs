@@ -53,6 +53,10 @@ namespace BetterLyrics.WinUI3.Helper
         public static string SongSearchMapPath => Path.Combine(LocalFolder, "song-search-map.db");
         public static string LyricsCachePath => Path.Combine(LyricsCacheDirectory, "lyrics-cache.db");
 
+        public static string PluginsDirectory => Path.Combine(LocalFolder, "plugins");
+        public static string PendingPluginsDirectory => Path.Combine(LocalFolder, "plugins-pending");
+
+
         public static void EnsureDirectories()
         {
             Directory.CreateDirectory(SettingsDirectory);
@@ -60,6 +64,9 @@ namespace BetterLyrics.WinUI3.Helper
             Directory.CreateDirectory(LyricsCacheDirectory);
             Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
             Directory.CreateDirectory(LocalAlbumArtCacheDirectory);
+
+            Directory.CreateDirectory(PluginsDirectory);
+            Directory.CreateDirectory(PendingPluginsDirectory);
         }
 
     }

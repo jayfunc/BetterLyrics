@@ -269,14 +269,12 @@
 		<Page Update="Controls\PatronControl.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\GhostSliderStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
+		<Page Update="Styles\Converters.xaml">
+		  <SubType>Designer</SubType>
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
-		<Page Update="Styles\Converters.xaml">
+		<Page Update="Styles\GhostSliderStyle.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
 	</ItemGroup>

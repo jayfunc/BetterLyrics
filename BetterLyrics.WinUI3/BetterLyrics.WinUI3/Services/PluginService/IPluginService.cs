@@ -7,11 +7,14 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 {
     public interface IPluginService
     {
-        IReadOnlyList<IPlugin> Plugins { get; }
+        T? GetPlugin<T>() where T : class;
 
-        T? GetPlugin<T>() where T : class, IPlugin;
+        /// <summary>
+        /// Invoke this method only when the app starts
+        /// </summary>
         void LoadPlugins();
         void InstallPlugin(string zipPath);
         void UninstallPlugin(string pluginId);
+        void PerformFileSynchronization();
     }
 }

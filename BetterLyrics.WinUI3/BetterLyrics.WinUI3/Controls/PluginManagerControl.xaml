@@ -7,12 +7,13 @@
     xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
     <Grid Padding="36,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -22,31 +23,52 @@
             <TextBlock x:Uid="PluginManagerControlTitle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
         </Grid>
 
-        <ListView
+        <InfoBar
             Grid.Row="1"
+            BorderThickness="0"
+            CornerRadius="4"
+            IsClosable="False"
+            IsOpen="True"
+            Message="Restart will be automatically performed after install, uninstall or update any plugins"
+            Severity="Warning" />
+
+        <ListView
+            Grid.Row="2"
             ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
-            ItemsSource="{x:Bind Plugins, Mode=OneWay}"
+            ItemsSource="{x:Bind ViewModel.AppSettings.PluginsInfo, Mode=OneWay}"
             SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:PluginDisplayModel">
-                    <dev:SettingsExpander
-                        Description="{x:Bind Description}"
-                        Header="{x:Bind Name}"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                 Glyph=&#xE74C;}">
-                        <TextBlock Text="{x:Bind Version}" />
+                <DataTemplate x:DataType="settingsmodels:PluginInfo">
+                    <dev:SettingsExpander Description="{x:Bind Id}" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE74C;}">
+                        <RichTextBlock TextAlignment="Right">
+                            <Paragraph>
+                                <Run Text="{x:Bind Plugin.Version}" />
+                            </Paragraph>
+                            <Paragraph>
+                                <Run
+                                    FontSize="{StaticResource ToolTipContentThemeFontSize}"
+                                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                    Text="{x:Bind Plugin.LastUpdated}" />
+                            </Paragraph>
+                        </RichTextBlock>
+                        <dev:SettingsExpander.Header>
+                            <RichTextBlock>
+                                <Paragraph>
+                                    <Run Text="{x:Bind Plugin.Name}" />
+                                    <Run
+                                        FontSize="{StaticResource ToolTipContentThemeFontSize}"
+                                        Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                        Text="by" />
+                                    <Hyperlink FontSize="{StaticResource ToolTipContentThemeFontSize}" NavigateUri="https://github.com/jayfunc">
+                                        <Run Text="{x:Bind Plugin.Author}" />
+                                    </Hyperlink>
+                                </Paragraph>
+                            </RichTextBlock>
+                        </dev:SettingsExpander.Header>
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <local:PropertyRow Header="Author" Value="{x:Bind Author}" />
-                                    <local:PropertyRow Header="ID" Value="{x:Bind Id}" />
-                                </StackPanel>
-                            </dev:SettingsCard>
+                            <dev:SettingsCard Header="{x:Bind Plugin.Description}" />
                             <dev:SettingsCard>
-                                <Button
-                                    x:Uid="PluginManagerControlUninstall"
-                                    Click="OnUninstallClick"
-                                    Tag="{x:Bind Plugin}" />
+                                <Button x:Uid="PluginManagerControlUninstall" Click="UninstallPluginButton_Click" />
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
@@ -55,10 +77,10 @@
         </ListView>
 
         <StackPanel
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Visibility="{x:Bind IsListEmpty, Mode=OneWay}">
+            Visibility="{x:Bind ViewModel.IsListEmpty, Mode=OneWay}">
             <FontIcon
                 FontSize="48"
                 Glyph="&#xE74C;"
@@ -69,12 +91,12 @@
                 Opacity="0.5" />
         </StackPanel>
 
-        <StackPanel Grid.Row="2" Margin="0,6,0,20">
+        <StackPanel Grid.Row="3" Margin="0,6,0,20">
             <Button
                 x:Uid="PluginManagerControlInstall"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Click="OnInstallPluginClick"
+                Command="{x:Bind ViewModel.InstallPluginCommand}"
                 Style="{StaticResource AccentButtonStyle}" />
         </StackPanel>
 
