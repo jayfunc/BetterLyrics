@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     _pluginService.InstallPlugin(file.Path);
                     // 确保程序已保存设置
-                    await Task.Delay(Constants.Time.DebounceTimeout);
+                    await Task.Delay(Constants.Time.DebounceTimeout * 2);
                     WindowHook.RestartApp();
                 }
                 catch (Exception ex)
@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 _pluginService.UninstallPlugin(plugin.Id);
                 // 确保程序已保存设置
-                await Task.Delay(Constants.Time.DebounceTimeout);
+                await Task.Delay(Constants.Time.DebounceTimeout * 2);
                 WindowHook.RestartApp();
             }
             catch (Exception ex)

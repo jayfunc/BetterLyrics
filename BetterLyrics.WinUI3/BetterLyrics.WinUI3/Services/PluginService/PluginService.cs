@@ -75,7 +75,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             string tempExtractPath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, Guid.NewGuid().ToString());
             ZipFile.ExtractToDirectory(zipPath, tempExtractPath);
 
-            string pluginId = IdentifyPluginId(tempExtractPath);
+            string? pluginId = IdentifyPluginId(tempExtractPath);
 
             string pendingDir = Path.Combine(PathHelper.PendingPluginsDirectory, pluginId);
 
@@ -84,7 +84,6 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             Directory.Move(tempExtractPath, pendingDir);
 
             plugins.Add(new PluginInfo(pluginId));
-            //throw new Exception("NeedRestart");
         }
 
         public void PerformFileSynchronization()
@@ -246,18 +245,15 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
         private string? IdentifyPluginId(string folderPath)
         {
-            // 1. 找到所有 DLL
             var dllFiles = Directory.GetFiles(folderPath, "*.dll", SearchOption.AllDirectories);
 
             foreach (var dllPath in dllFiles)
             {
                 try
                 {
-                    // 2. 使用 File.OpenRead 只读模式打开，用完即关，不留锁
                     using var stream = File.OpenRead(dllPath);
                     using var peReader = new PEReader(stream);
 
-                    // 检查是否有 .NET 元数据
                     if (!peReader.HasMetadata) continue;
 
                     var reader = peReader.GetMetadataReader();
