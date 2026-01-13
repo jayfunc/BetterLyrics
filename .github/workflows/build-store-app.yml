@@ -29,7 +29,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '10.x' # 根据你的项目目标框架修改
-        cache: 'dotnet'
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
