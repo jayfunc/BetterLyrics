@@ -12,7 +12,7 @@
 	<Identity
 	  Name="37412.BetterLyrics"
 	  Publisher="CN=E1428B0E-DC1D-4EA4-ACB1-4556569D5BA9"
-	  Version="1.2.260.0" />
+	  Version="1.2.271.0" />
 
 	<mp:PhoneIdentity PhoneProductId="ca4a4830-fc19-40d9-b823-53e2bff3d816" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -28,9 +28,9 @@
 	</Dependencies>
 
 	<Resources>
+		<Resource Language="en"/>
 		<Resource Language="ar"/>
 		<Resource Language="de"/>
-		<Resource Language="en"/>
 		<Resource Language="es"/>
 		<Resource Language="fr"/>
 		<Resource Language="hi"/>
@@ -52,7 +52,7 @@
 		  EntryPoint="$targetentrypoint$">
 			<uap:VisualElements
 			  DisplayName="BetterLyrics"
-			  Description="BetterLyrics.WinUI3 (Package)"
+			  Description="BetterLyrics.WinUI3"
 			  BackgroundColor="transparent"
 			  Square150x150Logo="Images\Square150x150Logo.png"
 			  Square44x44Logo="Images\Square44x44Logo.png">

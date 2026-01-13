@@ -8,6 +8,10 @@
 		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 		<MeCabUseDefaultDictionary>False</MeCabUseDefaultDictionary>
+		<Version>1.0.0</Version>
+		<Authors>jayfunc</Authors>
+		<Company>$(Authors)</Company>
+		<Copyright>Copyright © 2026 jayfunc</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -110,7 +114,7 @@
 
 	<Target Name="AutoExcludeSharedAssemblies" AfterTargets="ResolveAssemblyReferences">
 		<PropertyGroup>
-			<HostOutputDir>..\..\BetterLyrics.WinUI3\BetterLyrics.WinUI3\bin\x64\$(Configuration)\$(TargetFramework)\</HostOutputDir>
+			<HostOutputDir>..\..\BetterLyrics.WinUI3\bin\x64\$(Configuration)\$(TargetFramework)\win-x64\</HostOutputDir>
 		</PropertyGroup>
 		
 		<Message Text="[Debug] Searching for Host Assemblies in: $(HostOutputDir)" Importance="High" />
@@ -131,11 +135,27 @@
 			<Ns>BetterLyrics.WinUI3</Ns>
 			<Prefix>$(ProjectName)</Prefix>
 
-			<OutputDir>..\..\BetterLyrics.WinUI3\BetterLyrics.WinUI3\PluginConfigs\</OutputDir>
+			<OutputDir>..\..\BetterLyrics.WinUI3\PluginConfigs\</OutputDir>
 		</PropertyGroup>
 
 		<Message Text="[Analyzer] Delivering configs to Main App..." Importance="High" />
 		<Exec Command="&quot;$(AnalyzerPath)&quot; &quot;$(ScanDir)\&quot; &quot;$(Ns)&quot; &quot;$(Prefix)&quot; &quot;$(OutputDir)\&quot;" />
+	</Target>
+
+	<Target Name="PackagePluginToZip" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+		<PropertyGroup>
+			<PackageOutputDir>$(ProjectDir)..\_Dist\</PackageOutputDir>
+
+			<ZipFileName>$(AssemblyName).v$(Version).zip</ZipFileName>
+			<FinalZipPath>$(PackageOutputDir)$(ZipFileName)</FinalZipPath>
+		</PropertyGroup>
+
+		<ZipDirectory
+			SourceDirectory="$(OutputPath)"
+			DestinationFile="$(FinalZipPath)"
+			Overwrite="true" />
+
+		<Message Text="[Packager] The plugin package has been generated in the parent directory: $(FinalZipPath)" Importance="High" />
 	</Target>
 
 </Project>
