@@ -1,4 +1,4 @@
-**中文** | [**English**](PLUGIN_DEV.md)
+[**English**](PLUGIN_DEV.md) | **中文**
 
 # BetterLyrics 插件开发指南 🧩
 
