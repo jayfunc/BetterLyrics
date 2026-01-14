@@ -49,7 +49,7 @@ jobs:
       run: |
         msbuild PluginAnalyzer/PluginAnalyzer.csproj `
         /p:Configuration=${{ env.CONFIGURATION }} `
-        /p:Platform=${{ env.PLATFORM }}
+        /p:Platform="Any CPU"
 
     - name: Build Core Library
       run: |
