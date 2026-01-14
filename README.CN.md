@@ -1,7 +1,7 @@
 **中文** | [**English**](README.md)
 
 <div align="center">
-  <img src="BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets/Logo.png" alt="Logo" width="120">
+  <img src="BetterLyrics.WinUI3/Assets/Logo.png" alt="Logo" width="120">
   
   <h1>BetterLyrics</h1>
 
