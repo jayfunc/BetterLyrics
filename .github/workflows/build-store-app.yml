@@ -59,13 +59,23 @@ jobs:
 
     - name: Build All Plugins
       run: |
+        # 获取刚才编译好的工具的绝对路径
+        $analyzerPath = Resolve-Path "PluginAnalyzer\bin\${{ env.CONFIGURATION }}\net10.0\PluginAnalyzer.exe"
+        Write-Host "Using Analyzer at: $analyzerPath"
+
         $plugins = Get-ChildItem -Path "Plugins" -Filter "*.csproj" -Recurse
         foreach ($plugin in $plugins) {
             Write-Host "Building Plugin: $($plugin.Name)..."
-            msbuild $plugin.FullName
+            
+            # 注意：这里添加了 /p:AnalyzerPath="..."
+            msbuild $plugin.FullName `
             /p:Configuration=${{ env.CONFIGURATION }} `
-            /p:Platform=${{ env.PLATFORM }}
-            if ($LASTEXITCODE -ne 0) { exit 1 } # 如果有一个失败，立即停止
+            /p:Platform=${{ env.PLATFORM }} `
+            /p:SelfContained=true `
+            /p:RuntimeIdentifier=win-x64 `
+            /p:AnalyzerPath="$analyzerPath"
+
+            if ($LASTEXITCODE -ne 0) { exit 1 }
         }
 
     # 核心构建步骤
