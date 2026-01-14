@@ -45,10 +45,33 @@ jobs:
         $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
         [IO.File]::WriteAllBytes("$env:PFX_PATH", $pfx_cert_byte)
 
+    - name: Build Tools (PluginAnalyzer)
+      run: |
+        msbuild PluginAnalyzer/PluginAnalyzer.csproj `
+        /p:Configuration=${{ env.CONFIGURATION }} `
+        /p:Platform=${{ env.PLATFORM }}
+
+    - name: Build Core Library
+      run: |
+        msbuild BetterLyrics.Core/BetterLyrics.Core.csproj `
+        /p:Configuration=${{ env.CONFIGURATION }} `
+        /p:Platform=${{ env.PLATFORM }}
+
+    - name: Build All Plugins
+      run: |
+        $plugins = Get-ChildItem -Path "Plugins" -Filter "*.csproj" -Recurse
+        foreach ($plugin in $plugins) {
+            Write-Host "Building Plugin: $($plugin.Name)..."
+            msbuild $plugin.FullName
+            /p:Configuration=${{ env.CONFIGURATION }} `
+            /p:Platform=${{ env.PLATFORM }}
+            if ($LASTEXITCODE -ne 0) { exit 1 } # 如果有一个失败，立即停止
+        }
+
     # 核心构建步骤
     # UapAppxPackageBuildMode=StoreUpload: 生成用于商店上传的 .msixupload 文件
     # AppxBundle=Always: 确保生成 Bundle 包
-    - name: Build and Package for Store
+    - name: Build Main App and Package for Store
       run: |
         msbuild ${{ env.SOLUTION_NAME }} `
         /p:Configuration=${{ env.CONFIGURATION }} `
@@ -56,6 +79,7 @@ jobs:
         /p:UapAppxPackageBuildMode=StoreUpload `
         /p:AppxBundle=Always `
         /p:AppxBundlePlatforms="x86|x64" `
+        /p:SelfContained=true `
         /p:AppxPackageSigningEnabled=true `
         /p:PackageCertificateKeyFile=${{ env.PFX_PATH }} `
         /p:PackageCertificatePassword=${{ secrets.PFX_PASSWORD }} `
