@@ -1,4 +1,4 @@
-[**中文**](PLUGIN_DEV.CN.md) | **English**
+**English** | [**中文**](PLUGIN_DEV.CN.md)
 
 # BetterLyrics Plugin Development Guide 🧩
 
