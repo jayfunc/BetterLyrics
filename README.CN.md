@@ -1,4 +1,4 @@
-**中文** | [**English**](README.md)
+ [**English**](README.md) | **中文**
 
 <div align="center">
   <img src="BetterLyrics.WinUI3/Assets/Logo.png" alt="Logo" width="120">
